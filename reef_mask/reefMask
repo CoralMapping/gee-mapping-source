@@ -16,7 +16,7 @@ var reef = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 
 
 
-var globFunctions = require('users/mitchest/gbr_mapping:Modules/reefFunctions');
+var globFunctions = ('users/mitchest/global_reefs:Modules/reefFunctions');
 print('Time now:',globFunctions.getTime);
 
 ////////////////////////////////////
