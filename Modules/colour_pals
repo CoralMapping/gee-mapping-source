@@ -40,22 +40,6 @@ var benthic_pal = {
   min: 1, max: 30
 }
 
-    '0570b0', // 1 = Shallow lagoon
-    'fe9929', // 2 = Outer Reef Flat
-    'ffffd4', // 3 = Inner Reef Flat
-    '54278f', // 4 = Deep slope HE
-    '54278f', // 5 = Shallow slope HE
-    '54278f', // 6 = Shallow slope LE
-    '54278f', // 7 = Deep slope LE
-    '993404', // 8 = Reef crest
-    'ccebc5', // 9 = Open complex lagoon (patch reef component)
-    'd9d9d9', // 10 = Shallow Plateau
-    'd9d9d9', // 11 = Deep Plateau
-    '0570b0'  // 12 = Deep lagoon
-  ],
-  min: 1, max: 12
-  }
-
 // Define colour palette for BENTHIC classifications
 var display_pal = {
   palette: [ // the benthic classificaiton palette (NB in raster class value order)
