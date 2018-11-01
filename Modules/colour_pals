@@ -6,32 +6,36 @@
 // Define colour palette for GEOMORPHIC classiciations
 var benthic_pal = {
   palette: [  // the benthic classificaiton palette (NB in raster class value order)
-    '0570b0', // 1 = Shallow lagoon
-    'fe9929', // 2 = Outer Reef Flat
-    'ffffd4', // 3 = Inner Reef Flat
-    '54278f', // 4 = Deep slope HE
-    '54278f', // 5 = Shallow slope HE
-    '54278f', // 6 = Shallow slope LE
-    '54278f', // 7 = Deep slope LE
-    '993404', // 8 = Reef crest
-    'ccebc5', // 9 = Open complex lagoon (patch reef component)
-    'd9d9d9', // 10 = Shallow Plateau
-    'd9d9d9', // 11 = Deep Plateau
-    '0570b0'  // 12 = Deep lagoon
-    '0570b0', // 1 = Shallow lagoon
-    'fe9929', // 2 = Outer Reef Flat
-    'ffffd4', // 3 = Inner Reef Flat
-    '54278f', // 4 = Deep slope HE
-    '54278f', // 5 = Shallow slope HE
-    '54278f', // 6 = Shallow slope LE
-    '54278f', // 7 = Deep slope LE
-    '993404', // 8 = Reef crest
-    'ccebc5', // 9 = Open complex lagoon (patch reef component)
-    'd9d9d9', // 10 = Shallow Plateau
-    'd9d9d9', // 11 = Deep Plateau
-    '0570b0'  // 12 = Deep lagoon
-    'd9d9d9', // 11 = Deep Plateau
-    '0570b0'  // 12 = Deep lagoon
+    '0570b0', // 1 =  Land
+    'fe9929', // 2 =  Deep
+    'ffffd4', // 3 =  place-holder
+    '54278f', // 4 =  place-holder
+    '54278f', // 5 =  place-holder
+    '54278f', // 6 =  place-holder
+    '54278f', // 7 =  place-holder
+    '993404', // 8 =  place-holder
+    'ccebc5', // 9 =  place-holder
+    'd9d9d9', // 10 = place-holder
+    'd9d9d9', // 11 = Shallow Lagoon
+    '0570b0',  // 12 = Deep lagoon
+    '0570b0', // 13 = Inner Reef Flat
+    'fe9929', // 14 = Outer Reef Flat
+    'ffffd4', // 15 = Reef Rim
+    '54278f', // 16 = place-holder
+    '54278f', // 17 = place-holder
+    '54278f', // 18 = place-holder
+    '54278f', // 19 = place-holder
+    '993404', // 20 = place-holder
+    'ccebc5', // 21 = Slope Sheltered
+    'd9d9d9', // 22 = Slope Exposed
+    'd9d9d9', // 23 = Plateau
+    '0570b0', // 24 = Open Complex Lagoon
+    'd9d9d9', // 25 = Patch Reef
+    '0570b0', // 26 = Small Reef
+    '0570b0', // 27 = place-holder
+    '0570b0', // 28 = place-holder
+    '0570b0', // 29 = place-holder
+    '0570b0'  // 20 = place-holder
   ],
   min: 1, max: 26
 }
