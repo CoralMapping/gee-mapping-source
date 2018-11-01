@@ -73,8 +73,12 @@ var benthic_pal = {
 var geo_legend = pkg_vis.discrete_legend({
   names: ['Shallow Lagoon'],
   palette: ['9ecae1'],
-  title: 'Geomorphic Zone',
+  title: 'Geomorphic Zone'
 })
+
+// var geo_legend = ({
+  
+// })
 
 exports = {
   geo : geo_pal,
