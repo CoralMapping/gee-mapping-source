@@ -72,15 +72,10 @@ var benthic_pal = {
 // geo legend
 var geo_names = ['Shallow Lagoon', 'Deep Lagoon']
 var geo_cols = ['9ecae1', '2171b5']
-var geo_legend = {
-  names: geo_names,
-  palette: geo_cols,
-  title: 'Geomorphic Zone',
-  IsPlot: false
-}
 
 exports = {
   geo : geo_pal,
   benthic : benthic_pal,
-  geo_legend : geo_legend
+  geo_names : geo_names
+  geo_cols : geo_cols
 }
