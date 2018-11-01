@@ -15,11 +15,6 @@ Map.centerObject(centre_map, 11)
 // add the data
 
 // generate the legend
-//var map_legend = pkg_vis.discrete_legend(map_palettes.geo_legend) // make this dependant on region/map type
-// add it
-
-var geo_names = ['Shallow Lagoon', 'Deep Lagoon']
-var geo_cols = ['9ecae1', '2171b5']
-var map_legend = pkg_vis.discrete_legend(geo_names, geo_cols, 'Geomorphic Zone', false)
+var map_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
 pkg_vis.add_lgds([map_legend])
 
