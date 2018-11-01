@@ -29,7 +29,7 @@ var geo_pal = {
     '9e9ac8', // 21 = Slope Sheltered
     '807dba', // 22 = Slope Exposed
     'bdbdbd', // 23 = Plateau
-    '0570b0', // 24 = Open Complex Lagoon
+    '02818a', // 24 = Open Complex Lagoon
     'd9d9d9', // 25 = Patch Reef
     '0570b0', // 26 = Small Reef
     'ffffff', // 27 = place-holder
@@ -71,7 +71,7 @@ var benthic_pal = {
 
 // geo legend
 var geo_names = ['Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer Reef Flat', 'Reef Rim', 'Slope Sheltered', 'Slope Exposed', 'Plateau', 'Open Complex Lagoon', 'Patch Reef', 'Small Reef']
-var geo_cols = ['9ecae1', '2171b5', 'ffffd4', 'fe9929', 'fe9929', '9e9ac8', '807dba', 'bdbdbd', '0570b0', 'd9d9d9', '0570b0']
+var geo_cols = ['9ecae1', '2171b5', 'ffffd4', 'fe9929', '993404', '9e9ac8', '807dba', 'bdbdbd', '02818a', 'd9f0a3', 'd9f0a3']
 
 exports = {
   geo : geo_pal,
