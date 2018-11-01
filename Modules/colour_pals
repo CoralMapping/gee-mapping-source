@@ -76,6 +76,6 @@ var geo_cols = ['9ecae1', '2171b5']
 exports = {
   geo : geo_pal,
   benthic : benthic_pal,
-  geo_names : geo_names
+  geo_names : geo_names,
   geo_cols : geo_cols
 }
