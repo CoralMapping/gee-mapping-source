@@ -4,7 +4,7 @@
 // TODO: build in function that also adds a label (preferably dynamic so not all classes need to be labeled)
 
 // Define colour palette for Earth Engine display
-if (geomorphic) {
+exports.
   var display_pal = {
     palette: [ // the benthic classificaiton palette (NB in raster class value order)
   '0570b0', // 1 = Shallow lagoon
