@@ -16,4 +16,4 @@ Map.centerObject(centre_map, 11)
 
 // add the legend
 var map_legend = map_palettes.geo_legend // make this dependant on region/map type
-pkg_vis.add_lgds(map_legend)
+pkg_vis.add_lgds([map_legend])
