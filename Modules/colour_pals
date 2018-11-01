@@ -2,6 +2,7 @@
 // corresponds to the standard class names etc.
 
 // TODO: build in function that also adds a label (preferably dynamic so not all classes need to be labeled)
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // Define colour palette for GEOMORPHIC classiciations
 var geo_pal = {
