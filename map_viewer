@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.343697740921982]),
     Capricorn = /* color: #98ff00 */ee.Geometry.Point([151.913537635627, -23.452680584823657]),
-    gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map");
+    gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map30");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
