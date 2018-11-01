@@ -17,8 +17,8 @@ Map.centerObject(centre_map, 11)
 Map.addLayer(gbr_geo, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough + dodgy)", false)
 
 //Generate title
-var panel = ui.Panel({style: { fontSize: '14px', margin: '0 0 0px 0', padding: '0 0 0 6px', position: 'bottom-left' }})
-    .add(ui.Label('Prototype Coral Atlas mapping algorithms'))
+var panel = ui.Panel({style: {width: '200px'}})
+    .add(ui.Label('Prototype Coral Atlas mapping algorithms', style: {position: 'top-left'}))
 ui.root.add(panel)
 
 // generate the legend
