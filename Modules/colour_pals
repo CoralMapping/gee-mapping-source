@@ -32,12 +32,10 @@ var benthic_pal = {
     '0570b0'  // 12 = Deep lagoon
     'd9d9d9', // 11 = Deep Plateau
     '0570b0'  // 12 = Deep lagoon
-  ]
+  ],
+  min: 1, max: 26
 }
-/*    
-    
-    
-    
+
     '0570b0', // 1 = Shallow lagoon
     'fe9929', // 2 = Outer Reef Flat
     'ffffd4', // 3 = Inner Reef Flat
