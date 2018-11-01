@@ -18,7 +18,7 @@ Map.addLayer(gbr_geo, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough + dodg
 
 //Generate title
 var panel = ui.Panel({style: {width: '200px'}})
-    .add(ui.Label('Prototype COral Atlas mapping algorithms'))
+    .add(ui.Label('Prototype Coral Atlas mapping algorithms'))
 ui.root.add(panel)
 
 // generate the legend
