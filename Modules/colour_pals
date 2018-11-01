@@ -2,7 +2,7 @@
 // corresponds to the standard class names etc.
 
 // TODO: build in function that also adds a label (preferably dynamic so not all classes need to be labeled)
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 
 // Define colour palette for GEOMORPHIC classiciations
 var geo_pal = {
@@ -70,7 +70,14 @@ var benthic_pal = {
   min: 1, max: 22
   }
 
+var geo_legend = pkg_vs.discrete_legend({
+  names: ['Shallow Lagoon'],
+  palette: ['9ecae1'],
+  title: 'Geomorphic Zone',
+})
+
 exports = {
   geo : geo_pal,
-  benthic : benthic_pal
+  benthic : benthic_pal,
+  geo_legend : geo_legend
 }
