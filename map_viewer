@@ -15,4 +15,4 @@ Map.centerObject(centre_map, 11)
 // add the data
 
 // add the legend
-pkg_vis.add_lgds([lg_vi])
+pkg_vis.add_lgds([map_palettes.geo_legend])
