@@ -17,7 +17,10 @@ Map.centerObject(centre_map, 11)
 Map.addLayer(gbr_geo, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough + dodgy)", false)
 
 //Generate title
-var title = ui.Label('Prototype Coral Atlas mapping algorithms')
+var title = ui.Label({
+  value: 'Prototype Coral Atlas mapping algorithms',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})
 
 // generate the legend
 var map_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
