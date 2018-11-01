@@ -1,0 +1,226 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var reef = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    modisDaily = ee.ImageCollection("MODIS/006/MYDOCGA"),
+    gebco = ee.Image("users/murrnick/global-reefs/existingData/GEBCO_RN5136");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//////////////////////////////////////////// 
+// Global Reef Mask 
+// Nick Murray
+// n.murray@unsw.edu.au
+//
+// Description:
+// Use publicly available elevation and bathymetry
+// data to develop a mask suitable for mapping reefs.
+// 
+//////////////////////////////////////////// 
+
+
+
+var globFunctions = require('users/mitchest/gbr_mapping:Modules/reefFunctions');
+print('Time now:',globFunctions.getTime);
+
+////////////////////////////////////
+// 00. Global Variables
+////////////////////////////////////
+
+// Set the global options
+var globOptions = { 
+  version: 1,
+  maskElevation: 5,  // Elevation less than (m)
+  maskDepth: -20, // ocean depth greater than (m)
+  timeStamp: globFunctions.getTime,
+  kernelSize: 20,
+};
+var site = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+//Map.addLayer(site, null, 'Site', false);
+Map.setOptions('SATELLITE');
+
+////////////////////////////////////
+// 01. ETOPO Masking
+////////////////////////////////////
+
+// Mask to globOptions as depicted by ETOPO
+// Amante, C. & Eakins, B. W. ETOPO1 1 arc-minute global relief model: 
+// procedures, data sources and analysis.  (US Department of Commerce, 
+// National Oceanic and Atmospheric Administration, National Environmental 
+// Satellite, Data, and Information Service, National Geophysical Data 
+// Center, Marine Geology and Geophysics Division, 2009).
+
+var etopo = ee.Image('NOAA/NGDC/ETOPO1')
+        .clip(site)
+        .select(['bedrock'], ['etopo'])
+        .resample('bicubic');
+
+var topoMask = etopo
+    .gte(globOptions.maskDepth)
+    .and(etopo.lte(globOptions.maskElevation));
+var topoMask = topoMask.updateMask(topoMask);
+
+
+
+////////////////////////////////////
+// 02. SRTM Masking
+////////////////////////////////////
+
+// Mask to 0m as depicted by SRTM
+// Farr, T. G. et al. The shuttle radar topography mission. Rev. Geophys. 45 (2007).
+
+var srtm = ee.Image('USGS/SRTMGL1_003')
+    .clip(site);
+var srtm = srtm
+    .lte(0);
+var finalMask = topoMask
+    .rename('datamask')
+    .byte()
+    .updateMask(srtm);
+
+
+////////////////////////////////////
+// 02a. etopo Masking + buffer + modis open water mask
+////////////////////////////////////
+
+// etopo mask
+var etopoMask = etopo.lt(globOptions.maskElevation).and(etopo.gt(globOptions.maskDepth));
+var etopoMaskDist= etopoMask.fastDistanceTransform(256).lte(10000).selfMask(); // 10K is the buffer around the GEBCO
+Map.addLayer(etopoMaskDist)
+
+
+// modis 8-day product
+var modisRatioMask = modisDaily
+                  .filterDate("2017-01-01", "2017-12-31")
+                  .select(["sur_refl_b09","sur_refl_b12"],["blue","red"])
+                  .median()
+                  .updateMask(etopoMask)
+                  .normalizedDifference(["red","blue"])//.aside(Map.addLayer)
+                  .gte(-0.8)
+
+
+var modisRatioMaskSmooth = modisRatioMask
+                            .updateMask(modisRatioMask)
+                            .focal_max({
+                              radius: 2000,
+                              kernelType: 'circle',
+                              units: 'meters',
+                              iterations: 1});
+
+
+// buffer the topo mask by 20km, then clip land again
+    // but DON'T use the SRTM as it has no data over open ocean without a radar return
+
+//function buff_polys(f) {return f.buffer(20000)}
+
+var finalMaskBuff = topoMask
+                      .rename('datamask')
+                      .byte()
+                      .eq(1)
+                      .focal_max({
+                        radius: 10000,
+                        kernelType: 'circle',
+                        units: 'meters',
+                        iterations: 5})
+                      // .reduceToVectors({
+                      //   geometry: site,
+                      //   scale: 5000,
+                      //   geometryType: 'polygon',
+                      //   eightConnected: false,
+                      //   maxPixels: 1e13
+                      //   })
+                      //.map(buff_polys)
+                      //.reduceToImage(['label'], ee.Reducer.first())
+                      .updateMask(etopoMask)
+                      .updateMask(modisRatioMaskSmooth)
+                      .focal_max({
+                        radius: 2000,
+                        kernelType: 'circle',
+                        units: 'meters',
+                        iterations: 1})
+//print(finalMaskBuff)
+
+////////////////////////////////////
+// 02a. GEBCO Mask
+////////////////////////////////////
+
+var gebcoMask = gebco.lt(globOptions.maskElevation).and(gebco.gt(globOptions.maskDepth)).selfMask();
+var gebcoDistMask = gebcoMask.fastDistanceTransform(256).lte(10000).selfMask(); // 10K is the buffer around the GEBCO
+var etopoVisParams = {palette: 'edc951,ed6841,cc2a36,4f372d,00a0b0', min: [0], max: [1]};
+
+
+
+
+////////////////////////////////////
+// 03. Visualisation
+////////////////////////////////////
+var etopoVisParams = {palette: 'edc951,ed6841,cc2a36,4f372d,00a0b0', min: [-50], max: [50]};
+//var binViz = {palette: '0d56ac,790d35', min: [1], max:[2]}; // Binary 
+Map.addLayer (srtm, {}, "srtm layer", false);
+Map.addLayer (etopo, {}, "etopo layer", false);
+Map.addLayer(gebco, etopoVisParams, 'GEBCO Raw', false);
+//Map.addLayer (modisRatioMaskSmooth, {palette:'yellow'}, 'MODIS Smooth Ratio Mask (Yellow)', true);
+Map.addLayer(gebcoMask, {palette: 'darkblue'}, 'GEBCO Raw Mask (Blue)', true);
+Map.addLayer(gebcoDistMask, etopoVisParams, 'GEBCO 10k buffer')
+Map.addLayer (topoMask, {'palette': 'darkgreen'}, "ETOPO Mask Only (Dark Green)", true);
+Map.addLayer (finalMask, {'palette': 'c20101'}, "ETOPO + SRTM Mask", false);
+Map.addLayer (finalMaskBuff, {'palette': 'c20101'}, "ETOPO + buffer + MODIS", false);
+Map.addLayer(reef, {color:'aqua'}, 'wcmc reef (aqua)', true);
+
+// Export to local drive
+Export.image.toDrive({
+  image: finalMaskBuff,
+  description: 'exportFinalMasktoDrive',
+  fileNamePrefix: 'reefMask_etopoModisSRTM',
+  scale: 500,
+  region: site,
+  maxPixels: 800000000000
+});
+
+// Export to local drive
+Export.image.toDrive({
+  image: gebcoDistMask,
+  description: 'exportFinalMasktoDrive',
+  fileNamePrefix: 'reefMask_gebco',
+  scale: 500,
+  region: site,
+  maxPixels: 800000000000
+});
+
+
+// Export metadata
+var fileName = 'reefMask'
+    .concat('_v')
+    .concat(globOptions.version);
+print (fileName);
+var metaData = ee.Feature(null, {
+  version: globOptions.version,
+  fileName: fileName,
+  globOptions: globOptions,
+});
+
+// Gebco to Asset
+Export.image.toAsset({
+  image:  gebcoMask, 
+  description: 'exportGebcoToAsset',
+  assetId: 'global-reefs/reefOut/reefMask_gebco',
+  scale: 250,
+  region: site,
+  maxPixels: 800000000000
+});
+
+// Gebco to Asset
+Export.image.toAsset({
+  image:  etopoMaskDist, 
+  description: 'exportEtopoToAsset',
+  assetId: 'global-reefs/reefOut/reefMask_etopo',
+  scale: 250,
+  region: site,
+  maxPixels: 800000000000
+});
+
+// MODIS to Asset
+Export.image.toAsset({
+  image:  finalMaskBuff, 
+  description: 'exportMODISToAsset',
+  assetId: 'global-reefs/reefOut/reefMask_etopoModisSRTM',
+  scale: 250,
+  region: site,
+  maxPixels: 800000000000
+});

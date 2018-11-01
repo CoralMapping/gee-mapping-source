@@ -1,0 +1,30 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var image = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_K0S500_v3_Global");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Map.addLayer(image.randomVisualizer())
+Map.setOptions('SATELLITE')
+//Map.centerObject(image)
+Map.setCenter(121.1086, -6.7158, 10)
+var finalOut = image.lte(1).selfMask(); 
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+
+var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
+print(ls8);
+var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
+Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+Map.addLayer(finalOut, {palette:'yellow'}, 'reef', true, 0.8);
+
+// var vector = finalOut.addBands(finalOut).reduceToVectors({
+//   reducer: "max",
+//   //geometry: points,
+//   geometryType: "polygon",
+//   bestEffort: true,
+//   eightConnected: false,
+//   geometry: aoi,
+//   scale: 100});
+  
+// //Map.addLayer(vector, {color:'white'}, 'vector')
+// var simple = vector.map(function (feature) {
+//     var feat = feature.simplify(10);
+//     return feat });
+// Map.addLayer(simple, {color:'green'}, 'vector')
