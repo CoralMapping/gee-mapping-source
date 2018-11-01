@@ -3,7 +3,7 @@
 
 // TODO: build in function that also adds a label (preferably dynamic so not all classes need to be labeled)
 
-// Define colour palette for Earth Engine display
+// Define colour palette for BENTHIC classiciations
 var benthic_pal = {
   palette: [// the benthic classificaiton palette (NB in raster class value order)
     '0570b0', // 1 = Shallow lagoon
@@ -22,33 +22,33 @@ var benthic_pal = {
   min: 1, max: 12
   }
 
-} else {
-  var display_pal = {
-    palette: [ // the benthic classificaiton palette (NB in raster class value order)
-  '0570b0', // CA IRF
-  '0570b0', // CA ORF
-  '0570b0', // CA RC
-  '993404', // Ro IRF
-  '993404', // Ro ORF
-  '993404', // Ro RC
-  '993404', // Ro SL
-  'fcbba1', // Ru IRF
-  'fcbba1', // Ru ORF
-  'fcbba1', // Ru RC
-  'fcbba1', // Ru SL
-  'ffffcc', // Sa IRF
-  'ffffcc', // Sa ORF
-  'ffffcc', // Sa SL
-  '253494', // Deep lagoon
-  '969696', // Deep slope lee
-  '737373', // Deep slope wind
-  '7bccc4', // OCL
-  '252525', // Deep Plat.
-  '252525', // Shallow Plat.
-  'f0f0f0', // Shallow slope lee
-  'd9d9d9'  // Shallow slope wind
+// Define colour palette for GEOMORPHIC classiciations
+var display_pal = {
+  palette: [ // the benthic classificaiton palette (NB in raster class value order)
+    '0570b0', // CA IRF
+    '0570b0', // CA ORF
+    '0570b0', // CA RC
+    '993404', // Ro IRF
+    '993404', // Ro ORF
+    '993404', // Ro RC
+    '993404', // Ro SL
+    'fcbba1', // Ru IRF
+    'fcbba1', // Ru ORF
+    'fcbba1', // Ru RC
+    'fcbba1', // Ru SL
+    'ffffcc', // Sa IRF
+    'ffffcc', // Sa ORF
+    'ffffcc', // Sa SL
+    '253494', // Deep lagoon
+    '969696', // Deep slope lee
+    '737373', // Deep slope wind
+    '7bccc4', // OCL
+    '252525', // Deep Plat.
+    '252525', // Shallow Plat.
+    'f0f0f0', // Shallow slope lee
+    'd9d9d9'  // Shallow slope wind
   ],
   min: 1, max: 22
   }
-  var class_layer_name = "Benthic habitat classification"
-}
+
+
