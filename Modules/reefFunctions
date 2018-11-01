@@ -1,0 +1,50 @@
+// wcsFunctions
+
+// Paste this into your script to access the functions
+//var globFunctions = require('users/mitchest:gbr_mapping/Modules/reefFunctions');
+//print('Time now:',globFunctions.getTime);
+
+exports.applyCFMask = function(image) {
+	// Mask out SHADOW, SNOW, and CLOUD classes. SR data.
+	var clear = image.select('pixel_qa').bitwiseAnd(2).neq(0); // clear
+	var water = image.select('pixel_qa').bitwiseAnd(4).neq(0);
+	var finalMask = clear.add(water);
+	var img = image.updateMask(finalMask);
+	return img;
+};
+
+exports.applyNDWI = function(image) {
+	// apply NDWI to an image
+	var ndwi = image.normalizedDifference(['green','nir']);
+	return ndwi.select([0], ['ndwi']);
+};
+
+exports.applyMNDWI = function(image) {
+	// apply MNDWI to an image
+	var mndwi = image.normalizedDifference(['green','swir1']);
+	return image.select([0], ['mndwi']);
+};
+
+exports.applyAWEI = function(image) {
+	// apply AWEI to an image
+	var awei = image.expression("4*(b('green')-b('swir1'))-(0.25*b('nir')+2.75*b('swir2'))");
+	return awei.select([0], ['awei']);
+};
+
+exports.applyNDVI = function(image) {
+	// apply NDVI to an image
+	var ndvi = image.normalizedDifference(['nir','red']);
+	return ndvi.select([0], ['ndvi']);
+};
+
+ exports.samplePredictors = function(feature) {
+    // sample training composite for predictor data
+    var predictorData = trainComposite.reduceRegion({
+    reducer: ee.Reducer.first(), // mean and first return the same
+    geometry: feature.geometry(),
+    scale: 8}); //1m sample = 1 pixel
+    return feature.set(predictorData);
+ }
+
+
+exports.getTime = ee.Date(Date.now());
