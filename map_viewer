@@ -14,7 +14,7 @@ var centre_map = Cairns
 Map.centerObject(centre_map, 11)
 
 // add the data
-Map.addLayer(gbr_geo, map_palettes.geo, "Whole GBR Geomorphic", false)
+Map.addLayer(gbr_geo, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough + dodgy)", false)
 
 // generate the legend
 var map_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
