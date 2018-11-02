@@ -19,7 +19,8 @@ Map.addLayer(gbr_geo_map, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough + 
 
 
 // add training point distributions
-Map.addLayer(gbr_geo_training, {}, "GBR training point distribution", false)
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+
 
 
 ////////// UI SET UP //////////
