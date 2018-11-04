@@ -14,7 +14,7 @@ var centre_map = Cairns
 Map.centerObject(centre_map, 11)
 
 // add the data layers
-Map.addLayer(gbr_geo_map10, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough - not for release)", false)
+Map.addLayer(gbr_geo_map10, map_palettes.geo, "Sentinel-2 GBR Geomorphic (rough - not for release)", true)
 
 
 // add training point distributions
