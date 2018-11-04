@@ -34,3 +34,23 @@ var title = ui.Label({
 var map_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
 pkg_vis.add_lgds([title, map_legend])
 
+
+///////// LINK TO DATA EXPORT /////////
+
+// map to export 
+var export_map = gbr_geo_map10
+// extent
+var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
+// export
+Export.image.toDrive({
+    image: classification_output,
+    description: 'gbr_sent2_geo_map',
+    folder: 'GBR Mapping',
+    region: export_convhull,
+    scale: 10,
+    maxPixels: 1e13
+})
+
+
+
+
