@@ -43,7 +43,7 @@ var export_map = gbr_geo_map10
 var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
 // export
 Export.image.toDrive({
-    image: classification_output,
+    image: export_map,
     description: 'gbr_sent2_geo_map',
     folder: 'GBR Mapping',
     region: export_convhull,
