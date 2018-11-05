@@ -52,6 +52,3 @@ pkg_vis.add_lgds([title, map_legend])
 //     maxPixels: 1e13
 // })
 
-
-
-
