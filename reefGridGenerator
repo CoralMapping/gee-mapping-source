@@ -1,0 +1,55 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var coralMask = ee.FeatureCollection("users/murrnick/global-reefs/masks/20181001_GlobalCoralMask_v1");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+Map.addLayer(coralMask, null, 'coral-mask');
+
+var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
+  // function to generate a grid
+  var xx = ee.List.sequence(xmin, ee.Number(xmax).subtract(dx), dx);
+  var yy = ee.List.sequence(ymin, ee.Number(ymax).subtract(dx), dy);
+  var polys = xx.map(function(x) {
+    return yy.map(function(y) {
+      var x1 = ee.Number(x);
+      var x2 = ee.Number(x).add(dx);
+      var y1 = ee.Number(y);
+      var y2 = ee.Number(y).add(dy);
+      var coords = ee.List([x1, y1, x2, y2]);
+      return ee.Feature(ee.Algorithms.GeometryConstructors.Rectangle(coords));
+    });
+  }).flatten();
+  return ee.FeatureCollection(polys);
+};
+
+// generate global grid
+// Change the dx and dy to make change grid size
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 2, dy = 2;
+var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
+var reefGrid = grid.filterBounds(coralMask);
+Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
+Map.setCenter(132,-25,4);
+//print('Total cell count: ', grid.size());
+//print (grid.first());
+
+
+// WRS grid (landsat footprints)
+//var wrs = ee.FeatureCollection("ft:1DpJjUTrG_HbRtNurLSKIXKTCZowspqReEk7E-mgz");
+//var coastWRS = wrs.filterBounds(globCoast);
+
+Export.table.toDrive({
+  collection: ee.FeatureCollection(coastGrid), //
+  description: 'exportGrid',
+  folder: 'reefsout',
+  fileNamePrefix: 'WorldReefGrid_'.concat(dx).concat('deg'),
+  fileFormat: 'SHP'
+});
+
+// Plot them
+//Map.addLayer(ee.FeatureCollection('ft:1qgWxKhgls8btuWAsxABWJgjVQOcYj6q4aOMav6_G'), null, '3 degree');
+//Map.addLayer(ee.FeatureCollection('ft:1Loe8rbCNYYPm5Dfqk4P3xva9NGJZ-BaWGFmM_2nc'),  {color:'500045'}, '5 degree');
+//Map.addLayer(ee.FeatureCollection('ft:1vE1lPTpOxc-BoW9T3j9ZIEw6AnqCl3tjIFXbOWLl'), {color:'050075'}, '10 degree'); //10 degree
+//Map.addLayer(ee.FeatureCollection('ft:1nKpep-PSaw0dlg_heNdzQH30qVzi-V_drGeUtL0P'),  {color:'1f4d00'}, 'WRS grid');
+//Map.addLayer(ee.FeatureCollection('ft:11BEbK5deTVC0xst0-TADMkdRGKd5BFz9d0nrhgZ4'),  {color:'e0ff00'}, 'Final Training Set');
+
+// Global rectangle
+var region = ee.Geometry.Polygon([-180, 90, 0, 90, 180, 90, 180, -90, 10, -90, -180, -90], null, false)
+Map.addLayer(region,  {color:'1f009c'}, 'Non-geodesic polygon', false);
