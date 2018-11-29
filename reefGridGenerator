@@ -1,8 +1,17 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var coralMask = ee.FeatureCollection("users/murrnick/global-reefs/masks/20181001_GlobalCoralMask_v1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-Map.addLayer(coralMask, null, 'coral-mask');
 
+// Prepare coral mask
+Map.addLayer(coralMask, null, 'coral-mask');
+var simpleMask = coralMask.map(
+  // reduce number of vertices
+  function(f) {
+  return f.simplify(10000); 
+});
+Map.addLayer(simpleMask,{color:'red'}, 'simple-coral-mask' );
+
+// Generate a grid
 var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
   // function to generate a grid
   var xx = ee.List.sequence(xmin, ee.Number(xmax).subtract(dx), dx);
@@ -22,13 +31,23 @@ var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
 
 // generate global grid
 // Change the dx and dy to make change grid size
-var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 2, dy = 2;
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 1, dy = 1;
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
-var reefGrid = grid.filterBounds(coralMask);
+var reefGrid = grid.filterBounds(simpleMask);
 Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
-Map.setCenter(132,-25,4);
+
+// get Centroid
+var getCentroid = function(f) {
+  // get centroid of each grid cell
+  var centroid = f.geometry().centroid();//.coordinates());
+  return ee.Feature(centroid);
+};
+var gridCentroids = reefGrid.map(getCentroid);
+print (gridCentroids);
+Map.addLayer(gridCentroids, {color:'yellow'}, 'centroids', true);
+
+//Map.setCenter(132,-25,4);
 //print('Total cell count: ', grid.size());
-//print (grid.first());
 
 
 // WRS grid (landsat footprints)
@@ -36,10 +55,18 @@ Map.setCenter(132,-25,4);
 //var coastWRS = wrs.filterBounds(globCoast);
 
 Export.table.toDrive({
-  collection: ee.FeatureCollection(coastGrid), //
+  collection: ee.FeatureCollection(reefGrid), //
   description: 'exportGrid',
   folder: 'reefsout',
   fileNamePrefix: 'WorldReefGrid_'.concat(dx).concat('deg'),
+  fileFormat: 'SHP'
+});
+
+Export.table.toDrive({
+  collection: ee.FeatureCollection(reefGrid), //
+  description: 'exportGrid',
+  folder: 'gridCentroids',
+  fileNamePrefix: 'WorldReefGridCentroids_'.concat(dx).concat('deg'),
   fileFormat: 'SHP'
 });
 
@@ -50,6 +77,3 @@ Export.table.toDrive({
 //Map.addLayer(ee.FeatureCollection('ft:1nKpep-PSaw0dlg_heNdzQH30qVzi-V_drGeUtL0P'),  {color:'1f4d00'}, 'WRS grid');
 //Map.addLayer(ee.FeatureCollection('ft:11BEbK5deTVC0xst0-TADMkdRGKd5BFz9d0nrhgZ4'),  {color:'e0ff00'}, 'Final Training Set');
 
-// Global rectangle
-var region = ee.Geometry.Polygon([-180, 90, 0, 90, 180, 90, 180, -90, 10, -90, -180, -90], null, false)
-Map.addLayer(region,  {color:'1f009c'}, 'Non-geodesic polygon', false);
