@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var coralMask = ee.FeatureCollection("users/murrnick/global-reefs/masks/20181001_GlobalCoralMask_v1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Reef Grid Generator
 
 // Prepare coral mask
 Map.addLayer(coralMask, null, 'coral-mask');
