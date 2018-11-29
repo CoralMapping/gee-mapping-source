@@ -32,7 +32,7 @@ var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
 
 // generate global grid
 // Change the dx and dy to make change grid size
-var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 0.5, dy = 0.5;
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 0.5, dy = 0.5; // grid size is dx,dy
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
 var reefGrid = grid.filterBounds(simpleMask);
 Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
