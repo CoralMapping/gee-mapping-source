@@ -62,7 +62,7 @@ Export.table.toDrive({
 });
 
 Export.table.toDrive({
-  collection: ee.FeatureCollection(reefGrid), //
+  collection: ee.FeatureCollection(gridCentroids), //
   description: 'exportGrid',
   folder: 'gridCentroids',
   fileNamePrefix: 'WorldReefGridCentroids_'.concat(dx).concat('deg'),
