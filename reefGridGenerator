@@ -31,7 +31,7 @@ var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
 
 // generate global grid
 // Change the dx and dy to make change grid size
-var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 1, dy = 1;
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 0.5, dy = 0.5;
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
 var reefGrid = grid.filterBounds(simpleMask);
 Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
@@ -43,12 +43,10 @@ var getCentroid = function(f) {
   return ee.Feature(centroid);
 };
 var gridCentroids = reefGrid.map(getCentroid);
-print (gridCentroids);
 Map.addLayer(gridCentroids, {color:'yellow'}, 'centroids', true);
 
 //Map.setCenter(132,-25,4);
-//print('Total cell count: ', grid.size());
-
+print('Total cell count: ', grid.size());
 
 // WRS grid (landsat footprints)
 //var wrs = ee.FeatureCollection("ft:1DpJjUTrG_HbRtNurLSKIXKTCZowspqReEk7E-mgz");
