@@ -1,5 +1,7 @@
 // module for standard parameters for classification tasks
 
+// preliminary - need to add more details and fill out
+
 var sentinel = {
   pixel: 10,
   name: 's2'
