@@ -40,7 +40,7 @@ var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 2, dy = 2; // grid size
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
 Map.addLayer(grid);
 var globCoast = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk'); // Natural Earth coastline
-var reefGrid = grid.filterBounds(simpleMask);
+var reefGrid = grid.filterBounds(coralMask);
 Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
 
 // get Centroid
