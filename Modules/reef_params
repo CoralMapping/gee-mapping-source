@@ -1,9 +1,16 @@
 // module for standard parameters for classification tasks
 
+var sentinel = {
+  pixel: 10,
+  name: 's2'
+}
+
+var dove = {
+  pixel: 4,
+  name: 'dove'
+}s
 
 exports = {
-  geo : geo_pal,
-  benthic : benthic_pal,
-  geo_names : geo_names,
-  geo_cols : geo_cols
+  sentinel : sentinel,
+  dove : dove
 }
