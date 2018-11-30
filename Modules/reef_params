@@ -31,7 +31,7 @@ var cancook = {
   benthic_train: ""
 }
 
-
+// export the objects
 exports = {
   sentinel : sentinel,
   dove : dove,
