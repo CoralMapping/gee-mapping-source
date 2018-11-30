@@ -7,14 +7,14 @@ Map.setCenter(150.044, -18.882, 7);
 
 // Prepare coral mask
 //Map.addLayer(coralMask, null, 'coral-mask');
-var simpleMask = coralMask.map(
-  // reduce number of vertices
-  function(f) {
-  return f.simplify(100000); 
-});
+// var simpleMask = coralMask.map(
+//   // reduce number of vertices
+//   function(f) {
+//   return f.simplify(100000); 
+// });
 
-Map.addLayer(simpleMask,{color:'red'}, 'simple-coral-mask' );
-print (simpleMask)
+// Map.addLayer(simpleMask,{color:'red'}, 'simple-coral-mask' );
+// print (simpleMask)
 
 // Generate a grid
 var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
@@ -36,7 +36,7 @@ var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
 
 // generate global grid
 // Change the dx and dy to make change grid size
-var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 2, dy = 2; // grid size is dx,dy
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 0.5, dy = 0.5; // grid size is dx,dy
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
 Map.addLayer(grid);
 var globCoast = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk'); // Natural Earth coastline
