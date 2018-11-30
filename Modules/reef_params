@@ -18,16 +18,23 @@ var dove = {
 }
 
 var cancook = {
-  dove_image: ,
-  dove_depth: ,
-  ls8_image: ,
-  ls8_depth: ,
-  waves: ,
-  geo_train:, 
-  benthic_train:
+  dove_image: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  dove_depth: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  dove_pixels: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  dove_segments: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  ls8_image: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  ls8_depth: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  ls8_pixels: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  ls8_segments: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  waves: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
+  geo_train: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs", 
+  benthic_train: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs"
 }
+
 
 exports = {
   sentinel : sentinel,
-  dove : dove
+  dove : dove,
+  landsat8 : landsat8,
+  cancook : cancook
 }
