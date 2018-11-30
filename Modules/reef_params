@@ -1,0 +1,9 @@
+// module for standard parameters for classification tasks
+
+
+exports = {
+  geo : geo_pal,
+  benthic : benthic_pal,
+  geo_names : geo_names,
+  geo_cols : geo_cols
+}
