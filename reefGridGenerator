@@ -4,13 +4,15 @@ var coralMask = ee.FeatureCollection("users/murrnick/global-reefs/masks/20181001
 // Reef Grid Generator
 
 // Prepare coral mask
-Map.addLayer(coralMask, null, 'coral-mask');
+//Map.addLayer(coralMask, null, 'coral-mask');
 var simpleMask = coralMask.map(
   // reduce number of vertices
   function(f) {
-  return f.simplify(10000); 
+  return f.simplify(1000); 
 });
+
 Map.addLayer(simpleMask,{color:'red'}, 'simple-coral-mask' );
+print (simpleMask)
 
 // Generate a grid
 var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
@@ -32,8 +34,10 @@ var generateGrid = function(xmin, ymin, xmax, ymax, dx, dy) {
 
 // generate global grid
 // Change the dx and dy to make change grid size
-var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 0.1, dy = 0.1; // grid size is dx,dy
+var xmin = -180, xmax = 180, ymin = -30, ymax = 30, dx = 2, dy = 2; // grid size is dx,dy
 var grid = generateGrid(xmin, ymin, xmax, ymax, dx, dy);
+Map.addLayer(grid);
+var globCoast = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk'); // Natural Earth coastline
 var reefGrid = grid.filterBounds(simpleMask);
 Map.addLayer(reefGrid, {color:'009bd6'}, 'reef-grid', true);
 
@@ -44,10 +48,10 @@ var getCentroid = function(f) {
   return ee.Feature(centroid);
 };
 var gridCentroids = reefGrid.map(getCentroid);
-Map.addLayer(gridCentroids, {color:'yellow'}, 'centroids', true);
+//Map.addLayer(gridCentroids.filterBounds(simpleMask), {color:'yellow'}, 'centroids', true);
 
 //Map.setCenter(132,-25,4);
-print('Total cell count: ', grid.size());
+//print('Total cell count: ', reefGrid.size());
 
 // WRS grid (landsat footprints)
 //var wrs = ee.FeatureCollection("ft:1DpJjUTrG_HbRtNurLSKIXKTCZowspqReEk7E-mgz");
