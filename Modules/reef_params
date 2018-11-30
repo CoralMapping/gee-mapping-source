@@ -18,6 +18,7 @@ var dove = {
 }
 
 var cancook = {
+  name: "cairns_cook",
   dove_image: "users/mitchest/gbr_reefs/cairns_cook_dove_rrs",
   dove_depth: "users/mitchest/gbr_reefs/cairns_cook_dove_depth",
   dove_pixels: "users/mitchest/gbr_reefs/cairns_cook_dove_pixels",
