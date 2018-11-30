@@ -10,7 +10,17 @@ var sentinel = {
 var dove = {
   pixel: 4,
   name: 'dove'
-}s
+}
+
+var cancook = {
+  dove_image: ,
+  dove_depth: ,
+  ls8_image: ,
+  ls8_depth: ,
+  waves: ,
+  geo_train:, 
+  benthic_train:
+}
 
 exports = {
   sentinel : sentinel,
