@@ -3,12 +3,14 @@ var coralMask = ee.FeatureCollection("users/murrnick/global-reefs/masks/20181001
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Reef Grid Generator
 
+Map.setCenter(150.044, -18.882, 7);
+
 // Prepare coral mask
 //Map.addLayer(coralMask, null, 'coral-mask');
 var simpleMask = coralMask.map(
   // reduce number of vertices
   function(f) {
-  return f.simplify(1000); 
+  return f.simplify(100000); 
 });
 
 Map.addLayer(simpleMask,{color:'red'}, 'simple-coral-mask' );
