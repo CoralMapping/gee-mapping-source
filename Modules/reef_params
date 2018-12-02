@@ -13,7 +13,7 @@ var landsat8 = {
 }
 
 var dove = {
-  pixel: 4,
+  pixel: 5,
   sname: 'dove'
 }
 
