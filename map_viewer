@@ -21,8 +21,8 @@ Map.centerObject(centre_map, 11)
 Map.addLayer(gbr_geo_map10, map_palettes.geo, "Sentinel-2 GBR-geo10 (rough - no Dove data)", false)
 Map.addLayer(gbr_geo_map30, map_palettes.geo, "Sentinel-2 GBR-geo30 (rough - no Dove data)", false)
 //Carins to Cooktown
-Map.addLayer(gbr_geo_map30, map_palettes.geo, "Dove v1 Carins-Cook geo-5m", false)
-Map.addLayer(gbr_geo_map30, map_palettes.geo, "Dove v1 Carins-Cook geo-5m (segmentation)", false)
+Map.addLayer(cancook_geo_map5, map_palettes.geo, "Dove v1 Carins-Cook geo-5m", false)
+Map.addLayer(cancook_geo_map5_seg, map_palettes.geo, "Dove v1 Carins-Cook geo-5m (segmentation)", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
