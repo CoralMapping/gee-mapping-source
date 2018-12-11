@@ -17,7 +17,7 @@ var add_depth = function(thresh_dat){
   })
   print("depth", depth_slider)
 }
-
+/*
 // waves
 var waves_slider = ui.Slider({
     min: 0, max: 4, step: 0.1
@@ -174,7 +174,7 @@ depth_slider2.onChange(function(value) {
 })
 print("depthVar + depth: depthVar", depthvar_slider2); print("depthVar + depth: depth", depth_slider2)
 
-
+*/
 exports = {
   add_depth : add_depth
 }
