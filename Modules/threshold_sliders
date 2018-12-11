@@ -75,16 +75,18 @@ var add_b2 = function(threshdat) {
 }
 
 // b3
-var b3_slider = ui.Slider({
-    min: 250, max: 2800, step: 10
-})
-var b3_threshold = ui.Map.Layer(thresh_dat.select('b3'), bw_pal, 'b3 (green) threshold', false)
-Map.add(b3_threshold)
-b3_slider.onChange(function(value) {
-  var thresholded = thresh_dat.select('b3').updateMask(thresh_dat.select('b3').gte(value))
-  b3_threshold.setEeObject(thresholded)
-})
-print( "b3 (green)", b3_slider)
+var add_b3 = function(threshdat) {
+  var b3_slider = ui.Slider({
+      min: 250, max: 2800, step: 10
+  })
+  var b3_threshold = ui.Map.Layer(thresh_dat.select('b3'), bw_pal, 'b3 (green) threshold', false)
+  Map.add(b3_threshold)
+  b3_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b3').updateMask(thresh_dat.select('b3').gte(value))
+    b3_threshold.setEeObject(thresholded)
+  })
+  print( "b3 (green)", b3_slider)
+}
 
 // b4
 var b4_slider = ui.Slider({
