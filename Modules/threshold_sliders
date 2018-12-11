@@ -171,3 +171,8 @@ depth_slider2.onChange(function(value) {
   depth_depthVar_threshold.setEeObject(thresholded)
 })
 print("depthVar + depth: depthVar", depthvar_slider2); print("depthVar + depth: depth", depth_slider2)
+
+
+exports = {
+  depth_slider : depth_slider
+}
