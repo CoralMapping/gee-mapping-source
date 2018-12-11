@@ -5,16 +5,18 @@ var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999}
 var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
 
 // depth
-var depth_slider = ui.Slider({
+var add_depth = function(){
+  var depth_slider = ui.Slider({
     min: -15, max: 1, step: 0.1, value: -15
-})
-var depth_threshold = ui.Map.Layer(thresh_dat.select('depth'), bw_pal, 'depth threshold', false)
-Map.add(depth_threshold)
-depth_slider.onChange(function(value) {
-  var thresholded = thresh_dat.select('depth').updateMask(thresh_dat.select('depth').gte(value))
-  depth_threshold.setEeObject(thresholded)
-})
-print("depth", depth_slider)
+  })
+  var depth_threshold = ui.Map.Layer(thresh_dat.select('depth'), bw_pal, 'depth threshold', false)
+  Map.add(depth_threshold)
+  depth_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('depth').updateMask(thresh_dat.select('depth').gte(value))
+    depth_threshold.setEeObject(thresholded)
+  })
+  print("depth", depth_slider)
+}
 
 // waves
 var waves_slider = ui.Slider({
@@ -174,5 +176,5 @@ print("depthVar + depth: depthVar", depthvar_slider2); print("depthVar + depth: 
 
 
 exports = {
-  depth_slider : depth_slider
+  add_depth : add_depth
 }
