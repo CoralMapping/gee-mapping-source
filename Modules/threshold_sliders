@@ -1,0 +1,179 @@
+
+
+if (thresholding) {
+  
+  var thresh_dat = (threshold_pixels) ? pixels : segments
+  
+  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999}
+  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
+  
+  // depth
+  var depth_slider = ui.Slider({
+      min: -15, max: 1, step: 0.1, value: -15
+  })
+  var depth_threshold = ui.Map.Layer(thresh_dat.select('depth'), bw_pal, 'depth threshold', false)
+  Map.add(depth_threshold)
+  depth_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('depth').updateMask(thresh_dat.select('depth').gte(value))
+    depth_threshold.setEeObject(thresholded)
+  })
+  print("depth", depth_slider)
+  
+  // waves
+  var waves_slider = ui.Slider({
+      min: 0, max: 4, step: 0.1
+  })
+  var waves_threshold = ui.Map.Layer(thresh_dat.select('waves'), bw_pal, 'waves threshold', false)
+  Map.add(waves_threshold)
+  waves_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('waves').updateMask(thresh_dat.select('waves').gte(value))
+    waves_threshold.setEeObject(thresholded)
+  })
+  print("waves", waves_slider)
+  
+  // slope
+  var slope_slider = ui.Slider({
+      min: 0, max: 9, step: 0.1
+  })
+  var slope_threshold = ui.Map.Layer(thresh_dat.select('slope'), bw_pal, 'slope threshold', false)
+  Map.add(slope_threshold)
+  slope_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('slope').updateMask(thresh_dat.select('slope').gte(value))
+    slope_threshold.setEeObject(thresholded)
+  })
+  print("slope", slope_slider)
+  
+  // b1
+  var b1_slider = ui.Slider({
+      min: 500, max: 2500, step: 10
+  })
+  var b1_threshold = ui.Map.Layer(thresh_dat.select('b1'), bw_pal, 'b1 (coastal) threshold', false)
+  Map.add(b1_threshold)
+  b1_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b1').updateMask(thresh_dat.select('b1').gte(value))
+    b1_threshold.setEeObject(thresholded)
+  })
+  print("b1 (coastal)", b1_slider)
+  
+  // b2
+  var b2_slider = ui.Slider({
+      min: 500, max: 2300, step: 10
+  })
+  var b2_threshold = ui.Map.Layer(thresh_dat.select('b2'), bw_pal, 'b2 (blue) threshold', false)
+  Map.add(b2_threshold)
+  b2_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b2').updateMask(thresh_dat.select('b2').gte(value))
+    b2_threshold.setEeObject(thresholded)
+  })
+  print("b2 (blue)", b2_slider)
+  
+  // b3
+  var b3_slider = ui.Slider({
+      min: 250, max: 2800, step: 10
+  })
+  var b3_threshold = ui.Map.Layer(thresh_dat.select('b3'), bw_pal, 'b3 (green) threshold', false)
+  Map.add(b3_threshold)
+  b3_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b3').updateMask(thresh_dat.select('b3').gte(value))
+    b3_threshold.setEeObject(thresholded)
+  })
+  print( "b3 (green)", b3_slider)
+  
+  // b4
+  var b4_slider = ui.Slider({
+      min: 50, max: 1700, step: 10
+  })
+  var b4_threshold = ui.Map.Layer(thresh_dat.select('b4'), bw_pal, 'b4 (red) threshold', false)
+  Map.add(b4_threshold)
+  b4_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b4').updateMask(thresh_dat.select('b4').gte(value))
+    b4_threshold.setEeObject(thresholded)
+  })
+  print( "b4 (red)", b4_slider)
+  
+  // b5
+  var b5_slider = ui.Slider({
+      min: 0, max: 150, step: 1
+  })
+  var b5_threshold = ui.Map.Layer(thresh_dat.select('b5'), bw_pal, 'b5 (NIR) threshold', false)
+  Map.add(b5_threshold)
+  b5_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b5').updateMask(thresh_dat.select('b5').gte(value))
+    b5_threshold.setEeObject(thresholded)
+  })
+  print("b5 (NIR)", b5_slider)
+  
+  // depth sd
+  var depthsd_slider = ui.Slider({
+      min: 0, max: 10, step: 0.1
+  })
+  var depthsd_threshold = ui.Map.Layer(thresh_dat.select('depth_stdDev'), bw_pal, 'Depth variance threshold', false)
+  Map.add(depthsd_threshold)
+  depthsd_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('depth_stdDev').updateMask(thresh_dat.select('depth_stdDev').gte(value))
+    depthsd_threshold.setEeObject(thresholded)
+  })
+  print("Depth variance", depthsd_slider)
+  
+  // red sd
+  var redsd_slider = ui.Slider({
+      min: 0, max: 150, step: 5
+  })
+  var redsd_threshold = ui.Map.Layer(thresh_dat.select('b4_stdDev'), bw_pal, 'Red (b4) variance threshold', false)
+  Map.add(redsd_threshold)
+  redsd_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('b4_stdDev').updateMask(thresh_dat.select('b4_stdDev').gte(value))
+    redsd_threshold.setEeObject(thresholded)
+  })
+  print("Red band variance", redsd_slider)
+  
+  // NDWI
+  var ndwi_slider = ui.Slider({
+      min: 0, max: 1, step: 0.01
+  })
+  var ndwi_threshold = ui.Map.Layer(thresh_dat.select('ndwi'), bw_pal, 'NDWI threshold', false)
+  Map.add(ndwi_threshold)
+  ndwi_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('ndwi').updateMask(thresh_dat.select('ndwi').gte(value))
+    ndwi_threshold.setEeObject(thresholded)
+  })
+  print("NDWI", ndwi_slider)
+  
+  // depth glcm
+  var depthidm_slider = ui.Slider({
+      min: 0, max: 1.1, step: 0.005
+  })
+  var depthidm_threshold = ui.Map.Layer(thresh_dat.select('depth_idm'), bw_pal, 'GLCM depth idm threshold', false)
+  Map.add(depthidm_threshold)
+  depthidm_slider.onChange(function(value) {
+    var thresholded = thresh_dat.select('depth_idm').updateMask(thresh_dat.select('depth_idm').gte(value))
+    depthidm_threshold.setEeObject(thresholded)
+  })
+  print("GLCM depth", depthidm_slider)
+  
+  // depth variance + depth
+  var depthvar_slider2 = ui.Slider({
+      min: 0, max: 10, step: 0.1
+  })
+  var depth_slider2 = ui.Slider({
+      min: -15, max: 1, step: 0.1, value: -15
+  })
+  var depth_depthVar_threshold = ui.Map.Layer(ee.Image(255).updateMask(thresh_dat.select('depth')), red_pal, 'depthVar + depth threshold', false)
+  Map.add(depth_depthVar_threshold)
+  var depthVar_value = 0; var depth_value = 0
+  depthvar_slider2.onChange(function(value) {
+    depthVar_value = value
+    var thresholded = ee.Image(255).updateMask(thresh_dat.select('depth_stdDev').gte(depthVar_value)
+                                          .and(thresh_dat.select('depth').gte(depth_value)))
+    depth_depthVar_threshold.setEeObject(thresholded)
+  })
+  depth_slider2.onChange(function(value) {
+    depth_value = value
+    var thresholded = ee.Image(255).updateMask(thresh_dat.select('depth_stdDev').gte(depthVar_value)
+                                          .and(thresh_dat.select('depth').gte(depth_value)))
+    depth_depthVar_threshold.setEeObject(thresholded)
+  })
+  print("depthVar + depth: depthVar", depthvar_slider2); print("depthVar + depth: depth", depth_slider2)
+  
+  
+}
