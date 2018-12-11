@@ -7,7 +7,7 @@ var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
 // depth
 var add_depth = function(thresh_dat){
   var depth_slider = ui.Slider({
-    min: -15, max: 1, step: 0.1, value: -15
+    min: -1, max: 20, step: 0.1, value: 15
   })
   var depth_threshold = ui.Map.Layer(thresh_dat.select('depth'), bw_pal, 'depth threshold', false)
   Map.add(depth_threshold)
