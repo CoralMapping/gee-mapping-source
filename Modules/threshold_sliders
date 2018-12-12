@@ -12,7 +12,7 @@ var add_depth = function(thresh_dat) {
   var depth_threshold = ui.Map.Layer(thresh_dat.select('depth'), bw_pal, 'depth threshold', false)
   Map.add(depth_threshold)
   depth_slider.onChange(function(value) {
-    var thresholded = thresh_dat.select('depth').updateMask(thresh_dat.select('depth').gte(value))
+    var thresholded = thresh_dat.select('depth').updateMask(thresh_dat.select('depth').lte(value))
     depth_threshold.setEeObject(thresholded)
   })
   print("depth", depth_slider)
