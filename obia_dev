@@ -12,7 +12,7 @@ The goal here is to develop a method to reclassify objects based on their neighb
     3. if some conditions are met (e.g. if class A 100% surrounded by class B, then assign that obejct to class B)
 */
 
-Map.centerObject(map_centre, 11)
+Map.centerObject(map_centre, 14)
 
 // A crude example of this is to find small objects, and replace with smoothed raster underneath
 var smooth_map = map_classification
