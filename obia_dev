@@ -23,7 +23,7 @@ var smooth_map = map_classification
 
 var crude_object_smooth = map_classification
                              .mask(map_classification.connectedPixelCount(50, false)
-                             .gte(vars.small_object_filter))
+                             .gte(50))
                              .unmask(smooth_map)
 
 
@@ -65,3 +65,4 @@ var geo_pal = {
 }
 
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
+Map.addLayer(crude_object_smooth, geo_pal, 'Crude map smooth', true)
