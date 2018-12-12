@@ -1,36 +1,67 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_classification = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map10"),
-    getout = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[145.5833498970211, -16.311561055140405],
-          [145.53528471147422, -16.384038397817186],
-          [145.62118966085126, -16.46993916018863],
-          [145.93979317647626, -16.821241941478974],
-          [146.05926949483563, -16.812040001002586],
-          [146.1183210085075, -16.760763878234087],
-          [146.16913277608563, -16.685796995935075],
-          [146.20346505147626, -16.576582128104658],
-          [146.09497506124188, -16.40408083793102],
-          [145.94528634053876, -16.210328550556454],
-          [145.89722115499188, -16.114040448692972],
-          [145.88898140889813, -16.02694518643717],
-          [145.8546491335075, -15.967540227587865],
-          [145.84228951436688, -15.896231012340209],
-          [145.84640938741376, -15.822254010608273],
-          [145.8216901491325, -15.803755524812077],
-          [145.80658394796063, -15.811683654411768],
-          [145.71457344991376, -15.904155508917228],
-          [145.56213814717938, -15.984703473475875]]]);
+var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.366909817391132]),
+    map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// minimal reproducable example to help develop object-based relationship rules
+// ###### minimal reproducable example to help develop object-based relationship rules
+// mitchell.lyons@gmail.com
+
+/*
+The goal here is to develop a method to reclassify objects based on their neighbouring map classes, i.e.
+    1. define an object as a group of connected pixels of a particular map class
+    2. then determine the relative border to that object of other mapping classes
+    3. if some conditions are met (e.g. if class A 100% surrounded by class B, then assign that obejct to class B)
+*/
 
 Map.centerObject(map_centre, 11)
 
+// A crude example of this is to find small objects, and replace with smoothed raster underneath
+var smooth_map = map_classification
+                    .focal_mode({
+                      radius: 2, kernelType: 'octagon', units: 'pixels', iterations: 3
+                    })
+                    .mask(map_classification.gte(1))
 
-Export.image.toAsset({
-    image: map_classification,
-    description: 'reef_map_eg',
-    assetId: 'reef_map_eg',
-    region: getout,
-    scale: 10,
-    maxPixels: 1e13
-  })
+var crude_object_smooth = map_classification
+                             .mask(map_classification.connectedPixelCount(50, false)
+                             .gte(vars.small_object_filter))
+                             .unmask(smooth_map)
+
+
+// a colour palette to make it a bit nicer to look at (also gives the raster value keys)
+var geo_pal = {
+  palette: [  // the benthic classificaiton palette (NB in raster class value order)
+    '238b45', // 1 =  Land
+    '08306b', // 2 =  Deep
+    'ffffff', // 3 =  place-holder
+    'ffffff', // 4 =  place-holder
+    'ffffff', // 5 =  place-holder
+    'ffffff', // 6 =  place-holder
+    'ffffff', // 7 =  place-holder
+    'ffffff', // 8 =  place-holder
+    'ffffff', // 9 =  place-holder
+    'ffffff', // 10 = place-holder
+    '9ecae1', // 11 = Shallow Lagoon
+    '2171b5',  // 12 = Deep lagoon
+    'ffffd4', // 13 = Inner Reef Flat
+    'fe9929', // 14 = Outer Reef Flat
+    '993404', // 15 = Reef Rim
+    'ffffff', // 16 = place-holder
+    'ffffff', // 17 = place-holder
+    'ffffff', // 18 = place-holder
+    'ffffff', // 19 = place-holder
+    'ffffff', // 20 = place-holder
+    '9e9ac8', // 21 = Slope Sheltered
+    '807dba', // 22 = Slope Exposed
+    'bdbdbd', // 23 = Plateau
+    '02818a', // 24 = Open Complex Lagoon
+    'd9d9d9', // 25 = Patch Reef
+    '0570b0', // 26 = Small Reef
+    'ffffff', // 27 = place-holder
+    'ffffff', // 28 = place-holder
+    'ffffff', // 29 = place-holder
+    'ffffff'  // 30 = place-holder
+  ],
+  min: 1, max: 30
+}
+
+Map.addLayer(map_classification, geo_pal, 'Map classification', true)
