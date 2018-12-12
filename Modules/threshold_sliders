@@ -19,7 +19,7 @@ var add_depth = function(thresh_dat) {
 }
 
 // waves
-var add_waves = function(threshdat) {
+var add_waves = function(thresh_dat) {
   var waves_slider = ui.Slider({
       min: 0, max: 4, step: 0.1
   })
@@ -33,7 +33,7 @@ var add_waves = function(threshdat) {
 }
 
 // slope
-var add_slope = function(threshdat) {
+var add_slope = function(thresh_dat) {
   var slope_slider = ui.Slider({
       min: 0, max: 9, step: 0.1
   })
@@ -47,7 +47,7 @@ var add_slope = function(threshdat) {
 }
 
 // b1
-var add_b1 = function(threshdat) {
+var add_b1 = function(thresh_dat) {
   var b1_slider = ui.Slider({
       min: 500, max: 2500, step: 10
   })
@@ -61,7 +61,7 @@ var add_b1 = function(threshdat) {
 }
 
 // b2
-var add_b2 = function(threshdat) {
+var add_b2 = function(thresh_dat) {
   var b2_slider = ui.Slider({
       min: 500, max: 2300, step: 10
   })
@@ -75,7 +75,7 @@ var add_b2 = function(threshdat) {
 }
 
 // b3
-var add_b3 = function(threshdat) {
+var add_b3 = function(thresh_dat) {
   var b3_slider = ui.Slider({
       min: 250, max: 2800, step: 10
   })
@@ -89,7 +89,7 @@ var add_b3 = function(threshdat) {
 }
 
 // b4
-var add_b4 = function(threshdat) {
+var add_b4 = function(thresh_dat) {
   var b4_slider = ui.Slider({
       min: 50, max: 1700, step: 10
   })
@@ -103,7 +103,7 @@ var add_b4 = function(threshdat) {
 }
 
 // b5
-var add_b5 = function(threshdat) {
+var add_b5 = function(thresh_dat) {
   var b5_slider = ui.Slider({
       min: 0, max: 150, step: 1
   })
@@ -117,7 +117,7 @@ var add_b5 = function(threshdat) {
 }
 
 // depth sd
-var add_depthsd = function(threshdat) {
+var add_depthsd = function(thresh_dat) {
   var depthsd_slider = ui.Slider({
       min: 0, max: 10, step: 0.1
   })
@@ -131,7 +131,7 @@ var add_depthsd = function(threshdat) {
 }
 
 // red sd
-var add_redsd = function(threshdat) {
+var add_redsd = function(thresh_dat) {
   var redsd_slider = ui.Slider({
       min: 0, max: 150, step: 5
   })
@@ -145,7 +145,7 @@ var add_redsd = function(threshdat) {
 }
 
 // NDWI
-var add_ndwi = function(threshdat) {
+var add_ndwi = function(thresh_dat) {
   var ndwi_slider = ui.Slider({
       min: 0, max: 1, step: 0.01
   })
@@ -159,7 +159,7 @@ var add_ndwi = function(threshdat) {
 }
 
 // depth glcm
-var add_idm = function(threshdat) {
+var add_idm = function(thresh_dat) {
   var depthidm_slider = ui.Slider({
       min: 0, max: 1.1, step: 0.005
   })
@@ -173,7 +173,7 @@ var add_idm = function(threshdat) {
 }
 
 // depth variance + depth
-var add_depth_depthvar = function(threshdat) {
+var add_depth_depthvar = function(thresh_dat) {
   var depthvar_slider2 = ui.Slider({
       min: 0, max: 10, step: 0.1
   })
