@@ -4,7 +4,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     gbr_geo_map10 = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map10"),
     gbr_geo_map30 = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map30"),
     cancook_geo_map5 = ee.Image("users/mitchest/gbr_reefs/cairns_cook_dove_geo"),
-    cancook_geo_map5_seg = ee.Image("users/mitchest/gbr_reefs/cairns_cook_dove_geo-seg");
+    cancook_geo_map5_seg = ee.Image("users/mitchest/gbr_reefs/cairns_cook_dove_geo-seg"),
+    cancook_geo_map5_both = ee.Image("users/mitchest/gbr_reefs/cairns_cook_dove_geo-both");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -23,6 +24,7 @@ Map.addLayer(gbr_geo_map30, map_palettes.geo, "Sentinel-2 GBR-geo30 (rough - no 
 //Carins to Cooktown
 Map.addLayer(cancook_geo_map5, map_palettes.geo, "Dove v1 Carins-Cook geo-5m", false)
 Map.addLayer(cancook_geo_map5_seg, map_palettes.geo, "Dove v1 Carins-Cook geo-5m (segmentation)", false)
+Map.addLayer(cancook_geo_map5_both, map_palettes.geo, "Dove v1 Carins-Cook geo-5m (pix + seg)", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
