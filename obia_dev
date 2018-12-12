@@ -17,14 +17,33 @@ Map.centerObject(map_centre, 12)
 // A crude example of this is to find small objects, and replace with smoothed raster underneath
 var smooth_map = map_classification
                     .focal_mode({
-                      radius: 2, kernelType: 'octagon', units: 'pixels', iterations: 3
+                      radius: 5, kernelType: 'octagon', units: 'pixels', iterations: 3
                     })
                     .mask(map_classification.gte(1))
 
-var crude_object_smooth = map_classification
-                             .mask(map_classification.connectedPixelCount(50, false)
-                             .gte(50))
+var crude_object_removal = map_classification
+                             .mask(map_classification.connectedPixelCount(50, false).gte(50))
                              .unmask(smooth_map)
+
+
+/*
+Another option is to target specific classes, e.g.
+ - Target class 15 (reef rim, brown colour)
+ - Find objects of a certain size, and replace them with what's underneath
+
+BUT, this would get onerous, and sometimes small areas of that class are actually ok if they're
+not sourrounded by particular classes (e.g. class 13/14; orange/light orange)
+*/
+var very_smooth_map = map_classification.mask(map_classification.neq(15))
+                         .focal_mode({
+                           radius: 10, kernelType: 'octagon', units: 'pixels', iterations: 5
+                          })
+
+var target_class_15 = map_classification
+                         .mask(map_classification.eq(15).connectedPixelCount(50, false)
+                         .gte(50))
+                         .unmask(smooth_map)
+
 
 
 // a colour palette to make it a bit nicer to look at (also gives the raster value keys)
@@ -65,4 +84,4 @@ var geo_pal = {
 }
 
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
-Map.addLayer(crude_object_smooth, geo_pal, 'Crude map smooth', true)
+Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
