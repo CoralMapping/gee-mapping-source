@@ -200,4 +200,16 @@ var add_depth_depthvar = function(threshdat) {
 
 exports = {
   add_depth : add_depth
+  add_waves : add_waves,
+  add_slope : add_slope,
+  add_b1 : add_b1,
+  add_b2 : add_b2,
+  add_b3 : add_b3,
+  add_b4 : add_b4,
+  add_b5 : add_b5,
+  add_depthsd : add_depthsd,
+  add_redsd : add_redsd,
+  add_ndwi : add_ndwi,
+  add_idm : add_idm,
+  add_depth_depthvar : add_depth_depthvar
 }
