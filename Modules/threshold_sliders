@@ -178,7 +178,7 @@ var add_depth_depthvar = function(threshdat) {
       min: 0, max: 10, step: 0.1
   })
   var depth_slider2 = ui.Slider({
-      min: -15, max: 1, step: 0.1, value: -15
+      min: -1, max: 20, step: 0.1, value: 15
   })
   var depth_depthVar_threshold = ui.Map.Layer(ee.Image(255).updateMask(thresh_dat.select('depth')), red_pal, 'depthVar + depth threshold', false)
   Map.add(depth_depthVar_threshold)
@@ -192,7 +192,7 @@ var add_depth_depthvar = function(threshdat) {
   depth_slider2.onChange(function(value) {
     depth_value = value
     var thresholded = ee.Image(255).updateMask(thresh_dat.select('depth_stdDev').gte(depthVar_value)
-                                          .and(thresh_dat.select('depth').gte(depth_value)))
+                                          .and(thresh_dat.select('depth').lte(depth_value)))
     depth_depthVar_threshold.setEeObject(thresholded)
   })
   print("depthVar + depth: depthVar", depthvar_slider2); print("depthVar + depth: depth", depth_slider2)
