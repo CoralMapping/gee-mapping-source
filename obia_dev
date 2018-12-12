@@ -22,8 +22,8 @@ var smooth_map = map_classification
                     .mask(map_classification.gte(1))
 
 var crude_object_removal = map_classification
-                             .mask(map_classification.connectedPixelCount(50, false).gte(50))
-                             .unmask(smooth_map)
+                              .updateMask(map_classification.connectedPixelCount(50, false).gte(50))
+                              .unmask(smooth_map)
 
 
 /*
@@ -37,12 +37,12 @@ not sourrounded by particular classes (e.g. class 13/14; orange/light orange)
 var very_smooth_map = map_classification.mask(map_classification.neq(15))
                          .focal_mode({
                            radius: 10, kernelType: 'octagon', units: 'pixels', iterations: 5
-                          })
+                         })
+                         .mask(map_classification.gte(1))
 
 var target_class_15 = map_classification
-                         .mask(map_classification.eq(15).connectedPixelCount(50, false)
-                         .gte(50))
-                         .unmask(smooth_map)
+                         .mask(map_classification.eq(15).connectedPixelCount(300, false).lte(300))
+                         //.unmask(smooth_map)
 
 
 
@@ -85,3 +85,4 @@ var geo_pal = {
 
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
+Map.addLayer(target_class_15, geo_pal, 'Remove small class 15 objects', false)
