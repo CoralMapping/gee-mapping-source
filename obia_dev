@@ -76,7 +76,10 @@ var border_pixels = map_classification.reduceNeighborhood({
   reducer: ee.Reducer.countDistinct(),
   kernel: ee.Kernel.square(1)
 })
-Map.addLayer(border_pixels)
+
+var neighbour_pixels = map_classification.rename('classes').addBands(border_pixels)
+                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 1000)
+Map.addLayer(neighbour_pixels)
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
