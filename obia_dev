@@ -101,3 +101,4 @@ var geo_pal = {
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
 Map.addLayer(target_class_15, geo_pal, 'Remove small class 15 objects', false)
+Map.addLayer(target_class_14, geo_pal, 'Remove small class 14 & 15 objects', false)
