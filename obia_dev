@@ -72,7 +72,8 @@ var target_class_14 = target_class_15
                          .unmask(smooth_map_14)
 
 
-var unique_neighbours = map_classification.reduceConnectedComponents({reducer: ee.Reducer.countDistinct(), maxSize: 1000}).aside(Map.addLayer)
+var unique_neighbours = map_classification.reduceConnectedComponents({reducer: ee.Reducer.countDistinct(), maxSize: 1000})
+Map.addLayer(unique_neighbours)
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
