@@ -57,7 +57,7 @@ var target_class_15 = map_classification
                          .updateMask(map_classification.gt(0)
                                         .subtract(map_classification.eq(15).selfMask()
                                                     .connectedPixelCount(300, false).lt(300).unmask(0)
-                                                  ) // clunky, sure htere's a simpler way...
+                                                  ) // clunky, sure there's a simpler way...
                                      )
                          .unmask(smooth_map_15)
                          
@@ -65,7 +65,7 @@ var target_class_14 = target_class_15
                         .updateMask(map_classification.gt(0)
                                         .subtract(map_classification.eq(14).selfMask()
                                                     .connectedPixelCount(300, false).lt(300).unmask(0)
-                                                  ) // clunky, sure htere's a simpler way...
+                                                  ) // clunky, sure there's a simpler way...
                                      )
                          .unmask(smooth_map_14)
 
