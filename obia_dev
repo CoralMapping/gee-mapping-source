@@ -104,7 +104,7 @@ var border_pixels2 = border_compl_15.reduceNeighborhood({
 })
 
 var neighbour_pixels2 = border_compl_15.rename('classes').addBands(border_pixels2)
-                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 2000)
+                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 500)
 
 var border_compl_14 = border_compl_15
                          .updateMask(map_classification.gt(0)
