@@ -42,12 +42,12 @@ and sometimes small areas of a class are actually ok if they're not sourrounded 
 */
 var smooth_map_15 = map_classification.mask(map_classification.neq(15))
                          .focal_mode({
-                           radius: 20, kernelType: 'octagon', units: 'pixels', iterations: 1
+                           radius: 20, kernelType: 'circle', units: 'pixels', iterations: 1
                          })
                          .mask(map_classification.gte(1))
 var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          .focal_mode({
-                           radius: 20, kernelType: 'octagon', units: 'pixels', iterations: 1
+                           radius: 20, kernelType: 'circle', units: 'pixels', iterations: 1
                          })
                          .mask(map_classification.gte(1))
 
