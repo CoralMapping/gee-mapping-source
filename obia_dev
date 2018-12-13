@@ -79,6 +79,7 @@ This approach is at least less reliant on size, but still ignores class-based lo
 and probably needs to have sequential reductions for the complexity to make sense...?
 */
 
+// for class 15
 var border_pixels = map_classification.reduceNeighborhood({
   reducer: ee.Reducer.countDistinct(),
   kernel: ee.Kernel.square(1)
@@ -95,11 +96,20 @@ var border_compl_15 = map_classification
                                          )
                                      )
                          .unmask(smooth_map_15)
-                         
+
+// for class 14
+border_pixels = border_compl_15.reduceNeighborhood({
+  reducer: ee.Reducer.countDistinct(),
+  kernel: ee.Kernel.square(1)
+})
+
+neighbour_pixels = border_compl_15.rename('classes').addBands(border_pixels)
+                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 2000)
+
 var border_compl_14 = border_compl_15
                          .updateMask(map_classification.gt(0)
                                         .subtract(
-                                          map_classification.eq(14).and(neighbour_pixels.lte(2))
+                                          map_classification.eq(14).and(neighbour_pixels.lte(3))
                                           .unmask(0)
                                          )
                                      )
