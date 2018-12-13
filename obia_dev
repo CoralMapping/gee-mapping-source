@@ -74,7 +74,7 @@ var target_class_14 = target_class_15
 
 var unique_neighbours = map_classification.reduceConnectedComponents({
   reducer: ee.Reducer.countDistinct(),
-  labelBand: 'classification',
+  labelBand: null,
   maxSize: 1000
 })
 Map.addLayer(unique_neighbours)
