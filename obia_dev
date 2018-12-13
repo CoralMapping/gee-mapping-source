@@ -32,8 +32,8 @@ var crude_object_removal = map_classification
 
 /*
 Another option is to target specific classes, e.g.
- - Target class 15 (reef rim, brown colour)
- - Find objects of a certain size, and replace them with what's underneath
+ - Target class 15 (reef rim, brown colour) and 14 (outer reef flat, orange)
+ - Find objects of a certain size, and replace them with what's underneath (that's not the target class)
 
 BUT, this might get onerous, and sequentially doing this may not always make sense,
 and sometimes quite large areas can be wrong and need re-assigning
@@ -68,6 +68,7 @@ var target_class_14 = target_class_15
                                                   ) // clunky, sure there's a simpler way...
                                      )
                          .unmask(smooth_map_14)
+
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
