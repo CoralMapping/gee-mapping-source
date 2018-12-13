@@ -75,7 +75,8 @@ var limit_size_14 = limit_size_15
 /*
 Another option that similarly targets classes, but this based on border complexity rather than size
 
-This approach is at least less reliant on size, but still ignores class-based logic
+This approach is at least less reliant on size, but still ignores class-based logic,
+and probably needs to have sequential reductions for the complexity to make sense...?
 */
 
 var border_pixels = map_classification.reduceNeighborhood({
@@ -84,7 +85,7 @@ var border_pixels = map_classification.reduceNeighborhood({
 })
 
 var neighbour_pixels = map_classification.rename('classes').addBands(border_pixels)
-                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 2000).aside(Map.addLayer)
+                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 2000)
 
 var border_compl_15 = map_classification
                          .updateMask(map_classification.gt(0)
