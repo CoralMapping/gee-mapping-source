@@ -55,11 +55,11 @@ var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          .mask(map_classification.gte(1))
 
 var target_class_15 = map_classification
-                         .mask(map_classification.eq(15).and(object_sizes.gte(300)))
+                         .updateMask(map_classification.neq(15).and(object_sizes.gte(300)))
                          .unmask(smooth_map_15)
                          
 var target_class_14 = target_class_15
-                         .updateMask(target_class_15.eq(14).and(object_sizes.gte(200)))
+                         .updateMask(target_class_15.neq(14).and(object_sizes.gte(200)))
                          .unmask(smooth_map_14)
 
 
@@ -103,5 +103,5 @@ var geo_pal = {
 
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
-Map.addLayer(target_class_15, geo_pal, 'Remove small class 15 objects', false)
-Map.addLayer(target_class_14, geo_pal, 'Remove small class 14 & 15 objects', false)
+Map.addLayer(target_class_15, geo_pal, 'Removed small class 15 objects', false)
+Map.addLayer(target_class_14, geo_pal, 'Removed small class 14 & 15 objects', false)
