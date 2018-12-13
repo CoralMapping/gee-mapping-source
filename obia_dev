@@ -14,7 +14,10 @@ The goal here is to develop a method to reclassify objects based on their neighb
 
 Map.centerObject(map_centre, 12)
 
-// A crude example of this is to find small objects, and replace with smoothed raster underneath
+/*
+A crude example of this is to find small objects, and replace with smoothed raster underneath,
+but there's lots of classes that a quite small or thin, that shouldn't be removed
+*/
 var smooth_map = map_classification
                     .focal_mode({
                       radius: 10, kernelType: 'octagon', units: 'pixels', iterations: 1
@@ -31,10 +34,18 @@ Another option is to target specific classes, e.g.
  - Target class 15 (reef rim, brown colour)
  - Find objects of a certain size, and replace them with what's underneath
 
-BUT, this would get onerous, and sometimes small areas of that class are actually ok if they're
-not sourrounded by particular classes (e.g. class 13/14; orange/light orange)
+BUT, this might get onerous, and sequentially doing this may not always make sense,
+and sometimes quite large areas can be wrong and need re-assigning
+and sometimes small areas of a class are actually ok if they're not sourrounded by particular classes,
+  e.g. small areas of class 15 surrounded by class 13/14 (orange/pale yellow) is not OK,
+  but it is OK if it borders class 21/22 (purples)
 */
-var very_smooth_map = map_classification.mask(map_classification.neq(15))
+var smooth_map_15 = map_classification.mask(map_classification.neq(15))
+                         .focal_mode({
+                           radius: 20, kernelType: 'octagon', units: 'pixels', iterations: 1
+                         })
+                         .mask(map_classification.gte(1))
+var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          .focal_mode({
                            radius: 20, kernelType: 'octagon', units: 'pixels', iterations: 1
                          })
@@ -42,7 +53,11 @@ var very_smooth_map = map_classification.mask(map_classification.neq(15))
 
 var target_class_15 = map_classification
                          .updateMask(map_classification.eq(15).connectedPixelCount(300, false).gte(300))
-                         .unmask(very_smooth_map)
+                         .unmask(smooth_map_15)
+                         
+var target_class_14 = target_class_15
+                         .updateMask(target_class_15.eq(14).connectedPixelCount(200, false).gte(200))
+                         .unmask(smooth_map_14)                        
 
 
 
@@ -60,7 +75,7 @@ var geo_pal = {
     'ffffff', // 9 =  place-holder
     'ffffff', // 10 = place-holder
     '9ecae1', // 11 = Shallow Lagoon
-    '2171b5',  // 12 = Deep lagoon
+    '2171b5', // 12 = Deep lagoon
     'ffffd4', // 13 = Inner Reef Flat
     'fe9929', // 14 = Outer Reef Flat
     '993404', // 15 = Reef Rim
