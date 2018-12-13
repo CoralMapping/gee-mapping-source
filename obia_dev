@@ -9,7 +9,9 @@ var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.
 The goal here is to develop a method to reclassify objects based on their neighbouring map classes, i.e.
     1. define an object as a group of connected pixels of a particular map class
     2. then determine the relative border to that object for the surrounding mapping classes
-    3. if some conditions are met (e.g. if object of class A is 100% surrounded by class B, then assign that object to class B)
+    3. if some conditions are met, reassign that object
+          e.g. if object of class A is 100% surrounded by class B, then assign that object to class B
+          e.g. if object of class C is >70% surrounded by class D, then assign that object to class C
 */
 
 Map.centerObject(map_centre, 12)
