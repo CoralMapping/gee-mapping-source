@@ -158,9 +158,9 @@ var geo_pal = {
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
 Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
-Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
-Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
-Map.addLayer(border_compl_14, geo_pal, 'Removed class 15 & 14 w/ complex borders', false)
+Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', true)
+Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', true)
+Map.addLayer(border_compl_14, geo_pal, 'Removed class 14 & 15 w/ complex borders', false)
 
 
 
