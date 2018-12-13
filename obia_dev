@@ -40,7 +40,7 @@ and sometimes small areas of a class are actually ok if they're not sourrounded 
   e.g. small areas of class 15 surrounded by class 13/14 (orange/pale yellow) is not OK,
   but it is OK if it borders class 21/22 (purples)
 */
-var object_sizes = map_classification.connectedPixelCount(300, false)
+var object_sizes = map_classification.connectedPixelCount(300, false) // to avoid re-calculated this
 
 var smooth_map_15 = map_classification.mask(map_classification.neq(15))
                          .focal_mode({
