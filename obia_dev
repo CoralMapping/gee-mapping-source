@@ -55,7 +55,7 @@ var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          .mask(map_classification.gte(1))
 
 var target_class_15 = map_classification
-                         .updateMask(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lte(299))
+                         .updateMask(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300))
                          //.unmask(smooth_map_15)
                          
 var target_class_14 = target_class_15
