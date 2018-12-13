@@ -72,9 +72,11 @@ var target_class_14 = target_class_15
                          .unmask(smooth_map_14)
 
 
-var unique_neighbours = map_classification.addBands(map_classification)
-                          .reduceConnectedComponents(ee.Reducer.countDistinct(), 'classification', 1000)
-Map.addLayer(unique_neighbours)
+var border_pixels = map_classification.reduceNeighborhood({
+  reducer: ee.Reducer.distinct,
+  kernel: ee.Kernel.square(1)
+})
+Map.addLayer(border_pixels)
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
