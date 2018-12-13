@@ -55,7 +55,7 @@ var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          })
                          .mask(map_classification.gte(1))
 
-var target_class_15 = map_classification
+var limit_size_15 = map_classification
                          .updateMask(map_classification.gt(0)
                                         .subtract(map_classification.eq(15).selfMask()
                                                     .connectedPixelCount(300, false).lt(300).unmask(0)
@@ -63,7 +63,7 @@ var target_class_15 = map_classification
                                      )
                          .unmask(smooth_map_15)
                          
-var target_class_14 = target_class_15
+var limit_size_14 = limit_size_15
                         .updateMask(map_classification.gt(0)
                                         .subtract(map_classification.eq(14).selfMask()
                                                     .connectedPixelCount(300, false).lt(300).unmask(0)
@@ -72,14 +72,32 @@ var target_class_14 = target_class_15
                          .unmask(smooth_map_14)
 
 
+/*
+Another option that similarly targets classes, but this based on border complexity rather than size
+
+This approach is at least less reliant on size, but still ignores class-based logic
+*/
+
 var border_pixels = map_classification.reduceNeighborhood({
   reducer: ee.Reducer.countDistinct(),
   kernel: ee.Kernel.square(1)
 })
 
 var neighbour_pixels = map_classification.rename('classes').addBands(border_pixels)
-                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 1000)
-Map.addLayer(neighbour_pixels)
+                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 2000)
+
+var border_compl_15 = map_classification
+                         .updateMask(map_classification.gt(0)
+                                        .subtract(neighbour_pixels.lte(3).unmask(0))
+                                     )
+                         .unmask(smooth_map_15)
+                         
+var border_compl_14 = border_compl_15
+                         .updateMask(map_classification.gt(0)
+                                        .subtract(neighbour_pixels.lte(3).unmask(0))
+                                     )
+                         .unmask(smooth_map_15)
+
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
@@ -122,5 +140,10 @@ var geo_pal = {
 
 Map.addLayer(map_classification, geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
-Map.addLayer(target_class_15, geo_pal, 'Removed small class 15 objects', false)
-Map.addLayer(target_class_14, geo_pal, 'Removed small class 14 & 15 objects', false)
+Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
+Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
+Map.addLayer(border_compl_15, geo_pal, 'Removed small class 14 & 15 objects', false)
+Map.addLayer(border_compl_14, geo_pal, 'Removed small class 14 & 15 objects', false)
+
+
+
