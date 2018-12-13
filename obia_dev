@@ -53,13 +53,13 @@ var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          })
                          .mask(map_classification.gte(1))
 
-map_classification.gt(0).subtract(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300).unmask(0)).aside(Map.addLayer)
-
 var target_class_15 = map_classification
                          .updateMask(map_classification.gt(0)
-                                      .subtract(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300))
-                          )
-                         //.unmask(smooth_map_15)
+                                        .subtract(map_classification.eq(15).selfMask()
+                                                    .connectedPixelCount(300, false).lt(300).unmask(0)
+                                                  )
+                                     )
+                         .unmask(smooth_map_15)
                          
 // var target_class_14 = target_class_15
 //                         .updateMask(target_class_15.neq(14).and(object_sizes.gte(200)))
