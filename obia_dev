@@ -96,7 +96,7 @@ var border_compl_14 = border_compl_15
                          .updateMask(map_classification.gt(0)
                                         .subtract(neighbour_pixels.lte(3).unmask(0))
                                      )
-                         .unmask(smooth_map_15)
+                         .unmask(smooth_map_14)
 
 
 /*
