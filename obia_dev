@@ -100,21 +100,12 @@ var border_compl_15 = map_classification
                                      )
                          .unmask(smooth_map_15)
 
-// for class 14
-var border_pixels2 = border_compl_15.reduceNeighborhood({
-  reducer: ee.Reducer.countDistinct(),
-  kernel: ee.Kernel.square(1)
-})
-
-var neighbour_pixels2 = border_compl_15.rename('classes').addBands(border_pixels2)
-                            .reduceConnectedComponents(ee.Reducer.max(), 'classes', 500)
-
-var border_compl_14 = border_compl_15
-                         .updateMask(map_classification.gt(0)
-                                        .subtract(
-                                          map_classification.eq(14).and(neighbour_pixels2.lte(3))
-                                          .unmask(0)
-                                         )
+// now filter out small class 14's with this input
+var complex15_size14 = border_compl_15
+                        .updateMask(map_classification.gt(0)
+                                        .subtract(border_compl_15.eq(14).selfMask()
+                                                    .connectedPixelCount(300, false).lt(300).unmask(0)
+                                                  )
                                      )
                          .unmask(smooth_map_14)
 
