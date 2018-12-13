@@ -17,7 +17,7 @@ Map.centerObject(map_centre, 12)
 // A crude example of this is to find small objects, and replace with smoothed raster underneath
 var smooth_map = map_classification
                     .focal_mode({
-                      radius: 5, kernelType: 'octagon', units: 'pixels', iterations: 3
+                      radius: 10, kernelType: 'octagon', units: 'pixels', iterations: 1
                     })
                     .mask(map_classification.gte(1))
 
@@ -36,7 +36,7 @@ not sourrounded by particular classes (e.g. class 13/14; orange/light orange)
 */
 var very_smooth_map = map_classification.mask(map_classification.neq(15))
                          .focal_mode({
-                           radius: 10, kernelType: 'octagon', units: 'pixels', iterations: 5
+                           radius: 20, kernelType: 'octagon', units: 'pixels', iterations: 1
                          })
                          .mask(map_classification.gte(1))
 
