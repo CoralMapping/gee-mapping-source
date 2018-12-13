@@ -88,7 +88,10 @@ var neighbour_pixels = map_classification.rename('classes').addBands(border_pixe
 
 var border_compl_15 = map_classification
                          .updateMask(map_classification.gt(0)
-                                        .subtract(neighbour_pixels.lte(3).unmask(0))
+                                        .subtract(
+                                          map_classification.eq(15).and(neighbour_pixels.lte(3))
+                                          .unmask(0)
+                                         )
                                      )
                          .unmask(smooth_map_15)
                          
