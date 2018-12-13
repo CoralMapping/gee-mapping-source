@@ -59,7 +59,7 @@ var target_class_15 = map_classification
                          
 var target_class_14 = target_class_15
                          .updateMask(object_sizes.gte(200))
-                         .unmask(smooth_map_14)        
+                         .unmask(smooth_map_14)
 
 
 
