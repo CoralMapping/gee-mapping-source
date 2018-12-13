@@ -73,7 +73,7 @@ var target_class_14 = target_class_15
 
 
 var border_pixels = map_classification.reduceNeighborhood({
-  reducer: ee.Reducer.distinct,
+  reducer: ee.Reducer.countDistinct(),
   kernel: ee.Kernel.square(1)
 })
 Map.addLayer(border_pixels)
