@@ -73,7 +73,10 @@ var limit_size_14 = limit_size_15
 
 
 /*
-Another option that similarly targets classes, but this based on border complexity rather than size
+Another option that similarly targets classes, but is based on border complexity rather than size
+  - Calculate distinct values in 1 pixel square kernel
+  - Calculate the max value within each class object
+  - Replace complex objects with smoothed map (that's not target class) underneath
 
 This approach is at least less reliant on size, but still ignores class-based logic,
 and probably needs to have sequential reductions for the complexity to make sense...?
