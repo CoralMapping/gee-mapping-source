@@ -98,7 +98,7 @@ var border_compl_15 = map_classification
 var border_compl_14 = border_compl_15
                          .updateMask(map_classification.gt(0)
                                         .subtract(
-                                          map_classification.eq(15).and(neighbour_pixels.lte(3))
+                                          map_classification.eq(14).and(neighbour_pixels.lte(3))
                                           .unmask(0)
                                          )
                                      )
