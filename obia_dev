@@ -156,5 +156,3 @@ Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', fals
 Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
 
-
-
