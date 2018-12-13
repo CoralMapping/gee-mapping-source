@@ -72,11 +72,7 @@ var target_class_14 = target_class_15
                          .unmask(smooth_map_14)
 
 
-var unique_neighbours = map_classification.reduceConnectedComponents({
-  reducer: ee.Reducer.countDistinct(),
-  labelBand: null,
-  maxSize: 1000
-})
+var unique_neighbours = map_classification.reduceConnectedComponents(ee.Reducer.countDistinct())
 Map.addLayer(unique_neighbours)
 
 /*
