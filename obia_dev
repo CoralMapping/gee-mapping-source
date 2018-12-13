@@ -42,6 +42,7 @@ and sometimes small areas of a class are actually ok if they're not sourrounded 
   but it is OK if it borders class 21/22 (purples)
 */
 var object_sizes = map_classification.connectedPixelCount(300, false) // to avoid re-calculated this
+map_classification.eq(15).selfMask().connectedPixelCount(300, false).gte(300).aside(Map.addLayer)
 
 var smooth_map_15 = map_classification.mask(map_classification.neq(15))
                          .focal_mode({
@@ -54,10 +55,9 @@ var smooth_map_14 = map_classification.mask(map_classification.neq(14))
                          })
                          .mask(map_classification.gte(1))
 
-var target_class_15 = map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300)
-// map_classification
-//                         .updateMask(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300))
-//                         //.unmask(smooth_map_15)
+var target_class_15 = map_classification
+                         .updateMask(map_classification.eq(15).selfMask().connectedPixelCount(300, false).lt(300))
+                         //.unmask(smooth_map_15)
                          
 var target_class_14 = target_class_15
                          .updateMask(target_class_15.neq(14).and(object_sizes.gte(200)))
