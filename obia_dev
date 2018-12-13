@@ -69,9 +69,9 @@ var target_class_14 = target_class_15
                                      )
                          .unmask(smooth_map_14)
 
-
-
-// a colour palette to make it a bit nicer to look at (also gives the raster value keys)
+/*
+Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
+*/
 var geo_pal = {
   palette: [  // the benthic classificaiton palette (NB in raster class value order)
     '238b45', // 1 =  Land
