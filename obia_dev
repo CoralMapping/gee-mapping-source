@@ -111,6 +111,13 @@ var complex15_size14 = border_compl_15
 
 
 /*
+Another option is to try to use the pertimeter pixels or something
+*/
+var minMax = map_classification.reduceNeighborhood(ee.Reducer.minMax(), ee.Kernel.square(1))
+var perimeterPixels = minMax.select(0).neq(minMax.select(1)).rename('perimeter')
+
+
+/*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
 */
 var geo_pal = {
