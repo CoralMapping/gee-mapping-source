@@ -124,10 +124,19 @@ var map_fc = map_classification.reduceToVectors({
 
 print(map_fc.first())
 
-/*var set_neighbour_properties = function(f) {
-  var f_buff = f.buffer(10)
-  var f_case = vecto
-}*/
+var set_neighbour_properties = function(f) {
+  var diff = f.buffer(10).difference(f)
+  var diff_classes = map_classification.reduceRegion({
+    reducer: ee.Reducer.frequencyHistogram(),
+    geometry: diff,
+    scale: 10
+  }).get("histogram")
+  return(f.set(diff_classes))
+}
+
+var map_fc_neighbours = map_fc.map(set_neighbour_properties)
+
+print(map_fc_neightbours).first()
 
 
 
