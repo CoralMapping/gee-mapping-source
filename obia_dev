@@ -136,7 +136,7 @@ var set_neighbour_properties = function(f) {
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neightbours).first()
+print(map_fc_neighbours).first()
 
 
 
