@@ -135,7 +135,7 @@ var set_neighbour_properties = function(f) {
   )
   
   var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
-  var diff_percs = diff_classes.map(function(k,v){ee.Number(v).divide(diff_sum).multiply(100)})
+  var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100))})
   
   return(f.set('sum', diff_percs))
 }
