@@ -1,19 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.366909817391132]),
-    map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
-    little_square = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.7525829325657, -16.329077198343604],
-          [145.75241127118875, -16.33920826296877],
-          [145.7615522395115, -16.340320177109717],
-          [145.7612089167576, -16.329118382595755]]]),
-    vlittle_triangle = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[145.71284652300562, -16.399827009047048],
-          [145.71329721008658, -16.40250413759324],
-          [145.71428508572433, -16.401124063965955],
-          [145.71467140057098, -16.400516736866635],
-          [145.71483237076689, -16.40024394921444],
-          [145.7149075100649, -16.40003291529818],
-          [145.7127821292604, -16.39947695672435]]]);
+    map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -149,7 +136,7 @@ var set_neighbour_properties = function(f) {
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neighbours.filterBounds(vlittle_triangle))
+print(map_fc_neighbours.limit(10))
 
 
 
