@@ -134,14 +134,18 @@ var set_neighbour_properties = function(f) {
     }).get('classification')
   )
   
-  var diff_sum = diff_classes.toArray().arrayReduce(ee.Reducer.mean(), [0])
+  var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
+  
+  var diff_percs = diff_classes.map(function(k,v){e.Number(v).divide(diff_sum).multiply(100)})
+  
+  
   
   return(f.set('sum', diff_sum))
 }
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neighbours.limit(200))
+print(map_fc_neighbours.limit(10))
 
 
 
