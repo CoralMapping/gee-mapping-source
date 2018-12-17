@@ -130,7 +130,7 @@ var set_neighbour_properties = function(f) {
     map_classification.unmask(ee.Image(0)).reduceRegion({
       reducer: ee.Reducer.frequencyHistogram(),
       geometry: diff.geometry(),
-      scale: 10/2
+      scale: 10
     }).get('classification')
   )
   
