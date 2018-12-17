@@ -130,8 +130,8 @@ var set_neighbour_properties = function(f) {
     reducer: ee.Reducer.frequencyHistogram(),
     geometry: diff.geometry(),
     scale: 10
-  }).get("histogram")
-  return(f.set(diff_classes))
+  }).get("classification")
+  return(f.set(ee.Dictionary(diff_classes)))
 }
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
