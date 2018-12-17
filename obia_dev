@@ -128,7 +128,7 @@ var set_neighbour_properties = function(f) {
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
   var diff_classes = map_classification.reduceRegion({
     reducer: ee.Reducer.frequencyHistogram(),
-    geometry: diff,
+    geometry: diff.geometry(),
     scale: 10
   }).get("histogram")
   return(f.set(diff_classes))
