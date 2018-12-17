@@ -5,7 +5,13 @@ var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.
         [[[145.7525829325657, -16.329077198343604],
           [145.75241127118875, -16.33920826296877],
           [145.7615522395115, -16.340320177109717],
-          [145.7612089167576, -16.329118382595755]]]);
+          [145.7612089167576, -16.329118382595755]]]),
+    vlittle_triangle = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[145.756234361285, -16.336992957402217],
+          [145.75647039567832, -16.340534627979924],
+          [145.7590238586605, -16.337693060163808],
+          [145.75949592744712, -16.337178278965496],
+          [145.75616998826865, -16.33664290508109]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -141,7 +147,7 @@ var set_neighbour_properties = function(f) {
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neighbours.filterBounds(little_square))
+print(map_fc_neighbours.filterBounds(vlittle_triangle))
 
 
 
