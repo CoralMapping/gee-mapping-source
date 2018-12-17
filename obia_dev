@@ -126,17 +126,24 @@ print(map_fc.first())
 
 var set_neighbour_properties = function(f) {
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
-  var diff_classes = map_classification.reduceRegion({
-    reducer: ee.Reducer.frequencyHistogram(),
-    geometry: diff.geometry(),
-    scale: 10
-  }).get("classification")
-  return(f.set(ee.Dictionary(diff_classes)))
+  var diff_classes = ee.Dictionary(
+    map_classification.reduceRegion({
+      reducer: ee.Reducer.frequencyHistogram(),
+      geometry: diff.geometry(),
+      scale: 10
+    }).get('classification')
+  )
+  var diff_sums = ee.Array(diff_classes.values()).reduce(ee.Reducer.sum(),[0]).get([0])
+  var class_percs = diff_classes.map(function(v) {
+    return ee.Number(v).divide(sum).multiply(100)
+    })
+  
+  return(f.set(class_percs))
 }
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neighbours.limit(10))
+print(map_fc_neighbours.limit(200))
 
 
 
