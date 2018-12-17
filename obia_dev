@@ -134,8 +134,8 @@ var set_neighbour_properties = function(f) {
     }).get('classification')
   )
   var diff_sums = ee.Array(diff_classes.values()).reduce(ee.Reducer.sum(),[0]).get([0])
-  var class_percs = diff_classes.map(function(v) {
-    return ee.Number(v).divide(sum).multiply(100)
+  var class_percs = diff_classes.map(function(i) {
+    return ee.Number(i).divide(diff_sums).multiply(100)
     })
   
   return(f.set(class_percs))
