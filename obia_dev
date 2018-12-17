@@ -127,7 +127,7 @@ print(map_fc.first())
 var set_neighbour_properties = function(f) {
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
   var diff_classes = ee.Dictionary(
-    map_classification.reduceRegion({
+    map_classification.unmask(ee.Image(0)).reduceRegion({
       reducer: ee.Reducer.frequencyHistogram(),
       geometry: diff.geometry(),
       scale: 10
