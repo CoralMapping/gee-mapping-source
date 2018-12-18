@@ -111,7 +111,11 @@ var complex15_size14 = border_compl_15
 
 
 /*
-Another option is to vectorise, buffer, reduce classes within buffer to properties, make raster layers from properties
+Another option is to vectorise, buffer by ~1px, take the .difference() to get just the new buffer area,
+  reduce the classes within that new area with .frequencyHistogram(), convert to % border,
+  then make raster layers from properties
+  
+  This is the best solution in terms of the info - but it appears to be horribly slow...
 */
 
 var map_fc = map_classification.reduceToVectors({
