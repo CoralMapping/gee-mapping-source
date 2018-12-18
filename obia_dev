@@ -127,7 +127,7 @@ var map_fc = map_classification.reduceToVectors({
   tileScale: 1
 })
 
-print(map_fc.first())
+print(map_fc.limit(200))
 
 var set_neighbour_properties = function(f) {
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
