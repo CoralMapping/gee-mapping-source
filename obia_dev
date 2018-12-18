@@ -149,7 +149,7 @@ var set_neighbour_properties = function(f) {
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
-print("e.g. Border % for first feature", map_fc_neighbours.first())
+print("e.g. Border % for first feature", ee.Dictionary(map_fc_neighbours.first().get(['0','1','2','3'])))
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
 
