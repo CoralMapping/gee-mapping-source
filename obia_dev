@@ -150,7 +150,7 @@ var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
 
-
+// Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
