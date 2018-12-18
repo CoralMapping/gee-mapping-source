@@ -142,7 +142,7 @@ var set_neighbour_properties = function(f) {
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-print(map_fc_neighbours.limit(10))
+print(map_fc_neighbours.limit(200))
 
 
 
