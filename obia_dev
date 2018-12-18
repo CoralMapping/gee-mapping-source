@@ -149,6 +149,7 @@ var set_neighbour_properties = function(f) {
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
+print("Border % for first feature", map_fc_neighbours.first().get())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
 
