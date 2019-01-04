@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.366909817391132]),
+var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.73990507280234, -16.42257219756514]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
         [[[145.73817244749466, -16.428266781294006],
@@ -161,13 +161,16 @@ print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary(
 //print(map_fc_neighbours.filterBounds(test_area).size())
 //Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
 
-var object_clean = function(feature) {
+var object_clean = function(f) {
   // define ee objects for the classes
-  var class_num = ee.Number(feature.get('label').eq())
-  var nb_
+  var class_num = ee.Number(f.get('label').eq())
+  var nb_14 = ee.Number(f.get('14')) // ORF
+  var nb_13 = ee.Number(f.get('13')) // IRF
   
-  if (class_num.eq(15)) {
-    
+  if (class_num.eq(15)) { // RR
+    if (nb_14.gt(80)) {
+      return(f.set({out_class: 14}))
+    }
   }
 }
 
