@@ -156,12 +156,12 @@ var set_neighbour_properties = function(f) {
   var nb_13 = ee.Number(diff_percs.get('13')) // IRF
   
   // reef rim clean
-  if (class_num.eq(15)) { // RR
+  if (class_num.divide(15).eq(1)) { // RR
     if (nb_14.gt(80)) {
-      return(f.set({out_class: class_num}))
+      return(f.set({out_class: 14}))
     }
   } else {   // if no hits on class logic, keep same class
-    return(f.set({out_class: class_num}))
+    return(f.set({out_class: 0}))
   }
   
   //return(f.set(diff_percs))
