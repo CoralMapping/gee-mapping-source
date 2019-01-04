@@ -158,7 +158,7 @@ print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary(
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
 var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14").clip(test_area)
-print(neighbour_14.filterBounds(test_area).size())
+print(map_fc_neighbours.filterBounds(test_area).size())
 Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
 
 
