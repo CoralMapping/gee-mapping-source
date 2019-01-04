@@ -167,7 +167,7 @@ var set_neighbour_properties = function(f) {
   //return(f.set(diff_percs))
 }
 
-var map_fc_neighbours = map_fc.map(set_neighbour_properties)
+var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
