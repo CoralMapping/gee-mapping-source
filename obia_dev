@@ -19,7 +19,7 @@ The goal here is to develop a method to reclassify objects based on their neighb
           e.g. if object of class C is >70% surrounded by class D, then assign that object to class C
 */
 
-Map.centerObject(map_centre, 12)
+Map.centerObject(map_centre, 14) // zoom level 14 is ~10m/px
 
 /*
 A crude example of this is to find small objects, and replace with smoothed raster underneath,
@@ -161,11 +161,17 @@ print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary(
 //print(map_fc_neighbours.filterBounds(test_area).size())
 //Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
 
-/*var get_nb_14 = function(feature) {
-  if (ee.feature)
-}*/
+var object_clean = function(feature) {
+  // define ee objects for the classes
+  var class_num = ee.Number(feature.get('label').eq())
+  var nb_
+  
+  if (class_num.eq(15)) {
+    
+  }
+}
 
-print(map_fc_neighbours.first())
+print(map_fc_neighbours.first().get('label'))
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
