@@ -136,7 +136,9 @@ var map_fc = map_classification.reduceToVectors({
 //print(map_fc.size())
 
 var set_neighbour_properties = function(f) {
+  // make the 1px buffer
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
+  // reduce the classes in the buffer zone
   var diff_classes = ee.Dictionary(
     map_classification.unmask(ee.Image(0)).reduceRegion({
       reducer: ee.Reducer.frequencyHistogram(),
@@ -144,24 +146,41 @@ var set_neighbour_properties = function(f) {
       scale: 10
     }).get('classification')
   )
-  
+  // calculate the percentages
   var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
   var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100))})
   
-  return(f.set(diff_percs))
+  // define ee objects for the classes
+  var class_num = ee.Number(f.get('label').eq())
+  var nb_14 = ee.Number(diff_percs.get('14')) // ORF
+  var nb_13 = ee.Number(diff_percs.get('13')) // IRF
+  
+  // reef rim clean
+  if (class_num.eq(15)) { // RR
+    if (nb_14.gt(80)) {
+      return(f.set({out_class: 14}))
+    }
+  }
+  
+  // if no hits on class logic, keep same class
+  else {
+    return(f.set({out_class: class_num}))
+  }
+  
+  //return(f.set(diff_percs))
 }
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
 //print(map_fc_neighbours.limit(50))
-print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
+//print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
 //var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14").clip(test_area)
 //print(map_fc_neighbours.filterBounds(test_area).size())
 //Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
 
-var object_clean = function(f) {
+/*var object_clean = function(f) {
   // define ee objects for the classes
   var class_num = ee.Number(f.get('label').eq())
   var nb_14 = ee.Number(f.get('14')) // ORF
@@ -178,9 +197,8 @@ var object_clean = function(f) {
   else {
     return(f.set({out_class: class_num}))
   }
-}
+}*/
 
-print(map_fc_neighbours.first().get('label'))
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
