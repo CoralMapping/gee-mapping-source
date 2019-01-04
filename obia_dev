@@ -1,6 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.79071684038047, -16.366909817391132]),
-    map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg");
+    map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
+    test_area = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[145.73332301359574, -16.427690494146443],
+          [145.73332301359574, -16.434358855168767],
+          [145.74250689726273, -16.43444117918315],
+          [145.7424639819185, -16.427525840361803]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -152,7 +157,7 @@ var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
-var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14")
+var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14").clip(test_area)
 Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
 
 
