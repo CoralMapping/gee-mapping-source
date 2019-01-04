@@ -132,7 +132,7 @@ var map_fc = map_classification.reduceToVectors({
   tileScale: 1
 })
 
-//print(map_fc.limit(50))
+print(map_fc.limit(50))
 //print(map_fc.size())
 
 var set_neighbour_properties = function(f) {
