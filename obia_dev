@@ -161,7 +161,7 @@ var set_neighbour_properties = function(f) {
       return(f.set({out_class: 14}))
     }
   } else {   // if no hits on class logic, keep same class
-    return(f.set({out_class: 0}))
+    return(f.set({out_class: class_num}))
   }
   
   //return(f.set(diff_percs))
