@@ -148,12 +148,13 @@ var set_neighbour_properties = function(f) {
 
 var map_fc_neighbours = map_fc.map(set_neighbour_properties)
 
-var neighbour_14 = ee.Image(0).paint()
-
 //print(map_fc_neighbours.limit(50))
 print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
+var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14")
+Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
+
 
 /*
 Now display it - a colour palette to make it a bit nicer to look at (also gives the raster value keys)
