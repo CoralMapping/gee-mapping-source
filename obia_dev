@@ -157,7 +157,7 @@ var set_neighbour_properties = function(f) {
   
   // reef rim clean
   if (class_num == 15) { // RR
-    if (nb_14 > 80) {
+    if (nb_14 > 30) {
       return(f.set({out_class: 14}))
     }
   } else {   // if no hits on class logic, keep same class
