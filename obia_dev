@@ -160,10 +160,7 @@ var set_neighbour_properties = function(f) {
     if (nb_14.gt(80)) {
       return(f.set({out_class: class_num}))
     }
-  }
-  
-  // if no hits on class logic, keep same class
-  else {
+  } else {   // if no hits on class logic, keep same class
     return(f.set({out_class: class_num}))
   }
   
