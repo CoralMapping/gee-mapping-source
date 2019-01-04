@@ -132,7 +132,7 @@ var map_fc = map_classification.reduceToVectors({
   tileScale: 1
 })
 
-print(map_fc.limit(50))
+print(map_fc.limit(1))
 //print(map_fc.size())
 
 var set_neighbour_properties = function(f) {
@@ -151,7 +151,7 @@ var set_neighbour_properties = function(f) {
   var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100))})
   
   // define ee objects for the classes
-  var class_num = ee.Number(f.get('label').eq())
+  var class_num = ee.Number(f.get('label'))
   var nb_14 = ee.Number(diff_percs.get('14')) // ORF
   var nb_13 = ee.Number(diff_percs.get('13')) // IRF
   
@@ -182,7 +182,7 @@ print(map_fc_neighbours.limit(50))
 
 /*var object_clean = function(f) {
   // define ee objects for the classes
-  var class_num = ee.Number(f.get('label').eq())
+  var class_num = ee.Number(f.get('label')
   var nb_14 = ee.Number(f.get('14')) // ORF
   var nb_13 = ee.Number(f.get('13')) // IRF
   
