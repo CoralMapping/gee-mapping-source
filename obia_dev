@@ -173,7 +173,8 @@ print(map_fc_neighbours.limit(50))
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to image
-var clean_map = ee.Image().byte().paint(map_fc_neighbours, 'out_class')
+var clean_map = ee.Image().byte().paint(map_fc_neighbours, 'out_class').rename('classification')
+print(clean_map)
 Map.addLayer(clean_map, geo_pal, 'cleaned map', false)
 
 
