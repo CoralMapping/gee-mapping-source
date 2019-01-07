@@ -170,6 +170,7 @@ var set_neighbour_properties = function(f) {
 var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
+Map.addLayer(map_fc_neighbours, {}, "Neighbour features", true)
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to image
@@ -243,5 +244,5 @@ Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
 Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
 Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
-Map.addLayer(clean_map, geo_pal, 'cleaned map', false)
+Map.addLayer(clean_map, geo_pal, 'cleaned map', true)
 
