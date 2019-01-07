@@ -175,7 +175,6 @@ print(map_fc_neighbours.limit(50))
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to image
 var clean_map = ee.Image().byte().paint(map_fc_neighbours, 'out_class').rename('classification')
 print(clean_map)
-Map.addLayer(clean_map, geo_pal, 'cleaned map', false)
 
 
 
@@ -244,4 +243,5 @@ Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
 Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
 Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
+Map.addLayer(clean_map, geo_pal, 'cleaned map', false)
 
