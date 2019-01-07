@@ -172,10 +172,11 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 print(map_fc_neighbours.limit(50))
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
-// Then figure out how to get the feature properties into the overall feature collection, and/or back to iamge
-//var neighbour_14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename("nb_14").clip(test_area)
-//print(map_fc_neighbours.filterBounds(test_area).size())
-//Map.addLayer(neighbour_14, {}, 'neighbour to class 14 - ORF', false)
+// Then figure out how to get the feature properties into the overall feature collection, and/or back to image
+var clean_map = ee.Image().byte().paint(map_fc_neighbours, 'out_class')
+Map.addLayer(clean_map, {}, 'cleaned map', false)
+
+
 
 /*var object_clean = function(f) {
   // define ee objects for the classes
