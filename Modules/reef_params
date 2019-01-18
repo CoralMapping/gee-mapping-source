@@ -54,5 +54,6 @@ exports = {
   sentinel : sentinel,
   dove : dove,
   landsat8 : landsat8,
-  cancook : cancook
+  cancook : cancook,
+  cancook_htv2 : cancook_htv2
 }
