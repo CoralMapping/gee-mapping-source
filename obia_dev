@@ -138,7 +138,7 @@ var test_buff = function(f) {
   return(f.buffer(10).difference(f, ee.ErrorMargin(0.5)))
 }
 
-Map.addLayer(map_fc.limit(5).map(test_buff))
+Map.addLayer(map_fc.filterBounds(test_area).limit(5).map(test_buff))
 //print(map_fc.limit(1))
 //print(map_fc.size())
 
