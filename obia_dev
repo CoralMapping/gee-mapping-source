@@ -20,6 +20,7 @@ The goal here is to develop a method to reclassify objects based on their neighb
 */
 
 Map.centerObject(map_centre, 14) // zoom level 14 is ~10m/px
+map_classification = map_classification.toUint8()
 
 /*
 A crude example of this is to find small objects, and replace with smoothed raster underneath,
