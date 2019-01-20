@@ -133,14 +133,6 @@ var map_fc = map_classification.reduceToVectors({
   tileScale: 1
 })
 
-var test_buff = function(f) {
-  // make the 1px buffer
-  return(f.buffer(10).difference(f, ee.ErrorMargin(0.5)))
-}
-
-Map.addLayer(map_fc.filterBounds(test_area).limit(5).map(test_buff))
-//print(map_fc.limit(1))
-//print(map_fc.size())
 
 var set_neighbour_properties = function(f) {
   // make the 1px buffer
