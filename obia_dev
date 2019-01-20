@@ -148,7 +148,14 @@ var set_neighbour_properties = function(f) {
   )
   // calculate the percentages
   var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
-  var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100))})
+  var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum))})
+  
+  // NOW we can try to do the class logic right here, or we can return the neighbour % and do image logic later
+  
+  /*
+  
+  TODO: figure out client vs. server side logic below
+    - i would think class_num.eq(15) is correct, but I can't get it to work?
   
   // define ee objects for the classes
   var class_num = ee.Number(f.get('label'))
@@ -163,15 +170,19 @@ var set_neighbour_properties = function(f) {
   } else {   // if no hits on class logic, keep same class
     return(f.set({out_class: class_num}))
   }
+  */
   
-  //return(f.set(diff_percs))
+  // this is the 'return % and image logic later option
+  // maybe this is more efficient, can use where() after, then only that gets calc'd and painted?
+  
+  return(f.set(diff_percs))
 }
 
 var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_properties)
 
 print(map_fc_neighbours.limit(50))
-Map.addLayer(map_fc_neighbours, {}, "Neighbour features", true)
-//print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
+//Map.addLayer(map_fc_neighbours, {}, "Neighbour features", true)
+print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Then figure out how to get the feature properties into the overall feature collection, and/or back to image
 var clean_map = ee.Image().byte().paint(map_fc_neighbours, 'out_class').rename('classification')
