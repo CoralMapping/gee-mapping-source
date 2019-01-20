@@ -184,8 +184,9 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Now we paint the desired properties to an image, so we can perform the logic
+var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
-var nb13 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb13') //IRF
+var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
 
 // RR surrounded by ORF
 var map_classification_clean = map_classification.where({
