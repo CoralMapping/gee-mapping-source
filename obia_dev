@@ -133,6 +133,12 @@ var map_fc = map_classification.reduceToVectors({
   tileScale: 1
 })
 
+var test_buff = function(f) {
+  // make the 1px buffer
+  var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
+}
+
+Map.addLayer(map_fc.limit(5).map(test_buff))
 //print(map_fc.limit(1))
 //print(map_fc.size())
 
@@ -189,6 +195,13 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb13') //IRF
 
+// RR surrounded by ORF
+var map_classification_clean = map_classification.where({
+  test: map_classification.eq(15).and(nb14.gt(50)),
+  value: ee.Image(14)
+})
+
+// RR surrounded by ORF
 var map_classification_clean = map_classification.where({
   test: map_classification.eq(15).and(nb14.gt(50)),
   value: ee.Image(14)
@@ -242,5 +255,6 @@ Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
 Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
 Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
+
 Map.addLayer(map_classification_clean, geo_pal, 'cleaned map', false)
 
