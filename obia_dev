@@ -135,7 +135,7 @@ var map_fc = map_classification.reduceToVectors({
 
 var test_buff = function(f) {
   // make the 1px buffer
-  var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
+  return(f.buffer(10).difference(f, ee.ErrorMargin(0.5)))
 }
 
 Map.addLayer(map_fc.limit(5).map(test_buff))
