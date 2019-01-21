@@ -181,7 +181,7 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 
 //print(map_fc_neighbours.limit(5))
 //Map.addLayer(map_fc_neighbours, {}, "Neighbour features", true)
-//print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
+print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
 var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb15') //RR
@@ -194,9 +194,15 @@ var map_classification_clean = map_classification.where({
   value: ee.Image(14)
 })
 
-// RR surrounded by ORF
-var map_classification_clean = map_classification.where({
-  test: map_classification.eq(15).and(nb14.add(nb13).gt(50)),
+// RR surrounded by IRF
+var map_classification_clean = map_classification_clean.where({
+  test: map_classification_clean.eq(15).and(nb14.add(nb13).gt(50)),
+  value: ee.Image(14)
+})
+
+// IR surrounded by ORF
+var map_classification_clean = map_classification_clean.where({
+  test: map_classification_clean.eq(13).and(nb14.gt(50)),
   value: ee.Image(13)
 })
 
