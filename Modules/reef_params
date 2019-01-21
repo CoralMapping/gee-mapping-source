@@ -72,5 +72,5 @@ exports = {
   landsat8 : landsat8,
   cancook : cancook,
   cancook_htv2 : cancook_htv2,
-  cancook_hlv2 : cancook_ltv2
+  cancook_ltv2 : cancook_ltv2
 }
