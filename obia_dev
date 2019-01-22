@@ -198,7 +198,7 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 //print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
-var objsize = ee.Image().byte().paint(map_fc_neighbours, 'count').rename('count')
+var objsize = ee.Image().paint(map_fc_neighbours, 'count').unmask(30000).rename('count')
 var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
@@ -215,13 +215,13 @@ map_clean = map_clean.where({
 
 // RR surrounded by IRF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.add(nb13).gt(50))),
+  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.add(nb13).gt(75))),
   value: ee.Image(13)
 })
 
 // IRF surrounded by ORF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(50))),
+  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(75))),
   value: ee.Image(14)
 })
 
