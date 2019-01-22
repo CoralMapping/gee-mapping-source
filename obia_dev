@@ -216,31 +216,45 @@ map_clean = map_clean.where({
           .and(nb14.gt(60)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
   value: ee.Image(14)
 })
-/*
+
 // RR surrounded by IRF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb13.add(nb14).gt(75))),
+  test: map_clean.eq(15)
+          .and(objsize.lt(min_size))
+          .and(nb13.gt(60)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
+  value: ee.Image(13)
+})
+
+// RR surrounded by IRF + ORF
+map_clean = map_clean.where({
+  test: map_clean.eq(15)
+          .and(objsize.lt(min_size))
+          .and(nb13.add(nb14).gt(80)),
   value: ee.Image(13)
 })
 
 // RR surrounded by OCL + stuff
 map_clean = map_clean.where({
   test: objsize.lt(min_size).and(map_clean.eq(15).and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75))),
-  value: ee.Image(14)
+  value: ee.Image(14) // could try making a bigger radius smooth map, and replaceing with that??
 })
 
 // ORF surrounded by IRF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(14).and(nb13.gt(60))),
+  test: map_clean.eq(14)
+          .and(objsize.lt(min_size))
+          .and(nb13.gt(60)),
   value: ee.Image(13)
 })
 
 // IRF surrounded by ORF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(60))),
+  test: map_clean.eq(14)
+          .and(objsize.lt(min_size))
+          .and(nb14.gt(60)),
   value: ee.Image(14)
 })
-*/
+
 print(map_clean)
 
 
