@@ -212,19 +212,19 @@ map_clean = map_clean.where({
 
 // RR surrounded by IRF
 map_clean = map_clean.where({
-  test: map_clean.eq(15).and(nb14.add(nb13).gt(50)),
+  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.add(nb13).gt(50))),
   value: ee.Image(14)
 })
 
 // IRF surrounded by ORF
 map_clean = map_clean.where({
-  test: map_clean.eq(13).and(nb14.gt(50)),
+  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(50))),
   value: ee.Image(14)
 })
 
 // ORF surrounded by IRF
 map_clean = map_clean.where({
-  test: map_clean.eq(14).and(nb13.gt(50)),
+  test: objsize.lt(min_size).and(map_clean.eq(14).and(nb13.gt(50))),
   value: ee.Image(13)
 })
 
