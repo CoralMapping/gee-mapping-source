@@ -1,11 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.73990507280234, -16.42257219756514]),
+var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.7265154854, -16.400506767051564]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.73353759031693, -16.417399364534486],
-          [145.73055497389237, -16.425817549114285],
-          [145.74066153746048, -16.432033187347795],
-          [145.74205628614823, -16.42345061473957]]]);
+        [[[145.72323834683846, -16.392369946828165],
+          [145.72025611441575, -16.40078813151383],
+          [145.73036137734186, -16.40700376966303],
+          [145.73175594687245, -16.398421197104323]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -206,6 +206,12 @@ var map_classification_clean = map_classification_clean.where({
   value: ee.Image(13)
 })
 
+// ORF surrounded by IRF
+var map_classification_clean = map_classification_clean.where({
+  test: map_classification_clean.eq(13).and(nb14.gt(50)),
+  value: ee.Image(13)
+})
+
 print(map_classification_clean)
 
 
@@ -248,7 +254,7 @@ var geo_pal = {
   min: 1, max: 30
 }
 
-Map.addLayer(map_classification, geo_pal, 'Map classification', true)
+Map.addLayer(map_classification.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'Map classification', true)
 Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
 Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
 Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
