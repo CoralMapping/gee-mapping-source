@@ -125,6 +125,17 @@ Another option is to vectorise, .map over the feature collection with a function
 This is the best solution in terms of the goal - but it appears to be horribly slow...
 */
 
+var map_smooth = map_classification
+                    .focal_mode({
+                      radius: 3, kernelType: 'circle', units: 'pixels', iterations: 1
+                    })
+                    .mask(map_classification.gte(1))
+
+var map_nosmall = map_classification
+                     .updateMask(map_classification.connectedPixelCount(9, false).gte(9))
+                     .unmask(smooth_map)
+
+
 var map_fc = map_classification.reduceToVectors({
   scale: 10, 
   eightConnected: false,
@@ -184,6 +195,7 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 print("e.g. Border % for first feature", map_fc_neighbours.first().toDictionary())
 
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
+var objsize = ee.Image().byte().paint(map_fc_neighbours, 'count').rename('count')
 var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
