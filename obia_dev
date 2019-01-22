@@ -202,7 +202,7 @@ var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
 
 var map_clean = map_nosmall // initialse the map to do the cleaning with
 
-var min_size = ee.Number(2000)
+var min_size = 2000
 
 // RR surrounded by ORF
 map_clean = map_clean.where({
