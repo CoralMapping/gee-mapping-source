@@ -199,9 +199,9 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
 var objsize = ee.Image().byte().paint(map_fc_neighbours, 'count').rename('count')
-var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb15') //RR
-var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
-var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
+var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
+var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
+var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
 
 var map_clean = map_nosmall // initialse the map to do the cleaning with
 
@@ -216,7 +216,7 @@ map_clean = map_clean.where({
 // RR surrounded by IRF
 map_clean = map_clean.where({
   test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.add(nb13).gt(50))),
-  value: ee.Image(14)
+  value: ee.Image(13)
 })
 
 // IRF surrounded by ORF
@@ -274,13 +274,13 @@ var geo_pal = {
 }
 
 Map.addLayer(map_classification.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'Map classification', true)
+
 //Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
 //Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
 //Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
 //Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 //Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
-
-Map.addLayer(objsize.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
+//Map.addLayer(objsize.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
 
 Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
 
