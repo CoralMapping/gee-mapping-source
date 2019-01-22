@@ -21,6 +21,7 @@ The goal here is to develop a method to reclassify objects based on their neighb
 
 Map.centerObject(map_centre, 14) // zoom level 14 is ~10m/px
 map_classification = map_classification.toUint8()
+print("Nominal scale of input: ", map_classification.projection().nominalScale())
 
 /*
 A crude example of this is to find small objects, and replace with smoothed raster underneath,
@@ -127,12 +128,12 @@ This is the best solution in terms of the goal - but it appears to be horribly s
 
 var map_smooth = map_classification
                     .focal_mode({
-                      radius: 2, kernelType: 'circle', units: 'pixels', iterations: 1
+                      radius: 3, kernelType: 'circle', units: 'pixels', iterations: 1
                     })
                     .mask(map_classification.gte(1))
 
 var map_nosmall = map_classification
-                     .updateMask(map_classification.connectedPixelCount(9, false).gte(9))
+                     .mask(map_classification.connectedPixelCount(10, false).gte(10))
                      .unmask(map_smooth)
 
 var map_bigmask = map_classification
@@ -279,4 +280,4 @@ Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', fa
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
 
 Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
-Map.addLayer(map_nosmall.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", true)
+Map.addLayer(map_smooth.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", true)
