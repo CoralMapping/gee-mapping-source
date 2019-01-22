@@ -127,7 +127,7 @@ This is the best solution in terms of the goal - but it appears to be horribly s
 
 var map_smooth = map_classification
                     .focal_mode({
-                      radius: 3, kernelType: 'circle', units: 'pixels', iterations: 1
+                      radius: 2, kernelType: 'circle', units: 'pixels', iterations: 1
                     })
                     .mask(map_classification.gte(1))
 
