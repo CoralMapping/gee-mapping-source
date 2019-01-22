@@ -133,10 +133,10 @@ var map_smooth = map_classification
 
 var map_nosmall = map_classification
                      .updateMask(map_classification.connectedPixelCount(9, false).gte(9))
-                     .unmask(smooth_map)
+                     .unmask(map_smooth)
 
 
-var map_fc = map_classification.reduceToVectors({
+var map_fc = map_nosmall.reduceToVectors({
   scale: 10, 
   eightConnected: false,
   bestEffort: true, 
@@ -150,7 +150,7 @@ var set_neighbour_properties = function(f) {
   var diff = f.buffer(10).difference(f, ee.ErrorMargin(0.5))
   // reduce the classes in the buffer zone
   var diff_classes = ee.Dictionary(
-    map_classification.unmask(ee.Image(0)).reduceRegion({
+    map_nosmall.unmask(ee.Image(0)).reduceRegion({
       reducer: ee.Reducer.frequencyHistogram(),
       geometry: diff.geometry(),
       scale: 10
@@ -201,14 +201,14 @@ var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
 
 // RR surrounded by ORF
-var map_classification_clean = map_classification.where({
-  test: map_classification.eq(15).and(nb14.gt(50)),
+var map_clean = map_nosmall.where({
+  test: map_nosmall.eq(15).and(nb14.gt(50)),
   value: ee.Image(14)
 })
 
 // RR surrounded by IRF
-var map_classification_clean = map_classification_clean.where({
-  test: map_classification_clean.eq(15).and(nb14.add(nb13).gt(50)),
+var map_clean = map_clean.where({
+  test: map_clean.eq(15).and(nb14.add(nb13).gt(50)),
   value: ee.Image(14)
 })
 
