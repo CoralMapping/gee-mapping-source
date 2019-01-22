@@ -197,11 +197,13 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
 var objsize = ee.Image().paint(map_fc_neighbours, 'count').unmask(30000).rename('count')
 var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
+var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22') //SE
+var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //SS
 var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
-var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //IRF
-var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') //IRF
+var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //DL
+var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') //SL
 
 var map_clean = map_nosmall // initialse the map to do the cleaning with
 
