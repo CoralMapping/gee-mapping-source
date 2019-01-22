@@ -241,8 +241,10 @@ map_clean = map_clean.where({
 
 // RR surrounded by OCL + stuff
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75))),
-  value: ee.Image(14) 
+  test: map_clean.eq(15)
+          .and(objsize.lt(min_size))
+          .and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75)),
+  value: ee.Image(14)
 })
 
 // ORF surrounded by IRF
