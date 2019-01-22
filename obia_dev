@@ -200,28 +200,30 @@ var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').rename('nb13') //IRF
 
+var map_clean = map_nosmall // initialse the map to do the cleaning with
+
 // RR surrounded by ORF
-var map_clean = map_nosmall.where({
-  test: map_nosmall.eq(15).and(nb14.gt(50)),
+map_clean = map_clean.where({
+  test: map_clean.eq(15).and(nb14.gt(50)),
   value: ee.Image(14)
 })
 
 // RR surrounded by IRF
-var map_clean = map_clean.where({
+map_clean = map_clean.where({
   test: map_clean.eq(15).and(nb14.add(nb13).gt(50)),
   value: ee.Image(14)
 })
 
-// IR surrounded by ORF
-var map_clean = map_clean.where({
+// IRF surrounded by ORF
+map_clean = map_clean.where({
   test: map_clean.eq(13).and(nb14.gt(50)),
-  value: ee.Image(13)
+  value: ee.Image(14)
 })
 
 // ORF surrounded by IRF
-var map_clean = map_clean.where({
-  test: map_clean.eq(14).and(nb14.gt(50)),
-  value: ee.Image(14)
+map_clean = map_clean.where({
+  test: map_clean.eq(14).and(nb13.gt(50)),
+  value: ee.Image(13)
 })
 
 print(map_clean)
