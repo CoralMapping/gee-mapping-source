@@ -2,13 +2,10 @@
 var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.7265154854, -16.400506767051564]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.7234100082154, -16.3943461401304],
-          [145.7142479662224, -16.400623454953074],
-          [145.72093120956572, -16.399449869490784],
-          [145.7259896128785, -16.40158012259229],
-          [145.72701398049128, -16.400910838700838],
-          [145.72929914815404, -16.400160062883785],
-          [145.73175594687245, -16.398421197104323]]]);
+        [[[145.76758292204897, -16.331249835520396],
+          [145.7674970913605, -16.33890987205993],
+          [145.77929881102602, -16.33915696501521],
+          [145.77942755705874, -16.33108510025526]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -199,9 +196,12 @@ var map_fc_neighbours = map_fc.filterBounds(test_area).map(set_neighbour_propert
 
 // Now we paint the desired properties to an image, so we can perform the logic (maybe functionalise this)
 var objsize = ee.Image().paint(map_fc_neighbours, 'count').unmask(30000).rename('count')
+var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
 var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
 var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
 var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //IRF
+var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') //IRF
 
 var map_clean = map_nosmall // initialse the map to do the cleaning with
 
@@ -215,20 +215,26 @@ map_clean = map_clean.where({
 
 // RR surrounded by IRF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.add(nb13).gt(75))),
+  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb13.add(nb14).gt(75))),
   value: ee.Image(13)
 })
 
-// IRF surrounded by ORF
+// RR surrounded by OCL + stuff
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(75))),
+  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75))),
   value: ee.Image(14)
 })
 
 // ORF surrounded by IRF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(14).and(nb13.gt(75))),
+  test: objsize.lt(min_size).and(map_clean.eq(14).and(nb13.gt(60))),
   value: ee.Image(13)
+})
+
+// IRF surrounded by ORF
+map_clean = map_clean.where({
+  test: objsize.lt(min_size).and(map_clean.eq(13).and(nb14.gt(60))),
+  value: ee.Image(14)
 })
 
 print(map_clean)
