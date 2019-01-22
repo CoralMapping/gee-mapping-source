@@ -236,7 +236,7 @@ map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
           .and(nb13.add(nb14).gt(80)),
-  value: ee.Image(13) // could try making a bigger radius smooth map, and replaceing with that??
+  value: map_vsmooth// ee.Image(13) // could try making a bigger radius smooth map, and replaceing with that??
 })
 
 // RR surrounded by OCL + stuff
