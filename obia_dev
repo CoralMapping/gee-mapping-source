@@ -133,17 +133,9 @@ var map_smooth = map_classification
                     .mask(map_classification.gte(1))
 
 var map_nosmall = map_classification.where({
-  test: map_classification.connectedPixelCount(10, false).gte(10), 
+  test: map_classification.connectedPixelCount(10, false).lte(9), 
   value: map_smooth
 })
-
-/*var map_nosmall = map_classification
-                     .mask(map_classification.connectedPixelCount(10, false).gte(10))
-                     .unmask(map_smooth)*/
-
-var map_bigmask = map_classification
-                     .updateMask(map_nosmall.connectedPixelCount(2500, false).lte(2500))
-
 
 var map_fc = map_nosmall.reduceToVectors({
   scale: 10, 
@@ -152,7 +144,6 @@ var map_fc = map_nosmall.reduceToVectors({
   maxPixels: 1e13,
   tileScale: 1
 })
-
 
 var set_neighbour_properties = function(f) {
   // make the 1px buffer
@@ -213,7 +204,7 @@ var map_clean = map_nosmall // initialse the map to do the cleaning with
 
 // RR surrounded by ORF
 map_clean = map_clean.where({
-  test: map_clean.eq(15).and(nb14.gt(50)),
+  test: objsize.lt(2500).and(map_clean.eq(15).and(nb14.gt(50))),
   value: ee.Image(14)
 })
 
@@ -278,11 +269,11 @@ var geo_pal = {
 }
 
 Map.addLayer(map_classification.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'Map classification', true)
-Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
-Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
-Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
-Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
-Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
+//Map.addLayer(crude_object_removal, geo_pal, 'Crude map smooth', false)
+//Map.addLayer(limit_size_15, geo_pal, 'Removed small class 15 objects', false)
+//Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
+//Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
+//Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
 
 Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
-Map.addLayer(map_nosmall.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", true)
+Map.addLayer(objsize.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
