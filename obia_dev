@@ -132,7 +132,7 @@ var map_smooth = map_classification
                     .mask(map_classification.gte(1))
 
 var map_nosmall = map_classification
-                     .updateMask(map_classification.connectedPixelCount(9, false).gt(9))
+                     .updateMask(map_classification.connectedPixelCount(10, false).gte(9))
                      .unmask(map_smooth)
 
 var map_bigmask = map_classification
