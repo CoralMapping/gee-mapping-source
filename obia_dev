@@ -131,6 +131,12 @@ var map_smooth = map_classification
                       radius: 3, kernelType: 'circle', units: 'pixels', iterations: 1
                     })
                     .mask(map_classification.gte(1))
+                    
+var map_vsmooth = map_classification
+                    .focal_mode({
+                      radius: 10, kernelType: 'circle', units: 'pixels', iterations: 1
+                    })
+                    .mask(map_classification.gte(1))
 
 var map_nosmall = map_classification.where({
   test: map_classification.connectedPixelCount(10, false).lte(9), 
@@ -213,7 +219,7 @@ var min_size = 2000
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb14.gt(60)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
+          .and(nb14.gt(75)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
   value: ee.Image(14)
 })
 
@@ -221,7 +227,7 @@ map_clean = map_clean.where({
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb13.gt(60)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
+          .and(nb13.gt(75)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
   value: ee.Image(13)
 })
 
@@ -230,13 +236,13 @@ map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
           .and(nb13.add(nb14).gt(80)),
-  value: ee.Image(13)
+  value: ee.Image(13) // could try making a bigger radius smooth map, and replaceing with that??
 })
 
 // RR surrounded by OCL + stuff
 map_clean = map_clean.where({
   test: objsize.lt(min_size).and(map_clean.eq(15).and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75))),
-  value: ee.Image(14) // could try making a bigger radius smooth map, and replaceing with that??
+  value: ee.Image(14) 
 })
 
 // ORF surrounded by IRF
@@ -304,7 +310,7 @@ Map.addLayer(map_classification.reproject(ee.Projection('EPSG:4326').atScale(10)
 //Map.addLayer(limit_size_14, geo_pal, 'Removed small class 14 & 15 objects', false)
 //Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 //Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
-//Map.addLayer(objsize.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
+Map.addLayer(map_vsmooth.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
 
 Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
 
