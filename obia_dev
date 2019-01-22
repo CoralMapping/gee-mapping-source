@@ -275,5 +275,7 @@ Map.addLayer(map_classification.reproject(ee.Projection('EPSG:4326').atScale(10)
 //Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', false)
 //Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
 
-Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
 Map.addLayer(objsize.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", false)
+
+Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
+
