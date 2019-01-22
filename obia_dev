@@ -2,10 +2,10 @@
 var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.7265154854, -16.400506767051564]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.75007073478162, -16.419032171167544],
-          [145.74998486411812, -16.426692207693495],
-          [145.76179190074458, -16.42693930066571],
-          [145.76192070337913, -16.418867435885403]]]);
+        [[[145.78852278104716, -16.422407640464193],
+          [145.78843690884173, -16.430067676989626],
+          [145.80024415056891, -16.43031476996249],
+          [145.80037295538705, -16.422242905181403]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
