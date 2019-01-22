@@ -209,7 +209,7 @@ var min_size = 2000
 
 // RR surrounded by ORF
 map_clean = map_clean.where({
-  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.gt(50))),
+  test: objsize.lt(min_size).and(map_clean.eq(15).and(nb14.gt(75))),
   value: ee.Image(14)
 })
 
