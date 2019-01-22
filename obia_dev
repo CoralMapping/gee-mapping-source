@@ -132,9 +132,14 @@ var map_smooth = map_classification
                     })
                     .mask(map_classification.gte(1))
 
-var map_nosmall = map_classification
+var map_nosmall = map_classification.where({
+  test: map_classification.connectedPixelCount(10, false).gte(10), 
+  value: map_smooth
+})
+
+/*var map_nosmall = map_classification
                      .mask(map_classification.connectedPixelCount(10, false).gte(10))
-                     .unmask(map_smooth)
+                     .unmask(map_smooth)*/
 
 var map_bigmask = map_classification
                      .updateMask(map_nosmall.connectedPixelCount(2500, false).lte(2500))
@@ -280,4 +285,4 @@ Map.addLayer(border_compl_15, geo_pal, 'Removed class 15 w/ complex borders', fa
 Map.addLayer(complex15_size14, geo_pal, 'Removed class 15 (via complexity) & 14 (via size)', false)
 
 Map.addLayer(map_clean.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, 'cleaned map', false)
-Map.addLayer(map_smooth.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", true)
+Map.addLayer(map_nosmall.reproject(ee.Projection('EPSG:4326').atScale(10)), geo_pal, "smooth", true)
