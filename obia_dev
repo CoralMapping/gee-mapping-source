@@ -220,8 +220,8 @@ var map_clean = map_clean.where({
 
 // ORF surrounded by IRF
 var map_clean = map_clean.where({
-  test: map_clean.eq(13).and(nb14.gt(50)),
-  value: ee.Image(13)
+  test: map_clean.eq(14).and(nb14.gt(50)),
+  value: ee.Image(14)
 })
 
 print(map_clean)
