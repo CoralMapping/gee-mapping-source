@@ -134,7 +134,7 @@ var map_smooth = map_classification
                     
 var map_vsmooth = map_classification
                     .focal_mode({
-                      radius: 10, kernelType: 'circle', units: 'pixels', iterations: 1
+                      radius: 30, kernelType: 'circle', units: 'pixels', iterations: 1
                     })
                     .mask(map_classification.gte(1))
 
