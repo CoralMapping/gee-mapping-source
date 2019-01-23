@@ -1,11 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.7265154854, -16.400506767051564]),
+var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.74505491411105, -16.32671763140018]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.78852278104716, -16.422407640464193],
-          [145.78843690884173, -16.430067676989626],
-          [145.80024415056891, -16.43031476996249],
-          [145.80037295538705, -16.422242905181403]]]);
+        [[[145.73810008523697, -16.326595149905312],
+          [145.73801425666136, -16.334255186445564],
+          [145.74981569530053, -16.33450227939993],
+          [145.7499444383418, -16.32643041464107]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -243,7 +243,8 @@ map_clean = map_clean.where({
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb11.add(nb12).add(nb13).add(nb13).add(nb24).gt(75)),
+          .and(nb24.gt(10))
+          .and(nb11.add(nb12).gt(10)),
   value: ee.Image(14)
 })
 
