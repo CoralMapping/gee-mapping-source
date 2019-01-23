@@ -1,11 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.74505491411105, -16.32671763140018]),
+var map_centre = /* color: #0b4a8b */ee.Geometry.Point([145.68325681840793, -16.121675339329713]),
     map_classification = ee.Image("users/mitchest/gbr_reefs/reef_map_eg"),
     test_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[145.73810008523697, -16.326595149905312],
-          [145.73801425666136, -16.334255186445564],
-          [145.74981569530053, -16.33450227939993],
-          [145.7499444383418, -16.32643041464107]]]);
+        [[[145.67643626433562, -16.124317178075696],
+          [145.67635052693913, -16.13197721464718],
+          [145.6881398410727, -16.132224307562577],
+          [145.68826845506624, -16.124152442850566]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // ###### minimal reproducable example to help develop object-based relationship rules
 // mitchell.lyons@gmail.com
@@ -213,13 +213,13 @@ var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb
 
 var map_clean = map_nosmall // initialse the map to do the cleaning with
 
-var min_size = 2000
+var min_size = 2000 // we can have multiple size limits for different classes
 
 // RR surrounded by ORF
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb14.gt(75)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
+          .and(nb14.gt(75)),
   value: ee.Image(14)
 })
 
@@ -227,7 +227,7 @@ map_clean = map_clean.where({
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb13.gt(75)), // SPLIT THIS LINE BY LINE AND NOT NESTED???
+          .and(nb13.gt(75)),
   value: ee.Image(13)
 })
 
@@ -235,6 +235,7 @@ map_clean = map_clean.where({
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
+          .and(nb13.lt(75).and(nb14.lt(75))) // to ensure we're no re-writing previous rules
           .and(nb13.add(nb14).gt(80)),
   value: map_vsmooth// ee.Image(13) // could try making a bigger radius smooth map, and replaceing with that??
 })
@@ -243,8 +244,8 @@ map_clean = map_clean.where({
 map_clean = map_clean.where({
   test: map_clean.eq(15)
           .and(objsize.lt(min_size))
-          .and(nb24.gt(10))
-          .and(nb11.add(nb12).gt(10)),
+          .and(nb13.lt(75).and(nb14.lt(75))) // to ensure we're no re-writing previous rules
+          .and(nb24.gt(0)),
   value: ee.Image(14)
 })
 
