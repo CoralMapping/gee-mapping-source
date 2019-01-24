@@ -32,7 +32,9 @@ var cancook = {
   geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "",
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_geo-both",
-  benthic_map: ""
+  benthic_map: "",
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_geo-both-clean",
+  benthic_map_clean: ""
 }
 
 var cancook_htv2 = {
@@ -50,7 +52,9 @@ var cancook_htv2 = {
   geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "",
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo",
-  benthic_map: ""
+  benthic_map: "",
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean",
+  benthic_map_clean: ""
 }
 
 var cancook_ltv2 = {
@@ -67,8 +71,10 @@ var cancook_ltv2 = {
   waves: "users/mitchest/gbr_reefs/cancook_waves",
   geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "",
-  geo_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo",
-  benthic_map: ""
+  geo_map: "users/mitchest/gbr_reefs/cancook_dove_ltv2_geo",
+  benthic_map: "",
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_geo-clean",
+  benthic_map_clean: ""
 }
 
 // export the objects
