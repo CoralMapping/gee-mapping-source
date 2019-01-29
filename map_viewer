@@ -21,8 +21,8 @@ Map.centerObject(centre_map, 11)
 
 // add some background data
 Map.addLayer(gbr_sentinel, {bands: ['B4','B3','B2'], min: 360, max: 2000}, "Sentinel-2 mosaic", false)
-Map.addLayer(cancook_dove_ht_pixels, {bands: ['B3','B2','B1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(cancook_dove_ht_segmentation, {bands: ['B3','B2','B1'], min: 66, max: 1260}, "Dove H-tide segmentation mosaic", false)
+Map.addLayer(cancook_dove_ht_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
+Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, max: 1380}, "Dove H-tide segmentation mosaic", false)
 
 // add the map data layers
 // GBR
