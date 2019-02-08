@@ -28,13 +28,13 @@ Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, ma
 
 // add the map data layers
 // GBR
-Map.addLayer(gbr_geo_map10, map_palettes.geo, "Sentinel-2 GBR-geo10 (rough - no Dove data)", false)
-Map.addLayer(gbr_geo_map30, map_palettes.geo, "Sentinel-2 GBR-geo30 (rough - no Dove data)", false)
+Map.addLayer(gbr_geo_map10.selfMask(), map_palettes.geo, "Sentinel-2 GBR-geo10 (rough - no Dove data)", false)
+Map.addLayer(gbr_geo_map30.selfMask(), map_palettes.geo, "Sentinel-2 GBR-geo30 (rough - no Dove data)", false)
 //Carins to Cooktown
-Map.addLayer(cancook_dove_htv2_geo, map_palettes.geo, "Dove Carins-Cook Geo - raw H-tide", false)
-Map.addLayer(cancook_dove_ltv2_geo, map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic, map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
-Map.addLayer(cancook_dove_ltv2_benthic, map_palettes.benthic, "Dove Carins-Cook Benthic - raw L-tide", false)
+Map.addLayer(cancook_dove_htv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw H-tide", false)
+Map.addLayer(cancook_dove_ltv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
+Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
+Map.addLayer(cancook_dove_ltv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw L-tide", false)
 
 
 // add training point distributions
