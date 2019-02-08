@@ -6,6 +6,7 @@
 // Define colour palette for GEOMORPHIC classiciations
 var geo_pal = {
   palette: [  // the benthic classificaiton palette (NB in raster class value order)
+    'ffffff', // 0 =  Ignore
     '238b45', // 1 =  Land
     '08306b', // 2 =  Deep
     'ffffff', // 3 =  place-holder
@@ -37,7 +38,7 @@ var geo_pal = {
     'ffffff', // 29 = place-holder
     'ffffff'  // 30 = place-holder
   ],
-  min: 1, max: 30
+  min: 1, max: 31
 }
 
 // Define colour palette for BENTHIC classifications
