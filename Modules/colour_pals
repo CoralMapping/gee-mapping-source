@@ -82,5 +82,7 @@ exports = {
   geo : geo_pal,
   benthic : benthic_pal,
   geo_names : geo_names,
-  geo_cols : geo_cols
+  geo_cols : geo_cols,
+  benthic_names : benthic_names,
+  benthic_cols : benthic_cols
 }
