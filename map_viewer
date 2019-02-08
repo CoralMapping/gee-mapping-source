@@ -54,8 +54,8 @@ var title = ui.Label({
 var map_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
 pkg_vis.add_lgds([title, map_legend])
 // generate the legend
-var map_legend = pkg_vis.discrete_legend(map_palettes.benthic_names, map_palettes.benthic_cols, 'Benthic Habitat', false)
-pkg_vis.add_lgds([title, map_legend])
+var map_legend2 = pkg_vis.discrete_legend(map_palettes.benthic_names, map_palettes.benthic_cols, 'Benthic Habitat', false)
+pkg_vis.add_lgds([title, map_legend2])
 
 
 ///////// LINK TO DATA EXPORT /////////
