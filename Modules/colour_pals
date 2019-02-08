@@ -63,7 +63,7 @@ var benthic_pal = {
     'ffffff', // 18 = place-holder
     'ffffff', // 19 = place-holder
     'ffffff', // 20 = place-holder
-    '9e9ac8', // 21 = place-holder
+    'ffffff', // 21 = place-holder
   ],
   min: 1, max: 21
   }
