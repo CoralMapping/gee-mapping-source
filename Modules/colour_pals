@@ -38,7 +38,7 @@ var geo_pal = {
     'ffffff', // 29 = place-holder
     'ffffff'  // 30 = place-holder
   ],
-  min: 1, max: 31
+  min: 0, max: 30
 }
 
 // Define colour palette for BENTHIC classifications
@@ -67,7 +67,7 @@ var benthic_pal = {
     'ffffff', // 20 = place-holder
     'ffffff', // 21 = place-holder
   ],
-  min: 1, max: 22
+  min: 0, max: 21
   }
 
 // geo legend
