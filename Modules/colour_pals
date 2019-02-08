@@ -43,30 +43,29 @@ var geo_pal = {
 // Define colour palette for BENTHIC classifications
 var benthic_pal = {
   palette: [ // the benthic classificaiton palette (NB in raster class value order)
-    '0570b0', // CA IRF
-    '0570b0', // CA ORF
-    '0570b0', // CA RC
-    '993404', // Ro IRF
-    '993404', // Ro ORF
-    '993404', // Ro RC
-    '993404', // Ro SL
-    'fcbba1', // Ru IRF
-    'fcbba1', // Ru ORF
-    'fcbba1', // Ru RC
-    'fcbba1', // Ru SL
-    'ffffcc', // Sa IRF
-    'ffffcc', // Sa ORF
-    'ffffcc', // Sa SL
-    '253494', // Deep lagoon
-    '969696', // Deep slope lee
-    '737373', // Deep slope wind
-    '7bccc4', // OCL
-    '252525', // Deep Plat.
-    '252525', // Shallow Plat.
-    'f0f0f0', // Shallow slope lee
-    'd9d9d9'  // Shallow slope wind
+    '238b45', // 1 =  Land
+    '08306b', // 2 =  Deep
+    'ffffff', // 3 =  Mangrove
+    'ffffff', // 4 =  Mud
+    'ffffff', // 5 =  place-holder
+    'ffffff', // 6 =  place-holder
+    'ffffff', // 7 =  place-holder
+    'ffffff', // 8 =  place-holder
+    'ffffff', // 9 =  place-holder
+    'ffffff', // 10 = place-holder
+    '9ecae1', // 11 = Sand
+    '2171b5', // 12 = Rubble
+    'ffffd4', // 13 = Rock
+    'fe9929', // 14 = Seagrass
+    '993404', // 15 = Coral/Algae
+    'ffffff', // 16 = Coral
+    'ffffff', // 17 = place-holder
+    'ffffff', // 18 = place-holder
+    'ffffff', // 19 = place-holder
+    'ffffff', // 20 = place-holder
+    '9e9ac8', // 21 = place-holder
   ],
-  min: 1, max: 22
+  min: 1, max: 21
   }
 
 // geo legend
