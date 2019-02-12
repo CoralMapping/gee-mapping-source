@@ -10,5 +10,5 @@ Export.image.toDrive({
   image: cancook_htv2_geo, 
   description: 'cancook geo', 
   region: export_convhull,
-  scale: 5
+  scale: 10
 })
