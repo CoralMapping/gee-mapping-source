@@ -10,14 +10,16 @@ Export.image.toDrive({
   image: cancook_htv2_geo, 
   description: 'cancook geo', 
   region: export_convhull,
-  scale: 10
+  scale: 10,
+  maxPixels: 1e13
 })
 
 Export.image.toDrive({
   image: cancook_htv2_benthic, 
   description: 'cancook benthic', 
   region: export_convhull,
-  scale: 10
+  scale: 10,
+  maxPixels: 1e13
 })
 
-Map.addLayer(export_conhull)
+Map.addLayer(export_convhull)
