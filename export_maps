@@ -10,7 +10,7 @@ Export.image.toDrive({
   image: cancook_htv2_geo, 
   description: 'cancook_geo', 
   region: export_convhull,
-  scale: 10,
+  scale: 5,
   maxPixels: 1e13
 })
 
@@ -18,7 +18,7 @@ Export.image.toDrive({
   image: cancook_htv2_benthic, 
   description: 'cancook_benthic', 
   region: export_convhull,
-  scale: 10,
+  scale: 5,
   maxPixels: 1e13
 })
 
