@@ -8,7 +8,7 @@ var export_convhull = cancook_htv2_geo.gte(0).reduceToVectors({scale: 1000, maxP
 
 Export.image.toDrive({
   image: cancook_htv2_geo, 
-  description: 'cancook geo', 
+  description: 'cancook_geo', 
   region: export_convhull,
   scale: 10,
   maxPixels: 1e13
@@ -16,7 +16,7 @@ Export.image.toDrive({
 
 Export.image.toDrive({
   image: cancook_htv2_benthic, 
-  description: 'cancook benthic', 
+  description: 'cancook_benthic', 
   region: export_convhull,
   scale: 10,
   maxPixels: 1e13
