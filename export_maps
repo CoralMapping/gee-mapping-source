@@ -12,3 +12,10 @@ Export.image.toDrive({
   region: export_convhull,
   scale: 10
 })
+
+Export.image.toDrive({
+  image: cancook_htv2_benthic, 
+  description: 'cancook geo', 
+  region: export_convhull,
+  scale: 10
+})
