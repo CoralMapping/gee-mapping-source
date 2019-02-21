@@ -53,7 +53,7 @@ var cancook_htv2 = {
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo",
   benthic_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic",
-  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean", // temporary for demo purposes
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean",
   benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean"
 }
 
