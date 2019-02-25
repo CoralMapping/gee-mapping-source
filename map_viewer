@@ -11,7 +11,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_ht_segmentation = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_segmentation"),
     cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic"),
     cancook_dove_ltv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic"),
-    cancook_dove_htv2_geo_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean");
+    cancook_dove_htv2_geo_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean"),
+    waves_c2c = ee.Image("users/danleeharris/gbr_waves/C2C_v2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -27,6 +28,8 @@ Map.centerObject(centre_map, 11)
 Map.addLayer(gbr_sentinel, {bands: ['B4','B3','B2'], min: 360, max: 2000}, "Sentinel-2 mosaic", false)
 Map.addLayer(cancook_dove_ht_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
 Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, max: 1380}, "Dove H-tide segmentation mosaic", false)
+Map.addLayer(waves_c2c, {bands: ['b1'], min: 66, max: 1380}, "C2C wave data from Dove data", false)
+
 
 // add the map data layers
 // GBR
