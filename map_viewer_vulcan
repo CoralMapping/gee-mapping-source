@@ -23,8 +23,8 @@ Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, ma
 
 // add the map data layers
 //Carins to Cooktown
-Map.addLayer(cancook_dove_htv2_geo_clean.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - clean H-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
+Map.addLayer(cancook_dove_htv2_geo_clean.selfMask(), map_palettes.geo, "Planet Dove - Geomorphic map", false)
+Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Planet Dove - Benthic map", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
