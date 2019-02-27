@@ -14,6 +14,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choose where to centre (link this dynamically to map app?)
 var centre_map = Cairns
+Map.setOptions("SATELLITE")
 Map.centerObject(centre_map, 11)
 
 // add some background data
