@@ -6,6 +6,11 @@ var cancook_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo"
 // Cancook export
 var export_convhull = cancook_htv2_geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_geo.geometry().bounds()}).geometry().convexHull({maxError: 100})
 
+// ######
+// Need to add raw classification, make a mask, and update mask for export
+// ######
+
+
 Export.image.toDrive({
   image: cancook_htv2_geo, 
   description: 'cancook_geo', 
