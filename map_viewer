@@ -33,7 +33,7 @@ Map.addLayer(gbr_sentinel, {bands: ['B4','B3','B2'], min: 360, max: 2000}, "Sent
 Map.addLayer(cancook_dove_ht_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
 Map.addLayer(cancook_dove_ht_pixels.select('depth'), depth_pal, "Dove H-tide depth moasic", false)
 Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, max: 1380}, "Dove H-tide segmentation mosaic", false)
-Map.addLayer(waves_c2c, {bands: ['b1'], min: -0.05, max: 1.8}, "C2C wave data from Dove data", false)
+//Map.addLayer(waves_c2c, {bands: ['b1'], min: -0.05, max: 1.8}, "C2C wave data from Dove data", false)
 
 
 // add the map data layers
