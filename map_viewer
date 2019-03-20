@@ -13,10 +13,10 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic"),
     cancook_dove_ltv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic"),
     cancook_dove_htv2_geo_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean"),
-    cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-cleanx"),
     cancook_dove_ltv2_geo_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_geo-clean"),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50");
+    cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50"),
+    cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
