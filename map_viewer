@@ -43,8 +43,8 @@ Map.addLayer(gbr_s2_geo.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Canco
 Map.addLayer(gbr_s2_benthic.selfMask(), map_palettes.benthic, "Sentinel-2 GBR benthic (Cancook trained)", false)
 //Carins to Cooktown
 Map.addLayer(cancook_dove_htv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw H-tide", false)
+Map.addLayer(cancook_dove_htv2_geo_clean0.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - base clean H-tide", false)
 Map.addLayer(cancook_dove_htv2_geo_clean.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - final clean H-tide", false)
-Map.addLayer(cancook_dove_htv2_geo_clean.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - base clean H-tide", false)
 Map.addLayer(cancook_dove_ltv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
 Map.addLayer(cancook_dove_ltv2_geo_clean.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - clean L-tide", false)
 Map.addLayer(cancook_dove_geo_nd50.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - no depth", false)
