@@ -11,6 +11,7 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_ht_pixels = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_pixels"),
     cancook_dove_ht_segmentation = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_segmentation"),
     cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic"),
+    cancook_dove_htv2_benthic_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean"),
     cancook_dove_ltv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic"),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50"),
@@ -47,6 +48,7 @@ Map.addLayer(cancook_dove_htv2_geo_clean_test.selfMask(), map_palettes.geo, "Dov
 Map.addLayer(cancook_dove_ltv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
 Map.addLayer(cancook_dove_geo_nd50.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - no depth", false)
 Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
+Map.addLayer(cancook_dove_htv2_benthic_clean.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - clean H-tide", false)
 Map.addLayer(cancook_dove_ltv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw L-tide", false)
 
 
