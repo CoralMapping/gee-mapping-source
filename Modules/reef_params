@@ -33,7 +33,7 @@ var cancook = {
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_geo-both",
   benthic_map: "",
-  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_geo-both-clean",
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_geo-both-clean1",
   benthic_map_clean: ""
 }
 
@@ -54,7 +54,7 @@ var cancook_htv2 = {
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo",
   benthic_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic",
   geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2",
-  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean"
+  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"
 }
 
 var cancook_ltv2 = {
@@ -73,8 +73,8 @@ var cancook_ltv2 = {
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_ltv2_geo",
   benthic_map: "users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic",
-  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_geo-clean",
-  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic-clean"
+  geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_geo-clean1",
+  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic-clean1"
 }
 
 var gbr = {
