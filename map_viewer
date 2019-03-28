@@ -16,8 +16,7 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50"),
     cancook_dove_htv2_benthic_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"),
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
-    cancook_dove_htv2_geo_clean1 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean1"),
-    cancook_dove_htv2_geo_clean2a = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2a");
+    cancook_dove_htv2_geo_clean1 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
