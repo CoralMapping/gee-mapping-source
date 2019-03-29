@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var cancook_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo"),
-    cancook_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic");
+var cancook_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"),
+    cancook_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 // Cancook export
@@ -15,7 +15,7 @@ Export.image.toDrive({
   image: cancook_htv2_geo, 
   description: 'cancook_geo', 
   region: export_convhull,
-  scale: 5,
+  scale: 25,
   maxPixels: 1e13
 })
 
@@ -23,7 +23,7 @@ Export.image.toDrive({
   image: cancook_htv2_benthic, 
   description: 'cancook_benthic', 
   region: export_convhull,
-  scale: 5,
+  scale: 25,
   maxPixels: 1e13
 })
 
