@@ -18,7 +18,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50"),
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
     cancook_dove_htv2_geo_clean1 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean1"),
-    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5");
+    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
+    cancook_dove_htv2_benthic_clean5x = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5x");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -50,9 +51,10 @@ Map.addLayer(cancook_dove_htv2_geo_clean1.selfMask(), map_palettes.geo, "Dove Ca
 Map.addLayer(cancook_dove_htv2_geo_clean2.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - final clean H-tide", false)
 Map.addLayer(cancook_dove_ltv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
 Map.addLayer(cancook_dove_geo_nd50.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - no depth", false)
-Map.addLayer(cancook_dove_htv2_benthic_pts.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - pts H-tide", false)
+Map.addLayer(cancook_dove_htv2_benthic_pts.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - map + field points H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - clean H-tide", false)
+Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
 Map.addLayer(cancook_dove_ltv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw L-tide", false)
 
