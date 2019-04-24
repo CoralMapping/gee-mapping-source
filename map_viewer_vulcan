@@ -3,8 +3,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     gbr_sentinel = ee.Image("users/mitchest/gbr_reefs/gbr_sentinel2x"),
     cancook_dove_ht_pixels = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_pixels"),
     cancook_dove_ht_segmentation = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_segmentation"),
-    cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic"),
-    cancook_dove_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo");
+    cancook_dove_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
+    cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -53,13 +53,13 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])
 // hopefully eventually we can link this to a download link in the app?
 
 // // map to export 
-// var export_map = gbr_geo_map10
+// var export_map = cancook_dove_htv2_geo
 // // extent
 // var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
 // // export
 // Export.image.toDrive({
 //     image: export_map,
-//     description: 'gbr_sent2_geo_map',
+//     description: 'cancook_dove_htv2_geo',
 //     folder: 'GBR Mapping',
 //     region: export_convhull,
 //     scale: 10,
