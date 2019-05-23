@@ -80,6 +80,23 @@ var cancook_ltv2 = {
   benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic-clean1"
 }
 
+var fiji_ltv2 = {
+  sname: "fiji",
+  asset: "gbr_reefs/",
+  dove_image: "projects/coral_atlas/fiji/lowTideV2/fj_srLowV2",
+  dove_depth: "projects/coral_atlas/fiji/lowTideV2/fj_depthLowV2",
+  dove_pixels: "projects/coral_atlas/fiji/fj_low_pixels",
+  dove_segments: "projects/coral_atlas/fiji/fj_low_segmentation",
+  waves: "",
+  geo_train: "", 
+  benthic_train: "",
+  benthic_pts: "",
+  geo_map: "",
+  benthic_map: "",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
 var gbr = {
   sname: "gbr",
   asset: "gbr_reefs/",
