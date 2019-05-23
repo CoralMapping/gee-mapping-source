@@ -75,21 +75,21 @@ Map.centerObject(map_centre, 12)
 // load input data
 var reflec = ee.Image(region_params.dove_image).select(vars.all_bands)
 var depth = ee.Image(region_params.dove_depth)
-var waves = ee.Image(region_params.waves)
+//var waves = ee.Image(region_params.waves)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
-var waves = waves.rename('waves')
+//var waves = waves.rename('waves')
 
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds()}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", false) // water depth
-Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+//Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 
 // 3. Segmentation and metrics calculation
@@ -106,7 +106,8 @@ var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reduc
 if (vars.pixel_based) {
   //// pixel-based data generation
   // combine data to move forward with
-  var all_data = reflec.addBands(depth).addBands(waves).addBands(slope)
+  var all_data = reflec.addBands(depth)//.addBands(waves)
+                  .addBands(slope)
                   .addBands(depth_glcm).addBands(red_glcm).addBands(depth_var).addBands(red_var)
                   .updateMask(depth_mask) // make sure all layers are clipped down
   Map.addLayer(all_data, {}, "Model predictor data", false) 
@@ -158,7 +159,8 @@ if (vars.pixel_based) {
   */
 
   // Calculate object statistics
-  var segmented_data_mean = reflec.addBands(depth).addBands(waves).addBands(slope)
+  var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
+                            .addBands(slope)
                             .addBands(depth_glcm).addBands(red_glcm).addBands(depth_var).addBands(red_var)
                             .addBands(segmented_data.select('clusters'))
                             .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
