@@ -81,8 +81,8 @@ var cancook_ltv2 = {
 }
 
 var fiji_ltv2 = {
-  sname: "fiji",
-  asset: "gbr_reefs/",
+  sname: "projects/coral_atlas/fiji/",
+  asset: "global_reefs/fiji/",
   dove_image: "projects/coral_atlas/fiji/lowTideV2/fj_srLowV2",
   dove_depth: "projects/coral_atlas/fiji/lowTideV2/fj_depthLowV2",
   dove_pixels: "projects/coral_atlas/fiji/fj_low_pixels",
