@@ -1,0 +1,247 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map_centre = /* color: #d63000 */ee.Geometry.Point([145.80162048339844, -16.373509401104197]),
+    little_output = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[145.8318340073315, -16.390801849833178],
+          [145.8310611957852, -16.39994122680124],
+          [145.83852843328168, -16.408421841419344],
+          [145.85689783331964, -16.411675859049694],
+          [145.87698289564605, -16.398790400885044],
+          [145.90478871691369, -16.37433268116923],
+          [145.92761930410154, -16.341884793743866],
+          [145.9244435086921, -16.32130488011204],
+          [145.91358966070334, -16.313978642111035],
+          [145.90177877600206, -16.315111905034705],
+          [145.89065424960745, -16.31888052077881],
+          [145.88075790724156, -16.33035371094197],
+          [145.88668448871363, -16.341641873814247],
+          [145.88449677806648, -16.351569535871693],
+          [145.87790845839413, -16.365756933464045],
+          [145.86396952862492, -16.374826046279587],
+          [145.85167844100363, -16.3826505542935],
+          [145.8387008690654, -16.387508269616987]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - Fiji region
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script generates the data as an asset (for quick load)
+// - Corresponding '_classification' script performs the machine learning classificaiton
+///////////////////////////////
+
+// Need to load the segmentation package
+// https://earthengine.googlesource.com/users/gena/packages/+/master/slic#
+// TODO: need to modify the source code to be able to use 2 bands?
+//var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
+// load analysis params module
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.cancook_ltv2      //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. Segmentation and metrics calculation
+// 4. Export data to asset
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  // OBIA settings
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
+  compactness: 500, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
+  //segment_iters: 3, // number of (SLIC) segmentation iterations
+  //var segment_max = 1499 // must be <reduce_max below (~1500 at this point seems fair)
+  reduce_max: 1500, // the max size of object to be able to reduce
+  //var segment_compactness = 0.7 // higher the number, the more compact (square) objects are
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b3'] : ['B2','B4'], // only handles Landsat/Sentinel-2/Dove
+  
+  // analysis parameters
+  //image_data_scale: sensor_params.pixel, // pixel size of the image data
+  depth_limit: 15, // depth limit for analysis (NB negative values)
+  min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
+  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
+  red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
+  green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
+
+  // export options
+  do_export: false, // export the results?
+  export_scale: sensor_params.pixel, // pixel size to export at
+  segments_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'segmentation',
+  pixels_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'pixels',
+  asset_output: region_params.asset // asset path
+}
+
+var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
+
+
+
+// 2. Data loads & vis
+
+Map.centerObject(map_centre, 12)
+
+// load input data
+var reflec = ee.Image(region_params.dove_image).select(vars.all_bands)
+var depth = ee.Image(region_params.dove_depth)
+var waves = ee.Image(region_params.waves)
+var geomorph = ee.FeatureCollection(region_params.geo_train)
+var benthic = ee.FeatureCollection(region_params.benthic_train)
+
+// define a mask based on min/max depth
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).updateMask(waves)
+
+var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
+var waves = waves.rename('waves')
+
+var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds()}).geometry().convexHull({maxError: 100})
+
+Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
+Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", false) // water depth
+Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+
+
+// 3. Segmentation and metrics calculation
+var slope = ee.Terrain.slope(depth) // slope in degress
+
+// glcm texture (dunno how useful this is yet)
+var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(10).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
+var red_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band + '_asm']).focal_mean(10).rename('red_asm') // mean neighbourhood glcm asm on red
+// local variance in depth and red reflectance (5 pixels)
+var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev')
+var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev')
+
+// calculate pixel or object data
+if (vars.pixel_based) {
+  //// pixel-based data generation
+  // combine data to move forward with
+  var all_data = reflec.addBands(depth).addBands(waves).addBands(slope)
+                  .addBands(depth_glcm).addBands(red_glcm).addBands(depth_var).addBands(red_var)
+                  .updateMask(depth_mask) // make sure all layers are clipped down
+  Map.addLayer(all_data, {}, "Model predictor data", false) 
+} else {
+  //// OBIA data generation
+  // choose data to segment on and segment
+  var segment_on = reflec.select(vars.segment_bands).addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
+                         .updateMask(depth_mask)
+
+  // ***SNIC segmentation***
+  
+  var run_snic = function(bands) {
+    return(
+    ee.Algorithms.Image.Segmentation.SNIC({
+    image: bands,
+    seeds: ee.Algorithms.Image.Segmentation.seedGrid(vars.scale_factor, "hex"),
+    //size: 1000,
+    neighborhoodSize: vars.scale_factor*2,
+    compactness: vars.compactness,
+    connectivity: 4
+    })
+    )
+  }
+  
+  var segmented_data = run_snic(segment_on)
+  Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+  
+   
+  /*
+  // ***SLIC segmentation***
+  segment_on = segment_on.rename(['v1','v2','v3'])
+  var slic = new Slic(segment_on, vars.scale_factor, false)
+  slic.compactness = vars.compactness
+  var segmentation = slic.iterate(vars.segment_iters)
+  var segmented_data = segmentation.image.select('label').rename('clusters').int32()
+  Map.addLayer(segmented_data.randomVisualizer(), {}, "Slic labels", false)
+  */
+  
+  /*
+  // ***k-means segmentation***
+  var segmented_data = ee.Algorithms.Image.Segmentation.KMeans({
+    image: reflec.select(['b2']).addBands(depth), //all_data.select(segment_bands),
+    numClusters: segment_size,
+    numIterations: 10,
+    //neighborhoodSize: 100
+    gridSize: segment_max
+  })
+  Map.addLayer({eeObject: segmented_data, shown: false, name: "Segmentation algorithm segments"})
+  */
+
+  // Calculate object statistics
+  var segmented_data_mean = reflec.addBands(depth).addBands(waves).addBands(slope)
+                            .addBands(depth_glcm).addBands(red_glcm).addBands(depth_var).addBands(red_var)
+                            .addBands(segmented_data.select('clusters'))
+                            .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
+  
+  /*
+  If you wanted to segment on all data - then this inbuilt SNIC functio nreally calcualtes the mean stats super quick!!
+  var segmented_data_mean = run_snic(
+    reflec.addBands(depth).addBands(waves).addBands(slope)
+    .addBands(depth_glcm).addBands(red_glcm).addBands(depth_var).addBands(red_var)
+    ).regexpRename('_mean', '')*/
+  
+  /*
+  // For this analysis anyway, SD has not come up as adding much useful info
+  // Looks like you can also use .combine - and do both mean and SD in one reduction??
+  var segmented_data_sd = reflec.addBands(depth).addBands(waves).addBands(slope)//.addBands(depth_glcm)
+                          .addBands(segmented_data.select('clusters'))
+                          .reduceConnectedComponents(ee.Reducer.stdDev(), "clusters", vars.reduce_max)
+                          //.rename(['b1_sd','b2_sd','b3_sd','b4_sd','b5_sd','depth_mean','waves_sd','slope_sd','depth_corr_sd','depth_var_sd','depth_idm_sd'])
+  */
+  
+  // combine data to move forward with
+  var all_data = segmented_data_mean
+                 //.addBands(segmented_data_sd)
+                 .updateMask(depth_mask)
+                 // remove the cluster band - index starts at 0
+                 //.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
+  Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
+}
+
+
+//all_data.select('b1_1','b2_1','b3_1','b4_1','b5_1').reduce('sum').aside(Map.addLayer, {}, "sd_sum", false)
+//all_data.select('b3','b4','waves','slope','depth').spectralGradient().aside(Map.addLayer, {}, "SAM", false)
+
+/*
+// export data to guide threshold development
+var geomorphic_sample = all_data.sampleRegions({
+  collection: geomorph,
+  properties: ['Class_na_1'],
+  scale: vars.image_data_scale
+})
+
+Export.table.toDrive({
+    collection: geomorphic_sample,
+    description: 'geomorphic_object_sample',
+    folder: output_folder,
+    fileFormat: 'CSV'
+  })
+*/
+
+
+// 4. Export data to asset
+
+var out_scale = (vars.pixel_based) ? vars.export_scale : vars.export_scale * 3 // no need to reduce pixels at native res, we're doign the mean anyway
+
+var export_data = function () {
+  Map.addLayer({eeObject: export_convhull, name: "Export footprint", shown: true})
+  Export.image.toAsset({
+    image: all_data.updateMask(depth_mask).set(vars), //just double check not doing anything outside depth range
+    description: output_name,
+    assetId: vars.asset_output + output_name,
+    scale: vars.export_scale,
+    region: export_convhull,
+    maxPixels: 1e13
+  })
+}
+
+if (vars.do_export) export_data() // export if wanted
