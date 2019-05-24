@@ -97,6 +97,23 @@ var fiji_ltv2 = {
   benthic_map_clean: ""
 }
 
+var fiji_htv2 = {
+  sname: "fj",
+  asset: "projects/coral_atlas/fiji/",
+  dove_image: "projects/coral_atlas/fiji/highTideV2/fj_srHighV2",
+  dove_depth: "projects/coral_atlas/fiji/highTideV2/fj_depthHighV2",
+  dove_pixels: "projects/coral_atlas/fiji/fj_high_pixels",
+  dove_segments: "projects/coral_atlas/fiji/fj_high_segmentation",
+  waves: "",
+  geo_train: "", 
+  benthic_train: "",
+  benthic_pts: "",
+  geo_map: "",
+  benthic_map: "",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
 var gbr = {
   sname: "gbr",
   asset: "gbr_reefs/",
