@@ -118,7 +118,7 @@ var pixels = ee.Image(region_params.dove_pixels)
 var segments = ee.Image(region_params.dove_segments)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
-//var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
+if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
 
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
@@ -342,5 +342,5 @@ if (vars.do_export) {
 
 // last so it sits on top
 Map.addLayer(train_pts, {}, "Training point distribution", false) // Training data points
-Map.addLayer(benthic_pts, {}, "Training field point distribution", false) // Training data points
+if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training field point distribution", false) // Training data points
 Map.addLayer(training_data, {}, "Image training point distribution", false) // Training data points
