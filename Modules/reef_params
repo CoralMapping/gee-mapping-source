@@ -40,6 +40,7 @@ var cancook = {
 
 var cancook_htv2 = {
   sname: "cancook",
+  tide: "high",
   asset: "gbr_reefs/",
   dove_image: "users/mitchest/gbr_reefs/cancook_dove_htv2_rrs",
   dove_depth: "users/mitchest/gbr_reefs/cancook_dove_htv2_depth",
@@ -61,6 +62,7 @@ var cancook_htv2 = {
 
 var cancook_ltv2 = {
   sname: "cancook",
+  tide: "low",
   asset: "gbr_reefs/",
   dove_image: "users/mitchest/gbr_reefs/cancook_dove_ltv2_rrs",
   dove_depth: "users/mitchest/gbr_reefs/cancook_dove_ltv2_depth",
@@ -82,6 +84,7 @@ var cancook_ltv2 = {
 
 var fiji_ltv2 = {
   sname: "fj",
+  tide: "low",
   asset: "projects/coral_atlas/fiji/",
   dove_image: "projects/coral_atlas/fiji/lowTideV2/fj_srLowV2",
   dove_depth: "projects/coral_atlas/fiji/lowTideV2/fj_depthLowV2",
@@ -99,6 +102,7 @@ var fiji_ltv2 = {
 
 var fiji_htv2 = {
   sname: "fj",
+  tide: "high",
   asset: "projects/coral_atlas/fiji/",
   dove_image: "projects/coral_atlas/fiji/highTideV2/fj_srHighV2",
   dove_depth: "projects/coral_atlas/fiji/highTideV2/fj_depthHighV2",
@@ -116,6 +120,7 @@ var fiji_htv2 = {
 
 var gbr = {
   sname: "gbr",
+  tide: "anytide",
   asset: "gbr_reefs/",
   dove_image: "",
   dove_depth: "",
