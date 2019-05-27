@@ -59,8 +59,8 @@ var vars = {
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  segments_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'segmentation',
-  pixels_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'pixels',
+  segments_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_' + 'segmentation',
+  pixels_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_' + 'pixels',
   asset_output: region_params.asset // asset path
 }
 
