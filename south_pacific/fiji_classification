@@ -105,8 +105,8 @@ var vars = {
   // export options
   do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo',
-  benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic',
+  geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_geo',
+  benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_benthic',
   asset_output: region_params.asset, // asset path
 
 }
