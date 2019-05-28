@@ -84,6 +84,9 @@ var vars = {
   set_seed: 42, // set a seed so results are repeatable
 
   // class information for classification, sampling and reporting
+  // trim input data
+  trim_training_data: true, // if true, will trim the trianing data set by the % below
+  trim_training_perc: 0.6,
   // geomorphic
   nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
   nosamp_numpix_geo: [0, 0, 5000, 0,  0 ], // set number of pixels to sample from above classes
@@ -122,6 +125,15 @@ if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_param
 
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+
+print(all_training_data.size())
+
+if (vars.trim_training_data) {
+  all_training_data = all_training_data.randomColumn()
+  all_training_data = all_training_data.filterMetadata("random", "less_than", vars.all_training_perc)
+}
+
+print(all_training_data.size())
 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
