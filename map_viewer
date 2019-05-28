@@ -12,7 +12,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
     cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
     fiji_pixels = ee.Image("projects/coral_atlas/fiji/fj_high_pixels"),
-    fiji_high_geo = ee.Image("projects/coral_atlas/fiji/fj_high_geo");
+    fiji_high_geo = ee.Image("projects/coral_atlas/fiji/fj_high_geo"),
+    fiji_high_benthic = ee.Image("projects/coral_atlas/fiji/fj_high_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -41,6 +42,7 @@ Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, 
 
 // fiji
 Map.addLayer(fiji_high_geo.selfMask(), map_palettes.geo, "Dove Fiji Geo - RAW H-tide", false)
+Map.addLayer(fiji_high_benthic.selfMask(), map_palettes.geo, "Dove Fiji Benthic - RAW H-tide", false)
 
 
 // add training point distributions
