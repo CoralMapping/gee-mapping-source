@@ -42,7 +42,7 @@ Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, 
 
 // fiji
 Map.addLayer(fiji_high_geo.selfMask(), map_palettes.geo, "Dove Fiji Geo - RAW H-tide", false)
-Map.addLayer(fiji_high_benthic.selfMask(), map_palettes.geo, "Dove Fiji Benthic - RAW H-tide", false)
+Map.addLayer(fiji_high_benthic.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - RAW H-tide", false)
 
 
 // add training point distributions
