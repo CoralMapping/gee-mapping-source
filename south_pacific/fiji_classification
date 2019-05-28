@@ -78,7 +78,7 @@ var vars = {
   
   // classification params
   train_size: 2000,
-  rf_trees: 30, // number of random forest trees (per class)
+  rf_trees: 90, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
   rf_varPerSplit: 0, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
