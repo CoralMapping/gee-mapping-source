@@ -130,10 +130,11 @@ print(all_training_data.size())
 
 if (vars.trim_training_data) {
   all_training_data = all_training_data.randomColumn()
-  all_training_data = all_training_data.filterMetadata("random", "less_than", vars.all_training_perc)
+  print(all_training_data.first())
+  all_training_data = all_training_data.filterMetadata("random", "less_than", ee.Number(vars.all_training_perc))
 }
 
-print(all_training_data.size())
+print(all_training_data.first())
 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
