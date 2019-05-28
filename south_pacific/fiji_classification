@@ -129,12 +129,12 @@ var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the traini
 print(all_training_data.size())
 
 if (vars.trim_training_data) {
-  all_training_data = all_training_data.randomColumn()
+  all_training_data = all_training_data.randomColumn('random')
   print(all_training_data.first())
-  all_training_data = all_training_data.filterMetadata("random", "less_than", ee.Number(vars.all_training_perc))
+  all_training_data = all_training_data.filter(ee.Filter.lte('random', vars.all_training_perc))
 }
 
-print(all_training_data.first())
+print(all_training_data.size())
 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
