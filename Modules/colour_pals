@@ -46,7 +46,7 @@ var benthic_pal = {
   palette: [ // the benthic classificaiton palette (NB in raster class value order)
     'ffffff', // 0 =  Ignore
     '004529', // 1 =  Land
-    '08306b', // 2 =  Deep
+    '08306b', // 2 =  Temporal*
     '99d8c9', // 3 =  Mangrove
     'ffff5c', // 4 =  Mud
     'ffffff', // 5 =  place-holder
@@ -75,7 +75,7 @@ var geo_names = ['Deep', 'Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Ou
 var geo_cols = ['08306b', '5ce0ff',           '0868ac',     'ffffbf',           'ffcc7a',         'a50f15',   'd9f0a3',         'd4d417',         'bdbdbd',   '02818a',             'deebf7',     'deebf7']
 
 // geo legend
-var benthic_names = ['Deep', 'Sand',    'Rubble', 'Rock', 'Coral/Algae', 'Coral',   'Mud',    'Mangrove', 'Seagrass']
+var benthic_names = ['Temporal*', 'Sand',    'Rubble', 'Rock', 'Coral/Algae', 'Coral',   'Mud',    'Mangrove', 'Seagrass']
 var benthic_cols = ['08306b','ffffcc', 'fcbba1', '993404', '5cfaff',      '5cfaff', 'ffff5c', '99d8c9',     'a6d96a']
 
 exports = {
