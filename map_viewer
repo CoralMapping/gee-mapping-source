@@ -25,7 +25,7 @@ var centre_map = Fiji
 Map.centerObject(centre_map, 11)
 
 // add some background data
-
+Map.addLayer(fiji_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
 
 
 // add the map data layers
