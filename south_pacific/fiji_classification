@@ -125,16 +125,11 @@ if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_param
 
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
-
-print(all_training_data.size())
-
+// trim the data (randomly) if needed
 if (vars.trim_training_data) {
-  all_training_data = all_training_data.randomColumn('random')
-  print(all_training_data.first())
-  all_training_data = all_training_data.filter(ee.Filter.lte('random', vars.all_training_perc))
+  all_training_data = all_training_data.randomColumn("random")
+  all_training_data = all_training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
 }
-
-print(all_training_data.size())
 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
