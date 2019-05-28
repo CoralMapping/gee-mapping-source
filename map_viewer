@@ -3,23 +3,12 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     Capricorn = /* color: #98ff00 */ee.Geometry.Point([151.913537635627, -23.452680584823657]),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     waves_c2c = ee.Image("users/danleeharris/gbr_waves/C2C_v2"),
-    gbr_sentinel = ee.Image("users/mitchest/gbr_reefs/gbr_sentinel2x"),
     gbr_geo_map30 = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map30"),
     gbr_s2_geo = ee.Image("users/mitchest/gbr_reefs/gbr_s2_geo"),
     gbr_s2_benthic = ee.Image("users/mitchest/gbr_reefs/gbr_s2_benthic"),
-    cancook_dove_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo"),
-    cancook_dove_ltv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_geo"),
-    cancook_dove_ht_pixels = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_pixels"),
-    cancook_dove_ht_segmentation = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_segmentation"),
-    cancook_dove_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic"),
-    cancook_dove_htv2_benthic_pts = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-pts"),
     cancook_dove_htv2_benthic_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"),
-    cancook_dove_ltv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_ltv2_benthic"),
-    cancook_dove_geo_nd50 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_geo-nd50"),
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
-    cancook_dove_htv2_geo_clean1 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean1"),
-    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
-    cancook_dove_htv2_benthic_clean5x = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5x");
+    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -45,19 +34,12 @@ Map.addLayer(gbr_geo_map30.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Ca
 Map.addLayer(gbr_s2_geo.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Cancook trained)", false)
 Map.addLayer(gbr_s2_benthic.selfMask(), map_palettes.benthic, "Sentinel-2 GBR benthic (Cancook trained)", false)
 //Carins to Cooktown
-Map.addLayer(cancook_dove_htv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw H-tide", false)
-Map.addLayer(cancook_dove_htv2_geo_clean1.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - base clean H-tide", false)
-//Map.addLayer(cancook_dove_htv2_geo_clean2a.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - final clean-a H-tide", false)
 Map.addLayer(cancook_dove_htv2_geo_clean2.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - final clean H-tide", false)
-Map.addLayer(cancook_dove_ltv2_geo.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - raw L-tide", false)
-Map.addLayer(cancook_dove_geo_nd50.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - no depth", false)
-Map.addLayer(cancook_dove_htv2_benthic_pts.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - map + field points H-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - clean H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
-Map.addLayer(cancook_dove_ltv2_benthic.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - raw L-tide", false)
 
+// fiji
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
