@@ -1,14 +1,18 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.343697740921982]),
     Capricorn = /* color: #98ff00 */ee.Geometry.Point([151.913537635627, -23.452680584823657]),
+    Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.16988549547624]),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     waves_c2c = ee.Image("users/danleeharris/gbr_waves/C2C_v2"),
     gbr_geo_map30 = ee.Image("users/mitchest/gbr_reefs/gbr_geo_map30"),
     gbr_s2_geo = ee.Image("users/mitchest/gbr_reefs/gbr_s2_geo"),
     gbr_s2_benthic = ee.Image("users/mitchest/gbr_reefs/gbr_s2_benthic"),
+    cancook_pixels = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_pixels"),
     cancook_dove_htv2_benthic_clean = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"),
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
-    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5");
+    cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
+    fiji_pixels = ee.Image("projects/coral_atlas/fiji/fj_high_pixels"),
+    fiji_high_geo = ee.Image("projects/coral_atlas/fiji/fj_high_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -17,15 +21,11 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choose where to centre (link this dynamically to map app?)
-var centre_map = Cairns
+var centre_map = Fiji
 Map.centerObject(centre_map, 11)
 
 // add some background data
-Map.addLayer(gbr_sentinel, {bands: ['B4','B3','B2'], min: 360, max: 2000}, "Sentinel-2 mosaic", false)
-Map.addLayer(cancook_dove_ht_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(cancook_dove_ht_pixels.select('depth'), depth_pal, "Dove H-tide depth moasic", false)
-Map.addLayer(cancook_dove_ht_segmentation, {bands: ['b3','b2','b1'], min: 66, max: 1380}, "Dove H-tide segmentation mosaic", false)
-//Map.addLayer(waves_c2c, {bands: ['b1'], min: -0.05, max: 1.8}, "C2C wave data from Dove data", false)
+
 
 
 // add the map data layers
@@ -40,6 +40,8 @@ Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, 
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
 
 // fiji
+Map.addLayer(fiji_high_geo.selfMask(), map_palettes.geo, "Dove Fiji Geo - RAW H-tide", false)
+
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
