@@ -12,10 +12,15 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
     cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
     fiji_pixels = ee.Image("projects/coral_atlas/fiji/fj_high_pixels"),
-    fiji_high_geo = ee.Image("projects/coral_atlas/fiji/fj_high_geo"),
-    fiji_high_benthic = ee.Image("projects/coral_atlas/fiji/fj_high_benthic"),
-    fiji_high_benthic2k = ee.Image("projects/coral_atlas/fiji/fj_high_benthic2k"),
-    fiji_high_geo2k = ee.Image("projects/coral_atlas/fiji/fj_high_geo2k");
+    fiji_benthic_1k30t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic1k30t"),
+    fiji_benthic_2k30t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic2k30t"),
+    fiji_benthic_2k100t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic2k100t"),
+    fiji_geo_1k30t = ee.Image("projects/coral_atlas/fiji/fj_high_geo1k30t"),
+    fiji_geo_2k30t = ee.Image("projects/coral_atlas/fiji/fj_high_geo2k30t"),
+    fiji_geo_2k100t = ee.Image("projects/coral_atlas/fiji/fj_high_geo2k100t"),
+    fiji_geo_briboth2k40t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briboth2k40t"),
+    fiji_geo_briseg2k40t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briseg2k40t"),
+    fiji_geo_briseg2k90t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briseg2k90t");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -43,10 +48,16 @@ Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, 
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
 
 // fiji
-Map.addLayer(fiji_high_geo.selfMask(), map_palettes.geo, "Dove Fiji Geo - RAW H-tide", false)
-Map.addLayer(fiji_high_benthic.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - RAW H-tide", false)
-Map.addLayer(fiji_high_geo2k.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k - RAW H-tide", false)
-Map.addLayer(fiji_high_benthic2k.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k - RAW H-tide", false)
+Map.addLayer(fiji_benthic_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 1k30t", false)
+Map.addLayer(fiji_benthic_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k30t", false)
+Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k 2k100t", false)
+
+Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 1k30t", false)
+Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 2k30t", false)
+Map.addLayer(fiji_geo_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 2k100t", false)
+Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright both 2k40t", false)
+Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright seg 2k40t", false)
+Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright seg 2k90t", false)
 
 
 // add training point distributions
