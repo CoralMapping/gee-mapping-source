@@ -74,7 +74,7 @@ var vars = {
   small_object_filter: 50, // size in pixels (output scale) for small object removal
   
   // add relative band brightness to predictor variables?
-  use_brightness: true,
+  use_brightness: false,
   
   // zone thresholds
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
@@ -141,15 +141,19 @@ var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_num
 var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic*/
 
 
-// Add any extra indices needed
+// Add any extra indices needed (MOVE THIS TO DATA GEN AFTER TESTING)
 
 // ndwi (not really, but conceptually achieves it when everything is water...)
-segments = segments.addBands(
-  segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
+segments = segments
+              .addBands(segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
+              .addBands(segments.select('b3').divide(segments.select('b1')).rename('rb'))
+              .addBands(segments.select('b2').divide(segments.select('b1')).rename('gb'))
+              .addBands(segments.select('b3').divide(segments.select('b2')).rename('rg'))
+              
 pixels = pixels.addBands(
   pixels.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
 
-// replace the band values with relatvie brightness values
+// replace the band values with relatvie brightness values if set
 if (vars.use_brightness) {
   segments = segments
     .addBands({overwrite: true, srcImg:
