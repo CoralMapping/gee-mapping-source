@@ -56,7 +56,7 @@ Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 1k30t",
 Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k30t", false)
 Map.addLayer(fiji_geo_2k100t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k100t", false)
 Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright both 2k40t", false)
-Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
+Map.addLayer(fiji_geo_briseg2k40t.unmask(0).focal_mode({radius:1,iterations:2}).selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
 Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k90t", false)
 
 
