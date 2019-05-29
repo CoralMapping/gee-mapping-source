@@ -92,22 +92,26 @@ Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
-// TESTING // ################################################### //
+// TESTING DEPTH IMPORVEMENTS // ################################################### //
 
 Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
 Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
 
-Map.addLayer(depth.lt(3).selfMask(), {}, "3m depth mask", false)
 
-var rbratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10)
+
+// TESTING OUTLINE EXTRACTION // ################################################### //
+
+var rbratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10) // get reef area + land
+
+var nir_ratio = reflec.select('b4').divide(reflec.select('b1')).focal_median(10) // mask out land
+
+Map.addLayer(depth.lt(3).selfMask(), {}, "3m depth mask", false)
 Map.addLayer(rbratio, {}, "rb ratio", false)
 Map.addLayer(rbratio.gt(0.5).selfMask(), {}, "rb ratio mask", false)
-
-var nir_ratio = reflec.select('b4').divide(reflec.select('b1')).focal_median(10)
 Map.addLayer(nir_ratio.gt(1).selfMask(), {}, "nir ratio mask", false)
 
+// END TESTING // ################################################### //
 
-// ################################################### //
 
 
 // 3. Segmentation and metrics calculation
