@@ -154,42 +154,42 @@ if (vars.use_brightness) {
   segments = segments
     .addBands({overwrite: true, srcImg:
     segments.expression(' B / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b1')})
+      'B': segments.select('b1'),
+      'G': segments.select('b2'),
+      'R': segments.select('b3') }).rename('b1')})
     .addBands({overwrite: true, srcImg:
     segments.expression(' G / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b2')})
+      'B': segments.select('b1'),
+      'G': segments.select('b2'),
+      'R': segments.select('b3') }).rename('b2')})
     .addBands({overwrite: true, srcImg:
     segments.expression(' R / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b3')})
+      'B': segments.select('b1'),
+      'G': segments.select('b2'),
+      'R': segments.select('b3') }).rename('b3')})
     
   pixels = pixels
     .addBands({overwrite: true, srcImg:
     pixels.expression(' B / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b1')})
+      'B': pixels.select('b1'),
+      'G': pixels.select('b2'),
+      'R': pixels.select('b3') }).rename('b1')})
     .addBands({overwrite: true, srcImg:
     pixels.expression(' G / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b2')})
+      'B': pixels.select('b1'),
+      'G': pixels.select('b2'),
+      'R': pixels.select('b3') }).rename('b2')})
     .addBands({overwrite: true, srcImg:
     pixels.expression(' R / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b3')})
+      'B': pixels.select('b1'),
+      'G': pixels.select('b2'),
+      'R': pixels.select('b3') }).rename('b3')})
 }
 
 
 // make the combined pixels and segemnts data
 // and ensure they're masked the same
-segments = segments.updateMask(pixels)
+pixels = segments.updateMask(pixels)
 pixels = segments.updateMask(segments)
 var pixsegs = pixels.addBands(segments)
                 // test remoing depth from classification
