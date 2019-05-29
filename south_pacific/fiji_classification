@@ -64,7 +64,7 @@ var vars = {
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
   // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
+  pixels_or_objects: 'both', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -109,7 +109,7 @@ var vars = {
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_geo',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_benthic',
