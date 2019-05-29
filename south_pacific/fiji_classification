@@ -64,7 +64,7 @@ var vars = {
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
   // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'segments', // one of 'both', 'pixels' or 'segments', where 'both' means both pixel and object input data combined 
+  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
