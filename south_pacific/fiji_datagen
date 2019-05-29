@@ -114,14 +114,12 @@ var depth_rb = depth.multiply(rbratio)
 
 Map.addLayer(rbratio, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "rb ratio", false)
 Map.addLayer(b_bright, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright", false)
-Map.addLayer(depth_bbri, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "depth index", false)
-Map.addLayer(depth_rb, {palette:['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061']}, "depth index", false)
+Map.addLayer(depth_bbri, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "depth + b bright", false)
+Map.addLayer(depth_rb, {palette:['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061']}, "depth + rb ratio", false)
 
 Map.addLayer(depth.lt(3).selfMask(), {palette:'4eb3d3'}, "3m depth mask", false)
 Map.addLayer(rbratio.gt(0.4).selfMask(), {palette:'feb24c'}, "rb ratio mask", false)
-Map.addLayer(depth_idx.lt(5).selfMask(), {palette:'bf812d'}, "dix ratio mask", false)
-
-Map.addLayer(depth.lt(5).and(depth_idx.lt(5)).selfMask(), {palette:'c51b7d'}, "dix depth mask", false)
+Map.addLayer(depth_bbri.lt(5).selfMask(), {palette:'bf812d'}, "dix ratio mask", false)
 
 Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", false)
 
