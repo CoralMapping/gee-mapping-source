@@ -108,6 +108,17 @@ var b_bright = reflec.expression(' B / (B + G + R)', {
   'G': reflec.select('b2'),
   'R': reflec.select('b3')
 })
+var g_bright = reflec.expression(' G / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var r_bright = reflec.expression(' R / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var brightness = b_bright.add(g_bright).add(r_bright)
 
 var depth_bbri = depth.multiply(b_bright)
 var depth_rb = depth.multiply(rbratio)
@@ -118,6 +129,7 @@ Map.addLayer(b_bright, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed
 Map.addLayer(bbri_rb, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright + rb", false)
 Map.addLayer(depth_bbri, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "depth + b bright", false)
 Map.addLayer(depth_rb, {palette:['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061']}, "depth + rb ratio", false)
+Map.addLayer(brightness, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "rgb brightness", false)
 
 Map.addLayer(depth.lt(3).selfMask(), {palette:'4eb3d3'}, "3m depth mask", false)
 Map.addLayer(rbratio.gt(0.4).selfMask(), {palette:'feb24c'}, "rb ratio mask", false)
