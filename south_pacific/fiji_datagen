@@ -98,7 +98,7 @@ Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
 Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
 
 
-
+/*
 // TESTING OUTLINE EXTRACTION // ################################################### //
 
 var rbratio = reflec.select('b3').divide(reflec.select('b1')) // get reef area + land
@@ -125,7 +125,7 @@ Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", f
 
 // END TESTING // ################################################### //
 
-
+*/
 
 // 3. Segmentation and metrics calculation
 var slope = ee.Terrain.slope(depth) // slope in degress
