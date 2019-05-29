@@ -81,8 +81,8 @@ var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 
-Map.addLayer(depth, {min:0,max:14}, "raw depth", false)
-Map.addLayer(depth.focal_mean({radius: 3, units: 'pixels'}).updateMask(depth.gt(0)), {min:0,max:14}, "smooth depth", false)
+Map.addLayer(depth, {min:1,max:13}, "raw depth", false)
+Map.addLayer(depth.focal_mean({radius: 3, units: 'pixels'}).updateMask(depth.gt(0)), {min:1,max:13}, "smooth depth", false)
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
