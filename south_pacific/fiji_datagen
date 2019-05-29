@@ -120,8 +120,8 @@ var r_bright = reflec.expression(' R / (B + G + R)', {
 })
 
 var ratio_bright = reflec.select('b3').divide(reflec.select('b1'))
-                    .add(reflec.select('b2').divide(reflec.select('b3')))
-                    .add(reflec.select('b2').divide(reflec.select('b1')))
+                    .multiply(reflec.select('b2').divide(reflec.select('b3')))
+                    .multiply(reflec.select('b2').divide(reflec.select('b1')))
       
 
 var depth_bbri = depth.multiply(b_bright)
