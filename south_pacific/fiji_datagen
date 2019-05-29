@@ -97,9 +97,15 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", fals
 Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
 Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
 
-var ratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10)
-Map.addLayer(ratio, {}, "ratio", false)
-Map.addLayer(ratio.gt(0.5).selfMask(), {}, "ratio mask", false)
+Map.addLayer(depth.lt(3).selfMask(), {}, "3m depth mask", false)
+
+var rbratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10)
+Map.addLayer(rbratio, {}, "rb ratio", false)
+Map.addLayer(rbratio.gt(0.5).selfMask(), {}, "rb ratio mask", false)
+
+var nir_ratio = reflec.select('b4').divide(reflec.select('b1')).focal_median(10)
+Map.addLayer(nir_ratio.gt(1).selfMask(), {}, "nir ratio mask", false)
+
 
 // ################################################### //
 
