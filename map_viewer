@@ -52,12 +52,12 @@ Map.addLayer(fiji_benthic_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Ben
 Map.addLayer(fiji_benthic_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k30t", false)
 Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k 2k100t", false)
 
-Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 1k30t", false)
-Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 2k30t", false)
-Map.addLayer(fiji_geo_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Geo 2k100t", false)
-Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright both 2k40t", false)
-Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright seg 2k40t", false)
-Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.benthic, "Dove Fiji Geo bright seg 2k90t", false)
+Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 1k30t", false)
+Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k30t", false)
+Map.addLayer(fiji_geo_2k100t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k100t", false)
+Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright both 2k40t", false)
+Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
+Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k90t", false)
 
 
 // add training point distributions
