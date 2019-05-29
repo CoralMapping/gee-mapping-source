@@ -105,10 +105,10 @@ var rbratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10) /
 
 var nir_ratio = reflec.select('b4').divide(reflec.select('b1')).focal_median(10) // mask out land
 
-Map.addLayer(depth.lt(3).selfMask(), {}, "3m depth mask", false)
+Map.addLayer(depth.lt(3).selfMask(), {palette:'4eb3d3'}, "3m depth mask", false)
 Map.addLayer(rbratio, {}, "rb ratio", false)
-Map.addLayer(rbratio.gt(0.5).selfMask(), {}, "rb ratio mask", false)
-Map.addLayer(nir_ratio.gt(1).selfMask(), {}, "nir ratio mask", false)
+Map.addLayer(rbratio.gt(0.3).selfMask(), {palette:'feb24c'}, "rb ratio mask", false)
+Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", false)
 
 // END TESTING // ################################################### //
 
