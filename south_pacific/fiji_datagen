@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([178.4832000732422, -18.216959399416115]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Fiji region
@@ -70,7 +70,7 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 
 // 2. Data loads & vis
 
-Map.centerObject(map_centre, 12)
+Map.centerObject(map_centre, 15)
 
 // load input data
 var reflec = ee.Image(region_params.dove_image).select(vars.all_bands)
@@ -79,10 +79,6 @@ depth = depth.where(depth.eq(-0.01), 0.1)
 //var waves = ee.Image(region_params.waves)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
-
-
-Map.addLayer(depth, {min:1,max:13}, "raw depth", false)
-Map.addLayer(depth.focal_min({radius: 2, units: 'pixels'}).updateMask(depth.gt(0)), {min:1,max:13}, "smooth depth", false)
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
@@ -95,6 +91,17 @@ var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+
+// TESTING // ################################################### //
+
+Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
+Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
+
+var ratio = reflec.select('b3').divide(reflec.select('b1')).focal_median(10)
+Map.addLayer(ratio, {}, "ratio", false)
+Map.addLayer(ratio.gt(0.5).selfMask(), {}, "ratio mask", false)
+
+// ################################################### //
 
 
 // 3. Segmentation and metrics calculation
