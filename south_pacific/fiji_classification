@@ -152,38 +152,38 @@ pixels = pixels.addBands(
 // replace the band values with relatvie brightness values
 if (vars.use_brightness) {
   segments = segments
-    .addBands()
+    .addBands({overwrite: true, srcImg:
     segments.expression(' B / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b_bri')
-    .addBands(
+      'R': reflec.select('b3') }).rename('b1')})
+    .addBands({overwrite: true, srcImg:
     segments.expression(' G / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('g_bri'))
-    .addBands(
+      'R': reflec.select('b3') }).rename('b2')})
+    .addBands({overwrite: true, srcImg:
     segments.expression(' R / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('r_bri'))
+      'R': reflec.select('b3') }).rename('b3')})
     
-    pixels = pixels
-    .addBands()
+  pixels = pixels
+    .addBands({overwrite: true, srcImg:
     pixels.expression(' B / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b_bri')
-    .addBands(
+      'R': reflec.select('b3') }).rename('b1')})
+    .addBands({overwrite: true, srcImg:
     pixels.expression(' G / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('g_bri'))
-    .addBands(
+      'R': reflec.select('b3') }).rename('b2')})
+    .addBands({overwrite: true, srcImg:
     pixels.expression(' R / (B + G + R)', {
       'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('r_bri'))
+      'R': reflec.select('b3') }).rename('b3')})
 }
 
 
