@@ -72,20 +72,21 @@ var vars = {
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
   small_object_filter: 50, // size in pixels (output scale) for small object removal
+  use_brightness: true, // add relative band brightness to predictor variables
   
   // zone thresholds
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
   train_size: 2000,
-  rf_trees: 90, // number of random forest trees (per class)
+  rf_trees: 40, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
   rf_varPerSplit: 0, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
 
   // class information for classification, sampling and reporting
   // trim input data
-  trim_training_data: true, // if true, will trim the training data set by the % below
+  trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.6,
   // geomorphic
   nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
@@ -106,7 +107,7 @@ var vars = {
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_geo',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_benthic',
@@ -139,6 +140,22 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 
 
 // Add any extra indices needed
+if vars.
+var reflec_ratios = 
+    reflec.expression(' B / (B + G + R)', {
+      'B': reflec.select('b3'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b1') }).rename('b_bri')
+    .addBands(
+    reflec.expression(' G / (B + G + R)', {
+      'B': reflec.select('b3'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b1') }).rename('g_bri'))
+    .addBands(
+    reflec.expression(' R / (B + G + R)', {
+      'B': reflec.select('b3'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b1') }).rename('r_bri'))
 
 // ndwi (not really, but conceptually achieves it when everything is water...)
 segments = segments.addBands(
