@@ -82,7 +82,7 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 
 Map.addLayer(depth, {min:1,max:13}, "raw depth", false)
-Map.addLayer(depth.focal_min({radius: 10, units: 'pixels'}).updateMask(depth.gt(0)), {min:1,max:13}, "smooth depth", false)
+Map.addLayer(depth.focal_min({radius: 2, units: 'pixels'}).updateMask(depth.gt(0)), {min:1,max:13}, "smooth depth", false)
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
