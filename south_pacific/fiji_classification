@@ -72,7 +72,9 @@ var vars = {
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
   small_object_filter: 50, // size in pixels (output scale) for small object removal
-  use_brightness: false, // add relative band brightness to predictor variables
+  
+  // add relative band brightness to predictor variables?
+  use_brightness: true,
   
   // zone thresholds
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
