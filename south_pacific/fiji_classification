@@ -72,7 +72,7 @@ var vars = {
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
   small_object_filter: 50, // size in pixels (output scale) for small object removal
-  use_brightness: true, // add relative band brightness to predictor variables
+  use_brightness: false, // add relative band brightness to predictor variables
   
   // zone thresholds
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
@@ -140,22 +140,42 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 
 
 // Add any extra indices needed
-if vars.
-var reflec_ratios = 
-    reflec.expression(' B / (B + G + R)', {
-      'B': reflec.select('b3'),
+if (vars.use_brightness) {
+  segments = segments
+    .addBands()
+    segments.expression(' B / (B + G + R)', {
+      'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b1') }).rename('b_bri')
+      'R': reflec.select('b3') }).rename('b_bri')
     .addBands(
-    reflec.expression(' G / (B + G + R)', {
-      'B': reflec.select('b3'),
+    segments.expression(' G / (B + G + R)', {
+      'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b1') }).rename('g_bri'))
+      'R': reflec.select('b3') }).rename('g_bri'))
     .addBands(
-    reflec.expression(' R / (B + G + R)', {
-      'B': reflec.select('b3'),
+    segments.expression(' R / (B + G + R)', {
+      'B': reflec.select('b1'),
       'G': reflec.select('b2'),
-      'R': reflec.select('b1') }).rename('r_bri'))
+      'R': reflec.select('b3') }).rename('r_bri'))
+    
+    pixels = pixels
+    .addBands()
+    pixels.expression(' B / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('b_bri')
+    .addBands(
+    pixels.expression(' G / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('g_bri'))
+    .addBands(
+    pixels.expression(' R / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('r_bri'))
+}
+
 
 // ndwi (not really, but conceptually achieves it when everything is water...)
 segments = segments.addBands(
