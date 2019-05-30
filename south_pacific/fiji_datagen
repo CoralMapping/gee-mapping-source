@@ -157,25 +157,25 @@ if (vars.use_brightness) {
   reflec = reflec
     .addBands({overwrite: true, srcImg:
     reflec.expression(' B / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b1')})
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.blue_band)})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' G / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b2')})
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.green_band)})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' R / (B + G + R)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3') }).rename('b3')})
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.red_band)})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' N / (B + G + R + N)', {
-      'B': reflec.select('b1'),
-      'G': reflec.select('b2'),
-      'R': reflec.select('b3'),
-      'N': reflec.select('b4')}).rename('b4')})
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band),
+      'N': reflec.select(vars.nir_band)}).rename(vars.nir_band)})
 }
 
 var slope = ee.Terrain.slope(depth) // slope in degress
