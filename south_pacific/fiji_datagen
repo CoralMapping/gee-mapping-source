@@ -55,6 +55,7 @@ var vars = {
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
   green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
+  blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
 
   // export options
   do_export: false, // export the results?
@@ -98,7 +99,7 @@ Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
 Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
 
 
-
+/*
 // TESTING OUTLINE EXTRACTION // ################################################### //
 
 var rbratio = reflec.select('b3').divide(reflec.select('b1')) // get reef area + land
@@ -142,10 +143,14 @@ Map.addLayer(depth_bbri.lt(5).selfMask(), {palette:'bf812d'}, "dix ratio mask", 
 Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", false)
 
 // END TESTING // ################################################### //
-
+ */
 
 
 // 3. Segmentation and metrics calculation
+
+
+print(vars.)
+
 var slope = ee.Terrain.slope(depth) // slope in degress
 
 // glcm texture (dunno how useful this is yet)
