@@ -181,7 +181,7 @@ if (vars.use_brightness) {
 var slope = ee.Terrain.slope(depth) // slope in degress
 
 // glcm texture (dunno how useful this is yet)
-var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(10).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
+var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
 var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band + '_asm']).focal_mean(10).rename('red_asm') // mean neighbourhood glcm asm on red
 // local variance in depth and red reflectance (5 pixels)
 var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev')
