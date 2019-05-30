@@ -56,7 +56,11 @@ var vars = {
   red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
   green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
-
+  nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
+  
+  // use relative band brightness as predictor variables (instead of Rrs values)?
+  use_brightness: true,
+  
   // export options
   do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
@@ -76,7 +80,7 @@ Map.centerObject(map_centre, 15)
 // load input data
 var reflec = ee.Image(region_params.dove_image).select(vars.all_bands)
 var depth = ee.Image(region_params.dove_depth).divide(100) //(NB depth is *100 in integer values)
-depth = depth.where(depth.eq(-0.01), 0.1)
+depth = depth.where(depth.eq(-0.01), 0.1) // handle "too shallow" retrievals
 //var waves = ee.Image(region_params.waves)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
@@ -90,16 +94,16 @@ var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100)}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15}, "Water depth (m)", false) // water depth
+Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
+
+/*
 // TESTING DEPTH IMPORVEMENTS // ################################################### //
 
 Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
 Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
 
-
-/*
 // TESTING OUTLINE EXTRACTION // ################################################### //
 
 var rbratio = reflec.select('b3').divide(reflec.select('b1')) // get reef area + land
@@ -148,8 +152,31 @@ Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", f
 
 // 3. Segmentation and metrics calculation
 
-
-print(vars.)
+// replace the band values with relatvie brightness values if set
+if (vars.use_brightness) {
+  reflec = reflec
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' B / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('b1')})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' G / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('b2')})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' R / (B + G + R)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3') }).rename('b3')})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' N / (B + G + R + N)', {
+      'B': reflec.select('b1'),
+      'G': reflec.select('b2'),
+      'R': reflec.select('b3'),
+      'N': reflec.select('b4')}).rename('b4')})
+}
 
 var slope = ee.Terrain.slope(depth) // slope in degress
 
