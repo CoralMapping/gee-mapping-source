@@ -62,7 +62,7 @@ var vars = {
   use_brightness: true,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   segments_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_' + 'segmentation',
   pixels_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_' + 'pixels',
@@ -91,7 +91,7 @@ var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.upda
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
 
-var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100)}).geometry().convexHull({maxError: 100})
+var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
