@@ -40,13 +40,13 @@ var region_params = param_module.fiji_htv2      //<------------ THIS IS WHERE YO
 var vars = {
   // OBIA settings
   pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
-  scale_factor: 15, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
-  compactness: 500, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
+  scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
+  compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
-  //var segment_max = 1499 // must be <reduce_max below (~1500 at this point seems fair)
+  //segment_max: 1499, // must be <reduce_max below (~1500 at this point seems fair)
   reduce_max: 1500, // the max size of object to be able to reduce
-  //var segment_compactness = 0.7 // higher the number, the more compact (square) objects are
-  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b3'] : ['B2','B4'], // only handles Landsat/Sentinel-2/Dove
+  //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B2','B4'], // only handles Landsat/Sentinel-2/Dove
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -159,23 +159,23 @@ if (vars.use_brightness) {
     reflec.expression(' B / (B + G + R)', {
       'B': reflec.select(vars.blue_band),
       'G': reflec.select(vars.green_band),
-      'R': reflec.select(vars.red_band) }).rename(vars.blue_band)})
+      'R': reflec.select(vars.red_band) }).rename(vars.blue_band).multiply(10000).int16()})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' G / (B + G + R)', {
       'B': reflec.select(vars.blue_band),
       'G': reflec.select(vars.green_band),
-      'R': reflec.select(vars.red_band) }).rename(vars.green_band)})
+      'R': reflec.select(vars.red_band) }).rename(vars.green_band).multiply(10000).int16()})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' R / (B + G + R)', {
       'B': reflec.select(vars.blue_band),
       'G': reflec.select(vars.green_band),
-      'R': reflec.select(vars.red_band) }).rename(vars.red_band)})
+      'R': reflec.select(vars.red_band) }).rename(vars.red_band).multiply(10000).int16()})
     .addBands({overwrite: true, srcImg:
     reflec.expression(' N / (B + G + R + N)', {
       'B': reflec.select(vars.blue_band),
       'G': reflec.select(vars.green_band),
       'R': reflec.select(vars.red_band),
-      'N': reflec.select(vars.nir_band)}).rename(vars.nir_band)})
+      'N': reflec.select(vars.nir_band)}).rename(vars.nir_band).multiply(10000).int16()})
 }
 
 // calculate slope
@@ -202,7 +202,7 @@ if (vars.pixel_based) {
 } else {
   //// OBIA data generation
   // choose data to segment on and segment
-  var segment_on = reflec.select(vars.segment_bands).addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
+  var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
                          .updateMask(depth_mask)
 
   // ***SNIC segmentation***
@@ -224,9 +224,9 @@ if (vars.pixel_based) {
   Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
   
    
-  /*
+  
   // ***SLIC segmentation***
-  segment_on = segment_on.rename(['v1','v2','v3'])
+  /*segment_on = segment_on.rename(['v1','v2','v3'])
   var slic = new Slic(segment_on, vars.scale_factor, false)
   slic.compactness = vars.compactness
   var segmentation = slic.iterate(vars.segment_iters)
