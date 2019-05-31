@@ -1,0 +1,40 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var depth_e = ee.Image("projects/coral_atlas/fiji/highTideV2/fj_depthHighV2_eastdateLine"),
+    depth_w = ee.Image("projects/coral_atlas/fiji/highTideV2/fj_depthHighV2_westdateLine"),
+    sr_1 = ee.Image("projects/coral_atlas/fiji/highTideV2/fj_srHighV2"),
+    sr_e = ee.Image("projects/coral_atlas/fiji/highTideV2/fj_srHighV2_eastdateline"),
+    sr_w = ee.Image("projects/coral_atlas/fiji/highTideV2/fj_srHighV2_westdateline"),
+    geometry = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[176.2240506354616, -15.241590187203553],
+          [176.2240506354616, -24.726686896942795],
+          [182.4203396979616, -24.726686896942795],
+          [182.4203396979616, -15.241590187203553]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var depth = ee.ImageCollection([depth_e, depth_w]).mosaic()
+var sr = ee.ImageCollection([sr_1, sr_e, sr_w]).mosaic()
+
+Map.addLayer(depth)
+Map.addLayer(sr)
+
+Export.image.toAsset({
+  image: depth,
+  description: "fj_high_depth",
+  region: geometry,
+  scale: 5,
+  crs: "EPSG:3460",
+  maxPixels: 1e13})
+  
+Export.image.toAsset({
+  image: sr,
+  description: "fj_high_rrs",
+  region: geometry,
+  scale: 5,
+  crs: "EPSG:3460",
+  maxPixels: 1e13})
