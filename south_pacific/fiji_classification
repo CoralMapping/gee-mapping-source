@@ -172,7 +172,7 @@ Map.addLayer(pixels, s2_vis, 'per-pixel image data', false)
 Map.addLayer(segments, s2_vis, 'segmented image data', false)
 Map.addLayer(pixsegs, s2_vis, 'segments + pixels', false)
 
-print(train_pts.projection())
+
 // ################################################
 // Add the threshold slider layers
 // ################################################
