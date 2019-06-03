@@ -36,7 +36,7 @@ Map.centerObject(centre_map, 11)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(fiji_high_depth, {min: 0, max: 14}, "Dove H-tide pixel mosaic", false)
+Map.addLayer(fiji_high_depth, {min: -1, max: 1500}, "Dove H-tide depth", false)
 
 
 /*// add the map data layers
