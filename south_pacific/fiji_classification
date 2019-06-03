@@ -160,8 +160,8 @@ pixels = pixels
 
 // make the combined pixels and segemnts data
 // and ensure they're masked the same
-pixels = segments.updateMask(pixels)
-pixels = segments.updateMask(segments)
+segments = segments.updateMask(pixels)
+pixels = pixels.updateMask(segments)
 var pixsegs = pixels.addBands(segments)
                 // test remoing depth from classification
                 //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
@@ -172,7 +172,7 @@ Map.addLayer(pixels, s2_vis, 'per-pixel image data', false)
 Map.addLayer(segments, s2_vis, 'segmented image data', false)
 Map.addLayer(pixsegs, s2_vis, 'segments + pixels', false)
 
-
+print(train_pts.projection())
 // ################################################
 // Add the threshold slider layers
 // ################################################
@@ -254,11 +254,11 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                         return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
                       })
 }
-// ## If you have training points from multiple UTM zones,
+// ## If you have training points from multiple UTM zones (and the local epsg is a UTM crs),
 // ## then you need to run the above block within each zone and then merge.
 // ## See 'gbr_classification' script for an example
 //var train_pts = train_pts_cc.merge(train_pts_cbg) // merge to final set
-print(train_pts.projection())
+
 /*
 // function to create a X m buffer around the input training data (this may change when segments are used)
 var buff_points = function (feature) {
