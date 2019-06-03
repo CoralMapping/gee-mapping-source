@@ -73,8 +73,8 @@ var vars = {
   class_field: 'class_num', // the field in the training data that stores the class integer
   small_object_filter: 50, // size in pixels (output scale) for small object removal
   
-  // add relative band brightness to predictor variables?
-  use_brightness: true,
+  /*// add relative band brightness to predictor variables?
+  use_brightness: true, <<----- now done in the *_datagen script */
   
   // zone thresholds
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
@@ -87,6 +87,7 @@ var vars = {
   set_seed: 42, // set a seed so results are repeatable
 
   // class information for classification, sampling and reporting
+  local_epsg: region_params.epsg,
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.6,
@@ -155,43 +156,6 @@ pixels = pixels
           .addBands(pixels.select('b3').divide(pixels.select('b1')).rename('rb'))
           .addBands(pixels.select('b2').divide(pixels.select('b1')).rename('gb'))
           .addBands(pixels.select('b3').divide(pixels.select('b2')).rename('rg'))
-
-// replace the band values with relatvie brightness values if set
-if (vars.use_brightness) {
-  segments = segments
-    .addBands({overwrite: true, srcImg:
-    segments.expression(' B / (B + G + R)', {
-      'B': segments.select('b1'),
-      'G': segments.select('b2'),
-      'R': segments.select('b3') }).rename('b1')})
-    .addBands({overwrite: true, srcImg:
-    segments.expression(' G / (B + G + R)', {
-      'B': segments.select('b1'),
-      'G': segments.select('b2'),
-      'R': segments.select('b3') }).rename('b2')})
-    .addBands({overwrite: true, srcImg:
-    segments.expression(' R / (B + G + R)', {
-      'B': segments.select('b1'),
-      'G': segments.select('b2'),
-      'R': segments.select('b3') }).rename('b3')})
-    
-  pixels = pixels
-    .addBands({overwrite: true, srcImg:
-    pixels.expression(' B / (B + G + R)', {
-      'B': pixels.select('b1'),
-      'G': pixels.select('b2'),
-      'R': pixels.select('b3') }).rename('b1')})
-    .addBands({overwrite: true, srcImg:
-    pixels.expression(' G / (B + G + R)', {
-      'B': pixels.select('b1'),
-      'G': pixels.select('b2'),
-      'R': pixels.select('b3') }).rename('b2')})
-    .addBands({overwrite: true, srcImg:
-    pixels.expression(' R / (B + G + R)', {
-      'B': pixels.select('b1'),
-      'G': pixels.select('b2'),
-      'R': pixels.select('b3') }).rename('b3')})
-}
 
 
 // make the combined pixels and segemnts data
@@ -266,7 +230,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                       .stratifiedSample({
                         numPoints: vars.train_size,
                         region: all_training_data, // region to sample points from
-                        projection: "EPSG:32755",
+                        projection: vars.local_epsg,
                         scale: sensor_params.pixel,
                         classValues: nosamp_class,
                         classPoints: nosamp_numpix
@@ -282,7 +246,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                       .stratifiedSample({
                         numPoints: vars.train_size,
                         region: all_training_data, // region to sample points from
-                        projection: "EPSG:32755",
+                        projection: vars.local_epsg,
                         scale: sensor_params.pixel,
                         classValues: nosamp_class,
                         classPoints: nosamp_numpix
