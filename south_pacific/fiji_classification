@@ -98,8 +98,8 @@ var vars = {
   //classes_mapped_geo:       [ 2,  11,  12,  13,   14,   15,  16,  21,  22,  23,  24  ], // classes to map
   //classes_mapped_names_geo: ['D','SL','DL','IRF','ORF','RR','TRF','SS','SE','PL','OCL'],
   // benthic
-  nosamp_class_benthic:  [0,    1,2], // classes not to use/use more
-  nosamp_numpix_benthic: [5000, 0,0], // set number of pixels to sample from above classes
+  nosamp_class_benthic:  [0,     1,2], // classes not to use/use more
+  nosamp_numpix_benthic: [10000, 0,0], // set number of pixels to sample from above classes
   // TODO: consider dynamically generating these
   //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
   //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
