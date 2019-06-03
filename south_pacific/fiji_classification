@@ -345,6 +345,7 @@ var export_classification = function () {
     assetId: vars.asset_output + output_name,
     region: export_convhull,
     scale: vars.export_scale,
+    crs: vars.local_epsg,
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
