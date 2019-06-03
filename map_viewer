@@ -20,7 +20,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     fiji_geo_2k100t = ee.Image("projects/coral_atlas/fiji/fj_high_geo2k100t"),
     fiji_geo_briboth2k40t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briboth2k40t"),
     fiji_geo_briseg2k40t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briseg2k40t"),
-    fiji_geo_briseg2k90t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briseg2k90t");
+    fiji_geo_briseg2k90t = ee.Image("projects/coral_atlas/fiji/fj_high_geo_briseg2k90t"),
+    fiji_high_benthic = ee.Image("projects/coral_atlas/fiji/fj_high_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -51,6 +52,7 @@ Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, 
 Map.addLayer(fiji_benthic_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 1k30t", false)
 Map.addLayer(fiji_benthic_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k30t", false)
 Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k 2k100t", false)
+Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic RAW", false)
 
 Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 1k30t", false)
 Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k30t", false)
