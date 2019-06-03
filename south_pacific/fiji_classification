@@ -89,8 +89,8 @@ var vars = {
   // class information for classification, sampling and reporting
   local_epsg: region_params.epsg,
   // trim input data
-  trim_training_data: false, // if true, will trim the training data set by the % below
-  trim_training_perc: 0.6,
+  trim_training_data: true, // if true, will trim the training data set by the % below
+  trim_training_perc: 0.7,
   // geomorphic
   nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
   nosamp_numpix_geo: [0, 0, 5000, 0,  0 ], // set number of pixels to sample from above classes
