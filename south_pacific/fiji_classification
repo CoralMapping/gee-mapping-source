@@ -258,7 +258,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
 // ## then you need to run the above block within each zone and then merge.
 // ## See 'gbr_classification' script for an example
 //var train_pts = train_pts_cc.merge(train_pts_cbg) // merge to final set
-
+print(train_pts.projection())
 /*
 // function to create a X m buffer around the input training data (this may change when segments are used)
 var buff_points = function (feature) {
