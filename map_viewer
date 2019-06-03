@@ -12,6 +12,7 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     cancook_dove_htv2_geo_clean2 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
     cancook_dove_htv2_benthic_clean5 = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean5"),
     fiji_dove = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_rrs"),
+    fiji_high_depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
     fiji_benthic_1k30t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic1k30t"),
     fiji_benthic_2k30t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic2k30t"),
     fiji_benthic_2k100t = ee.Image("projects/coral_atlas/fiji/fj_high_benthic2k100t"),
@@ -35,9 +36,10 @@ Map.centerObject(centre_map, 11)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
+Map.addLayer(fiji_high_depth, {min: 0, max: 14}, "Dove H-tide pixel mosaic", false)
 
 
-// add the map data layers
+/*// add the map data layers
 // GBR
 Map.addLayer(gbr_geo_map30.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Cancook + CBG trained)", false)
 Map.addLayer(gbr_s2_geo.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Cancook trained)", false)
@@ -47,7 +49,8 @@ Map.addLayer(cancook_dove_htv2_geo_clean2.selfMask(), map_palettes.geo, "Dove Ca
 Map.addLayer(cancook_dove_htv2_benthic_clean.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - clean H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res H-tide", false)
 Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
-
+ 
+*/
 // fiji
 Map.addLayer(fiji_benthic_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 1k30t", false)
 Map.addLayer(fiji_benthic_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k30t", false)
