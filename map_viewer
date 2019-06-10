@@ -15,7 +15,8 @@ var Cairns = /* color: #d63000 */ee.Geometry.Point([145.80785085646403, -16.3436
     fiji_high_depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
     fiji_high_benthic_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_seg"),
     fiji_high_benthic_pixseg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_pixseg"),
-    fiji_high_geo_both = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_pixseg");
+    fiji_high_geo_both = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_pixseg"),
+    fiji_high_geo_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_seg");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs across different regions
 
@@ -63,6 +64,7 @@ Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo b
 Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k90t", false)
 */
 Map.addLayer(fiji_high_geo_both.selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
+Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
