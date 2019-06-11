@@ -17,7 +17,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choose where to centre (link this dynamically to map app?)
 var centre_map = Fiji
-Map.centerObject(centre_map, 9)
+Map.centerObject(centre_map, 10)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
@@ -48,10 +48,13 @@ Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg 
 
 
 // example confidence layer
-var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000).selfMask()
+var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000)
 //Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
-var conf_flag = fiji_high_depth.eq(-1).or(fiji_high_depth.gt(1000)).selfMask().or(depth_nir_flag.eq(1))
-Map.addLayer(conf_flag, {}, "Confidence flag", false)
+var conf_flag = fiji_high_depth.eq(-1)
+                        .or(fiji_high_depth.gt(1000))
+                        .add(depth_nir_flag.eq(1))
+                        .selfMask()
+Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
 
 
 // add training point distributions
