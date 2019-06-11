@@ -22,6 +22,8 @@ Map.centerObject(centre_map, 9)
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
+// example confidence layer
+var conf_layer = fiji_high_depth.neq(-1).and(fiji_high_depth.lt(1000))
 
 /*// add the map data layers
 // GBR
