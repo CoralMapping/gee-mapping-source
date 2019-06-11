@@ -1,6 +1,18 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var sentinel = ee.ImageCollection("COPERNICUS/S2"),
-    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth");
+    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
+    fiji_square = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[176.63618326092933, -15.647431003809402],
+          [176.63618326092933, -24.039498288169224],
+          [181.87666177655427, -24.039498288169224],
+          [181.87666177655427, -15.647431003809402]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // #####################################################
 // Generate cloud masked sentinel-2 mosaic for Fiji
@@ -10,10 +22,11 @@ var do_export = false
 
 // define a mask for output imagery
 var depth_mask = depth.gte(-1)
-
+print(depth_mask.projection())
 // define (convex hull) region to export image data
 var export_convhull = depth_mask.gt(0)
-                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:4326"})
+                        .reproject({crs: "EPSG:3857", scale: 1000})
+                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:3857", geometry: fiji_square})
                         .geometry()
                         .convexHull({maxError: 100})
 
