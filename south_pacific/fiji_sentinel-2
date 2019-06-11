@@ -18,7 +18,7 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2"),
 // Generate cloud masked sentinel-2 mosaic for Fiji
 // #####################################################
 
-var do_export = false
+var do_export = true
 
 // define a mask for output imagery
 var depth_mask = depth.gte(-1).focal_mode(3)
@@ -61,7 +61,7 @@ if (do_export) {
   Export.image.toAsset({
     image: reflec, 
     description: 'sentinel_2_export',
-    assetId: 'gbr_reefs/gbr_sentinel2x', 
+    assetId: 'fiji/fiji_sentinel2', 
     region: export_convhull,
     scale: 10,
     maxPixels: 1e13})
