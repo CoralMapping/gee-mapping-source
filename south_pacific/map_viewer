@@ -66,14 +66,15 @@ Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence
 
 //Generate title
 var title = ui.Label({
-  value: 'Prototype Coral Atlas mapping algorithms',
+  value: 'Coral Atlas map classes',
   style: {fontWeight: 'bold', fontSize: '18px'}
 })
 
 // generate the legend
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_names, map_palettes.benthic_cols, 'Benthic Habitat', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend])
+var mask_legend = pkg_vis.discrete_legend(["Depth retrieval","Water properties"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend, mask_legend])
 // generate the legend
 
 
