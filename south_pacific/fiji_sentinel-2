@@ -21,7 +21,7 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2"),
 var do_export = false
 
 // define a mask for output imagery
-var depth_mask = depth.gte(-1).focal_mode(10)
+var depth_mask = depth.gte(-1).focal_mode(3)
 
 // define (convex hull) region to export image data
 var export_convhull = depth_mask.gt(0)
