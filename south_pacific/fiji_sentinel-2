@@ -1,0 +1,55 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var sentinel = ee.ImageCollection("COPERNICUS/S2"),
+    depth = ee.Image("users/mitchest/gbr_reefs/gbr_depth30");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// #####################################################
+// Generate cloud masked sentinel-2 mosaic for Fiji
+// #####################################################
+
+var do_export = true
+
+// define a mask for output imagery
+var depth_mask = depth.gte(-20).and(depth.lte(2))
+
+// define (convex hull) region to export image data
+var export_convhull = depth_mask.gt(0)
+                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true})
+                        .geometry()
+                        .convexHull({maxError: 100})
+
+// Bits 10 and 11 are clouds and cirrus, respectively, in Sentinel-2 imagery
+var cloudBitMask = ee.Number(2).pow(10).int()
+var cirrusBitMask = ee.Number(2).pow(11).int()
+// function to mask cloud in each image within image collection
+function maskS2clouds(image) {
+  var qa = image.select('QA60')
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0).and(
+             qa.bitwiseAnd(cirrusBitMask).eq(0))
+  return image.updateMask(mask).updateMask(depth_mask)
+}
+
+var s2_col = sentinel
+  .filterDate('2015-07-01', '2018-12-31')
+  .filterBounds(export_convhull)
+  .map(maskS2clouds)
+  
+var reflec = s2_col
+  .median() // .reduce(ee.Reducer.median())
+  .updateMask(depth_mask)
+  .select(["B1", "B2", "B3", "B4", "B5"])
+
+
+Map.addLayer(reflec, {}, 'sentinel', false)
+Map.addLayer(export_convhull, {}, 'export conv hull', false)
+Map.addLayer(depth_mask, {}, 'depth mask', false)
+
+if (do_export) {
+  Export.image.toAsset({
+    image: reflec, 
+    description: 'sentinel_2_export',
+    assetId: 'gbr_reefs/gbr_sentinel2x', 
+    region: export_convhull,
+    scale: 10,
+    maxPixels: 1e13})
+}
