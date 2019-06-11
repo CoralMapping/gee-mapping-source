@@ -48,11 +48,11 @@ Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg 
 
 
 // example confidence layer
-var conf_flag = fiji_high_depth.eq(-1).or(fiji_high_depth.gt(1000)).selfMask()
+var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000).selfMask()
+//Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
+var conf_flag = fiji_high_depth.eq(-1).or(fiji_high_depth.gt(1000)).or(depth_nir_flag.eq(1)).selfMask()
 Map.addLayer(conf_flag, {}, "Confidence flag", false)
 
-var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth)
-Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
