@@ -1,15 +1,15 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var sentinel = ee.ImageCollection("COPERNICUS/S2"),
-    depth = ee.Image("users/mitchest/gbr_reefs/gbr_depth30");
+    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // #####################################################
 // Generate cloud masked sentinel-2 mosaic for Fiji
 // #####################################################
 
-var do_export = true
+var do_export = false
 
 // define a mask for output imagery
-var depth_mask = depth.gte(-20).and(depth.lte(2))
+var depth_mask = depth.gte(-1)
 
 // define (convex hull) region to export image data
 var export_convhull = depth_mask.gt(0)
@@ -30,7 +30,7 @@ function maskS2clouds(image) {
 }
 
 var s2_col = sentinel
-  .filterDate('2015-07-01', '2018-12-31')
+  .filterDate('2018-01-01', '2019-12-31')
   .filterBounds(export_convhull)
   .map(maskS2clouds)
   
