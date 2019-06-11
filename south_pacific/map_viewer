@@ -22,21 +22,7 @@ Map.centerObject(centre_map, 9)
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
-// example confidence layer
-var conf_layer = fiji_high_depth.neq(-1).and(fiji_high_depth.lt(1000))
 
-/*// add the map data layers
-// GBR
-Map.addLayer(gbr_geo_map30.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Cancook + CBG trained)", false)
-Map.addLayer(gbr_s2_geo.selfMask(), map_palettes.geo, "Sentinel-2 GBR geo (Cancook trained)", false)
-Map.addLayer(gbr_s2_benthic.selfMask(), map_palettes.benthic, "Sentinel-2 GBR benthic (Cancook trained)", false)
-//Carins to Cooktown
-Map.addLayer(cancook_dove_htv2_geo_clean2.selfMask(), map_palettes.geo, "Dove Carins-Cook Geo - final clean H-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic_clean.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - clean H-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res H-tide", false)
-Map.addLayer(cancook_dove_htv2_benthic_clean5.selfMask(), map_palettes.benthic, "Dove Carins-Cook Benthic - hi-res clean H-tide", false)
- 
-*/
 
 /*
 // fiji
@@ -57,6 +43,11 @@ Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo b
 */
 Map.addLayer(fiji_high_geo_both.selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
 Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
+
+
+// example confidence layer
+var conf_flag = fiji_high_depth.neq(-1).and(fiji_high_depth.lt(1000))
+Map.addLayer(conf_flag, {palette:["ef6548"]}, "Confidence flag", false)
 
 // add training point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
