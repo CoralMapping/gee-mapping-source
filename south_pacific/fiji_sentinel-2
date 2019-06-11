@@ -13,7 +13,7 @@ var depth_mask = depth.gte(-1)
 
 // define (convex hull) region to export image data
 var export_convhull = depth_mask.gt(0)
-                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:3460"})
+                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:4326"})
                         .geometry()
                         .convexHull({maxError: 100})
 
