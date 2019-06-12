@@ -2,6 +2,7 @@
 var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.16988549547624]),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     fiji_dove = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_rrs"),
+    fiji_s2 = ee.Image("projects/coral_atlas/fiji/full_mosaics/fiji_sentinel2"),
     fiji_high_depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
     fiji_high_pixels = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_pixels"),
     fiji_high_benthic_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_seg"),
@@ -21,6 +22,7 @@ Map.centerObject(centre_map, 10)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
+Map.addLayer(fiji_s2, {bands: ['b4','b3','b2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
 Map.addLayer(fiji_high_pixels, {}, "Dove H-tide pixel covariate data", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
