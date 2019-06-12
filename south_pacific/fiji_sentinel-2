@@ -64,5 +64,6 @@ if (do_export) {
     assetId: 'fiji/fiji_sentinel2', 
     region: export_convhull,
     scale: 10,
+    crs: "EPSG:3460",
     maxPixels: 1e13})
 }
