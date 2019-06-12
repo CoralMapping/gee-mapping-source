@@ -22,7 +22,7 @@ Map.centerObject(centre_map, 10)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(fiji_s2, {bands: ['b4','b3','b2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
+Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
 Map.addLayer(fiji_high_pixels, {}, "Dove H-tide pixel covariate data", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
