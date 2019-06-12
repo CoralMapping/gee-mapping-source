@@ -147,7 +147,7 @@ exports = {
   sentinel : sentinel,
   dove : dove,
   landsat8 : landsat8,
-  cancook : cancook,
+  cancook_s2 : cancook_s2,
   cancook_htv2 : cancook_htv2,
   cancook_ltv2 : cancook_ltv2,
   gbr: gbr,
