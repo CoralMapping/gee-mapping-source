@@ -46,6 +46,14 @@ var make_contour = function(calc_scale) {
   )
 }
 
+// finally export when happy
+Export.table.toDrive({
+  collection: make_contour(5),
+  description: 'reef outline export',
+  folder: 'your/drive/folder',
+  fileNamePrefix: 'region_wave_outline',
+  fileFormat: 'SHP'
+})
 
 // add them all to map to inspect
 Map.centerObject(depth, 8)
