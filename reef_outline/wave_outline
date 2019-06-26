@@ -9,6 +9,11 @@ then we'll buff it out like the other modules in the mapping pipline
 // load analysis params module - to ensure using same data as mapping
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
+
+// Choose the region to generate outline from
+var region_params = param_module.fj_htv2
+
+
 var pixels = ee.Image(param_module.fiij_htv2.dove_pixels)
 
 Map.addLayer(pixels, {}, "Depth data", false)
