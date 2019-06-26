@@ -1,0 +1,49 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var suva = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[177.9580959909298, -18.31351453152914],
+          [177.90728422335167, -18.38781149913013],
+          [177.88943144014854, -18.49984805652757],
+          [177.98144193819542, -18.54672535217004],
+          [178.20940824678917, -18.425599430986406],
+          [178.32888456514854, -18.291349605744003],
+          [178.48406644991417, -18.231359720010396],
+          [178.72988554171104, -18.141336104125553],
+          [178.67495390108604, -18.091738068329608],
+          [178.42638822725792, -18.078683620389715],
+          [178.30004545382042, -18.133505769431387],
+          [178.03362699678917, -18.260053120683338]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+/*
+Little script to extract mapping input data to do own
+analysis (mapping or otherwise.
+
+Use the drawing tool to make a polygon of interest,
+name it something sensible, then input it into the clip code
+*/
+
+// import the data you need (pixels most likely - but could do segmentation)
+var pixels = ee.Image('projects/coral_atlas/fiji/in_out/fj_high_pixels')
+
+// set the aoi object to your subset area
+var aoi = suva
+
+// this is where you make the subset you want to export
+var subset = pixels.clip(aoi)
+
+// check it
+Map.addLayer(subset, {}, "Subset to export", true)
+
+//export it
+Export.image.toDrive({
+  image: subset,
+  description: 'subset export',
+  folder: 'your/drive/folder', 
+  fileNamePrefix: 'file_name',
+  region: aoi,
+  scale: 5, // could be 10 for sentinel-2 etc.
+  maxPixels: 1e13
+})
+
+
+
+
