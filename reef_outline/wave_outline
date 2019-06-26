@@ -34,14 +34,17 @@ var contour_smooth = contour_mask.unmask(2,false)
                                  .selfMask()
 
 var contour_boundary = depth.geometry().bounds(50) // to bound vectorisation
-
-var contour_vector = contour_smooth.reduceToVectors({
-  geometry: contour_boundary,
-  scale: 10,
-  bestEffort: true,
-  maxPixels: 1e13
-})
-
+// this is a function to allow a 'quick' view before exporting at full res
+var make_contour = function(calc_scale) {
+  return(
+    contour_smooth.reduceToVectors({
+      geometry: contour_boundary,
+      scale: calc_scale,
+      bestEffort: true,
+      maxPixels: 1e13
+    })
+  )
+}
 
 
 // add them all to map to inspect
@@ -49,6 +52,6 @@ Map.centerObject(depth, 8)
 Map.addLayer(depth, {min:-1,max:15,palette:['#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth data", false)
 Map.addLayer(contour_mask, {}, "Wave contour mask", false)
 Map.addLayer(contour_smooth, {}, "Wave contour mask (smooth)", false)
-Map.addLayer(contour_vector, {}, "Wave contour vector", false)
+Map.addLayer(make_contour(1000), {}, "Wave contour vector", false)
 
 
