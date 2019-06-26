@@ -18,7 +18,8 @@ Little script to extract mapping input data to do own
 analysis (mapping or otherwise.
 
 Use the drawing tool to make a polygon of interest,
-name it something sensible, then input it into the clip code
+name it something sensible - you can do multiple areas -
+then input it into the aoi variable, so it flows to the clip and ship
 */
 
 // import the data you need (pixels most likely - but could do segmentation)
