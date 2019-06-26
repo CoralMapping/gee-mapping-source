@@ -52,6 +52,6 @@ Map.centerObject(depth, 8)
 Map.addLayer(depth, {min:-1,max:15,palette:['#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth data", false)
 Map.addLayer(contour_mask, {}, "Wave contour mask", false)
 Map.addLayer(contour_smooth, {}, "Wave contour mask (smooth)", false)
-Map.addLayer(make_contour(1000), {}, "Wave contour vector", false)
+Map.addLayer(make_contour(100), {}, "Wave contour vector", false)
 
 
