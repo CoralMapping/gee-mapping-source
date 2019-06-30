@@ -52,8 +52,7 @@ Export.table.toDrive({
   description: 'reef outline export',
   folder: 'your/drive/folder',
   fileNamePrefix: 'region_wave_outline',
-  fileFormat: 'SHP',
-  crs: region_params.epsg
+  fileFormat: 'SHP'
 })
 
 // add them all to map to inspect
@@ -62,5 +61,5 @@ Map.addLayer(depth, {min:-1,max:15,palette:['#a6bddb','#74a9cf','#3690c0','#0570
 Map.addLayer(contour_mask, {}, "Wave contour mask", false)
 Map.addLayer(contour_smooth, {}, "Wave contour mask (smooth)", false)
 Map.addLayer(make_contour(100), {}, "Wave contour vector", false)
-
+print(make_contour(100).geometry().projection())
 
