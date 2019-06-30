@@ -52,7 +52,8 @@ Export.table.toDrive({
   description: 'reef outline export',
   folder: 'your/drive/folder',
   fileNamePrefix: 'region_wave_outline',
-  fileFormat: 'SHP'
+  fileFormat: 'SHP',
+  crs: region_params.epsg
 })
 
 // add them all to map to inspect
