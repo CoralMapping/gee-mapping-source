@@ -28,8 +28,8 @@ var cancook_s2 = {
   geo_train: "users/mitchest/gbr_reefs/cancook_geo_training", 
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
   benthic_pts: "users/mitchest/gbr_reefs/cancook_field_benthic-pts",
-  geo_map: "",
-  benthic_map: "",
+  geo_map: "users/mitchest/gbr_reefs/cancook_eomap_geo",
+  benthic_map: "users/mitchest/gbr_reefs/cancook_eomap_benthic",
   geo_map_clean: "",
   benthic_map_clean: ""
 }
