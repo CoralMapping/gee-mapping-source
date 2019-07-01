@@ -121,8 +121,8 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.Image(region_params.dove_pixels)
-var segments = ee.Image(region_params.dove_segments)
+var pixels = ee.Image(region_params.pixels)
+var segments = ee.Image(region_params.segments)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
