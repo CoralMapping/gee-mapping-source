@@ -134,7 +134,7 @@ exports = {
   cancook_s2 : cancook_s2,
   cancook_htv2 : cancook_htv2,
   cancook_ltv2 : cancook_ltv2,
-  gbr: gbr,
+  gbr_gees2: gbr_gees2,
   fiji_ltv2: fiji_ltv2,
   fiji_htv2: fiji_htv2
 }
