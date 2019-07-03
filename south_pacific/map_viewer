@@ -50,6 +50,12 @@ Map.addLayer(fiji_high_geo_both.selfMask(), map_palettes.geo, "Dove Fiji Geo pix
 Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
 
 
+// add training data / sample point distributions
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps - geo", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training maps - benthic", false)
+
+
 // example confidence layer
 var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000)
 //Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
@@ -59,11 +65,6 @@ var conf_flag = fiji_high_depth.eq(-1)
                         .selfMask()
 Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
 
-
-// add training data / sample point distributions
-// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps - geo", false)
-Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.geo, "Training maps - benthic", false)
 
 
 ////////// UI SET UP //////////
