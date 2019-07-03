@@ -9,7 +9,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_high_benthic_pixseg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_pixseg"),
     fiji_high_geo_both = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_pixseg"),
     fiji_high_geo_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_seg"),
-    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_geo");
+    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_geo"),
+    fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -26,8 +27,6 @@ Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-t
 Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
 Map.addLayer(fiji_high_pixels, {}, "Dove H-tide pixel covariate data", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
-
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps", false)
 
 
 /*
@@ -61,9 +60,10 @@ var conf_flag = fiji_high_depth.eq(-1)
 Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
 
 
-// add training point distributions
+// add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps - geo", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.geo, "Training maps - benthic", false)
 
 
 ////////// UI SET UP //////////
