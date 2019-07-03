@@ -8,7 +8,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_high_benthic_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_seg"),
     fiji_high_benthic_pixseg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_pixseg"),
     fiji_high_geo_both = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_pixseg"),
-    fiji_high_geo_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_seg");
+    fiji_high_geo_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_seg"),
+    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -26,6 +27,7 @@ Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-
 Map.addLayer(fiji_high_pixels, {}, "Dove H-tide pixel covariate data", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps", false)
 
 
 /*
