@@ -52,8 +52,8 @@ Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg 
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training maps - geo", false)
-Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training maps - benthic", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Training maps - benthic", false)
 
 
 // example confidence layer
