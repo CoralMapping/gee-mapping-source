@@ -59,7 +59,7 @@ var region_params = param_module.fiji_htv2  //<------------ THIS IS WHERE YOU CH
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -89,8 +89,8 @@ var vars = {
   // class information for classification, sampling and reporting
   local_epsg: region_params.epsg,
   // trim input data
-  trim_training_data: false, // if true, will trim the training data set by the % below
-  trim_training_perc: 0.7,
+  trim_training_data: true, // if true, will trim the training data set by the % below
+  trim_training_perc: 0.65,
   // geomorphic
   nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
   nosamp_numpix_geo: [0, 0, 10000, 0,  0 ], // set number of pixels to sample from above classes
@@ -110,7 +110,7 @@ var vars = {
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_geo',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_' + region_params.tide + '_benthic',
