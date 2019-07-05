@@ -9,7 +9,7 @@ var geo_pal = {
     'ffffff', // 0 =  Ignore
     '004529', // 1 =  Land
     '08306b', // 2 =  Deep
-    'ffffff', // 3 =  place-holder
+    '993404', // 3 =  Turbid
     'ffffff', // 4 =  place-holder
     'ffffff', // 5 =  place-holder
     'ffffff', // 6 =  place-holder
@@ -71,8 +71,8 @@ var benthic_pal = {
   }
 
 // geo legend
-var geo_names = ['Deep', 'Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer Reef Flat', 'Reef Rim', 'Terrestrial Reef Flat', 'Slope Sheltered', 'Slope Exposed', 'Plateau', 'Open Complex Lagoon', 'Patch Reef', 'Small Reef']
-var geo_cols = ['08306b', '5ce0ff',           '0868ac',     'ffffbf',           'ffcc7a',         'a50f15', 'addd8e',                 'd9f0a3',         'd4d417',         'bdbdbd',   '02818a',             'deebf7',     'deebf7']
+var geo_names = ['Deep', 'Turbid', 'Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer Reef Flat', 'Reef Rim', 'Terrestrial Reef Flat', 'Slope Sheltered', 'Slope Exposed', 'Plateau', 'Open Complex Lagoon', 'Patch Reef', 'Small Reef']
+var geo_cols = ['08306b', '993404', '5ce0ff',           '0868ac',     'ffffbf',           'ffcc7a',         'a50f15', 'addd8e',                 'd9f0a3',         'd4d417',         'bdbdbd',   '02818a',             'deebf7',     'deebf7']
 
 // benthic legend
 var benthic_names = ['Temporal*', 'Sand',    'Rubble', 'Rock', 'Coral/Algae', 'Algae' , 'Coral',   'Mud',    'Mangrove', 'Seagrass']
