@@ -9,10 +9,10 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_high_benthic_pixseg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_pixseg"),
     fiji_high_geo_both = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_pixseg"),
     fiji_high_geo_seg = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_seg"),
-    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_geo"),
-    fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_fina_kadavu_kubalau_benthic"),
     fiji_high_benthic_newtrain = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_new"),
-    fiji_high_geo_newtrain = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_new");
+    fiji_high_geo_newtrain = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_new"),
+    fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_kubulau_kadavu_benthic"),
+    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_kubulau_kadavu_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
