@@ -51,9 +51,9 @@ Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo b
 */
 Map.addLayer(fiji_high_geo_both.updateMask(fiji_high_geo_both.neq(2))
                                .selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
-Map.addLayer(fiji_high_geo_seg.updateMask(fiji_high_geo_both.neq(2))
+Map.addLayer(fiji_high_geo_seg.updateMask(fiji_high_geo_seg.neq(2))
                               .selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
-Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_both.neq(2))
+Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_newtrain.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
 
 // add training data / sample point distributions
