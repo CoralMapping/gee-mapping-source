@@ -49,9 +49,12 @@ Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo 
 Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
 Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k90t", false)
 */
-Map.addLayer(fiji_high_geo_both.selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
-Map.addLayer(fiji_high_geo_seg.selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
-Map.addLayer(fiji_high_geo_newtrain.selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
+Map.addLayer(fiji_high_geo_both.updateMask(fiji_high_geo_both.neq(2))
+                               .selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
+Map.addLayer(fiji_high_geo_seg.updateMask(fiji_high_geo_both.neq(2))
+                              .selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
+Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_both.neq(2))
+                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
