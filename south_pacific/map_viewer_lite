@@ -27,8 +27,6 @@ Map.centerObject(centre_map, 10)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
-Map.addLayer(fiji_high_pixels, {}, "Dove H-tide pixel covariate data", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 
 
@@ -37,9 +35,9 @@ Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb',
 Map.addLayer(fiji_benthic_1k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 1k30t", false)
 Map.addLayer(fiji_benthic_2k30t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k30t", false)
 Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Benthic 2k 2k100t", false)
-*/
 Map.addLayer(fiji_high_benthic_seg.selfMask(), map_palettes.benthic, "Dove Fiji Benthic seg RAW", false)
 Map.addLayer(fiji_high_benthic_pixseg.selfMask(), map_palettes.benthic, "Dove Fiji Benthic pix+seg RAW", false)
+*/
 Map.addLayer(fiji_high_benthic_newtrain.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training RAW", false)
 /*
 Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 1k30t", false)
@@ -49,11 +47,11 @@ Map.addLayer(fiji_geo_briboth2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo 
 //Map.addLayer(fiji_geo_briseg2k40t.unmask(0).focal_mode({radius:1,iterations:2}).selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
 Map.addLayer(fiji_geo_briseg2k40t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k40t", false)
 Map.addLayer(fiji_geo_briseg2k90t.selfMask(), map_palettes.geo, "Dove Fiji Geo bright seg 2k90t", false)
-*/
 Map.addLayer(fiji_high_geo_both.updateMask(fiji_high_geo_both.neq(2))
                                .selfMask(), map_palettes.geo, "Dove Fiji Geo pix+seg RAW", false)
 Map.addLayer(fiji_high_geo_seg.updateMask(fiji_high_geo_seg.neq(2))
                               .selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
+*/
 Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_newtrain.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
 
