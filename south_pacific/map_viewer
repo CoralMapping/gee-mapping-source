@@ -72,7 +72,6 @@ var conf_flag = fiji_high_depth.eq(-1)
 Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
 
 
-
 ////////// UI SET UP //////////
 
 //Generate title
