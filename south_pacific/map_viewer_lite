@@ -26,8 +26,8 @@ var centre_map = Fiji
 Map.centerObject(centre_map, 10)
 
 // add some background data
-Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide pixel mosaic", false)
-Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
+Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
+Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
 
 
 /*
@@ -38,7 +38,7 @@ Map.addLayer(fiji_benthic_2k100t.selfMask(), map_palettes.benthic, "Dove Fiji Be
 Map.addLayer(fiji_high_benthic_seg.selfMask(), map_palettes.benthic, "Dove Fiji Benthic seg RAW", false)
 Map.addLayer(fiji_high_benthic_pixseg.selfMask(), map_palettes.benthic, "Dove Fiji Benthic pix+seg RAW", false)
 */
-Map.addLayer(fiji_high_benthic_newtrain.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training RAW", false)
+Map.addLayer(fiji_high_benthic_newtrain.selfMask(), map_palettes.benthic, "Benthic habitat map - RAW", false)
 /*
 Map.addLayer(fiji_geo_1k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 1k30t", false)
 Map.addLayer(fiji_geo_2k30t.selfMask(), map_palettes.geo, "Dove Fiji Geo 2k30t", false)
@@ -53,12 +53,12 @@ Map.addLayer(fiji_high_geo_seg.updateMask(fiji_high_geo_seg.neq(2))
                               .selfMask(), map_palettes.geo, "Dove Fiji Geo seg RAW", false)
 */
 Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_newtrain.neq(2))
-                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
+                                   .selfMask(), map_palettes.geo, "Geomorphic zonation map - RAW", false)
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo", false)
-Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Training maps - benthic", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Geomorphic training map", false)
+Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Benthic training map", false)
 
 
 // example confidence layer
