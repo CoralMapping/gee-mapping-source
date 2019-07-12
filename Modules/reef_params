@@ -125,6 +125,44 @@ var fiji_htv2 = {
   benthic_map_clean: ""
 }
 
+var fiji_htocean = {
+  sname: "fj",
+  tide: "high",
+  asset: "projects/coral_atlas/fiji/",
+  epsg: "EPSG:3460",
+  image: "projects/coral_atlas/fiji/full_mosaics/fj_high_sr_ocean",
+  depth: "projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean",
+  pixels: "projects/coral_atlas/fiji/in_out/fj_high_ocean_pixels",
+  segments: "projects/coral_atlas/fiji/in_out/fj_high_ocean_segmentation",
+  waves: "",
+  geo_train: "projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo", 
+  benthic_train: "projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_benthic",
+  benthic_pts: "",
+  geo_map: "",
+  benthic_map: "",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
+var fiji_htcoast = {
+  sname: "fj",
+  tide: "high",
+  asset: "projects/coral_atlas/fiji/",
+  epsg: "EPSG:3460",
+  image: "projects/coral_atlas/fiji/full_mosaics/fj_high_sr_coast",
+  depth: "projects/coral_atlas/fiji/full_mosaics/fj_high_depth_coast",
+  pixels: "projects/coral_atlas/fiji/in_out/fj_high_coast_pixels",
+  segments: "projects/coral_atlas/fiji/in_out/fj_high_coast_segmentation",
+  waves: "",
+  geo_train: "projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo", 
+  benthic_train: "projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_benthic",
+  benthic_pts: "",
+  geo_map: "",
+  benthic_map: "",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
 
 // export the objects
 exports = {
