@@ -10,8 +10,6 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_high_depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
     fiji_high_depth_coast = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_coastal"),
     fiji_high_depth_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
-    fiji_high_benthic_newtrain = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_new"),
-    fiji_high_geo_newtrain = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_new"),
     fiji_high_benthic_newtrain2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_benthic_new2"),
     fiji_high_geo_newtrain2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_geo_new2"),
     fiji_high_benthic_coast = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_coast_benthic"),
@@ -42,14 +40,11 @@ Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6
 
 
 // fiji
-Map.addLayer(fiji_high_benthic_newtrain.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training RAW", false)
 Map.addLayer(fiji_high_benthic_newtrain2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training+suva RAW", false)
 Map.addLayer(fiji_high_benthic_coast.selfMask(), map_palettes.benthic, "Dove Fiji Benthic coastal Chla RAW", false)
 Map.addLayer(fiji_high_benthic_ocean.selfMask(), map_palettes.benthic, "Dove Fiji Benthic ocean Chla RAW", false)
 
 
-Map.addLayer(fiji_high_geo_newtrain.updateMask(fiji_high_geo_newtrain.neq(2))
-                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training RAW", false)
 Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
 Map.addLayer(fiji_high_geo_coast.updateMask(fiji_high_geo_coast.neq(2))
