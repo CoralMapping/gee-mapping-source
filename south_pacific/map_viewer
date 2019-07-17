@@ -32,8 +32,8 @@ Map.centerObject(centre_map, 10)
 var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
 var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
-Map.addLayer(kd1, {}, "kd1", false)
-Map.addLayer(kd2, {}, "kd2", false)
+Map.addLayer(kd1, {}, "waves - kd1", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide 1st mosaic", false)
