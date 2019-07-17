@@ -28,12 +28,6 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var centre_map = Fiji
 Map.centerObject(centre_map, 10)
 
-// wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
-var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
-
-Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)
 
 // add some background data
 Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide 1st mosaic", false)
@@ -59,11 +53,17 @@ Map.addLayer(fiji_high_geo_coast.updateMask(fiji_high_geo_coast.neq(2))
 Map.addLayer(fiji_high_geo_ocean.updateMask(fiji_high_geo_ocean.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo ocean Chla RAW", false)
 
+// wave data
+var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+
+Map.addLayer(kd1, {}, "waves - kd1", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)
+
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
 Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo", false)
 Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Training maps - benthic", false)
-
 
 // example confidence layer
 var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000)
