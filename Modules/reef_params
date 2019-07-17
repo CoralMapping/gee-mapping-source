@@ -43,7 +43,7 @@ var heron_wv2 = {
   sname: "heron",
   asset: "gbr_reefs/",
   image: "users/mitchest/gbr_reefs/heron_wv2",
-  depth: "users/mitchest/gbr_reefs/heron_wv2",
+  depth: "users/mitchest/gbr_reefs/heron_depth",
   pixels: "users/mitchest/gbr_reefs/heron_pixels",
   segments: "users/mitchest/gbr_reefs/heron_segmentation",
   waves: "users/mitchest/gbr_reefs/gbr_hs95",
