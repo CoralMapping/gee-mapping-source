@@ -193,7 +193,7 @@ var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reduc
 if (vars.pixel_based) {
   //// pixel-based data generation
   // combine data to move forward with
-  var all_data = reflec.addBands(depth)//.addBands(waves)
+  var all_data = reflec.addBands(depth).addBands(waves)
                   .addBands(slope)
                   .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                   .addBands(depth_var).addBands(red_var)
@@ -247,7 +247,7 @@ if (vars.pixel_based) {
   */
 
   // Calculate object statistics
-  var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
+  var segmented_data_mean = reflec.addBands(depth).addBands(waves)
                             .addBands(slope)
                             .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                             .addBands(depth_var).addBands(red_var)
