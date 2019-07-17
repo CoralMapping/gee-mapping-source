@@ -17,6 +17,11 @@ var dove = {
   sname: 'dove'
 }
 
+var wv2 = {
+  pixel: 2,
+  sname: 'wv2'
+}
+
 var cancook_s2 = {
   sname: "cancook",
   asset: "gbr_reefs/",
