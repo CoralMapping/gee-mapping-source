@@ -42,7 +42,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.fiji_htcoast  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -88,7 +88,7 @@ var vars = {
 // load input data
 var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)
-var pixels = ee.Image(region_params.dove_pixels)
+var pixels = ee.Image(region_params.pixels)
 
 var smooth_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
@@ -385,7 +385,7 @@ var export_classification = function () {
   if (vars.export_small_area) {
     var export_convhull = export_small
   } else {
-    var export_convhull = smooth_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: pixels.select(vars.blue_band).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_convhull = pixels.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: pixels.select(vars.blue_band).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
