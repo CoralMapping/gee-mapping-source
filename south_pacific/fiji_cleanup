@@ -1,0 +1,423 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[145.74441076322785, -16.409393716505143],
+          [145.74616947562868, -16.409990269312864],
+          [145.74842236526285, -16.40963049996607],
+          [145.74852947866611, -16.407809280222448],
+          [145.7446468785621, -16.407253677480547],
+          [145.74340233634302, -16.40811784549426],
+          [145.74358468305047, -16.40879694903384]]]),
+    export_small = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[145.6841965333474, -16.356968639781293],
+          [145.68144995131615, -16.376074471815638],
+          [145.69140631117943, -16.39880138531326],
+          [145.7171555177224, -16.433710025541963],
+          [145.74839788832787, -16.46499074171742],
+          [145.78616339125756, -16.475197041668277],
+          [145.8266754762185, -16.47618471958656],
+          [145.85860449233178, -16.45412538032669],
+          [145.86959082045678, -16.43832013201272],
+          [145.8483048097146, -16.432392832167288],
+          [145.8328552857888, -16.406705777065522],
+          [145.79165655532006, -16.36849824505903],
+          [145.7556076661599, -16.36487472823476],
+          [145.68694311537865, -16.34477945945371]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Global coral atlas project - Fiji region
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the raw classification data (from *_classification script)
+// - Then applied some cleanup and object-based relational rules
+///////////////////////////////
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. OBIA clean up rules
+// 4. Export
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.sentinel         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.cancook_s2  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  
+  // analysis type
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+
+  // analysis parameters
+  image_data_scale: ee.Number(sensor_params.pixel).pow(2), // relates back to object size and the min mapping unit defined in classification stage
+  small_object: ee.Number(50).int(), // relates to the vars.min_object_size from the *_classification script
+  obia_clean: true, // run object-based relationship rules + small object clean up
+  
+  //############
+  /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
+  You just run the clean-up twice to catch the left overs */
+  obia_2nd_pass: false,
+  //############
+  
+  smooth_output: true, // run smoother over final output (includes noise removal)
+  
+  // results/layers to show
+  export_small_area: false,
+  show_eg_area: true, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
+                              // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
+  reproject_display: false,
+  reproject_res: ee.Number(sensor_params.pixel).pow(2),
+  
+  // export options
+  do_export: false, // export the results?
+  geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
+  benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
+  asset_output: region_params.asset, // asset path
+
+}
+
+// 2. Data loads & vis
+benthic_map
+// load input data
+var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
+var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)
+var pixels = ee.Image(region_params.dove_pixels)
+
+var smooth_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
+
+var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
+Map.centerObject(eg_area, 11)
+Map.addLayer(pixels, {}, 'Image data', false)
+Map.addLayer(smooth_map, display_pal, 'Raw classification', true)
+
+
+// 3. Object-based re-classificaiton and cleaning
+
+var class_extent_mask = smooth_map.gte(1) // just so it doesn't balloon out
+
+// define the cleaned map to either do OBIA on or just export later
+var clean_map = smooth_map
+//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, "output_scale", true)
+
+if (vars.obia_clean) {
+  
+  // #########
+  // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
+  // #########
+  
+  // first make a make size threshold, so we're not vecortising huge objects when we don't have to
+  var segment_id = smooth_map.connectedComponents(ee.Kernel.plus(1), 256).select('labels')
+  //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+  
+  
+  // FUNCTION that maps over feature colleciton and assigns neighbour percentages
+  var set_neighbour_properties = function(f) {
+    // make the 1px buffer
+    var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+    // reduce the classes in the buffer zone
+    var diff_classes = ee.Dictionary(
+      clean_map.unmask(ee.Image(0)).reduceRegion({
+        reducer: ee.Reducer.frequencyHistogram(),
+        geometry: diff.geometry(),
+        scale: vars.image_data_scale
+      }).get('classification')
+    )
+    // calculate the percentages
+    var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
+    var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())})
+    
+    /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
+       or we can return the neighbour % and do image logic via (painted) rasters */
+    
+    return(f.set(diff_percs))
+  }
+  
+  // FUNCTION to reduce the map to vectors and map the neighbour properties function
+  var reduce_neighbours = function() {
+    // reduce map to vectors
+    var map_fc = clean_map
+          .updateMask(segment_id).updateMask(clean_map.eq(classn)) // only vectorise class/es of interest
+          .reduceToVectors({
+            scale: vars.image_data_scale, 
+            eightConnected: false,
+            bestEffort: true, 
+            maxPixels: 1e13,
+            tileScale: 1
+          })
+    // map the function, calculate neighbour properties
+    return(map_fc.map(set_neighbour_properties))
+  }
+  
+  if (vars.geomorphic) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
+  
+    // This is where we select the single or group of classes to vectorise for cleaning up
+    //var classn = ee.Number(15) // one class
+    var classn = clean_map.where({
+      test: clean_map.neq(15) //RR
+              .and(clean_map.neq(14)) //ORF
+              .and(clean_map.neq(13)) //IRF
+              .and(clean_map.neq(12)) // deep L
+              .and(clean_map.neq(11)), // shallow L 
+      value: ee.Image(99) // 99 ensures it's ignored in logic
+    })
+    // Minimum size of object to reclass based on neighbourhood
+    var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2) // the first number is the square dimension of the desired min size
+    // calculate neighbours
+    var map_fc_neighbours = reduce_neighbours()
+    
+    // #########
+    // REEF RIM
+    // #########
+    
+    var focus_class = ee.Number(15) //RR
+    
+    // start the object-based neighbourhood rules
+    // paint out to rasters (only paint the layers needed)
+    var objsize = ee.Image(30000).paint(map_fc_neighbours, 'count').rename('count')
+    var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
+    var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22') //SL ex
+    var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
+    var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
+    var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
+    var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    
+    // RR surrounded by ORF --> ORF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb14.gt(75)),
+      value: ee.Image(14)
+    })
+    
+    // RR surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.gt(75)),
+      value: ee.Image(13)
+    })
+    
+    // RR surrounded by OCL --> OCL
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb24.gt(75)),
+      value: ee.Image(24)
+    })
+    
+    /* with 2nd/3rd pass method, we don't really need this
+    // RR surrounded by IRF + ORF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.lte(75).and(nb14.lte(75))) // to ensure we're no re-writing previous rules
+              .and(nb13.add(nb14).gt(75))
+              .and(nb21.add(nb22).lte(0)), // to not get rid of complex reef rims (if touching slope, it's probably RR)
+      value: ee.Image(13) // could try assigning to a place-holder, then deal with at the end?
+    })*/
+    
+    // small RR objects touching OCL + stuff --> ORF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(objsize.lte(max_size))
+              .and(nb13.lte(75).and(nb14.lte(75))) // to ensure we're no re-writing previous rules
+              .and(nb24.gt(1)),
+      value: ee.Image(14)
+    })
+    
+    // ####
+    // ORF
+    // ####
+    
+    focus_class = ee.Number(14) // ORF
+    
+    //classn = ee.Number(14)
+    //map_fc_neighbours = reduce_neighbours()
+    //var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22') //SL ex
+    //var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
+    //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
+    //nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    
+    // ORF surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.gt(75)),
+      value: ee.Image(13)
+    })
+    
+    // ORF surrounded by RR --> RR
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb15.gt(85)),
+      value: ee.Image(15)
+    })
+    
+    // ORF touching slope and RR --> RR
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb21.gt(0).or(nb22.gt(0)))
+              .and(nb15.gt(0)),
+      value: ee.Image(15)
+    })
+    
+    // ####
+    // IRF
+    // ####
+    
+    focus_class = ee.Number(13) // IRF
+    
+    //classn = ee.Number(13)
+    //map_fc_neighbours = reduce_neighbours()
+    //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
+    //nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
+    
+    // IRF surrounded by ORF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb14.gt(75)),
+      value: ee.Image(14)
+    })
+    
+    // IRF surrounded by RR --> RR
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb15.gt(85)),
+      value: ee.Image(15)
+    })
+    
+    // ####
+    // LAGOONS
+    // ####
+    
+    var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') // shallow lag
+    var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //deep lag
+    
+    // DL touching SL --> SL
+    /* 
+    This is a stop-gap until we have better depth product - below are the rules we want,
+    but too much band-aiding is required to make it work, so for the moment just err on the side
+    of shallow lagoon when it's mixed.
+    */
+    clean_map = clean_map.where({
+      test: clean_map.eq(12)
+              .and(nb11.gt(0)),
+      value: ee.Image(11)
+    })
+    
+    /*// SL sourrounded by DL --> DL
+    clean_map = clean_map.where({
+      test: clean_map.eq(11)
+              .and(nb12.gt(75)),
+      value: ee.Image(12)
+    })*/
+    
+    /*// DL sourrounded by SL --> SL
+    clean_map = clean_map.where({
+      test: clean_map.eq(12)
+              .and(nb11.gt(75)),
+      value: ee.Image(11)
+    })*/
+    
+    // DL/SL surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(11).or(clean_map.eq(12))
+              .and(objsize.lte(max_size))
+              .and(nb13.gt(80)),
+      value: ee.Image(13)
+    })
+    
+    // DL/SL touching OCL --> OCL
+    clean_map = clean_map.where({
+      test: clean_map.eq(11).or(clean_map.eq(12))
+              .and(nb24.gt(0)),
+      value: ee.Image(24)
+    })
+    
+    
+  } else {
+    
+    // BENTHIC CLEAN-UP RULES
+    
+  }
+  
+  // ####
+  // Final small object clean (safety net for oddities with scaling and border buffers??)
+  // ####
+  
+  var map_vsmooth = clean_map
+                        .focal_mode({
+                          radius: 10, // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 1
+                        })
+                        .updateMask(class_extent_mask)
+  
+  clean_map = clean_map.where({
+    test: clean_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+    value: map_vsmooth
+  })
+
+}
+
+// final smooth
+if (vars.smooth_output) {
+  // smooth the output lightly to make nice edges, and get rid of noise
+  var noise_smooth = clean_map.unmask(99) // unmasking to a value allows us to include masked areas in the smooth, then re-mask after
+                        .focal_mode({
+                          radius: 3, // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 2
+                        })
+  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(class_extent_mask)
+} else {
+  // just clip to the classified extent and move on
+  clean_map = clean_map.updateMask(class_extent_mask)
+}
+
+
+// 4. Export data
+
+var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
+
+var export_classification = function () {
+  
+  if (vars.export_small_area) {
+    var export_convhull = export_small
+  } else {
+    var export_convhull = smooth_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: smooth_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
+  }
+  Map.addLayer(export_convhull, {}, "Export footprint", true)
+  Export.image.toAsset({
+    image: clean_map.set(vars),
+    description: output_name,
+    assetId: vars.asset_output + output_name,
+    region: export_convhull,
+    scale: vars.image_data_scale,
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  })
+}
+
+if (vars.do_export) {
+  print("For export, the image data scale must be set to:", vars.image_data_scale)
+  export_classification() // export if wanted
+} else {
+  if (vars.show_eg_area) {
+    if (vars.reproject_display) {
+      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.reproject_res)), display_pal, output_name + '_final', false)
+    } else {
+      Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
+    }
+  } else {
+    if (vars.reproject_display) {
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.reproject_res)), display_pal, output_name + '_final', false)
+    } else {
+      Map.addLayer(clean_map, display_pal, output_name + '_final', false)
+    }
+  }
+}
