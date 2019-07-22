@@ -114,10 +114,8 @@ if (vars.obia_clean) {
   
   // first make a make size threshold, so we're not vecortising huge objects when we don't have to
   var segment_id = smooth_map.connectedComponents(ee.Kernel.plus(1), 256).select('labels')
-  //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+  Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   
-  var segment_size = smooth_map.connectedPixelCount(1024, false)
-  Map.addLayer(segment_size, {}, "size")
   
   // FUNCTION that maps over feature colleciton and assigns neighbour percentages
   var set_neighbour_properties = function(f) {
@@ -128,7 +126,8 @@ if (vars.obia_clean) {
       clean_map.unmask(ee.Image(0)).reduceRegion({
         reducer: ee.Reducer.frequencyHistogram(),
         geometry: diff.geometry(),
-        scale: vars.image_data_scale
+        scale: vars.image_data_scale,
+        maxPixels: 1e11
       }).get('classification')
     )
     // calculate the percentages
