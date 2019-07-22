@@ -116,6 +116,7 @@ if (vars.obia_clean) {
   var segment_id = smooth_map.connectedComponents(ee.Kernel.plus(1), 256).select('labels')
   //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   
+  var 
   
   // FUNCTION that maps over feature colleciton and assigns neighbour percentages
   var set_neighbour_properties = function(f) {
