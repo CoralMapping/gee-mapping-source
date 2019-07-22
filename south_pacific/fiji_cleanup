@@ -42,7 +42,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.fiji_htcoast  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -114,7 +114,7 @@ if (vars.obia_clean) {
   
   // first make a make size threshold, so we're not vecortising huge objects when we don't have to
   var segment_id = smooth_map.connectedComponents(ee.Kernel.plus(1), 256).select('labels')
-  Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+  //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   
   
   // FUNCTION that maps over feature colleciton and assigns neighbour percentages
