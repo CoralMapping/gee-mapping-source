@@ -1,9 +1,13 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var cancook_htv2_benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"),
-    cancook_htv2_geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2");
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
+/*
+Script to export maps to GCS, ready for smoothing
+- note the eventual smoothed output still needs to be QC'd by UQ, 
+  to ensure smoothing has not done naything untoward
+  
+TODO: link this to the reef_params module
+ - in that case you'd just choose the region, and the exrpot would all happen automatically
+ - let's just see if this process takes off, then i'll invest time to link it up with automation
+*/
 
-// Cancook export
 var export_convhull = cancook_htv2_benthic.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_benthic.geometry().bounds()}).geometry().convexHull({maxError: 100})
 
 // ######
