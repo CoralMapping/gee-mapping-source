@@ -1,3 +1,22 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var test_export = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[177.95370758857712, -19.20373342970009],
+          [178.10888947334274, -19.229668867104735],
+          [178.29153717842087, -19.158336576045084],
+          [178.29977692451462, -19.10903441140699],
+          [178.34646881904587, -19.133687333537296],
+          [178.518130195999, -19.08697341798053],
+          [178.65271271553024, -18.85060740198786],
+          [178.58267487373337, -18.702383927051454],
+          [178.59091461982712, -18.580066799679773],
+          [178.46731842842087, -18.582670208100676],
+          [178.39453400459274, -18.868801284583835],
+          [178.10202301826462, -18.940258123200397],
+          [177.90014923896774, -19.098653133808405]]]),
+    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_geo"),
+    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_benthic"),
+    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
 - note the eventual smoothed output still needs to be QC'd by UQ, 
@@ -13,7 +32,10 @@ TODO: link this to the reef_params module
 // export region
 - convex hull, or manual
 */
-//var export_convhull = cancook_htv2_benthic.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_benthic.geometry().bounds()}).geometry().convexHull({maxError: 100})
+//var export_geom = cancook_htv2_benthic.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_benthic.geometry().bounds()}).geometry().convexHull({maxError: 100})
+var export_geom = test_export
+
+
 
 
 
