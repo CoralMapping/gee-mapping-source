@@ -28,6 +28,9 @@ TODO: define output params up front
 TODO: link this to the reef_params module
   - in that case you'd just choose the region, and the exrpot would all happen automatically
   - let's just see if this process takes off, then i'll invest time to link it up with automation
+  
+TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
+  - Fiji/south pacific might be the only region where this happens? worth it?
 */
 
 // so we can visualise maps before export
