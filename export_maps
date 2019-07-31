@@ -58,14 +58,14 @@ var export_stack = depth.rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
 // add export region
-Map.addLayer(export_geo)
+Map.addLayer(export_geom)
 
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
   description: 'fiji_stack_example',
-  bucket: 'gs://coral-atlas-data-pipeline/coral-gee-export-bucket/fiji',
-  fileNamePrefix: 'fiji_stack_example',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_example',
   region: test_export, 
   scale: 5,
   maxPixels: 1e13, 
