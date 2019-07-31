@@ -21,10 +21,13 @@ var test_export = /* color: #d63000 */ee.Geometry.Polygon(
 Script to export maps to GCS, ready for smoothing
 - note the eventual smoothed output still needs to be QC'd by UQ, 
   to ensure smoothing has not done naything untoward
-  
+ 
+TODO: define output params up front
+  - e.g. description, export path, GCS bucket etc.
+ 
 TODO: link this to the reef_params module
- - in that case you'd just choose the region, and the exrpot would all happen automatically
- - let's just see if this process takes off, then i'll invest time to link it up with automation
+  - in that case you'd just choose the region, and the exrpot would all happen automatically
+  - let's just see if this process takes off, then i'll invest time to link it up with automation
 */
 
 // so we can visualise maps before export
@@ -54,25 +57,18 @@ var export_stack = depth.rename('depth')
                     .toInt16()
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
-
-
-
-/*
-Export.image.toDrive({
-  image: cancook_htv2_benthic, 
-  description: 'cancook_benthic', 
-  region: export_convhull,
-  scale: 25,
-  maxPixels: 1e13
-})
-
-Export.image.toDrive({
-  image: cancook_htv2_geo, 
-  description: 'cancook_geo', 
-  region: export_convhull,
-  scale: 25,
-  maxPixels: 1e13
-})
-
+// add export region
 Map.addLayer(export_geo)
-*/
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack,
+  description: 'fiji_stack_example',
+  bucket: 'gs://coral-atlas-data-pipeline/coral-gee-export-bucket/fiji',
+  fileNamePrefix: 'fiji_stack_example',
+  region: test_export, 
+  scale: 5,
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})
+
