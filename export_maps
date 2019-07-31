@@ -9,11 +9,11 @@ TODO: link this to the reef_params module
 */
 
 
+/*
 // export region
+- convex hull, or manual
+*/
 //var export_convhull = cancook_htv2_benthic.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_benthic.geometry().bounds()}).geometry().convexHull({maxError: 100})
-
-
-
 
 
 
