@@ -59,7 +59,7 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -89,7 +89,7 @@ var vars = {
   // class information for classification, sampling and reporting
   local_epsg: region_params.epsg,
   // trim input data
-  trim_training_data: true, // if true, will trim the training data set by the % below
+  trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.60,
   // geomorphic
   nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
