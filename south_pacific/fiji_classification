@@ -59,12 +59,12 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
   // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
+  pixels_or_objects: 'both', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -72,7 +72,7 @@ var vars = {
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  small_object_filter: 50, // size in pixels (output scale) for small object removal
+  small_object_filter: 25, // size in pixels (output scale) for small object removal
   
   /*// add relative band brightness to predictor variables?
   use_brightness: true, <<----- now done in the *_datagen script */
