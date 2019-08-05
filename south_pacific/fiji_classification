@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([178.25660705566406, -18.242394531116258]),
-    s2_vis = {"opacity":1,"bands":["b4","b3","b2"],"min":309.90909090909093,"max":2502.5,"gamma":1},
     eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -19,7 +18,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.25660705566406, -18.
          [[[178.1896083331153, -19.126039427046837],
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
-           [178.24265169859382, -19.126039427046837]]]], null, false);
+           [178.24265169859382, -19.126039427046837]]]], null, false),
+    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Fiji region
@@ -68,6 +68,7 @@ var vars = {
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
+  input_bands: ['b1','b2','b3','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -142,16 +143,18 @@ var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_num
 var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic*/
 
 
-// Add any extra indices needed (MOVE THIS TO DATA GEN AFTER TESTING)
+// Add any extra indices needed (MOVE HEAVY STUFF TO DATA GEN AFTER TESTING)
 
 // ndwi (not really, but conceptually achieves it when everything is water...) + band ratios
 segments = segments
+              .select(vars.input_bands)
               //.addBands(segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
               .addBands(segments.select('b3').divide(segments.select('b1')).rename('rb'))
               .addBands(segments.select('b2').divide(segments.select('b1')).rename('gb'))
               .addBands(segments.select('b3').divide(segments.select('b2')).rename('rg'))
               
 pixels = pixels
+          .select(vars.input_bands)
           //.addBands(pixels.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
           .addBands(pixels.select('b3').divide(pixels.select('b1')).rename('rb'))
           .addBands(pixels.select('b2').divide(pixels.select('b1')).rename('gb'))
@@ -168,9 +171,9 @@ var pixsegs = pixels.addBands(segments)
 
 Map.centerObject(map_centre, 11)
 
-Map.addLayer(pixels, s2_vis, 'per-pixel image data', false)
-Map.addLayer(segments, s2_vis, 'segmented image data', false)
-Map.addLayer(pixsegs, s2_vis, 'segments + pixels', false)
+Map.addLayer(pixels, rgb_vis, 'per-pixel image data', false)
+Map.addLayer(segments, rgb_vis, 'segmented image data', false)
+Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
 
 
 // ################################################
