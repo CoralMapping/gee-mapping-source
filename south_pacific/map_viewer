@@ -21,8 +21,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_high_geo_ocean = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_geo"),
     fiji_high_geo_ocean2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_geo2"),
     fiji_high_pixels = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_pixels"),
-    fiji_ocean_benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic"),
-    fiji_ocean_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo");
+    fiji_ocean_benthic_man = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_man"),
+    fiji_ocean_geo_man = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_man");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -52,7 +52,7 @@ Map.addLayer(fiji_high_benthic_coast.selfMask(), map_palettes.benthic, "Dove Fij
 Map.addLayer(fiji_high_benthic_ocean.selfMask(), map_palettes.benthic, "Dove Fiji Benthic ocean Chla RAW", false)
 Map.addLayer(fiji_high_benthic_coast2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves coastal Chla RAW", false)
 Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves ocean Chla RAW", false)
-Map.addLayer(fiji_ocean_benthic.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - manual curation", false)
+Map.addLayer(fiji_ocean_benthic_man.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - manual curation", false)
 
 
 Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
@@ -65,7 +65,7 @@ Map.addLayer(fiji_high_geo_coast2.updateMask(fiji_high_geo_coast2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo +waves coastal Chla RAW", false)
 Map.addLayer(fiji_high_geo_ocean2.updateMask(fiji_high_geo_ocean2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo +waves ocean Chla RAW", false)
-Map.addLayer(fiji_ocean_geo.updateMask(fiji_ocean_geo.neq(2))
+Map.addLayer(fiji_ocean_geo_man.updateMask(fiji_ocean_geo.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation", false)
 
 // wave data
