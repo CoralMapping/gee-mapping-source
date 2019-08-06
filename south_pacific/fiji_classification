@@ -161,10 +161,14 @@ pixels = pixels
           .addBands(pixels.select('b3').divide(pixels.select('b2')).rename('rg'))
 
 
-// make the combined pixels and segemnts data
-// and ensure they're masked the same
-segments = segments.updateMask(pixels)
-pixels = pixels.updateMask(segments)
+/*
+make the combined pixels and segemnts data
+and ensure they're masked the same
+- not sure why, but this masking cross-reference fucks things??
+- leaving out for time being
+//segments = segments.updateMask(pixels)
+//pixels = pixels.updateMask(segments)
+*/
 var pixsegs = pixels.addBands(segments)
                 // test remoing depth from classification
                 //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
