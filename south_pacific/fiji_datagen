@@ -180,7 +180,7 @@ if (vars.use_brightness) {
 
 // calculate slope
 var slope = ee.Terrain.slope(depth) // slope in degress
-Map.addLayer(slope.focal_mean(1.5))
+
 // glcm texture (mixed usefulness - will vary with image quality and type)
 var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
 var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5)
