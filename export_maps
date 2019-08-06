@@ -61,7 +61,7 @@ var export_stack = depth.rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
 // add export region
-Map.addLayer(export_geom)
+Map.addLayer(export_geom, {}, "export footprint", true)
 
 // run the export
 Export.image.toCloudStorage({
