@@ -68,7 +68,7 @@ var vars = {
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
-  input_bands: ['b1','b2','b3','depth','b4','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'],
+  input_bands: ['b1','b2','b3','depth','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -148,14 +148,14 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 // ndwi (not really, but conceptually achieves it when everything is water...) + band ratios
 segments = segments
               .select(vars.input_bands)
-              .addBands(segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
+              //.addBands(segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
               .addBands(segments.select('b3').divide(segments.select('b1')).rename('rb'))
               .addBands(segments.select('b2').divide(segments.select('b1')).rename('gb'))
               .addBands(segments.select('b3').divide(segments.select('b2')).rename('rg'))
               
 pixels = pixels
           .select(vars.input_bands)
-          .addBands(pixels.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
+          //.addBands(pixels.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
           .addBands(pixels.select('b3').divide(pixels.select('b1')).rename('rb'))
           .addBands(pixels.select('b2').divide(pixels.select('b1')).rename('gb'))
           .addBands(pixels.select('b3').divide(pixels.select('b2')).rename('rg'))
