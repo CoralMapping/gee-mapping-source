@@ -57,7 +57,7 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel).pow(2), // relates back to object size and the min mapping unit defined in classification stage
-  small_object: ee.Number(50).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(100).int(), // relates to the vars.min_object_size from the *_classification script
   obia_clean: true, // run object-based relationship rules + small object clean up
   
   //############
