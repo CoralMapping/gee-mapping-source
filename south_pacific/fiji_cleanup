@@ -76,7 +76,7 @@ var vars = {
   reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
@@ -90,45 +90,46 @@ var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)
 var pixels = ee.Image(region_params.pixels)
 
-var smooth_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
+var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.centerObject(eg_area, 11)
 Map.addLayer(pixels, {}, 'Image data', false)
-Map.addLayer(smooth_map, display_pal, 'Raw classification', true)
+Map.addLayer(input_map, display_pal, 'Raw classification', false)
 
 
 // 3. Object-based re-classificaiton and cleaning
 
-var class_extent_mask = smooth_map.gte(1) // just so it doesn't balloon out
+var class_extent_mask = input_map.gte(1) // just so it doesn't balloon out
+
+/*
 
 // define the cleaned map to either do OBIA on or just export later
 var clean_map = smooth_map
 //Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, "output_scale", true)
 
-
-/*
 ########
 Initial small object clean
  - this was originally at the end, but we needed to massively reduce the number of objects to 
    iterate through in the OBIA cleaning, so this happens first now
  - future collabs with google might fix this, but need to change the parallel serialisation of vector procesing
 ########
+
 */
 
-
-var map_vsmooth = clean_map
+var smooth_map = input_map
                       .focal_mode({
                         radius: 10, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
                       })
                       .updateMask(class_extent_mask)
 
-clean_map = clean_map.where({
-  test: clean_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
-  value: map_vsmooth
+var clean_map = input_map.where({
+  test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+  value: smooth_map
 })
 
+Map.addLayer(clean_map, display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
   
@@ -137,7 +138,7 @@ if (vars.obia_clean) {
   // #########
   
   // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-  var segment_id = smooth_map.connectedComponents(ee.Kernel.plus(1),128).select('labels')
+  var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),128).select('labels')
   //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   //Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   
