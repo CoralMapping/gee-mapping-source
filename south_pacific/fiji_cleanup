@@ -106,6 +106,30 @@ var class_extent_mask = smooth_map.gte(1) // just so it doesn't balloon out
 var clean_map = smooth_map
 //Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, "output_scale", true)
 
+
+/*
+########
+Initial small object clean
+ - this was originally at the end, but we needed to massively reduce the number of objects to 
+   iterate through in the OBIA cleaning, so this happens first now
+ - future collabs with google might fix this, but need to change the parallel serialisation of vector procesing
+########
+*/
+
+
+var map_vsmooth = clean_map
+                      .focal_mode({
+                        radius: 10, // relates to smoothness required
+                        kernelType: 'circle', units: 'pixels', iterations: 1
+                      })
+                      .updateMask(class_extent_mask)
+
+clean_map = clean_map.where({
+  test: clean_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+  value: map_vsmooth
+})
+
+
 if (vars.obia_clean) {
   
   // #########
@@ -344,7 +368,7 @@ if (vars.obia_clean) {
     
   }
   
-  // ####
+/*  // ####
   // Final small object clean (safety net for oddities with scaling and border buffers??)
   // ####
   
@@ -358,7 +382,7 @@ if (vars.obia_clean) {
   clean_map = clean_map.where({
     test: clean_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: map_vsmooth
-  })
+  })*/
 
 }
 
