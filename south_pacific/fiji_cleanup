@@ -118,18 +118,20 @@ Initial small object clean
 */
 
 var smooth_map = input_map
+                      .unmask(99)
                       .focal_mode({
                         radius: 10, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
                       })
-                      .updateMask(class_extent_mask)
+
+//smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
 var clean_map = input_map.where({
   test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
   value: smooth_map
-})
+}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
-Map.addLayer(clean_map, display_pal, 'Initial smooth classification', false)
+Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
   
