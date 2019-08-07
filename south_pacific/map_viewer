@@ -65,7 +65,7 @@ Map.addLayer(fiji_high_geo_coast2.updateMask(fiji_high_geo_coast2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo +waves coastal Chla RAW", false)
 Map.addLayer(fiji_high_geo_ocean2.updateMask(fiji_high_geo_ocean2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo +waves ocean Chla RAW", false)
-Map.addLayer(fiji_ocean_geo_man.updateMask(fiji_ocean_geo.neq(2))
+Map.addLayer(fiji_ocean_geo_man.updateMask(fiji_ocean_geo_man.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation", false)
 
 // wave data
