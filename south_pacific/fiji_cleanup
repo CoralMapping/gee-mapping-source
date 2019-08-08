@@ -228,6 +228,13 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
+    // RR surrounded by IRF + ORF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.add(nb14)).gt(75),
+      value: ee.Image(13)
+    })
+    
     /*// RR surrounded by OCL --> OCL
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
