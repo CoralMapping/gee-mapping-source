@@ -66,13 +66,13 @@ var vars = {
   
   // results/layers to show
   export_small_area: true,
-  show_eg_area: true, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
+  show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
-  reproject_display: false,
+  reproject_display: true,
   reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
