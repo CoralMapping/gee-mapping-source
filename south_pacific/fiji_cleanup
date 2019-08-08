@@ -231,7 +231,7 @@ if (vars.obia_clean) {
     // RR surrounded by IRF + ORF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
-              .and(nb13.add(nb14)).gt(75),
+              .and(nb13.add(nb14).gt(75)),
       value: ee.Image(13)
     })
     
@@ -359,6 +359,13 @@ if (vars.obia_clean) {
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
+      value: ee.Image(13)
+    })
+    
+    // TRF surrounded by IRF + ORF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.add(nb14).gt(75)),
       value: ee.Image(13)
     })
     
