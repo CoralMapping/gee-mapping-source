@@ -57,7 +57,8 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel).pow(2), // relates back to object size and the min mapping unit defined in classification stage
-  small_object: ee.Number(100).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(50).int(), // relates to the vars.min_object_size from the *_classification script
+  smooth_radius: ee.Number(7), // radius in pixels for initial smooth 
   obia_clean: true, // run object-based relationship rules + small object clean up
   
   //############
@@ -120,7 +121,7 @@ Initial small object clean
 var smooth_map = input_map
                       .unmask(99)
                       .focal_mode({
-                        radius: 10, // relates to smoothness required
+                        radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
                       })
 
@@ -142,7 +143,7 @@ if (vars.obia_clean) {
   // first make a make size threshold, so we're not vecortising huge objects when we don't have to
   var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),128).select('labels')
   //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
-  //Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+  Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
   
   // FUNCTION that maps over feature colleciton and assigns neighbour percentages
   var set_neighbour_properties = function(f) {
