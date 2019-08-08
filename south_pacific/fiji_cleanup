@@ -141,7 +141,7 @@ if (vars.obia_clean) {
   // #########
   
   // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-  var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),256).select('labels')
+  var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object).select('labels')
   //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
   Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
   
@@ -210,12 +210,14 @@ if (vars.obia_clean) {
     // start the object-based neighbourhood rules
     // paint out to rasters (only paint the layers needed)
     var objsize = ee.Image(30000).paint(map_fc_neighbours, 'count').rename('count')
-    var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
+    //var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
     var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22') //SL ex
     var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
+    var nb16 = ee.Image().byte().paint(map_fc_neighbours, '16').unmask(0).rename('nb16') //TRF
     var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
     var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
     var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    var nb3 = ee.Image().byte().paint(map_fc_neighbours, '3').unmask(0).rename('nb3') //Turbid
     
     // RR surrounded by ORF --> ORF
     clean_map = clean_map.where({
@@ -231,12 +233,12 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
-    // RR surrounded by OCL --> OCL
+    /*// RR surrounded by OCL --> OCL
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb24.gt(75)),
       value: ee.Image(24)
-    })
+    })*/
     
     /* with 2nd/3rd pass method, we don't really need this
     // RR surrounded by IRF + ORF --> IRF
@@ -248,14 +250,14 @@ if (vars.obia_clean) {
       value: ee.Image(13) // could try assigning to a place-holder, then deal with at the end?
     })*/
     
-    // small RR objects touching OCL + stuff --> ORF
+    /*// small RR objects touching OCL + stuff --> ORF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(objsize.lte(max_size))
               .and(nb13.lte(75).and(nb14.lte(75))) // to ensure we're no re-writing previous rules
               .and(nb24.gt(1)),
       value: ee.Image(14)
-    })
+    })*/
     
     // ####
     // ORF
@@ -275,6 +277,13 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
+    })
+    
+    // ORF surrounded by TRF --> TRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb16.gt(75)),
+      value: ee.Image(16)
     })
     
     // ORF surrounded by RR --> RR
@@ -303,11 +312,18 @@ if (vars.obia_clean) {
     //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
     //nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
     
-    // IRF surrounded by ORF --> IRF
+    // IRF surrounded by ORF --> ORF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
+    })
+    
+    // IRF surrounded by TRF --> TRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb16.gt(75)),
+      value: ee.Image(16)
     })
     
     // IRF surrounded by RR --> RR
@@ -316,6 +332,34 @@ if (vars.obia_clean) {
               .and(nb15.gt(85)),
       value: ee.Image(15)
     })
+    
+    
+    // ####
+    // TRF
+    // ####
+    
+    focus_class = ee.Number(16) // TRF
+    
+    //classn = ee.Number(16)
+    //map_fc_neighbours = reduce_neighbours()
+    //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
+    //nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
+    //nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    
+    // TRF surrounded by ORF --> ORF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb14.gt(75)),
+      value: ee.Image(14)
+    })
+    
+    // TRF surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.gt(75)),
+      value: ee.Image(13)
+    })
+    
     
     // ####
     // LAGOONS
@@ -358,13 +402,40 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
-    // DL/SL touching OCL --> OCL
+    /*// DL/SL touching OCL --> OCL
     clean_map = clean_map.where({
       test: clean_map.eq(11).or(clean_map.eq(12))
               .and(nb24.gt(0)),
       value: ee.Image(24)
+    })*/
+    
+    
+    // ####
+    // Turbid
+    // ####
+    
+    focus_class = ee.Number(3) // turbid
+    
+    // Turb surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb13.gt(75)),
+      value: ee.Image(13)
     })
     
+    // Turb surrounded by ORF --> ORF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb14.gt(75)),
+      value: ee.Image(14)
+    })
+    
+    // Turb surrounded by TRF --> TRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb16.gt(75)),
+      value: ee.Image(16)
+    })
     
   } else {
     
