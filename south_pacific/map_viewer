@@ -48,7 +48,6 @@ Map.addLayer(fiji_high_depth_coast, {min: -1, max: 1200, palette:['#d0d1e6','#a6
 Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide ocean Chla depth", false)
 
 
-
 // fiji
 Map.addLayer(fiji_high_benthic_newtrain2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training+suva RAW", false)
 Map.addLayer(fiji_high_benthic_coast.selfMask(), map_palettes.benthic, "Dove Fiji Benthic coastal Chla RAW", false)
@@ -89,14 +88,21 @@ Map.addLayer(kd2, {}, "waves - kd2", false)
 Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo", false)
 Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Training maps - benthic", false)
 
-// example confidence layer
-var depth_nir_flag = fiji_high_pixels.select('b4').multiply(fiji_high_depth).gt(250000)
+// #############
+// example confidence layers
+
+// depth and nir combos
+var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
 //Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
-var conf_flag = fiji_high_depth.eq(-1)
-                        .or(fiji_high_depth.gt(1000))
+var conf_flag = fiji_high_depth_ocean.eq(-1)
+                        .or(fiji_high_depth_ocean.gt(1000))
                         .add(depth_nir_flag.eq(1))
                         .selfMask()
 Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
+
+//straight depth missing/-1
+var depth_flag = fiji_high_depth_ocean.unmask(0).lte(0).updateMask(fiji_dove_ocean.select(0)).selfMask()
+Map.addLayer(depth_flag, {min:0,max:1}, "No valid depth retrievals", false)
 
 
 ////////// UI SET UP //////////
