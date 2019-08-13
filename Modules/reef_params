@@ -157,7 +157,7 @@ var fiji_htocean = {
   pixels: "projects/coral_atlas/fiji/in_out/fj_high_ocean_pixels",
   segments: "projects/coral_atlas/fiji/in_out/fj_high_ocean_segmentation",
   waves: "users/danleeharris/reefwave/fiji_v1_kd2",
-  geo_train: "projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo", 
+  geo_train: "projects/coral_atlas/fiji/training/fiji_training_maps_geo", 
   benthic_train: "projects/coral_atlas/fiji/training/fiji_all_benthic",
   benthic_pts: "",
   geo_map: "projects/coral_atlas/fiji/in_out/fj_ocean_geo_maps",
