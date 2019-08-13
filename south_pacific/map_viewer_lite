@@ -2,7 +2,7 @@
 var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.16988549547624]),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_benthic"),
-    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_geo"),
+    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo"),
     fiji_dove = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_rrs"),
     fiji_dove_coast = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_coastal"),
     fiji_dove_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_ocean"),
