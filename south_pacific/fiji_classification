@@ -75,7 +75,7 @@ var vars = {
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  small_object_filter: 25, // size in pixels (output scale) for small object removal
+  small_object_filter: 50, // size in pixels (output scale) for small object removal
   
   /*// add relative band brightness to predictor variables?
   use_brightness: true, <<----- now done in the *_datagen script */
