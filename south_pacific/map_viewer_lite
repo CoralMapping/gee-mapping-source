@@ -41,25 +41,25 @@ Map.centerObject(centre_map, 10)
 
 
 // add some background data
-Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide 1st mosaic", false)
-Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)
+/*Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide 1st mosaic", false)
+Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)*/
 Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide ocean Chla mosaic", false)
-Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
+/*Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)
 Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
-Map.addLayer(fiji_high_depth_coast, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide coastal Chla depth", false)
+Map.addLayer(fiji_high_depth_coast, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide coastal Chla depth", false)*/
 Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide ocean Chla depth", false)
 
 
 // fiji
-Map.addLayer(fiji_high_benthic_newtrain2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training+suva RAW", false)
+/*Map.addLayer(fiji_high_benthic_newtrain2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic new-training+suva RAW", false)
 Map.addLayer(fiji_high_benthic_coast.selfMask(), map_palettes.benthic, "Dove Fiji Benthic coastal Chla RAW", false)
 Map.addLayer(fiji_high_benthic_ocean.selfMask(), map_palettes.benthic, "Dove Fiji Benthic ocean Chla RAW", false)
 Map.addLayer(fiji_high_benthic_coast2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves coastal Chla RAW", false)
-Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves ocean Chla RAW", false)
+Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves ocean Chla RAW", false)*/
 Map.addLayer(fiji_ocean_benthic_man.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - manual curation", false)
 Map.addLayer(fiji_ocean_benthic_man_nd.selfMask(), map_palettes.benthic, "Dove Fiji Benthic - manual curation (no depth)", false)
 
-Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
+/*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
 Map.addLayer(fiji_high_geo_coast.updateMask(fiji_high_geo_coast.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo coastal Chla RAW", false)
@@ -72,20 +72,20 @@ Map.addLayer(fiji_high_geo_ocean2.updateMask(fiji_high_geo_ocean2.neq(2))
 Map.addLayer(fiji_ocean_geo_man.updateMask(fiji_ocean_geo_man.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation", false)
 Map.addLayer(fiji_ocean_geo_man2.updateMask(fiji_ocean_geo_man2.neq(2))
-                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation 2", false)
+                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation 2", false)*/
 Map.addLayer(fiji_ocean_geo_maps.updateMask(fiji_ocean_geo_maps.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - maps", false)
-Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
-                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean test", false)
+/*Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
+                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean test", false)*/
 Map.addLayer(fiji_ocean_geo_clean.updateMask(fiji_ocean_geo_clean.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean full", false)
 
 // wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+/*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
 var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
 Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)*/
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
