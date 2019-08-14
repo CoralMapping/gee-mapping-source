@@ -81,8 +81,7 @@ var vars = {
 
 /*output resolution (bigger for geomorphic)
  - relates back to object size and the min mapping unit defined in classification stage*/
-var image_data_scale = (vars.geomorphic) ? ee.Number(sensor_params.pixel).pow(2) : ee.Number(sensor_params.pixel)
-vars.set('image_data_scale', image_data_scale)
+if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(2)
 
 // 2. Data loads & vis
 
