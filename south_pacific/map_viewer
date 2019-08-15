@@ -2,7 +2,8 @@
 var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.16988549547624]),
     depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_benthic"),
-    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_geo"),
+    fiji_training_geo_oldmaps = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_geo"),
+    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_training_maps_geo"),
     fiji_dove = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_rrs"),
     fiji_dove_coast = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_coastal"),
     fiji_dove_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_ocean"),
@@ -27,7 +28,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_ocean_geo_man2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_man2"),
     fiji_ocean_geo_maps = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_maps"),
     fiji_geo_clean_test = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean-test"),
-    fiji_ocean_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean");
+    fiji_ocean_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
+    fiji_ocean_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -89,6 +91,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo (old maps) ", false)
 Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num').selfMask(), map_palettes.geo, "Training maps - geo", false)
 Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num').selfMask(), map_palettes.benthic, "Training maps - benthic", false)
 
