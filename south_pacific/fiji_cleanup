@@ -58,7 +58,7 @@ var vars = {
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
-  You just run the clean-up twice to catch the left overs */
+  You can (if needed) just run the clean-up twice to catch the left overs */
   obia_2nd_pass: false,
   //############
   
