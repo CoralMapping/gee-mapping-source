@@ -69,7 +69,7 @@ Export.image.toCloudStorage({
   description: 'fiji_stack_prelim',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_prelim',
-  region: test_export, 
+  region: export_geom, 
   scale: 5,
   maxPixels: 1e13, 
   skipEmptyTiles: true
