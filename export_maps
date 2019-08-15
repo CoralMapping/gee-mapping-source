@@ -37,7 +37,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // export region convex hull, or manual
-var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds()}).geometry().convexHull({maxError: 100})
+var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 //var export_geom = test_export
 
 
