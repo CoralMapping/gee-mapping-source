@@ -69,7 +69,7 @@ var vars = {
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   reproject_display: true,
-  reproject_res: ee.Number(sensor_params.pixel).pow(2),
+  //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
   do_export: false, // export the results?
@@ -558,13 +558,13 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.reproject_res)), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
       Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
     }
   } else {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.reproject_res)), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
       Map.addLayer(clean_map, display_pal, output_name + '_final', false)
     }
