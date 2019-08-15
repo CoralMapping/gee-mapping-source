@@ -51,7 +51,7 @@ Map.addLayer(export_geom, {}, "export footprint", true)
 
 // run the export
 Export.image.toCloudStorage({
-  image: export_stack,t
+  image: export_stack,
   description: 'fiji_stack_prelim',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_prelim',
