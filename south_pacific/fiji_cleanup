@@ -100,7 +100,7 @@ Map.addLayer(input_map, display_pal, 'Raw classification', false)
 
 // 3. Object-based re-classificaiton and cleaning
 
-var class_extent_mask = input_map.gte(1) // just so it doesn't balloon out
+var class_extent_mask = input_map.gte(0) // just so it doesn't balloon out
 
 /*
 
