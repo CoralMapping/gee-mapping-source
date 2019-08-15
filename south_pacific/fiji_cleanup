@@ -454,14 +454,44 @@ if (vars.obia_clean) {
     
     // BENTHIC CLEAN-UP RULES
     
+    // Deep (or land or missing) in geo == masked from benthic
     clean_map = clean_map.where({
       test: geo_map.unmask(0).lte(2),
       value: ee.Image(0)
     })
     
+    // Deep lagoon in geo == masked from benthic
     clean_map = clean_map.where({
       test: geo_map.eq(12),
       value: ee.Image(0)
+    })
+    
+    // Ignore in benthic + ORF in geo == rock
+    clean_map = clean_map.where({
+      test: clean_map.eq(0)
+                     .and(geo_map.eq(14)),
+      value: ee.Image(13)
+    })
+    
+    // Ignore in benthic + IRF in geo == sand
+    clean_map = clean_map.where({
+      test: clean_map.eq(0)
+                     .and(geo_map.eq(13)),
+      value: ee.Image(11)
+    })
+    
+    // Ignore in benthic + TRF in geo == sand
+    clean_map = clean_map.where({
+      test: clean_map.eq(0)
+                     .and(geo_map.eq(16)),
+      value: ee.Image(11)
+    })
+    
+    // Ignore in benthic + turbid in geo == seagrass
+    clean_map = clean_map.where({
+      test: clean_map.eq(0)
+                     .and(geo_map.eq(3)),
+      value: ee.Image(14)
     })
     
   }
