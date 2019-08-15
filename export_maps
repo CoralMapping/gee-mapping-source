@@ -1,19 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var test_export = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[177.95370758857712, -19.20373342970009],
-          [178.10888947334274, -19.229668867104735],
-          [178.29153717842087, -19.158336576045084],
-          [178.29977692451462, -19.10903441140699],
-          [178.34646881904587, -19.133687333537296],
-          [178.518130195999, -19.08697341798053],
-          [178.65271271553024, -18.85060740198786],
-          [178.58267487373337, -18.702383927051454],
-          [178.59091461982712, -18.580066799679773],
-          [178.46731842842087, -18.582670208100676],
-          [178.39453400459274, -18.868801284583835],
-          [178.10202301826462, -18.940258123200397],
-          [177.90014923896774, -19.098653133808405]]]),
-    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
+var depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
     geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
     benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
@@ -65,7 +51,7 @@ Map.addLayer(export_geom, {}, "export footprint", true)
 
 // run the export
 Export.image.toCloudStorage({
-  image: export_stack,
+  image: export_stack,t
   description: 'fiji_stack_prelim',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_prelim',
