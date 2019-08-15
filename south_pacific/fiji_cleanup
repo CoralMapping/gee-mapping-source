@@ -53,7 +53,7 @@ var vars = {
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
   small_object: ee.Number(50).int(), // relates to the vars.min_object_size from the *_classification script
-  smooth_radius: ee.Number(7), // radius in pixels for initial smooth 
+  smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
   obia_clean: true, // run object-based relationship rules + small object clean up
   
   //############
@@ -453,6 +453,16 @@ if (vars.obia_clean) {
   } else {
     
     // BENTHIC CLEAN-UP RULES
+    
+    clean_map = clean_map.where({
+      test: geo_map.unmask(0).lte(2),
+      value: ee.Image(0)
+    })
+    
+    clean_map = clean_map.where({
+      test: geo_map.eq(12),
+      value: ee.Image(0)
+    })
     
   }
   
