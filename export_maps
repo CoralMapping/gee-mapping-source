@@ -14,8 +14,8 @@ var test_export = /* color: #d63000 */ee.Geometry.Polygon(
           [178.10202301826462, -18.940258123200397],
           [177.90014923896774, -19.098653133808405]]]),
     depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
-    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_maps"),
-    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_man");
+    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
+    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -37,8 +37,8 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // export region convex hull, or manual
-//var export_geom = cancook_htv2_benthic.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cancook_htv2_benthic.geometry().bounds()}).geometry().convexHull({maxError: 100})
-var export_geom = test_export
+var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds()}).geometry().convexHull({maxError: 100})
+//var export_geom = test_export
 
 
 // make reef/non-reef layer 
@@ -68,7 +68,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'fiji_stack_example',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_example',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_prelim',
   region: test_export, 
   scale: 5,
   maxPixels: 1e13, 
