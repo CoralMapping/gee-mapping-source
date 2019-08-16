@@ -127,8 +127,9 @@ var vars = {
 // load input data
 var pixels = ee.Image(region_params.pixels)
 var segments = ee.Image(region_params.segments)
-var geomorph = ee.FeatureCollection(region_params.geo_train)
-//var geomorph = ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo')
+//var geomorph = ee.FeatureCollection(region_params.geo_train)
+var geomorph = ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo')
+        .merge(ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_training_maps_geo'))
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
 
