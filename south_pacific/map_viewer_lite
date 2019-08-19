@@ -50,7 +50,7 @@ Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fi
 Map.addLayer(fiji_ocean_benthic_man, map_palettes.benthic, "Benthic - manual curation", false)
 Map.addLayer(fiji_ocean_benthic_man_nd, map_palettes.benthic, "Benthic - manual curation (no depth)", false)
 Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation + clean-up", false)
-Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation (no depth, substrate classes only)", false)
+Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual (no depth, substrate classes only)", false)
 
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
