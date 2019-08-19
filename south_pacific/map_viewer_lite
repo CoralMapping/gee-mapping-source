@@ -5,6 +5,7 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_training_geo_oldmaps = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_geo"),
     fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_training_maps_geo"),
     fiji_dove_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_ocean"),
+    fiji_high_depth_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
     fiji_ocean_benthic_man = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_man"),
     fiji_ocean_benthic_man_nd = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_man-nd"),
     fiji_ocean_geo_man = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_man"),
