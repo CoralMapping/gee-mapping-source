@@ -48,11 +48,11 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(60).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(10).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
   obia_clean: true, // run object-based relationship rules + small object clean up
   
