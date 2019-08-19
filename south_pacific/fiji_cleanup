@@ -487,11 +487,11 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
-    // Ignore in benthic + turbid in geo == rubble
+    // Ignore in benthic + turbid in geo == turbid (temporal - class num 2)
     clean_map = clean_map.where({
       test: clean_map.eq(0)
                      .and(geo_map.eq(3)),
-      value: ee.Image(12)
+      value: ee.Image(2)
     })
     
     
