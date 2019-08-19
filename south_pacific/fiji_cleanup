@@ -145,7 +145,7 @@ if (vars.geomorphic) {
                           })
   
   var clean_map = clean_map.where({
-    test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(2)), 
+    test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(10)), 
     value: smooth_noturbid
   }).updateMask(class_extent_mask)
 }
