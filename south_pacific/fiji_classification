@@ -64,7 +64,7 @@ var vars = {
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
   // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
+  pixels_or_objects: 'both', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -236,9 +236,9 @@ if (vars.show_intermediates) {
 Map.addLayer(all_training_data, {}, "Training polygons", false)
 
 if (!vars.geomorphic && vars.use_benthic_points) {
-  // need to get background pts form the map
+  // draw trainign points from cal/val map + input point data set
   var map_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select(1))
+                      .updateMask(segments.select('b1').gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
                         numPoints: vars.train_size,
@@ -255,7 +255,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
 } else {
   // draw trainign points from cal/val map
   var train_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select(1))
+                      .updateMask(segments.select('b1').gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
                         numPoints: vars.train_size,
