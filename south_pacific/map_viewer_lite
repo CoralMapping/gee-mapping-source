@@ -36,6 +36,8 @@ Map.centerObject(centre_map, 10)
 Map.addLayer(fiji_dove_orig_low, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove L-tide 1st mosaic", false)
 Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)*/
 Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean Chla mosaic", false)
+Map.addLayer(fiji_ocean_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean pixels", false)
+Map.addLayer(fiji_ocean_segments, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean segments", false)
 /*Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)*/
 /*Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 Map.addLayer(fiji_low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove L-tide depth", false)
