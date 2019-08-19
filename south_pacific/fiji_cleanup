@@ -184,7 +184,9 @@ if (vars.obia_clean) {
   }
   
   if (vars.geomorphic) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
-  
+    
+    //############### CLEAN UP SMALL TURBID AREAS
+    
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
     var classn = clean_map.where({
