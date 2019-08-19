@@ -494,6 +494,16 @@ if (vars.obia_clean) {
       value: ee.Image(12)
     })
     
+    
+    // Ignore in benthic + RR in geo == rock
+    
+    // seagrass in benthic + ORF or RR in geo == coral
+    
+    // turbid/missing/deep in geo == ignore (0)
+    
+    // coral or algae in benthic + TRF in geo == seagrass
+    
+    
   }
   
 /*  // ####
