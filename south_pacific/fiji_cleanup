@@ -519,10 +519,10 @@ if (vars.obia_clean) {
     // Ignore in benthic + RR in geo == rock
     */
     
-    // seagrass in benthic + ORF or RR in geo == coral
+    // seagrass in benthic + ORF or RR in geo == coral/algae
     clean_map = clean_map.where({
       test: clean_map.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+                     .and(geo_map.eq([14,15,21,22])),
       value: ee.Image(15)
     })
     
