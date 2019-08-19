@@ -71,7 +71,7 @@ var vars = {
   /* choose from
   'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'
   */
-  input_bands: ['b1','b2','b3','b1_savg','b2_savg','red_stdDev'],
+  input_bands: ['b1','b2','b3'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -84,7 +84,7 @@ var vars = {
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
-  train_size: 2000,
+  train_size: 3000,
   rf_trees: 40, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
   rf_varPerSplit: 0, // default sqrt(n(k))
