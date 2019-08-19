@@ -48,7 +48,7 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -184,9 +184,7 @@ if (vars.obia_clean) {
   }
   
   if (vars.geomorphic) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
-    
-    //############### CLEAN UP SMALL TURBID AREAS
-    
+  
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
     var classn = clean_map.where({
@@ -489,22 +487,12 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
-    // Ignore in benthic + turbid in geo == turbid (temporal - class num 2)
+    // Ignore in benthic + turbid in geo == rubble
     clean_map = clean_map.where({
       test: clean_map.eq(0)
                      .and(geo_map.eq(3)),
-      value: ee.Image(2)
+      value: ee.Image(12)
     })
-    
-    
-    // Ignore in benthic + RR in geo == rock
-    
-    // seagrass in benthic + ORF or RR in geo == coral
-    
-    // turbid/missing/deep in geo == ignore (0)
-    
-    // coral or algae in benthic + TRF in geo == seagrass
-    
     
   }
   
