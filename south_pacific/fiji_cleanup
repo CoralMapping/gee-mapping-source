@@ -48,11 +48,11 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(60).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(10).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
   obia_clean: true, // run object-based relationship rules + small object clean up
   
@@ -72,7 +72,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
@@ -113,6 +113,8 @@ Initial small object clean
  - this was originally at the end, but we needed to massively reduce the number of objects to 
    iterate through in the OBIA cleaning, so this happens first now
  - future collabs with google might fix this, but need to change the parallel serialisation of vector procesing
+ 
+ - includes a special case for geomorphic to clean up turbid areas over size threshold
 ########
 
 */
@@ -132,7 +134,9 @@ var clean_map = input_map.where({
 }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
 
-//############### CLEAN UP SMALL (but slightly larger) TURBID AREAS
+//CLEAN UP SMALL (but slightly larger) TURBID AREAS
+
+
 
 
 
