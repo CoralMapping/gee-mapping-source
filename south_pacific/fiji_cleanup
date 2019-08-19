@@ -48,7 +48,7 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -131,6 +131,11 @@ var clean_map = input_map.where({
   value: smooth_map
 }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
+
+//############### CLEAN UP SMALL (but slightly larger) TURBID AREAS
+
+
+
 Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
@@ -184,11 +189,12 @@ if (vars.obia_clean) {
   }
   
   if (vars.geomorphic) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
-  
+    
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
     var classn = clean_map.where({
-      test: clean_map.neq(15) //RR
+      test: clean_map.neq(16) //TRF
+              .and(clean_map.neq(15)) //RR
               .and(clean_map.neq(14)) //ORF
               .and(clean_map.neq(13)) //IRF
               .and(clean_map.neq(12)) // deep L
@@ -487,12 +493,22 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
-    // Ignore in benthic + turbid in geo == rubble
+    // Ignore in benthic + turbid in geo == turbid (temporal - class num 2)
     clean_map = clean_map.where({
       test: clean_map.eq(0)
                      .and(geo_map.eq(3)),
-      value: ee.Image(12)
+      value: ee.Image(2)
     })
+    
+    
+    // Ignore in benthic + RR in geo == rock
+    
+    // seagrass in benthic + ORF or RR in geo == coral
+    
+    // turbid/missing/deep in geo == ignore (0)
+    
+    // coral or algae in benthic + TRF in geo == seagrass
+    
     
   }
   
