@@ -134,21 +134,21 @@ var clean_map = input_map.where({
 }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
 
-/*if (vars.geomorphic) {
+if (vars.geomorphic) {
   //CLEAN UP SMALL (but slightly larger) TURBID AREAS
   
   var smooth_noturbid = clean_map
                           .updateMask(clean_map.neq(3))
                           .focal_mode({
-                            radius: vars.smooth_radius*2,
-                            kernelType: 'circle', units: 'pixels', iterations: 1
+                            radius: vars.smooth_radius,
+                            kernelType: 'circle', units: 'pixels', iterations: 3
                           })
   
   var clean_map = clean_map.where({
-    test: clean_map.eq(3).connectedPixelCount(vars.small_object*4, false).lt(vars.small_object*4), 
+    test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(2)), 
     value: smooth_noturbid
   }).updateMask(class_extent_mask)
-}*/
+}
 
 
 Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
