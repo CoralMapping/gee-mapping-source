@@ -134,7 +134,7 @@ var clean_map = input_map.where({
 }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
 
-if (vars.geomorphic) {
+/*if (vars.geomorphic) {
   //CLEAN UP SMALL (but slightly larger) TURBID AREAS
   
   var smooth_noturbid = clean_map
@@ -147,8 +147,8 @@ if (vars.geomorphic) {
   var clean_map = clean_map.where({
     test: clean_map.eq(3).connectedPixelCount(vars.small_object*4, false).lt(vars.small_object*4), 
     value: smooth_noturbid
-  })
-}
+  }).updateMask(class_extent_mask)
+}*/
 
 
 Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
