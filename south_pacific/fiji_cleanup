@@ -140,8 +140,8 @@ if (vars.geomorphic) {
   var smooth_noturbid = clean_map
                           .updateMask(clean_map.neq(3))
                           .focal_mode({
-                            radius: vars.smooth_radius,
-                            kernelType: 'circle', units: 'pixels', iterations: 3
+                            radius: vars.smooth_radius.multiply(1.5),
+                            kernelType: 'circle', units: 'pixels', iterations: 2
                           })
   
   var clean_map = clean_map.where({
