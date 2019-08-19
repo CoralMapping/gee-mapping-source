@@ -59,7 +59,7 @@ var region_params = param_module.fiji_htocean  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -71,11 +71,11 @@ var vars = {
   /* choose from
   'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'
   */
-  input_bands: ['b1','b2','b3','depth','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'],
+  input_bands: ['b1','b2','b3','b1_savg','b2_savg','red_stdDev'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  small_object_filter: 50, // size in pixels (output scale) for small object removal
+  small_object_filter: 10, // size in pixels (output scale) for small object removal
   
   /*// add relative band brightness to predictor variables?
   use_brightness: true, <<----- now done in the *_datagen script */
@@ -103,7 +103,7 @@ var vars = {
   //classes_mapped_names_geo: ['D','SL','DL','IRF','ORF','RR','TRF','SS','SE','PL','OCL'],
   // benthic
   nosamp_class_benthic:  [0,     1,2], // classes not to use/use more
-  nosamp_numpix_benthic: [10000, 0,0], // set number of pixels to sample from above classes
+  nosamp_numpix_benthic: [0, 0,0], // set number of pixels to sample from above classes
   // TODO: consider dynamically generating these
   //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
   //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
