@@ -429,7 +429,7 @@ if (vars.obia_clean) {
     })*/
     
     
-    // ####
+    /*// ####
     // Turbid
     // ####
     
@@ -454,7 +454,7 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb16.gt(75)),
       value: ee.Image(16)
-    })
+    })*/
     
   } else {
     
