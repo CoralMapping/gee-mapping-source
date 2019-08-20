@@ -56,8 +56,8 @@ Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fi
 Map.addLayer(fiji_ocean_benthic_man, map_palettes.benthic, "Benthic - manual curation", false)
 Map.addLayer(fiji_ocean_benthic_man_nd, map_palettes.benthic, "Benthic - manual curation (no depth)", false)
 Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation + clean-up", false)
-Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop", false)
-Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, redo", false)
+Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop, segment-only", false)
+Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
 
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
