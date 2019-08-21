@@ -86,7 +86,7 @@ Map.addLayer(fiji_ocean_geo_clean, map_palettes.geo, "Geo - existing maps + clea
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
-Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - FINAL", false)
+Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
