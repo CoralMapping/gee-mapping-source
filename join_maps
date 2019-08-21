@@ -66,6 +66,18 @@ Map.addLayer(map_out, map_palettes.geo, "combined map", false)
 var export_geom = map_out.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: map_out.gte(0).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 Map.addLayer(export_geom, {}, "export area", true)
 
+/*
+Temporary add in to deal with turbid issues from differnt maps
+###########
+*/
+
+
+
+/*
+###########
+*/
+
+
 Export.image.toAsset({
   image: map_out, 
   description: 'combined_map',
