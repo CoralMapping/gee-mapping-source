@@ -23,7 +23,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_ocean_benthic_rgb = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_rgb"),
     fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
     fiji_ocean_benthic_top2_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop-clean"),
-    fiji_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean");
+    fiji_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean"),
+    fiji_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -55,14 +56,15 @@ Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6
 Map.addLayer(fiji_high_benthic_coast.selfMask(), map_palettes.benthic, "Dove Fiji Benthic coastal Chla RAW", false)
 Map.addLayer(fiji_high_benthic_ocean.selfMask(), map_palettes.benthic, "Dove Fiji Benthic ocean Chla RAW", false)
 Map.addLayer(fiji_high_benthic_coast2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves coastal Chla RAW", false)
-Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves ocean Chla RAW", false)*/
+Map.addLayer(fiji_high_benthic_ocean2.selfMask(), map_palettes.benthic, "Dove Fiji Benthic +waves ocean Chla RAW", false)
 Map.addLayer(fiji_ocean_benthic_man, map_palettes.benthic, "Benthic - manual curation", false)
 Map.addLayer(fiji_ocean_benthic_man_nd, map_palettes.benthic, "Benthic - manual curation (no depth)", false)
 Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation + clean-up", false)
-Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop, segment-only", false)
+Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop, segment-only", false)*/
 Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
-Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
-Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
+//Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
+//Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
+Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
 
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
