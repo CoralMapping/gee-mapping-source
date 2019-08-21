@@ -68,7 +68,7 @@ Temporary add in to deal with turbid issues from differnt maps
 // shallow lagoon > 10m == deep lagoon
 map_out = map_out.where({
   test: map_out.eq(11)
-                 .and(pixels.select('depth').gt(10)),
+                 .and(pixels.select('depth').focal_mean(5).gt(10)),
   value: ee.Image(12)
 })
 
