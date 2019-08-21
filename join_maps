@@ -71,7 +71,7 @@ Map.addLayer(export_geom, {}, "export area", true)
 /*
 Temporary add in to deal with turbid issues from differnt maps
 ###########
-*/
+
 
 // shallow lagoon > 10m == deep lagoon
 map_out = map_out.where({
@@ -95,7 +95,7 @@ map_out = map_out.where({
   value: smooth_noturbid
 }).updateMask(class_extent_mask)
 
-/*
+
 ###########
 */
 
