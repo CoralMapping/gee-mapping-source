@@ -1,0 +1,12 @@
+/*
+Little test case to join maps from different sub-regions
+
+This is potentially useful when a mapping region contains different 
+reef types, where the different reef types are mapped better by different
+trianing data sets or algorithm specifications
+
+TODO: polygons to be auto-generated based on apriori information,
+        for the meantime they are manual
+
+*/
+
