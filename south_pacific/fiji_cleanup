@@ -542,6 +542,8 @@ if (vars.obia_clean) {
       value: ee.Image(14)
     })
     
+    // ####--> BMA rules
+    
   }
   
 /*  // ####
