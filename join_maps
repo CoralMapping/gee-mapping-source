@@ -35,7 +35,8 @@ var map1 = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
           [177.25921139823163, -17.76336803131878],
           [177.16582760916913, -17.896715700183304],
           [177.21801266776288, -18.212687746013934],
-          [177.45971188651288, -18.410857451010074]]]);
+          [177.45971188651288, -18.410857451010074]]]),
+    pixels = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Little test case to join maps from different sub-regions
@@ -58,6 +59,39 @@ var map_out = map2.where({
   value: map1
 })
 
+
+/*
+Temporary add in to deal with turbid issues from differnt maps
+###########
+*/
+
+// shallow lagoon > 10m == deep lagoon
+map_out = map_out.where({
+  test: map_out.eq(11)
+                 .and(pixels.select('depth').gt(10)),
+  value: ee.Image(12)
+})
+
+//CLEAN UP SMALL (but slightly larger) TURBID AREAS
+var class_extent_mask = map_out.gte(1)
+
+var smooth_noturbid = map_out
+                        .updateMask(map_out.neq(3))
+                        .focal_mode({
+                          radius: ee.Number(5).multiply(1.5),
+                          kernelType: 'circle', units: 'pixels', iterations: 2
+                        })
+
+map_out = map_out.where({
+  test: map_out.eq(3).connectedPixelCount(ee.Number(60).multiply(10), false).lt(ee.Number(60).multiply(10)), 
+  value: smooth_noturbid
+}).updateMask(class_extent_mask)
+
+/*
+###########
+*/
+
+
 Map.addLayer(map1.updateMask(map2.eq(map1)), map_palettes.geo, "map's equal", false)
 Map.addLayer(map1, map_palettes.geo, "map1", false)
 Map.addLayer(map2, map_palettes.geo, "map2", false)
@@ -65,18 +99,6 @@ Map.addLayer(map_out, map_palettes.geo, "combined map", false)
 
 var export_geom = map_out.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: map_out.gte(0).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 Map.addLayer(export_geom, {}, "export area", true)
-
-/*
-Temporary add in to deal with turbid issues from differnt maps
-###########
-*/
-
-
-
-/*
-###########
-*/
-
 
 Export.image.toAsset({
   image: map_out, 
