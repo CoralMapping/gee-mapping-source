@@ -49,7 +49,7 @@ TODO: polygons to be auto-generated based on apriori information,
         for the meantime they are manual
 
 */
-Map.addLayer(pixels)
+
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 var swap_raster = ee.Image().byte().paint(swap_maps)
@@ -108,8 +108,8 @@ Map.addLayer(map_out, map_palettes.geo, "combined map", false)
 Export.image.toAsset({
   image: map_out, 
   description: 'combined_geo_map',
-  //assetId: 'projects/coral_atlas/fiji/in_out/fj_geo-clean',
-  pyramidingPolicy: 'mode',
+  assetId: 'projects/coral_atlas/fiji/in_out/fj_geo-clean',
+  pyramidingPolicy: {'.default': 'mode'},
   region: export_geom,
   scale: 5,
   maxPixels: 1e13
