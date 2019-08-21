@@ -137,6 +137,12 @@ var clean_map = input_map.where({
 if (vars.geomorphic) {
   //CLEAN UP SMALL (but slightly larger) TURBID AREAS
   
+  clean_map = clean_map.where({
+    test: clean_map.eq(11)
+                   .and(pixels.select('depth').gt(10)),
+    value: ee.Image(12)
+  })
+  
   var smooth_noturbid = clean_map
                           .updateMask(clean_map.neq(3))
                           .focal_mode({
@@ -144,7 +150,7 @@ if (vars.geomorphic) {
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           })
   
-  var clean_map = clean_map.where({
+  clean_map = clean_map.where({
     test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(10)), 
     value: smooth_noturbid
   }).updateMask(class_extent_mask)
@@ -216,6 +222,7 @@ if (vars.obia_clean) {
               .and(clean_map.neq(11)), // shallow L 
       value: ee.Image(99) // 99 ensures it's ignored in logic
     })
+    
     // Minimum size of object to reclass based on neighbourhood
     var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2) // the first number is the square dimension of the desired min size
     // calculate neighbours
@@ -525,6 +532,8 @@ if (vars.obia_clean) {
                      .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
       value: ee.Image(15)
     })
+    
+    // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
     
     // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
