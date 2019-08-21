@@ -22,7 +22,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_ocean_benthic_top2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2"),
     fiji_ocean_benthic_rgb = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_rgb"),
     fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
-    fiji_ocean_benthic_top2_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop-clean");
+    fiji_ocean_benthic_top2_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop-clean"),
+    fiji_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -76,15 +77,16 @@ Map.addLayer(fiji_high_geo_ocean2.updateMask(fiji_high_geo_ocean2.neq(2))
 Map.addLayer(fiji_ocean_geo_man.updateMask(fiji_ocean_geo_man.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation", false)
 Map.addLayer(fiji_ocean_geo_man2.updateMask(fiji_ocean_geo_man2.neq(2))
-                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation 2", false)*/
+                                   .selfMask(), map_palettes.geo, "Dove Fiji Geo - manual curation 2", false)
 Map.addLayer(fiji_ocean_geo_maps, map_palettes.geo, "Geo - existing maps", false)
-/*Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
+Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean test", false)*/
 Map.addLayer(fiji_ocean_geo_clean, map_palettes.geo, "Geo - existing maps + clean-up", false)
-Map.addLayer(fiji_ocean_geo_tm, map_palettes.geo, "Geo - new training maps", false)
-Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
-Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
+//Map.addLayer(fiji_ocean_geo_tm, map_palettes.geo, "Geo - new training maps", false)
+//Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
+//Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
+Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
