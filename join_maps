@@ -102,8 +102,8 @@ Map.addLayer(export_geom, {}, "export area", true)
 
 Export.image.toAsset({
   image: map_out, 
-  description: 'combined_map',
-  assetId: 'projects/coral_atlas/fiji/in_out/fj_ocean_combined_geo',
+  description: 'combined_geo_map',
+  assetId: 'projects/coral_atlas/fiji/in_out/fj_geo-clean',
   pyramidingPolicy: 'mode',
   region: export_geom,
   scale: 5,
