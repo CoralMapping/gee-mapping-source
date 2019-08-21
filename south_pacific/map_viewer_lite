@@ -21,7 +21,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_ocean_benthic_top = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop"),
     fiji_ocean_benthic_top2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2"),
     fiji_ocean_benthic_rgb = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_rgb"),
-    fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean");
+    fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
+    fiji_ocean_benthic_top2_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -59,6 +60,7 @@ Map.addLayer(fiji_ocean_benthic_man_nd, map_palettes.benthic, "Benthic - manual 
 Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation + clean-up", false)
 Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop, segment-only", false)
 Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
+Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
 
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
