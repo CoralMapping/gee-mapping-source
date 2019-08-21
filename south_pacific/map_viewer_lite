@@ -64,7 +64,7 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 //Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
-Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
+Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
