@@ -1,3 +1,9 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map1 = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
+    map2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
+    map1_poly = /* color: #d63000 */ee.Geometry.MultiPoint(),
+    map2_poly = /* color: #98ff00 */ee.Geometry.MultiPoint();
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Little test case to join maps from different sub-regions
 
@@ -9,4 +15,10 @@ TODO: polygons to be auto-generated based on apriori information,
         for the meantime they are manual
 
 */
+
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+
+Map.addLayer(map1.updateMask(map2.eq(map1)), map_palettes.geo, "map's equal", false)
+Map.addLayer(map1, map_palettes.geo, "map1", true)
+Map.addLayer(map2, map_palettes.geo, "map2", true)
 
