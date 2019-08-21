@@ -135,14 +135,15 @@ var clean_map = input_map.where({
 
 
 if (vars.geomorphic) {
-  //CLEAN UP SMALL (but slightly larger) TURBID AREAS
   
+  // shallow lagoon > 10m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
                    .and(pixels.select('depth').gt(10)),
     value: ee.Image(12)
   })
   
+  //CLEAN UP SMALL (but slightly larger) TURBID AREAS
   var smooth_noturbid = clean_map
                           .updateMask(clean_map.neq(3))
                           .focal_mode({
