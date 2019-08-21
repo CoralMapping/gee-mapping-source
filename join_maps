@@ -49,7 +49,7 @@ TODO: polygons to be auto-generated based on apriori information,
         for the meantime they are manual
 
 */
-
+Map.addLayer(pixels)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 var swap_raster = ee.Image().byte().paint(swap_maps)
@@ -58,6 +58,14 @@ var map_out = map2.where({
   test: swap_raster.eq(0),
   value: map1
 })
+
+
+Map.addLayer(map1.updateMask(map2.eq(map1)), map_palettes.geo, "map's equal", false)
+Map.addLayer(map1, map_palettes.geo, "map1", false)
+Map.addLayer(map2, map_palettes.geo, "map2", false)
+
+var export_geom = map_out.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: map_out.gte(0).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+Map.addLayer(export_geom, {}, "export area", true)
 
 
 /*
@@ -92,13 +100,10 @@ map_out = map_out.where({
 */
 
 
-Map.addLayer(map1.updateMask(map2.eq(map1)), map_palettes.geo, "map's equal", false)
-Map.addLayer(map1, map_palettes.geo, "map1", false)
-Map.addLayer(map2, map_palettes.geo, "map2", false)
+
+
 Map.addLayer(map_out, map_palettes.geo, "combined map", false)
 
-var export_geom = map_out.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: map_out.gte(0).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-Map.addLayer(export_geom, {}, "export area", true)
 
 Export.image.toAsset({
   image: map_out, 
