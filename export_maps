@@ -44,7 +44,6 @@ var export_stack = depth.rename('depth')
                     .addBands(geo.rename('geomorphic'))
                     .addBands(benthic.rename('benthic'))
                     .toInt16()
-Map.addLayer(export_stack, {}, "export raster stack", false)
 
 // add export region
 Map.addLayer(export_geom, {}, "export footprint", true)
@@ -56,6 +55,8 @@ var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
 var export_stack_east = export_stack.updateMask(latlong.lte(0))
 var export_stack_west = export_stack.updateMask(latlong.gt(0))
 
+Map.addLayer(export_stack_east, {}, "export raster stack east", false)
+Map.addLayer(export_stack_west, {}, "export raster stack west", false)
 
 // run the export
 Export.image.toCloudStorage({
