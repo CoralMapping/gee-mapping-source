@@ -160,7 +160,7 @@ var fiji_htocean = {
   geo_train: "projects/coral_atlas/fiji/training/fiji_training_new_old_geo", 
   benthic_train: "projects/coral_atlas/fiji/training/fiji_all_benthic",
   benthic_pts: "",
-  geo_map: "projects/coral_atlas/fiji/in_out/fj_geo-clean",
+  geo_map: "projects/coral_atlas/fiji/in_out/fj_geo-clean2",
   benthic_map: "projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2",
   geo_map_clean: "",
   benthic_map_clean: ""
