@@ -165,7 +165,6 @@ if (!vars.geomorphic) {
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
   var smooth_map = input_map
                       .unmask(99)
-                      .updateMask(input_map.neq(2))
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
@@ -180,14 +179,14 @@ if (!vars.geomorphic) {
   
   // CLEAN UP ALL TEMPORAL AREAS
   var smooth_notemp = input_map
-                          .updateMask(clean_map1.neq(2))
+                          .updateMask(input_map.neq(2))
                           .focal_mode({
                             radius: vars.smooth_radius.multiply(2),
                             kernelType: 'circle', units: 'pixels', iterations: 3
                           })
   
   clean_map = clean_map1.where({
-    test: clean_map1.eq(2), 
+    test: input_map.eq(2), 
     value: smooth_notemp
   }).updateMask(clean_map1.gte(0))
   
