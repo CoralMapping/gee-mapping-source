@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map1 = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
     map2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
+    map3 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_tm-clean"),
     swap_maps = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[177.51585092045468, -18.45420669903227],
            [178.06244339449836, -18.31867106134707],
@@ -79,13 +80,14 @@ var swap_raster = ee.Image().byte().paint(swap_maps)
 
 var map_out = map2.where({
   test: swap_raster.eq(0),
-  value: map1
+  value: map3
 })
 
 
 Map.addLayer(map1.updateMask(map2.eq(map1)), map_palettes.geo, "map's equal", false)
 Map.addLayer(map1, map_palettes.geo, "map1", false)
 Map.addLayer(map2, map_palettes.geo, "map2", false)
+Map.addLayer(map3, map_palettes.geo, "map3", false)
 
 var export_geom = map_out.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: map_out.gte(0).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 Map.addLayer(export_geom, {}, "export area", true)
@@ -94,7 +96,7 @@ Map.addLayer(export_geom, {}, "export area", true)
 /*
 Temporary add in to deal with turbid issues from differnt maps
 ###########
-
+*/
 
 // shallow lagoon > 10m == deep lagoon
 map_out = map_out.where({
@@ -118,7 +120,7 @@ map_out = map_out.where({
   value: smooth_noturbid
 }).updateMask(class_extent_mask)
 
-
+/*
 ###########
 */
 
