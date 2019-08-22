@@ -173,27 +173,27 @@ if (!vars.geomorphic) {
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
-  var clean_map = input_map.where({
+  var clean_map1 = input_map.where({
     test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
   }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   // CLEAN UP ALL TEMPORAL AREAS
-  var smooth_notemp = clean_map
-                          .updateMask(clean_map.neq(2))
+  var smooth_notemp = input_map
+                          .updateMask(clean_map1.neq(2))
                           .focal_mode({
-                            radius: vars.smooth_radius.multiply(1.5),
-                            kernelType: 'circle', units: 'pixels', iterations: 2
+                            radius: vars.smooth_radius.multiply(2),
+                            kernelType: 'circle', units: 'pixels', iterations: 3
                           })
   
-  clean_map = clean_map.where({
-    test: input_map.eq(2), 
+  clean_map = clean_map1.where({
+    test: clean_map1.eq(2), 
     value: smooth_notemp
-  }).updateMask(class_extent_mask)
+  }).updateMask(clean_map1.gte(0))
   
   // this catches any left over unmasked temporal, and assigned it back to temporal
   clean_map = clean_map.where({
-    test: clean_map.unmask(99).eq(99).and(input_map.eq(2)),
+    test: clean_map.unmask(99).eq(99).and(clean_map1.eq(2)),
     value: ee.Image(2)
   })
   
