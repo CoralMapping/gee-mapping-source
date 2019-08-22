@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
-    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo-clean"),
-    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic-clean");
+    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
+    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -49,12 +49,32 @@ Map.addLayer(export_stack, {}, "export raster stack", false)
 // add export region
 Map.addLayer(export_geom, {}, "export footprint", true)
 
+// add raster flag for either side of dateline
+var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+//Map.addLayer(latlong.gt(0).selfMask())
+
+var export_stack_east = export_stack.updateMask(latlong.lte(0))
+var export_stack_west = export_stack.updateMask(latlong.gt(0))
+
+
 // run the export
 Export.image.toCloudStorage({
-  image: export_stack,
-  description: 'fiji_stack_prelim',
+  image: export_stack_east,
+  description: 'fiji_stack_east',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_prelim',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_east',
+  region: export_geom, 
+  scale: 5,
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack_west,
+  description: 'fiji_stack_west',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_west',
   region: export_geom, 
   scale: 5,
   maxPixels: 1e13, 
