@@ -119,7 +119,11 @@ Initial small object clean
 
 */
 
-var smooth_map = input_map
+// special case for benthic (mask temporal then smooth) and geo (as below)
+
+if (vars.geomorphic) {
+  
+  var smooth_map = input_map
                       .unmask(99)
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
@@ -128,13 +132,10 @@ var smooth_map = input_map
 
 //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
 
-var clean_map = input_map.where({
-  test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
-  value: smooth_map
-}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-
-
-if (vars.geomorphic) {
+  var clean_map = input_map.where({
+    test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+    value: smooth_map
+  }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   // shallow lagoon > 10m == deep lagoon
   clean_map = clean_map.where({
