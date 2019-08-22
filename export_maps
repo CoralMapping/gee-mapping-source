@@ -17,6 +17,7 @@ TODO: link this to the reef_params module
   
 TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
   - Fiji/south pacific might be the only region where this happens? worth it?
+  **A: resonable solution below**
 */
 
 // so we can visualise maps before export
