@@ -114,7 +114,7 @@ var smooth_noturbid = map_out
                         })
 
 map_out = map_out.where({
-  test: map_out.eq(3).connectedPixelCount(ee.Number(60).multiply(10), false).lt(ee.Number(60).multiply(10)), 
+  test: map_out.eq(3).connectedPixelCount(ee.Number(100).multiply(10), false).lt(ee.Number(100).multiply(10)), 
   value: smooth_noturbid
 }).updateMask(class_extent_mask)
 
