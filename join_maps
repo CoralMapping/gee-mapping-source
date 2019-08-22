@@ -102,7 +102,7 @@ map_out = map_out.where({
 
 
 
-Map.addLayer(map_out, map_palettes.geo, "combined map", false)
+Map.addLayer(map_out.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(25))), map_palettes.geo, "combined map", false)
 
 
 Export.image.toAsset({
