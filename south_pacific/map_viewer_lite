@@ -116,8 +116,8 @@ var conf_flag = fiji_high_depth_ocean.eq(-1)
 Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
 
 //straight depth missing/-1
-var depth_flag = fiji_high_depth_ocean.unmask(0).lte(0).updateMask(fiji_dove_ocean.select(0)).selfMask()
-Map.addLayer(depth_flag, {min:0,max:1,palette:["#bababa"]}, "No valid depth retrievals", false)
+var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
+Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffffff"]}, "Valid depth retrievals", false)
 
 
 ////////// UI SET UP //////////
