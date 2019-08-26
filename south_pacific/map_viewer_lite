@@ -117,7 +117,7 @@ Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence
 
 //straight depth missing/-1
 var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
-Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffffff"]}, "Valid depth retrievals", false)
+Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
 
 Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
 
