@@ -42,8 +42,8 @@ Map.centerObject(centre_map, 10)
 Map.addLayer(fiji_dove_orig_low, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove L-tide 1st mosaic", false)
 Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)*/
 Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean Chla mosaic", false)
-Map.addLayer(fiji_ocean_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean pixels", false)
-Map.addLayer(fiji_ocean_segments, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean segments", false)
+//Map.addLayer(fiji_ocean_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean pixels", false)
+//Map.addLayer(fiji_ocean_segments, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean segments", false)
 /*Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)*/
 /*Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 Map.addLayer(fiji_low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove L-tide depth", false)
@@ -61,7 +61,7 @@ Map.addLayer(fiji_ocean_benthic_man, map_palettes.benthic, "Benthic - manual cur
 Map.addLayer(fiji_ocean_benthic_man_nd, map_palettes.benthic, "Benthic - manual curation (no depth)", false)
 Map.addLayer(fiji_ocean_benthic_clean, map_palettes.benthic, "Benthic - manual curation + clean-up", false)
 Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, reeftop, segment-only", false)*/
-Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
+//Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 //Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
 Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
@@ -83,11 +83,11 @@ Map.addLayer(fiji_ocean_geo_man2.updateMask(fiji_ocean_geo_man2.neq(2))
 Map.addLayer(fiji_ocean_geo_maps, map_palettes.geo, "Geo - existing maps", false)
 Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean test", false)*/
-Map.addLayer(fiji_ocean_geo_clean, map_palettes.geo, "Geo - existing maps + clean-up", false)
+//Map.addLayer(fiji_ocean_geo_clean, map_palettes.geo, "Geo - existing maps + clean-up", false)
 //Map.addLayer(fiji_ocean_geo_tm, map_palettes.geo, "Geo - new training maps", false)
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
-Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
+//Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
 Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // wave data
@@ -99,9 +99,9 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
-Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
-Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
 
 // #############
 // example confidence layers
