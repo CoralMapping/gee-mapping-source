@@ -60,20 +60,22 @@ Map.addLayer(export_stack_east, {}, "export raster stack east", false)
 Map.addLayer(export_stack_west, {}, "export raster stack west", false)
 
 // make east/west export geometries
-var export_geom_east = latlong.lte(0).selfMask()
+var export_geom_east = export_stack_east.select('depth').gte(-1).selfMask()
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
                               scale: 5,
-                              maxPixels: 1e13
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
                             })
 
-var export_geom_west = latlong.gt(0).selfMask()
+var export_geom_west = export_stack_west.select('depth').gte(-1).selfMask()
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
                               scale: 5,
-                              maxPixels: 1e13
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
                             })
 
 Map.addLayer(export_geom_west, {}, "export footprint west", true)
@@ -88,7 +90,7 @@ Export.image.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_east',
   region: export_geom_east, 
   scale: 5,
-  crs: 'EPSG:3460',
+  crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
@@ -101,7 +103,7 @@ Export.image.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_west',
   region: export_geom, 
   scale: 5,
-  crs: 'EPSG:3460',
+  crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
