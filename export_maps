@@ -25,7 +25,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // export region convex hull, or manual
 var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-//var export_geom = test_export
+
 
 
 // make reef/non-reef layer 
@@ -46,8 +46,8 @@ var export_stack = depth.rename('depth')
                     .addBands(benthic.rename('benthic'))
                     .toInt16()
 
-// add export region
-Map.addLayer(export_geom, {}, "export footprint", true)
+/*// add export region
+Map.addLayer(export_geom, {}, "export footprint", true)*/
 
 // add raster flag for either side of dateline
 var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
@@ -59,28 +59,49 @@ var export_stack_west = export_stack.updateMask(latlong.gt(0))
 Map.addLayer(export_stack_east, {}, "export raster stack east", false)
 Map.addLayer(export_stack_west, {}, "export raster stack west", false)
 
+// make east/west export geometries
+var export_geom_east = latlong.lte(0).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13
+                            })
+
+var export_geom_west = latlong.gt(0).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13
+                            })
+
+Map.addLayer(export_geom_west, {}, "export footprint west", true)
+Map.addLayer(export_geom_east, {}, "export footprint east", true)
+
+
 // run the export
 Export.image.toCloudStorage({
   image: export_stack_east,
   description: 'fiji_stack_east',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_east',
-  region: export_geom, 
+  region: export_geom_east, 
   scale: 5,
-  crs: 'EPSG:4326',
+  crs: 'EPSG:3460',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
 
 // run the export
 Export.image.toCloudStorage({
-  image: export_stack_west,
+  image: export_geom_west,
   description: 'fiji_stack_west',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_west',
   region: export_geom, 
   scale: 5,
-  crs: 'EPSG:4326',
+  crs: 'EPSG:3460',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
