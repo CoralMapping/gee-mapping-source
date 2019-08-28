@@ -97,11 +97,11 @@ Export.image.toCloudStorage({
 
 // run the export
 Export.image.toCloudStorage({
-  image: export_geom_west,
+  image: export_stack_west,
   description: 'fiji_stack_west',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_stack_west',
-  region: export_geom, 
+  region: export_geom_west, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
