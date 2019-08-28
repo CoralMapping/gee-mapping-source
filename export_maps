@@ -60,7 +60,7 @@ Map.addLayer(export_stack_east, {}, "export raster stack east", false)
 Map.addLayer(export_stack_west, {}, "export raster stack west", false)
 
 // make east/west export geometries
-var export_geom_east = export_stack_east.select('depth').gte(-1).selfMask()
+var export_geom_east = export_stack_east.select('depth').gte(-999).unmask(1)
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
@@ -69,7 +69,7 @@ var export_geom_east = export_stack_east.select('depth').gte(-1).selfMask()
                               crs: 'EPSG:4326'
                             })
 
-var export_geom_west = export_stack_west.select('depth').gte(-1).selfMask()
+var export_geom_west = export_stack_west.select('depth').gte(-999).unmask(1)
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
@@ -87,7 +87,7 @@ Export.image.toCloudStorage({
   image: export_stack_east,
   description: 'fiji_stack_east',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_east',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_stack_east',
   region: export_geom_east, 
   scale: 5,
   crs: 'EPSG:4326',
@@ -100,7 +100,7 @@ Export.image.toCloudStorage({
   image: export_geom_west,
   description: 'fiji_stack_west',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/fiji/fiji_stack_west',
+  fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_stack_west',
   region: export_geom, 
   scale: 5,
   crs: 'EPSG:4326',
