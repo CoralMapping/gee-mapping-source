@@ -60,7 +60,7 @@ Map.addLayer(export_stack_east, {}, "export raster stack east", false)
 Map.addLayer(export_stack_west, {}, "export raster stack west", false)
 
 // make east/west export geometries
-var export_geom_east = export_stack_east.select('depth').gte(-999).unmask(1)
+var export_geom_east = latlong.lt(0).and(latlong.gt(-179.99998)).selfMask()
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
@@ -69,7 +69,7 @@ var export_geom_east = export_stack_east.select('depth').gte(-999).unmask(1)
                               crs: 'EPSG:4326'
                             })
 
-var export_geom_west = export_stack_west.select('depth').gte(-999).unmask(1)
+var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
                             .reduceToVectors({
                               reducer: ee.Reducer.countEvery(),
                               geometry: export_geom,
