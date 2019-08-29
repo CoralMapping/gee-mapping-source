@@ -93,7 +93,7 @@ Export.image.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_stack_east',
   region: export_geom_east, 
   scale: 5,
-  crs: 'EPSG:4326',
+  crs: 'EPSG:3460',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
@@ -106,7 +106,7 @@ Export.image.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_stack_west',
   region: export_geom_west, 
   scale: 5,
-  crs: 'EPSG:4326',
+  crs: 'EPSG:3460',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
