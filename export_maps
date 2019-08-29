@@ -114,7 +114,7 @@ Export.image.toCloudStorage({
 
 // export the convex hull boundary
 Export.table.toCloudStorage({
-  collection: ee.Feature(export_geom),
+  collection: ee.FeatureCollection(export_geom),
   description: 'fiji_convex_hull',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_convex_hull',
