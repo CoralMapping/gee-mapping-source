@@ -114,6 +114,7 @@ var gbr_eomap = {
   tide: "anytide",
   asset: "gbr_reefs/",
   image: "users/mitchest/gbr_reefs/gbr_eomap_rrs",
+  rrb: "users/mitchest/gbr_reefs/gbr_eomap_rrb",
   depth: "users/mitchest/gbr_reefs/gbr_eomap_depth",
   pixels: "users/mitchest/gbr_reefs/gbr_eomap_pixels",
   segments: "users/mitchest/gbr_reefs/gbr_eomap_segmentation",
