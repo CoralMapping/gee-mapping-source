@@ -109,6 +109,23 @@ var gbr_gees2 = {
   benthic_map_clean: ""
 }
 
+var gbr_eomap = {
+  sname: "gbr",
+  tide: "anytide",
+  asset: "gbr_reefs/",
+  image: "users/mitchest/gbr_reefs/gbr_sentinel2x",
+  depth: "users/mitchest/gbr_reefs/gbr_depth30",
+  pixels: "users/mitchest/gbr_reefs/gbr_s2_pixels",
+  segments: "users/mitchest/gbr_reefs/gbr_s2_segmentation",
+  waves: "users/mitchest/gbr_reefs/gbr_hs95",
+  geo_train: "users/mitchest/gbr_reefs/cancook_geo_training", 
+  benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
+  geo_map: "",
+  benthic_map: "",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
 var fiji_ltv2 = {
   sname: "fj",
   tide: "low",
