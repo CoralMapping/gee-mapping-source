@@ -119,7 +119,7 @@ var gbr_eomap = {
   pixels: "users/mitchest/gbr_reefs/gbr_eomap_pixels",
   segments: "users/mitchest/gbr_reefs/gbr_eomap_segmentation",
   waves: "users/mitchest/gbr_reefs/gbr_hs95",
-  geo_train: "users/mitchest/gbr_reefs/cancook_geo_training", 
+  geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
   geo_map: "",
   benthic_map: "",
