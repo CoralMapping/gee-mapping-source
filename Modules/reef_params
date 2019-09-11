@@ -203,6 +203,24 @@ var fiji_htcoast = {
   benthic_map_clean: ""
 }
 
+var swpac = {
+  sname: "swp",
+  tide: "both",
+  asset: "projects/coral_atlas/sw_pacific/",
+  epsg: "EPSG:3460",
+  image: "projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif",
+  depth: "projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif",
+  pixels: "projects/coral_atlas/sw_pacific/in_out/swp_pixels",
+  segments: "projects/coral_atlas/sw_pacific/in_out/swp_segmentation",
+  waves: "",
+  geo_train: "projects/coral_atlas/fiji/training/fiji_training_new_old_geo", 
+  benthic_train: "projects/coral_atlas/fiji/training/fiji_all_benthic",
+  benthic_pts: "",
+  geo_map: "projects/coral_atlas/sw_pacific/",
+  benthic_map: "projects/coral_atlas/sw_pacific/",
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
 
 // export the objects
 exports = {
