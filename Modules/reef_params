@@ -209,7 +209,7 @@ var swpac = {
   asset: "projects/coral_atlas/sw_pacific/",
   epsg: "EPSG:3460",
   image: "projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif",
-  depth: "projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_depth/sw_pac_lt_depth_tif",
+  depth: "projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif",
   pixels: "projects/coral_atlas/sw_pacific/in_out/swp_pixels",
   segments: "projects/coral_atlas/sw_pacific/in_out/swp_segmentation",
   waves: "",
