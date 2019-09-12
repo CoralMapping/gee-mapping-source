@@ -81,7 +81,7 @@ Map.centerObject(map_centre, 15)
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
 var depth = ee.Image(region_params.depth).divide(100) //(NB depth is *100 in integer values)
 depth = depth.where(depth.eq(-0.01), 0.1) // handle "too shallow" retrievals
-var waves = ee.Image(region_params.waves).unmask(0)
+//var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
@@ -89,13 +89,13 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
-var waves = waves.rename('waves')
+//var waves = waves.rename('waves')
 
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
-Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+//Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 
 /*
@@ -193,7 +193,7 @@ var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reduc
 if (vars.pixel_based) {
   //// pixel-based data generation
   // combine data to move forward with
-  var all_data = reflec.addBands(depth).addBands(waves)
+  var all_data = reflec.addBands(depth)//.addBands(waves)
                   .addBands(slope)
                   .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                   .addBands(depth_var).addBands(red_var)
@@ -247,7 +247,7 @@ if (vars.pixel_based) {
   */
 
   // Calculate object statistics
-  var segmented_data_mean = reflec.addBands(depth).addBands(waves)
+  var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
                             .addBands(slope)
                             .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                             .addBands(depth_var).addBands(red_var)
