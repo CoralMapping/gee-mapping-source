@@ -59,7 +59,7 @@ var vars = {
   nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
   
   // use relative band brightness as predictor variables (instead of Rrs values)?
-  use_brightness: false,
+  use_brightness: true,
   
   // export options
   do_export: false, // export the results?
