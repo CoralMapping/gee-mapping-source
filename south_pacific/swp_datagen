@@ -312,7 +312,8 @@ var export_data = function () {
     assetId: vars.asset_output + output_name,
     scale: vars.export_scale,
     region: export_convhull,
-    maxPixels: 1e13
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
   })
 }
 
