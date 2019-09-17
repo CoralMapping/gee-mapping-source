@@ -72,11 +72,11 @@ Map.addLayer(fiji_ocean_geo_man2.updateMask(fiji_ocean_geo_man2.neq(2))
 Map.addLayer(fiji_ocean_geo_maps, map_palettes.geo, "Geo - existing maps", false)
 Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo - clean test", false)*/
-Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing maps + clean-up", false)
+//Map.addLayer(fiji_ocean_geo_clean, map_palettes.geo, "Geo - existing maps + clean-up", false)
 //Map.addLayer(fiji_ocean_geo_tm, map_palettes.geo, "Geo - new training maps", false)
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
-//Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
+Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
 Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // wave data
