@@ -205,10 +205,13 @@ if (vars.pixel_based) {
   if (use_glcm) {
     all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
   }                  
-  Map.addLayer(all_data, {}, "Model predictor data", false) 
+  Map.addLayer(all_data, {}, "Model predictor data", false)
 } else {
   //// OBIA data generation
-  // choose data to segment on and segment
+  
+  if (segment)
+  
+  // choose data to segment on and segment if not using all bands
   var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
                          .updateMask(depth_mask)
 
