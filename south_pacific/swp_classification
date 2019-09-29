@@ -124,6 +124,9 @@ var vars = {
 
 // 2. Data loads & vis
 
+
+/// ADD BACK IN -1/-2/-3 pixels fromdepth data
+
 // load input data
 var pixels = ee.Image(region_params.pixels)
 var segments = ee.Image(region_params.segments)
