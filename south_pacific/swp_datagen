@@ -183,10 +183,12 @@ if (vars.use_brightness) {
 // calculate slope
 var slope = ee.Terrain.slope(depth) // slope in degress
 
-// glcm texture (mixed usefulness - will vary with image quality and type)
-var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
-var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5)
-var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5)
+if (use_glcm) {
+  // glcm texture (mixed usefulness - will vary with image quality and type)
+  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
+  var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5)
+  var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5)
+}
 
 // local variance in depth and red reflectance (5 pixels)
 var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev')
@@ -198,9 +200,11 @@ if (vars.pixel_based) {
   // combine data to move forward with
   var all_data = reflec.addBands(depth)//.addBands(waves)
                   .addBands(slope)
-                  .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                   .addBands(depth_var).addBands(red_var)
                   .updateMask(depth_mask) // make sure all layers are clipped down
+  if (use_glcm) {
+    all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
+  }                  
   Map.addLayer(all_data, {}, "Model predictor data", false) 
 } else {
   //// OBIA data generation
