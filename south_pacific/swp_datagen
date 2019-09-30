@@ -331,6 +331,7 @@ var export_data = function () {
     description: output_name,
     assetId: vars.asset_output + output_name,
     scale: vars.export_scale,
+    crs: region_params.epsg,
     region: export_convhull,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mean'},
