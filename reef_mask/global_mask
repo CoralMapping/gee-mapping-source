@@ -11,7 +11,8 @@ in the bathymetry data (and Dove mosaic)
 */
 
 var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-300)).selfMask()
-  var global_bathy_mask_buffer = ee.Image(1)
+
+var global_bathy_mask_buffer = ee.Image(1)
         .cumulativeCost({
           source: global_bathy_mask,
           maxDistance: 2000,
