@@ -181,7 +181,7 @@ if (vars.use_brightness) {
 }
 
 // calculate slope
-//var slope = ee.Terrain.slope(depth) // slope in degress (SWP too big for slope calcs...)
+//var slope = ee.Terrain.slope(depth) // slope in degress (SWP depth is no good for slope, and it's probably too big for slope calcs...)
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
