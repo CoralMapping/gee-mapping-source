@@ -183,7 +183,7 @@ if (vars.use_brightness) {
 // calculate slope
 var slope = ee.Terrain.slope(depth) // slope in degress
 
-if (use_glcm) {
+if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
   var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
   var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5)
@@ -242,7 +242,7 @@ if (vars.pixel_based) {
                   .addBands(slope)
                   .addBands(depth_var).addBands(red_var)
                   .updateMask(depth_mask) // make sure all layers are clipped down
-  if (use_glcm) { // add glcm if using
+  if (vars.use_glcm) { // add glcm if using
     all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
   }                  
   Map.addLayer(all_data, {}, "Model predictor data", false)
@@ -250,7 +250,7 @@ if (vars.pixel_based) {
 } else {
   //// OBIA data generation
   
-  if (segment_all_bands) { 
+  if (vars.segment_all_bands) { 
     // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
     var segmented_data_mean = run_snic(reflec
                                        .addBands(depth)
