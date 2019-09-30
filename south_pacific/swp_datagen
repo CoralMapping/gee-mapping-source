@@ -105,13 +105,13 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6ba
 
 // add in global bathy if using
 if (vars.bathy_mask) {
-  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-500)).selfMask()
+  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-300)).selfMask()
   var global_bathy_mask_buffer = ee.Image(1)
         .cumulativeCost({
-          source: mangrove,
+          source: global_bathy_mask,
           maxDistance: 2000,
           geodeticDistance: false
-        }).lt(2000)
+        }).lt(2000).selfMask()
   
   depth_mask = depth_mask.updateMask(global_bathy_mask_buffer)
   Map.addLayer(global_bathy_mask_buffer, {min:0, max:1}, 'global bathymetry mask', false)
