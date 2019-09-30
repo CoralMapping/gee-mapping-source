@@ -194,29 +194,9 @@ if (use_glcm) {
 var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev')
 var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev')
 
-// calculate pixel or object data
-if (vars.pixel_based) {
-  //// pixel-based data generation
-  // combine data to move forward with
-  var all_data = reflec.addBands(depth)//.addBands(waves)
-                  .addBands(slope)
-                  .addBands(depth_var).addBands(red_var)
-                  .updateMask(depth_mask) // make sure all layers are clipped down
-  if (use_glcm) {
-    all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
-  }                  
-  Map.addLayer(all_data, {}, "Model predictor data", false)
-} else {
-  //// OBIA data generation
-  
-  if (segment)
-  
-  // choose data to segment on and segment if not using all bands
-  var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
-                         .updateMask(depth_mask)
+// segmentation functions
 
-  // ***SNIC segmentation***
-  
+// ***SNIC segmentation***
   var run_snic = function(bands) {
     return(
     ee.Algorithms.Image.Segmentation.SNIC({
@@ -230,13 +210,9 @@ if (vars.pixel_based) {
     )
   }
   
-  var segmented_data = run_snic(segment_on)
-  Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
-  
-   
-  
   // ***SLIC segmentation***
-  /*segment_on = segment_on.rename(['v1','v2','v3'])
+  /*
+  segment_on = segment_on.rename(['v1','v2','v3'])
   var slic = new Slic(segment_on, vars.scale_factor, false)
   slic.compactness = vars.compactness
   var segmentation = slic.iterate(vars.segment_iters)
@@ -244,8 +220,9 @@ if (vars.pixel_based) {
   Map.addLayer(segmented_data.randomVisualizer(), {}, "Slic labels", false)
   */
   
-  /*
+  
   // ***k-means segmentation***
+  /*
   var segmented_data = ee.Algorithms.Image.Segmentation.KMeans({
     image: reflec.select(['b2']).addBands(depth), //all_data.select(segment_bands),
     numClusters: segment_size,
@@ -256,20 +233,40 @@ if (vars.pixel_based) {
   Map.addLayer({eeObject: segmented_data, shown: false, name: "Segmentation algorithm segments"})
   */
 
-  // Calculate object statistics
-  var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
-                            .addBands(slope)
-                            .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
-                            .addBands(depth_var).addBands(red_var)
-                            .addBands(segmented_data.select('clusters'))
-                            .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
+
+// calculate pixel or object data
+if (vars.pixel_based) {
+  // pixel-based data generation
+  // combine data to move forward with
+  var all_data = reflec.addBands(depth)//.addBands(waves)
+                  .addBands(slope)
+                  .addBands(depth_var).addBands(red_var)
+                  .updateMask(depth_mask) // make sure all layers are clipped down
+  if (use_glcm) { // add glcm if using
+    all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
+  }                  
+  Map.addLayer(all_data, {}, "Model predictor data", false)
   
-  /*
-  If you wanted to segment on all data - then this inbuilt SNIC functio nreally calcualtes the mean stats super quick!!
-  var segmented_data_mean = run_snic(
-    reflec.addBands(depth).addBands(waves).addBands(slope)
-    .addBands(depth_glcm).addBands(green_glcm).addBands(depth_var).addBands(red_var)
-    ).regexpRename('_mean', '')*/
+} else {
+  //// OBIA data generation
+  
+  if (segment_all_bands) { 
+    // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
+    
+    
+  } else {
+    // segment on the bands specified by var segment_on
+    var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
+                         .updateMask(depth_mask)
+    var segmented_data = run_snic(segment_on)
+    Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // Calculate object statistics
+    var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
+                              .addBands(slope)
+                              .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
+                              .addBands(depth_var).addBands(red_var)
+                              .addBands(segmented_data.select('clusters'))
+                              .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
   
   /*
   // For this analysis anyway, SD has not come up as adding much useful info
@@ -279,10 +276,12 @@ if (vars.pixel_based) {
                           .reduceConnectedComponents(ee.Reducer.stdDev(), "clusters", vars.reduce_max)
                           //.rename(['b1_sd','b2_sd','b3_sd','b4_sd','b5_sd','depth_mean','waves_sd','slope_sd','depth_corr_sd','depth_var_sd','depth_idm_sd'])
   */
+  }
   
   // combine data to move forward with
   var all_data = segmented_data_mean
                  //.addBands(segmented_data_sd)
+                 .addBands(depth_var).addBands(red_var)
                  .updateMask(depth_mask)
                  // remove the cluster band - index starts at 0
                  //.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
@@ -290,10 +289,15 @@ if (vars.pixel_based) {
 }
 
 
+/*
+
+####### SOME POSSIBLY FUTURE USEFUL JUNK ######
+
 //all_data.select('b1_1','b2_1','b3_1','b4_1','b5_1').reduce('sum').aside(Map.addLayer, {}, "sd_sum", false)
 //all_data.select('b3','b4','waves','slope','depth').spectralGradient().aside(Map.addLayer, {}, "SAM", false)
 
-/*
+
+
 // export data to guide threshold development
 var geomorphic_sample = all_data.sampleRegions({
   collection: geomorph,
