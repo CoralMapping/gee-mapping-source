@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]),
+    global_bathy = ee.Image("users/murrnick/global-reefs/existingData/GEBCO_RN5136");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - SWP region
@@ -39,7 +40,7 @@ var region_params = param_module.swpac     //<------------ THIS IS WHERE YOU CHO
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -62,6 +63,9 @@ var vars = {
   
   // use relative band brightness as predictor variables (instead of Rrs values)?
   use_brightness: true,
+  
+  // use global bathymetry layer to remove junk + limit size
+  bathy_mask: true,
   
   // export options
   do_export: true, // export the results?
@@ -89,6 +93,12 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
+// add in global bathy if using
+if (vars.bathy_mask) {
+  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-500)).selfMask().focal_max(5)
+  depth_mask = depth_mask.updateMask(global_bathy_mask)
+  Map.addLayer(global_bathy_mask, {min:0, max:1}, 'global bathymetry mask', false)
+}
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
