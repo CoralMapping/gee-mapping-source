@@ -181,7 +181,7 @@ if (vars.use_brightness) {
 }
 
 // calculate slope
-var slope = ee.Terrain.slope(depth) // slope in degress
+//var slope = ee.Terrain.slope(depth) // slope in degress (SWP too big for slope calcs...)
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
@@ -238,8 +238,7 @@ var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reduc
 if (vars.pixel_based) {
   // pixel-based data generation
   // combine data to move forward with
-  var all_data = reflec.addBands(depth)//.addBands(waves)
-                  .addBands(slope)
+  var all_data = reflec.addBands(depth)//.addBands(waves).addBands(slope)
                   .addBands(depth_var).addBands(red_var)
                   .updateMask(depth_mask) // make sure all layers are clipped down
   if (vars.use_glcm) { // add glcm if using
@@ -254,8 +253,7 @@ if (vars.pixel_based) {
     // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
     var segmented_data_mean = run_snic(reflec
                                        .addBands(depth)
-                                       //.addBands(waves)
-                                       .addBands(slope)
+                                       //.addBands(waves).addBands(slope)
                                        )
                                        .regexpRename('_mean', '')
     Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
@@ -269,8 +267,7 @@ if (vars.pixel_based) {
     var segmented_data = run_snic(segment_on)
     Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
     // Calculate object statistics
-    var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
-                              .addBands(slope)
+    var segmented_data_mean = reflec.addBands(depth)//.addBands(waves).addBands(slope)
                               //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                               .addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
