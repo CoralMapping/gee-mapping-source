@@ -93,11 +93,6 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
-// add in global bathy if using
-if (vars.bathy_mask) {
-  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-500)).selfMask().focal_max(5)
-  depth_mask = depth_mask.updateMask(global_bathy_mask)
-}
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
@@ -107,7 +102,14 @@ var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
-if (vars.bathy_mask) Map.addLayer(global_bathy_mask, {min:0, max:1}, 'global bathymetry mask', false)
+
+// add in global bathy if using
+if (vars.bathy_mask) {
+  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-500)).selfMask().focal_max(5)
+  depth_mask = depth_mask.updateMask(global_bathy_mask)
+  Map.addLayer(global_bathy_mask, {min:0, max:1}, 'global bathymetry mask', false)
+}
+
 
 /*
 // TESTING DEPTH IMPORVEMENTS // ################################################### //
