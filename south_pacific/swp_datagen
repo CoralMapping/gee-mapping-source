@@ -258,6 +258,9 @@ if (vars.pixel_based) {
                                        .addBands(slope)
                                        )
                                        .regexpRename('_mean', '')
+    Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // remove the cluster band - index starts at 0
+    segmented_data_mean = segmented_data_mean.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
     
   } else {
     // segment on the bands specified by var segment_on
@@ -288,8 +291,6 @@ if (vars.pixel_based) {
                  //.addBands(segmented_data_sd)
                  .addBands(depth_var).addBands(red_var)
                  .updateMask(depth_mask)
-                 // remove the cluster band - index starts at 0
-                 //.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
   Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
 }
 
