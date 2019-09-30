@@ -252,7 +252,12 @@ if (vars.pixel_based) {
   
   if (segment_all_bands) { 
     // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
-    
+    var segmented_data_mean = run_snic(reflec
+                                       .addBands(depth)
+                                       //.addBands(waves)
+                                       .addBands(slope)
+                                       )
+                                       .regexpRename('_mean', '')
     
   } else {
     // segment on the bands specified by var segment_on
