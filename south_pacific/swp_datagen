@@ -329,7 +329,7 @@ var export_data = function () {
   Export.image.toAsset({
     image: all_data.updateMask(depth_mask).set(vars), //just double check not doing anything outside depth range
     description: output_name,
-    assetId: vars.asset_output + output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
     crs: region_params.epsg,
     region: export_convhull,
