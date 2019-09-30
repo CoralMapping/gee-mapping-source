@@ -21,6 +21,18 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.25660705566406, -18.
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+/*
+TODO:
+
+  - ADD BACK IN -1/-2/-3 pixels fromdepth data
+
+  - add in GEBCO depth filter
+          image: users/murrnick/global-reefs/existingData/GEBCO_RN5136
+          e.g. filter: Map.addLayer(gebco.lt(0).and(gebco.gt(-500)).selfMask().focal_max(10), {}, 'gebco depth')
+*/
+
+
+
 ///////////////////////////////
 // Global coral atlas project - SWP region
 // Contact: mitchell.lyons@gmail.com
@@ -122,10 +134,8 @@ var vars = {
 
 }
 
+
 // 2. Data loads & vis
-
-
-/// ADD BACK IN -1/-2/-3 pixels fromdepth data
 
 // load input data
 var pixels = ee.Image(region_params.pixels)
