@@ -24,7 +24,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.25660705566406, -18.
 /*
 TODO:
 
-  - ADD BACK IN -1/-2/-3 pixels fromdepth data
+  - ADD IN -1/-2/-3 pixels from depth data where needed
 
   - add in GEBCO depth filter
           image: users/murrnick/global-reefs/existingData/GEBCO_RN5136
