@@ -58,7 +58,7 @@ var vars = {
   green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
-  use_glcm: false, // use glcm metrics
+  use_glcm: true, // use glcm metrics
   
   // use relative band brightness as predictor variables (instead of Rrs values)?
   use_brightness: true,
@@ -271,7 +271,7 @@ if (vars.pixel_based) {
     // Calculate object statistics
     var segmented_data_mean = reflec.addBands(depth)//.addBands(waves)
                               .addBands(slope)
-                              .addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
+                              //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
                               .addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
