@@ -286,6 +286,7 @@ if (vars.pixel_based) {
     Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
     // remove the cluster band - index starts at 0
     segmented_data_mean = segmented_data_mean.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
+    segmented_data_mean = segmented_data_mean.cast(segmented_data_mean.bandNames().zip(ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
     
   } else {
     // segment on the bands specified by var segment_on
@@ -299,7 +300,8 @@ if (vars.pixel_based) {
                               .addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
-  
+    segmented_data_mean = segmented_data_mean.cast(segmented_data_mean.bandNames().zip(ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    
   /*
   // For this analysis anyway, SD has not come up as adding much useful info
   // Looks like you can also use .combine - and do both mean and SD in one reduction??
