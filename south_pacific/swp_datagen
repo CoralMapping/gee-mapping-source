@@ -109,7 +109,8 @@ var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.upda
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
 
-var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.4087)
+//var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth*100, max: vars.depth_limit*100, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
@@ -348,14 +349,14 @@ Export.table.toDrive({
 var out_scale = (vars.pixel_based) ? vars.export_scale : vars.export_scale * 3 // no need to reduce pixels at native res, we're doign the mean anyway
 
 var export_data = function () {
-  Map.addLayer({eeObject: export_convhull, name: "Export footprint", shown: true})
+  Map.addLayer({eeObject: export_geom, name: "Export footprint", shown: true})
   Export.image.toAsset({
     image: all_data.updateMask(depth_mask).set(vars), //just double check not doing anything outside depth range
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
     crs: region_params.epsg,
-    region: export_convhull,
+    region: export_geom,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mean'},
   })
