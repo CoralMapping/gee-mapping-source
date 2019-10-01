@@ -11,10 +11,12 @@ var seg = ee.ImageCollection([seg_e, seg_w]).mosaic()
 Map.addLayer(pix)
 Map.addLayer(seg)
 
+var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+
 Export.image.toAsset({
   image: pix,
   description: "projects/coral_atlas/sw_pacific/in_out/swp_pixels",
-  region: geometry,
+  region: export_geom,
   scale: 5,
   crs: "EPSG:3857",
   maxPixels: 1e13})
@@ -22,7 +24,7 @@ Export.image.toAsset({
 Export.image.toAsset({
   image: seg,
   description: "projects/coral_atlas/sw_pacific/in_out/swp_segmentation",
-  region: geometry,
+  region: export_geom,
   scale: 5,
   crs: "EPSG:3857",
   maxPixels: 1e13})
