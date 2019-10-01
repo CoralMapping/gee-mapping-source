@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136");
+var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Training data for global reef mas
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
@@ -15,7 +16,7 @@ var land = gebco.gt(200)
       bestEffort:true
     })
 Map.addLayer(land, {color:'darkgreen'},'land');
-var landPoints = ee.FeatureCollection.randomPoints(land, 2000 ,0, 10)
+var landPoints = ee.FeatureCollection.randomPoints(land, 20,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:1});
@@ -34,10 +35,21 @@ var water = gebco.lt(-1000)
       bestEffort:true
   })
 Map.addLayer(water,{color:'darkblue'},'water');
-var waterPoints = ee.FeatureCollection.randomPoints(water, 2000 ,0, 10)
+var waterPoints = ee.FeatureCollection.randomPoints(water, 20 ,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:2});
   });
 Map.addLayer(waterPoints, {color:'blue'}, 'Water Points');
 
+
+Map.addLayer(wcmc, {color:'orange'}, 'WCMC Reef')
+
+var reefPoints = ee.FeatureCollection.randomPoints(wcmc, 20 ,0, 10)
+    .map(
+      function(feature) {
+        return feature.set({CLASS:3});
+  });
+Map.addLayer(reefPoints, {color:'yellow'}, 'Reef Points');
+
+var reefMaskTrainingSet = reefPoints.merge(waterPoints.merge(landPoints))
