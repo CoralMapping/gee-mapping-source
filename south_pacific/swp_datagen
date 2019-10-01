@@ -104,9 +104,9 @@ var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit*100).and(depth.gt(vars.min_depth*100))//.updateMask(waves)
+var depth_mask = depth.lt(ee.Number(vars.depth_limit).multiply(100)).and(depth.gt(ee.Number(vars.min_depth).multiply(100)))//.updateMask(waves)
 
-var depth = depth.updateMask(depth_mask).rename('depth').int16() // mask out depth below set limit
+var depth = depth.int16().updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
 
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
@@ -211,7 +211,7 @@ if (vars.use_brightness) {
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
-  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent').int16() // maximum neighbourhood glcm entropy on depth
+  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent').multiply(100).int16() // maximum neighbourhood glcm entropy on depth
   var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5).int16()
   var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5).int16()
 }
