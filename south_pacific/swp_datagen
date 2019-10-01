@@ -97,22 +97,22 @@ Map.centerObject(map_centre, 15)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-var depth = ee.Image(region_params.depth).divide(100) //(NB depth is *100 in integer values)
-depth = depth.where(depth.eq(-0.01), 0.1) // handle "too shallow" retrievals
+var depth = ee.Image(region_params.depth) //(NB depth is *100 in integer values)
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit*100).and(depth.gt(vars.min_depth*100))//.updateMask(waves)
 
-var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
+var depth = depth.updateMask(depth_mask).rename('depth').int16() // mask out depth below set limit
 //var waves = waves.rename('waves')
 
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth*100, max: vars.depth_limit*100, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
@@ -211,14 +211,14 @@ if (vars.use_brightness) {
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
-  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent') // maximum neighbourhood glcm entropy on depth
-  var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5)
-  var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5)
+  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent').int16() // maximum neighbourhood glcm entropy on depth
+  var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5).int16()
+  var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5).int16()
 }
 
 // local variance in depth and red reflectance (5 pixels)
-var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev')
-var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev')
+var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev').int16()
+var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev').int16()
 
 // segmentation functions
 
