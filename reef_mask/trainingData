@@ -45,7 +45,7 @@ Map.addLayer(waterPoints, {color:'blue'}, 'Water Points');
 Map.addLayer(wcmc, {color:'orange'}, 'WCMC Reef');
 var wcmcLimit = wcmc.randomColumn('random', 0)
     .sort('random')
-    .limit(500) // limit to 500 reefs only to avoid geo timeouts
+    .limit(2500) // limit to 500 reefs only to avoid geo timeouts
 var reefPoints = ee.FeatureCollection.randomPoints(wcmcLimit, 4000,0, 10)
     .map(
       function(feature) {
