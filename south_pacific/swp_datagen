@@ -120,7 +120,7 @@ Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth*100, max: vars.depth_
 if (vars.global_mask) {
   // manual touch-ups if needed
   var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
-  global_mask = global_mask.unmask(0).add(manual_adds).selfMask()
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)
   // mask the depth mask with global mask
   depth_mask = depth_mask.updateMask(global_mask)
   Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
@@ -346,20 +346,37 @@ Export.table.toDrive({
 
 // 4. Export data to asset
 
-var out_scale = (vars.pixel_based) ? vars.export_scale : vars.export_scale * 3 // no need to reduce pixels at native res, we're doign the mean anyway
-
-var export_data = function () {
-  Map.addLayer({eeObject: export_geom, name: "Export footprint", shown: true})
+// export if specified in input params
+if (vars.do_export) {
+  // add raster flag for either side of dateline
+  var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+  var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
+  var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
+  
+  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7)
+  var export_geom_west = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7)
+  
+  Map.addLayer(export_geom_east, {}, "export footprint east", true)
+  Map.addLayer(export_geom_west, {}, "export footprint west", true)
+  
   Export.image.toAsset({
-    image: all_data.updateMask(depth_mask).set(vars), //just double check not doing anything outside depth range
+    image: export_stack_east,
     description: output_name,
-    assetId: vars.asset_output + 'in_out/' + output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
     scale: vars.export_scale,
-    crs: region_params.epsg,
-    region: export_geom,
+    region: export_geom_east,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mean'},
   })
+  
+  Export.image.toAsset({
+    image: export_stack_west,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
+    scale: vars.export_scale,
+    region: export_geom_west,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
 }
-
-if (vars.do_export) export_data() // export if wanted
