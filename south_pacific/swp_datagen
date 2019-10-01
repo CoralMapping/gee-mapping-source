@@ -118,8 +118,8 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6ba
 // add in global bathy if using
 if (vars.global_mask) {
   // manual touch-ups if needed
-  var manual_adds = manual_mask_additions.reduceToImage('mask',ee.Reducer.countEvery())
-  global_mask = global_mask.and(manual_adds.gt(0))
+  var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask()
   // mask the depth mask with global mask
   depth_mask = depth_mask.updateMask(global_mask)
   Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
