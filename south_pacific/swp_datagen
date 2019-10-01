@@ -355,8 +355,8 @@ if (vars.do_export) {
   var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
   var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
   
-  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7)
-  var export_geom_west = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7)
+  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
+  var export_geom_west = ee.Geometry.Rectangle(162.7417,-23.0584,179.99998,-7.3087)
   
   Map.addLayer(export_geom_east, {}, "export footprint east", true)
   Map.addLayer(export_geom_west, {}, "export footprint west", true)
