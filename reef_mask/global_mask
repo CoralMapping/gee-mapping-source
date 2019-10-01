@@ -8,6 +8,12 @@ Little script to make a coarse global layer based on
 
 Fundamental motivation is to mask out noise and error in deep water
 in the bathymetry data (and Dove mosaic)
+
+improving on the early mask products, e.g.
+users/murrnick/global-reefs/reefOut/reefMask_gebco_1k
+
+Outcome of GCRMN work will determine needs
+
 */
 
 var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-300)).selfMask()
