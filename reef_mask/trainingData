@@ -57,9 +57,9 @@ var reefPoints2 = reefPoints1.filter(ee.Filter.bounds(water).not()).aside(print)
 
 Map.addLayer(reefPoints, {color:'yellow'}, 'Reef Points');
 Map.addLayer(reefPoints2, {color:'red'}, 'Reef Points');
+
 // Export
 var reefMaskTrainingSet = reefPoints2.merge(waterPoints.merge(landPoints));
-
 Export.table.toAsset({
   collection:reefMaskTrainingSet,
   description: 'exportReefTrain',
