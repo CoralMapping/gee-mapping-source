@@ -4,9 +4,8 @@ var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Training data for global reef mas
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
-Map.addLayer(aoi)
 
-//Map.addLayer(gebco)
+// Land Points
 var land = gebco.gt(200)
     .selfMask() //land == 1
     .reduceToVectors({
@@ -16,15 +15,14 @@ var land = gebco.gt(200)
       bestEffort:true
     })
 Map.addLayer(land, {color:'darkgreen'},'land');
-var landPoints = ee.FeatureCollection.randomPoints(land, 20,0, 10)
+var landPoints = ee.FeatureCollection.randomPoints(land, 4000 ,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:1});
   });
-print (landPoints.limit(5));
 Map.addLayer(landPoints, {color:'green'}, 'Land Points');
 
-
+// Water Points
 var water = gebco.lt(-1000)
     .selfMask()
     .remap([1],[2]) //water == 2
@@ -35,7 +33,7 @@ var water = gebco.lt(-1000)
       bestEffort:true
   })
 Map.addLayer(water,{color:'darkblue'},'water');
-var waterPoints = ee.FeatureCollection.randomPoints(water, 20 ,0, 10)
+var waterPoints = ee.FeatureCollection.randomPoints(water, 4000 ,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:2});
@@ -43,13 +41,27 @@ var waterPoints = ee.FeatureCollection.randomPoints(water, 20 ,0, 10)
 Map.addLayer(waterPoints, {color:'blue'}, 'Water Points');
 
 
-Map.addLayer(wcmc, {color:'orange'}, 'WCMC Reef')
-
-var reefPoints = ee.FeatureCollection.randomPoints(wcmc, 20 ,0, 10)
+// Reef Points
+Map.addLayer(wcmc, {color:'orange'}, 'WCMC Reef');
+var wcmcLimit = wcmc.randomColumn('random', 0)
+    .sort('random')
+    .limit(500) // limit to 500 reefs only to avoid geo timeouts
+var reefPoints = ee.FeatureCollection.randomPoints(wcmcLimit, 4000,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:3});
   });
-Map.addLayer(reefPoints, {color:'yellow'}, 'Reef Points');
 
-var reefMaskTrainingSet = reefPoints.merge(waterPoints.merge(landPoints))
+var reefPoints1 = reefPoints.filter(ee.Filter.bounds(land).not()).aside(print); // exclude any ambiguous points
+var reefPoints2 = reefPoints1.filter(ee.Filter.bounds(water).not()).aside(print); // exclude any ambiguous points
+
+Map.addLayer(reefPoints, {color:'yellow'}, 'Reef Points');
+Map.addLayer(reefPoints2, {color:'red'}, 'Reef Points');
+// Export
+var reefMaskTrainingSet = reefPoints2.merge(waterPoints.merge(landPoints));
+
+Export.table.toAsset({
+  collection:reefMaskTrainingSet,
+  description: 'exportReefTrain',
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData'
+});
