@@ -64,7 +64,7 @@ var vars = {
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
-  depth_limit: 15, // depth limit for analysis 
+  depth_limit: 1500, // depth limit for analysis 
   min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
@@ -97,16 +97,16 @@ Map.centerObject(map_centre, 15)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-var depth = ee.Image(region_params.depth) //(NB depth is *100 in integer values)
+var depth = ee.Image(region_params.depth).int16() //(NB depth is *100 in integer values)
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(ee.Number(vars.depth_limit).multiply(100)).and(depth.gt(ee.Number(vars.min_depth).multiply(100)))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
 
-var depth = depth.int16().updateMask(depth_mask).rename('depth') // mask out depth below set limit
+var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
 
 var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
