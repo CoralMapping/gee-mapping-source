@@ -12,7 +12,19 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.
             {
               "mask": 1,
               "system:index": "0"
-            })]);
+            })]),
+    geometry = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[178.16241624385157, -18.197440602065203],
+          [178.16241624385157, -18.490728907223655],
+          [178.40480210810938, -18.490728907223655],
+          [178.40480210810938, -18.197440602065203]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - SWP region
