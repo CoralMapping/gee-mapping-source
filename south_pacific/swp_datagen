@@ -1,6 +1,18 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]),
-    global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k");
+    global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
+    manual_mask_additions = /* color: #d63000 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[178.0708356215348, -16.4585267896326],
+                  [178.16284611958167, -16.444039023103436],
+                  [178.2136578871598, -16.39134712666384],
+                  [178.07907536762855, -16.39398206044838],
+                  [178.00354436176917, -16.44799033943158]]]),
+            {
+              "mask": 1,
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - SWP region
@@ -105,6 +117,10 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6ba
 
 // add in global bathy if using
 if (vars.global_mask) {
+  // manual touch-ups if needed
+  var manual_adds = manual_mask_additions.reduceToImage('mask',ee.Reducer.countEvery())
+  global_mask = global_mask.and(manual_adds.gt(0))
+  // mask the depth mask with global mask
   depth_mask = depth_mask.updateMask(global_mask)
   Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
 }
