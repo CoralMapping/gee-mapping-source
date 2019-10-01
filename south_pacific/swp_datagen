@@ -52,7 +52,7 @@ var region_params = param_module.swpac     //<------------ THIS IS WHERE YOU CHO
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -113,7 +113,7 @@ var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
 //var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth*100, max: vars.depth_limit*100, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
@@ -218,8 +218,8 @@ if (vars.use_glcm) {
 }
 
 // local variance in depth and red reflectance (5 pixels)
-var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev').int16()
-var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev').int16()
+var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev').multiply(10).int16()
+var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev').multiply(10).int16()
 
 // segmentation functions
 
@@ -286,7 +286,7 @@ if (vars.pixel_based) {
     Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
     // remove the cluster band - index starts at 0
     segmented_data_mean = segmented_data_mean.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
-    segmented_data_mean = segmented_data_mean.cast(segmented_data_mean.bandNames().zip(ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
     
   } else {
     // segment on the bands specified by var segment_on
@@ -300,7 +300,7 @@ if (vars.pixel_based) {
                               .addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
-    segmented_data_mean = segmented_data_mean.cast(segmented_data_mean.bandNames().zip(ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
     
   /*
   // For this analysis anyway, SD has not come up as adding much useful info
