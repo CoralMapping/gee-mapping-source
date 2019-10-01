@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]),
-    global_bathy = ee.Image("users/murrnick/global-reefs/existingData/GEBCO_RN5136");
+    global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - SWP region
@@ -64,8 +64,8 @@ var vars = {
   // use relative band brightness as predictor variables (instead of Rrs values)?
   use_brightness: true,
   
-  // use global bathymetry layer to remove junk + limit size
-  bathy_mask: true,
+  // use global reef mask layer to remove junk + limit size
+  global_mask: true,
   
   // export options
   do_export: true, // export the results?
@@ -104,17 +104,9 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 15, palette:['#9ecae1','#6ba
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
-if (vars.bathy_mask) {
-  var global_bathy_mask = global_bathy.lt(0).and(global_bathy.gt(-300)).selfMask()
-  var global_bathy_mask_buffer = ee.Image(1)
-        .cumulativeCost({
-          source: global_bathy_mask,
-          maxDistance: 2000,
-          geodeticDistance: false
-        }).lt(2000).selfMask()
-  
-  depth_mask = depth_mask.updateMask(global_bathy_mask_buffer)
-  Map.addLayer(global_bathy_mask_buffer, {min:0, max:1}, 'global bathymetry mask', false)
+if (vars.global_mask) {
+  depth_mask = depth_mask.updateMask(global_mask)
+  Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
 }
 
 
