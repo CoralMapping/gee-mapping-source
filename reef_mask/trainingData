@@ -1,0 +1,43 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Training data for global reef mas
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+Map.addLayer(aoi)
+
+//Map.addLayer(gebco)
+var land = gebco.gt(200)
+    .selfMask() //land == 1
+    .reduceToVectors({
+      geometry: aoi,
+      scale:1000,
+      geometryType:'polygon',
+      bestEffort:true
+    })
+Map.addLayer(land, {color:'darkgreen'},'land');
+var landPoints = ee.FeatureCollection.randomPoints(land, 2000 ,0, 10)
+    .map(
+      function(feature) {
+        return feature.set({CLASS:1});
+  });
+print (landPoints.limit(5));
+Map.addLayer(landPoints, {color:'green'}, 'Land Points');
+
+
+var water = gebco.lt(-1000)
+    .selfMask()
+    .remap([1],[2]) //water == 2
+    .reduceToVectors({
+      geometry: aoi,
+      scale:1000,
+      geometryType:'polygon',
+      bestEffort:true
+  })
+Map.addLayer(water,{color:'darkblue'},'water');
+var waterPoints = ee.FeatureCollection.randomPoints(water, 2000 ,0, 10)
+    .map(
+      function(feature) {
+        return feature.set({CLASS:2});
+  });
+Map.addLayer(waterPoints, {color:'blue'}, 'Water Points');
+
