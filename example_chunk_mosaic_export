@@ -2,7 +2,8 @@
 var pix_e = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_east"),
     pix_w = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_west"),
     seg_e = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_segmentation_east"),
-    seg_w = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_segmentation_west");
+    seg_w = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_segmentation_west"),
+    image = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_rb/sw_pac_ht_rb_tif");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var pix = ee.ImageCollection([pix_e, pix_w]).mosaic()
 var seg = ee.ImageCollection([seg_e, seg_w]).mosaic()
@@ -15,7 +16,7 @@ Export.image.toAsset({
   description: "projects/coral_atlas/sw_pacific/in_out/swp_pixels",
   region: geometry,
   scale: 5,
-  crs: "EPSG:3460",
+  crs: "EPSG:3857",
   maxPixels: 1e13})
   
 Export.image.toAsset({
@@ -23,5 +24,5 @@ Export.image.toAsset({
   description: "projects/coral_atlas/sw_pacific/in_out/swp_segmentation",
   region: geometry,
   scale: 5,
-  crs: "EPSG:3460",
+  crs: "EPSG:3857",
   maxPixels: 1e13})
