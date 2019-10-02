@@ -76,14 +76,14 @@ var vars = {
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
   // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'pixels', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
+  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
   /* choose from
   'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'
   */
-  input_bands: ['b1','b2','b3','b4','depth','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'],
+  input_bands: ['b1','b2','b3','b4','depth','depth_stdDev','red_stdDev'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
