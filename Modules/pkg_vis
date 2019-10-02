@@ -172,7 +172,7 @@ function add_lgds(lgds, map) {
     map = map || Map;
     lgds = ui.Panel({
         widgets: lgds,
-        layout: ui.Panel.Layout.Flow('vertical'),
+        layout: ui.Panel.Layout.Flow('vertical', true),
         style: { fontSize: '14px', margin: '0 0 0px 0', padding: '0 0 0 6px', position: 'bottom-left' }
     });
     map.add(lgds);
