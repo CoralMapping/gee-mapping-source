@@ -11,6 +11,7 @@ Map.addLayer(pix)
 Map.addLayer(seg)
 
 var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+Map.addLayer(export_geom)
 
 Export.image.toAsset({
   image: pix,
