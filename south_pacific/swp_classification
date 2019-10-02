@@ -356,7 +356,7 @@ var map_clean = raw_classification.where({
   test: raw_classification.connectedPixelCount(vars.small_object_filter, false).lt(vars.small_object_filter), 
   value: map_smooth
 })
-print(map_clean.projection())
+
 
 // 7. Export data
 
