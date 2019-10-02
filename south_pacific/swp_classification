@@ -356,7 +356,7 @@ var map_clean = raw_classification.where({
   test: raw_classification.connectedPixelCount(vars.small_object_filter, false).lt(vars.small_object_filter), 
   value: map_smooth
 })
-
+print(map_clean.projection())
 
 // 7. Export data
 
@@ -372,6 +372,7 @@ var export_classification = function () {
     assetId: vars.asset_output + output_name,
     region: export_convhull,
     scale: vars.export_scale,
+    crs: vars.local_epsg,
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
