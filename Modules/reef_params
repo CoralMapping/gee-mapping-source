@@ -71,7 +71,7 @@ var cancook_htv2 = {
   geo_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo",
   benthic_map: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic",
   geo_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2",
-  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean1"
+  benthic_map_clean: "users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean-pts"
 }
 
 var cancook_ltv2 = {
