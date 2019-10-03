@@ -50,8 +50,8 @@ var heron_wv2 = {
   geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "users/mitchest/gbr_reefs/heron_2014_benthic",
   benthic_pts: "users/mitchest/gbr_reefs/heron_2014_benthic",
-  geo_map: "users/mitchest/gbr_reefs/cancook_eomap_geo",
-  benthic_map: "users/mitchest/gbr_reefs/cancook_eomap_benthic",
+  geo_map: "users/mitchest/gbr_reefs/heron_geo",
+  benthic_map: "users/mitchest/gbr_reefs/heron_benthic",
   geo_map_clean: "",
   benthic_map_clean: ""
 }
