@@ -103,8 +103,8 @@ var gbr_gees2 = {
   waves: "users/mitchest/gbr_reefs/gbr_hs95",
   geo_train: "users/mitchest/gbr_reefs/gbr_geo_training", 
   benthic_train: "users/mitchest/gbr_reefs/cancook_benthic_training",
-  geo_map: "",
-  benthic_map: "",
+  geo_map: "users/mitchest/gbr_reefs/gbr_s2_geo",
+  benthic_map: "users/mitchest/gbr_reefs/gbr_s2_benthicx",
   geo_map_clean: "",
   benthic_map_clean: ""
 }
