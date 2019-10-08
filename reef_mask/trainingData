@@ -1,21 +1,38 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
+    lsCover = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Training data for global reef mas
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+
+// // Landsat
+// var nvis = {bands:['Red', 'Green', 'Blue'], 'min': 0, 'max': 128}
+// Map.addLayer(ls19, nvis, 'ls8 2019')
+// var lsMask = ls19.select('Blue').add(1)
+// var mask = ee.Image(1).updateMask(lsMask) // binary image
+// var lsCover = mask.reduceToVectors({geometry: aoi, geometryType: "polygon", maxPixels: 1e8, bestEffort:true, scale: 100}) 
+// Map.addLayer(lsCover) // AOI for training in 
+
+// Export.table.toAsset({
+//   collection:lsCover,
+//   description: 'exportReefTrain',
+//   assetId: 'projects/coral_atlas/reefMask/globalLandsatFootprint'
+// });
+
+
 
 // Land Points
 var land = gebco.gt(200)
     .selfMask() //land == 1
     .reduceToVectors({
-      geometry: aoi,
-      scale:1000,
+      geometry: lsCover,
+      scale:100,
       geometryType:'polygon',
       bestEffort:true
     })
 Map.addLayer(land, {color:'darkgreen'},'land');
-var landPoints = ee.FeatureCollection.randomPoints(land, 4000 ,0, 10)
+var landPoints = ee.FeatureCollection.randomPoints(land, 6000 ,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:1});
@@ -27,13 +44,13 @@ var water = gebco.lt(-1000)
     .selfMask()
     .remap([1],[2]) //water == 2
     .reduceToVectors({
-      geometry: aoi,
-      scale:1000,
+      geometry: lsCover,
+      scale:100,
       geometryType:'polygon',
       bestEffort:true
   })
 Map.addLayer(water,{color:'darkblue'},'water');
-var waterPoints = ee.FeatureCollection.randomPoints(water, 4000 ,0, 10)
+var waterPoints = ee.FeatureCollection.randomPoints(water, 6000 ,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:2});
@@ -45,8 +62,9 @@ Map.addLayer(waterPoints, {color:'blue'}, 'Water Points');
 Map.addLayer(wcmc, {color:'orange'}, 'WCMC Reef');
 var wcmcLimit = wcmc.randomColumn('random', 0)
     .sort('random')
-    .limit(2500) // limit to 500 reefs only to avoid geo timeouts
-var reefPoints = ee.FeatureCollection.randomPoints(wcmcLimit, 4000,0, 10)
+    .filterBounds(lsCover)
+    .limit(5000) // limit to 500 reefs only to avoid geo timeouts
+var reefPoints = ee.FeatureCollection.randomPoints(wcmcLimit, 6000,0, 10)
     .map(
       function(feature) {
         return feature.set({CLASS:3});
@@ -63,5 +81,5 @@ var reefMaskTrainingSet = reefPoints2.merge(waterPoints.merge(landPoints));
 Export.table.toAsset({
   collection:reefMaskTrainingSet,
   description: 'exportReefTrain',
-  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData'
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData_v3'
 });
