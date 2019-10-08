@@ -241,7 +241,19 @@ Export.table.toDrive({
 
 // Export final classified image to asset
 Export.image.toAsset({
-  image: finalOut, 
+  image: finalOut.set({
+  fileName: fileName,
+  filePath: 'uq-global-reefs/reefsOut'.concat(fileName), 
+  globOptions: globOptions,
+  nPredictors: bands.length(),
+  predictorList: bands,
+  nTrainingPoints: trainingSet.size(),
+  nPoints: globOptions.numPoints,
+  nPointsUsed:  trainingSet.size(),
+  nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 1)).size(),
+  nPointsWater: trainingSet.filter(ee.Filter.eq('CLASS', 2)).size(),
+  nPointsReef: trainingSet.filter(ee.Filter.eq('CLASS', 3)).size()
+  }), 
   description: 'exportFinaltoAsset-'.concat(globOptions.versionID),
   assetId: 'global-reefs/reefOut/'.concat(fileName),
   scale: globOptions.outScale,
