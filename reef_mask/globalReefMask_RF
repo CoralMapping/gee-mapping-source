@@ -35,9 +35,7 @@ var globOptions = {
   outFolder: 'reefsOut',
   mapDebug: false, // set to true to add all layers of the map
   startDate: '2016-0-01',
-  endDate: '2018-01-01',
-  bandSelect: ['ultrablue', 'blue', 'green', 'red', 'nir'],
-  bands8: ['B1', 'B2', 'B3', 'B4', 'B5'],
+  endDate: '2019-01-01',
   parallelScale: 8, // A scaling factor used to limit memory use; using a larger parallelScale (e.g. 2 or 4) may enable computations that run out of memory with the default.
   trainingValidationRatio: 0.01, // training vs validation
   nTrees: 10, 
