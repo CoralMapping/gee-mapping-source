@@ -22,6 +22,11 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 // 00. Global Variables
 ////////////////////////////////////
 
+
+var lsFootprint = infraRoads.map(
+  function(f) {
+  return f.buffer(-6000); // 3km width
+}).union(); 
 var aoi = lsFootprint;
 Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
 Map.centerObject(aoi);
