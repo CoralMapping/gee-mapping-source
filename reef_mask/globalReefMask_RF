@@ -141,6 +141,8 @@ var trainComposite = trainComposite1
   .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
+  .addBands (ee.Image('NOAA/NGDC/ETOPO1')
+    .select(['bedrock'], ['etopo']))
   //.addBands(trainVectors.rename('training'))
  // .addBands(modis) // remove this line to run more quickly
   .clip(aoi);
@@ -148,14 +150,14 @@ var trainComposite = trainComposite1
 //var bands = trainComposite.select([1,2,3,4,5,6,7,8,9]).bandNames().aside(print); // without modis (Landsat Only)
 //var bandList = ee.List.sequence(0, 84, 1);
 var bands = trainComposite.bandNames().aside(print); // bands used in classification
-print (trainComposite, 'TC2');
+
 
 ////////////////////////////////////
 // 2. Training Data
 ////////////////////////////////////
 
 // Training points
-var randomPoints = trainingData
+var randomPoints = trainingData.filterBounds(aoi)
 
 // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
