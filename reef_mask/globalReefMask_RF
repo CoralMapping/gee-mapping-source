@@ -1,32 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
-    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8"),
-    trainingData = ee.FeatureCollection("users/murrnick/global-reefs/trainingData/TrainingPolygons_V3"),
-    testAOI_a = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[118.63692704814378, -5.331901777533915],
-          [118.63143388408128, -7.280997899974374],
-          [121.74605790751878, -7.700360941856133],
-          [122.26790849345628, -7.596919429916407],
-          [121.68013993876878, -5.594375730133507],
-          [120.83968583720628, -5.173269011556441]]]),
-    testAOI_b = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[132.4856994980854, -1.2711374078459385],
-          [132.0462463730854, -18.934463745615965],
-          [147.8665588730854, -20.382851677613285],
-          [151.9974182480854, -17.55722194295171],
-          [149.0091369980854, -9.055569343296536],
-          [144.4388244980854, -4.387065861420099],
-          [132.2220276230854, -0.9635790832260278]]]),
-    testAOI_c = /* color: #0b4a8b */ee.Geometry.Polygon(
-        [[[-101.10248764725719, 22.67636443554209],
-          [-99.03705795975719, 18.77267177941507],
-          [-88.62201889725719, 14.776472311810517],
-          [-83.04096420975719, 9.363975091954806],
-          [-80.09662827225719, 8.582646982341213],
-          [-73.54877670975719, 8.365319337460596],
-          [-65.41889389725719, 9.753990550654132],
-          [-69.06635483475719, 21.536376396810475],
-          [-77.54780014725719, 26.077997361605203]]]),
     GBR_Test = /* color: #d63000 */ee.Geometry.Polygon(
         [[[154.50264257962965, -29.360860757263083],
           [154.36020071778967, -21.291356296671434],
@@ -34,7 +7,10 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
           [146.8212707506558, -7.614568390671287],
           [142.38338949392414, -6.178371431738409],
           [140.8740543169929, -11.16707855305966],
-          [152.77164350655664, -29.896770255364927]]]);
+          [152.77164350655664, -29.896770255364927]]]),
+    lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
+    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -46,26 +22,19 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 // 00. Global Variables
 ////////////////////////////////////
 
-//var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
-//var aoi = testAOI_a;
-//var aoi = testAOI_b;
-//var aoi = testAOI_c;
-var aoi = GBR_Test;
+var aoi = lsFootprint;
 Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
 Map.centerObject(aoi);
-var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8").clip(aoi);
-print(ls8);
-var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
+var lsVis = {min: 0, max: 128, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
-//Map.centerObject(aoi);
 //Map.setCenter(12.0087, -4.5343, 12);
 
 var globOptions = { 
-  versionID: '_v6', //file name prefix
+  versionID: '_v3', //file name prefix
   outFolder: 'reefsOut',
-  mapDebug: true, // set to true to add all layers of the map
-  startDate: '2016-01-01',
+  mapDebug: false, // set to true to add all layers of the map
+  startDate: '2016-0-01',
   endDate: '2018-01-01',
   bandSelect: ['ultrablue', 'blue', 'green', 'red', 'nir'],
   bands8: ['B1', 'B2', 'B3', 'B4', 'B5'],
@@ -74,14 +43,12 @@ var globOptions = {
   nTrees: 10, 
   outScale: 500, //resolution in metres
   conPixels: 4, // set min patch size (10 ~ 1 ha, 100 ~ 9ha @ 30m Landsat scale). 3 = 0.27ha 6 = 0.54ha 9 = 0.81ha
-  classifyClean: true, //remove patches smaller than x connected pixels if true
-  numPoints: 10000, // size of training set per class
+  classifyClean: false, //remove patches smaller than x connected pixels if true
+  numPoints: 100, // size of training set per class
   samplePredictorData: true,
-  kernelSize: 0,
   maskAltitude: 100,  
   maskDepth: -1000, 
   maskDistance: 100000,
-  //imageLimit: 50 // limit number of images for memory issues while testing (350, 3 degrees; 20000, 40 degrees (25K fails)
 };
 Map.setOptions('SATELLITE');
 ////////////////////////////////////
@@ -92,31 +59,11 @@ Map.setOptions('SATELLITE');
 ////////////////////////////////////
 
 var landsatFunctions = {
-  applyCFMask: function(image) {
-    // Mask out SHADOW, SNOW, and CLOUD classes. SR data.
-    var clear = image.select('pixel_qa').bitwiseAnd(2).neq(0); // clear
-    var water = image.select('pixel_qa').bitwiseAnd(4).neq(0);
-    var finalMask = clear.add(water);
-    var img = image.updateMask(finalMask);
-    return img;
-  },
-
+  
   applyNDWI: function(image) {
     // apply NDWI to an image
     var ndwi = image.normalizedDifference(['Green','NIR']);
     return ndwi.select([0], ['ndwi']);
-  },
-
-  applyMNDWI: function(image) {
-    // apply MNDWI to an image
-    var mndwi = image.normalizedDifference(['green','swir1']);
-    return image.select([0], ['mndwi']);
-  },
-
-  applyAWEI: function(image) {
-    // apply AWEI to an image
-    var awei = image.expression("4*(b('green')-b('swir1'))-(0.25*b('nir')+2.75*b('swir2'))");
-    return awei.select([0], ['awei']);
   },
 
   applyNDVI: function(image) {
@@ -131,23 +78,6 @@ var landsatFunctions = {
   }
 };
 
-//EVI = 2.5[(NIR – RED) / ((NIR) + (6RED) - (7.5BLUE) + 1)]
-// reduce an Landsat collection to per band metrics
-var reducer = ee.Reducer.median()
-    .combine(ee.Reducer.minMax(), '', true)
-    //.combine(ee.Reducer.stdDev(), '', true)
-    //.combine(ee.Reducer.min(), '', true)
-    //.combine(ee.Reducer.count(), '', true) // only for interest. Can remove.
-    .combine(ee.Reducer.percentile([10, 25, 50, 75,90]), '', true)
-    .combine(ee.Reducer.intervalMean(0, 10).setOutputs(['intMn0010']), '', true)
-    .combine(ee.Reducer.intervalMean(10, 25).setOutputs(['intMn1025']), '', true)
-    .combine(ee.Reducer.intervalMean(25, 50).setOutputs(['intMn2550']), '', true)
-    .combine(ee.Reducer.intervalMean(50, 75).setOutputs(['intMn5075']), '', true)
-    .combine(ee.Reducer.intervalMean(75, 90).setOutputs(['intMn7590']), '', true)
-    .combine(ee.Reducer.intervalMean(90, 100).setOutputs(['intMn90100']), '', true)
-    .combine(ee.Reducer.intervalMean(10, 90).setOutputs(['intMn1090']), '', true)
-    .combine(ee.Reducer.intervalMean(25, 75).setOutputs(['intMn2575']), '', true);
-
 function samplePredictors(feature) {
     // sample training composite for predictor data
     var predictorData = trainComposite.reduceRegion({
@@ -157,60 +87,27 @@ function samplePredictors(feature) {
     return feature.set(predictorData);
  }
 
- //visParams
- var lsVis = {min: 0, max: 2000, bands: ['red', 'green', 'blue']};
-////////////////////////////////////
-
-
 ////////////////////////////////////
 // 1. Data Imports and Processing
 ////////////////////////////////////
 
-// images
-function generateLandsatCollection(){
-  // var L7collection = ee.ImageCollection('LANDSAT/LE07/C01/T1_SR')
-  //     .filterDate(globOptions.startDate,globOptions.endDate)
-  //     .map(landsatFunctions.applyCFMask)
-  //     .select(globOptions.bands7, globOptions.bandSelect);
-  var L8collection = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
-      .filterDate(globOptions.startDate, globOptions.endDate)
-      .map(landsatFunctions.applyCFMask)
-      .select(globOptions.bands8,globOptions.bandSelect );
-  var collectionFull = ee.ImageCollection(L8collection)
-  //    .merge(L7collection))
-      .filterBounds(aoi); 
-  return collectionFull;
-}
-var collection = generateLandsatCollection();
-//print (collection);
-//Map.addLayer(collection)
 
+var collection = ls8
+print (collection);
 
 // TODO: add band metrics
 // Data processing to final predictors
 var covariates = {
-    redBand: collection.select(['red'])
-        .reduce(reducer, globOptions.parallelScale),
-    blueBand: collection.select(['blue'])
-        .reduce(reducer, globOptions.parallelScale),
-    greenBand: collection.select(['green'])
-        .reduce(reducer, globOptions.parallelScale),
-    nirBand: collection.select(['nir'])
-        .reduce(reducer, globOptions.parallelScale),
-    ultraBlueBand: collection.select(['ultrablue'])
-        .reduce(reducer, globOptions.parallelScale),
+    redBand: collection.select(['Red']),
+    blueBand: collection.select(['Blue']),
+    greenBand: collection.select(['Green']),
+    nirBand: collection.select(['NIR'])
 };
-print(covariates, 'covariates');
-
 
 var trainComposite1 = covariates.nirBand
-    .addBands(covariates.ultraBlueBand)
     .addBands(covariates.redBand)
     .addBands(covariates.blueBand)
-    .addBands(covariates.greenBand)
-    .clip(aoi);
-//print (trainComposite1, 'TC');
-//Map.addLayer(trainComposite1)
+    .addBands(covariates.greenBand);
 
 // Mithc: Landsat 8 – Bands 1-4, maybe 5 if there’s trouble with land classification
 // // MODIS
@@ -219,66 +116,48 @@ var trainComposite1 = covariates.nirBand
 //   .median()
 //   .mask(ls8.select('NIR')); // mask to LS8
 
-
-
 var coastMask = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk') // Natural Earth coastline
-    .distance(globOptions.maskDistance).gte(-20); 
+    .distance(globOptions.maskDistance).gte(-200); 
 var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
     .select(['bedrock'], ['etopo'])
     .gte(globOptions.maskDepth)
     .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
 var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
-//Map.addLayer(topoMask);
+Map.addLayer(topoMask);
 
 // Add a training image
-var trainingData = trainingData.filterBounds(aoi).filter(ee.Filter.neq('CLASS', 3));
 var trainVectors = trainingData.reduceToImage({
     properties: ['CLASS'],
     reducer: ee.Reducer.first()
-}).select(['first'], ['CLASS']);
-//var trainVectors = trainVectors.remap([1,2,3,4], [1,2,2,4]).select(['remapped'], ['CLASS']); //join deep and coast water
-//var trainVectors = trainVectors.select(['remapped'], ['CLASS']); //join deep and coast water
+});
 
 // FINAL MASK
 var trainComposite = trainComposite1
-  //.addBands(ls8)
   .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
   .addBands(ls8.normalizedDifference(['Green', 'NIR']).rename(['NDWI']))
   .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
-  .addBands(trainVectors)
+  //.addBands(trainVectors.rename('training'))
  // .addBands(modis) // remove this line to run more quickly
   .clip(aoi);
 //var bands = trainComposite.select([1,2,3,4,5,6,7,8,9,10,11,12]).bandNames().aside(print); // with modis
 //var bands = trainComposite.select([1,2,3,4,5,6,7,8,9]).bandNames().aside(print); // without modis (Landsat Only)
-var bandList = ee.List.sequence(0, 84, 1);
-print (trainComposite.bandNames());
-var bands = trainComposite.select(bandList).bandNames().aside(print); // bands used in classification
+//var bandList = ee.List.sequence(0, 84, 1);
+var bands = trainComposite.bandNames().aside(print); // bands used in classification
 print (trainComposite, 'TC2');
-Map.addLayer(trainComposite, null, 'TC2');
-
-
 
 ////////////////////////////////////
 // 2. Training Data
 ////////////////////////////////////
 
 // Training points
-var randomPoints = ee.FeatureCollection.randomPoints(trainingData.filterBounds(aoi), globOptions.numPoints,0, 10);
-print (randomPoints, 'randomPoints');
+var randomPoints = trainingData
 
 // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
+print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('CLASS', null)) //handle null data points;
-    //.filter(ee.Filter.neq('Blue', null)); //handle null data points;
-    //.filter(ee.Filter.neq('sur_refl_b01', null)); //handle null data points;
-
-print  (trainingSet,'Sampled Points'); //handle null data points;) 1 == Reef
-print  (trainingSet.filter(ee.Filter.eq('CLASS', 1)).limit(100),'1'); //handle null data points;) 1 == Reef
-print  (trainingSet.filter(ee.Filter.eq('CLASS', 2)).limit(100),'2'); //handle null data points;) 2 == Ocean Deep, 3 == Ocean Coastal
-print  (trainingSet.filter(ee.Filter.eq('CLASS', 4)).limit(100), '4'); //handle null data points;)4 ==  Land
-print  (trainingSet.filter(ee.Filter.eq('CLASS', 3)).limit(100), '3'); //handle null data points;)4 ==  Land
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -325,9 +204,7 @@ if (globOptions.classifyClean) {
 // METADATA
 // Batch mode
 // File naming
-var fileName = 'reefMask'
-  .concat('_K') //Kernel size
-  .concat(globOptions.kernelSize)
+var fileName = 'reefMask_gen2_'
   .concat('S') //scale 
   .concat(globOptions.outScale)
   .concat(globOptions.versionID);
@@ -390,9 +267,9 @@ if (globOptions.mapDebug) {
   print('Band names for training:', bands);
   Map.addLayer(aoi, {color:'ffffff'}, 'AOI');
   Map.addLayer(trainVectors.randomVisualizer(), null , 'Training vectors');
-  print (randomPoints, 'randomPoints');
-  print (predictorSet, 'predictorSet');
-  print (trainingSet, 'training set');
+  print (randomPoints.limit(10), 'randomPoints');
+  print (predictorSet.limit(10), 'predictorSet');
+  print (trainingSet.limit(10), 'training set');
   Map.addLayer(trainingSet,{color:'ffeb00'}, 'Training Points');
   Map.addLayer(trainComposite,null, 'Train Composite');
   print (finalOut, 'final Out');
