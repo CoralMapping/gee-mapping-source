@@ -10,7 +10,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
           [152.77164350655664, -29.896770255364927]]]),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v3");
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v3"),
+    image = ee.Image("projects/coral_atlas/workflow/test-visual/micronesia_4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -226,11 +227,11 @@ var metaData = ee.Feature(null, {
 });
 
 Export.table.toDrive({
-  collection: ee.FeatureCollection(metaData), //
-  description: 'exportMetaDataToDrive-'.concat(globOptions.versionID),
+  collection: ee.FeatureCollection(predictorSet), //
+  description: 'exportPredictorsToDrive',
   folder: globOptions.outFolder,
-  fileNamePrefix: 'reefsMETA'.concat(fileName),
-  fileFormat: 'CSV'
+  fileNamePrefix: 'reefsTraining'.concat(fileName),
+  fileFormat: 'SHP'
 });
 
 // Export final classified image to asset
@@ -238,8 +239,8 @@ Export.image.toAsset({
   image: finalOut, 
   description: 'exportFinaltoAsset',
   assetId: 'global-reefs/reefOut/'.concat(fileName),
-  scale: 1000,
-  region: GBR_Test,
+  scale: 30,
+  region: aoi,
   maxPixels: 800000000000
 });
 
