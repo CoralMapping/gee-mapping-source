@@ -181,8 +181,8 @@ var fiji_htocean = {
   benthic_pts: "",
   geo_map: "projects/coral_atlas/fiji/in_out/fj_geo-clean3",
   benthic_map: "projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2",
-  geo_map_clean: "",
-  benthic_map_clean: ""
+  geo_map_clean: "projects/coral_atlas/fiji/in_out/fj_geo-clean3",
+  benthic_map_clean: "projects/coral_atlas/fiji/in_out/fj_benthic-clean3"
 }
 
 var fiji_htcoast = {
