@@ -183,13 +183,13 @@ var finalOut = classified
 // 4. Postprocess
 ////////////////////////////////////
   
-// Postprocessing
-if (globOptions.classifyClean) {
-  var finalOut = finalOut.mask(finalOut
-  .connectedPixelCount(globOptions.conPixels)
-  .gte(globOptions.conPixels)); 
-  var clean = 'CP'.concat(globOptions.conPixels); // connected pixel 100 (@30m = 9 ha)
-} else {clean = 'CP00';} // connected pixel zero
+// // Postprocessing
+// if (globOptions.classifyClean) {
+//   var finalOut = finalOut.mask(finalOut
+//   .connectedPixelCount(globOptions.conPixels)
+//   .gte(globOptions.conPixels)); 
+//   var clean = 'CP'.concat(globOptions.conPixels); // connected pixel 100 (@30m = 9 ha)
+// } else {clean = 'CP00';} // connected pixel zero
 
 
 // focal_mode = excellent!
@@ -236,10 +236,10 @@ Export.table.toDrive({
 // Export final classified image to asset
 Export.image.toAsset({
   image: finalOut, 
-  description: 'exportFinaltoAsset-'.concat(globOptions.versionID),
+  description: 'exportFinaltoAsset',
   assetId: 'global-reefs/reefOut/'.concat(fileName),
-  scale: globOptions.outScale,
-  region: aoi,
+  scale: 1000,
+  region: GBR_Test,
   maxPixels: 800000000000
 });
 
@@ -255,25 +255,25 @@ Export.image.toDrive({
 });
 */
 
-////////////////////////////////////////////
+// ////////////////////////////////////////////
 
 
-////////////////////////////////////////////
-// 7. Debugging
-if (globOptions.mapDebug) {
-  print('Debug: adding data to map');
-  //print('Image collection:', collection.size());
-  print('Band names for training:', bands);
-  Map.addLayer(aoi, {color:'ffffff'}, 'AOI');
-  Map.addLayer(trainVectors.randomVisualizer(), null , 'Training vectors');
-  print (randomPoints.limit(10), 'randomPoints');
-  print (predictorSet.limit(10), 'predictorSet');
-  print (trainingSet.limit(10), 'training set');
-  Map.addLayer(trainingSet,{color:'ffeb00'}, 'Training Points');
-  Map.addLayer(trainComposite,null, 'Train Composite');
-  print (finalOut, 'final Out');
-  Map.addLayer(finalOut.randomVisualizer(),null, 'Reef Mask Classified');
-} else {print('Not debugging: running in batch mode')}
+// ////////////////////////////////////////////
+// // 7. Debugging
+// if (globOptions.mapDebug) {
+//   print('Debug: adding data to map');
+//   //print('Image collection:', collection.size());
+//   print('Band names for training:', bands);
+//   Map.addLayer(aoi, {color:'ffffff'}, 'AOI');
+//   Map.addLayer(trainVectors.randomVisualizer(), null , 'Training vectors');
+//   print (randomPoints.limit(10), 'randomPoints');
+//   print (predictorSet.limit(10), 'predictorSet');
+//   print (trainingSet.limit(10), 'training set');
+//   Map.addLayer(trainingSet,{color:'ffeb00'}, 'Training Points');
+//   Map.addLayer(trainComposite,null, 'Train Composite');
+//   print (finalOut, 'final Out');
+//   Map.addLayer(finalOut.randomVisualizer(),null, 'Reef Mask Classified');
+// } else {print('Not debugging: running in batch mode')}
 
 
 
