@@ -27,7 +27,9 @@ TODO:
 
 - Fix input class selection in vars dictionary (i.e. currently inputting two identical lists == bad)
 
-- if you 
+- Fix how/where sampling is done whether you print accuracy or export it
+
+- fix sampling using hard-coded EPSG to local EPSG (projected) from reef_params
 
 - Figure out how to do the 'confidence maps' <------- BIG COMPONENT TODO
     - resmapling based?
