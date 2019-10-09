@@ -155,7 +155,7 @@ if (vars.assess_accuracy) {
           .stratifiedSample({
             numPoints: vars.val_size,
             region: validation_region,
-            projection: "EPSG:32755",
+            projection: "EPSG:3141",
             scale: sensor_params.pixel,
             classValues: nosamp_class,
             classPoints: nosamp_numpix
