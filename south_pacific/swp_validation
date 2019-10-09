@@ -27,6 +27,8 @@ TODO:
 
 - Fix input class selection in vars dictionary (i.e. currently inputting two identical lists == bad)
 
+- if you 
+
 - Figure out how to do the 'confidence maps' <------- BIG COMPONENT TODO
     - resmapling based?
     - class based?
@@ -140,7 +142,7 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 if (vars.assess_accuracy) {
   
   // set the area from which validation points get drawn (want a small area if you're printing stats)
-  var validation_region = (vars.show_accuracy) ? validation : cancook_fieldpolys
+  var validation_region = (vars.show_accuracy) ? validation : all_training_data
   
   if (vars.benthic && vars.use_benthic_points) { 
     var validation_pts = benthic // if we're doign a point based assessment then use those
