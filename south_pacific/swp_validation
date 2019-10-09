@@ -72,6 +72,8 @@ var vars = {
   geomorphic: true, // assess geomorphic accuracy
   benthic: false, // assess benthic accuracy
   
+  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
   use_benthic_points: false,
