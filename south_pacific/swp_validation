@@ -8,10 +8,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.
       }
     ] */
     ee.Geometry.Polygon(
-        [[[177.84667132812683, -18.863822118584256],
-          [177.84667132812683, -19.299244334046836],
-          [178.57039569336098, -19.299244334046836],
-          [178.57039569336098, -18.863822118584256]]], null, false),
+        [[[179.24468158203308, -16.14915135945221],
+          [179.24468158203308, -16.347576284804468],
+          [179.53444598632973, -16.347576284804468],
+          [179.53444598632973, -16.14915135945221]]], null, false),
     cancook_fieldpolys = ee.FeatureCollection("users/mitchest/gbr_reefs/cancook_fieldpolys");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
@@ -30,6 +30,8 @@ TODO:
 - Fix how/where sampling is done whether you print accuracy or export it
 
 - fix sampling using hard-coded EPSG to local EPSG (projected) from reef_params
+
+- trim sampling domain to geometry of valdiation data
 
 - Figure out how to do the 'confidence maps' <------- BIG COMPONENT TODO
     - resmapling based?
