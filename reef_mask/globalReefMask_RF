@@ -22,16 +22,14 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 // 00. Global Variables
 ////////////////////////////////////
 
-
-var lsFootprint = infraRoads.map(
+var aoi = lsFootprint.map(
   function(f) {
-  return f.buffer(-6000); // 3km width
+  return f.buffer(3000); // 3km width
 }).union(); 
-var aoi = lsFootprint;
-Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
-Map.centerObject(aoi);
+//Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
+//Map.centerObject(aoi);
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green', 'Blue']};
-Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+//Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
 //Map.setCenter(12.0087, -4.5343, 12);
 
@@ -141,8 +139,6 @@ var trainComposite = trainComposite1
   .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
-  .addBands (ee.Image('NOAA/NGDC/ETOPO1')
-    .select(['bedrock'], ['etopo']))
   //.addBands(trainVectors.rename('training'))
  // .addBands(modis) // remove this line to run more quickly
   .clip(aoi);
@@ -150,7 +146,7 @@ var trainComposite = trainComposite1
 //var bands = trainComposite.select([1,2,3,4,5,6,7,8,9]).bandNames().aside(print); // without modis (Landsat Only)
 //var bandList = ee.List.sequence(0, 84, 1);
 var bands = trainComposite.bandNames().aside(print); // bands used in classification
-
+print (trainComposite, 'TC2');
 
 ////////////////////////////////////
 // 2. Training Data
@@ -241,19 +237,7 @@ Export.table.toDrive({
 
 // Export final classified image to asset
 Export.image.toAsset({
-  image: finalOut.set({
-  fileName: fileName,
-  filePath: 'uq-global-reefs/reefsOut'.concat(fileName), 
-  globOptions: globOptions,
-  nPredictors: bands.length(),
-  predictorList: bands,
-  nTrainingPoints: trainingSet.size(),
-  nPoints: globOptions.numPoints,
-  nPointsUsed:  trainingSet.size(),
-  nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 1)).size(),
-  nPointsWater: trainingSet.filter(ee.Filter.eq('CLASS', 2)).size(),
-  nPointsReef: trainingSet.filter(ee.Filter.eq('CLASS', 3)).size()
-  }), 
+  image: finalOut, 
   description: 'exportFinaltoAsset-'.concat(globOptions.versionID),
   assetId: 'global-reefs/reefOut/'.concat(fileName),
   scale: globOptions.outScale,
