@@ -75,7 +75,7 @@ var vars = {
   use_benthic_points: false,
   
   // cal/val params
-  val_size: 0,
+  val_size: 0, // default is to not sample - that way we have explicit control over the classes sampled for validaiton
   
   // class information for classification, sampling and reporting
   class_field: 'class_num', // the field in the training data that stores the class integer
