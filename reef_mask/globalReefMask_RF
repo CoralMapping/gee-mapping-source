@@ -93,8 +93,7 @@ function samplePredictors(feature) {
 ////////////////////////////////////
 
 
-var collection = ls8
-print (collection);
+var collection = ls8;
 
 // TODO: add band metrics
 // Data processing to final predictors
@@ -124,7 +123,7 @@ var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
     .gte(globOptions.maskDepth)
     .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
 var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
-Map.addLayer(topoMask);
+
 
 // Add a training image
 var trainVectors = trainingData.reduceToImage({
@@ -139,12 +138,11 @@ var trainComposite = trainComposite1
   .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
+  .addBands(ee.Image('NOAA/NGDC/ETOPO1')
+    .select(['bedrock'], ['etopo']))
   //.addBands(trainVectors.rename('training'))
  // .addBands(modis) // remove this line to run more quickly
   .clip(aoi);
-//var bands = trainComposite.select([1,2,3,4,5,6,7,8,9,10,11,12]).bandNames().aside(print); // with modis
-//var bands = trainComposite.select([1,2,3,4,5,6,7,8,9]).bandNames().aside(print); // without modis (Landsat Only)
-//var bandList = ee.List.sequence(0, 84, 1);
 var bands = trainComposite.bandNames().aside(print); // bands used in classification
 print (trainComposite, 'TC2');
 
@@ -157,7 +155,7 @@ var randomPoints = trainingData.filterBounds(aoi)
 
 // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
-print (predictorSet.limit(10), 'predictorSet')
+// print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('CLASS', null)) //handle null data points;
 
 ////////////////////////////////////
