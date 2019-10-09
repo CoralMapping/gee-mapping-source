@@ -50,12 +50,12 @@ var region_params = param_module.fiji_htcoast  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy
+  benthic: false, // assess benthic accuracy
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
-  use_benthic_points: true,
+  use_benthic_points: false,
   
   // cal/val params
   val_size: 200,
