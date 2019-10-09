@@ -1,0 +1,218 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.35440331787717]),
+    validation = /* color: #2000d6 */ee.Geometry.Polygon(
+        [[[145.62728434588064, -16.259883386161516],
+          [145.62865763689626, -16.338969129437668],
+          [145.6746628859197, -16.397603735992604],
+          [145.713801679865, -16.454245125933067],
+          [145.76392680193533, -16.48321805171136],
+          [145.8034097607108, -16.484209088698513],
+          [145.84907084490408, -16.475316774259966],
+          [145.8816906446956, -16.444694648623692],
+          [145.89644938494314, -16.407484236317348],
+          [145.9297568197319, -16.363342167853997],
+          [145.93421488787283, -16.302066421723058],
+          [145.84289103533376, -16.263838430938844],
+          [145.77216654802908, -16.25065463871251],
+          [145.63827067400564, -16.245380874179357]]]),
+    cancook_fieldpolys = ee.FeatureCollection("users/mitchest/gbr_reefs/cancook_fieldpolys");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+/*
+############### --> need to port this over form previous GBR work
+
+TODO:
+will this have lots of variation per region?
+ - if yes, then have validaiton module per region
+ - if no, then we can have a central and generic script that loads data via modules only
+
+*/
+
+
+///////////////////////////////
+// Global coral atlas project - Carins cook region development
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the cleaned up classification and assesses accuracy
+// - Corresponding '_classification' and '_cleanup' script performs the data gathering/segmentation
+///////////////////////////////
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. Accuracy assessment
+// 4. Export data
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.cancook_htv2  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  
+  // analysis type
+  geomorphic: true, // assess geomorphic accuracy
+  benthic: false, // assess benthic accuracy
+  
+  // analysis parameters
+  image_data_scale: sensor_params.pixel, // pixel size of the image data
+  use_benthic_points: false,
+  
+  // cal/val params
+  val_size: 0,
+  
+  // class information for classification, sampling and reporting
+  class_field: 'class_num', // the field in the training data that stores the class integer
+  // geomorphic
+  nosamp_class_geo:  [2,11,12,13,14,15,21,22,23,24], // classes not to use/use more
+  nosamp_numpix_geo: ee.List.repeat(2000, 10), // set number of pixels to sample from above classes to 0
+  // TODO: consider dynamically generating these
+  classes_mapped_geo:       [2,   11,  12,   13,   14,   15,  21,  22, 23,  24], // classes to map
+  classes_mapped_names_geo: ['DE','SL','DL','IRF','ORF','RR','SS','SE','PL','OCL'],
+  // benthic
+  nosamp_class_benthic:  [11, 12, 13, 15], // classes not to use/use more
+  nosamp_numpix_benthic: ee.List.repeat(2000, 4), // set number of pixels to sample from above classes to 0
+  // TODO: consider dynamically generating these
+  classes_mapped_benthic:       [11,    12,   13,  15], // classes to map
+  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'CA'],
+  
+  // results/layers to show
+  assess_accuracy: true, // write accuracy stats to output?
+  show_accuracy: true, // print error stats? (you might only be able to have a smaller val_size if you're vieing results live?)
+  
+  // export options
+  do_export: false, // export the results?
+  export_scale: sensor_params.pixel, // pixel size to export at
+  geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-val',
+  benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-val',
+  asset_output: region_params.asset, // asset path
+
+}
+
+// 2. Data loads & vis
+
+// load input data
+var pixels = ee.Image(region_params.dove_pixels)
+var segments = ee.Image(region_params.dove_segments)
+var geomorph = ee.FeatureCollection(region_params.geo_train)
+var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_train)
+var geo_map = ee.Image(region_params.geo_map_clean)
+var benthic_map = ee.Image(region_params.benthic_map_clean)
+
+// Add the raw data
+var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var val_map = (vars.geomorphic) ? geo_map : benthic_map // Set the validation map to either geomorphic or benthic
+
+// set the class information
+var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
+var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_numpix_benthic
+var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic
+var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic
+
+
+// 3. Accuracy assessment
+
+if (vars.assess_accuracy) {
+  
+  // set the area from which validation points get drawn (want a small area if you're printing stats)
+  var validation_region = (vars.show_accuracy) ? validation : cancook_fieldpolys
+  
+  if (vars.benthic && vars.use_benthic_points) { 
+    var validation_pts = benthic // if we're doign a point based assessment then use those
+  } else {
+    // otherwise use the cal/val maps for accuracy
+    var validation_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
+          .addBands(ee.Image.pixelLonLat())
+          .stratifiedSample({
+            numPoints: vars.val_size,
+            region: validation_region,
+            projection: "EPSG:32755",
+            scale: sensor_params.pixel,
+            classValues: nosamp_class,
+            classPoints: nosamp_numpix
+            })
+          .map(function(f) {
+            return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
+            })
+  }
+  
+  // calculate an error matrix - won't account for unmapped areas though
+  var accuracy_collection = val_map.unmask()
+        .reduceRegions({
+          collection: validation_pts,
+          reducer: ee.Reducer.first(),
+          scale: sensor_params.pixel,
+        })
+  
+  // make the error matrix, and include order of classes
+  var classification_errormatrix = accuracy_collection.errorMatrix({
+    actual: vars.class_field, 
+    predicted: 'first',
+    order: classes_mapped, 
+    })
+  
+  // set the accuracy results into the vars dictionary to be written into the file
+  var accuracy_oa = classification_errormatrix.accuracy()
+  var accuracy_cons = ee.Dictionary.fromLists({
+    keys: classes_mapped_names,
+    values: classification_errormatrix.consumersAccuracy().toList().flatten()
+  })
+  var accuracy_prod = ee.Dictionary.fromLists({
+    keys: classes_mapped_names,
+    values: classification_errormatrix.producersAccuracy().toList().flatten()
+  })
+  
+  if (vars.show_accuracy) {
+    print("Overall accuracy", accuracy_oa)
+    print("Users accuracy", accuracy_cons)
+    print("Producers accuracy", accuracy_prod)
+    
+    var classification_errormatrix_array = classification_errormatrix.array()
+    // make a table we can use to interpret mis-classification
+    var array_to_datatable = function(array) {
+      var class_names = ee.List(classes_mapped_names)
+      // function to iterate over class names and return Google vis DataTable columns
+      function toTableColumns(s) {
+        return {id: s, label: s, type: 'number'} 
+      }
+      var columns = class_names.map(toTableColumns)
+      // function to iterate over array and return Google vis DataTable rows
+      function featureToTableRow(f) {
+        return {c: ee.List(f).map(function(c) { return {v: c} })}
+      }
+      var rows = array.toList().map(featureToTableRow)
+      // dictionary to pass to chart ui
+      return ee.Dictionary({cols: columns, rows: rows})
+    }
+    
+    var dataTable = array_to_datatable(classification_errormatrix_array)
+                            .evaluate(function(dataTable) {
+                                // weird and i don't understand why we evaluate like this, but hey, it doesn't work outside
+                                print('------------- Error matrix -------------',
+                                ui.Chart(dataTable, 'Table').setOptions({pageSize: 15}),
+                                'rows: reference, cols: mapped')
+                            })
+  }
+} 
+
+
+
+// 4. Export
+
+// export to .csv?
+// or join to the input classification assset and re-write with accuracy in metadata?
+// or both?
+
+//.set("overall_acc", accuracy_oa, "user_acc", accuracy_cons, "producer_acc", accuracy_prod)
+
