@@ -8,10 +8,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.
       }
     ] */
     ee.Geometry.Polygon(
-        [[[177.88512347656433, -18.572475598081482],
-          [177.88512347656433, -19.335531649011298],
-          [178.60884784179848, -19.335531649011298],
-          [178.60884784179848, -18.572475598081482]]], null, false),
+        [[[177.84667132812683, -18.863822118584256],
+          [177.84667132812683, -19.299244334046836],
+          [178.57039569336098, -19.299244334046836],
+          [178.57039569336098, -18.863822118584256]]], null, false),
     cancook_fieldpolys = ee.FeatureCollection("users/mitchest/gbr_reefs/cancook_fieldpolys");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
