@@ -8,22 +8,24 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.
       }
     ] */
     ee.Geometry.Polygon(
-        [[[179.20828937011902, -16.115511396129435],
-          [179.20828937011902, -16.40291483799488],
-          [179.6202766748064, -16.40291483799488],
-          [179.6202766748064, -16.115511396129435]]], null, false),
+        [[[177.88512347656433, -18.572475598081482],
+          [177.88512347656433, -19.335531649011298],
+          [178.60884784179848, -19.335531649011298],
+          [178.60884784179848, -18.572475598081482]]], null, false),
     cancook_fieldpolys = ee.FeatureCollection("users/mitchest/gbr_reefs/cancook_fieldpolys");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 ############### --> need to port this over form previous GBR work
 
 TODO:
-will this have lots of variation per region?
- - if yes, then have validaiton module per region
- - if no, then we can have a central and generic script that loads data via modules only
-      - in that case we would need the "validation" geometry to be an asset and loaded via reef_params module
+- will this have lots of variation per region?
+  - if yes, then have validaiton module per region
+  - if no, then we can have a central and generic script that loads data via modules only
+    - in that case we would need the "validation" geometry to be an asset and loaded via reef_params module
       
 - Complete export module (i.e. export error mats to .csv)
+
+- Fix input class selection in vars dictionary (i.e. currently inputting two identical lists == bad)
 
 - Figure out how to do the 'confidence maps' <------- BIG COMPONENT TODO
     - resmapling based?
@@ -86,7 +88,7 @@ var vars = {
   classes_mapped_geo:       [2,   11,  12,   13,   14,   15,  16,    21,  22], // classes to map
   classes_mapped_names_geo: ['DE','SL','DL','IRF','ORF','RR', 'TRF','SS','SE'],
   // benthic
-  nosamp_class_benthic:  [11, 12, 13, 15, 16, 17, 18], // classes not to use/use more
+  nosamp_class_benthic:  [11, 12, 13, 14, 16, 17, 18], // classes not to use/use more
   nosamp_numpix_benthic: ee.List.repeat(2000, 7), // set number of pixels to sample from above classes to 0
   // TODO: consider dynamically generating these
   classes_mapped_benthic:       [11,    12,   13,  14,    16,   17,   18], // classes to map
