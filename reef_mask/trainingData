@@ -84,5 +84,5 @@ var reefMaskTrainingSet = reefPoints2.merge(waterPoints.merge(landPoints));
 Export.table.toAsset({
   collection:reefMaskTrainingSet,
   description: 'exportReefTrain',
-  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData_v3'
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData_v4'
 });
