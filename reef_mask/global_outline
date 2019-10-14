@@ -27,4 +27,8 @@ var global_bathy_mask_buffer = ee.Image(1)
           source: global_bathy_mask,
           maxDistance: 2000,
           geodeticDistance: false
-        }).lt(2000).selfMask()*/
+        }).lt(2000).selfMask()
+        
+*/
+
+
