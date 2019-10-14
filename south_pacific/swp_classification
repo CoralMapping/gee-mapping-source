@@ -413,7 +413,6 @@ if (vars.do_export) {
     pyramidingPolicy:{'.default': 'mode'},
   })
   
-  
 } else {
   if (vars.show_eg_area) {
     Map.addLayer(map_clean.clip(eg_area), display_pal, output_name + '_final', false)
