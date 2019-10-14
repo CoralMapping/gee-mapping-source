@@ -385,8 +385,8 @@ if (vars.do_export) {
   
   // add raster flag for either side of dateline
   var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
-  var export_stack_east = map_clean.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
-  var export_stack_west = map_clean.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
+  var export_stack_east = map_clean.set(vars).updateMask(latlong.lte(0))
+  var export_stack_west = map_clean.set(vars).updateMask(latlong.gt(0))
   
   var export_geom_east = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
   var export_geom_west = ee.Geometry.Rectangle(162.7417,-23.0584,179.99998,-7.3087)
