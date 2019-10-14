@@ -1,7 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
-    lsCover = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint");
+    lsCover = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
+    ls19 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Training data for global reef mas
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
@@ -25,6 +26,7 @@ var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180
 // Land Points
 var land = gebco.gt(200)
     .selfMask() //land == 1
+    .updateMask(ls19.select(0).gt(0))
     .reduceToVectors({
       geometry: lsCover,
       scale:100,
@@ -42,6 +44,7 @@ Map.addLayer(landPoints, {color:'green'}, 'Land Points');
 // Water Points
 var water = gebco.lt(-1000)
     .selfMask()
+    .updateMask(ls19.select(0).gt(0))
     .remap([1],[2]) //water == 2
     .reduceToVectors({
       geometry: lsCover,
