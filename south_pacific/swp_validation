@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.35440331787717]),
-    validation = 
+var validation = 
     /* color: #2000d6 */
     /* displayProperties: [
       {
@@ -8,11 +7,22 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([145.78102111816406, -16.
       }
     ] */
     ee.Geometry.Polygon(
-        [[[179.24468158203308, -16.14915135945221],
-          [179.24468158203308, -16.347576284804468],
-          [179.53444598632973, -16.347576284804468],
-          [179.53444598632973, -16.14915135945221]]], null, false),
-    cancook_fieldpolys = ee.FeatureCollection("users/mitchest/gbr_reefs/cancook_fieldpolys");
+        [[[176.20146869140808, -15.610233009654474],
+          [176.20146869140808, -19.503902652781576],
+          [182.36891864257973, -19.503902652781576],
+          [182.36891864257973, -15.610233009654474]]], null, false),
+    test_val = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[177.84943243669204, -18.77407437643519],
+          [177.84943243669204, -19.32446074215668],
+          [178.70636603044204, -19.32446074215668],
+          [178.70636603044204, -18.77407437643519]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 ############### --> need to port this over form previous GBR work
@@ -146,7 +156,7 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 if (vars.assess_accuracy) {
   
   // set the area from which validation points get drawn (want a small area if you're printing stats)
-  var validation_region = (vars.show_accuracy) ? validation : all_training_data
+  var validation_region = (vars.show_accuracy) ? test_val : validation
   
   if (vars.benthic && vars.use_benthic_points) { 
     var validation_pts = benthic // if we're doign a point based assessment then use those
