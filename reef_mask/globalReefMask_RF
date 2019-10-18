@@ -1,17 +1,21 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
-    GBR_Test = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[154.50264257962965, -29.360860757263083],
-          [154.36020071778967, -21.291356296671434],
-          [153.46233819978193, -15.33226682962104],
-          [146.8212707506558, -7.614568390671287],
-          [142.38338949392414, -6.178371431738409],
-          [140.8740543169929, -11.16707855305966],
-          [152.77164350655664, -29.896770255364927]]]),
+    GBR_Test = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[144.41088869326597, -15.690603685198964],
+          [144.41088869326597, -22.820613847933103],
+          [151.57397463076597, -22.820613847933103],
+          [151.57397463076597, -15.690603685198964]]], null, false),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v3"),
-    image = ee.Image("projects/coral_atlas/workflow/test-visual/micronesia_4");
+    image = ee.Image("projects/coral_atlas/workflow/test-visual/micronesia_4"),
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v4_GBR_b");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -23,10 +27,11 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 // 00. Global Variables
 ////////////////////////////////////
 
-var aoi = lsFootprint.map(
-  function(f) {
-  return f.buffer(3000); // 3km width
-}).union(); 
+var aoi = GBR_Test
+// lsFootprint.map(
+//   function(f) {
+//   return f.buffer(3000); // 3km width
+// }).union(); 
 //Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
 //Map.centerObject(aoi);
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green', 'Blue']};
@@ -43,7 +48,7 @@ var globOptions = {
   parallelScale: 8, // A scaling factor used to limit memory use; using a larger parallelScale (e.g. 2 or 4) may enable computations that run out of memory with the default.
   trainingValidationRatio: 0.01, // training vs validation
   nTrees: 10, 
-  outScale: 500, //resolution in metres
+  outScale: 30, //resolution in metres
   conPixels: 4, // set min patch size (10 ~ 1 ha, 100 ~ 9ha @ 30m Landsat scale). 3 = 0.27ha 6 = 0.54ha 9 = 0.81ha
   classifyClean: false, //remove patches smaller than x connected pixels if true
   numPoints: 100, // size of training set per class
@@ -118,8 +123,8 @@ var trainComposite1 = covariates.nirBand
 //   .mask(ls8.select('NIR')); // mask to LS8
 
 var coastMask = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk') // Natural Earth coastline
-    .distance(globOptions.maskDistance).gte(-200); 
-var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
+    .distance(globOptions.maskDistance).gte(-200).clip(aoi); 
+var topoMask = ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
     .select(['bedrock'], ['etopo'])
     .gte(globOptions.maskDepth)
     .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
@@ -153,6 +158,7 @@ print (trainComposite, 'TC2');
 
 // Training points
 var randomPoints = trainingData.filterBounds(aoi)
+print (randomPoints.size(), 'random points')
 
 // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
