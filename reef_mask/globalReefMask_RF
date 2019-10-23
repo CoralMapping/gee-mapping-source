@@ -36,7 +36,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = '0'
+var id = '1'
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
 Map.centerObject(grid)
@@ -178,7 +178,7 @@ Map.addLayer(randomPoints)
 
 // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
-// print (predictorSet.limit(10), 'predictorSet')
+print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('CLASS', null)) //handle null data points;
 
 ////////////////////////////////////
@@ -191,7 +191,7 @@ var classifier = ee.Classifier.randomForest({
     variablesPerSplit: 0, // 0 is the default: sqrt of nPredictors 
     bagFraction: 0.5,
     seed: 0})
-  .train(trainingSet, 'CLASS', bands)
+  .train(trainingSet, 'CLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
   .setOutputMode('CLASSIFICATION');
 
 // Classify the composite image
@@ -250,14 +250,22 @@ var metaData = ee.Feature(null, {
   nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 4)).size()
 });
 
-Export.table.toDrive({
-  collection: ee.FeatureCollection(predictorSet), //
-  description: 'exportPredictorsToDrive',
-  folder: globOptions.outFolder,
-  fileNamePrefix: 'reefsTraining'.concat(fileName),
-  fileFormat: 'SHP'
+// Export.table.toDrive({
+//   collection: ee.FeatureCollection(predictorSet), //
+//   description: 'exportPredictorsToDrive_GridID_'.concat(id),
+//   folder: globOptions.outFolder,
+//   fileNamePrefix: 'reefsTraining'.concat(fileName),
+//   fileFormat: 'SHP'
+// });
+
+Export.table.toAsset({
+  collection:predictorSet,
+  description: 'exportReefTrain_'.concat(id),
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid'.concat(id)
 });
 
+
+/*
 // Export final classified image to asset
 Export.image.toAsset({
   image: finalOut, 
@@ -268,7 +276,7 @@ Export.image.toAsset({
   maxPixels: 800000000000
 });
 
-/*
+
 Export.image.toDrive({
   image: finalOut,
   description: 'exportFinaltoDrive-'.concat(globOptions.versionID),
