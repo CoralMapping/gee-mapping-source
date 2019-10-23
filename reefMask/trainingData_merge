@@ -44,3 +44,4 @@ Export.table.toAsset({
   assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v6'
 });
 
+
