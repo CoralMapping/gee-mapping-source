@@ -36,7 +36,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = '0'
+var id = 'b'
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
