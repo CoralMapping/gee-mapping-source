@@ -1,17 +1,17 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var table = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid3"),
-    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid1"),
-    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid2"),
-    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid3"),
-    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid4"),
-    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid5"),
-    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid6"),
-    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid7"),
-    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid8"),
-    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid9"),
-    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grida"),
-    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_gridb");
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var table = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_3"),
+    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_1"),
+    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_2"),
+    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_3"),
+    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_4"),
+    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_5"),
+    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_6"),
+    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_7"),
+    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_8"),
+    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_9"),
+    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_a"),
+    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_b");
+
+
 Map.setOptions('SATELLITE')
 Map.centerObject(table)
 print (table.size())
@@ -41,7 +41,7 @@ print (notNull.size(), 'null')
 Export.table.toAsset({
   collection:covariates,
   description: 'exportReefCovariates',
-  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v6'
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7'
 });
 
 
