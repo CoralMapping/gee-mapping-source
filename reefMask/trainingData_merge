@@ -21,7 +21,7 @@ print (table)
 var covariates = table.merge(table2.merge(table3.merge(table4.merge(table5.merge(table6.merge(table7.merge(table8.merge(table9.merge(table10.merge(table11.merge(table12)))))))))))
 print (covariates.size(), 'covariates')
 
-var reefDat = covariates.filterMetadata('CLASS', 'equals', 3).limit()
+var reefDat = covariates.filterMetadata('CLASS', 'equals', 3)
 var waterDat = covariates.filterMetadata('CLASS', 'equals', 2)
 var landDat = covariates.filterMetadata('CLASS', 'equals', 1)
 
@@ -32,6 +32,11 @@ print (landDat.size(), 'land')
 Map.addLayer(reefDat, {color:'yellow'}, 'Reef Points');
 Map.addLayer(waterDat, {color:'blue'}, 'Water Points');
 Map.addLayer(landDat, {color:'green'}, 'Land Points');
+
+var covTest = covariates.limit(5).aside(print)
+
+var notNull = covTest.filter(ee.Filter.neq('BG', null)).aside(print)
+print (notNull.size(), 'null')
 
 Export.table.toAsset({
   collection:covariates,
