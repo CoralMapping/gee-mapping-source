@@ -18,7 +18,7 @@ var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Training data for global reef mas
-var aoi = geometry//ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 // Map.addLayer(grid)
 // print (grid, 'grid')
 // var grid = grid
