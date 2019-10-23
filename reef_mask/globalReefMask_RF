@@ -8,15 +8,14 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
       }
     ] */
     ee.Geometry.Polygon(
-        [[[144.41088869326597, -15.690603685198964],
-          [144.41088869326597, -22.820613847933103],
-          [151.57397463076597, -22.820613847933103],
-          [151.57397463076597, -15.690603685198964]]], null, false),
+        [[[146.87182619326597, -18.00367598062379],
+          [146.87182619326597, -21.272862556548375],
+          [150.38745119326597, -21.272862556548375],
+          [150.38745119326597, -18.00367598062379]]], null, false),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v4"),
-    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v6");
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v7");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -28,8 +27,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 // 00. Global Variables
 ////////////////////////////////////
 
-Map.addLayer(grid)
-print (grid, 'grid')
+
+
 var grid = grid
     .map(
       function(feature) {
@@ -39,6 +38,7 @@ print (grid, 'gridCentroid')
 
 var id = '0'
 var aoi = grid.filterMetadata('gridID', 'equals', id)
+Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
 Map.centerObject(grid)
 
@@ -173,15 +173,16 @@ print (trainComposite, 'TC2');
 ////////////////////////////////////
 
 // Training points
-// var randomPoints = trainingData.filterBounds(aoi)
-// print (randomPoints.size(), 'random points')
-// Map.addLayer(randomPoints)
+Map.addLayer(trainingData, {color:'yellow'}, 'training')
+var randomPoints = trainingData.filterBounds(aoi)
+print (randomPoints.size(), 'random points')
+Map.addLayer(randomPoints)
 
 // // Sample the Classifier
-// var predictorSet = randomPoints.map(samplePredictors)
+var predictorSet = randomPoints.map(samplePredictors)
 
-print (predictorSet.size(), 'predictorSet Size')
-print (predictorSet.limit(10), 'predictorSet')
+//print (predictorSet.size(), 'predictorSet Size')
+//print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
 print (trainingSet.size(), 'training set size')
 print (trainingSet.limit(10), 'training Set')
@@ -268,11 +269,11 @@ var metaData = ee.Feature(null, {
 Export.table.toAsset({
   collection:predictorSet,
   description: 'exportReefTrain_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid'.concat(id)
+  assetId: 'projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_'.concat(id)
 });
 
 
-
+/*
 // Export final classified image to asset
 Export.image.toAsset({
   image: finalOut, 
@@ -283,7 +284,7 @@ Export.image.toAsset({
   maxPixels: 800000000000
 });
 
-/*
+
 Export.image.toDrive({
   image: finalOut,
   description: 'exportFinaltoDrive-'.concat(globOptions.versionID),
