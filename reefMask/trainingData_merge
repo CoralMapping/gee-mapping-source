@@ -29,7 +29,13 @@ print (reefDat.size(), 'reef')
 print (waterDat.size(), 'water')
 print (landDat.size(), 'land')
 
-
 Map.addLayer(reefDat, {color:'yellow'}, 'Reef Points');
 Map.addLayer(waterDat, {color:'blue'}, 'Water Points');
 Map.addLayer(landDat, {color:'green'}, 'Land Points');
+
+Export.table.toAsset({
+  collection:covariates,
+  description: 'exportReefCovariates',
+  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v6'
+});
+
