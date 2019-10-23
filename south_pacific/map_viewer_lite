@@ -13,7 +13,10 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_ocean_benthic_top2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2"),
     fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
     fiji_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
-    fiji_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3");
+    fiji_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
+    swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
+    swp_dove_lt = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif"),
+    swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -30,14 +33,16 @@ Map.centerObject(centre_map, 10)
 /*Map.addLayer(fiji_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide 1st mosaic", false)
 Map.addLayer(fiji_dove_orig_low, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove L-tide 1st mosaic", false)
 Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)*/
-Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean Chla mosaic", false)
+Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Fiji H-tide ocean Chla mosaic", false)
+Map.addLayer(swp_dove_lt, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "SWP L-tide mosaic", false)
 //Map.addLayer(fiji_ocean_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean pixels", false)
 //Map.addLayer(fiji_ocean_segments, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean segments", false)
 /*Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)*/
 /*Map.addLayer(fiji_high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide depth", false)
 Map.addLayer(fiji_low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove L-tide depth", false)
 Map.addLayer(fiji_high_depth_coast, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide coastal Chla depth", false)*/
-Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide ocean Chla depth", false)
+Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Fiji Dove H-tide ocean Chla depth", false)
+Map.addLayer(swp_ht_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "SWP Dove H-tide depth", false)
 
 
 // fiji
@@ -55,6 +60,10 @@ Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth,
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
 Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 
+// SWP
+Map.addLayer(swp_benthic_east, map_palettes.benthic, "SWP Benthic - east RAW", false)
+
+// Fiji
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
 Map.addLayer(fiji_high_geo_coast.updateMask(fiji_high_geo_coast.neq(2))
@@ -78,6 +87,8 @@ Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
 Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
+
+// SWP
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
