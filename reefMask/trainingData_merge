@@ -1,0 +1,35 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var table = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid3"),
+    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid1"),
+    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid2"),
+    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid3"),
+    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid4"),
+    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid5"),
+    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid6"),
+    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid7"),
+    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid8"),
+    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grid9"),
+    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_grida"),
+    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v5_gridb");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+Map.setOptions('SATELLITE')
+Map.centerObject(table)
+print (table.size())
+print (table)
+
+
+var covariates = table.merge(table2.merge(table3.merge(table4.merge(table5.merge(table6.merge(table7.merge(table8.merge(table9.merge(table10.merge(table11.merge(table12)))))))))))
+print (covariates.size(), 'covariates')
+
+var reefDat = covariates.filterMetadata('CLASS', 'equals', 3).limit()
+var waterDat = covariates.filterMetadata('CLASS', 'equals', 2)
+var landDat = covariates.filterMetadata('CLASS', 'equals', 1)
+
+print (reefDat.size(), 'reef')
+print (waterDat.size(), 'water')
+print (landDat.size(), 'land')
+
+
+Map.addLayer(reefDat, {color:'yellow'}, 'Reef Points');
+Map.addLayer(waterDat, {color:'blue'}, 'Water Points');
+Map.addLayer(landDat, {color:'green'}, 'Land Points');
