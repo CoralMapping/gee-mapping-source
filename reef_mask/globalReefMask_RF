@@ -15,7 +15,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v4");
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v4"),
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v6");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -36,7 +37,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = '1'
+var id = '0'
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
 Map.centerObject(grid)
@@ -63,7 +64,7 @@ var globOptions = {
   //parallelScale: 8, // A scaling factor used to limit memory use; using a larger parallelScale (e.g. 2 or 4) may enable computations that run out of memory with the default.
   trainingValidationRatio: 0.01, // training vs validation
   nTrees: 10, 
-  outScale: 30, //resolution in metres
+  outScale: 90, //resolution in metres
   //conPixels: 4, // set min patch size (10 ~ 1 ha, 100 ~ 9ha @ 30m Landsat scale). 3 = 0.27ha 6 = 0.54ha 9 = 0.81ha
   classifyClean: false, //remove patches smaller than x connected pixels if true
   numPoints: 100, // size of training set per class
@@ -172,14 +173,18 @@ print (trainComposite, 'TC2');
 ////////////////////////////////////
 
 // Training points
-var randomPoints = trainingData.filterBounds(aoi)
-print (randomPoints.size(), 'random points')
-Map.addLayer(randomPoints)
+// var randomPoints = trainingData.filterBounds(aoi)
+// print (randomPoints.size(), 'random points')
+// Map.addLayer(randomPoints)
 
-// Sample the Classifier
-var predictorSet = randomPoints.map(samplePredictors)
+// // Sample the Classifier
+// var predictorSet = randomPoints.map(samplePredictors)
+
+print (predictorSet.size(), 'predictorSet Size')
 print (predictorSet.limit(10), 'predictorSet')
-var trainingSet = predictorSet.filter(ee.Filter.neq('CLASS', null)) //handle null data points;
+var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+print (trainingSet.size(), 'training set size')
+print (trainingSet.limit(10), 'training Set')
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -195,8 +200,10 @@ var classifier = ee.Classifier.randomForest({
   .setOutputMode('CLASSIFICATION');
 
 // Classify the composite image
-var classified = trainComposite.select(bands)
-  .mask(topoMask)
+var classified = trainComposite
+  .clip(aoi)
+  .select(bands)
+  //.mask(topoMask)
   .classify(classifier);
 var finalOut = classified
   .clip(aoi);
@@ -265,7 +272,7 @@ Export.table.toAsset({
 });
 
 
-/*
+
 // Export final classified image to asset
 Export.image.toAsset({
   image: finalOut, 
@@ -276,7 +283,7 @@ Export.image.toAsset({
   maxPixels: 800000000000
 });
 
-
+/*
 Export.image.toDrive({
   image: finalOut,
   description: 'exportFinaltoDrive-'.concat(globOptions.versionID),
