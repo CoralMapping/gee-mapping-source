@@ -1,19 +1,17 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var image = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
-    image2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_6"),
-    wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3");
+var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    image = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 Map.setOptions('SATELLITE')
 Map.centerObject(image)
 
-//var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
-
-Map.addLayer(image, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
-Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+Map.addLayer(image.clip (aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+//Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
