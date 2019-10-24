@@ -15,7 +15,6 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingData_v7"),
     predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
@@ -162,9 +161,7 @@ var trainComposite = trainComposite1
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
   .addBands(ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
-    .select(['bedrock'], ['etopo']))
-  //.addBands(trainVectors.rename('training'))
- // .addBands(modis) // remove this line to run more quickly
+  .select(['bedrock'], ['etopo'])).resample('bicubic')
   ;
 var bands = trainComposite.bandNames().aside(print); // bands used in classification
 print (trainComposite, 'TC2');
