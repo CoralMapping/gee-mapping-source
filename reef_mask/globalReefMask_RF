@@ -13,9 +13,11 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
           [150.38745119326597, -21.272862556548375],
           [150.38745119326597, -18.00367598062379]]], null, false),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
-    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
+    ls8c = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
-    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7");
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7"),
+    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8_intervalMeans"),
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -26,7 +28,7 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 // 00. Global Variables
 ////////////////////////////////////
-
+Map.addLayer(ls8)
 
 
 var grid = grid
@@ -50,13 +52,13 @@ Map.centerObject(grid)
 // }).union(); 
 //Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
 //Map.centerObject(aoi);
-var lsVis = {min: 0, max: 128, bands: ['Red', 'Green', 'Blue']};
+var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
 //Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
 //Map.setCenter(12.0087, -4.5343, 12);
 
 var globOptions = { 
-  versionID: '_v7', //file name prefix
+  versionID: '_v8', //file name prefix
   outFolder: 'reefsOut',
   mapDebug: false, // set to true to add all layers of the map
   startDate: '2016-01-01',
@@ -81,26 +83,6 @@ Map.setOptions('SATELLITE');
 // 0. Functions
 ////////////////////////////////////
 
-var landsatFunctions = {
-  
-  applyNDWI: function(image) {
-    // apply NDWI to an image
-    var ndwi = image.normalizedDifference(['Green','NIR']);
-    return ndwi.select([0], ['ndwi']);
-  },
-
-  applyNDVI: function(image) {
-    // apply NDVI to an image
-    var ndvi = image.normalizedDifference(['NIR','Red']);
-    return ndvi.select([0], ['ndvi']);
-  },
-  
-  applyEVI: function(image) {
-    var evi = image.expression("2.5*(b('NIR')-b('Red'))/(b('NIR')+6*b('Red') - 7.5*b('Blue') + 1)");
-    return evi.select([0], ['evi']);
-  }
-};
-
 function samplePredictors(feature) {
     // sample training composite for predictor data
     var predictorData = trainComposite.reduceRegion({
@@ -116,20 +98,23 @@ function samplePredictors(feature) {
 
 
 var collection = ls8.clip(aoi);
+print (ls8.bandNames())
 
 // TODO: add band metrics
 // Data processing to final predictors
-var covariates = {
-    redBand: collection.select(['Red']),
-    blueBand: collection.select(['Blue']),
-    greenBand: collection.select(['Green']),
-    nirBand: collection.select(['NIR'])
-};
+// var covariates = {
+//     redBand: collection.select(['Red_median']),
+//     blueBand: collection.select(['Blue_median']),
+//     greenBand: collection.select(['Green_median']),
+//     nirBand: collection.select(['NIR_median']),
+    
+// };
 
-var trainComposite1 = covariates.nirBand
-    .addBands(covariates.redBand)
-    .addBands(covariates.blueBand)
-    .addBands(covariates.greenBand);
+var trainComposite1 = collection
+// //.nirBand
+//     .addBands(covariates.redBand)
+//     .addBands(covariates.blueBand)
+//     .addBands(covariates.greenBand);
 
 // Mithc: Landsat 8 – Bands 1-4, maybe 5 if there’s trouble with land classification
 // // MODIS
@@ -152,14 +137,14 @@ var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
 //     properties: ['CLASS'],
 //     reducer: ee.Reducer.first()
 // });
-
+Map.addLayer(trainComposite1)
 // FINAL MASK
 var trainComposite = trainComposite1
-  .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
-  .addBands(ls8.normalizedDifference(['Green', 'NIR']).rename(['NDWI']))
-  .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
-  .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
-  .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
+  .addBands(ls8.normalizedDifference(['NIR_median', 'Red_median']).rename(['NDVI']))
+  .addBands(ls8.normalizedDifference(['Green_median', 'NIR_median']).rename(['NDWI']))
+  .addBands(ls8.select('Blue_median').divide(ls8c.select('NIR_median')).rename(['WBI']))
+  .addBands(ls8.select('Blue_median').subtract(ls8c.select('Red_median')).rename(['BR']))
+  .addBands(ls8.normalizedDifference(['Blue_median', 'Green_median']).rename(['BG']))
   .addBands(ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
   .select(['bedrock'], ['etopo'])).resample('bicubic')
   ;
@@ -172,19 +157,22 @@ print (trainComposite, 'TC2');
 
 // Training points
 
-// Map.addLayer(trainingData, {color:'yellow'}, 'training')
-// var randomPoints = trainingData.filterBounds(aoi)
-// print (randomPoints.size(), 'random points')
-// Map.addLayer(randomPoints)
+Map.addLayer(trainingData, {color:'yellow'}, 'training')
+var randomPoints = trainingData.filterBounds(aoi)
+print (randomPoints.size(), 'random points')
+Map.addLayer(randomPoints)
 
-// // // Sample the Classifier
-// var predictorSet = randomPoints.map(samplePredictors)
+// // Sample the Classifier
+var predictorSet = randomPoints.map(samplePredictors)
 
-print (predictorSet.size(), 'predictorSet Size')
-print (predictorSet.limit(10), 'predictorSet')
-var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
-print (trainingSet.size(), 'training set size')
-print (trainingSet.limit(10), 'training Set')
+
+/* COMMENT UNCOMMENT 
+// print (predictorSet.size(), 'predictorSet Size')
+// print (predictorSet.limit(10), 'predictorSet')
+// var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+// print (trainingSet.size(), 'training set size')
+// print (trainingSet.limit(10), 'training Set')
+
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -224,7 +212,7 @@ var finalOut = classified
 
 // focal_mode = excellent!
 //var finalOutPost = finalOut2.focal_mode({kernel: ee.Kernel.chebyshev(globOptions.kernelSize, "meters")}); // use a chebyshev kernel
-
+*/
 
 ////////////////////////////////////
 // 6. Export final classifications
@@ -242,20 +230,20 @@ var fileName = 'reefMask_gen3_'
 print(fileName);
 
 // Gather metadata
-var metaData = ee.Feature(null, {
-  fileName: fileName,
-  filePath: 'uq-global-reefs/reefsOut'.concat(fileName), 
-  globOptions: globOptions,
-  nPredictors: bands.length(),
-  predictorList: bands,
-  nTrainingPoints: trainingSet.size(),
-  nPoints: globOptions.numPoints,
-  nPointsUsed:  trainingSet.size(),
-  nPointsReef: trainingSet.filter(ee.Filter.eq('CLASS', 1)).size(),
-  nPointsOcean: trainingSet.filter(ee.Filter.eq('CLASS', 2)).size(),
-  nPointsShallow: trainingSet.filter(ee.Filter.eq('CLASS', 3)).size(),
-  nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 4)).size()
-});
+// var metaData = ee.Feature(null, {
+//   fileName: fileName,
+//   filePath: 'uq-global-reefs/reefsOut'.concat(fileName), 
+//   globOptions: globOptions,
+//   nPredictors: bands.length(),
+//   predictorList: bands,
+//   nTrainingPoints: trainingSet.size(),
+//   nPoints: globOptions.numPoints,
+//   nPointsUsed:  trainingSet.size(),
+//   nPointsReef: trainingSet.filter(ee.Filter.eq('CLASS', 1)).size(),
+//   nPointsOcean: trainingSet.filter(ee.Filter.eq('CLASS', 2)).size(),
+//   nPointsShallow: trainingSet.filter(ee.Filter.eq('CLASS', 3)).size(),
+//   nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 4)).size()
+// });
 
 // Export.table.toDrive({
 //   collection: ee.FeatureCollection(predictorSet), //
@@ -264,24 +252,23 @@ var metaData = ee.Feature(null, {
 //   fileNamePrefix: 'reefsTraining'.concat(fileName),
 //   fileFormat: 'SHP'
 // });
-/*
+
 Export.table.toAsset({
   collection:predictorSet,
   description: 'exportReefTrain_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_'.concat(id)
+  assetId: 'projects/coral_atlas/reefMask/reefMaskCovariateData_v8_grid_'.concat(id)
 });
-*/
 
 
 // Export final classified image to asset
-Export.image.toAsset({
-  image: finalOut, 
-  description: 'exportFinaltoAsset_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/maskOut/'.concat(fileName),
-  scale: globOptions.outScale,
-  region: aoi,
-  maxPixels: 800000000000
-});
+// Export.image.toAsset({
+//   image: finalOut, 
+//   description: 'exportFinaltoAsset_'.concat(id),
+//   assetId: 'projects/coral_atlas/reefMask/maskOut/'.concat(fileName),
+//   scale: globOptions.outScale,
+//   region: aoi,
+//   maxPixels: 800000000000
+// });
 
 /*
 Export.image.toDrive({
