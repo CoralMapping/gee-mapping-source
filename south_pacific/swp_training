@@ -1,37 +1,22 @@
-/*
-TODO:
-
-  - ADD IN -1/-2/-3 pixels from depth data where needed
-
-  - add in GEBCO depth filter
-          image: users/murrnick/global-reefs/existingData/GEBCO_RN5136
-          e.g. filter: Map.addLayer(gebco.lt(0).and(gebco.gt(-500)).selfMask().focal_max(10), {}, 'gebco depth')
-*/
-
-
-
 ///////////////////////////////
 // Global coral atlas project - SWP region
 // Contact: mitchell.lyons@gmail.com
 // Description:
 // - Developing a process to combine OBIA and supervised classification
-// - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
+// - This script loads the pixel-based and segmentation data and training data and exports the training sampled
 // - Corresponding '_datagen' script performs the data gathering/segmentation
+// - Corresponding '_classification' script performs the classification 
 ///////////////////////////////
 
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
-// 3. Divide into potential mapping zones (not utilised yet really)
 // 4. Create training data
-// 5. Train and fit models
-// 6. Clean up minimum mapping unit
-// 7. Export data
+// 5. Export data
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
-var slider_module = require('users/mitchest/global_reefs:Modules/threshold_sliders')
 
 // ###########################################
 // SENSOR GENERICS
@@ -50,35 +35,17 @@ var vars = {
   // analysis type
   geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
-  thresholding: false, // should all the thresholdable layers be added to the map?
-  threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
-  // choose whether pixels, segments or both should be used to train the classifier:
-  pixels_or_objects: 'objects', // one of 'both', 'pixels' or 'objects', where 'both' means both pixel and object input data combined 
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
   /* choose from
-  'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'
+  'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev','rb','rg','gb',
   */
-  input_bands: ['b1','b2','b3','b4','depth','depth_stdDev','red_stdDev'],
+  input_bands: ['b1','b2','b3','b4','depth','depth_stdDev','red_stdDev','rb','rg','gb'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  small_object_filter: 50, // size in pixels (output scale) for small object removal
   
-  /*// add relative band brightness to predictor variables?
-  use_brightness: true, <<----- now done in the *_datagen script */
-  
-  // zone thresholds
-  //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
-  
-  // classification params
-  train_size: 3000,
-  rf_trees: 40, // number of random forest trees (per class)
-  rf_minLeafPop: 1, // minimum leaf population for random forest
-  rf_varPerSplit: 0, // default sqrt(n(k))
-  set_seed: 42, // set a seed so results are repeatable
-
   // class information for classification, sampling and reporting
   local_epsg: region_params.epsg,
   // trim input data
@@ -97,16 +64,12 @@ var vars = {
   //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
   //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
   
-  // results/layers to show
-  show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
-  show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
-                              // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  geomorph_output_name: region_params.sname + '_' + 'geo',
-  benthic_output_name: region_params.sname + '_' + 'benthic',
+  geomorph_output_name: region_params.sname + '_' + 'geo_training',
+  benthic_output_name: region_params.sname + '_' + 'benthic_training',
   asset_output: region_params.asset, // asset path
 
 }
@@ -118,8 +81,6 @@ var vars = {
 var pixels = ee.Image(region_params.pixels)
 var segments = ee.Image(region_params.segments)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
-/*var geomorph = ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo')
-        .merge(ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_training_maps_geo'))*/
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
 
