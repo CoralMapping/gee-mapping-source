@@ -38,12 +38,6 @@ var vars = {
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
-  /* choose from
-  'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev','rb','rg','gb',
-  */
-  input_bands: ['b1','b2','b3','b4','depth','depth_stdDev','red_stdDev','rb','rg','gb'],
-  blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
-  blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
   
   // class information for classification, sampling and reporting
@@ -78,8 +72,8 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.Image(region_params.pixels)
-var segments = ee.Image(region_params.segments)
+var pixels = ee.Image(region_params.pixels).regexpRename('(^.*$)','$1_p')
+var segments = ee.Image(region_params.segments).regexpRename('(^.*$)','$1_s')
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
@@ -111,57 +105,11 @@ var pixsegs = pixels.addBands(segments)
                 // test remoing depth from classification
                 //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
 
-Map.centerObject(map_centre, 11)
+Map.centerObject(pixels, 11)
 
-Map.addLayer(pixels, rgb_vis, 'per-pixel image data', false)
+Map.addLayer(pixels, {}, 'per-pixel image data', false)
 Map.addLayer(segments, rgb_vis, 'segmented image data', false)
 Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
-
-
-// ################################################
-// Add the threshold slider layers
-// ################################################
-
-if (vars.thresholding) {
-  
-  var thresh_dat = (vars.threshold_pixels) ? pixels : segments
-  
-  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999}
-  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
-  
-  // N.B. these are all generic and come from mitchest/global_reefs/Modules/threshold_sliders
-  slider_module.add_depth(thresh_dat)
-  slider_module.add_waves(thresh_dat)
-  slider_module.add_slope(thresh_dat)
-  slider_module.add_b1(thresh_dat)
-  slider_module.add_b2(thresh_dat)
-  slider_module.add_b3(thresh_dat)
-  slider_module.add_b4(thresh_dat)
-  if (sensor_params.sname != 'dove') slider_module.add_b5(thresh_dat)
-  slider_module.add_depthsd(thresh_dat)
-  slider_module.add_redsd(thresh_dat)
-  slider_module.add_ndwi(thresh_dat)
-  slider_module.add_idm(thresh_dat)
-  slider_module.add_depth_depthvar(thresh_dat)
-  
-}
-  
-// ################################################
-// End of adding threshold slider layers
-// ################################################
-
-
-// 3. Divide into potential mapping zones
-
-/*
-
-var reef_top = pixels.select('depth').gt(vars.reef_top_depth)
-
-if (vars.show_intermediates) {
-  Map.addLayer(reef_top, {}, "reef top", false)
-}
-
-*/
 
 
 // 4. Create training data
@@ -240,42 +188,6 @@ if (vars.pixels_or_objects == 'pixels') {
 //print(train_pts.size())
 //print(training_data.size())
 
-// 5. Train and fit models
-
-// parameterise and train the classifier (random forest in this case)
-var rf_classifier = ee.Classifier.randomForest({
-  numberOfTrees: vars.rf_trees,
-  minLeafPopulation: vars.rf_minLeafPop,
-  variablesPerSplit: vars.rf_varPerSplit,
-  seed: vars.set_seed
-}).train(training_data, vars.class_field)
-// fit the classificaiton model
-if (vars.pixels_or_objects == 'pixels') {
-  var raw_classification = pixels.classify(rf_classifier).toUint8()
-} else if (vars.pixels_or_objects == 'objects') {
-  var raw_classification = segments.classify(rf_classifier).toUint8()
-} else {
-  var raw_classification = pixsegs.classify(rf_classifier).toUint8()
-}
-
-
-// 6. Remove objects below minimum mapping unit
-
-var class_extent_mask = raw_classification.gte(1) // just so it doesn't balloon out
-
-// make a smooth underlay to replace the minimum mapping unit
-var map_smooth = raw_classification
-                    .focal_mode({
-                      radius: ee.Number(vars.small_object_filter).sqrt().int8(),
-                      kernelType: 'circle', units: 'pixels', iterations: 1
-                    })
-                    .updateMask(class_extent_mask)
-
-// replace small objects with the smooth underlay
-var map_clean = raw_classification.where({
-  test: raw_classification.connectedPixelCount(vars.small_object_filter, false).lt(vars.small_object_filter), 
-  value: map_smooth
-})
 
 
 // 7. Export data
