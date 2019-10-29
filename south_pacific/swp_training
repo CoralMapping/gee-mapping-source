@@ -108,8 +108,8 @@ var pixsegs = pixels.addBands(segments)
 Map.centerObject(pixels, 11)
 
 Map.addLayer(pixels, {}, 'per-pixel image data', false)
-Map.addLayer(segments, rgb_vis, 'segmented image data', false)
-Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
+Map.addLayer(segments, {}, 'segmented image data', false)
+Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 
 // 4. Create training data
