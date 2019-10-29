@@ -74,7 +74,7 @@ var vars = {
   use_glcm: true, // use glcm metrics
   
   // use relative band brightness as predictor variables (instead of Rrs values)?
-  use_brightness: true,
+  use_brightness: false,
   
   // use global reef mask layer to remove junk + limit size
   global_mask: true,
