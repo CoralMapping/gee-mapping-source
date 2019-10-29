@@ -161,24 +161,6 @@ var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_num
 var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic*/
 
 
-// Add any extra indices needed (MOVE HEAVY STUFF TO DATA GEN AFTER TESTING)
-
-// ndwi (not really, but conceptually achieves it when everything is water...) + band ratios
-segments = segments
-              .select(vars.input_bands)
-              //.addBands(segments.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
-              .addBands(segments.select('b3').divide(segments.select('b1')).rename('rb'))
-              .addBands(segments.select('b2').divide(segments.select('b1')).rename('gb'))
-              .addBands(segments.select('b3').divide(segments.select('b2')).rename('rg'))
-              
-pixels = pixels
-          .select(vars.input_bands)
-          //.addBands(pixels.normalizedDifference(vars.blue_nir_bands).rename('ndwi'))
-          .addBands(pixels.select('b3').divide(pixels.select('b1')).rename('rb'))
-          .addBands(pixels.select('b2').divide(pixels.select('b1')).rename('gb'))
-          .addBands(pixels.select('b3').divide(pixels.select('b2')).rename('rg'))
-
-
 /*
 make the combined pixels and segemnts data
 and ensure they're masked the same
