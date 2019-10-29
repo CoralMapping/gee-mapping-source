@@ -321,6 +321,15 @@ if (vars.pixel_based) {
 }
 
 
+
+
+// Add any extra indices needed
+
+all_data = all_data
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.blue_band)).rename('rb'))
+              .addBands(all_data.select(vars.green_band).divide(all_data.select(vars.blue_band)).rename('gb'))
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).rename('rg'))
+
 /*
 
 ####### SOME POSSIBLY FUTURE USEFUL JUNK ######
