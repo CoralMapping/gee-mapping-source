@@ -270,8 +270,7 @@ if (vars.pixel_based) {
                   .updateMask(depth_mask) // make sure all layers are clipped down
   if (vars.use_glcm) { // add glcm if using
     all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
-  }                  
-  Map.addLayer(all_data, {}, "Model predictor data", false)
+  }
   
 } else {
   //// OBIA data generation
@@ -317,7 +316,7 @@ if (vars.pixel_based) {
                  //.addBands(segmented_data_sd)
                  .addBands(depth_var).addBands(red_var)
                  .updateMask(depth_mask)
-  Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
+  //Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
 }
 
 
@@ -329,6 +328,7 @@ all_data = all_data
               .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.blue_band)).rename('rb'))
               .addBands(all_data.select(vars.green_band).divide(all_data.select(vars.blue_band)).rename('gb'))
               .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).rename('rg'))
+Map.addLayer(all_data, {}, "Model predictor data", false)
 
 /*
 
