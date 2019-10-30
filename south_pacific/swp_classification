@@ -46,9 +46,8 @@ TODO:
 // 1. Setting constants
 // 2. Data loads & vis
 // 3. Divide into potential mapping zones (not utilised yet really)
-// 4. Load training data
-// 5. Train and fit models
-// 6. Export data
+// 4. Train and fit models
+// 5. Export data
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
@@ -109,18 +108,6 @@ var vars = {
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.60,
-  // geomorphic
-  nosamp_class_geo:  [0, 1, 2,    25, 26], // classes not to use/use more
-  nosamp_numpix_geo: [0, 0, 10000, 0,  0 ], // set number of pixels to sample from above classes
-  // TODO: consider dynamically generating these
-  //classes_mapped_geo:       [ 2,  11,  12,  13,   14,   15,  16,  21,  22,  23,  24  ], // classes to map
-  //classes_mapped_names_geo: ['D','SL','DL','IRF','ORF','RR','TRF','SS','SE','PL','OCL'],
-  // benthic
-  nosamp_class_benthic:  [0, 1], // classes not to use/use more
-  nosamp_numpix_benthic: [0, 0], // set number of pixels to sample from above classes
-  // TODO: consider dynamically generating these
-  //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
-  //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -128,7 +115,7 @@ var vars = {
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
@@ -148,20 +135,19 @@ var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
 
-// Add the raw data
-var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+// Load training data samples (from '*_calval' script)
+
+//classes_mapped_geo:       [ 2,  11,  12,  13,   14,   15,  16,  21,  22,  23,  24  ], // classes to map
+//classes_mapped_names_geo: ['D','SL','DL','IRF','ORF','RR','TRF','SS','SE','PL','OCL'],
+//classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
+//classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
+
+var training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
 // trim the data (randomly) if needed
 if (vars.trim_training_data) {
-  all_training_data = all_training_data.randomColumn("random")
-  all_training_data = all_training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
+  training_data = training_data.randomColumn("random")
+  training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
 }
-
-// set the class information
-var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
-var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_numpix_benthic
-/*var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic
-var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic*/
-
 
 /*
 make the combined pixels and segemnts data
@@ -228,83 +214,7 @@ if (vars.show_intermediates) {
 */
 
 
-// 4. Create training data
-
-Map.addLayer(all_training_data, {}, "Training polygons", false)
-
-if (!vars.geomorphic && vars.use_benthic_points) {
-  // draw trainign points from cal/val map + input point data set
-  var map_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select('b1').gte(0))
-                      .addBands(ee.Image.pixelLonLat())
-                      .stratifiedSample({
-                        numPoints: vars.train_size,
-                        region: all_training_data, // region to sample points from
-                        projection: vars.local_epsg,
-                        scale: sensor_params.pixel,
-                        classValues: nosamp_class,
-                        classPoints: nosamp_numpix
-                      }).map(function(f) {
-                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-                      })
-  var train_pts = benthic_pts.merge(map_pts) // use benthic field data poitns to train a map
-  
-} else {
-  // draw trainign points from cal/val map
-  var train_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select('b1').gte(0))
-                      .addBands(ee.Image.pixelLonLat())
-                      .stratifiedSample({
-                        numPoints: vars.train_size,
-                        region: all_training_data, // region to sample points from
-                        projection: vars.local_epsg,
-                        scale: sensor_params.pixel,
-                        classValues: nosamp_class,
-                        classPoints: nosamp_numpix
-                      }).map(function(f) {
-                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-                      })
-}
-// ## If you have training points from multiple UTM zones (and the local epsg is a UTM crs),
-// ## then you need to run the above block within each zone and then merge.
-// ## See 'gbr_classification' script for an example
-//var train_pts = train_pts_cc.merge(train_pts_cbg) // merge to final set
-
-/*
-// function to create a X m buffer around the input training data (this may change when segments are used)
-var buff_points = function (feature) {
-  return feature.buffer(vars.train_point_buff_dist) // should get the 3x3 Landsat neighbourhood
-}
-var train_pts = train_pts.map(buff_points)
-*/
-
-// extract image data for classifier training
-if (vars.pixels_or_objects == 'pixels') {
-  var training_data = pixels.sampleRegions({
-    collection: train_pts,
-    properties: [vars.class_field],
-    scale: vars.image_data_scale
-  })
-} else if (vars.pixels_or_objects == 'objects') {
-  var training_data = segments.sampleRegions({
-    collection: train_pts,
-    properties: [vars.class_field],
-    scale: vars.image_data_scale
-  })
-} else {
-  var training_data = pixsegs.sampleRegions({
-    collection: train_pts,
-    properties: [vars.class_field],
-    scale: vars.image_data_scale,
-    geometries: false
-  })
-}
-//print(benthic_pts.size())
-//print(ignore_pts.size())
-//print(train_pts.size())
-//print(training_data.size())
-
-// 5. Train and fit models
+// 4. Train and fit models
 
 // parameterise and train the classifier (random forest in this case)
 var rf_classifier = ee.Classifier.randomForest({
@@ -323,7 +233,7 @@ if (vars.pixels_or_objects == 'pixels') {
 }
 
 
-// 6. Export data
+// 5. Export data
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
