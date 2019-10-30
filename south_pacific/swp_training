@@ -126,7 +126,7 @@ Map.addLayer(all_training_data, {}, "Training polygons", false)
 if (!vars.geomorphic && vars.use_benthic_points) {
   // draw trainign points from cal/val map + input point data set
   var map_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select('b1').gte(0))
+                      .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
                         numPoints: vars.train_size,
@@ -143,7 +143,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
 } else {
   // draw trainign points from cal/val map
   var train_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-                      .updateMask(segments.select('b1').gte(0))
+                      .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
                         numPoints: vars.train_size,
