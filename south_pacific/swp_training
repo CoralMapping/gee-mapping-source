@@ -113,7 +113,7 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 
 
 
-Map.centerObject(pixels, 11)
+Map.centerObject(pixsegs, 11)
 
 //Map.addLayer(pixels, {}, 'per-pixel image data', false)
 //Map.addLayer(segments, {}, 'segmented image data', false)
@@ -203,7 +203,7 @@ var training_data = pixsegs.sampleRegions({
 //print(benthic_pts.size())
 //print(ignore_pts.size())
 //print(train_pts.size())
-//print(training_data.size())
+print(training_data.limit(1))
 
 
 
