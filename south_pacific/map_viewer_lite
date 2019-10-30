@@ -16,7 +16,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     fiji_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
     swp_dove_lt = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif"),
-    swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif");
+    swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
+    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east_lite");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -63,6 +64,7 @@ Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 // SWP
 Map.addLayer(swp_benthic_east, map_palettes.benthic, "SWP Benthic - east RAW", false)
 
+
 // Fiji
 /*Map.addLayer(fiji_high_geo_newtrain2.updateMask(fiji_high_geo_newtrain2.neq(2))
                                    .selfMask(), map_palettes.geo, "Dove Fiji Geo new-training+suva RAW", false)
@@ -89,6 +91,7 @@ Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean
 Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // SWP
+Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
