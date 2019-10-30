@@ -127,11 +127,12 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.Image(region_params.pixels)
-var segments = ee.Image(region_params.segments)
+var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+                  .addBands(
+              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
+                           )
+                  //.select(vars.input_bands)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
-/*var geomorph = ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_suva_kubulau_kadavu_geo')
-        .merge(ee.FeatureCollection('projects/coral_atlas/fiji/training/fiji_training_maps_geo'))*/
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
 
@@ -149,22 +150,8 @@ if (vars.trim_training_data) {
   training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
 }
 
-/*
-make the combined pixels and segemnts data
-and ensure they're masked the same
-- not sure why, but this masking cross-reference fucks things??
-- leaving out for time being
-//segments = segments.updateMask(pixels)
-//pixels = pixels.updateMask(segments)
-*/
-var pixsegs = pixels.addBands(segments)
-                // test remoing depth from classification
-                //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
-
 Map.centerObject(map_centre, 11)
 
-Map.addLayer(pixels, rgb_vis, 'per-pixel image data', false)
-Map.addLayer(segments, rgb_vis, 'segmented image data', false)
 Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
 
 
