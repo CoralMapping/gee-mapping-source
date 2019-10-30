@@ -280,9 +280,9 @@ if (vars.do_export) {
   
 } else {
   if (vars.show_eg_area) {
-    Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_final', false)
+    Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_raw', false)
   } else {
-    Map.addLayer(raw_classification, display_pal, output_name + '_final', false)
+    Map.addLayer(raw_classification, display_pal, output_name + '_raw', false)
   }
 }
 
