@@ -79,12 +79,14 @@ var vars = {
   
   /*
   Choose whether pixels, segments or both should be used to train the classifier. Choose from,
-  pixel data:
-  'b1','b2','b3','b4','depth','waves','slope','depth_maxent','b1_savg','b2_savg','depth_stdDev','red_stdDev'
-  object data:
   
-  */
-  input_bands: ['b1','b2','b3','b4','depth','depth_stdDev','red_stdDev'],
+  pixel data:
+  ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p']
+  
+  object data:
+  ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'depth_stdDev_s', 'red_stdDev_s', 'rb_s', 'gb_s', 'rg_s']
+    */
+  input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'red_stdDev_s', 'rg_s'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -131,7 +133,7 @@ var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
                            )
-                  //.select(vars.input_bands)
+                  .select(vars.input_bands)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
@@ -151,7 +153,7 @@ if (vars.trim_training_data) {
 }
 
 Map.centerObject(map_centre, 11)
-
+print(pixsegs.bandNames().join("', '"))
 Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
 
 
