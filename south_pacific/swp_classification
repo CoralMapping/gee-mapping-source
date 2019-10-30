@@ -129,8 +129,8 @@ var vars = {
 if (vars.test_mode) {
   vars.set({
     rf_trees: 30, 
-    trim_training_data: false,
-    trim_training_perc: 0.60
+    trim_training_data: true,
+    trim_training_perc: 0.01
   })
 }
 
