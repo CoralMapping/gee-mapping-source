@@ -99,8 +99,7 @@ var vars = {
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
-  train_size: 3000,
-  rf_trees: 40, // number of random forest trees (per class)
+  rf_trees: 30, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
   rf_varPerSplit: 0, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
@@ -115,6 +114,7 @@ var vars = {
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
+  test_mode: true, // this pars down the training computation, to test whether classificiton output is working
   
   // export options
   do_export: false, // export the results?
@@ -123,6 +123,15 @@ var vars = {
   benthic_output_name: region_params.sname + '_' + 'benthic',
   asset_output: region_params.asset, // asset path
 
+}
+
+// if running in text mode, over-write the trianing params
+if (vars.test_mode) {
+  vars.set({
+    rf_trees: 30, 
+    trim_training_data: false,
+    trim_training_perc: 0.60
+  })
 }
 
 
