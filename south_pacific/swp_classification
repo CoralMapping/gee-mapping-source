@@ -26,7 +26,7 @@ TODO:
 
   - ADD IN -1/-2/-3 pixels from depth data where needed
 
-  - add in GEBCO depth filter
+  - add in GEBCO depth filter (done in _datagen now)
           image: users/murrnick/global-reefs/existingData/GEBCO_RN5136
           e.g. filter: Map.addLayer(gebco.lt(0).and(gebco.gt(-500)).selfMask().focal_max(10), {}, 'gebco depth')
 */
@@ -46,10 +46,9 @@ TODO:
 // 1. Setting constants
 // 2. Data loads & vis
 // 3. Divide into potential mapping zones (not utilised yet really)
-// 4. Create training data
+// 4. Load training data
 // 5. Train and fit models
-// 6. Clean up minimum mapping unit
-// 7. Export data
+// 6. Export data
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
@@ -321,26 +320,7 @@ if (vars.pixels_or_objects == 'pixels') {
 }
 
 
-// 6. Remove objects below minimum mapping unit
-
-var class_extent_mask = raw_classification.gte(1) // just so it doesn't balloon out
-
-// make a smooth underlay to replace the minimum mapping unit
-var map_smooth = raw_classification
-                    .focal_mode({
-                      radius: ee.Number(vars.small_object_filter).sqrt().int8(),
-                      kernelType: 'circle', units: 'pixels', iterations: 1
-                    })
-                    .updateMask(class_extent_mask)
-
-// replace small objects with the smooth underlay
-var map_clean = raw_classification.where({
-  test: raw_classification.connectedPixelCount(vars.small_object_filter, false).lt(vars.small_object_filter), 
-  value: map_smooth
-})
-
-
-// 7. Export data
+// 6. Export data
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
