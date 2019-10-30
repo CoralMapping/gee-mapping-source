@@ -39,7 +39,7 @@ TODO:
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
-// - Corresponding '_datagen' script performs the data gathering/segmentation
+// - Corresponding '_datagen' script performs the data gathering/segmentation, '_calval' generates the trianing samples
 ///////////////////////////////
 
 // Table of contents
@@ -71,7 +71,7 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
