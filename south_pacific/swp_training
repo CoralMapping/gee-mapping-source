@@ -72,8 +72,26 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
-var segments = ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')
+/*var pixels = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+var segments = ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')*/
+
+/*
+make the combined pixels and segemnts data
+and ensure they're masked the same
+- not sure why, but this masking cross-reference fucks things??
+- leaving out for time being
+//segments = segments.updateMask(pixels)
+//pixels = pixels.updateMask(segments)
+*/
+var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+                  .addBands(
+              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
+                           )
+                // test remoing depth from classification
+                //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
+
+
+// training data
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
@@ -93,22 +111,11 @@ var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_num
 var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic*/
 
 
-/*
-make the combined pixels and segemnts data
-and ensure they're masked the same
-- not sure why, but this masking cross-reference fucks things??
-- leaving out for time being
-//segments = segments.updateMask(pixels)
-//pixels = pixels.updateMask(segments)
-*/
-var pixsegs = pixels.addBands(segments)
-                // test remoing depth from classification
-                //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
 
 Map.centerObject(pixels, 11)
 
-Map.addLayer(pixels, {}, 'per-pixel image data', false)
-Map.addLayer(segments, {}, 'segmented image data', false)
+//Map.addLayer(pixels, {}, 'per-pixel image data', false)
+//Map.addLayer(segments, {}, 'segmented image data', false)
 Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 
@@ -163,7 +170,7 @@ var train_pts = train_pts.map(buff_points)
 */
 
 // extract image data for classifier training
-if (vars.pixels_or_objects == 'pixels') {
+/*if (vars.pixels_or_objects == 'pixels') {
   var training_data = pixels.sampleRegions({
     collection: train_pts,
     properties: [vars.class_field],
@@ -182,7 +189,16 @@ if (vars.pixels_or_objects == 'pixels') {
     scale: vars.image_data_scale,
     geometries: false
   })
-}
+}*/
+
+var training_data = pixsegs.sampleRegions({
+    collection: train_pts,
+    properties: [vars.class_field],
+    scale: vars.image_data_scale,
+    geometries: false
+})
+
+
 //print(benthic_pts.size())
 //print(ignore_pts.size())
 //print(train_pts.size())
