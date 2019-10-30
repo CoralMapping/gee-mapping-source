@@ -214,16 +214,16 @@ var val_desc = (vars.geomorphic) ? region_params.sname + '_geo_validation' : reg
 if (vars.export_type == 'train') {
   Export.table.toAsset({
     collection: training_data, 
-    description:  output_desc, 
-    assetId: output_name
+    description:  cal_desc, 
+    assetId: cal_name
   })
 }
 
 if (vars.export_type == 'val') {
   Export.table.toAsset({
-    collection: training_data, 
-    description:  output_desc, 
-    assetId: output_name
+    collection: train_pts, 
+    description:  val_desc, 
+    assetId: val_name
   })
 }
 
