@@ -127,7 +127,7 @@ var vars = {
 
 // if running in text mode, over-write the trianing params
 if (vars.test_mode) {
-  vars.rf_trees = 2
+  vars.rf_trees = 10
   vars.trim_training_data = true
   vars.trim_training_perc = 0.1
 }
