@@ -153,8 +153,7 @@ if (vars.trim_training_data) {
 }
 
 Map.centerObject(map_centre, 11)
-print(pixsegs.bandNames().join("', '"))
-Map.addLayer(pixsegs, rgb_vis, 'segments + pixels', false)
+Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
 
 
 // ################################################
