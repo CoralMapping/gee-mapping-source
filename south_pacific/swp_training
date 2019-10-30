@@ -72,8 +72,8 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.Image(region_params.pixels).regexpRename('(^.*$)','$1_p')
-var segments = ee.Image(region_params.segments).regexpRename('(^.*$)','$1_s')
+var pixels = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+var segments = ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
