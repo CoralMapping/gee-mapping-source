@@ -13,10 +13,9 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
           [150.38745119326597, -21.272862556548375],
           [150.38745119326597, -18.00367598062379]]], null, false),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
-    ls8c = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
+    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
     predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7"),
-    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8_intervalMeans"),
     trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
@@ -38,7 +37,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = 'b'
+var id = 'a'
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
@@ -140,11 +139,11 @@ var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
 Map.addLayer(trainComposite1)
 // FINAL MASK
 var trainComposite = trainComposite1
-  .addBands(ls8.normalizedDifference(['NIR_median', 'Red_median']).rename(['NDVI']))
-  .addBands(ls8.normalizedDifference(['Green_median', 'NIR_median']).rename(['NDWI']))
-  .addBands(ls8.select('Blue_median').divide(ls8c.select('NIR_median')).rename(['WBI']))
-  .addBands(ls8.select('Blue_median').subtract(ls8c.select('Red_median')).rename(['BR']))
-  .addBands(ls8.normalizedDifference(['Blue_median', 'Green_median']).rename(['BG']))
+  .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
+  .addBands(ls8.normalizedDifference(['Green', 'NIR']).rename(['NDWI']))
+  .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
+  .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
+  .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
   .addBands(ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
   .select(['bedrock'], ['etopo'])).resample('bicubic')
   ;
@@ -157,6 +156,8 @@ print (trainComposite, 'TC2');
 
 // Training points
 
+/* COMMENT UNCOMMENT
+// IF SAMPLING
 Map.addLayer(trainingData, {color:'yellow'}, 'training')
 var randomPoints = trainingData.filterBounds(aoi)
 print (randomPoints.size(), 'random points')
@@ -164,15 +165,23 @@ Map.addLayer(randomPoints)
 
 // // Sample the Classifier
 var predictorSet = randomPoints.map(samplePredictors)
+*/
+
+// COMMENT UNCOMMENT 
+// If running the classification
+print (predictorSet.size(), 'predictorSet Size')
+print (predictorSet.limit(10), 'predictorSet')
+var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+print (trainingSet.size(), 'training set size')
+print (trainingSet.limit(10), 'training Set')
+
+// If running as probability
 
 
-/* COMMENT UNCOMMENT 
-// print (predictorSet.size(), 'predictorSet Size')
-// print (predictorSet.limit(10), 'predictorSet')
-// var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
-// print (trainingSet.size(), 'training set size')
-// print (trainingSet.limit(10), 'training Set')
-
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals','3').limit(5000).map(function(feat){return feat.set({'boolCLASS':1})})
+var trainingPoints_0 = trainingSet.filterMetadata('remappedCl','not_equals','3').limit(5000).map(function(feat){return feat.set({'boolCLASS':0})})
+var trainingSet = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet)
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -185,7 +194,9 @@ var classifier = ee.Classifier.randomForest({
     bagFraction: 0.5,
     seed: 0})
   .train(trainingSet, 'CLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
-  .setOutputMode('CLASSIFICATION');
+  // .setOutputMode('CLASSIFICATION');
+  .setOutputMode('PROBABILITY');
+  
 
 // Classify the composite image
 var classified = trainComposite
@@ -212,7 +223,6 @@ var finalOut = classified
 
 // focal_mode = excellent!
 //var finalOutPost = finalOut2.focal_mode({kernel: ee.Kernel.chebyshev(globOptions.kernelSize, "meters")}); // use a chebyshev kernel
-*/
 
 ////////////////////////////////////
 // 6. Export final classifications
@@ -222,6 +232,7 @@ var finalOut = classified
 // Batch mode
 // File naming
 var fileName = 'reefMask_gen3_'
+  .concat('prob_') //scale 
   .concat('S') //scale 
   .concat(globOptions.outScale)
   .concat(globOptions.versionID)
@@ -261,14 +272,14 @@ Export.table.toAsset({
 
 
 // Export final classified image to asset
-// Export.image.toAsset({
-//   image: finalOut, 
-//   description: 'exportFinaltoAsset_'.concat(id),
-//   assetId: 'projects/coral_atlas/reefMask/maskOut/'.concat(fileName),
-//   scale: globOptions.outScale,
-//   region: aoi,
-//   maxPixels: 800000000000
-// });
+Export.image.toAsset({
+  image: finalOut, 
+  description: 'exportFinaltoAsset_'.concat(id),
+  assetId: 'projects/coral_atlas/reefMask/maskOut/'.concat(fileName),
+  scale: globOptions.outScale,
+  region: aoi,
+  maxPixels: 800000000000
+});
 
 /*
 Export.image.toDrive({
