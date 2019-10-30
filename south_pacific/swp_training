@@ -210,11 +210,12 @@ print(training_data.limit(1))
 // 7. Export data
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
+var output_desc = (vars.geomorphic) ? region_params.sname + '_geo_training' : region_params.sname + '_benthic_training'
 
 if (vars.do_export) {
   Export.table.toAsset({
     collection: training_data, 
-    description: output_name, 
+    description:  region_params.sname + ' ', 
     assetId: output_name
   })
   
