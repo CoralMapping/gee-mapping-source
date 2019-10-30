@@ -63,8 +63,8 @@ var vars = {
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  geomorph_output_name: region_params.sname + '_' + 'geo_training',
-  benthic_output_name: region_params.sname + '_' + 'benthic_training',
+  geomorph_output_name: region_params.asset + 'training/' + region_params.sname + '_' + 'geo_training',
+  benthic_output_name: region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_training',
   asset_output: region_params.asset, // asset path
 
 }
@@ -210,11 +210,13 @@ print(training_data.limit(1))
 // 7. Export data
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
-var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
-
 
 if (vars.do_export) {
-  
+  Export.table.toAsset({
+    collection: training_data, 
+    description: output_name, 
+    assetId: output_name
+  })
   
 }
 
