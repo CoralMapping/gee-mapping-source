@@ -28,6 +28,14 @@ var validation =
 ############### --> need to port this over form previous GBR work
 
 TODO:
+
+BIGGEST TODO - there's now a *_calval script, that generates training data and validation data
+                  - so e.g. we will load ee.FeatureCollection('projects/coral_atlas/sw_pacific/training/swp_geo_validation')
+                    and that will hold all the potential ppol of validation points,
+                    (essentially we directly load the 'accuracy_collection' object)
+                    and that's a nice workflow to produce and independent set of cal/val point
+                    but of course we need ot retain scope to add in additional vlaidation data.
+
 - will this have lots of variation per region?
   - if yes, then have validaiton module per region
   - if no, then we can have a central and generic script that loads data via modules only
