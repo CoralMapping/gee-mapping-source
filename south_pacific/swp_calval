@@ -31,6 +31,8 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 // These will get written to the asset metadata 
 
 var vars = {
+  // exporting a validation sample?
+  export_val: false,
   
   // analysis type
   geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
@@ -61,8 +63,6 @@ var vars = {
   
   
   // export options
-  do_export: true, // export the results?
-  export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.asset + 'training/' + region_params.sname + '_' + 'geo_training',
   benthic_output_name: region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_training',
   asset_output: region_params.asset, // asset path
