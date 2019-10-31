@@ -27,7 +27,6 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 // 00. Global Variables
 ////////////////////////////////////
-Map.addLayer(ls8)
 
 
 var grid = grid
@@ -178,10 +177,10 @@ print (trainingSet.limit(10), 'training Set')
 // If running as probability
 
 
-var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals','3').limit(5000).map(function(feat){return feat.set({'boolCLASS':1})})
-var trainingPoints_0 = trainingSet.filterMetadata('remappedCl','not_equals','3').limit(5000).map(function(feat){return feat.set({'boolCLASS':0})})
-var trainingSet = trainingPoints_1.merge(trainingPoints_0)
-print (trainingSet)
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})}).aside(print)
+var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}).aside(print)
+var trainingSet_X = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet_X.size(), '_X' )
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -193,7 +192,7 @@ var classifier = ee.Classifier.randomForest({
     variablesPerSplit: 0, // 0 is the default: sqrt of nPredictors 
     bagFraction: 0.5,
     seed: 0})
-  .train(trainingSet, 'CLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
+  .train(trainingSet_X, 'boolCLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
   // .setOutputMode('CLASSIFICATION');
   .setOutputMode('PROBABILITY');
   
