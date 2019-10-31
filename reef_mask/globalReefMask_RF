@@ -16,7 +16,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
     ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
     predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7"),
-    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7");
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7"),
+    mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -36,7 +37,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = 'a'
+var id = 'b' // 0:9, a,b
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
@@ -158,13 +159,23 @@ print (trainComposite, 'TC2');
 /* COMMENT UNCOMMENT
 // IF SAMPLING
 Map.addLayer(trainingData, {color:'yellow'}, 'training')
-var randomPoints = trainingData.filterBounds(aoi)
+var randomPoints = trainingData
 print (randomPoints.size(), 'random points')
 Map.addLayer(randomPoints)
+*/
+
+// // Add the mudflat data if you want
+// Map.addLayer(trainingData, {color:'yellow'}, 'training');
+// var randomPoints = trainingData.merge(mudflatData.filterMetadata('CLASS', 'equals',2)); // only merge mudflats and call it water
+// print (randomPoints.size(), 'randomPointsSize');
+// Map.addLayer(mudflatData.filterMetadata('CLASS', 'equals',2), {color:'orange'}, 'mudflat') //class 2
+
 
 // // Sample the Classifier
-var predictorSet = randomPoints.map(samplePredictors)
-*/
+// var predictorSet = randomPoints
+//     .filterBounds(aoi)
+//     .map(samplePredictors)
+
 
 // COMMENT UNCOMMENT 
 // If running the classification
@@ -175,12 +186,10 @@ print (trainingSet.size(), 'training set size')
 print (trainingSet.limit(10), 'training Set')
 
 // If running as probability
-
-
-var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})}).aside(print)
-var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}).aside(print)
-var trainingSet_X = trainingPoints_1.merge(trainingPoints_0)
-print (trainingSet_X.size(), '_X' )
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})}).aside(print) //reef
+var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}).aside(print) //other (mudflat, land, water)
+var trainingSet = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet.size(), '_X' )
 
 ////////////////////////////////////
 // 3. Run the Classification 
@@ -192,8 +201,9 @@ var classifier = ee.Classifier.randomForest({
     variablesPerSplit: 0, // 0 is the default: sqrt of nPredictors 
     bagFraction: 0.5,
     seed: 0})
-  .train(trainingSet_X, 'boolCLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
+  // .train(trainingSet, 'CLASS', bands) //CLASSIFICATION
   // .setOutputMode('CLASSIFICATION');
+  .train(trainingSet, 'boolCLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
   .setOutputMode('PROBABILITY');
   
 
@@ -230,7 +240,7 @@ var finalOut = classified
 // METADATA
 // Batch mode
 // File naming
-var fileName = 'reefMask_gen3_'
+var fileName = 'reefMask_gen4_'
   .concat('prob_') //scale 
   .concat('S') //scale 
   .concat(globOptions.outScale)
@@ -274,7 +284,7 @@ Export.table.toAsset({
 Export.image.toAsset({
   image: finalOut, 
   description: 'exportFinaltoAsset_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/maskOut/'.concat(fileName),
+  assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
   scale: globOptions.outScale,
   region: aoi,
   maxPixels: 800000000000
