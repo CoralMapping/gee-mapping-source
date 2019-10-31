@@ -11,7 +11,9 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image9 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_2"),
     image10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_1"),
     image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
-    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b");
+    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
+    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east0"),
+    swp_geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -24,10 +26,17 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 Map.setOptions('SATELLITE')
 Map.setCenter (147.1, -17.5,10)
 
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+
+
+
+// bg data
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+
+// reef mask layer
 Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image2.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image3.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
@@ -41,7 +50,9 @@ Map.addLayer(image10.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[
 Map.addLayer(image11.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image12.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 
-
+// e.g. mappign region data
+Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
+Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", false)
 
 //Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
