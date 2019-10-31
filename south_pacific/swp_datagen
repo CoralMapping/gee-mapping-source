@@ -331,12 +331,8 @@ all_data = all_data
               .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).multiply(1000).int16().rename('rg'))
 
 // clean up noise
-Map.addLayer(all_data, {}, "Model predictor data", false)
-
 all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
-
-Map.addLayer(all_data, {}, "Model predictor data clean", false)
-
+Map.addLayer(all_data, {}, "Model predictor data", false)
 
 
 /*
