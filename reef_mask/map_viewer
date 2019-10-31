@@ -13,6 +13,13 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
     image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+////////////////////////////////////
+// Global Reef Outline Classification
+// Nov 2019
+// Nick Murray - nicholas.murray@jcu.edu.au
+// Mitch Lyons - m.lyons@gmail.com
+////////////////////////////////////
+
 
 Map.setOptions('SATELLITE')
 Map.setCenter (147.1, -17.5,10)
