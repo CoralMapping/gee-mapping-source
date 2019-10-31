@@ -99,7 +99,7 @@ var vars = {
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
-  rf_trees: 30, // number of random forest trees (per class)
+  rf_trees: 20, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
   rf_varPerSplit: 0, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
