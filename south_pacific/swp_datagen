@@ -72,6 +72,7 @@ var vars = {
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
   use_glcm: true, // use glcm metrics
+  small_object: 400, // the smallest size a group of image pixels should be to not be considered noise
   
   // use relative band brightness as predictor variables (instead of Rrs values)?
   use_brightness: false,
@@ -328,16 +329,21 @@ all_data = all_data
               .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('rb'))
               .addBands(all_data.select(vars.green_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('gb'))
               .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).multiply(1000).int16().rename('rg'))
+
+// clean up noise
 Map.addLayer(all_data, {}, "Model predictor data", false)
 
-/*
+all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
 
+Map.addLayer(all_data, {}, "Model predictor data clean", false)
+
+
+
+/*
 ####### SOME POSSIBLY FUTURE USEFUL JUNK ######
 
 //all_data.select('b1_1','b2_1','b3_1','b4_1','b5_1').reduce('sum').aside(Map.addLayer, {}, "sd_sum", false)
 //all_data.select('b3','b4','waves','slope','depth').spectralGradient().aside(Map.addLayer, {}, "SAM", false)
-
-
 
 // export data to guide threshold development
 var geomorphic_sample = all_data.sampleRegions({
