@@ -37,7 +37,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = 'b' // 0:9, a,b
+var id = 'a' // 0:9, a,b
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
@@ -214,7 +214,9 @@ var classified = trainComposite
   //.mask(topoMask)
   .classify(classifier);
 var finalOut = classified
-  .clip(aoi);
+  .clip(aoi)
+  .multiply(100)
+  .toUint8();
 
   
 ////////////////////////////////////
@@ -242,6 +244,7 @@ var finalOut = classified
 // File naming
 var fileName = 'reefMask_gen4_'
   .concat('prob_') //scale 
+  .concat('ui8_') //scale 
   .concat('S') //scale 
   .concat(globOptions.outScale)
   .concat(globOptions.versionID)
