@@ -37,7 +37,7 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = 'a' // 0:9, a,b
+var id = 'b' // 0:9, a,b
 var aoi = grid.filterMetadata('gridID', 'equals', id)
 Map.addLayer(grid)
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
@@ -136,7 +136,7 @@ var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
 //     properties: ['CLASS'],
 //     reducer: ee.Reducer.first()
 // });
-Map.addLayer(trainComposite1)
+//Map.addLayer(trainComposite1)
 // FINAL MASK
 var trainComposite = trainComposite1
   .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
@@ -156,29 +156,30 @@ print (trainComposite, 'TC2');
 
 // Training points
 
-/* COMMENT UNCOMMENT
+//COMMENT UNCOMMENT
 // IF SAMPLING
-Map.addLayer(trainingData, {color:'yellow'}, 'training')
-var randomPoints = trainingData
-print (randomPoints.size(), 'random points')
-Map.addLayer(randomPoints)
-*/
-
-// // Add the mudflat data if you want
-// Map.addLayer(trainingData, {color:'yellow'}, 'training');
-// var randomPoints = trainingData.merge(mudflatData.filterMetadata('CLASS', 'equals',2)); // only merge mudflats and call it water
-// print (randomPoints.size(), 'randomPointsSize');
-// Map.addLayer(mudflatData.filterMetadata('CLASS', 'equals',2), {color:'orange'}, 'mudflat') //class 2
+//Map.addLayer(trainingData, {color:'yellow'}, 'training')
+// var randomPoints = trainingData
+// print (randomPoints.size(), 'random points')
+// Map.addLayer(randomPoints)
 
 
-// // Sample the Classifier
-// var predictorSet = randomPoints
-//     .filterBounds(aoi)
-//     .map(samplePredictors)
+// Add the mudflat data if you want
+Map.addLayer(trainingData, {color:'yellow'}, 'training');
+var randomPoints = trainingData.merge(mudflatData.filterMetadata('CLASS', 'equals',2)); // only merge mudflats and call it water
+print (randomPoints.size(), 'randomPointsSize');
+Map.addLayer(mudflatData.filterMetadata('CLASS', 'equals',2), {color:'orange'}, 'mudflat'); //class 2
+
+
+// Sample the Classifier
+var predictorSet = randomPoints
+    .filterBounds(aoi)
+    .map(samplePredictors);
 
 
 // COMMENT UNCOMMENT 
 // If running the classification
+/*
 print (predictorSet.size(), 'predictorSet Size')
 print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
@@ -238,7 +239,7 @@ var finalOut = classified
 ////////////////////////////////////
 // 6. Export final classifications
 ////////////////////////////////////
-
+*/
 // METADATA
 // Batch mode
 // File naming
@@ -279,19 +280,19 @@ print(fileName);
 Export.table.toAsset({
   collection:predictorSet,
   description: 'exportReefTrain_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/reefMaskCovariateData_v8_grid_'.concat(id)
+  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateData_v8_grid_'.concat(id)
 });
 
 
 // Export final classified image to asset
-Export.image.toAsset({
-  image: finalOut, 
-  description: 'exportFinaltoAsset_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
-  scale: globOptions.outScale,
-  region: aoi,
-  maxPixels: 800000000000
-});
+// Export.image.toAsset({
+//   image: finalOut, 
+//   description: 'exportFinaltoAsset_'.concat(id),
+//   assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
+//   scale: globOptions.outScale,
+//   region: aoi,
+//   maxPixels: 800000000000
+// });
 
 /*
 Export.image.toDrive({
