@@ -10,10 +10,9 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_3"),
     image9 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_2"),
     image10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_1"),
-    image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
     image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
-    image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/TEST_reefMask_gen3_prob_S30_v8_gridID_a"),
-    srtm = ee.Image("CGIAR/SRTM90_V4");
+    srtm = ee.Image("CGIAR/SRTM90_V4"),
+    image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/INTreefMask_gen4_prob_S30_v8_gridID_a");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 Map.setOptions('SATELLITE')
@@ -67,8 +66,8 @@ var viriPlasma =  [
 
 
 var reefProb = image13.updateMask(ls8.select(['Blue']))
-    .updateMask(image13.gt(0.8))
-Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
+    .updateMask(image13.gt(70))
+Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
 
 
 
