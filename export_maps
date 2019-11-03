@@ -69,13 +69,13 @@ var export_stack = depth.rename('depth')
 
 
 // add export region
-var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.5254)
-var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.9133)
+var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
+var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
 Map.addLayer(export_geom_west, {}, "export footprint west", true)
 Map.addLayer(export_geom_east, {}, "export footprint east", true)
 
 // add raster flag for either side of dateline
-var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom_east).clip
+var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom_east).clip(export_geom_west)
 //Map.addLayer(latlong.gt(0).selfMask())
 
 var export_stack_east = export_stack.updateMask(latlong.lte(0))
@@ -134,7 +134,7 @@ Export.image.toCloudStorage({
 // export the convex hull boundary
 
 // export region convex hull, or manual
-//var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+/*var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Export.table.toCloudStorage({
   collection: ee.FeatureCollection(export_geom),
@@ -142,4 +142,4 @@ Export.table.toCloudStorage({
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/fiji/new_geom/fiji_convex_hull',
   fileFormat: "SHP"
-})
+})*/
