@@ -26,6 +26,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 
 
 // ####### Some temporary masking options
+
 //  - use geo only (east)
 //  - use reef outline (west)
 
@@ -40,7 +41,6 @@ benthic2 = benthic2.updateMask(reef_outline)
 
 var benthic = ee.ImageCollection([benthic1, benthic2]).mosaic()
 var geo = ee.ImageCollection([geo1, geo2]).mosaic()
-
 
 
 // #######
