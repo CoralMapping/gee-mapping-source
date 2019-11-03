@@ -18,7 +18,8 @@ var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.169885
     swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east0"),
     swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east0"),
-    swp_geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0");
+    swp_geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0"),
+    swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west0");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -64,6 +65,7 @@ Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 
 // SWP
 Map.addLayer(swp_benthic_east, map_palettes.benthic, "SWP Benthic - east RAW", false)
+Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
 
 
 // Fiji
