@@ -34,7 +34,7 @@ benthic1 = benthic1.updateMask(geo1.gt(3))
 
 var reef_outline = outline1 // join other if needed
                     .eq(3).selfMask() // reef only
-                    .focal_mode(3)
+                    //.focal_mode(3)
 //Map.addLayer(reef_outline, {}, "outline")
 geo2 = geo2.updateMask(reef_outline)
 benthic2 = benthic2.updateMask(reef_outline)
@@ -47,11 +47,6 @@ var geo = ee.ImageCollection([geo1, geo2]).mosaic()
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
-
-// export region convex hull, or manual
-var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-
-
 
 // make reef/non-reef layer 
 var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
@@ -71,11 +66,16 @@ var export_stack = depth.rename('depth')
                     .addBands(benthic.rename('benthic'))
                     .toInt16()
 
-/*// add export region
-Map.addLayer(export_geom, {}, "export footprint", true)*/
+
+
+// add export region
+var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.5254)
+var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.9133)
+Map.addLayer(export_geom_west, {}, "export footprint west", true)
+Map.addLayer(export_geom_east, {}, "export footprint east", true)
 
 // add raster flag for either side of dateline
-var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom_east).clip
 //Map.addLayer(latlong.gt(0).selfMask())
 
 var export_stack_east = export_stack.updateMask(latlong.lte(0))
@@ -102,12 +102,6 @@ var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
                               maxPixels: 1e13,
                               crs: 'EPSG:4326'
                             })*/
-
-var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7)
-var export_geom_west = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7)
-
-Map.addLayer(export_geom_west, {}, "export footprint west", true)
-Map.addLayer(export_geom_east, {}, "export footprint east", true)
 
 
 // run the export
@@ -138,6 +132,10 @@ Export.image.toCloudStorage({
 
 
 // export the convex hull boundary
+
+// export region convex hull, or manual
+//var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+
 Export.table.toCloudStorage({
   collection: ee.FeatureCollection(export_geom),
   description: 'fiji_convex_hull',
