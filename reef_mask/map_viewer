@@ -35,10 +35,10 @@ var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
-// e.g. mappign region data
+/*// e.g. mappign region data
 Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", true)
 Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
-
+*/
 // reef mask layer
 Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image2.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
@@ -52,6 +52,7 @@ Map.addLayer(image9.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1
 Map.addLayer(image10.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image11.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image12.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 
 //Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
