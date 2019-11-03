@@ -1,7 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
-    geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
-    benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3");
+    benthic1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east0"),
+    benthic2 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west0"),
+    geo1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east0"),
+    geo2 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0"),
+    image = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI"),
+    outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -19,6 +23,27 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
   - Fiji/south pacific might be the only region where this happens? worth it?
   **A: resonable solution below**
 */
+
+
+// ####### Some temporary masking options
+//  - use geo only (east)
+//  - use reef outline (west)
+
+benthic1 = benthic1.updateMask(geo1.gt(3))
+
+var reef_outline = outline1 // join other if needed
+                    .eq(3).selfMask() // reef only
+                    .focal_mode(3)
+//Map.addLayer(reef_outline, {}, "outline")
+geo2 = geo2.updateMask(reef_outline)
+benthic2 = benthic2.updateMask(reef_outline)
+
+var benthic = ee.ImageCollection([benthic1, benthic2]).mosaic()
+var geo = ee.ImageCollection([geo1, geo2]).mosaic()
+
+
+
+// #######
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
