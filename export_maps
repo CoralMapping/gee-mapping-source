@@ -74,8 +74,8 @@ Map.addLayer(export_geom_west, {}, "export footprint west", true)
 Map.addLayer(export_geom_east, {}, "export footprint east", true)
 
 // add raster flag for either side of dateline
-var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom_east).clip(export_geom_west)
-//Map.addLayer(latlong.gt(0).selfMask())
+var latlong = ee.Image.pixelLonLat().select('longitude').clipToCollection(ee.FeatureCollection([export_geom_west,export_geom_east]))
+//Map.addLayer(latlong)
 
 var export_stack_east = export_stack.updateMask(latlong.lte(0))
 var export_stack_west = export_stack.updateMask(latlong.gt(0))
