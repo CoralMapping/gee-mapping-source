@@ -12,7 +12,8 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image3 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_7"),
     image2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
     image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
-    image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI");
+    image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI"),
+    planet_mask = ee.FeatureCollection("projects/coral_atlas/global_datasets/20181001_GlobalCoralMask_v1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -56,6 +57,7 @@ Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[
 
 //Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
+Map.addLayer(planet_mask, {color: 'grey'}, 'Planet mask')
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
 //   //geometry: points,
