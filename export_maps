@@ -56,10 +56,10 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
-Map.addLayer(depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
+Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 
 // combine into single stack
-var export_stack = depth.rename('depth')
+var export_stack = depth.updateMask(geo.gt(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
                     .addBands(geo.rename('geomorphic'))
                     .addBands(benthic.rename('benthic'))
