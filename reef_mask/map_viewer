@@ -32,7 +32,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // bg data
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
-var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
+var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8");
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
