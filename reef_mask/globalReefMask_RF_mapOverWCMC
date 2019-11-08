@@ -221,7 +221,7 @@ function runClassifier(feature) {
     return finalOut;
  }
 
-var reefMask = wcmcReefs.limit(1).aside(Map.addLayer).map(runClassifier)
+var reefMask = wcmcReefs1.limit(2).aside(Map.addLayer).map(runClassifier)
 print (reefMask)
 
 // // Train a classifier
