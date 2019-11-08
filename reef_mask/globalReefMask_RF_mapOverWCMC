@@ -1,0 +1,413 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    GBR_Test = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[146.87182619326597, -18.00367598062379],
+          [146.87182619326597, -21.272862556548375],
+          [150.38745119326597, -21.272862556548375],
+          [150.38745119326597, -18.00367598062379]]], null, false),
+    lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
+    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
+    grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
+    trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7"),
+    mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature"),
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingLibrary_v7");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+////////////////////////////////////
+// Global Reef Classification
+// August 2018
+// n.murray@unsw.edu.au
+////////////////////////////////////
+
+////////////////////////////////////
+// 00. Global Variables
+////////////////////////////////////
+
+
+// var grid = grid
+//     .map(
+//       function(feature) {
+//         return feature.set({gridID:feature.id().slice(19,20)});
+//   });
+// print (grid, 'gridCentroid')
+
+// var id = 'b' // 0:9, a,b
+// var aoi = grid.filterMetadata('gridID', 'equals', id)
+// Map.addLayer(grid)
+// Map.addLayer(aoi, {color:'yellow'}, 'aoi')
+// Map.centerObject(grid)
+
+
+//GBR_Test
+// lsFootprint.map(
+//   function(f) {
+//   return f.buffer(3000); // 3km width
+// }).union(); 
+//Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
+//Map.centerObject(aoi);
+var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
+//Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+
+print (wcmcReefs.limit(5))
+Map.addLayer(wcmcReefs.limit(1).geometry(), {color:'orange'}, 'wcmc first')
+Map.centerObject(wcmcReefs.limit(1));
+
+// Remove all non-polygons from a geometry
+function remove_non_polygons(geometry) { 
+  return ee.Algorithms.If(ee.Algorithms.IsEqual(ee.Geometry(geometry).type()
+                          , ee.String('Polygon'))
+                          , ee.Feature(ee.Geometry(geometry)), null);
+}
+
+// Clean a polygon from other types of geometries (eg. lines, points,...)
+function clean_polygon_feature(feature) { 
+    var geometries = feature.geometry().geometries();
+    var geometries_cleaned = ee.FeatureCollection(geometries.map(remove_non_polygons)).union().first();
+    return ee.Feature(feature).setGeometry(geometries_cleaned.geometry());
+}
+var wcmcReefs1 = wcmcReefs.map(clean_polygon_feature);
+
+print(wcmcReefs1.limit(5));
+Map.addLayer(wcmcReefs1.limit(1))
+
+
+/*
+//Map.setCenter(12.0087, -4.5343, 12);
+
+var globOptions = { 
+  versionID: '_v8', //file name prefix
+  outFolder: 'reefsOut',
+  mapDebug: false, // set to true to add all layers of the map
+  startDate: '2016-01-01',
+  endDate: '2019-01-01',
+  //parallelScale: 8, // A scaling factor used to limit memory use; using a larger parallelScale (e.g. 2 or 4) may enable computations that run out of memory with the default.
+  trainingValidationRatio: 0.01, // training vs validation
+  nTrees: 10, 
+  outScale: 30, //resolution in metres
+  //conPixels: 4, // set min patch size (10 ~ 1 ha, 100 ~ 9ha @ 30m Landsat scale). 3 = 0.27ha 6 = 0.54ha 9 = 0.81ha
+  classifyClean: false, //remove patches smaller than x connected pixels if true
+  numPoints: 100, // size of training set per class
+  samplePredictorData: true,
+  maskAltitude: 100,  
+  maskDepth: -1000, 
+  maskDistance: 100000,
+};
+Map.setOptions('SATELLITE');
+////////////////////////////////////
+
+
+////////////////////////////////////
+// 0. Functions
+////////////////////////////////////
+
+function samplePredictors(feature) {
+    // sample training composite for predictor data
+    var predictorData = trainComposite.reduceRegion({
+    reducer: ee.Reducer.first(), // mean and first return the same
+    geometry: feature.geometry(),
+    scale: 1}); //1m sample = <1 pixel
+    return feature.set(predictorData);
+ }
+
+////////////////////////////////////
+// 1. Data Imports and Processing
+////////////////////////////////////
+
+
+var collection = ls8//.clip(aoi);
+print (ls8.bandNames())
+
+// TODO: add band metrics
+// Data processing to final predictors
+// var covariates = {
+//     redBand: collection.select(['Red_median']),
+//     blueBand: collection.select(['Blue_median']),
+//     greenBand: collection.select(['Green_median']),
+//     nirBand: collection.select(['NIR_median']),
+    
+// };
+
+var trainComposite1 = collection
+// //.nirBand
+//     .addBands(covariates.redBand)
+//     .addBands(covariates.blueBand)
+//     .addBands(covariates.greenBand);
+
+// Mithc: Landsat 8 – Bands 1-4, maybe 5 if there’s trouble with land classification
+// // MODIS
+// var modis = ee.ImageCollection('MODIS/006/MYD09A1') //MYD09A1.006 Aqua Surface Reflectance 8-Day Global 500m
+//   .select('sur_refl_b01', 'sur_refl_b03', 'sur_refl_b04')
+//   .median()
+//   .mask(ls8.select('NIR')); // mask to LS8
+
+// var coastMask = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk') // Natural Earth coastline
+//     .distance(globOptions.maskDistance).gte(-200).clip(aoi); 
+// var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
+//     .select(['bedrock'], ['etopo'])
+//     .gte(globOptions.maskDepth)
+//     .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
+// var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
+
+
+// Add a training image
+// var trainVectors = trainingData.reduceToImage({
+//     properties: ['CLASS'],
+//     reducer: ee.Reducer.first()
+// });
+//Map.addLayer(trainComposite1)
+// FINAL MASK
+var trainComposite = trainComposite1
+  .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
+  .addBands(ls8.normalizedDifference(['Green', 'NIR']).rename(['NDWI']))
+  .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
+  .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
+  .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
+  .addBands(ee.Image('NOAA/NGDC/ETOPO1')
+  .select(['bedrock'], ['etopo'])).resample('bicubic')
+  ;
+var bands = trainComposite.bandNames().aside(print); // bands used in classification
+print (trainComposite, 'TC2');
+
+////////////////////////////////////
+// 2. Training Data
+////////////////////////////////////
+
+// Training points
+
+//COMMENT UNCOMMENT
+// IF SAMPLING
+//Map.addLayer(trainingData, {color:'yellow'}, 'training')
+// var randomPoints = trainingData.aside(print)
+// print (randomPoints.size(), 'random points')
+// Map.addLayer(randomPoints)
+
+
+// // Add the mudflat data if you want
+// Map.addLayer(trainingData, {color:'yellow'}, 'training');
+// var randomPoints = trainingData.merge(mudflatData.filterMetadata('CLASS', 'equals',2)); // only merge mudflats and call it water
+// print (randomPoints.size(), 'randomPointsSize');
+// Map.addLayer(mudflatData.filterMetadata('CLASS', 'equals',2), {color:'orange'}, 'mudflat'); //class 2
+
+
+// // Sample the Classifier
+// var predictorSet = randomPoints
+//     .filterBounds(aoi)
+//     .map(samplePredictors);
+
+
+// COMMENT UNCOMMENT 
+// If running the classification
+
+print (predictorSet.size(), 'predictorSet Size')
+print (predictorSet.limit(10), 'predictorSet')
+var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+print (trainingSet.size(), 'training set size')
+print (trainingSet.limit(10), 'training Set')
+
+// If running as probability
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})}) //reef
+var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}) //other (mudflat, land, water)
+var trainingSet = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet.size(), '_X' )
+
+////////////////////////////////////
+// 3. Run the Classification 
+////////////////////////////////////
+
+
+function runClassifier(feature) {
+    // run the reef Mask classifier per feature
+    var featBuffed = feature//.buffer(300);
+    var classifier = ee.Classifier.randomForest({
+        numberOfTrees: globOptions.nTrees, 
+        variablesPerSplit: 0, // 0 is the default: sqrt of nPredictors 
+        bagFraction: 0.5,
+        seed: 0})
+      .train(trainingSet, 'boolCLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
+      .setOutputMode('PROBABILITY');
+    // Classify the composite image
+    var classified = trainComposite
+      .clip(featBuffed)
+      .select(bands)
+      //.mask(topoMask)
+      .classify(classifier);
+    var finalOut = classified
+      .clip(featBuffed)
+      .multiply(100)
+      .toUint8()
+    return finalOut;
+ }
+
+var reefMask = wcmcReefs.limit(1).aside(Map.addLayer).map(runClassifier)
+print (reefMask)
+
+// // Train a classifier
+// var classifier = ee.Classifier.randomForest({
+//     numberOfTrees: globOptions.nTrees, 
+//     variablesPerSplit: 0, // 0 is the default: sqrt of nPredictors 
+//     bagFraction: 0.5,
+//     seed: 0})
+//   // .train(trainingSet, 'CLASS', bands) //CLASSIFICATION
+//   // .setOutputMode('CLASSIFICATION');
+//   .train(trainingSet, 'boolCLASS', bands) //training takes much longer than prediction ~ 5 times longer I think
+//   .setOutputMode('PROBABILITY');
+  
+
+// // Classify the composite image
+// var classified = trainComposite
+//   .clip(aoi)
+//   .select(bands)
+//   //.mask(topoMask)
+//   .classify(classifier);
+// var finalOut = classified
+//   .clip(aoi)
+//   .multiply(100)
+//   .toUint8();
+
+  
+////////////////////////////////////
+// 4. Postprocess
+////////////////////////////////////
+  
+// // Postprocessing
+// if (globOptions.classifyClean) {
+//   var finalOut = finalOut.mask(finalOut
+//   .connectedPixelCount(globOptions.conPixels)
+//   .gte(globOptions.conPixels)); 
+//   var clean = 'CP'.concat(globOptions.conPixels); // connected pixel 100 (@30m = 9 ha)
+// } else {clean = 'CP00';} // connected pixel zero
+
+
+// focal_mode = excellent!
+//var finalOutPost = finalOut2.focal_mode({kernel: ee.Kernel.chebyshev(globOptions.kernelSize, "meters")}); // use a chebyshev kernel
+
+////////////////////////////////////
+// 6. Export final classifications
+////////////////////////////////////
+
+// METADATA
+// Batch mode
+// // File naming
+// var fileName = 'reefMask_gen4_'
+//   .concat('prob_') //scale 
+//   .concat('ui8_') //scale 
+//   .concat('S') //scale 
+//   .concat(globOptions.outScale)
+//   .concat(globOptions.versionID)
+//   .concat('_gridID_')
+//   .concat(id);
+// print(fileName);
+
+// Gather metadata
+// var metaData = ee.Feature(null, {
+//   fileName: fileName,
+//   filePath: 'uq-global-reefs/reefsOut'.concat(fileName), 
+//   globOptions: globOptions,
+//   nPredictors: bands.length(),
+//   predictorList: bands,
+//   nTrainingPoints: trainingSet.size(),
+//   nPoints: globOptions.numPoints,
+//   nPointsUsed:  trainingSet.size(),
+//   nPointsReef: trainingSet.filter(ee.Filter.eq('CLASS', 1)).size(),
+//   nPointsOcean: trainingSet.filter(ee.Filter.eq('CLASS', 2)).size(),
+//   nPointsShallow: trainingSet.filter(ee.Filter.eq('CLASS', 3)).size(),
+//   nPointsLand: trainingSet.filter(ee.Filter.eq('CLASS', 4)).size()
+// });
+
+// Export.table.toDrive({
+//   collection: ee.FeatureCollection(predictorSet), //
+//   description: 'exportPredictorsToDrive_GridID_'.concat(id),
+//   folder: globOptions.outFolder,
+//   fileNamePrefix: 'reefsTraining'.concat(fileName),
+//   fileFormat: 'SHP'
+// });
+
+// Export.table.toAsset({
+//   collection:predictorSet,
+//   description: 'exportReefTrain_'.concat(id),
+//   assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateData_v8_grid_'.concat(id)
+// });
+
+
+// Export final classified image to asset
+// Export.image.toAsset({
+//   image: finalOut, 
+//   description: 'exportFinaltoAsset_'.concat(id),
+//   assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
+//   scale: globOptions.outScale,
+//   region: aoi,
+//   maxPixels: 800000000000
+// });
+
+/*
+Export.image.toDrive({
+  image: finalOut,
+  description: 'exportFinaltoDrive-'.concat(globOptions.versionID),
+  fileNamePrefix: 'reefMask'.concat(fileName).concat('_raw'),
+  scale: globOptions.outScale,
+  region: aoi,
+  folder: globOptions.outFolder,
+  maxPixels: 800000000000
+});
+
+
+// ////////////////////////////////////////////
+
+
+// ////////////////////////////////////////////
+// // 7. Debugging
+// if (globOptions.mapDebug) {
+//   print('Debug: adding data to map');
+//   //print('Image collection:', collection.size());
+//   print('Band names for training:', bands);
+//   Map.addLayer(aoi, {color:'ffffff'}, 'AOI');
+//   Map.addLayer(trainVectors.randomVisualizer(), null , 'Training vectors');
+//   print (randomPoints.limit(10), 'randomPoints');
+//   print (predictorSet.limit(10), 'predictorSet');
+//   print (trainingSet.limit(10), 'training set');
+//   Map.addLayer(trainingSet,{color:'ffeb00'}, 'Training Points');
+//   Map.addLayer(trainComposite,null, 'Train Composite');
+//   print (finalOut, 'final Out');
+//   Map.addLayer(finalOut.randomVisualizer(),null, 'Reef Mask Classified');
+// } else {print('Not debugging: running in batch mode')}
+
+
+
+
+
+// Vis
+var viriPlasma =  [
+'440154', 
+'462372', 
+'404284', 
+'355d8c', 
+'2a768e', 
+'21908d', 
+'26a784', 
+'47bd6f', 
+'79d051', 
+'b8de30', 
+'fde725',
+"0d0887", 
+"3d049b", 
+"6903a5",
+"8d0fa1",
+"ae2891",
+"cb4679",
+"df6363",
+"f0844c",
+"faa638", 
+"fbcc27",
+"f0f921"
+];
+
+Map.centerObject(reefMask)
+Map.addLayer(reefMask.first(), {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
+
+*/
