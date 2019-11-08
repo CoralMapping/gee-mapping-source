@@ -38,25 +38,42 @@ print (wcmcReefs.limit(10))
 
 // Data Clean
 // Remove all non-polygons from a geometry
-function remove_non_polygons(geometry) { 
-  return ee.Algorithms.If(ee.Algorithms.IsEqual(ee.Geometry(geometry).type()
-                          , ee.String('Polygon'))
-                          , ee.Feature(ee.Geometry(geometry)), null);
-}
+// TODO Sort out polygons that are geometry collections argh!
 
-// Clean a polygon from other types of geometries (eg. lines, points,...)
-function clean_polygon_feature(feature) { 
-    var geometries = feature.geometry().geometries();
-    var geometries_cleaned = ee.FeatureCollection(geometries.map(remove_non_polygons)).union().first();
-    return ee.Feature(feature).setGeometry(geometries_cleaned.geometry());
-}
-var wcmcReefs1 = wcmcReefs.map(clean_polygon_feature);
+// function remove_non_polygons(geometry) { 
+//   return ee.Algorithms.If(ee.Algorithms.IsEqual(ee.Geometry(geometry).type()
+//                           , ee.String('Polygon'))
+//                           , ee.Feature(ee.Geometry(geometry)), null);
+// }
 
-print(wcmcReefs1.limit(5));
-Map.addLayer(wcmcReefs1.limit(1))
-Map.center
+// // Clean a polygon from other types of geometries (eg. lines, points,...)
+// function clean_polygon_feature(feature) { 
+//     var geometries = feature.geometry().geometries();
+//     var geometries_cleaned = ee.FeatureCollection(geometries.map(remove_non_polygons)).union().first();
+//     return ee.Feature(feature).setGeometry(geometries_cleaned.geometry());
+// }
+// var wcmcReefs1 = wcmcReefs.map(clean_polygon_feature);
+
+// print(wcmcReefs1.limit(5));
+// Map.addLayer(wcmcReefs1.limit(1))
+
+//----------------------------
+// OR Try converting to image first
+
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+var im = ee.Image(1)
+var reefIm = im.clip(wcmcReefs)
+// Then to poly - need to map this as a function though.
+var reefPoly = reefIm.reduceToVectors({
+       scale: 100,
+       geometry: aoi,
+       geometryType: 'polygon',
+       bestEffort: true   // Best effort might make this less accurate
+       }).geometry();
+Map.addLayer(reefPoly);
 
 
+//----------------------------
 
 //Map.setCenter(12.0087, -4.5343, 12);
 
