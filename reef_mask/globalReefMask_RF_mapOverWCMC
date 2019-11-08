@@ -30,34 +30,11 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 
 
-// var grid = grid
-//     .map(
-//       function(feature) {
-//         return feature.set({gridID:feature.id().slice(19,20)});
-//   });
-// print (grid, 'gridCentroid')
-
-// var id = 'b' // 0:9, a,b
-// var aoi = grid.filterMetadata('gridID', 'equals', id)
-// Map.addLayer(grid)
-// Map.addLayer(aoi, {color:'yellow'}, 'aoi')
-// Map.centerObject(grid)
-
 
 //GBR_Test
-// lsFootprint.map(
-//   function(f) {
-//   return f.buffer(3000); // 3km width
-// }).union(); 
-//Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
-//Map.centerObject(aoi);
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
-//Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
-print (wcmcReefs.limit(5))
-Map.addLayer(wcmcReefs.limit(1).geometry(), {color:'orange'}, 'wcmc first')
-Map.centerObject(wcmcReefs.limit(1));
-
+// Data Clean
 // Remove all non-polygons from a geometry
 function remove_non_polygons(geometry) { 
   return ee.Algorithms.If(ee.Algorithms.IsEqual(ee.Geometry(geometry).type()
@@ -77,7 +54,7 @@ print(wcmcReefs1.limit(5));
 Map.addLayer(wcmcReefs1.limit(1))
 
 
-/*
+
 //Map.setCenter(12.0087, -4.5343, 12);
 
 var globOptions = { 
@@ -380,7 +357,7 @@ Export.image.toDrive({
 
 
 
-
+*/
 // Vis
 var viriPlasma =  [
 '440154', 
@@ -408,6 +385,5 @@ var viriPlasma =  [
 ];
 
 Map.centerObject(reefMask)
-Map.addLayer(reefMask.first(), {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
+Map.addLayer(reefMask, {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
 
-*/
