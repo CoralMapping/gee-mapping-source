@@ -33,6 +33,8 @@ var GBR_Test =
 
 //GBR_Test
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
+Map.addLayer(wcmcReefs, {color: 'aqua'}, 'wcmc reefs')
+print (wcmcReefs.limit(10))
 
 // Data Clean
 // Remove all non-polygons from a geometry
@@ -52,6 +54,7 @@ var wcmcReefs1 = wcmcReefs.map(clean_polygon_feature);
 
 print(wcmcReefs1.limit(5));
 Map.addLayer(wcmcReefs1.limit(1))
+Map.center
 
 
 
@@ -222,10 +225,12 @@ function runClassifier(feature) {
  }
 
 var reefMask = wcmcReefs1.filterMetadata('PARENT_ISO', 'equals', 'AUS')
-    //.limit(5)
+    .limit(5)
     // TODO: Sort out how to get all little polygons rather than multiGeometries
     .map(runClassifier);
 
+Map.addLayer(wcmcReefs1.filterMetadata('PARENT_ISO', 'equals', 'AUS')
+    .limit(5))
 var aoi = reefMask.geometry().bounds()
 Map.centerObject(aoi)
 
