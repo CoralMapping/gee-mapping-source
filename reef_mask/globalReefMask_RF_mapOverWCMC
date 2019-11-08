@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
-    GBR_Test = 
+var GBR_Test = 
     /* color: #d63000 */
     /* displayProperties: [
       {
@@ -17,7 +16,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
     trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7"),
     mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature"),
-    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingLibrary_v7");
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingLibrary_v7"),
+    wcmcReefs = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -221,8 +221,14 @@ function runClassifier(feature) {
     return finalOut;
  }
 
-var reefMask = wcmcReefs1.limit(2).aside(Map.addLayer).map(runClassifier)
-print (reefMask)
+var reefMask = wcmcReefs1.filterMetadata('PARENT_ISO', 'equals', 'AUS')
+    //.limit(5)
+    // TODO: Sort out how to get all little polygons rather than multiGeometries
+    .map(runClassifier);
+
+var aoi = reefMask.geometry().bounds()
+Map.centerObject(aoi)
+
 
 // // Train a classifier
 // var classifier = ee.Classifier.randomForest({
@@ -271,15 +277,15 @@ print (reefMask)
 // METADATA
 // Batch mode
 // // File naming
-// var fileName = 'reefMask_gen4_'
-//   .concat('prob_') //scale 
-//   .concat('ui8_') //scale 
-//   .concat('S') //scale 
-//   .concat(globOptions.outScale)
-//   .concat(globOptions.versionID)
-//   .concat('_gridID_')
-//   .concat(id);
-// print(fileName);
+var fileName = 'reefMask_gen4_'
+  .concat('prob_') //scale 
+  .concat('ui8_') //scale 
+  .concat('S') //scale 
+  .concat(globOptions.outScale)
+  .concat(globOptions.versionID)
+  .concat('_wcmcMapTest')
+  //.concat(id);
+print(fileName);
 
 // Gather metadata
 // var metaData = ee.Feature(null, {
@@ -313,14 +319,15 @@ print (reefMask)
 
 
 // Export final classified image to asset
-// Export.image.toAsset({
-//   image: finalOut, 
-//   description: 'exportFinaltoAsset_'.concat(id),
-//   assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
-//   scale: globOptions.outScale,
-//   region: aoi,
-//   maxPixels: 800000000000
-// });
+Export.image.toAsset({
+  image: reefMask, 
+  description: 'exportFinaltoAsset',
+  assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
+  scale: globOptions.outScale,
+  region: aoi,
+  maxPixels: 800000000000
+});
+
 
 /*
 Export.image.toDrive({
@@ -384,6 +391,6 @@ var viriPlasma =  [
 "f0f921"
 ];
 
-Map.centerObject(reefMask)
-Map.addLayer(reefMask, {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
+//Map.centerObject(reefMask);
+//Map.addLayer(reefMask, {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence');
 
