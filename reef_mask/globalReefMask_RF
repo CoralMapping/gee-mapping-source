@@ -30,18 +30,18 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 
 
-var grid = grid
-    .map(
-      function(feature) {
-        return feature.set({gridID:feature.id().slice(19,20)});
-  });
-print (grid, 'gridCentroid')
+// var grid = grid
+//     .map(
+//       function(feature) {
+//         return feature.set({gridID:feature.id().slice(19,20)});
+//   });
+// print (grid, 'gridCentroid')
 
-var id = 'b' // 0:9, a,b
-var aoi = grid.filterMetadata('gridID', 'equals', id)
-Map.addLayer(grid)
-Map.addLayer(aoi, {color:'yellow'}, 'aoi')
-Map.centerObject(grid)
+// var id = 'b' // 0:9, a,b
+// var aoi = grid.filterMetadata('gridID', 'equals', id)
+// Map.addLayer(grid)
+// Map.addLayer(aoi, {color:'yellow'}, 'aoi')
+// Map.centerObject(grid)
 
 
 //GBR_Test
@@ -96,7 +96,7 @@ function samplePredictors(feature) {
 ////////////////////////////////////
 
 
-var collection = ls8.clip(aoi);
+var collection = ls8//.clip(aoi);
 print (ls8.bandNames())
 
 // TODO: add band metrics
@@ -122,13 +122,13 @@ var trainComposite1 = collection
 //   .median()
 //   .mask(ls8.select('NIR')); // mask to LS8
 
-var coastMask = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk') // Natural Earth coastline
-    .distance(globOptions.maskDistance).gte(-200).clip(aoi); 
-var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
-    .select(['bedrock'], ['etopo'])
-    .gte(globOptions.maskDepth)
-    .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
-var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
+// var coastMask = ee.FeatureCollection('ft:1Hsoe_WwULJ23Nuj1wikGzfH_WQMtpDWOR3XpWkHk') // Natural Earth coastline
+//     .distance(globOptions.maskDistance).gte(-200).clip(aoi); 
+// var topoMask = ee.Image('NOAA/NGDC/ETOPO1')
+//     .select(['bedrock'], ['etopo'])
+//     .gte(globOptions.maskDepth)
+//     .and(ee.Image('NOAA/NGDC/ETOPO1').lte(globOptions.maskAltitude));
+// var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
 
 
 // Add a training image
@@ -144,7 +144,7 @@ var trainComposite = trainComposite1
   .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
   .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
   .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
-  .addBands(ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
+  .addBands(ee.Image('NOAA/NGDC/ETOPO1')
   .select(['bedrock'], ['etopo'])).resample('bicubic')
   ;
 var bands = trainComposite.bandNames().aside(print); // bands used in classification
@@ -220,7 +220,7 @@ function runClassifier(feature) {
     return finalOut;
  }
 
-var reefMask = wcmcReefs.limit(2).map(runClassifier)
+var reefMask = wcmcReefs.limit(1).map(runClassifier)
 print (reefMask)
 
 // // Train a classifier
