@@ -16,7 +16,8 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
     trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7"),
     mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature"),
-    ls8 = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8");
+    ls8 = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8"),
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -29,27 +30,23 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 
 
-var grid = grid
-    .map(
-      function(feature) {
-        return feature.set({gridID:feature.id().slice(19,20)});
-  });
-print (grid, 'gridCentroid')
+// var grid = grid
+//     .map(
+//       function(feature) {
+//         return feature.set({gridID:feature.id().slice(19,20)});
+//   });
+// print (grid, 'gridCentroid')
 
-var id = 'b' // 0:9, a,b
-var aoi = grid.filterMetadata('gridID', 'equals', id)
-Map.addLayer(grid)
-Map.addLayer(aoi, {color:'yellow'}, 'aoi')
-Map.centerObject(grid)
+// var id = 'b' // 0:9, a,b
+// var aoi = grid.filterMetadata('gridID', 'equals', id)
+// Map.addLayer(grid)
+// Map.addLayer(aoi, {color:'yellow'}, 'aoi')
+// Map.centerObject(grid)
 
-
-//GBR_Test
-// lsFootprint.map(
-//   function(f) {
-//   return f.buffer(3000); // 3km width
-// }).union(); 
-//Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
-//Map.centerObject(aoi);
+var id = 'TEST'
+var aoi = GBR_Test 
+Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
+Map.centerObject(aoi);
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
 //Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
@@ -158,6 +155,7 @@ print (trainComposite, 'TC2');
 
 //COMMENT UNCOMMENT
 // IF SAMPLING
+/*
 //Map.addLayer(trainingData, {color:'yellow'}, 'training')
 // var randomPoints = trainingData
 // print (randomPoints.size(), 'random points')
@@ -175,11 +173,11 @@ Map.addLayer(mudflatData.filterMetadata('CLASS', 'equals',2), {color:'orange'}, 
 var predictorSet = randomPoints
     .filterBounds(aoi)
     .map(samplePredictors);
-
+*/
 
 // COMMENT UNCOMMENT 
 // If running the classification
-/*
+
 print (predictorSet.size(), 'predictorSet Size')
 print (predictorSet.limit(10), 'predictorSet')
 var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
@@ -239,7 +237,7 @@ var finalOut = classified
 ////////////////////////////////////
 // 6. Export final classifications
 ////////////////////////////////////
-*/
+
 // METADATA
 // Batch mode
 // File naming
@@ -277,22 +275,22 @@ print(fileName);
 //   fileFormat: 'SHP'
 // });
 
-Export.table.toAsset({
-  collection:predictorSet,
-  description: 'exportReefTrain_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_'.concat(id)
-});
+// Export.table.toAsset({
+//   collection:predictorSet,
+//   description: 'exportReefTrain_'.concat(id),
+//   assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_'.concat(id)
+// });
 
 
 // Export final classified image to asset
-// Export.image.toAsset({
-//   image: finalOut, 
-//   description: 'exportFinaltoAsset_'.concat(id),
-//   assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
-//   scale: globOptions.outScale,
-//   region: aoi,
-//   maxPixels: 800000000000
-// });
+Export.image.toAsset({
+  image: finalOut, 
+  description: 'exportFinaltoAsset_'.concat(id),
+  assetId: 'projects/coral_atlas/reefMask/maskOut/probabilityMask/'.concat(fileName),
+  scale: globOptions.outScale,
+  region: aoi,
+  maxPixels: 800000000000
+});
 
 /*
 Export.image.toDrive({
