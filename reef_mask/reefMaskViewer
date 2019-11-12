@@ -14,11 +14,12 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
     srtm = ee.Image("CGIAR/SRTM90_V4"),
     image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen3_prob_S30_v8_gridID_a"),
-    ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8");
+    ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8"),
+    image14 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v8_gridID_TEST");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 Map.setOptions('SATELLITE')
-Map.setCenter (110.5, -5.8,1)
+Map.setCenter (149.4, -19.8,11)
 
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
@@ -43,46 +44,46 @@ Map.addLayer(ls8new, lsNewVis, 'Landsat 8 At-surface Interval Mean', true) ;
 
 
 // // Vis
-// var viriPlasma =  [
-// '440154', 
-// '462372', 
-// '404284', 
-// '355d8c', 
-// '2a768e', 
-// '21908d', 
-// '26a784', 
-// '47bd6f', 
-// '79d051', 
-// 'b8de30', 
-// 'fde725',
-// "0d0887", 
-// "3d049b", 
-// "6903a5",
-// "8d0fa1",
-// "ae2891",
-// "cb4679",
-// "df6363",
-// "f0844c",
-// "faa638", 
-// "fbcc27",
-// "f0f921"
-// ];
+var viriPlasma =  [
+'440154', 
+'462372', 
+'404284', 
+'355d8c', 
+'2a768e', 
+'21908d', 
+'26a784', 
+'47bd6f', 
+'79d051', 
+'b8de30', 
+'fde725',
+"0d0887", 
+"3d049b", 
+"6903a5",
+"8d0fa1",
+"ae2891",
+"cb4679",
+"df6363",
+"f0844c",
+"faa638", 
+"fbcc27",
+"f0f921"
+];
 
-// var reefVisualiser = function (reefProb, threshold){
-//   var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
-//     .updateMask(image13.gt(threshold));
-//   return reefProbMasked;
-//     };
+var reefVisualiser = function (reefProb, threshold){
+  var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
+    .updateMask(image13.gt(threshold));
+  return reefProbMasked;
+    };
 
 
-// var reefProb = reefVisualiser(image13, 0.7)
-// Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:1}, 'prob reef occurrence')
+var reefProb = reefVisualiser(image14, 0.5)
+Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
 
 
 
 
 //Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
-Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
+Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
 //   //geometry: points,
