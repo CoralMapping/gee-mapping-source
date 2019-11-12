@@ -15,7 +15,8 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     srtm = ee.Image("CGIAR/SRTM90_V4"),
     image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen3_prob_S30_v8_gridID_a"),
     ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8"),
-    image14 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v8_gridID_TEST");
+    image14 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v8_gridID_TEST"),
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 Map.setOptions('SATELLITE')
@@ -68,15 +69,15 @@ var viriPlasma =  [
 "fbcc27",
 "f0f921"
 ];
-
+Map.addLayer(image14)
 var reefVisualiser = function (reefProb, threshold){
   var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
-    .updateMask(image13.gt(threshold));
+    .updateMask(reefProb.gt(threshold));
   return reefProbMasked;
     };
 
 
-var reefProb = reefVisualiser(image14, 0.5)
+var reefProb = reefVisualiser(image14, 70)
 Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
 
 
@@ -98,3 +99,26 @@ Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 //     var feat = feature.simplify(10);
 //     return feat });
 // Map.addLayer(simple, {color:'green'}, 'vector')
+
+// If running as probability
+var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})})//reef
+var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}) //other (mudflat, land, water)
+var trainingSet = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet.size(), 'training set size' )
+Map.addLayer(trainingPoints_1, {color:'aqua'}, 'training set: reef')
+Map.addLayer(trainingPoints_0, {color:'orange'}, 'training set: not reef')
+
+
+function sieve(image,mmu){
+  var connected = image.connectedPixelCount(mmu+2);
+  var elim = connected.gte(mmu);//.or(image.eq(0));
+  var mode = image.focal_mode(mmu/2,'circle','meters');
+  mode = mode.mask(image.mask());
+  var filled = image.where(elim.not(),mode);
+  return filled;
+}
+
+
+var pp = sieve(reefProb.gt(0).selfMask(), 500)
+Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',true, 1);// radius == 3
