@@ -1,15 +1,15 @@
-var table = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_3"),
-    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_1"),
-    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_2"),
-    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_3"),
-    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_4"),
-    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_5"),
-    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_6"),
-    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_7"),
-    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_8"),
-    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_9"),
-    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_a"),
-    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskCovariateData_v7_grid_b");
+var table = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_3"),
+    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_1"),
+    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_2"),
+    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_3"),
+    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_4"),
+    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_5"),
+    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_6"),
+    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_7"),
+    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_8"),
+    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_9"),
+    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_a"),
+    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_b");
 
 
 Map.setOptions('SATELLITE')
@@ -41,7 +41,7 @@ print (notNull.size(), 'null')
 Export.table.toAsset({
   collection:covariates,
   description: 'exportReefCovariates',
-  assetId: 'projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7'
+  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9'
 });
 
 
