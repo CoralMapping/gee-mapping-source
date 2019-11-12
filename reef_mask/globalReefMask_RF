@@ -30,30 +30,30 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
 ////////////////////////////////////
 
 
-// var grid = grid
-//     .map(
-//       function(feature) {
-//         return feature.set({gridID:feature.id().slice(19,20)});
-//   });
-// print (grid, 'gridCentroid')
+var grid = grid
+    .map(
+      function(feature) {
+        return feature.set({gridID:feature.id().slice(19,20)});
+  });
+print (grid, 'gridCentroid')
 
-// var id = 'b' // 0:9, a,b
-// var aoi = grid.filterMetadata('gridID', 'equals', id)
-// Map.addLayer(grid)
-// Map.addLayer(aoi, {color:'yellow'}, 'aoi')
-// Map.centerObject(grid)
+var id = 'b' // 0:9, a,b
+var aoi = grid.filterMetadata('gridID', 'equals', id)
+Map.addLayer(grid)
+Map.addLayer(aoi, {color:'yellow'}, 'aoi')
+Map.centerObject(grid)
 
-var id = 'TEST'
-var aoi = GBR_Test 
-Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
-Map.centerObject(aoi);
+// var id = 'TEST'
+// var aoi = GBR_Test 
+// Map.addLayer(aoi, {color: 'red'}, 'aoi', false);
+// Map.centerObject(aoi);
 var lsVis = {min: 0, max: 128, bands: ['Red', 'Green_median', 'Blue_median']};
 //Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 
 //Map.setCenter(12.0087, -4.5343, 12);
 
 var globOptions = { 
-  versionID: '_v8', //file name prefix
+  versionID: '_v9', //file name prefix
   outFolder: 'reefsOut',
   mapDebug: false, // set to true to add all layers of the map
   startDate: '2016-01-01',
