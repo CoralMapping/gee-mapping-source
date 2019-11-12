@@ -84,7 +84,7 @@ var reefVisualiser = function (reefProb, threshold){
 var reefProb = ee.ImageCollection([image, image2, image3]).mean().clip(aoi);
 Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
 
-
+// Add WCMCM data
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 
 // Add Training Data
