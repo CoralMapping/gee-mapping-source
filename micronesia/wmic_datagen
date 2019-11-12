@@ -110,8 +110,9 @@ var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.upda
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
 
-var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-//var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+// define it if it's a normal shape, otherwise draw it
+//var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
