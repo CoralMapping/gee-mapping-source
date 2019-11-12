@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([178.14674377441406, -18.28151823530889]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787600416741807]),
     eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -90,7 +90,7 @@ var vars = {
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  small_object_filter: 50, // size in pixels (output scale) for small object removal
+  //small_object_filter: 50, // size in pixels (output scale) for small object removal
   
   /*// add relative band brightness to predictor variables?
   use_brightness: true, <<----- now done in the *_datagen script */
@@ -161,7 +161,7 @@ if (vars.trim_training_data) {
 
 print("Number of training samples:", training_data.size())
 
-Map.centerObject(map_centre, 11)
+Map.centerObject(map_centre, 14)
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
 
 
