@@ -1,21 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
-    image = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    image2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
-    image3 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_7"),
-    image4 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_6"),
-    image5 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_4"),
-    image6 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_3"),
-    image7 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_5"),
-    image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_3"),
-    image9 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_2"),
-    image10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_1"),
-    image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
-    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
     srtm = ee.Image("CGIAR/SRTM90_V4"),
     image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen3_prob_S30_v8_gridID_a"),
     ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8"),
-    image14 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v8_gridID_TEST"),
     predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
@@ -30,17 +17,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image9 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_8"),
     image10 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_9"),
     image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_a"),
-    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b"),
-    
-
-
-
-
-
-
-
-
-
+    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b")
 
 Map.setOptions('SATELLITE')
 Map.setCenter (149.4, -19.8,11)
@@ -99,10 +76,8 @@ var reefVisualiser = function (reefProb, threshold){
   return reefProbMasked;
     };
 
-
-var reefProb = reefVisualiser(image14, 30)
-Map.addLayer(reefProb, {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
-
+var reefProb = ee.ImageCollection([image, image2, image3]).mean()
+Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
 
 
 
@@ -129,8 +104,8 @@ var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(functi
 var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}) //other (mudflat, land, water)
 var trainingSet = trainingPoints_1.merge(trainingPoints_0)
 print (trainingSet.size(), 'training set size' )
-Map.addLayer(trainingPoints_1, {color:'aqua'}, 'training set: reef')
-Map.addLayer(trainingPoints_0, {color:'orange'}, 'training set: not reef')
+Map.addLayer(trainingPoints_1, {color:'aqua'}, 'training set: reef', false)
+Map.addLayer(trainingPoints_0, {color:'orange'}, 'training set: not reef', false)
 
 
 function sieve(image,mmu){
@@ -143,5 +118,5 @@ function sieve(image,mmu){
 }
 
 
-var pp = sieve(reefProb.gt(0).selfMask(), 500)
-Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',true, 1);// radius == 3
+var pp = sieve(reefProb.gt(0).selfMask(), 1000)
+Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',false, 0.5);// radius == 3
