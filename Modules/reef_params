@@ -262,5 +262,6 @@ exports = {
   fiji_htv2: fiji_htv2,
   fiji_htcoast: fiji_htcoast,
   fiji_htocean: fiji_htocean,
-  swpac: swpac
+  swpac: swpac,
+  wmic: wmic
 }
