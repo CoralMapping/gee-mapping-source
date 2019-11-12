@@ -20,7 +20,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b")
 
 Map.setOptions('SATELLITE')
-Map.setCenter (149.4, -19.8,11)
+//Map.setCenter (149.4, -19.8,11)
 
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
@@ -69,36 +69,25 @@ var viriPlasma =  [
 "fbcc27",
 "f0f921"
 ];
-//Map.addLayer(image14)
+var landMask = ee.Image(1).where(srtm.gte(0), 0);
+
+  //161: var finalMask = coastMask.multiply(etopoMask).rename('datamask').byte();//.updateMask(srtm); // may sometimes be necessary to mask to 0m elevation
+
 var reefVisualiser = function (reefProb, threshold){
   var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
-    .updateMask(reefProb.gt(threshold));
+    .updateMask(reefProb.gt(threshold))
+    .updateMask(landMask);
   return reefProbMasked;
-    };
+};
 
-var reefProb = ee.ImageCollection([image, image2, image3]).mean()
-Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence')
+// merge into imageCollection
+var reefProb = ee.ImageCollection([image, image2, image3]).mean().clip(aoi);
+Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
 
 
-
-//Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
-// var vector = finalOut.addBands(finalOut).reduceToVectors({
-//   reducer: "max",
-//   //geometry: points,
-//   geometryType: "polygon",
-//   bestEffort: true,
-//   eightConnected: false,
-//   geometry: aoi,
-//   scale: 100});
-  
-// //Map.addLayer(vector, {color:'white'}, 'vector')
-// var simple = vector.map(function (feature) {
-//     var feat = feature.simplify(10);
-//     return feat });
-// Map.addLayer(simple, {color:'green'}, 'vector')
 
-// If running as probability
+// Add Training Data
 var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
 var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})})//reef
 var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}) //other (mudflat, land, water)
@@ -108,15 +97,18 @@ Map.addLayer(trainingPoints_1, {color:'aqua'}, 'training set: reef', false)
 Map.addLayer(trainingPoints_0, {color:'orange'}, 'training set: not reef', false)
 
 
-function sieve(image,mmu){
-  var connected = image.connectedPixelCount(mmu+2);
-  var elim = connected.gte(mmu);//.or(image.eq(0));
-  var mode = image.focal_mode(mmu/2,'circle','meters');
-  mode = mode.mask(image.mask());
-  var filled = image.where(elim.not(),mode);
-  return filled;
-}
+
+// PostProcessing
+
+// function sieve(image,mmu){
+//   var connected = image.connectedPixelCount(mmu+2);
+//   var elim = connected.gte(mmu);//.or(image.eq(0));
+//   var mode = image.focal_mode(mmu/2,'circle','meters');
+//   mode = mode.mask(image.mask());
+//   var filled = image.where(elim.not(),mode);
+//   return filled;
+// }
 
 
-var pp = sieve(reefProb.gt(0).selfMask(), 1000)
-Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',false, 0.5);// radius == 3
+// var pp = sieve(reefProb.gt(0).selfMask(), 1000)
+// Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',false, 0.5);// radius == 3
