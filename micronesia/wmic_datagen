@@ -361,6 +361,20 @@ Export.table.toDrive({
 
 // export if specified in input params
 if (vars.do_export) {
+  Map.addLayer(export_geom, {}, "export geometry", true)
+  
+  Export.image.toAsset({
+    image: all_data,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    scale: vars.export_scale,
+    region: export_geom,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  /*
+  
   // add raster flag for either side of dateline
   var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
   var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
@@ -391,5 +405,7 @@ if (vars.do_export) {
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mean'},
   })
+  
+  */
   
 }
