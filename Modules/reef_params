@@ -231,7 +231,7 @@ var wmic = {
   asset: "projects/coral_atlas/Micronesia/",
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/Micronesia/wm_low_tide_sr/west_micronesia_low_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic",
-  depth: "west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic_DEPTH",
+  depth: "projects/coral_atlas/Micronesia/west_micronesia_high_tide_depth/west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic_DEPTH",
   pixels: ["projects/coral_atlas/Micronesia/in_out/wmic_pixels"],
   segments: ["projects/coral_atlas/Micronesia/in_out/wmic_segmentation"],
   waves: "",
