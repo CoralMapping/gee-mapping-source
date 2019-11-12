@@ -13,11 +13,10 @@ var wcmcReefs = ee.FeatureCollection("users/murrnick/global-reefs/existingData/W
           [150.38745119326597, -21.272862556548375],
           [150.38745119326597, -18.00367598062379]]], null, false),
     lsFootprint = ee.FeatureCollection("projects/coral_atlas/reefMask/globalLandsatFootprint"),
-    ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8"),
     grid = ee.FeatureCollection("projects/coral_atlas/reefMask/reefGrid60degree"),
-    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/reefMaskTrainingLibrary_v7"),
     trainingData = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskTrainingData_v7"),
-    mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature");
+    mudflatData = ee.FeatureCollection("users/murrnick/tidalFlat/archivedData/globalMudflatTrainingPoints_Nature"),
+    ls8 = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Classification
@@ -139,11 +138,12 @@ var topoMask = topoMask.updateMask(topoMask).clip(aoi).select('bedrock');
 //Map.addLayer(trainComposite1)
 // FINAL MASK
 var trainComposite = trainComposite1
-  .addBands(ls8.normalizedDifference(['NIR', 'Red']).rename(['NDVI']))
-  .addBands(ls8.normalizedDifference(['Green', 'NIR']).rename(['NDWI']))
-  .addBands(ls8.select('Blue').divide(ls8.select('NIR')).rename(['WBI']))
-  .addBands(ls8.select('Blue').subtract(ls8.select('Red')).rename(['BR']))
-  .addBands(ls8.normalizedDifference(['Blue', 'Green']).rename(['BG']))
+  .addBands(ls8.normalizedDifference(['NIR_intMn2575', 'Red_intMn2575']).rename(['NDVI']))
+  .addBands(ls8.normalizedDifference(['Green_intMn2575', 'NIR_intMn2575']).rename(['NDWI']))
+  .addBands(ls8.select('Blue_intMn2575').divide(ls8.select('NIR_intMn2575')).rename(['WBI']))
+  .addBands(ls8.select('Blue_intMn2575').subtract(ls8.select('Red_intMn2575')).rename(['BR']))
+  .addBands(ls8.normalizedDifference(['Blue_intMn2575', 'Green_intMn2575']).rename(['BG']))
+  .addBands(ls8.select('Deepblue_intMn2575').rename(['deepBlue']))
   .addBands(ee.Image('NOAA/NGDC/ETOPO1').clip(aoi)
   .select(['bedrock'], ['etopo'])).resample('bicubic')
   ;
@@ -243,7 +243,7 @@ var finalOut = classified
 // METADATA
 // Batch mode
 // File naming
-var fileName = 'reefMask_gen4_'
+var fileName = 'reefMask_gen5_'
   .concat('prob_') //scale 
   .concat('ui8_') //scale 
   .concat('S') //scale 
@@ -280,7 +280,7 @@ print(fileName);
 Export.table.toAsset({
   collection:predictorSet,
   description: 'exportReefTrain_'.concat(id),
-  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateData_v8_grid_'.concat(id)
+  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_'.concat(id)
 });
 
 
