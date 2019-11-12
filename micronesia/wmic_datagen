@@ -282,6 +282,7 @@ if (vars.pixel_based) {
     var segmented_data_mean = run_snic(reflec
                                        .addBands(depth)
                                        //.addBands(waves).addBands(slope)
+                                       .updateMask(depth_mask)
                                        )
                                        .regexpRename('_mean', '')
     Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
