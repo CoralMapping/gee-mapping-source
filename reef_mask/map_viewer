@@ -23,8 +23,8 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 ////////////////////////////////////
 
 
-Map.setOptions('SATELLITE')
-Map.setCenter (147.1, -17.5,10)
+//Map.setOptions('SATELLITE')
+//Map.setCenter (147.1, -17.5,10)
 
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
@@ -40,8 +40,12 @@ Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
 Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", true)
 Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 */
-// reef mask layer
-Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+// Landsat 8 + WCMC + random forest reef mask layer
+var RFmask = ee.ImageCollection(image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13)
+                    .mosaic()
+Map.addLayer(RFmask.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+
+/*Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image2.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image3.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image4.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
@@ -53,11 +57,32 @@ Map.addLayer(image9.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1
 Map.addLayer(image10.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image11.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image12.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
-Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)*/
 
-//Map.addLayer(image2, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+// Planet visual + milenium + FCNN
+var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic()
+var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic()
+Map.addLayer(CNNreefProbs.clip(aoi), {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'CNN reef probabilities', true, 0.7)
+Map.addLayer(CNNreefPreds.clip(aoi), {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'CNN reef predictions', true, 0.7)
+
+
+// Add some other data
+
+// get mappign regions from GCS bucket
+
+
+var geojsonstring = ee.Blob('gs://globalmappingregions/NorthernCaribbeanBahamas.geojson.json').string()
+var json = ee.Deserializer.fromJSON(geojsonstring.getInfo())
+var mapping_region = ee.Geometry(json)
+Map.addLayer(mapping_region, {}, "Mapping region outline", false);
+
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc')
+
 Map.addLayer(planet_mask, {color: 'grey'}, 'Planet mask')
+
+
+
+
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
 //   //geometry: points,
