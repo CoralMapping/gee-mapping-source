@@ -1,7 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var sentinel = ee.ImageCollection("COPERNICUS/S2"),
-    depth = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth"),
-    fiji_square = 
+    wmic_square = 
     /* color: #d63000 */
     /* displayProperties: [
       {
@@ -9,10 +8,11 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2"),
       }
     ] */
     ee.Geometry.Polygon(
-        [[[176.63618326092933, -15.647431003809402],
-          [176.63618326092933, -24.039498288169224],
-          [181.87666177655427, -24.039498288169224],
-          [181.87666177655427, -15.647431003809402]]], null, false);
+        [[[130.44965982342933, 21.388577235983],
+          [130.44965982342933, 1.0183160427863818],
+          [163.72724771405433, 1.0183160427863818],
+          [163.72724771405433, 21.388577235983]]], null, false),
+    dove = ee.Image("projects/coral_atlas/Micronesia/wm_high_tide_sr/west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // #####################################################
 // Generate cloud masked sentinel-2 mosaic for West Micronesia
@@ -21,12 +21,12 @@ var sentinel = ee.ImageCollection("COPERNICUS/S2"),
 var do_export = true
 
 // define a mask for output imagery
-var depth_mask = depth.gte(-1).focal_mode(3)
+var dove_mask = dove.select(1).gt(0)
 
 // define (convex hull) region to export image data
-var export_convhull = depth_mask.gt(0)
-                        .reproject({crs: "EPSG:3857", scale: 1000})
-                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:3857", geometry: fiji_square})
+var export_convhull = dove_mask
+                        //.reproject({crs: "EPSG:3857", scale: 1000})
+                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:3857", geometry: wmic_square})
                         .geometry()
                         .convexHull({maxError: 100})
 
@@ -39,7 +39,7 @@ function maskS2clouds(image) {
   // Both flags should be set to zero, indicating clear conditions.
   var mask = qa.bitwiseAnd(cloudBitMask).eq(0).and(
              qa.bitwiseAnd(cirrusBitMask).eq(0))
-  return image.updateMask(mask).updateMask(depth_mask)
+  return image.updateMask(mask).updateMask(dove_mask)
 }
 
 var s2_col = sentinel
@@ -49,13 +49,13 @@ var s2_col = sentinel
   
 var reflec = s2_col
   .median() // .reduce(ee.Reducer.median())
-  .updateMask(depth_mask)
+  .updateMask(dove_mask)
   .select(["B1", "B2", "B3", "B4", "B5"])
 
 
-Map.addLayer(reflec, {}, 'sentinel', false)
+Map.addLayer(reflec, {min:0,max:2000}, 'sentinel', false)
 Map.addLayer(export_convhull, {}, 'export conv hull', false)
-Map.addLayer(depth_mask, {}, 'depth mask', false)
+Map.addLayer(dove_mask, {}, 'Dove data range', false)
 
 if (do_export) {
   Export.image.toAsset({
