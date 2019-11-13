@@ -26,7 +26,7 @@ var dove_mask = dove.select(1).gt(0)
 // define (convex hull) region to export image data
 var export_convhull = dove_mask
                         //.reproject({crs: "EPSG:3857", scale: 1000})
-                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:3857", geometry: wmic_square})
+                        .reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, crs: "EPSG:4326", geometry: wmic_square})
                         .geometry()
                         .convexHull({maxError: 100})
 
@@ -61,9 +61,9 @@ if (do_export) {
   Export.image.toAsset({
     image: reflec, 
     description: 'sentinel_2_export',
-    assetId: 'fiji/fiji_sentinel2', 
+    assetId: 'Micronesia/in_out/wmic_sentinel2', 
     region: export_convhull,
     scale: 10,
-    crs: "EPSG:3460",
+    crs: "EPSG:4326",
     maxPixels: 1e13})
 }
