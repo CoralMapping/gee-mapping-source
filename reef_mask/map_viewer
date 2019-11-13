@@ -14,7 +14,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
     image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI"),
     planet_mask = ee.FeatureCollection("projects/coral_atlas/global_datasets/20181001_GlobalCoralMask_v1"),
-    cari_baha = /* color: #98ff00 */ee.Feature(
+    cari_baha = /* color: #e8fff0 */ee.Feature(
         ee.Geometry.Polygon(
             [[[-83.74802887997924, 29.797979355890877],
               [-83.76670188165156, 29.806040314801056],
@@ -91,7 +91,42 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
               [-83.74802887997924, 29.797979355890877]]], null, false),
         {
           "system:index": "0"
-        });
+        }),
+    trimmer = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
+        [[[[-86.94846124811284, 30.197739678882293],
+           [-87.02536554498784, 29.826723371994056],
+           [-85.91574640436284, 28.79211111152925],
+           [-84.65231866998784, 27.29895484854458],
+           [-84.27878351373784, 25.923855481261555],
+           [-84.19089288873784, 24.652402645724507],
+           [-83.30100031061284, 24.061907157589907],
+           [-82.60886163873784, 24.17220809153051],
+           [-83.19113702936284, 24.63243109036835],
+           [-82.85056085748784, 24.93166813983205],
+           [-82.31223077936284, 25.100914511942964],
+           [-82.12546320123784, 25.369236415498303],
+           [-82.25729913873784, 25.943615500466546],
+           [-82.67477960748784, 26.485710823543403],
+           [-82.96042413873784, 26.937147834777992],
+           [-83.27902765436284, 27.48429155849791],
+           [-83.41086359186284, 27.93170933272885],
+           [-83.45480890436284, 28.3772823807667],
+           [-83.44902460844042, 28.555642900431213],
+           [-83.53124632245544, 28.69538967311156],
+           [-83.94919366998784, 28.984495451509854],
+           [-83.99289089519328, 29.22912887396694],
+           [-84.20187921686284, 29.387338175140105],
+           [-84.60326955601545, 29.306319242097928],
+           [-84.89401788873784, 29.157336013328273],
+           [-85.49826593561284, 29.16692976189759],
+           [-85.79489679498784, 29.349040441709306],
+           [-85.76193781061284, 29.79812625715408],
+           [-86.28928156061284, 30.112243788872775]]],
+         [[[-81.09510909245853, 30.116041826837737],
+           [-80.19423018620853, 28.68518082963858],
+           [-80.09535323308353, 27.88219146078193],
+           [-79.67237960027103, 27.249150306505225],
+           [-79.49659835027103, 30.18729080745607]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -155,8 +190,13 @@ Map.addLayer(planet_mask, {color: 'grey'}, 'Original Planet Dove acquisition mas
 
 
 // add the potential upated "tightened" mask to reduce un-needed Planet acquisition
-var buffered_RFmask = RFmask.eq(3).selfMask().focal_mode(10)
-Map.addLayer(buffered_RFmask.reproject("EPSG:4326").atScale(100), {}, "Buffered RF mask", false)
+var buffered_RFmask = RFmask.eq(3).selfMask().focal_mode(3)
+Map.addLayer(buffered_RFmask.reproject({crs:"EPSG:4326", scale: 500}), {}, "Buffered RF mask", false)
+
+
+// add the geom that trims out the manual trimming polys
+var manual_mask = planet_mask.geometry().difference(trimmer, 100)
+Map.addLayer(manual_mask, {color: 'grey'}, 'Modified Planet Dove acquisition mask', false)
 
 
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
