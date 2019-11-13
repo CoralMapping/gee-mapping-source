@@ -20,7 +20,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b")
 
 Map.setOptions('SATELLITE')
-Map.setCenter (149.4, -19.8,11)
+//Map.setCenter (149.4, -19.8,11)
 
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
@@ -81,8 +81,8 @@ var reefVisualiser = function (reefProb, threshold){
 };
 
 // merge into imageCollection
-var reefProb = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7]).mean().clip(aoi);
-Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
+var reefProb = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11,image12]).mean().clip(aoi);
+Map.addLayer(reefVisualiser(reefProb, 81), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
 
 // Add WCMCM data
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
