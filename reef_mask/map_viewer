@@ -195,7 +195,7 @@ Map.addLayer(buffered_RFmask.reproject({crs:"EPSG:4326", scale: 500}), {}, "Buff
 
 
 // add the geom that trims out the manual trimming polys
-var manual_mask = planet_mask.geometry().difference(trimmer, 100)
+var manual_mask = planet_mask.filterBounds(cari_baha.geometry()).geometry().difference(trimmer, 100)
 Map.addLayer(manual_mask, {color: 'grey'}, 'Modified Planet Dove acquisition mask', false)
 
 
