@@ -185,20 +185,20 @@ var reefVisualiser = function (reefProb, threshold){
 
 
 // Landsat 8 + WCMC + random forest reef mask layer
-var RFmask = ee.ImageCollection([srtm, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13])
+var RFmask = ee.ImageCollection([mask, mask2, mask3, mask4, mask5, mask6, mask7, mask8, mask9, mask10, mask11, mask12, mask13])
                     .mosaic().clip(aoi)
 Map.addLayer(RFmask, {palette: viriPlasma, min:[0], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
 
-var RFprobs = ee.ImageCollection([srtm, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12])
+var RFprobs = ee.probsCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12])
                     .mosaic().clip(aoi)
-Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
+Map.addLayer(reefVisualiser(RFprobs,100), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
 
 
 // Planet visual + milenium + FCNN
 var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().clip(aoi)
 var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic().clip(aoi)
-Map.addLayer(CNNreefProbs, {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
+Map.addLayer(reefVisualiser(CNNreefProbs,100), {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
 Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
 
 
