@@ -122,7 +122,7 @@ Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 // Landsat 8 + WCMC + random forest reef mask layer
 var RFmask = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13])
                     .mosaic()
-Map.addLayer(RFmask.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
+Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
 /*Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image2.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
