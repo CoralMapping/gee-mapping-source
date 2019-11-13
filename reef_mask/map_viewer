@@ -136,11 +136,11 @@ var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reef
     probs9 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_8"),
     probs10 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_9"),
     probs11 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_a"),
-    probs12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b")
+    probs12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b");
 
 var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
     mask2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
-    mask3 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
+    //mask3 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_0"),
     mask4 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_1"),
     mask5 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_2"),
     mask6 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_3"),
@@ -150,7 +150,7 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_
     mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_7"),
     mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
     mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
-    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI")
+    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI");
 
 
 //Map.setOptions('SATELLITE')
@@ -185,22 +185,27 @@ var reefVisualiser = function (reefProb, threshold){
 
 
 // Landsat 8 + WCMC + random forest reef mask layer
-var RFmask = ee.ImageCollection([mask, mask2, mask3, mask4, mask5, mask6, mask7, mask8, mask9, mask10, mask11, mask12, mask13])
+var RFmask = ee.ImageCollection([mask, mask2, /*mask3,*/ mask4, mask5, mask6, mask7, mask8, mask9, mask10, mask11, mask12, mask13])
                     .mosaic().clip(aoi)
-Map.addLayer(RFmask, {palette: viriPlasma, min:[0], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
+Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
-var RFprobs = ee.probsCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12])
+var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12])
                     .mosaic().clip(aoi)
-Map.addLayer(reefVisualiser(RFprobs,100), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
+Map.addLayer(reefVisualiser(RFprobs,30), {palette: viriPlasma, min:[1], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
 
 
 
 // Planet visual + milenium + FCNN
 var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().clip(aoi)
 var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic().clip(aoi)
-Map.addLayer(reefVisualiser(CNNreefProbs,100), {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
+Map.addLayer(reefVisualiser(CNNreefProbs,30), {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probabilities', false, 0.7)
 Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
 
+
+// combined  predictions
+var RFpCNN = CNNreefProbs.gt(60).and(RFprobs.gt(60)).selfMask().add(2).unmask(2)
+var RFpCNN_mask = RFpCNN.where(RFmask.eq(1), 1)
+Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
 
 // Add some other data
 
