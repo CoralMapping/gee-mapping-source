@@ -43,8 +43,9 @@ var id = 'c' // 0:9, a,b
 
 
 // Fiji
-var aoi = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7)
-//var export_geom_west = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7)
+// var aoi = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7) //east fiji
+//var aoi = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7) //west fiji
+var aoi = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
 
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
 Map.centerObject(aoi)
