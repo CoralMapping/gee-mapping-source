@@ -163,6 +163,7 @@ var viriPlasma = ['440154','462372','404284','355d8c','2a768e','21908d','26a784'
 // bg data
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8");
+var ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8")
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false);
 
@@ -197,7 +198,7 @@ Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]
 // Planet visual + milenium + FCNN
 var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().clip(aoi)
 var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic().clip(aoi)
-Map.addLayer(CNNreefProbs, {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
+Map.addLayer(CNNreefProbs, {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
 Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
 
 
