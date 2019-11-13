@@ -13,7 +13,19 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
     image2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
     image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
     image13 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_FIJI"),
-    planet_mask = ee.FeatureCollection("projects/coral_atlas/global_datasets/20181001_GlobalCoralMask_v1");
+    planet_mask = ee.FeatureCollection("projects/coral_atlas/global_datasets/20181001_GlobalCoralMask_v1"),
+    test = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-134.838671875, 40.40069505477473],
+          [-134.838671875, 39.457146431875564],
+          [-132.99296875, 39.457146431875564],
+          [-132.99296875, 40.40069505477473]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -22,7 +34,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 // Mitch Lyons - m.lyons@gmail.com
 // Nick Fabina
 ////////////////////////////////////
-
+print(test.toGeoJSONString())
 
 //Map.setOptions('SATELLITE')
 //Map.setCenter (147.1, -17.5,10)
@@ -71,10 +83,9 @@ Map.addLayer(CNNreefPreds.clip(aoi), {palette: ['darkblue', 'Orange'], min:[0], 
 
 var carib_baha_json = 
           {
-            "geometry" : {
-              "type" : "Polygon",
-              "coordinates" : [
-                [
+            "type":"Polygon",
+            "coordinates": [
+              [
                   [
                     -83.748028879979245,
                     29.797979355890877
@@ -367,10 +378,11 @@ var carib_baha_json =
                     -83.748028879979245,
                     29.797979355890877
                   ]
-                ]
-              ]
-            }
-          }
+                ]],
+          "geodesic":false,
+          "evenOdd":true
+}
+
 
 var cari_baha = ee.Feature(carib_baha_json)
 
