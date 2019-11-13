@@ -20,6 +20,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 // Nov 2019
 // Nick Murray - nicholas.murray@jcu.edu.au
 // Mitch Lyons - m.lyons@gmail.com
+// Nick Fabina
 ////////////////////////////////////
 
 
@@ -34,16 +35,16 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
 var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8");
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
-Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false) ;
 
 /*// e.g. mappign region data
 Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", true)
 Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 */
 // Landsat 8 + WCMC + random forest reef mask layer
-var RFmask = ee.ImageCollection(image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13)
+var RFmask = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13])
                     .mosaic()
-Map.addLayer(RFmask.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
+Map.addLayer(RFmask.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', false, 0.7)
 
 /*Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
 Map.addLayer(image2.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
@@ -62,8 +63,8 @@ Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[
 // Planet visual + milenium + FCNN
 var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic()
 var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic()
-Map.addLayer(CNNreefProbs.clip(aoi), {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'CNN reef probabilities', true, 0.7)
-Map.addLayer(CNNreefPreds.clip(aoi), {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'CNN reef predictions', true, 0.7)
+Map.addLayer(CNNreefProbs.clip(aoi), {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'CNN reef probabilities', false, 0.7)
+Map.addLayer(CNNreefPreds.clip(aoi), {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'CNN reef predictions', false, 0.7)
 
 
 // Add some other data
