@@ -81,7 +81,7 @@ var reefVisualiser = function (reefProb, threshold){
 };
 
 // merge into imageCollection
-var reefProb = ee.ImageCollection([image, image2, image3]).mean().clip(aoi);
+var reefProb = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7]).mean().clip(aoi);
 Map.addLayer(reefVisualiser(reefProb, 30), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
 
 // Add WCMCM data
