@@ -195,10 +195,19 @@ Map.addLayer(buffered_RFmask.reproject({crs:"EPSG:4326", scale: 500}), {}, "Buff
 
 
 // add the geom that trims out the manual trimming polys
-var manual_mask = planet_mask.filterBounds(cari_baha.geometry()).geometry().difference(trimmer, 100)
+var manual_mask = planet_mask.filterBounds(cari_baha.geometry()).geometry().difference(trimmer, 100).intersection(cari_baha.geometry(), 100)
 Map.addLayer(manual_mask, {color: 'grey'}, 'Modified Planet Dove acquisition mask', false)
 
+Export.table.toCloudStorage({
+  collection: ee.Feature(manual_mask),
+  description: "manual mask export",
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/updated_region_masks/nthcari_baha_mask_update',
+  fileFormat: 'GeoJSON'
+})
 
+
+coral-atlas-data-pipeline/coral-gee-export-bucket/updated_region_masks
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
 //   //geometry: points,
