@@ -37,11 +37,18 @@ var grid = grid
   });
 print (grid, 'gridCentroid')
 
-var id = 'b' // 0:9, a,b
-var aoi = grid.filterMetadata('gridID', 'equals', id)
-Map.addLayer(grid)
+var id = 'c' // 0:9, a,b
+// var aoi = grid.filterMetadata('gridID', 'equals', id)
+// Map.addLayer(grid)
+
+
+// Fiji
+var aoi = ee.Geometry.Rectangle(-179.99998,-21.1,-178,-15.7)
+//var export_geom_west = ee.Geometry.Rectangle(176.8,-19.3,179.99998,-15.7)
+
 Map.addLayer(aoi, {color:'yellow'}, 'aoi')
-Map.centerObject(grid)
+Map.centerObject(aoi)
+
 
 // var id = 'TEST'
 // var aoi = GBR_Test 
