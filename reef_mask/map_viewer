@@ -199,7 +199,7 @@ var manual_mask = planet_mask.filterBounds(cari_baha.geometry()).geometry().diff
 Map.addLayer(manual_mask, {color: 'grey'}, 'Modified Planet Dove acquisition mask', false)
 
 Export.table.toCloudStorage({
-  collection: ee.Feature(manual_mask),
+  collection: ee.FeatureCollection(manual_mask),
   description: "manual_mask_export",
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/updated_region_masks/nthcari_baha_mask_update',
