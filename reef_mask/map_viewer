@@ -207,7 +207,6 @@ Export.table.toCloudStorage({
 })
 
 
-coral-atlas-data-pipeline/coral-gee-export-bucket/updated_region_masks
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
 //   reducer: "max",
 //   //geometry: points,
