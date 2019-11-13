@@ -121,7 +121,7 @@ Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 */
 // Landsat 8 + WCMC + random forest reef mask layer
 var RFmask = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13])
-                    .mosaic()
+                    .mosaic().clip(aoi)
 Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
 /*Map.addLayer(image.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)
@@ -139,10 +139,10 @@ Map.addLayer(image12.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[
 Map.addLayer(image13.clip(aoi), {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'reefMask', true, 0.7)*/
 
 // Planet visual + milenium + FCNN
-var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic()
-var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic()
-Map.addLayer(CNNreefProbs.clip(aoi), {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
-Map.addLayer(CNNreefPreds.clip(aoi), {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
+var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().clip(aoi)
+var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic().clip(aoi)
+Map.addLayer(CNNreefProbs, {palette: ['ffffff', 'ff0000'], min:[0], max:[100]}, 'Planet CNN reef probs', false, 0.7)
+Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
 
 
 // Add some other data
@@ -155,7 +155,8 @@ Map.addLayer(planet_mask, {color: 'grey'}, 'Original Planet Dove acquisition mas
 
 
 // add the potential upated "tightened" mask to reduce un-needed Planet acquisition
-
+var buffered_RFmask = RFmask.eq(3).selfMask().focal_mode(10)
+Map.addLayer(buffered_RFmask.reproject("EPSG:4326").atScale(100), {}, "Buffered RF mask", false)
 
 
 // var vector = finalOut.addBands(finalOut).reduceToVectors({
