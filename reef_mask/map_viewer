@@ -154,7 +154,8 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_
     mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c");
 
 // weird glitch
-mask13 = mask13.divide(100).where(mask13.eq(255), 3)
+mask13 = mask13.divide(100)
+mask13 = mask13.where(mask13.eq(2.55), 3).uint8()
 
 
 //Map.setOptions('SATELLITE')
