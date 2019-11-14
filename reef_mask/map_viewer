@@ -137,7 +137,7 @@ var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reef
     probs10 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_9"),
     probs11 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_a"),
     probs12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b"),
-    probs_eastfiji = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_c");
+    probs13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_c");
 
 var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
     mask2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_b"),
@@ -151,7 +151,10 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_
     mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_7"),
     mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
     mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
-    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c").divide(100);
+    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c");
+
+// weird glitch
+mask13 = mask13.divide(100).where(mask13.eq(255), 3)
 
 
 //Map.setOptions('SATELLITE')
@@ -190,7 +193,7 @@ var RFmask = ee.ImageCollection([mask, mask2, /*mask3,*/ mask4, mask5, mask6, ma
                     .mosaic().clip(aoi)
 Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
-var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12])
+var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12, probs13])
                     .mosaic().clip(aoi)
 Map.addLayer(reefVisualiser(RFprobs,30), {palette: viriPlasma, min:[1], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
 
