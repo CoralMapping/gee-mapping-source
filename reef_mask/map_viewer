@@ -121,7 +121,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 // Nov 2019
 // Nick Murray - nicholas.murray@jcu.edu.au
 // Mitch Lyons - m.lyons@gmail.com
-// Nick Fabina
+// Nick Fabina - 
 ////////////////////////////////////
 
 // load RF probabilities/mask via strings, so easy to update
