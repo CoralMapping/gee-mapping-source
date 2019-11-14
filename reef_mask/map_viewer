@@ -161,7 +161,7 @@ mask13 = mask13.where(mask13.eq(2.55), 3).uint8()
 //Map.setOptions('SATELLITE')
 Map.setCenter(-83.182, 27.882, 7)
 
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+//var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var viriPlasma = ['440154','462372','404284','355d8c','2a768e','21908d','26a784','47bd6f','79d051','b8de30','fde725',"0d0887","3d049b","6903a5","8d0fa1","ae2891","cb4679","df6363","f0844c","faa638","fbcc27","f0f921"];
 
 
