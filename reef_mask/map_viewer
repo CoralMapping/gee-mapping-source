@@ -155,7 +155,7 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_
 
 
 //Map.setOptions('SATELLITE')
-//Map.setCenter (147.1, -17.5,10)
+Map.setCenter (-83.182, 27.882)
 
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var viriPlasma = ['440154','462372','404284','355d8c','2a768e','21908d','26a784','47bd6f','79d051','b8de30','fde725',"0d0887","3d049b","6903a5","8d0fa1","ae2891","cb4679","df6363","f0844c","faa638","fbcc27","f0f921"];
@@ -204,7 +204,7 @@ Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 
 
 
 // combined  predictions
-var RFpCNN = CNNreefProbs.gt(50).and(RFprobs.gt(50)).selfMask().add(2).unmask(2)
+var RFpCNN = CNNreefProbs.gt(30).and(RFprobs.gt(30)).selfMask().add(2).unmask(2)
 var RFpCNN_mask = RFpCNN.where(landMask.eq(0), 1)
 Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
 
