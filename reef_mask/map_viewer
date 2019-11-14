@@ -151,7 +151,7 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_
     mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_7"),
     mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_8"),
     mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_9"),
-    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c");
+    mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c").divide(100);
 
 
 //Map.setOptions('SATELLITE')
