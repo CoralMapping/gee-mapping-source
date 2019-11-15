@@ -27,7 +27,7 @@ var validation =
 /*
 ############### --> need to port this over form previous GBR work
 
-TODO:
+TODO (fixing up this script):
 
 BIGGEST TODO - there's now a *_calval script, that generates training data and validation data
                   - so e.g. we will load ee.FeatureCollection('projects/coral_atlas/sw_pacific/training/swp_geo_validation'),
@@ -48,17 +48,18 @@ BIGGEST TODO - there's now a *_calval script, that generates training data and v
 
 - Fix input class selection in vars dictionary (i.e. currently inputting two identical lists == bad)
 
-- Fix how/where sampling is done whether you print accuracy or export it
+- Fix aiblity to choose number of smaples chosen, and spatial distribution
 
-- fix sampling using hard-coded EPSG to local EPSG (projected) from reef_params
-
-- trim sampling domain to geometry of valdiation data
-
-- Figure out how to do the 'confidence maps' <------- BIG COMPONENT TODO
+######
+BIG COMPONENT TODO (new implementation required)
+######
+- Figure out how to do the 'confidence maps'
     - resmapling based?
     - class based?
     - distance to field data based?
     - hybrid of all above?
+######
+######
 */
 
 
