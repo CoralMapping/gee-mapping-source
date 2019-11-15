@@ -219,6 +219,8 @@ var swpac = {
   benthic_pts: "",
   geo_train_library: "projects/coral_atlas/sw_pacific/training/swp_geo_training",
   benthic_train_library: "projects/coral_atlas/sw_pacific/training/swp_benthic_training",
+  geo_val_library: "projects/coral_atlas/sw_pacific/training/swp_geo_validation",
+  benthic_val_library: "projects/coral_atlas/sw_pacific/training/swp_benthic_validation",
   geo_map: "projects/coral_atlas/sw_pacific/",
   benthic_map: "projects/coral_atlas/sw_pacific/",
   geo_map_clean: "",
