@@ -70,12 +70,6 @@ var viriPlasma =  [
 var landMask = ee.Image(1).where(srtm.gte(0), 0);
 
 
-// merge into imageCollection
-var reefClas = ee.ImageCollection([image19, image20, image30, image40, image50, image60, image70, image80, image90, image100, image110,image120]).mean().clip(aoi);
-Map.addLayer(reefClas, {palette: ['blue', 'green', 'orange'],min:100, max:255}, 'reef classification');
-
-
-
 var reefVisualiser = function (reefProb, threshold){
   var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
     .updateMask(reefProb.gt(threshold))
@@ -86,6 +80,13 @@ var reefVisualiser = function (reefProb, threshold){
 // merge into imageCollection
 var reefProb = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11,image12]).mean().clip(aoi);
 Map.addLayer(reefVisualiser(reefProb, 81), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
+
+
+// merge into imageCollection
+var reefClas = ee.ImageCollection([image19, image20, image30, image40, image50, image60, image70, image80, image90, image100, image110,image120]).mean().clip(aoi);
+Map.addLayer(reefClas, {palette: ['brown', 'blue','aqua' ],min:100, max:255}, 'reef classification');
+
+
 
 // Add WCMCM data
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
