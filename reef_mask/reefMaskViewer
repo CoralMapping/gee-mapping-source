@@ -84,7 +84,7 @@ Map.addLayer(reefVisualiser(reefProb, 81), {palette: viriPlasma, min:0, max:100}
 
 // merge into imageCollection
 var reefClas = ee.ImageCollection([image19, image20, image30, image40, image50, image60, image70, image80, image90, image100, image110,image120]).mean().clip(aoi);
-Map.addLayer(reefClas, {palette: ['brown', 'darkblue','aqua' ],min:100, max:255}, 'reef classification', true, 0.7);
+Map.addLayer(reefClas, {palette: ['brown', 'darkblue','aqua' ],min:100, max:255}, 'reef classification', false, 0.7);
 
 
 
