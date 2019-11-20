@@ -1,0 +1,300 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var Cairns_Cooktown = ee.FeatureCollection("users/ditrag/Cairns_Cook_for_SDB"),
+    point = /* color: #1f09d6 */ee.Geometry.Point([145.45483982208532, -14.677080742523996]),
+    S2_stretch = {"opacity":1,"bands":["B3","B2","B1"],"min":0.023750752230801343,"max":0.14418989669840146,"gamma":1},
+    S2_cloud_stretch = {"opacity":1,"bands":["B3","B2","B1"],"min":16.435131780202482,"max":993.9221804727621,"gamma":1},
+    S2_Rrs_stretch = {"opacity":1,"bands":["B3","B2","B1"],"min":-0.004556948340676737,"max":0.025433596547152763,"gamma":1},
+    exp_extent = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[145.37724829729314, -14.885575922874503],
+          [145.37724829729314, -15.21711994089259],
+          [145.35527564104314, -15.468745473234087],
+          [145.37724829729314, -15.664537122390499],
+          [145.55302954729314, -16.2112224052063],
+          [145.80022193010564, -16.643273535292376],
+          [146.03093482073064, -16.86419309736203],
+          [146.24516821916814, -17.41919411799884],
+          [146.36327124651189, -17.934721035011325],
+          [146.57475806291814, -17.845852690204836],
+          [146.65990210588689, -17.830165426754984],
+          [146.79173804338689, -17.767402567331363],
+          [146.65166235979314, -17.093949188181078],
+          [146.15727759416814, -16.483906299801774],
+          [146.01445532854314, -15.903635289444447],
+          [145.89909888323064, -14.817782660745047],
+          [145.47063208635564, -14.339316946654435],
+          [145.31682349260564, -14.498920790264272],
+          [145.00920630510564, -14.679666197353855]]]),
+    cc_eomap_sr = ee.Image("users/ditrag/CC_EOMAP_sr"),
+    cc_eomap_depth = ee.Image("users/ditrag/CC_EOMAP_depth"),
+    hazeDeepWater = 
+    /* color: #98ff00 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[145.85981161097982, -16.353462270554292],
+          [145.85981161097982, -16.355109428309],
+          [145.86152822474935, -16.355109428309],
+          [145.86152822474935, -16.353462270554292]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Script to derive Multi-temporal, Above-surface (Rrs) Image Composites from Sentinel-2 L1C for coastal aquatic mapping
+
+// Global Variables 
+// Filter dates
+var start = '2015-06-01'
+var end   = '2019-10-15'
+
+//--------------------------------------------------------------------------------
+// Helper functions
+//--------------------------------------------------------------------------------
+
+// Function to divide by 10000 to rescale S2 pixel values
+function divide10000(image){
+  return image.divide(10000)
+}
+
+// Function to mask clouds using the Sentinel-2 QA band.
+// Input: original image, Output: the image after applying cloud mask
+function maskS2clouds(image) {
+  var qa = image.select('QA60');
+
+  // Bits 10 and 11 are clouds and cirrus, respectively.
+  var cloudBitMask = ee.Number(2).pow(10).int();
+  var cirrusBitMask = ee.Number(2).pow(11).int();
+
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0).and(
+             qa.bitwiseAnd(cirrusBitMask).eq(0));
+
+  // Return the masked and scaled data.
+  return image.updateMask(mask).divide(10000);
+}
+
+//Water Mask Function 
+/***
+ * Return the DN that maximizes interclass variance in B5 (in the region).
+ */
+var otsu = function(histogram) {
+    histogram = ee.Dictionary(histogram);
+
+    var counts = ee.Array(histogram.get('histogram'));
+    var means = ee.Array(histogram.get('bucketMeans'));
+    var size = means.length().get([0]);
+    var total = counts.reduce(ee.Reducer.sum(), [0]).get([0]);
+    var sum = means.multiply(counts).reduce(ee.Reducer.sum(), [0]).get([0]);
+    var mean = sum.divide(total);
+
+    var indices = ee.List.sequence(1, size);
+
+    // Compute between sum of squares, where each mean partitions the data.
+    var bss = indices.map(function(i) {
+        var aCounts = counts.slice(0, 0, i);
+        var aCount = aCounts.reduce(ee.Reducer.sum(), [0]).get([0]);
+        var aMeans = means.slice(0, 0, i);
+        var aMean = aMeans.multiply(aCounts)
+            .reduce(ee.Reducer.sum(), [0]).get([0])
+            .divide(aCount);
+        var bCount = total.subtract(aCount);
+        var bMean = sum.subtract(aCount.multiply(aMean)).divide(bCount);
+        return aCount.multiply(aMean.subtract(mean).pow(2)).add(
+            bCount.multiply(bMean.subtract(mean).pow(2)));
+    });
+
+    // Return the mean value corresponding to the maximum BSS.
+    return means.sort(bss).get([-1]);
+};
+
+
+/***
+ * Compute a threshold using Otsu method (bimodal)
+ */
+function computeThresholdUsingOtsu(image, scale, bounds, cannyThreshold, cannySigma, minValue, debug) {
+    // clip image edges
+    var mask = image.mask().gt(0).focal_min(ee.Number(scale).multiply(3), 'circle', 'meters');
+
+    // detect sharp changes
+    var edge = ee.Algorithms.CannyEdgeDetector(image, cannyThreshold, cannySigma);
+    edge = edge.multiply(mask);
+
+    // buffer around NDWI edges
+    var edgeBuffer = edge.focal_max(ee.Number(scale).multiply(1), 'square', 'meters');
+    var imageEdge = image.mask(edgeBuffer);
+
+    // compute threshold using Otsu thresholding
+    var buckets = 100;
+    var hist = ee.Dictionary(ee.Dictionary(imageEdge.reduceRegion(ee.Reducer.histogram(buckets), bounds, scale)).values().get(0));
+
+    var threshold = ee.Algorithms.If(hist.contains('bucketMeans'), otsu(hist), 0.3);
+    threshold = ee.Number(threshold)//.add(0.05)
+
+    if(debug) {
+        //Map.addLayer(edge.mask(edge), {palette:['ff0000']}, 'edges', false);
+
+        print('Threshold: ', threshold);
+
+        print(ui.Chart.image.histogram(image, bounds, scale, buckets));
+        print(ui.Chart.image.histogram(imageEdge, bounds, scale, buckets));
+        //Map.addLayer(mask.mask(mask), {palette:['000000']}, 'image mask', false);
+    }
+
+    return minValue !== 'undefined' ? threshold.max(minValue) : threshold;
+}
+
+function getEdge(mask) {
+  return mask.subtract(mask.focal_min(1))
+}
+
+// Function for Atmospheric correction using dark pixel subtraction (Haze)
+// Input: an image after applying cloud mask
+// Output: the image after removing haze
+function hazeRemovalDeepwater(image) {
+  
+  // Select the relevant bands
+  image = image.select(['B1', 'B2', 'B3', 'B4', 'B8'])
+  
+  // Combine reducers of Mean and Standard deviation, for cheaper computation
+  var reducers = ee.Reducer.mean().combine({
+    reducer2: ee.Reducer.stdDev(),
+    sharedInputs: true
+  });
+  
+  // Calculate Mean and Standard deviation by intersecting the image with deep water polygon
+  var stats = image.reduceRegion({
+    reducer: reducers,
+    bestEffort: true,
+    geometry: hazeDeepWater,
+    scale: 10,
+    maxPixels: 1e12
+  });
+  
+  // Convert the statistics into an image and concaternate it to the original image
+  image = ee.Image.cat([image, stats.toImage()])
+  
+  // Apply the expression
+  return image.expression(
+    'image - ( mean - (2 * std) )', {
+      'image': image.select(['B1', 'B2', 'B3', 'B4', 'B8']),
+      'mean': image.select(['B1_mean', 'B2_mean', 'B3_mean', 'B4_mean', 'B8_mean']),
+      'std': image.select(['B1_stdDev', 'B2_stdDev', 'B3_stdDev', 'B4_stdDev', 'B8_stdDev'])
+  });
+}
+
+// Function to shift an image to have non negative values
+function makePositive(image){
+  
+  // Calculate minimum of image
+  var min = image.reduceRegion({
+    reducer: ee.Reducer.min(),
+    geometry: result,
+    scale: 10,
+    maxPixels: 1e12
+  });
+  
+  // Subtract min from image, to relocate the min to 0
+  return image.subtract(min.toImage(image.bandNames()))
+}
+
+// Fucntion to clip an image collection
+function clipCollection(image){
+  return image.clip(result)
+}
+
+//Process to create outline out of an existing raster
+//Convert Float to Integral
+var toIntegral = cc_eomap_depth.toByte();
+//Convert Raster with Integrals to Vector
+var cc_eomap_depth_extent = toIntegral.reduceToVectors({
+  scale: 10,
+  maxPixels: 1e13
+});
+//Store it to Feature Collection
+var result = ee.FeatureCollection(cc_eomap_depth_extent);
+//Map.addLayer(result);
+
+
+// Define a boxcar or low-pass kernel.
+var boxcar = ee.Kernel.square({
+  radius: 2, units: 'pixels', normalize: true
+});
+
+//--------------------------------------------------------------------------------
+// Apply Image Corrections Successively
+//--------------------------------------------------------------------------------
+
+// Import S2A - 1C image collection
+var S2Collection = ee.ImageCollection('COPERNICUS/S2')
+    // Select relevant bands
+    .select(['B1', 'B2', 'B3', 'B4', 'B8', 'B11', 'QA60'])
+    // Filter by dates (defines as global variables)
+    .filterDate(start, end)
+    // Clip each image in the collection using Coastline geometry
+    .map(clipCollection)
+
+// Define S2 to display original image (No corrections applied)    
+var S2 = S2Collection
+    .map(divide10000)
+    .median()
+// Map.setCenter(22.8983, 40.4919, 10);
+Map.addLayer(S2, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.3}, 'Sentinel-2_uncorrected', false);
+
+// To calculate the first 20% of a set of values
+var quartReducer = ee.Reducer.percentile([20])
+
+// Apply cloud mask and take the 20% percentile
+var S2_Cloud = S2Collection
+    // Pre-filter to get less cloudy granules.
+    .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 2))
+    // Apply cloud mask
+    .map(maskS2clouds)
+    // Take 20% percentile composite, and rename the bands
+    .reduce(quartReducer)
+    .select(['B1_p20', 'B2_p20', 'B3_p20', 'B4_p20', 'B8_p20', 'B11_p20'], 
+    ['B1', 'B2', 'B3', 'B4', 'B8', 'B11']);
+
+// Display Cloud-free composite    
+Map.addLayer(S2_Cloud, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.25}, 'Sentinel-2_Cloud_corrected', false);
+
+//automatic water mask
+Map.centerObject(point, 14)
+var bounds = ee.Geometry(Map.getBounds(true))
+//insert composite image for date desired
+//var S2image = ee.Image(S2_Cloud.filterBounds(bounds.centroid(10)).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 5)).first())
+//print(image)
+//Map.addLayer(image, {bands: ['B3', 'B8', 'B3'], min:500, max:3000}, 'image')
+
+var ndwi = S2_Cloud.normalizedDifference(['B3', 'B8'])
+
+var debug = true
+var scale = 10
+var cannyThreshold = 0.9
+var cannySigma = 1
+var minValue = -0.1
+var th = computeThresholdUsingOtsu(ndwi, scale, bounds, cannyThreshold, cannySigma, minValue, debug)
+
+print(th)
+
+var S2_Mask = ndwi.mask(ndwi.gt(th))
+//Map.addLayer(S2_Mask, {palette:'0000ff'}, 'water (th=' + th.getInfo() + ')', false)
+//Map.addLayer(ndwi.mask(getEdge(ndwi.gt(th))), {palette:'ffffff'}, 'water edge (th=' + th.getInfo() + ')')
+//Map.addLayer(ndwi.mask(getEdge(ndwi.gt(0))), {palette:'ff0000'}, 'water edge (th=0)')
+
+//var S2_Land = S2_Mask.unmask()
+//var S2_Land = S2_Land.eq(0)
+var S2_Cloud_Water = S2_Cloud.mask(S2_Mask)
+//Map.addLayer(S2_Cloud_Water,{bands: ['B3', 'B2', 'B1'], min: 0, max: 0.2}, 'Sentinel-2_Masked_for_Land', false)
+
+//Apply atmospheric correction and display
+var S2_Cloud_Land_Atm = hazeRemovalDeepwater(S2_Cloud_Water)
+Map.addLayer(S2_Cloud_Land_Atm, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.15}, 'Sentinel-2_Atmospherically_corrected', false);
+
+// Αpply Rrs(λ) 
+var SR = makePositive(S2_Cloud_Land_Atm).expression(
+  
+  'Atm/3.14159265359', {
+    
+  'Atm': S2_Cloud_Land_Atm
+  
+});
+Map.addLayer(SR, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.1}, 'Sentinel-2_Rrs')
