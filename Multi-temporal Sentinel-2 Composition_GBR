@@ -19,7 +19,6 @@ var point = /* color: #1f09d6 */ee.Geometry.Point([145.45483982208532, -14.67708
            [145.6609821829012, -16.44117051431447],
            [145.66510205594807, -16.44117051431447],
            [145.66510205594807, -16.437219059180013]]]], null, false),
-    cc_Dimo_S2_depth = ee.Image("projects/coral_atlas/cairnscook/full_mosaics/cc_new_Dimo_S2_depth"),
     extent = /* color: #0b4a8b */ee.Geometry.Polygon(
         [[[145.3889247557861, -14.916885806050834],
           [145.34223286125484, -15.086675969962196],
