@@ -38,12 +38,12 @@ var point = /* color: #1f09d6 */ee.Geometry.Point([145.45483982208532, -14.67708
           [145.44942383390685, -14.362021825171846],
           [145.19124512296935, -14.604017975761252]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-//Script to derive Multi-temporal, Above-surface (Rrs) Image Composites from Sentinel-2 L1C for coastal aquatic mapping
+//Script to derive Multi-temporal, Above-surface (Rrs) Image Composites from Sentinel-2 L1C for Coastal Aquatic Mapping
 
 // Global Variables 
 // Filter dates
 var start = '2015-06-01'
-var end   = '2019-10-15'
+var end   = '2019-10-31'
 
 //--------------------------------------------------------------------------------
 // Helper functions
