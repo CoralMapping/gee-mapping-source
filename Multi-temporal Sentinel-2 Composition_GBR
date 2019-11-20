@@ -12,7 +12,31 @@ var point = /* color: #1f09d6 */ee.Geometry.Point([145.45483982208532, -14.67708
           [145.85981161097982, -16.355109428309],
           [145.86152822474935, -16.355109428309],
           [145.86152822474935, -16.353462270554292]]], null, false),
-    cc_Dimo_S2_depth = ee.Image("projects/coral_atlas/cairnscook/full_mosaics/cc_new_Dimo_S2_depth");
+    cc_Dimo_S2_depth = ee.Image("projects/coral_atlas/cairnscook/full_mosaics/cc_new_Dimo_S2_depth"),
+    extent = /* color: #0b4a8b */ee.Geometry.Polygon(
+        [[[145.3889247557861, -14.916885806050834],
+          [145.34223286125484, -15.086675969962196],
+          [145.4108974120361, -15.266929489228417],
+          [145.35871235344234, -15.409961901562658],
+          [145.3944179198486, -15.57141720874903],
+          [145.4218837401611, -15.782969668352672],
+          [145.5756923339111, -16.229145938827124],
+          [145.66632954094234, -16.479513627714987],
+          [145.89154926750484, -16.747969514666263],
+          [146.05085102531734, -16.868914506726046],
+          [146.1579677245361, -17.265383173881467],
+          [146.3996669432861, -18.011352837659558],
+          [146.82538715812984, -17.851949813479457],
+          [146.64960590812984, -17.271155126947612],
+          [146.5644618651611, -17.029705749471997],
+          [146.42438618156734, -16.816866870066658],
+          [146.21564594719234, -16.58273112912043],
+          [145.93549458000484, -16.192751956242848],
+          [145.86408344719234, -15.860133362452892],
+          [145.82845215421935, -15.283358554690109],
+          [145.77901367765685, -14.702336171843399],
+          [145.44942383390685, -14.362021825171846],
+          [145.19124512296935, -14.604017975761252]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Script to derive Multi-temporal, Above-surface (Rrs) Image Composites from Sentinel-2 L1C for coastal aquatic mapping
 
@@ -162,7 +186,7 @@ function makePositive(image){
   // Calculate minimum of image
   var min = image.reduceRegion({
     reducer: ee.Reducer.min(),
-    geometry: result,
+    geometry: extent,
     scale: 10,
     maxPixels: 1e12
   });
@@ -173,21 +197,8 @@ function makePositive(image){
 
 // Fucntion to clip an image collection
 function clipCollection(image){
-  return image.clip(result)
+  return image.clip(extent)
 }
-
-//Process to create outline out of an existing raster
-//Convert Float to Integral
-var toIntegral = cc_Dimo_S2_depth.toByte();
-//Convert Raster with Integrals to Vector
-var cc_Dimo_S2_depth_extent = toIntegral.reduceToVectors({
-  scale: 10,
-  maxPixels: 1e13
-});
-//Store it to Feature Collection
-var result = ee.FeatureCollection(cc_Dimo_S2_depth_extent);
-//Map.addLayer(result);
-
 
 // Define a boxcar or low-pass kernel.
 var boxcar = ee.Kernel.square({
@@ -231,45 +242,45 @@ var S2_Cloud = S2Collection
 // Display Cloud-free composite    
 Map.addLayer(S2_Cloud, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.25}, 'Sentinel-2_Cloud_corrected', false);
 
-// //automatic water mask
-// Map.centerObject(point, 14)
-// var bounds = ee.Geometry(Map.getBounds(true))
-// //insert composite image for date desired
-// //var S2image = ee.Image(S2_Cloud.filterBounds(bounds.centroid(10)).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 5)).first())
-// //print(image)
-// //Map.addLayer(image, {bands: ['B3', 'B8', 'B3'], min:500, max:3000}, 'image')
+//automatic water mask
+Map.centerObject(point, 14)
+var bounds = ee.Geometry(Map.getBounds(true))
+//insert composite image for date desired
+//var S2image = ee.Image(S2_Cloud.filterBounds(bounds.centroid(10)).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 5)).first())
+//print(image)
+//Map.addLayer(image, {bands: ['B3', 'B8', 'B3'], min:500, max:3000}, 'image')
 
-// var ndwi = S2_Cloud.normalizedDifference(['B3', 'B8'])
+var ndwi = S2_Cloud.normalizedDifference(['B3', 'B8'])
 
-// var debug = true
-// var scale = 10
-// var cannyThreshold = 0.9
-// var cannySigma = 1
-// var minValue = -0.1
-// var th = computeThresholdUsingOtsu(ndwi, scale, bounds, cannyThreshold, cannySigma, minValue, debug)
+var debug = true
+var scale = 10
+var cannyThreshold = 0.9
+var cannySigma = 1
+var minValue = -0.1
+var th = computeThresholdUsingOtsu(ndwi, scale, bounds, cannyThreshold, cannySigma, minValue, debug)
 
-// print(th)
+print(th)
 
-// var S2_Mask = ndwi.mask(ndwi.gt(th))
-// //Map.addLayer(S2_Mask, {palette:'0000ff'}, 'water (th=' + th.getInfo() + ')', false)
-// //Map.addLayer(ndwi.mask(getEdge(ndwi.gt(th))), {palette:'ffffff'}, 'water edge (th=' + th.getInfo() + ')')
-// //Map.addLayer(ndwi.mask(getEdge(ndwi.gt(0))), {palette:'ff0000'}, 'water edge (th=0)')
+var S2_Mask = ndwi.mask(ndwi.gt(th))
+//Map.addLayer(S2_Mask, {palette:'0000ff'}, 'water (th=' + th.getInfo() + ')', false)
+//Map.addLayer(ndwi.mask(getEdge(ndwi.gt(th))), {palette:'ffffff'}, 'water edge (th=' + th.getInfo() + ')')
+//Map.addLayer(ndwi.mask(getEdge(ndwi.gt(0))), {palette:'ff0000'}, 'water edge (th=0)')
 
-// //var S2_Land = S2_Mask.unmask()
-// //var S2_Land = S2_Land.eq(0)
-// var S2_Cloud_Water = S2_Cloud.mask(S2_Mask)
-// //Map.addLayer(S2_Cloud_Water,{bands: ['B3', 'B2', 'B1'], min: 0, max: 0.2}, 'Sentinel-2_Masked_for_Land', false)
+//var S2_Land = S2_Mask.unmask()
+//var S2_Land = S2_Land.eq(0)
+var S2_Cloud_Water = S2_Cloud.mask(S2_Mask)
+Map.addLayer(S2_Cloud_Water,{bands: ['B3', 'B2', 'B1'], min: 0, max: 0.2}, 'Sentinel-2_Masked_for_Land', false)
 
 //Apply atmospheric correction and display
-var S2_Cloud_Atm = hazeRemovalDeepwater(S2_Cloud)
-Map.addLayer(S2_Cloud_Atm, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.15}, 'Sentinel-2_Atmospherically_corrected', false);
+var S2_Cloud_Land_Atm = hazeRemovalDeepwater(S2_Cloud_Water)
+Map.addLayer(S2_Cloud_Land_Atm, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.15}, 'Sentinel-2_Atmospherically_corrected', false);
 
 // Αpply Rrs(λ) 
-var Rrs = makePositive(S2_Cloud_Atm).expression(
+var Rrs = makePositive(S2_Cloud_Land_Atm).expression(
   
   'Atm/3.14159265359', {
     
-  'Atm': S2_Cloud_Atm
+  'Atm': S2_Cloud_Land_Atm
   
 });
 Map.addLayer(Rrs, {bands: ['B3', 'B2', 'B1'], min: 0, max: 0.1}, 'Sentinel-2_Above_Surface_Reflectance')
