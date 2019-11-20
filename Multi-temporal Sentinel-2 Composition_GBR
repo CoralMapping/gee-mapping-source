@@ -215,7 +215,7 @@ var S2Collection = ee.ImageCollection('COPERNICUS/S2')
     .select(['B1', 'B2', 'B3', 'B4', 'B8', 'B11', 'QA60'])
     // Filter by dates (defines as global variables)
     .filterDate(start, end)
-    // Clip each image in the collection using Coastline geometry
+    // Clip each image in the collection using Extent geometry
     .map(clipCollection)
 
 // Define S2 to display original image (No corrections applied)    
