@@ -192,6 +192,9 @@ var reefVisualiser = function (reefProb, threshold){
 // Landsat 8 + WCMC + random forest reef mask layer
 var RFmask = ee.ImageCollection([mask, mask2, mask3, mask4, mask5, mask6, mask7, mask8, mask9, mask10, mask11, mask12, /*mask13*/])
                     .mosaic().clip(aoi)
+// weird glitch
+RFmask = RFmask.divide(100)
+RFmask = RFmask.where(RFmask.eq(2.55), 3).uint8()
 Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
 
 var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12, probs13])
