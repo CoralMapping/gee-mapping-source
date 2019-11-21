@@ -139,18 +139,18 @@ var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reef
     probs12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b"),
     probs13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_c");
 
-var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_a"),
-    mask2 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_b"),
-    mask3 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_c"),
-    mask4 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_1"),
-    mask5 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_2"),
-    mask6 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_3"),
-    mask7 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_4"),
-    mask8 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_5"),
-    mask9 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_6"),
-    mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_7"),
-    mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_8"),
-    mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_9")
+var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_a"),
+    mask2 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_b"),
+    mask3 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c"),
+    mask4 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_1"),
+    mask5 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_2"),
+    mask6 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_3"),
+    mask7 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_4"),
+    mask8 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_5"),
+    mask9 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_6"),
+    mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_7"),
+    mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_8"),
+    mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_9")
     //mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_0");
 
 /*// weird glitch
