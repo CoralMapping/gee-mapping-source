@@ -150,12 +150,12 @@ var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui
     mask9 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_6"),
     mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_7"),
     mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_8"),
-    mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_9"),
+    mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen5_clas_ui8_S30_v9_gridID_9")
     //mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_0");
 
-// weird glitch
+/*// weird glitch
 mask13 = mask13.divide(100)
-mask13 = mask13.where(mask13.eq(2.55), 3).uint8()
+mask13 = mask13.where(mask13.eq(2.55), 3).uint8()*/
 
 
 //Map.setOptions('SATELLITE')
