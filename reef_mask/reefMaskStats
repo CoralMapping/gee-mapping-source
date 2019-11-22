@@ -9,10 +9,11 @@ var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
       }
     ] */
     ee.Geometry.Polygon(
-        [[[145.11360561933736, -14.844671766897319],
-          [145.11360561933736, -16.93670264946334],
-          [146.31111538496236, -16.93670264946334],
-          [146.31111538496236, -14.844671766897319]]], null, false);
+        [[[145.54207241621236, -16.115176355424516],
+          [145.54207241621236, -16.5105770346571],
+          [145.99800503339986, -16.5105770346571],
+          [145.99800503339986, -16.115176355424516]]], null, false),
+    srtm = ee.Image("CGIAR/SRTM90_V4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
@@ -61,8 +62,8 @@ Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false);
 
 
 // e.g. mappign region data
-Map.addLayer(gbr_geo, map_palettes.geo, "GBR Geo - Sentinel-2", true)
-Map.addLayer(fiji_geo, map_palettes.geo, "SWP Geo - Planet", true)
+Map.addLayer(gbr_geo, map_palettes.geo, "GBR Geo - Sentinel-2", false)
+Map.addLayer(fiji_geo, map_palettes.geo, "SWP Geo - Planet", false)
 
 
 
@@ -106,7 +107,7 @@ Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)*/
 
 // compare reef probabilities to mapped reef areas by class
 // make reef/non-reef layer 
-reef_top_maker = function(classified) {
+var reef_top_maker = function(classified) {
   var reef_top = classified.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
   var reef_all = classified.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
   return(reef_top.addBands(reef_all).reduce(ee.Reducer.sum()))
