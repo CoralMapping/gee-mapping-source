@@ -105,25 +105,14 @@ Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)*/
 
 
 // compare reef probabilities to mapped reef areas by class
-var gbr_probs_stack = gbr_geo.rename('classes').addBands(RFprobs.rename('reefProbs'))
-// Define chart customization options.
-var options = {
-  lineWidth: 1,
-  pointSize: 2,
-  hAxis: {title: 'Wavelength (micrometers)'},
-  vAxis: {title: 'Reflectance'},
-  title: 'Spectra in classified regions of Rhode Island'
-};
-// Make the chart, set the options.
-var chart = ui.Chart.image.byClass(
-    image, 'remapped', rhodeIsland, ee.Reducer.mean(), 500, classNames, wavelengths)
-    .setOptions(options);
-// Print the chart.
-print(chart);
+// make reef/non-reef layer 
+reef_top_maker = function(classified) {
+  var reef_top = classified.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
+  var reef_all = classified.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
+  return(reef_top.addBands(reef_all).reduce(ee.Reducer.sum()))
+}
 
-
-
-
-
-
-
+var gbr_reeftop = reef_top_maker(gbr_geo)
+Map.addLayer(gbr_reeftop, {min:0,max:2}, "GBR reef top", false)
+var gbr_reef_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(2)), chart_region, 30)
+print(gbr_reef_hist)
