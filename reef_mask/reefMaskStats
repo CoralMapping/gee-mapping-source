@@ -1,0 +1,129 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
+    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
+    chart_region = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[145.11360561933736, -14.844671766897319],
+          [145.11360561933736, -16.93670264946334],
+          [146.31111538496236, -16.93670264946334],
+          [146.31111538496236, -14.844671766897319]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+
+// load RF probabilities/mask via strings, so easy to update
+var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_0"),
+    probs2 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_1"),
+    probs3 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_2"),
+    probs4 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_3"),
+    probs5 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_4"),
+    probs6 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_5"),
+    probs7 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_6"),
+    probs8 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_7"),
+    probs9 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_8"),
+    probs10 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_9"),
+    probs11 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_a"),
+    probs12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b"),
+    probs13 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_c");
+
+var mask = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_a"),
+    mask2 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_b"),
+    mask3 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c"),
+    mask4 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_1"),
+    mask5 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_2"),
+    mask6 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_3"),
+    mask7 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_4"),
+    mask8 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_5"),
+    mask9 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_6"),
+    mask10 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_7"),
+    mask11 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_8"),
+    mask12 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_9")
+    //mask13 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_0");
+
+//Map.setOptions('SATELLITE')
+//Map.setCenter(-83.182, 27.882, 7)
+
+//var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var viriPlasma = ['440154','462372','404284','355d8c','2a768e','21908d','26a784','47bd6f','79d051','b8de30','fde725',"0d0887","3d049b","6903a5","8d0fa1","ae2891","cb4679","df6363","f0844c","faa638","fbcc27","f0f921"];
+
+
+// bg data
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k16to19_at_30m_ui8");
+var ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8")
+var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
+Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false);
+
+
+// e.g. mappign region data
+Map.addLayer(gbr_geo, map_palettes.geo, "GBR Geo - Sentinel-2", true)
+Map.addLayer(fiji_geo, map_palettes.geo, "SWP Geo - Planet", true)
+
+
+
+var landMask = ee.Image(1).where(srtm.gte(0), 0);
+
+var reefVisualiser = function (reefProb, threshold){
+  var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
+    .updateMask(reefProb.gt(threshold))
+    .updateMask(landMask);
+  return reefProbMasked;
+};
+
+// Landsat 8 + WCMC + random forest reef mask layer
+var RFmask = ee.ImageCollection([mask, mask2, mask3, mask4, mask5, mask6, mask7, mask8, mask9, mask10, mask11, mask12, /*mask13*/])
+                    .mosaic().clip(aoi)
+RFmask = RFmask.divide(100) // weird glitch
+RFmask = RFmask.where(RFmask.eq(2.55), 3).uint8() // weird glitch
+Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat8 RF reef mask', false, 0.7)
+
+var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12, probs13])
+                    .mosaic().clip(aoi)
+Map.addLayer(reefVisualiser(RFprobs,30), {palette: viriPlasma, min:[1], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
+
+
+// Planet visual + milenium + FCNN
+var CNNreefProbs = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().clip(aoi)
+var CNNreefPreds = ee.ImageCollection('users/nfabina/reef_preds_v1').mosaic().clip(aoi)
+Map.addLayer(reefVisualiser(CNNreefProbs,30), {palette: viriPlasma, min:[0], max:[100]}, 'Planet CNN reef probabilities', false, 0.7)
+Map.addLayer(CNNreefPreds, {palette: ['darkblue', 'Orange'], min:[0], max:[1]}, 'Planet CNN reef mask', false, 0.7)
+
+
+// combined  predictions
+var RFpCNN = CNNreefProbs.gt(30).and(RFprobs.gt(30)).selfMask().add(2).unmask(2)
+var RFpCNN_mask = RFpCNN.where(landMask.eq(0), 1)
+Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
+
+
+/*// Add some other data
+Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)*/
+
+
+// compare reef probabilities to mapped reef areas by class
+var gbr_probs_stack = gbr_geo.rename('classes').addBands(RFprobs.rename('reefProbs'))
+// Define chart customization options.
+var options = {
+  lineWidth: 1,
+  pointSize: 2,
+  hAxis: {title: 'Wavelength (micrometers)'},
+  vAxis: {title: 'Reflectance'},
+  title: 'Spectra in classified regions of Rhode Island'
+};
+// Make the chart, set the options.
+var chart = ui.Chart.image.byClass(
+    image, 'remapped', rhodeIsland, ee.Reducer.mean(), 500, classNames, wavelengths)
+    .setOptions(options);
+// Print the chart.
+print(chart);
+
+
+
+
+
+
+
