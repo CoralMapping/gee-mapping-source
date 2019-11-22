@@ -1,0 +1,51 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var b_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east0"),
+    b_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west0"),
+    geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east0"),
+    geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0"),
+    roi = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[157.69498277740786, -5.319964945936602],
+          [157.69498277740786, -28.04223854535673],
+          [192.38980699615797, -28.04223854535673],
+          [192.38980699615797, -5.319964945936602]]], null, false),
+    b_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_benthic_reference"),
+    g_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_geo_reference");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+////Import & visualization of data////
+print(g_ref,'g_ref');
+Map.addLayer(g_ref,{},'g_ref');
+print(b_ref,'b_ref');
+Map.addLayer(b_ref,{},'b_ref');
+var benthic_col=ee.ImageCollection([b_east,b_west]);
+var geo_col=ee.ImageCollection([geo_east,geo_west]);
+var benthic=benthic_col.mosaic().aside(print,'benthic');
+var geo=geo_col.mosaic().aside(print,'geo');
+
+Map.addLayer(geo,{},'geo');
+Map.addLayer(benthic,{},'benthic');
+Map.centerObject(roi,7);
+ 
+/////validation function/////
+function val_function (img,reference){
+  var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
+  var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
+  var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
+var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
+var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
+print('Accuracy Matrix',AccuracyMatrix);
+var overallAC=AccuracyMatrix.accuracy();
+print('accuracy of classification',overallAC);
+  return;
+}
+
+/////apply validation function////
+var benthic_validation=val_function(benthic,b_ref);
+var geo_validation=val_function(geo,g_ref);
+
