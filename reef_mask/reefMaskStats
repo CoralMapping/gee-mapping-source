@@ -14,7 +14,7 @@ var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
           [146.31111538496236, -16.93670264946334],
           [146.31111538496236, -14.844671766897319]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-require(path)
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // load RF probabilities/mask via strings, so easy to update
 var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_0"),
