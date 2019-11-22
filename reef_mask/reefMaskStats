@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
     fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
-    chart_region = 
+    gbr_region = 
     /* color: #d63000 */
     /* displayProperties: [
       {
@@ -9,10 +9,10 @@ var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
       }
     ] */
     ee.Geometry.Polygon(
-        [[[143.19099819746236, -11.37848501163459],
-          [143.19099819746236, -12.07231170960941],
-          [143.73482143964986, -12.07231170960941],
-          [143.73482143964986, -11.37848501163459]]], null, false),
+        [[[141.29538554456303, -8.953778349379663],
+          [141.29538554456303, -26.217847381940288],
+          [153.68796366956292, -26.217847381940288],
+          [153.68796366956292, -8.953778349379663]]], null, false),
     srtm = ee.Image("CGIAR/SRTM90_V4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
@@ -113,11 +113,17 @@ var reef_top_maker = function(classified) {
   return(reef_top.addBands(reef_all).reduce(ee.Reducer.sum()))
 }
 
+// ### GBR
+
+// make a sample geometry first
 var gbr_reeftop = reef_top_maker(gbr_geo)
 Map.addLayer(gbr_reeftop, {min:0,max:2}, "GBR reef top", false)
-var gbr_reeftop_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(2)), chart_region, 30, 10).setOptions({title:'Reef top classes probability histogram'})
+var gbr_sample = gbr_reeftop.stratifiedSample({region:gbr_region, scale:30, numPoints:500, geometries:true})
+print(gbr_sample.size())
+Map.addLayer(gbr_sample)
+var gbr_reeftop_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(2)), gbr_sample, 30, 15).setOptions({title:'Reef top classes probability histogram'})
 print(gbr_reeftop_hist)
-var gbr_reefother_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(1)), chart_region, 30, 10).setOptions({title:'Other reef classes probability histogram'})
+var gbr_reefother_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(1)), gbr_sample, 30, 15).setOptions({title:'Other reef classes probability histogram'})
 print(gbr_reefother_hist)
-var gbr_notreef_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(0)), chart_region, 30, 10).setOptions({title:'Not reef classes probability histogram'})
+var gbr_notreef_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.eq(0)), gbr_sample, 30, 15).setOptions({title:'Not reef classes probability histogram'})
 print(gbr_notreef_hist)
