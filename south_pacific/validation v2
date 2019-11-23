@@ -79,16 +79,16 @@ Map.addLayer(b_ref_c,{},'b_ref_c');
 // conversion of vector to image for stratified sampling
 ////////////////////////////////////////////////////////
 function vector2img(ft){
-  var imgColl=ft.reduceToImage(['class_num'], ee.Reducer.mean());
+  var imgColl=ft.reduceToImage(['class_num'], ee.Reducer.max());
   // print(imgColl,'imgColl');
   // Map.addLayer(imgColl,{},'imgColl');
-  return imgColl.select(['mean'],['class_num']);
+  return imgColl.select(['max'],['class_num']);
 }
 
-//stratified sampling with 2 points per initial reference vector
+//stratified sampling with 1 points per initial reference vector
 function strfSam (img,ft) {
   var ref_col=img.int().stratifiedSample({
-              numPoints: 2,
+              numPoints: 1,
               classBand:'class_num', 
               region:ft.geometry(),//might take some time..
               scale:10,
@@ -101,11 +101,11 @@ var b_ref_img=vector2img(b_ref_c)//.aside(print,'b_ref_img');
 var g_ref_img=vector2img(g_ref_c)//.aside(print,'g_ref_c');
 
 var b_ref_samples=ee.FeatureCollection(strfSam(b_ref_img,b_ref_c));
-//print(b_ref_samples,'b_ref_samples');
+print(b_ref_samples,'b_ref_samples');
 Map.addLayer(b_ref_samples,{},'b_ref_samples',false);
 
 var g_ref_samples=strfSam(g_ref_img,g_ref_c);
-//print(g_ref_samples,'g_ref_samples');
+print(g_ref_samples,'g_ref_samples');
 Map.addLayer(g_ref_samples,{},'g_ref_samples',false);
 
 
@@ -124,6 +124,8 @@ print('accuracy of classification',overallAC);
 
 
 /////apply validation function////
+print('accuracy assessment for benthic classification');
 var benthic_validation=val_function(benthic_c,b_ref_samples);
+print('accuracy assessment for geomorphological classification');
 var geo_validation=val_function(geo_c,g_ref_samples);
 
