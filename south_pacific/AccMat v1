@@ -1,0 +1,73 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var fj_area = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_coastal"),
+    b_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_benthic_reference"),
+    g_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_geo_reference"),
+    b_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east0"),
+    geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east0"),
+    roi = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[176.1139501583184, -15.561220257602068],
+          [176.1139501583184, -21.372864340334157],
+          [183.1397069942559, -21.372864340334157],
+          [183.1397069942559, -15.561220257602068]]], null, false),
+    geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west0"),
+    b_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west0"),
+    b_ref_samples = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/b_ref_samples");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Map.addLayer(fj_area,{},'fj_area');
+// print(fj_area,'fj_area');
+
+Map.addLayer(b_ref,{},'b_ref',false);
+//print(b_ref,'b_ref');
+
+Map.addLayer(g_ref,{},'g_ref',false);
+//print(g_ref,'g_ref');
+Map.centerObject(roi,8);
+Map.addLayer(b_west,{},'b_west',false);
+Map.addLayer(geo_east,{},'geo',false);
+
+
+var benthic_col=ee.ImageCollection([geo_east,b_west]);
+var geo_col=ee.ImageCollection([geo_east,geo_west]);
+var benthicIMG=benthic_col.mosaic().aside(Map.addLayer,{},'benthicIMG')//.aside(print,'benthic');
+var geoIMG=geo_col.mosaic()//.aside(print,'geo');
+
+var benthic_c=benthicIMG.clip(roi).aside(print);
+Map.addLayer(benthic_c,{},'benthic_c');
+var geo_c=geoIMG.clip(roi).aside(print);
+Map.addLayer(geo_c,{},'geo_c');
+
+print(b_ref_samples,'b_ref_samples');
+Map.addLayer(b_ref_samples,{},"b_ref_samples");
+
+// /////validation function/////
+function val_function (img,reference){
+  var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
+  var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
+  var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
+var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
+var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
+print('Accuracy Matrix',AccuracyMatrix);
+var ConsumerAccuracy=AccuracyMatrix.consumersAccuracy();
+print('ConsumerAccuracy',ConsumerAccuracy);
+var ProducersAccuracy=AccuracyMatrix.producersAccuracy();
+print('ProducersAccuracy',ProducersAccuracy);
+var overallAC=AccuracyMatrix.accuracy();
+print('accuracy of classification',overallAC);
+  return;
+}
+
+
+/////apply validation function////
+print('accuracy assessment for benthic classification');
+var benthic_validation=val_function(benthicIMG,b_ref_samples);
+// print('accuracy assessment for geomorphological classification');
+// var geo_validation=val_function(geoIMG,g_ref_samples);
+
+
