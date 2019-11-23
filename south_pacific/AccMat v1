@@ -51,7 +51,7 @@ function val_function (img,reference){
   var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
   var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
   var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
-var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
+var validated=training; //by classifying the validationdata we will be able to produce the error matrix
 var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
 print('Accuracy Matrix',AccuracyMatrix);
 var ConsumerAccuracy=AccuracyMatrix.consumersAccuracy();
