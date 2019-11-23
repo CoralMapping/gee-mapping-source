@@ -23,10 +23,10 @@ var fj_area = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_coa
 // print(fj_area,'fj_area');
 
 Map.addLayer(b_ref,{},'b_ref',false);
-print(b_ref,'b_ref');
+//print(b_ref,'b_ref');
 
 Map.addLayer(g_ref,{},'g_ref',false);
-print(g_ref,'g_ref');
+//print(g_ref,'g_ref');
 Map.centerObject(roi,8);
 Map.addLayer(b_west,{},'b_west',false);
 Map.addLayer(geo_east,{},'geo',false);
@@ -46,7 +46,7 @@ Map.addLayer(geo_c,{},'geo_c');
 // geomorphologial reference data
 var g_ref_c=g_ref.filterBounds(roi);
 g_ref_c=g_ref_c.map(function(ft){
-  return ft.intersection(fj_area)//.set(ft.get('class_num'));
+  return ft.intersection(fj_area);
 });
 Map.addLayer(g_ref_c,{},'g_ref_c');
 //print(g_ref_c,'g_ref_c')// <---- It shows an error but it works
@@ -57,7 +57,7 @@ b_ref_c=b_ref_c.map(function(ft){
   return ft.intersection(fj_area);
 });
 Map.addLayer(b_ref_c,{},'b_ref_c');
-//print(b_ref_c,'b_ref_c') //<---- It shows an error but it works
+//print(b_ref_c,'b_ref_c');
 
 // ////taking a portion of featureCollection due to their size
 // var randomGEO=g_ref_c.randomColumn().aside(print,'randomGEOref');
@@ -85,37 +85,45 @@ function vector2img(ft){
   return imgColl.select(['mean'],['class_num']);
 }
 
-//stratified sampling with 5 points per initial reference vector
+//stratified sampling with 2 points per initial reference vector
 function strfSam (img,ft) {
-  var ref_col=img.stratifiedSample({
-              numPoints: 5,
-              classBand:'class_numclass_num', 
+  var ref_col=img.int().stratifiedSample({
+              numPoints: 2,
+              classBand:'class_num', 
               region:ft.geometry(),//might take some time..
               scale:10,
               geometries:true
               });
+  return ref_col;
 }
 
-var b_ref_img=vector2img(b_ref_c).aside(print,'b_ref_img');
-var g_ref_img=vector2img(g_ref_c).aside(print,'g_ref_c');
+var b_ref_img=vector2img(b_ref_c)//.aside(print,'b_ref_img');
+var g_ref_img=vector2img(g_ref_c)//.aside(print,'g_ref_c');
 
+var b_ref_samples=ee.FeatureCollection(strfSam(b_ref_img,b_ref_c));
+//print(b_ref_samples,'b_ref_samples');
+Map.addLayer(b_ref_samples,{},'b_ref_samples',false);
+
+var g_ref_samples=strfSam(g_ref_img,g_ref_c);
+//print(g_ref_samples,'g_ref_samples');
+Map.addLayer(g_ref_samples,{},'g_ref_samples',false);
 
 
 // /////validation function/////
-// function val_function (img,reference){
-//   var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
-//   var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
-//   var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
-// var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
-// var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
-// print('Accuracy Matrix',AccuracyMatrix);
-// var overallAC=AccuracyMatrix.accuracy();
-// print('accuracy of classification',overallAC);
-//   return;
-// }
+function val_function (img,reference){
+  var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
+  var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
+  var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
+var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
+var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
+print('Accuracy Matrix',AccuracyMatrix);
+var overallAC=AccuracyMatrix.accuracy();
+print('accuracy of classification',overallAC);
+  return;
+}
 
-// var benthic_ref=b_ref_c.filter(ee.Filter.neq('ID',null)).aside(print,'benthic_ref');
-// /////apply validation function////
-// var benthic_validation=val_function(benthic_c,Bref);
-// var geo_validation=val_function(geo_c,Gref);
+
+/////apply validation function////
+var benthic_validation=val_function(benthic_c,b_ref_samples);
+var geo_validation=val_function(geo_c,g_ref_samples);
 
