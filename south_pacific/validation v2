@@ -59,30 +59,63 @@ b_ref_c=b_ref_c.map(function(ft){
 Map.addLayer(b_ref_c,{},'b_ref_c');
 //print(b_ref_c,'b_ref_c') //<---- It shows an error but it works
 
-////taking a portion of featureCollection due to their size
-var randomGEO=g_ref_c.randomColumn().aside(print,'randomGEOref');
-var randomBenthic=b_ref_c.randomColumn().aside(print,'randomBENTHICref');
-var split_proportion=ee.Number(0.8);
-var Gref=randomGEO.filter(ee.Filter.gt('random',split_proportion));
-var Bref=randomBenthic.filter(ee.Filter.gt('random',split_proportion));
+// ////taking a portion of featureCollection due to their size
+// var randomGEO=g_ref_c.randomColumn().aside(print,'randomGEOref');
+// var randomBenthic=b_ref_c.randomColumn().aside(print,'randomBENTHICref');
+// var split_proportion=ee.Number(0.8);
+// var Gref=randomGEO.filter(ee.Filter.gt('random',split_proportion));
+// var Bref=randomBenthic.filter(ee.Filter.gt('random',split_proportion));
 
+// extraction of centroids from feature collection
+// function centroids (ft) {
+//   var poi=ft.centroid();
+//   return poi;
+// }
+// var pois=b_ref_c.map(centroids);
+// print(pois,'pois');
+// Map.addLayer(pois,{},'pois')
 
-
-/////validation function/////
-function val_function (img,reference){
-  var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
-  var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
-  var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
-var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
-var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
-print('Accuracy Matrix',AccuracyMatrix);
-var overallAC=AccuracyMatrix.accuracy();
-print('accuracy of classification',overallAC);
-  return;
+////////////////////////////////////////////////////////
+// conversion of vector to image for stratified sampling
+////////////////////////////////////////////////////////
+function vector2img(ft){
+  var imgColl=ft.reduceToImage(['class_num'], ee.Reducer.mean());
+  // print(imgColl,'imgColl');
+  // Map.addLayer(imgColl,{},'imgColl');
+  return imgColl.select(['mean'],['class_num']);
 }
 
-var benthic_ref=b_ref_c.filter(ee.Filter.neq('ID',null)).aside(print,'benthic_ref');
-/////apply validation function////
-var benthic_validation=val_function(benthic_c,Bref);
-var geo_validation=val_function(geo_c,Gref);
+//stratified sampling with 5 points per initial reference vector
+function strfSam (img,ft) {
+  var ref_col=img.stratifiedSample({
+              numPoints: 5,
+              classBand:'class_numclass_num', 
+              region:ft.geometry(),//might take some time..
+              scale:10,
+              geometries:true
+              });
+}
+
+var b_ref_img=vector2img(b_ref_c).aside(print,'b_ref_img');
+var g_ref_img=vector2img(g_ref_c).aside(print,'g_ref_c');
+
+
+
+// /////validation function/////
+// function val_function (img,reference){
+//   var training=img.sampleRegions(reference,['class_num'],10);   //takes polygons as samples to train the classifier
+//   var trained=ee.Classifier.randomForest().train(training,'class_num'); //a known classifier test the match between ref samples and classification image
+//   var validationdata=img.sampleRegions(reference,['class_num'],10); //takes polygons as samples for the validation 
+// var validated=validationdata.classify(trained); //by classifying the validationdata we will be able to produce the error matrix
+// var AccuracyMatrix=validated.errorMatrix('class_num', 'classification');
+// print('Accuracy Matrix',AccuracyMatrix);
+// var overallAC=AccuracyMatrix.accuracy();
+// print('accuracy of classification',overallAC);
+//   return;
+// }
+
+// var benthic_ref=b_ref_c.filter(ee.Filter.neq('ID',null)).aside(print,'benthic_ref');
+// /////apply validation function////
+// var benthic_validation=val_function(benthic_c,Bref);
+// var geo_validation=val_function(geo_c,Gref);
 
