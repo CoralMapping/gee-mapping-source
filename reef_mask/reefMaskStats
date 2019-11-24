@@ -154,3 +154,18 @@ var fiji_reefother_hist = ui.Chart.image.histogram(RFprobs.updateMask(fiji_reeft
 print(fiji_reefother_hist)
 var fiji_notreef_hist = ui.Chart.image.histogram(RFprobs.updateMask(fiji_reeftop.eq(0)), fiji_sample, 30, 15).setOptions({title:'Fiji: Not reef classes probability histogram'})
 print(fiji_notreef_hist)*/
+
+
+/*
+### WCMC stats ###
+In side each WCMC polygon, summarise the reef area of the RF mask
+*/
+
+print("WCMC reefs:", wcmc.size())
+
+
+
+
+
+
+
