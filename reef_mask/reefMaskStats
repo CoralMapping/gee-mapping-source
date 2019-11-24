@@ -25,7 +25,8 @@ var gbr_geo = ee.Image("users/mitchest/gbr_reefs/gbr_eomap_geo"),
         [[[176.60699211243343, -15.313542144366815],
           [176.60699211243343, -19.74364920185794],
           [182.27593742493343, -19.74364920185794],
-          [182.27593742493343, -15.313542144366815]]], null, false);
+          [182.27593742493343, -15.313542144366815]]], null, false),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
@@ -113,8 +114,8 @@ var RFpCNN_mask = RFpCNN.where(landMask.eq(0), 1)
 Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
 
 
-/*// Add some other data
-Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)*/
+// Add some other data
+Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 
 
 // compare reef probabilities to mapped reef areas by class
