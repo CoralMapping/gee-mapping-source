@@ -141,7 +141,7 @@ var gbr_notreef_hist = ui.Chart.image.histogram(RFprobs.updateMask(gbr_reeftop.e
 print(gbr_notreef_hist)*/
 
 
-// ### FIJI
+/*// ### FIJI
 // make a sample geometry first
 var fiji_reeftop = reef_top_maker(fiji_geo)
 Map.addLayer(fiji_reeftop, {min:0,max:2}, "fiji reef top", false)
@@ -153,4 +153,4 @@ print(fiji_reeftop_hist)
 var fiji_reefother_hist = ui.Chart.image.histogram(RFprobs.updateMask(fiji_reeftop.eq(1)), fiji_sample, 30, 15).setOptions({title:'Fiji: Other reef classes probability histogram'})
 print(fiji_reefother_hist)
 var fiji_notreef_hist = ui.Chart.image.histogram(RFprobs.updateMask(fiji_reeftop.eq(0)), fiji_sample, 30, 15).setOptions({title:'Fiji: Not reef classes probability histogram'})
-print(fiji_notreef_hist)
+print(fiji_notreef_hist)*/
