@@ -163,6 +163,7 @@ In side each WCMC polygon, summarise the reef area of the RF mask
 
 //print("WCMC reefs:", wcmc.size())
 
+var proclimit = 10
 
 var wcmc_rfmask = function(f){
   var reef_count = RFmask.eq(3).selfMask().reduceRegion({
@@ -170,10 +171,14 @@ var wcmc_rfmask = function(f){
     geometry: f.geometry(),
     scale: 30
   })
-  return(f.set("wcmc", f.geometry().area(), "rf_mask", ee.Number(reef_count.get("classification")).multiply(30*30)))
+  
+  return(f.set("wcmc", f.geometry().area(), 
+               "rf_mask", ee.Number(reef_count.get("classification")).multiply(30*30),
+               "centroid", f.centroid().geometry().coordinates().join(','))
+        )
 }
 
-print(wcmc.limit(1).map(wcmc_rfmask))
+print(wcmc.limit(proclimit).map(wcmc_rfmask).toList(proclimit))
 
 
 var wcmc_rfprob = function(f){
@@ -182,14 +187,17 @@ var wcmc_rfprob = function(f){
     geometry: f.geometry(),
     scale: 30
   })
-  return(f.set("wcmc", f.geometry().area(), "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30)))
+  return(f.set("wcmc", f.geometry().area(), 
+               "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30),
+               "centroid", f.centroid().geometry().coordinates().join(','))
+        )
 }
 
 var thresh = 50
-print(wcmc.limit(1).map(wcmc_rfprob).toDictionary(["wcmc","rfprob50"]))
+print(wcmc.limit(proclimit).map(wcmc_rfprob).toList(proclimit))
 
 thresh = 80
-print(wcmc.limit(1).map(wcmc_rfprob).toDictionary())
+print(wcmc.limit(proclimit).map(wcmc_rfprob).toList(proclimit))
 
 
 
