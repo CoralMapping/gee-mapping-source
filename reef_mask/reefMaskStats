@@ -186,10 +186,10 @@ var wcmc_rfprob = function(f){
 }
 
 var thresh = 50
-print(wcmc.limit(1).map(wcmc_rfprob))
+print(wcmc.limit(1).map(wcmc_rfprob).toDictionary(["wcmc","rfprob50"]))
 
 thresh = 80
-print(wcmc.limit(1).map(wcmc_rfprob))
+print(wcmc.limit(1).map(wcmc_rfprob).toDictionary())
 
 
 
