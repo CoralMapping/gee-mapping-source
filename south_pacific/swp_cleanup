@@ -52,7 +52,7 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(10).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(100).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
   obia_clean: true, // run object-based relationship rules + small object clean up
   
@@ -86,8 +86,8 @@ if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(
 // 2. Data loads & vis
 
 // load input data
-var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
-var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)
+var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.ImageCollection(region_params.geo_map).mosaic()
+var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
 var pixels = ee.Image(region_params.pixels)
 
 var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
