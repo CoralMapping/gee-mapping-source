@@ -164,6 +164,9 @@ In side each WCMC polygon, summarise the reef area of the RF mask
 print("WCMC reefs:", wcmc.size())
 
 
+var wcmc_rf_area = 
+
+
 
 
 
