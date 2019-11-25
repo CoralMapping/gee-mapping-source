@@ -90,7 +90,7 @@ if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()*/
 var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)
-var pixels = ee.Image(region_params.pixels)
+var pixels = ee.ImageCollection(region_params.pixels).mosaic()
 
 var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
@@ -147,7 +147,19 @@ if (vars.geomorphic) {
     value: ee.Image(12)
   })
   
-  //CLEAN UP SMALL (but slightly larger) TURBID AREAS
+  // add in land, for geomorphic clean up rules
+  clean_map = clean_map.where({
+    test: pixel.select('depth').eq(-2),
+    value: ee.Image(1)
+  })
+  
+  // change -3 to reef rim, hope that clouds have been handleded by masking
+  clean_map = clean_map.where({
+    test: pixel.select('depth').eq(-3),
+    value: ee.Image(15)
+  })
+  
+  /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
   var smooth_noturbid = clean_map
                           .updateMask(clean_map.neq(3))
                           .focal_mode({
@@ -158,7 +170,7 @@ if (vars.geomorphic) {
   clean_map = clean_map.where({
     test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(10)), 
     value: smooth_noturbid
-  }).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask)*/
 }
 
 
@@ -179,7 +191,7 @@ if (!vars.geomorphic) {
     value: smooth_map
   }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
-  // CLEAN UP ALL TEMPORAL AREAS
+  /*// CLEAN UP ALL TEMPORAL AREAS
   var smooth_notemp = input_map
                           .updateMask(input_map.neq(2))
                           .focal_mode({
@@ -196,7 +208,7 @@ if (!vars.geomorphic) {
   clean_map = clean_map.where({
     test: clean_map.unmask(99).eq(99).and(clean_map1.eq(2)),
     value: ee.Image(2)
-  })
+  })*/
   
 }
 
