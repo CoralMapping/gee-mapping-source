@@ -228,7 +228,7 @@ Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 
 // add the potential upated "tightened" mask to reduce un-needed Planet acquisition
 var buffered_RFmask = RFmask.eq(3).selfMask().focal_mode(3)
-Map.addLayer(buffered_RFmask.reproject({crs:"EPSG:4326", scale: 500}), {}, "Buffered RF mask", false)
+Map.addLayer(buffered_RFmask.reproject({crs:"EPSG:4326", scale: 30}), {}, "Buffered RF mask", false)
 
 
 /*// add the geom that trims out the manual trimming polys
