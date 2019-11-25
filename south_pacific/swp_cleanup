@@ -585,12 +585,12 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })
     
-    // turbid in geo == turbid (temporal - class num 2)
+    /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
     clean_map = clean_map.where({
       test: geo_map.eq(3),
       value: ee.Image(2)
-    })
+    })*/
     
     /*
     // Ignore in benthic + ORF in geo == rock
