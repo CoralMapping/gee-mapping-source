@@ -158,7 +158,7 @@ print(fiji_notreef_hist)*/
 
 /*
 ### WCMC stats ###
-In side each WCMC polygon, summarise the reef area of the RF mask
+Inside each WCMC polygon, summarise the reef area of the RF mask/prob layer
 */
 
 //print("WCMC reefs:", wcmc.size())
@@ -200,4 +200,4 @@ thresh = 80
 print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
 
 
-
+// export table
