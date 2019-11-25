@@ -161,14 +161,35 @@ print(fiji_notreef_hist)*/
 In side each WCMC polygon, summarise the reef area of the RF mask
 */
 
-print("WCMC reefs:", wcmc.size())
+//print("WCMC reefs:", wcmc.size())
 
 
-var wcmc_rf_area = 
+var wcmc_rfmask = function(f){
+  var reef_count = RFmask.eq(3).selfMask().reduceRegion({
+    reducer: ee.Reducer.count(),
+    geometry: f.geometry(),
+    scale: 30
+  })
+  return(f.set("wcmc", f.geometry().area(), "rf_mask", ee.Number(reef_count.get("classification")).multiply(30*30)))
+}
+
+print(wcmc.limit(1).map(wcmc_rfmask))
 
 
+var wcmc_rfprob = function(f){
+  var reef_count = RFprobs.gt(thresh).selfMask().reduceRegion({
+    reducer: ee.Reducer.count(),
+    geometry: f.geometry(),
+    scale: 30
+  })
+  return(f.set("wcmc", f.geometry().area(), "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30)))
+}
 
+var thresh = 50
+print(wcmc.limit(1).map(wcmc_rfprob))
 
+thresh = 80
+print(wcmc.limit(1).map(wcmc_rfprob))
 
 
 
