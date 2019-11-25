@@ -147,6 +147,12 @@ if (vars.geomorphic) {
     value: ee.Image(12)
   })
   
+  // deep lagoon == deep (to ignore - decided Dove just cannot handle deep water classes effectively over large areas)
+  clean_map = clean_map.where({
+    test: clean_map.eq(12),
+    value: ee.Image(2)
+  })
+  
   // add in land, for geomorphic clean up rules
   clean_map = clean_map.where({
     test: pixel.select('depth').eq(-2),
@@ -274,7 +280,7 @@ if (vars.obia_clean) {
               .and(clean_map.neq(15)) //RR
               .and(clean_map.neq(14)) //ORF
               .and(clean_map.neq(13)) //IRF
-              .and(clean_map.neq(12)) // deep L
+              //.and(clean_map.neq(12)) // deep L
               .and(clean_map.neq(11)), // shallow L 
       value: ee.Image(99) // 99 ensures it's ignored in logic
     })
@@ -300,7 +306,7 @@ if (vars.obia_clean) {
     var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
     var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
     var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
-    var nb3 = ee.Image().byte().paint(map_fc_neighbours, '3').unmask(0).rename('nb3') //Turbid
+    //var nb3 = ee.Image().byte().paint(map_fc_neighbours, '3').unmask(0).rename('nb3') //Turbid
     
     // RR surrounded by ORF --> ORF
     clean_map = clean_map.where({
@@ -361,6 +367,7 @@ if (vars.obia_clean) {
     //var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
     //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
     //nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    var nb1 = ee.Image().byte().paint(map_fc_neighbours, '1').unmask(0).rename('nb1') //Land
     
     // ORF surrounded by IRF --> IRF
     clean_map = clean_map.where({
@@ -389,6 +396,13 @@ if (vars.obia_clean) {
               .and(nb21.gt(0).or(nb22.gt(0)))
               .and(nb15.gt(0)),
       value: ee.Image(15)
+    })
+    
+    // ORF touching land --> TRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb1.gt(10)),
+      value: ee.Image(16)
     })
     
     // ####
@@ -423,6 +437,12 @@ if (vars.obia_clean) {
       value: ee.Image(15)
     })
     
+    // IRF touching land --> TRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb1.gt(10)),
+      value: ee.Image(16)
+    })
     
     // ####
     // TRF
@@ -457,13 +477,20 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
+    // TRF not touching land --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb1.lt(10)),
+      value: ee.Image(13)
+    })
+    
     
     // ####
     // LAGOONS
     // ####
     
     var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') // shallow lag
-    var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //deep lag
+    //var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //deep lag
     
     // DL touching SL --> SL
     /* 
@@ -471,11 +498,11 @@ if (vars.obia_clean) {
     but too much band-aiding is required to make it work, so for the moment just err on the side
     of shallow lagoon when it's mixed.
     */
-    clean_map = clean_map.where({
+    /*clean_map = clean_map.where({
       test: clean_map.eq(12)
               .and(nb11.gt(0)),
       value: ee.Image(11)
-    })
+    })*/
     
     /*// SL sourrounded by DL --> DL
     clean_map = clean_map.where({
@@ -491,9 +518,17 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })*/
     
-    // DL/SL surrounded by IRF --> IRF
+    /*// DL/SL surrounded by IRF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(11).or(clean_map.eq(12))
+              .and(objsize.lte(max_size))
+              .and(nb13.gt(80)),
+      value: ee.Image(13)
+    })*/
+    
+    // SL surrounded by IRF --> IRF
+    clean_map = clean_map.where({
+      test: clean_map.eq(11)
               .and(objsize.lte(max_size))
               .and(nb13.gt(80)),
       value: ee.Image(13)
