@@ -115,6 +115,7 @@ Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], ma
 
 
 // Add some other data
+wcmc = wcmc.filterBounds(aoi)
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 
 
