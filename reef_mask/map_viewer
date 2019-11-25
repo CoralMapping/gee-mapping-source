@@ -114,7 +114,8 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
            [-80.09535323308353, 27.88219146078193],
            [-79.67237960027103, 27.249150306505225],
            [-79.49659835027103, 30.18729080745607]]]]),
-    srtm = ee.Image("CGIAR/SRTM90_V4");
+    srtm = ee.Image("CGIAR/SRTM90_V4"),
+    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -123,6 +124,8 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
 // Mitch Lyons - m.lyons@gmail.com
 // Nick Fabina - 
 ////////////////////////////////////
+
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // load RF probabilities/mask via strings, so easy to update
 var probs = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_0"),
@@ -172,11 +175,10 @@ var ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2
 var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false);
 
+// e.g. mappign region data
+Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
+//Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 
-/*// e.g. mappign region data
-Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", true)
-Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
-*/
 
 
 var landMask = ee.Image(1).where(srtm.gte(0), 0);
@@ -199,7 +201,7 @@ Map.addLayer(RFmask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]
 
 var RFprobs = ee.ImageCollection([probs, probs2, probs3, probs4, probs5, probs6, probs7, probs8, probs9, probs10, probs11, probs12, probs13])
                     .mosaic().clip(aoi)
-Map.addLayer(reefVisualiser(RFprobs,30), {palette: viriPlasma, min:[1], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
+Map.addLayer(reefVisualiser(RFprobs,50), {palette: viriPlasma, min:[1], max:[100]}, 'Landsat8 RF reef probabilities', false, 0.7)
 
 
 
