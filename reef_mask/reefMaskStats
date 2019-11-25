@@ -173,12 +173,12 @@ var wcmc_rfmask = function(f){
   })
   
   return(f.set("wcmc", f.geometry().area(), 
-               "rf_mask", ee.Number(reef_count.get("classification")).multiply(30*30),
-               "centroid", f.centroid().geometry().coordinates().join(','))
+               "rf_mask", ee.Number(reef_count.get("classification")).multiply(30*30))//,
+               //"centroid", f.centroid().geometry().coordinates().join(','))
         )
 }
 
-print(wcmc.limit(proclimit).map(wcmc_rfmask).toList(proclimit))
+print(wcmc.limit(proclimit).map(wcmc_rfmask))//.toList(proclimit))
 
 
 var wcmc_rfprob = function(f){
@@ -188,16 +188,16 @@ var wcmc_rfprob = function(f){
     scale: 30
   })
   return(f.set("wcmc", f.geometry().area(), 
-               "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30),
-               "centroid", f.centroid().geometry().coordinates().join(','))
+               "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30))//,
+               //"centroid", f.centroid().geometry().coordinates().join(','))
         )
 }
 
 var thresh = 50
-print(wcmc.limit(proclimit).map(wcmc_rfprob).toList(proclimit))
+print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
 
 thresh = 80
-print(wcmc.limit(proclimit).map(wcmc_rfprob).toList(proclimit))
+print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
 
 
 
