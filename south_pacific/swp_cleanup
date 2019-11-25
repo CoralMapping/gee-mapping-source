@@ -155,13 +155,13 @@ if (vars.geomorphic) {
   
   // add in land, for geomorphic clean up rules
   clean_map = clean_map.where({
-    test: pixel.select('depth').eq(-2),
+    test: pixels.select('depth').eq(-2),
     value: ee.Image(1)
   })
   
   // change -3 to reef rim, hope that clouds have been handleded by masking
   clean_map = clean_map.where({
-    test: pixel.select('depth').eq(-3),
+    test: pixels.select('depth').eq(-3),
     value: ee.Image(15)
   })
   
