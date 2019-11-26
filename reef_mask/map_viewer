@@ -223,7 +223,7 @@ Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], ma
 
 Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', false)
 
-//Map.addLayer(planet_mask, {color: 'grey'}, 'Original Planet Dove acquisition mask', false)
+Map.addLayer(planet_mask, {color: 'grey'}, 'Original Planet Dove acquisition mask', false)
 
 
 // add the potential upated "tightened" mask to reduce un-needed Planet acquisition
