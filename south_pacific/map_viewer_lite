@@ -1,22 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var Fiji = /* color: #d63000 */ee.Geometry.Point([178.38057923702922, -18.16988549547624]),
-    depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    fiji_training_benthic = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_benthic"),
-    fiji_training_geo_oldmaps = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_all_geo"),
-    fiji_training_geo = ee.FeatureCollection("projects/coral_atlas/fiji/training/fiji_training_maps_geo"),
-    fiji_ocean_pixels = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_pixels"),
-    fiji_ocean_segments = ee.Image("projects/coral_atlas/fiji/in_out/fj_high_ocean_segmentation"),
-    fiji_dove_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_sr_ocean"),
-    fiji_high_depth_ocean = ee.Image("projects/coral_atlas/fiji/full_mosaics/fj_high_depth_ocean"),
-    fiji_ocean_geo_maps = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_maps"),
-    fiji_ocean_geo_tm_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_geo_tm-clean"),
-    fiji_ocean_benthic_top2 = ee.Image("projects/coral_atlas/fiji/in_out/fj_ocean_benthic_reeftop2"),
-    fiji_geo_atd_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo_atd-clean"),
-    fiji_geo_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
-    fiji_benthic_clean = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
+var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     swp_dove_lt = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif"),
     swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
+    swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
     swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
@@ -63,6 +50,7 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 
 // SWP
 Map.addLayer(swp_benthic_east, map_palettes.benthic, "SWP Benthic - east RAW", false)
+Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
 //Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
 
 
@@ -111,7 +99,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 // #############
 // example confidence layers
 
-// depth and nir combos
+/*// depth and nir combos
 var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
 //Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
 var conf_flag = fiji_high_depth_ocean.eq(-1)
@@ -125,7 +113,7 @@ var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
 //Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
 
 //Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
-
+*/
 
 ////////// UI SET UP //////////
 
