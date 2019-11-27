@@ -4,7 +4,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
     swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
-    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east");
+    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east"),
+    fiji = /* color: #d63000 */ee.Geometry.Point([179.42064759488312, -16.263741104327007]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
