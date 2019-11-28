@@ -51,8 +51,8 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 //Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 
 // SWP
-Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east.neq([0,1,2,3,12])),
-                                swp_benthic_west.updateMask(swp_geo_west.neq([0,1,2,3,12]))]
+Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east.gt(2).and(swp_geo_east.neq(12))),
+                                swp_benthic_west.updateMask(swp_geo_west.gt(2).and(swp_geo_east.neq(12)))]
                                 ).mosaic(),
             map_palettes.benthic, "SWP Benthic - RAW", false)
 
