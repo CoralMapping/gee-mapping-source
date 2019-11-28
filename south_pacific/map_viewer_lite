@@ -5,6 +5,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
     swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
     swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east"),
+    swp_geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west"),
     Fiji = /* color: #d63000 */ee.Geometry.Point([179.42064759488312, -16.263741104327007]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
@@ -50,8 +51,14 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 //Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
 
 // SWP
-Map.addLayer(swp_benthic_east, map_palettes.benthic, "SWP Benthic - east RAW", false)
-Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
+Map.addLayer(ee.ImageCollection(swp_benthic_east.updateMask(swp_geo_east.gt(2)),
+                                swp_benthic_west.updateMask(swp_geo_west.gt(2))
+                                ).mosaic(),
+            map_palettes.benthic, "SWP Benthic - RAW", false)
+
+
+
+//Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
 //Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
 
 
@@ -81,7 +88,9 @@ Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
 //Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
 
 // SWP
-Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
+Map.addLayer(ee.ImageCollection(swp_geo_east, swp_geo_west).mosaic(),
+              map_palettes.geo, "SWP Geo -RAW", false)
+//Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", false)
 //Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", false)
 
 // wave data
