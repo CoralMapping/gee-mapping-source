@@ -52,7 +52,7 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 
 // SWP
 Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east.gt(2).and(swp_geo_east.neq(12))),
-                                swp_benthic_west.updateMask(swp_geo_west.gt(2).and(swp_geo_east.neq(12)))]
+                                swp_benthic_west.updateMask(swp_geo_west.gt(2).and(swp_geo_west.neq(12)))]
                                 ).mosaic(),
             map_palettes.benthic, "SWP Benthic - RAW", false)
 
