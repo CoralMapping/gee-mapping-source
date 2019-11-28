@@ -122,6 +122,8 @@ Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 Map.addLayer(all_training_data, {}, "Training polygons", false)
 
+var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666)
+
 if (!vars.geomorphic && vars.use_benthic_points) {
   // draw trainign points from cal/val map + input point data set
   var map_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
@@ -133,7 +135,8 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                         projection: vars.local_epsg,
                         scale: sensor_params.pixel,
                         classValues: nosamp_class,
-                        classPoints: nosamp_numpix
+                        classPoints: nosamp_numpix,
+                        seed: samp_seed
                       }).map(function(f) {
                         return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
                       })
@@ -150,7 +153,8 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                         projection: vars.local_epsg,
                         scale: sensor_params.pixel,
                         classValues: nosamp_class,
-                        classPoints: nosamp_numpix
+                        classPoints: nosamp_numpix,
+                        seed: samp_seed
                       }).map(function(f) {
                         return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
                       })
