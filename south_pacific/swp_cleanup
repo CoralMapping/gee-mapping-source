@@ -12,7 +12,19 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [178.38572253996801, -18.14798690419198],
           [178.39464893156958, -18.147008168757907],
           [178.4063219052024, -18.108506897570358],
-          [178.31190814787817, -18.120580241509167]]]);
+          [178.31190814787817, -18.120580241509167]]]),
+    swp_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[162.69556548631044, -6.330824554400339],
+          [162.69556548631044, -23.174924624263355],
+          [193.54517486131044, -23.174924624263355],
+          [193.54517486131044, -6.330824554400339]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SWP region
@@ -684,7 +696,7 @@ var export_classification = function () {
   if (vars.export_small_area) {
     var export_convhull = export_small
   } else {
-    var export_convhull = pixels.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: pixels.select(vars.blue_band).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_convhull = pixels.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
