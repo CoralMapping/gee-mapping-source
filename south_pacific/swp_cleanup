@@ -277,7 +277,8 @@ if (vars.obia_clean) {
             eightConnected: false,
             bestEffort: true, 
             maxPixels: 1e13,
-            tileScale: 1
+            tileScale: 1,
+            geometry: swp_extent
           })
     // map the function, calculate neighbour properties
     return(map_fc.map(set_neighbour_properties))
