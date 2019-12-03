@@ -197,8 +197,14 @@ var wcmc_rfprob = function(f){
 var thresh = 50
 print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
 
-thresh = 80
-print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
+/*thresh = 80
+print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))*/
 
 
 // export table
+Export.table.toDrive({
+  collection: wcmc.map(wcmc_rfprob),
+  description: 'wcmc_rf_probs',
+  fileNamePrefix: 'wcmc_rf_probs',
+  fileFormat: 'SHP',
+  selectors: ['rfprob50','wcmc']})
