@@ -179,7 +179,7 @@ var wcmc_rfmask = function(f){
         )
 }
 
-print(wcmc.limit(proclimit).map(wcmc_rfmask))//.toList(proclimit))
+//print(wcmc.limit(proclimit).map(wcmc_rfmask))//.toList(proclimit))
 
 
 var wcmc_rfprob = function(f){
