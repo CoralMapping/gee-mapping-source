@@ -183,18 +183,36 @@ print(wcmc.limit(proclimit).map(wcmc_rfmask))//.toList(proclimit))
 
 
 var wcmc_rfprob = function(f){
-  var reef_count = RFprobs.gt(thresh).selfMask().reduceRegion({
+  var reef_count30 = RFprobs.gt(30).selfMask().reduceRegion({
+    reducer: ee.Reducer.count(),
+    geometry: f.geometry(),
+    scale: 30
+  })
+  var reef_count50 = RFprobs.gt(50).selfMask().reduceRegion({
+    reducer: ee.Reducer.count(),
+    geometry: f.geometry(),
+    scale: 30
+  })
+  var reef_count70 = RFprobs.gt(70).selfMask().reduceRegion({
+    reducer: ee.Reducer.count(),
+    geometry: f.geometry(),
+    scale: 30
+  })
+  var reef_count90 = RFprobs.gt(90).selfMask().reduceRegion({
     reducer: ee.Reducer.count(),
     geometry: f.geometry(),
     scale: 30
   })
   return(f.set("wcmc", f.geometry().area(), 
-               "rfprob"+thresh, ee.Number(reef_count.get("classification")).multiply(30*30))//,
-               //"centroid", f.centroid().geometry().coordinates().join(','))
+               "rfprob30", ee.Number(reef_count30.get("classification")),
+               "rfprob50", ee.Number(reef_count50.get("classification")),
+               "rfprob70", ee.Number(reef_count70.get("classification")),
+               "rfprob90", ee.Number(reef_count90.get("classification")),
+               "centroid", f.centroid().geometry().coordinates().join(','))
         )
 }
 
-var thresh = 50
+//var thresh = 50
 print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))
 
 /*thresh = 80
