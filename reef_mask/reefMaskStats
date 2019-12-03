@@ -205,6 +205,7 @@ print(wcmc.limit(proclimit).map(wcmc_rfprob))//.toList(proclimit))*/
 Export.table.toDrive({
   collection: wcmc.map(wcmc_rfprob),
   description: 'wcmc_rf_probs',
-  fileNamePrefix: 'wcmc_rf_probs',
+  folder: 'wcmc_rf',
+  fileNamePrefix: 'wcmc_rf_prob50',
   fileFormat: 'SHP',
   selectors: ['rfprob50','wcmc']})
