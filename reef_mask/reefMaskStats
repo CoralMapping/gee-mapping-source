@@ -203,12 +203,14 @@ var wcmc_rfprob = function(f){
     geometry: f.geometry(),
     scale: 30
   })
+  var f_centroid = ee.List(f.centroid().geometry().coordinates())
   return(f.set("wcmc", f.geometry().area(), 
                "rfprob30", ee.Number(reef_count30.get("classification")),
                "rfprob50", ee.Number(reef_count50.get("classification")),
                "rfprob70", ee.Number(reef_count70.get("classification")),
                "rfprob90", ee.Number(reef_count90.get("classification")),
-               "centroid", f.centroid().geometry().coordinates().join(','))
+               "lat", f_centroid.get(0), "lon", f_centroid.get(1))
+               //"centroid", f.centroid().geometry().coordinates().join(','))
         )
 }
 
@@ -224,6 +226,7 @@ Export.table.toDrive({
   collection: wcmc.map(wcmc_rfprob),
   description: 'wcmc_rf_probs',
   folder: 'wcmc_rf',
-  fileNamePrefix: 'wcmc_rf_prob50',
-  fileFormat: 'SHP',
-  selectors: ['rfprob50','wcmc']})
+  fileNamePrefix: 'wcmc_rf_probs',
+  fileFormat: 'CSV',
+  selectors: ['lat','lon','rfprob30','rfprob50','rfprob70','rfprob90','wcmc']
+})
