@@ -105,17 +105,18 @@ var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clea
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)*/
 var pixels = ee.ImageCollection(region_params.pixels).mosaic()
 
-var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
+//var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.centerObject(eg_area, 11)
 Map.addLayer(pixels, {}, 'Image data', false)
-Map.addLayer(input_map, display_pal, 'Raw classification', false)
+Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
+Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 
 // 3. Object-based re-classificaiton and cleaning
 
-var class_extent_mask = input_map.gte(0) // just so it doesn't balloon out
+var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
 
 /*
 
@@ -139,7 +140,7 @@ Initial small object clean
 if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // make a smooth map with masked area as a value
-  var smooth_map = input_map
+  var smooth_map = geo_map
                       .unmask(99)
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
@@ -148,8 +149,8 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
-  var clean_map = input_map.where({
-    test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+  var clean_map = geo_map.where({
+    test: geo_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
   }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
@@ -196,7 +197,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
 if (!vars.geomorphic) {
   
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
-  var smooth_map = input_map
+  var smooth_map = benthic_map
                       .unmask(99)
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
@@ -205,21 +206,21 @@ if (!vars.geomorphic) {
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
-  var clean_map = input_map.where({
-    test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+  var clean_map = benthic_map.where({
+    test: benthic_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
   }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   /*// CLEAN UP ALL TEMPORAL AREAS
-  var smooth_notemp = input_map
-                          .updateMask(input_map.neq(2))
+  var smooth_notemp = benthic_map
+                          .updateMask(benthic_map.neq(2))
                           .focal_mode({
                             radius: vars.smooth_radius.multiply(2),
                             kernelType: 'circle', units: 'pixels', iterations: 3
                           })
   
   clean_map = clean_map1.where({
-    test: input_map.eq(2), 
+    test: benthic_map.eq(2), 
     value: smooth_notemp
   }).updateMask(clean_map1.gte(0))
   
@@ -232,13 +233,14 @@ if (!vars.geomorphic) {
 }
 
 
+
+if (vars.geomorphic && vars.obia_2nd_pass) {
+  var clean_map = geo_map
+}
+
 Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
-  
-  if (vars.obia_2nd_pass) {
-    var clean_map = input_map
-  }
   
   // #########
   // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
