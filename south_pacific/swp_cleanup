@@ -66,12 +66,12 @@ var vars = {
   image_data_scale: ee.Number(sensor_params.pixel),
   small_object: ee.Number(60).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
-  obia_clean: true, // run object-based relationship rules + small object clean up
-  
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
-  You can (if needed) just run the clean-up twice to catch the left overs */
+  - for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
+  - for smaller regions, can do both at once*/
   obia_2nd_pass: false,
+  obia_clean: false, // run object-based relationship rules + small object clean up
   //############
   
   smooth_output: true, // run smoother over final output (includes noise removal)
