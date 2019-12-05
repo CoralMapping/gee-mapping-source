@@ -710,7 +710,7 @@ var export_classification = function () {
   Export.image.toAsset({
     image: clean_map.set(vars),
     description: output_name,
-    assetId: vars.asset_output + output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
     scale: vars.image_data_scale,
     maxPixels: 1e13,
