@@ -204,7 +204,7 @@ if (!vars.geomorphic) {
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
-  var clean_map1 = input_map.where({
+  var clean_map = input_map.where({
     test: input_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
   }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
