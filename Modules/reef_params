@@ -223,8 +223,8 @@ var swpac = {
   benthic_val_library: "projects/coral_atlas/sw_pacific/training/swp_benthic_validation",
   geo_map: ["projects/coral_atlas/sw_pacific/in_out/swp_geo_east","projects/coral_atlas/sw_pacific/in_out/swp_geo_west"],
   benthic_map: ["projects/coral_atlas/sw_pacific/in_out/swp_benthic_east","projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"],
-  geo_map_clean: "",
-  benthic_map_clean: ""
+  geo_map_clean: "projects/coral_atlas/sw_pacific/in_out/swp_geo-clean1",
+  benthic_map_clean: "projects/coral_atlas/sw_pacific/in_out/swp_benthic-clean"
 }
 
 var wmic = {
