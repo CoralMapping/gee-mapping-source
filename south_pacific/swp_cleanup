@@ -64,19 +64,19 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(100).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(60).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
+  
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
   - for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   - for smaller regions, can do both at once*/
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
+  smooth_output: true, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
-  smooth_output: true, // run smoother over final output (includes noise removal)
-  
-  // results/layers to show
+    // results/layers to show
   export_small_area: false,
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
