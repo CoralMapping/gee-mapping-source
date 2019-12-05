@@ -69,8 +69,9 @@ var vars = {
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
-  - for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
-  - for smaller regions, can do both at once*/
+  - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
+  -           : for smaller regions, can do both at once
+  - BENTHIC : can do both at once */
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
   smooth_output: true, // run smoother over final output (includes noise removal) (should be false for second pass)
@@ -128,14 +129,14 @@ Initial small object clean
    iterate through in the OBIA cleaning, so this happens first now
  - future collabs with google might fix this, but need to change the parallel serialisation of vector procesing
  
- - includes a special case for:
+ - includes a possible special case for:
       - geomorphic to clean up turbid areas over size threshold; fix shallow vs. deep lagoon
       - benthic to allow breaking waves (temporal class) to grow into surrounding class
 ########
 
 */
 
-if (vars.geomorphic) {
+if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // make a smooth map with masked area as a value
   var smooth_map = input_map
@@ -234,6 +235,10 @@ if (!vars.geomorphic) {
 Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
+  
+  if (vars.obia_2nd_pass) {
+    var clean_map = input_map
+  }
   
   // #########
   // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
