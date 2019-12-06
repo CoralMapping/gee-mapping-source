@@ -4,15 +4,18 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [178.11912700606285, -19.160641289483575],
           [178.1160371012777, -19.1590197646103],
           [178.1149213023275, -19.161452045940777]]]),
-    export_small = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[178.30538501555395, -18.12906371491885],
-          [178.3294176083274, -18.15320673394874],
-          [178.33079089934301, -18.16723425373746],
-          [178.3414339047141, -18.170822508054943],
-          [178.38572253996801, -18.14798690419198],
-          [178.39464893156958, -18.147008168757907],
-          [178.4063219052024, -18.108506897570358],
-          [178.31190814787817, -18.120580241509167]]]),
+    export_small = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[179.92971466499546, -16.813226908598054],
+          [179.92971466499546, -16.869745698164554],
+          [179.98327301460483, -16.869745698164554],
+          [179.98327301460483, -16.813226908598054]]], null, false),
     swp_extent = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -78,8 +81,8 @@ var vars = {
   //############
   
     // results/layers to show
-  export_small_area: false,
-  show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
+  export_small_area: true,
+  show_eg_area: false, // contrain the map add toe the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   reproject_display: true,
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
