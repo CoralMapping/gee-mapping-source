@@ -739,7 +739,7 @@ if (vars.do_export) {
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
-    scale: vars.image_data_scale,
+    scale: 25,
     //crs: 'EPSG:3832',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
