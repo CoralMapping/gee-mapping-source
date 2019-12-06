@@ -118,7 +118,11 @@ Map.addLayer(depth, {}, 'Depth data', false)
 
 // 3. Object-based re-classificaiton and cleaning
 
+/*
 // if we want to retain the land/waves flags, need to add them in before makign the mask
+
+######## Not that straight forwards - the land and bright masks are a LOT of not land and not breakign waves... =(
+
 // add in land, for geomorphic clean up rules
   geo_map = geo_map.unmask(0).where({
     test: depth.eq(-2).and(globcover.select('landcover').neq(210)),
@@ -132,7 +136,7 @@ Map.addLayer(depth, {}, 'Depth data', false)
   })
   
   // remask
-  geo_map = geo_map.updateMask(geo_map.gt(0))
+  geo_map = geo_map.updateMask(geo_map.gt(0))*/
   
 var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
 
