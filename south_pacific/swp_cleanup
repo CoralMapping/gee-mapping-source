@@ -723,17 +723,17 @@ if (vars.do_export) {
     var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
-/*  Export.image.toAsset({
+  Export.image.toAsset({
     image: clean_map.set(vars),
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
-    scale: 25,
+    scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
-  })*/
-  Export.image.toCloudStorage({
+  })
+  /*Export.image.toCloudStorage({
     image: clean_map,//.set(vars),
     description: 'swp_geo_clean',
     bucket: 'mitchest_unet_bucket',
@@ -742,7 +742,7 @@ if (vars.do_export) {
     scale: 25,
     crs: 'EPSG:4326',
     maxPixels: 1e13
-  })
+  })*/
   
   
 } else {
