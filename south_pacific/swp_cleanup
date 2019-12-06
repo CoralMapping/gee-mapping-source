@@ -28,8 +28,7 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [161.99244048631044, -24.50136375705747],
           [192.84204986131044, -24.50136375705747],
           [192.84204986131044, -7.029171821347217]]], null, false),
-    geo1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east"),
-    geo2 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west");
+    geo1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west-clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SWP region
@@ -77,7 +76,7 @@ var vars = {
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : for smaller regions, can do both at once
   - BENTHIC : can do both at once */
-  obia_2nd_pass: false,
+  obia_2nd_pass: true,
   obia_clean: false, // run object-based relationship rules + small object clean up
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
@@ -107,7 +106,8 @@ if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(
 //var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.ImageCollection(region_params.geo_map).mosaic()
 if (vars.obia_2nd_pass) {
   // OR ru na separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
-  var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
+  //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
+  var geo_map = geo1
 } else {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   var geo_map = geo2
