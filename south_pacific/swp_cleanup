@@ -27,8 +27,7 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
         [[[161.99244048631044, -7.029171821347217],
           [161.99244048631044, -24.50136375705747],
           [192.84204986131044, -24.50136375705747],
-          [192.84204986131044, -7.029171821347217]]], null, false),
-    geo_map = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west");
+          [192.84204986131044, -7.029171821347217]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SWP region
@@ -104,6 +103,12 @@ if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(
 
 // load input data
 //var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.ImageCollection(region_params.geo_map).mosaic()
+if (vars.obia_2nd_pass) {
+  var geo_map = ee.Image(region_params.geo_map_clean)
+} else {
+  var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
+}
+
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
 /*var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)*/
