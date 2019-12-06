@@ -108,16 +108,16 @@ var vars = {
   local_epsg: region_params.epsg,
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
-  trim_training_perc: 0.60,
+  trim_training_perc: 0.80,
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
-  test_mode: true, // this pars down the training computation, to test whether classificiton output is working
+  test_mode: false, // this pars down the training computation, to test whether classificiton output is working
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
