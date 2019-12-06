@@ -27,7 +27,8 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
         [[[161.99244048631044, -7.029171821347217],
           [161.99244048631044, -24.50136375705747],
           [192.84204986131044, -24.50136375705747],
-          [192.84204986131044, -7.029171821347217]]], null, false);
+          [192.84204986131044, -7.029171821347217]]], null, false),
+    globcover = ee.Image("ESA/GLOBCOVER_L4_200901_200912_V2_3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SWP region
@@ -113,26 +114,31 @@ var depth = ee.Image(region_params.depth)
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {}, 'Depth data', false)
-Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
-Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
+
 
 
 // 3. Object-based re-classificaiton and cleaning
 
 // if we want to retain the land/waves flags, need to add them in before makign the mask
 // add in land, for geomorphic clean up rules
-  geo_map = geo_map.where({
-    test: depth.eq(-2),
+  geo_map = geo_map.unmask(0).where({
+    test: depth.eq(-2).and(globcover.select('landcover').neq(210)),
     value: ee.Image(1)
   })
   
   // change -3 to reef rim, hope that clouds have been handleded by masking
-  geo_map = geo_map.where({
+  geo_map = geo_map.unmask(0).where({
     test: depth.eq(-3),
     value: ee.Image(15)
   })
-
+  
+  // remask
+  geo_map = geo_map.updateMask(geo_map.gt(0))
+  
 var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
+
+Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
+Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 /*
 
