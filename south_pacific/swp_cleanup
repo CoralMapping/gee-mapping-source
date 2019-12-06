@@ -12,10 +12,10 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
       }
     ] */
     ee.Geometry.Polygon(
-        [[[179.92971466499546, -16.813226908598054],
-          [179.92971466499546, -16.869745698164554],
-          [179.98327301460483, -16.869745698164554],
-          [179.98327301460483, -16.813226908598054]]], null, false),
+        [[[179.83152435737827, -16.760307422251895],
+          [179.83152435737827, -16.816841987280164],
+          [179.93280456978061, -16.816841987280164],
+          [179.93280456978061, -16.760307422251895]]], null, false),
     swp_extent = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -88,7 +88,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
