@@ -710,7 +710,9 @@ if (vars.smooth_output) {
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
 
-var export_classification = function () {
+
+if (vars.do_export) {
+  print("For export, the image data scale must be set to:", vars.image_data_scale)
   
   if (vars.export_small_area) {
     var export_convhull = export_small
@@ -727,11 +729,8 @@ var export_classification = function () {
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
-}
-
-if (vars.do_export) {
-  print("For export, the image data scale must be set to:", vars.image_data_scale)
-  export_classification() // export if wanted
+  
+  
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
