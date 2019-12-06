@@ -91,7 +91,7 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo_east-clean1',
+  geomorph_output_name: region_params.sname + '_geo_west-clean1',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
 
@@ -109,7 +109,7 @@ if (vars.obia_2nd_pass) {
   var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
-  var geo_map = geo1
+  var geo_map = geo2
 }
 
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
@@ -738,7 +738,7 @@ if (vars.do_export) {
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
-    scale: vars.image_data_scale,
+    scale: 25,
     //crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
