@@ -699,10 +699,10 @@ if (vars.smooth_output) {
                           radius: 3, // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
                         })
-  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(class_extent_mask)
+  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(2))
 } else {
   // just clip to the classified extent and move on
-  clean_map = clean_map.updateMask(class_extent_mask)
+  clean_map = clean_map.updateMask(geo_map.gt(2))
 }
 
 
