@@ -724,11 +724,12 @@ if (vars.do_export) {
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
-    image: clean_map,//.set(vars),
+    image: clean_map.set(vars),
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
     scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
