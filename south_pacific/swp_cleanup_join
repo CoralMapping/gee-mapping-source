@@ -1,0 +1,47 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[178.11792537642418, -19.163235696114032],
+          [178.11912700606285, -19.160641289483575],
+          [178.1160371012777, -19.1590197646103],
+          [178.1149213023275, -19.161452045940777]]]),
+    export_small = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[179.95512054878452, -16.51030303799518],
+          [179.95512054878452, -16.56691147805663],
+          [180.05640076118686, -16.56691147805663],
+          [180.05640076118686, -16.51030303799518]]], null, false),
+    swp_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[161.99244048631044, -7.029171821347217],
+          [161.99244048631044, -24.50136375705747],
+          [192.84204986131044, -24.50136375705747],
+          [192.84204986131044, -7.029171821347217]]], null, false),
+    geo1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east-clean1"),
+    geo2 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west-clean1");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var clean_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
+
+Map.addLayer(clean_map)
+
+Export.image.toAsset({
+  image: clean_map,
+  description: 'swp_geo_clean1',
+  assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_geo_clean1',
+  region: swp_extent,
+  scale: 25,
+  wecrs: 'EPSG:3832',
+  maxPixels: 1e13,
+  pyramidingPolicy: {'.default': 'mode'}
+})
