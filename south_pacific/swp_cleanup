@@ -173,7 +173,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // shallow lagoon > 10m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
-                   .and(depth.gt(10)),
+                   .and(depth.gt(1000)),
     value: ee.Image(12)
   })
   
