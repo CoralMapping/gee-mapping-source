@@ -89,7 +89,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
@@ -715,7 +715,7 @@ var export_classification = function () {
   if (vars.export_small_area) {
     var export_convhull = export_small
   } else {
-    var export_convhull = class_extent_mask.reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
