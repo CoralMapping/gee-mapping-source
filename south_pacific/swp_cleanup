@@ -106,7 +106,7 @@ var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
 /*var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)*/
-var pixels = ee.ImageCollection(region_params.pixels).mosaic()
+var depth = ee.ImageCollection(region_params.pixels).mosaic()
 
 //var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
