@@ -119,6 +119,19 @@ Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 // 3. Object-based re-classificaiton and cleaning
 
+// if we want to retain the land/waves flags, need to add them in before makign the mask
+// add in land, for geomorphic clean up rules
+  geo_map = geo_map.where({
+    test: pixels.select('depth').eq(-2),
+    value: ee.Image(1)
+  })
+  
+  // change -3 to reef rim, hope that clouds have been handleded by masking
+  geo_map = geo_map.where({
+    test: pixels.select('depth').eq(-3),
+    value: ee.Image(15)
+  })
+
 var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
 
 /*
@@ -170,17 +183,6 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   })
   
-  // add in land, for geomorphic clean up rules
-  clean_map = clean_map.where({
-    test: pixels.select('depth').eq(-2),
-    value: ee.Image(1)
-  })
-  
-  // change -3 to reef rim, hope that clouds have been handleded by masking
-  clean_map = clean_map.where({
-    test: pixels.select('depth').eq(-3),
-    value: ee.Image(15)
-  })
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
   var smooth_noturbid = clean_map
