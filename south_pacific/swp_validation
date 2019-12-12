@@ -78,6 +78,8 @@ BIG COMPONENT TODO (new implementation required)
 // 2. Data loads & vis
 // 3. Accuracy assessment
 // 4. Export data
+// 5. User accuracy-based confidence layer
+// 6. Legend 
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
