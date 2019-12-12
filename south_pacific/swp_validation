@@ -348,7 +348,7 @@ if (vars.assess_accuracy) {
 
 
 
-//5. confidence layer
+//5. user accuracy-based confidence layer
 Map.addLayer(val_map,val_mapVIS,'val_map');
 Map.centerObject(validation,9);
 
