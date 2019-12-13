@@ -186,14 +186,15 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy
+  benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
   use_benthic_points: false,
+  use_geo_points: true,
   
   // cal/val params
   val_size: 0, // default is to not sample - that way we have explicit control over the classes sampled for validaiton
@@ -231,7 +232,7 @@ var vars = {
 // load input data
 var pixels = ee.Image(region_params.dove_pixels)
 var segments = ee.Image(region_params.dove_segments)
-var geomorph = ee.FeatureCollection(region_params.geo_train)
+var geomorph = (vars.use_geo_points) ? ee.FeatureCollection(region_params.geo_pts) : ee.FeatureCollection(region_params.geo_train)
 var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_train)
 if (vars.assess_clean) {
   var geo_map = ee.Image(region_params.geo_map_clean)
@@ -277,7 +278,24 @@ if (vars.assess_accuracy) {
             return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
             })
   }
-  
+  if (vars.geomorphic && vars.use_geo_points) { 
+    var validation_pts = geomorph // if we're doign a point based assessment then use those
+  } else {
+    // otherwise use the cal/val maps for accuracy
+    var validation_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
+          .addBands(ee.Image.pixelLonLat())
+          .stratifiedSample({
+            numPoints: vars.val_size,
+            region: validation_region,
+            projection: "EPSG:3141",
+            scale: sensor_params.pixel,
+            classValues: nosamp_class,
+            classPoints: nosamp_numpix
+            })
+          .map(function(f) {
+            return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
+            })
+  }
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
