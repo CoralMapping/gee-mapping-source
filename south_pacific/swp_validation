@@ -186,8 +186,8 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy
+  benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -392,11 +392,11 @@ return wideIm;
 
 function highConf(img){
   var highConfIm=img.expression(
-    "(b('remapped') >= 0.95) ? 6"+
-      ":(b('remapped') >= 0.9) ? 5"+
-        ":(b('remapped') >= 0.85) ? 4"+
-          ":(b('remapped') >= 0.8) ? 3"+
-            ":(b('remapped') >= 0.75) ? 2"+
+    "(b('remapped') >= 0.98) ? 6"+
+      ":(b('remapped') >= 0.96) ? 5"+
+        ":(b('remapped') >= 0.94) ? 4"+
+          ":(b('remapped') >= 0.92) ? 3"+
+            ":(b('remapped') >= 0.90) ? 2"+
               ":1"
   );
 return highConfIm;
@@ -427,7 +427,7 @@ var legend=ui.Panel({
   }
 });
 
-if (vars.geomorphic) {var Value='User Accuracy Geomorphic'} else {var Value='User Accuracy Benthic'}
+if (vars.geomorphic) {var Value='User Accuracy Geomorphic (%)'} else {var Value='User Accuracy Benthic (%)'}
 var legendTitle=ui.Label({
   value: Value,
   style: {
@@ -441,12 +441,12 @@ legend.add(legendTitle);
 
 
 var dictH={
-  '0-75':'f1eef6',
-  '75-80':'d0d1e6',
-  '80-85':'a6bddb',
-  '85-90':'74a9cf',
-  '90-95':'2b8cbe',
-  '95-100':'045a8d'
+  '0-90':'f1eef6',
+  '90-92':'d0d1e6',
+  '92-94':'a6bddb',
+  '94-96':'74a9cf',
+  '96-98':'2b8cbe',
+  '98-100':'045a8d'
 };
 
 var dictW={
