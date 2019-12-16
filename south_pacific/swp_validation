@@ -1,29 +1,3 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var validation = 
-    /* color: #2000d6 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[176.20146869140808, -15.610233009654474],
-          [176.20146869140808, -19.503902652781576],
-          [182.36891864257973, -19.503902652781576],
-          [182.36891864257973, -15.610233009654474]]], null, false),
-    test_val = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[177.84943243669204, -18.77407437643519],
-          [177.84943243669204, -19.32446074215668],
-          [178.70636603044204, -19.32446074215668],
-          [178.70636603044204, -18.77407437643519]]], null, false);
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 ############### --> need to port this over form previous GBR work
 
@@ -248,7 +222,7 @@ if (vars.assess_accuracy) {
 
 //5. user accuracy-based confidence layer
 Map.addLayer(val_map,val_mapVIS,'val_map');
-Map.centerObject(validation,9);
+Map.centerObject(val_map,9);
 
 
 var values_UA=(accuracy_cons.values());
