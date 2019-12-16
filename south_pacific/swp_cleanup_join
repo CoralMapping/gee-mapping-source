@@ -82,7 +82,7 @@ Map.addLayer(benthic_out, map_palettes.benthic, "benthic out", false)
 
 
 Export.image.toAsset({
-  image: geo_out2,
+  image: geo_out2.selfMask(),
   description: 'swp_geo_final',
   assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_geo_final',
   region: swp_extent,
@@ -93,7 +93,7 @@ Export.image.toAsset({
 })
 
 Export.image.toAsset({
-  image: benthic_out,
+  image: benthic_out.selfMask(),
   description: 'swp_benthic_final',
   assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_benthic_final',
   region: swp_extent,
