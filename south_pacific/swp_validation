@@ -62,10 +62,10 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy
+  benthic: true, // assess benthic accuracy
   
-  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -146,6 +146,8 @@ if (vars.assess_accuracy) {
     
   }
   
+  Map.addLayer(validation_pts, {}, "validation points used", false)
+  
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
@@ -219,13 +221,13 @@ if (vars.assess_accuracy) {
 
 
 //5. user accuracy-based confidence layer
-Map.addLayer(val_map,val_mapVIS,'val_map');
+Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
 Map.centerObject(val_map,9);
 
 
 var values_UA=(accuracy_cons.values());
 var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
-Map.addLayer(UAlayer,map_palettes.UA_pal,'UAlayer');
+Map.addLayer(UAlayer, map_palettes.UA_pal, 'User Accuracy layer', false);
 
 function wide(img){
   var wideIm=img.expression(
@@ -265,7 +267,7 @@ var UserAcc=maskUA(reclass);
 
 var toMap=UserAcc
 
-Map.addLayer(toMap,map_palettes.UserAcc_pal,'UserAcc');
+Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false);
 //print('toMap',toMap);
 
 //6. legend  
