@@ -52,6 +52,7 @@ var cnn_preds = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().gt(30
 var not_fiji = ee.Image(1).clip(swp_extent).subtract(ee.Image(1).clip(fiji_extent).unmask(0,false))
 
 var geo_out = swp_geo_east_clean.unmask(0, false).add(swp_geo_west_clean.unmask(0,false)).selfMask().clip(swp_extent)
+var benthic_out = swp_benthic_east.unmask(0, false).add(swp_benthic_west.unmask(0,false)).selfMask().clip(swp_extent)
 
 var fiji_mask = fiji_geo.unmask(0)
 
@@ -59,17 +60,21 @@ var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(15)), ee.Image(0))
 var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(16)), ee.Image(0))
 var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(21)), ee.Image(0))
 var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(22)), ee.Image(0))
+var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(23)), ee.Image(0))
 
 var geo_out2 = geo_out.where(cnn_preds.eq(0).and(geo_out.eq(15).and(not_fiji.eq(1))), ee.Image(0))
 var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(16).and(not_fiji.eq(1))), ee.Image(0))
 var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(21).and(not_fiji.eq(1))), ee.Image(0))
 var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(22).and(not_fiji.eq(1))), ee.Image(0))
+var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(23).and(not_fiji.eq(1))), ee.Image(0))
 
+var benthic_out = benthic_out.where(geo_out2.lte(3), ee.Image(0))
 
 Map.addLayer(not_fiji, {}, "not fiji", false)
 Map.addLayer(fiji_mask, map_palettes.geo, "fiji mask", false)
 Map.addLayer(geo_out, map_palettes.geo, "geo out", false)
 Map.addLayer(geo_out2, map_palettes.geo, "geo out 2", false)
+Map.addLayer(benthic_out, map_palettes.benthic, "benthic out", false)
 
 
 
