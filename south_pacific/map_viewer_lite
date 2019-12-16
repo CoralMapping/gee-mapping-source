@@ -71,10 +71,8 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
             map_palettes.benthic, "SWP Benthic - RAW", false)*/
 
 var benthic_raw = benthic_east.unmask(0, false).add(benthic_west.unmask(0,false)).selfMask().clip(swp_extent)
-
-
-//Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
-//Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
+Map.addLayer(benthic_raw, map_palettes.benthic, "Benthic - raw", false)
+Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic - clean", false)
 
 
 // Fiji
@@ -100,13 +98,15 @@ Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 //Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
-Map.addLayer(fiji_geo, map_palettes.geo, "Fiji Geo - FINAL", false)
+//Map.addLayer(fiji_geo, map_palettes.geo, "Fiji Geo - FINAL", false)
 
 // SWP
-Map.addLayer(ee.ImageCollection([swp_geo_east_clean, swp_geo_west_clean]).mosaic(),
-              map_palettes.geo, "SWP Geo - clean stage 1", false)
-//Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", false)
-//Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", false)
+/*Map.addLayer(ee.ImageCollection([swp_geo_east_clean, swp_geo_west_clean]).mosaic(),
+              map_palettes.geo, "SWP Geo - clean stage 1", false)*/
+
+var geo_raw = geo_east.unmask(0, false).add(geo_west.unmask(0,false)).selfMask().clip(swp_extent)
+Map.addLayer(geo_raw, map_palettes.geo, "Geomorphic - raw", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Geomorphic - clean", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
