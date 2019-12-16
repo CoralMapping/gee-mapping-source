@@ -33,21 +33,48 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
     swp_benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
     swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
     fiji_benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
-    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3");
+    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
+    fiji_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[176.80457703426077, -15.663015300802376],
+          [176.80457703426077, -21.112983291592666],
+          [181.92420594051077, -21.112983291592666],
+          [181.92420594051077, -15.663015300802376]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var cnn_preds = ee.ImageCollection('users/nfabina/reef_probs_v1').mosaic().gt(30).clip(swp_extent)
+var not_fiji = ee.Image(1).clip(swp_extent).subtract(ee.Image(1).clip(fiji_extent).unmask(0,false))
+
+var geo_out = swp_geo_east_clean.unmask(0, false).add(swp_geo_west_clean.unmask(0,false)).selfMask().clip(swp_extent)
+
+var fiji_mask = fiji_geo.unmask(0)
+
+var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(15)), ee.Image(0))
+var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(16)), ee.Image(0))
+var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(21)), ee.Image(0))
+var geo_out = geo_out.where(fiji_mask.lte(3).and(geo_out.eq(22)), ee.Image(0))
+
+var geo_out2 = geo_out.where(cnn_preds.eq(0).and(geo_out.eq(15).and(not_fiji.eq(1))), ee.Image(0))
+var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(16).and(not_fiji.eq(1))), ee.Image(0))
+var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(21).and(not_fiji.eq(1))), ee.Image(0))
+var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(22).and(not_fiji.eq(1))), ee.Image(0))
+
+
+Map.addLayer(not_fiji, {}, "not fiji", false)
+Map.addLayer(fiji_mask, map_palettes.geo, "fiji mask", false)
+Map.addLayer(geo_out, map_palettes.geo, "geo out", false)
+Map.addLayer(geo_out2, map_palettes.geo, "geo out 2", false)
 
 
 
 
-
-
-
-
-
-
-
-
-var clean_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
+/*var clean_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
 
 Map.addLayer(clean_map)
 
@@ -60,4 +87,4 @@ Export.image.toAsset({
   wecrs: 'EPSG:3832',
   maxPixels: 1e13,
   pyramidingPolicy: {'.default': 'mode'}
-})
+})*/
