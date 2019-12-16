@@ -6,7 +6,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     swp_benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
     Fiji = /* color: #d63000 */ee.Geometry.Point([179.42064759488312, -16.263741104327007]),
     swp_geo_east_clean = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east-clean1"),
-    swp_geo_west_clean = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west-clean1");
+    swp_geo_west_clean = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west-clean1"),
+    fiji_benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
+    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -48,7 +50,7 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 //Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 //Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
-//Map.addLayer(fiji_benthic_clean, map_palettes.benthic, "Benthic - FINAL", false)
+Map.addLayer(fiji_benthic, map_palettes.benthic, "Fiji Benthic - FINAL", false)
 
 // SWP
 Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east_clean.gt(2).and(swp_geo_east_clean.neq(12))),
@@ -85,7 +87,7 @@ Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 //Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
-//Map.addLayer(fiji_geo_clean, map_palettes.geo, "Geo - FINAL", false)
+Map.addLayer(fiji_geo, map_palettes.geo, "Fiji Geo - FINAL", false)
 
 // SWP
 Map.addLayer(ee.ImageCollection([swp_geo_east_clean, swp_geo_west_clean]).mosaic(),
