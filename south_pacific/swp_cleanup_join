@@ -81,19 +81,24 @@ Map.addLayer(geo_out2, map_palettes.geo, "geo out 2", false)
 Map.addLayer(benthic_out, map_palettes.benthic, "benthic out", false)
 
 
-
-
-/*var clean_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
-
-Map.addLayer(clean_map)
-
 Export.image.toAsset({
-  image: clean_map,
-  description: 'swp_geo_clean1',
-  assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_geo_clean1',
+  image: geo_out2,
+  description: 'swp_geo_final',
+  assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_geo_final',
   region: swp_extent,
   scale: 25,
   wecrs: 'EPSG:3832',
   maxPixels: 1e13,
   pyramidingPolicy: {'.default': 'mode'}
-})*/
+})
+
+Export.image.toAsset({
+  image: benthic_out,
+  description: 'swp_benthic_final',
+  assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_benthic_final',
+  region: swp_extent,
+  scale: 5,
+  wecrs: 'EPSG:3832',
+  maxPixels: 1e13,
+  pyramidingPolicy: {'.default': 'mode'}
+})
