@@ -222,7 +222,7 @@ if (vars.assess_accuracy) {
 
 //5. user accuracy-based confidence layer
 Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
-Map.centerObject(val_map,9);
+Map.centerObject(validation_pts,9);
 
 
 var values_UA=(accuracy_cons.values());
