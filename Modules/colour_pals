@@ -78,7 +78,7 @@ var UA_pal= {
     'df65b0',
     'dd1c77',
     '980043']
-};
+  };
 
 var UserAcc_pal= {
   palette: [
@@ -88,7 +88,7 @@ var UserAcc_pal= {
     '74a9cf',
     '2b8cbe',
     '045a8d']
-};
+  };
 
 
 // geo legend
