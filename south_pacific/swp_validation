@@ -113,7 +113,7 @@ var vars = {
   use_geo_points: false, // this flag is for using field photo transect points (also it is very unlikely we'll ever have geo points)
   
   // cal/val params
-  val_size: 0, // default is to not sample - that way we have explicit control over the classes sampled for validaiton
+  val_trim: 0.1, // percentage at which to trim the validation library i.e. if 0.1 = 10% of vlaidation library, so @ 3000 points per class = 300 points per class
   
   // class information for classification, sampling and reporting
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -121,8 +121,8 @@ var vars = {
   nosamp_class_geo:  [2,11,12,13,14,15,16,21,22], // classes not to use/use more
   nosamp_numpix_geo: ee.List.repeat(2000, 9), // set number of pixels to sample from above classes to 0
   // TODO: consider dynamically generating these
-  classes_mapped_geo:       [2,   11,  12,   13,   14,   15,  16,    21,  22], // classes to map
-  classes_mapped_names_geo: ['DE','SL','DL','IRF','ORF','RR', 'TRF','SS','SE'],
+  classes_mapped_geo:       [11,  13,   14,   15,  16,    21,  22], // classes to map
+  classes_mapped_names_geo: ['SL','IRF','ORF','RR', 'TRF','SS','SE'],
   // benthic
   nosamp_class_benthic:  [11, 12, 13, 14, 16, 17, 18], // classes not to use/use more
   nosamp_numpix_benthic: ee.List.repeat(2000, 7), // set number of pixels to sample from above classes to 0
@@ -131,7 +131,7 @@ var vars = {
   classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'AL', 'BMA' ],
   
   // results/layers to show
-  assess_accuracy: true, // write accuracy stats to output?
+  assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
   show_accuracy: true, // print error stats? (you might only be able to have a smaller val_size if you're vieing results live?)
   
   // export options
@@ -161,7 +161,7 @@ if (vars.assess_clean) {
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
 var val_map = (vars.geomorphic) ? geo_map : benthic_map // Set the validation map to either geomorphic or benthic
-var val_mapVIS=(vars.geomorphic) ? map_palettes.geo : map_palettes.benthic //Set the map visualization parameters to either geomorphic or benthic 
+var val_mapVIS = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic //Set the map visualization parameters to either geomorphic or benthic 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
 var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_numpix_benthic
@@ -177,41 +177,23 @@ if (vars.assess_accuracy) {
   var validation_region = (vars.show_accuracy) ? test_val : validation
   
   if (vars.benthic && vars.use_benthic_points) { 
-    var validation_pts = benthic // if we're doign a point based assessment then use those
+    
+    var validation_pts = all_training_data // if we're doign a point based assessment (from field data) then use those
+    
+  } else if (vars.geomorphic && vars.use_geo_points) {
+    
+    var validation_pts = all_training_data // if we're doign a point based assessment (from field data) then use those
+    
   } else {
-    // otherwise use the cal/val maps for accuracy
-    var validation_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-          .addBands(ee.Image.pixelLonLat())
-          .stratifiedSample({
-            numPoints: vars.val_size,
-            region: validation_region,
-            projection: "EPSG:3141",
-            scale: sensor_params.pixel,
-            classValues: nosamp_class,
-            classPoints: nosamp_numpix
-            })
-          .map(function(f) {
-            return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-            })
+    
+    // otherwise use the cal/val library and sub-sample it somehow
+    
+    // here we just randomly sample it down, but could do a range of different things here
+    
+    var validation_pts = all_training_data.randomColumn().filterMetadata('random', 'less_than', vars.val_trim)
+    
   }
-  if (vars.geomorphic && vars.use_geo_points) { 
-    var validation_pts = geomorph // if we're doign a point based assessment then use those
-  } else {
-    // otherwise use the cal/val maps for accuracy
-    var validation_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
-          .addBands(ee.Image.pixelLonLat())
-          .stratifiedSample({
-            numPoints: vars.val_size,
-            region: validation_region,
-            projection: "EPSG:3141",
-            scale: sensor_params.pixel,
-            classValues: nosamp_class,
-            classPoints: nosamp_numpix
-            })
-          .map(function(f) {
-            return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-            })
-  }
+  
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
