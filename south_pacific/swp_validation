@@ -102,15 +102,15 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy
+  benthic: false, // assess benthic accuracy
   
-  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
-  use_benthic_points: true, // this flag is for using field photo transect points
-  use_geo_points: true, // this flag is for using field photo transect points
+  use_benthic_points: false, // this flag is for using field photo transect points
+  use_geo_points: false, // this flag is for using field photo transect points (also it is very unlikely we'll ever have geo points)
   
   // cal/val params
   val_size: 0, // default is to not sample - that way we have explicit control over the classes sampled for validaiton
