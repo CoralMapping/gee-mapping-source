@@ -39,7 +39,7 @@ var vars = {
   export_type: 'val',
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
@@ -47,7 +47,7 @@ var vars = {
   class_field: 'class_num', // the field in the training data that stores the class integer
   
   // class information for classification, sampling and reporting
-  train_size: 3000,
+  train_size: 2000,
   local_epsg: region_params.epsg,
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
