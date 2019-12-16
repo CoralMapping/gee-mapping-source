@@ -82,12 +82,14 @@ var UA_pal= {
 
 var UserAcc_pal= {
   palette: [
-    'f1eef6',
-    'd0d1e6',
-    'a6bddb',
-    '74a9cf',
-    '2b8cbe',
-    '045a8d']
+    'ffffd9',
+    'edf8b1',
+    'c7e9b4',
+    '7fcdbb',
+    '41b6c4',
+    '1d91c0',
+    '225ea8',
+    '0c2c84']
   };
 
 
