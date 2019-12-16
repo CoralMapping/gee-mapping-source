@@ -44,6 +44,7 @@ BIG COMPONENT TODO (new implementation required)
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 
 
 
@@ -275,81 +276,14 @@ Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false)
 
 //6. legend  
 //based t GEE example: https://code.earthengine.google.com/c507af58b49f5467a04449837edc8337
-var legend=ui.Panel({
-  style: {
-    position: 'bottom-left',
-    padding: '8px 15px'
-  }
-});
 
-if (vars.geomorphic) {var Value='User Accuracy Geomorphic (%)'} else {var Value='User Accuracy Benthic (%)'}
-var legendTitle=ui.Label({
-  value: Value,
-  style: {
-    fontWeight:'bold',
-    fontSize:'18px',
-    margin:'0 0 4px 0',
-    padding: '0'
-  }
-});
-legend.add(legendTitle);
+if (vars.geomorphic) {var title=ui.Label({
+  value: 'User Accuracy Geomorphic (%)',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})} else {var title=ui.Label({
+  value:'User Accuracy Benthic (%)',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})}
 
-
-var dictH={
-  '0-0.1':'ffffd9',
-  '0.1-10':'edf8b1',
-  '10-50':'c7e9b4',
-  '50-60':'7fcdbb',
-  '60-70':'41b6c4',
-  '70-80':'1d91c0',
-  '80-90':'225ea8',
-  '90-100':'0c2c84'
-};
-
-// var dictW={
-//   '0-50':'f1eef6',
-//   '50-60':'d0d1e6',
-//   '60-70':'a6bddb',
-//   '70-80':'74a9cf',
-//   '80-90':'2b8cbe',
-//   '90-100':'045a8d'
-// };
-//print(dictW)
-
-// var Tcase=(ee.Number(listmin));
-// var boolean=(Tcase.getInfo() < 0.6);
-// //print('boolean',boolean);
-
-// if (boolean) {var dict=dictW} else {var dict=dictH}
-
-var dict=dictH;
-
-var makeRow = function(color, name) {
-  // Create the label that is actually the colored box.
-  var colorBox = ui.Label({
-    style: {
-      backgroundColor: '#' + color,
-      // Use padding to give the box height and width.
-      padding: '9px',
-      margin: '1 0 4px 0'
-    }
-  });
-
-  // Create the label filled with the description text.
-  var description = ui.Label({
-    value: name,
-    style: {margin: '0 0 4px 6px'}
-  });
-
-  return ui.Panel({
-    widgets: [colorBox, description],
-    layout: ui.Panel.Layout.Flow('horizontal')
-  });
-};
-
-Object.keys(dict).map(function(key) {
-  var value = dict[key];
-  return legend.add(makeRow(value, key));
-});
-
-Map.add(legend);
+var legend=pkg_vis.discrete_legend(map_palettes.UserAcc_cat, map_palettes.UserAcc_cols, ' ',false);
+pkg_vis.add_lgds([title,legend]);
