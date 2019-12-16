@@ -245,7 +245,7 @@ if (vars.assess_clean) {
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
 var val_map = (vars.geomorphic) ? geo_map : benthic_map // Set the validation map to either geomorphic or benthic
-var val_mapVIS=(vars.geomorphic) ? geo_pal : benthic_pal //Set the map visualization parameters to either geomorphic or benthic 
+var val_mapVIS=(vars.geomorphic) ? map_palettes.geo : map_palettes.benthic //Set the map visualization parameters to either geomorphic or benthic 
 // set the class information
 var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic
 var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_numpix_benthic
@@ -375,7 +375,7 @@ Map.centerObject(validation,9);
 
 var values_UA=(accuracy_cons.values());
 var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
-Map.addLayer(UAlayer,UA_pal,'UAlayer');
+Map.addLayer(UAlayer,map_palettes.ua,'UAlayer');
 
 function wide(img){
   var wideIm=img.expression(
@@ -415,7 +415,7 @@ var UserAcc=maskUA(reclass);
 
 var toMap=UserAcc
 
-Map.addLayer(toMap,UserAcc_pal,'UserAcc');
+Map.addLayer(toMap,map_palettes.UserAcc,'UserAcc');
 //print('toMap',toMap);
 
 //6. legend  
