@@ -68,7 +68,11 @@ var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(21).and(not_fiji.e
 var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(22).and(not_fiji.eq(1))), ee.Image(0))
 var geo_out2 = geo_out2.where(cnn_preds.eq(0).and(geo_out2.eq(23).and(not_fiji.eq(1))), ee.Image(0))
 
-var benthic_out = benthic_out.where(geo_out2.lte(3), ee.Image(0))
+var benthic_out = benthic_out.where(geo_out2.unmask(0).lte(3), ee.Image(0))
+var benthic_out = benthic_out.where(benthic_out.eq(18).and(geo_out2.eq(2).or(geo_out2.eq(12)).or(geo_out2.eq(21)).or(geo_out2.eq(22)).or(geo_out2.eq(23))), ee.Image(11))
+
+
+
 
 Map.addLayer(not_fiji, {}, "not fiji", false)
 Map.addLayer(fiji_mask, map_palettes.geo, "fiji mask", false)
