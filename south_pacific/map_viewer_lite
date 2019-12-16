@@ -8,7 +8,19 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
     benthic_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_east"),
     geo_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_west"),
-    geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east");
+    geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east"),
+    swp_extent = 
+    /* color: #98ff00 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[161.44092209122414, -7.392471946036167],
+          [161.44092209122414, -24.354642655941436],
+          [190.62060959122408, -24.354642655941436],
+          [190.62060959122408, -7.392471946036167]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -26,7 +38,7 @@ Map.centerObject(centre_map, 10)
 Map.addLayer(fiji_dove_orig_low, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove L-tide 1st mosaic", false)
 Map.addLayer(fiji_dove_coast, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove H-tide coastal Chla mosaic", false)*/
 //Map.addLayer(fiji_dove_ocean, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Fiji H-tide ocean Chla mosaic", false)
-Map.addLayer(swp_dove_lt, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "SWP L-tide mosaic", false)
+Map.addLayer(swp_dove_lt, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide mosaic", false)
 //Map.addLayer(fiji_ocean_pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean pixels", false)
 //Map.addLayer(fiji_ocean_segments, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "H-tide ocean segments", false)
 /*Map.addLayer(fiji_s2, {bands: ['B4','B3','B2'], min: 100, max: 2000}, "Sentinel-2 long-term mosaic", false)*/
@@ -34,7 +46,7 @@ Map.addLayer(swp_dove_lt, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "SWP L-
 Map.addLayer(fiji_low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove L-tide depth", false)
 Map.addLayer(fiji_high_depth_coast, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Dove H-tide coastal Chla depth", false)*/
 //Map.addLayer(fiji_high_depth_ocean, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Fiji Dove H-tide ocean Chla depth", false)
-Map.addLayer(swp_ht_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "SWP Dove H-tide depth", false)
+Map.addLayer(swp_ht_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
 
 
 // fiji
@@ -50,14 +62,15 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 //Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 //Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
-Map.addLayer(fiji_benthic, map_palettes.benthic, "Fiji Benthic - FINAL", false)
+//Map.addLayer(fiji_benthic, map_palettes.benthic, "Fiji Benthic - FINAL", false)
 
 // SWP
-Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east_clean.gt(2).and(swp_geo_east_clean.neq(12))),
+/*Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east_clean.gt(2).and(swp_geo_east_clean.neq(12))),
                                 swp_benthic_west.updateMask(swp_geo_west_clean.gt(2).and(swp_geo_west_clean.neq(12)))]
                                 ).mosaic(),
-            map_palettes.benthic, "SWP Benthic - RAW", false)
+            map_palettes.benthic, "SWP Benthic - RAW", false)*/
 
+var benthic_raw = benthic_east.unmask(0, false).add(benthic_west.unmask(0,false)).selfMask().clip(swp_extent)
 
 
 //Map.addLayer(swp_benthic_west, map_palettes.benthic, "SWP Benthic - west RAW", false)
