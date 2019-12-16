@@ -87,7 +87,7 @@ Export.image.toAsset({
   assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_geo_final',
   region: swp_extent,
   scale: 25,
-  wecrs: 'EPSG:3832',
+  crs: 'EPSG:3832',
   maxPixels: 1e13,
   pyramidingPolicy: {'.default': 'mode'}
 })
@@ -98,7 +98,7 @@ Export.image.toAsset({
   assetId: 'projects/coral_atlas/sw_pacific/in_out/swp_benthic_final',
   region: swp_extent,
   scale: 5,
-  wecrs: 'EPSG:3832',
+  crs: 'EPSG:3832',
   maxPixels: 1e13,
   pyramidingPolicy: {'.default': 'mode'}
 })
