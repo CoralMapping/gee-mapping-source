@@ -291,7 +291,7 @@ Map.centerObject(validation,9);
 
 var values_UA=(accuracy_cons.values());
 var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
-Map.addLayer(UAlayer,map_palettes.ua,'UAlayer');
+Map.addLayer(UAlayer,map_palettes.UA_pal,'UAlayer');
 
 function wide(img){
   var wideIm=img.expression(
@@ -331,7 +331,7 @@ var UserAcc=maskUA(reclass);
 
 var toMap=UserAcc
 
-Map.addLayer(toMap,map_palettes.UserAcc,'UserAcc');
+Map.addLayer(toMap,map_palettes.UserAcc_pal,'UserAcc');
 //print('toMap',toMap);
 
 //6. legend  
