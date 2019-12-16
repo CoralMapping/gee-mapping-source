@@ -109,8 +109,8 @@ var vars = {
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
-  use_benthic_points: true,
-  use_geo_points: true,
+  use_benthic_points: true, // this flag is for using field photo transect points
+  use_geo_points: true, // this flag is for using field photo transect points
   
   // cal/val params
   val_size: 0, // default is to not sample - that way we have explicit control over the classes sampled for validaiton
