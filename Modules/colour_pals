@@ -70,6 +70,27 @@ var benthic_pal = {
   min: 0, max: 21
   }
 
+// define colour palettes for accuracy display maps
+var UA_pal= {
+  palette: [
+    'f1eef6',
+    'd7b5d8',
+    'df65b0',
+    'dd1c77',
+    '980043']
+};
+
+var UserAcc_pal= {
+  palette: [
+    'f1eef6',
+    'd0d1e6',
+    'a6bddb',
+    '74a9cf',
+    '2b8cbe',
+    '045a8d']
+};
+
+
 // geo legend
 var geo_names = ['Deep (2 - masked)', 'Turbid (3)', 'Shallow Lagoon (11)', 'Deep Lagoon (12)', 'Inner Reef Flat (13)', 'Outer Reef Flat (14)', 'Reef Rim (15)', 'Terrestrial Reef Flat (16)', 'Slope Sheltered (21)', 'Slope Exposed (22)', 'Plateau (23)', 'Open Complex Lagoon (24)', 'Patch Reef (25)', 'Small Reef (26)']
 var geo_cols = ['023858',             'f768a1',       '5ce0ff',             '3690c0',           'ffffbf',               'ffcc7a',               'a50f15',         'addd8e',                     'd9f0a3',               'd4d417',            'bdbdbd',          '02818a',                 'deebf7',         'deebf7']
@@ -81,6 +102,8 @@ var benthic_cols = ['ffffff',              '08306b',      'ffffcc',        'fcbb
 exports = {
   geo : geo_pal,
   benthic : benthic_pal,
+  UA_pal: UA_pal,
+  UserAcc_pal: UserAcc_pal,
   geo_names : geo_names,
   geo_cols : geo_cols,
   benthic_names : benthic_names,
