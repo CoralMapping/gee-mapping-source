@@ -229,33 +229,36 @@ var values_UA=(accuracy_cons.values());
 var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
 Map.addLayer(UAlayer, map_palettes.UA_pal, 'User Accuracy layer', false);
 
-function wide(img){
-  var wideIm=img.expression(
+// function wide(img){
+//   var wideIm=img.expression(
     
-      "(b('remapped') >= 0.9) ? 6"+
-      ":(b('remapped') >= 0.8) ? 5"+
-        ":(b('remapped') >= 0.7) ? 4"+
-          ":(b('remapped') >= 0.6) ? 3"+
-            ":(b('remapped') >= 0.5) ? 2"+
-              ":1"
-  );
-return wideIm;
-}
+//       "(b('remapped') >= 0.9) ? 6"+
+//       ":(b('remapped') >= 0.8) ? 5"+
+//         ":(b('remapped') >= 0.7) ? 4"+
+//           ":(b('remapped') >= 0.6) ? 3"+
+//             ":(b('remapped') >= 0.5) ? 2"+
+//               ":1"
+//   );
+// return wideIm;
+// }
 
 function highConf(img){
   var highConfIm=img.expression(
-    "(b('remapped') >= 0.98) ? 6"+
-      ":(b('remapped') >= 0.96) ? 5"+
-        ":(b('remapped') >= 0.94) ? 4"+
-          ":(b('remapped') >= 0.92) ? 3"+
-            ":(b('remapped') >= 0.90) ? 2"+
-              ":1"
+    "(b('remapped') >= 0.90) ? 7"+
+      ":(b('remapped') >= 0.80) ? 6"+
+        ":(b('remapped') >= 0.70) ? 5"+
+          ":(b('remapped') >= 0.60) ? 4"+
+            ":(b('remapped') >= 0.50) ? 3"+
+              ":(b('remapped') >= 0.10) ? 2"+
+                ":(b('remapped') >= 0.01) ? 1"+
+                  ":0"
   );
 return highConfIm;
 }
 
-var listmin=values_UA.reduce(ee.Reducer.min())//.aside(print,'listimin');
-var reclass=ee.Image(ee.Algorithms.If(ee.Number(listmin).lt(0.6), wide(UAlayer), highConf(UAlayer)))//.aside(print);
+// var listmin=values_UA.reduce(ee.Reducer.min())//.aside(print,'listimin');
+// var reclass=ee.Image(ee.Algorithms.If(ee.Number(listmin).lt(0.6), wide(UAlayer), highConf(UAlayer)))//.aside(print);
+var reclass=highConf(UAlayer);
 
 function maskUA (img) {
   var mask=(UAlayer.multiply(0)).eq(0);
@@ -293,30 +296,33 @@ legend.add(legendTitle);
 
 
 var dictH={
-  '0-90':'f1eef6',
-  '90-92':'d0d1e6',
-  '92-94':'a6bddb',
-  '94-96':'74a9cf',
-  '96-98':'2b8cbe',
-  '98-100':'045a8d'
+  '0-0.1':'ffffd9',
+  '0.1-10':'edf8b1',
+  '10-50':'c7e9b4',
+  '50-60':'7fcdbb',
+  '60-70':'41b6c4',
+  '70-80':'1d91c0',
+  '80-90':'225ea8',
+  '90-100':'0c2c84'
 };
 
-var dictW={
-  '0-50':'f1eef6',
-  '50-60':'d0d1e6',
-  '60-70':'a6bddb',
-  '70-80':'74a9cf',
-  '80-90':'2b8cbe',
-  '90-100':'045a8d'
-};
+// var dictW={
+//   '0-50':'f1eef6',
+//   '50-60':'d0d1e6',
+//   '60-70':'a6bddb',
+//   '70-80':'74a9cf',
+//   '80-90':'2b8cbe',
+//   '90-100':'045a8d'
+// };
 //print(dictW)
 
-var Tcase=(ee.Number(listmin));
-var boolean=(Tcase.getInfo() < 0.6);
-//print('boolean',boolean);
+// var Tcase=(ee.Number(listmin));
+// var boolean=(Tcase.getInfo() < 0.6);
+// //print('boolean',boolean);
 
-if (boolean) {var dict=dictW} else {var dict=dictH}
+// if (boolean) {var dict=dictW} else {var dict=dictH}
 
+var dict=dictH;
 
 var makeRow = function(color, name) {
   // Create the label that is actually the colored box.
