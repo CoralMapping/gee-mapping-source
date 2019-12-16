@@ -29,7 +29,7 @@ var validation =
 
 TODO (fixing up this script):
 
-- will this have lots of variation per region?
+- Will this have lots of variation per region?
   - if yes, then have validation module per region
   - if no, then we can have a central and generic script that loads data via modules only
     - in that case we would need the "validation" geometry to be an asset and loaded via reef_params module
@@ -115,7 +115,7 @@ var vars = {
   
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
-  show_accuracy: true, // print error stats? (you might only be able to have a smaller val_size if you're vieing results live?)
+  show_accuracy: true, // print error stats to console? 
   
   // export options
   do_export: false, // export the results?
@@ -155,9 +155,6 @@ var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : v
 // 3. Accuracy assessment
 
 if (vars.assess_accuracy) {
-  
-  // set the area from which validation points get drawn (want a small area if you're printing stats)
-  var validation_region = (vars.show_accuracy) ? test_val : validation
   
   if (vars.benthic && vars.use_benthic_points) { 
     
