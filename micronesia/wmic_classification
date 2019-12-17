@@ -19,7 +19,20 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
+    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
+    wmic_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[130.7551960728133, 19.915585821970126],
+          [130.7551960728133, 0.7075765650212411],
+          [163.4944538853133, 0.7075765650212411],
+          [163.4944538853133, 19.915585821970126]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 TODO:
@@ -69,7 +82,7 @@ var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE 
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -259,7 +272,7 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: pixels.select(vars.blue_band).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   
   Map.addLayer(export_geom, {}, "export footprint", true)
   
