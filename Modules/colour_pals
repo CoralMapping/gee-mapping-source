@@ -116,6 +116,8 @@ exports = {
   UserAcc_pal: UserAcc_pal,
   geo_names : geo_names,
   geo_cols : geo_cols,
+  geo_gbr_names : geo_gbr_names,
+  geo_gbr_cols : geo_gbr_cols,
   benthic_names : benthic_names,
   benthic_cols : benthic_cols,
   UserAcc_cat:UserAcc_cat,
