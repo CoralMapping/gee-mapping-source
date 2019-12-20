@@ -119,7 +119,7 @@ var gbr_eomap = {
   depth: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth",
   waves: "projects/coral_atlas/gbr_eomap/mosaics/gbr_2019_hs95",
   pixels: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_pixels",
-  segments: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_pixels",
+  segments: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_segmentation",
   geo_train: "projects/coral_atlas/gbr_eomap/training/gbr_geo_reference", 
   benthic_train: "projects/coral_atlas/gbr_eomap/training/gbr_benthic_reference",
   geo_train_library: "",
