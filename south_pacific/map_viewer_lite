@@ -20,7 +20,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
         [[[161.44092209122414, -7.392471946036167],
           [161.44092209122414, -24.354642655941436],
           [190.62060959122408, -24.354642655941436],
-          [190.62060959122408, -7.392471946036167]]], null, false);
+          [190.62060959122408, -7.392471946036167]]], null, false),
+    fiji_benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
+    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -62,7 +64,7 @@ Map.addLayer(fiji_ocean_benthic_top, map_palettes.benthic, "Benthic - no depth, 
 //Map.addLayer(fiji_ocean_benthic_top2, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels", false)
 //Map.addLayer(fiji_ocean_benthic_top2_clean, map_palettes.benthic, "Benthic - no depth, reeftop, segments+pixels + clean-up", false)
 //Map.addLayer(fiji_ocean_benthic_rgb, map_palettes.benthic, "Benthic - no depth, reeftop, colour only", false)
-//Map.addLayer(fiji_benthic, map_palettes.benthic, "Fiji Benthic - FINAL", false)
+Map.addLayer(fiji_benthic, map_palettes.benthic, "Fiji Benthic - FINAL", false)
 
 // SWP
 /*Map.addLayer(ee.ImageCollection([swp_benthic_east.updateMask(swp_geo_east_clean.gt(2).and(swp_geo_east_clean.neq(12))),
@@ -98,7 +100,7 @@ Map.addLayer(fiji_geo_clean_test.updateMask(fiji_geo_clean_test.neq(2))
 //Map.addLayer(fiji_ocean_geo_tm_clean, map_palettes.geo, "Geo - new training maps + clean-up", false)
 //Map.addLayer(fiji_geo_atd, map_palettes.geo, "Geo - existing maps + new training maps", false)
 //Map.addLayer(fiji_geo_atd_clean, map_palettes.geo, "Geo - existing + new + clean-up", false)
-//Map.addLayer(fiji_geo, map_palettes.geo, "Fiji Geo - FINAL", false)
+Map.addLayer(fiji_geo, map_palettes.geo, "Fiji Geo - FINAL", false)
 
 // SWP
 /*Map.addLayer(ee.ImageCollection([swp_geo_east_clean, swp_geo_west_clean]).mosaic(),
