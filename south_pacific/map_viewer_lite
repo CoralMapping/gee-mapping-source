@@ -2,7 +2,10 @@
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     swp_dove_lt = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_low_tide_sr/sw_pac_lt_sr_tif"),
     swp_ht_depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
-    Fiji = /* color: #d63000 */ee.Geometry.Point([179.42064759488312, -16.263741104327007]),
+    Fiji = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([179.42064759488312, -16.263741104327007]),
     geo_clean = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_final"),
     benthic_clean = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_final"),
     benthic_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_west"),
@@ -11,6 +14,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east"),
     swp_extent = 
     /* color: #98ff00 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
