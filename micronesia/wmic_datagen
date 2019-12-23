@@ -299,7 +299,7 @@ if (vars.pixel_based) {
     // Calculate object statistics
     var segmented_data_mean = reflec.addBands(depth)//.addBands(waves).addBands(slope)
                               //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
-                              .addBands(depth_var).addBands(red_var)
+                              //.addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
     segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
@@ -317,7 +317,7 @@ if (vars.pixel_based) {
   // combine data to move forward with
   var all_data = segmented_data_mean
                  //.addBands(segmented_data_sd)
-                 .addBands(depth_var).addBands(red_var)
+                 //.addBands(depth_var).addBands(red_var)
                  .updateMask(depth_mask)
   //Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
 }
