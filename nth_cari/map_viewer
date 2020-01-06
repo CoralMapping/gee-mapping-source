@@ -1,12 +1,12 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    eaaf = /* color: #98ff00 */ee.Geometry.Point([40.98887512457759, -15.133024788287958]),
-    any_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191214T011216Z/east_africa_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    any_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191214T011216Z/east_africa_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    high_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    high_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    low_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth");
+    any_ssr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
+    any_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
+    high_ssr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
+    high_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
+    low_ssr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
+    low_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
+    ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -15,7 +15,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choose where to centre (link this dynamically to map app?)
-var centre_map = eaaf
+var centre_map = ncab
 Map.centerObject(centre_map, 10)
 
 
