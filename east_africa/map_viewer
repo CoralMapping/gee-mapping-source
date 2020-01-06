@@ -1,0 +1,94 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
+    depth = ee.Image("projects/coral_atlas/Micronesia/west_micronesia_high_tide_depth/west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic_DEPTH"),
+    rrs = ee.Image("projects/coral_atlas/Micronesia/wm_low_tide_sr/west_micronesia_low_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic"),
+    benthic = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic"),
+    geo = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo"),
+    wmic = /* color: #d63000 */ee.Geometry.Point([151.72552961318496, 7.454410756629496]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// little viewing script for looking at reefs and classifications for each region
+
+// imports
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+
+// choose where to centre (link this dynamically to map app?)
+var centre_map = wmic
+Map.centerObject(centre_map, 10)
+
+
+// add some background data
+Map.addLayer(rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide mosaic", false)
+Map.addLayer(depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
+
+// west micronesia
+Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
+Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - RAW", false)
+
+// wave data
+/*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+
+Map.addLayer(kd1, {}, "waves - kd1", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)*/
+
+// add training data / sample point distributions
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+
+// #############
+// example confidence layers
+
+/*// depth and nir combos
+var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
+//Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
+var conf_flag = fiji_high_depth_ocean.eq(-1)
+                        .or(fiji_high_depth_ocean.gt(1000))
+                        .add(depth_nir_flag.eq(1))
+                        .selfMask()
+Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
+
+//straight depth missing/-1
+var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
+//Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
+
+//Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
+*/
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_names, map_palettes.geo_cols, 'Geomorphic Zone', false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_names, map_palettes.benthic_cols, 'Benthic Habitat', false)
+var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend, mask_legend])
+// generate the legend
+
+
+
+
+///////// LINK TO DATA EXPORT /////////
+// hopefully eventually we can link this to a download link in the app?
+
+// // map to export 
+// var export_map = gbr_geo_map10
+// // extent
+// var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
+// // export
+// Export.image.toDrive({
+//     image: export_map,
+//     description: 'gbr_sent2_geo_map',
+//     folder: 'GBR Mapping',
+//     region: export_convhull,
+//     scale: 10,
+//     maxPixels: 1e13
+// })
+
