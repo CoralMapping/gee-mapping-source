@@ -249,8 +249,8 @@ var wmic = {
   benthic_train_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_training",
   geo_val_library: "projects/coral_atlas/Micronesia/training/wmic_geo_validation",
   benthic_val_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_validation",
-  geo_map: "projects/coral_atlas/Micronesia/in_out/wmic_geo",
-  benthic_map: "project/coral_atlas/Micronesia/in_out/wmic_benthic",
+  geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo"],
+  benthic_map: ["project/coral_atlas/Micronesia/in_out/wmic_benthic"],
   geo_map_clean: "",
   benthic_map_clean: ""
 }
