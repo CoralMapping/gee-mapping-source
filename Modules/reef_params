@@ -255,6 +255,51 @@ var wmic = {
   benthic_map_clean: ""
 }
 
+var nth_cari = {
+  sname: "nth_cari",
+  tide: "both",
+  asset: "projects/coral_atlas/workflow/mapping",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/Micronesia/wm_low_tide_sr/west_micronesia_low_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic",
+  depth: "projects/coral_atlas/Micronesia/west_micronesia_high_tide_depth/west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic_DEPTH",
+  pixels: ["projects/coral_atlas/Micronesia/in_out/wmic_pixels"],
+  segments: ["projects/coral_atlas/Micronesia/in_out/wmic_segmentation"],
+  waves: "",
+  geo_train: "projects/coral_atlas/Micronesia/training/wmic_geo_reference_v2", 
+  benthic_train: "projects/coral_atlas/Micronesia/training/wmic_benthic_reference_v2",
+  benthic_pts: "",
+  geo_train_library: "projects/coral_atlas/Micronesia/training/wmic_geo_training_v2",
+  benthic_train_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_training_v2",
+  geo_val_library: "projects/coral_atlas/Micronesia/training/wmic_geo_validation",
+  benthic_val_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_validation",
+  geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo"],
+  benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic"],
+  geo_map_clean: "",
+  benthic_map_clean: ""
+}
+
+
+
+any_rrs = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
+any_depth = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth",
+high_rrs = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
+high_depth = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth",
+low_rrs = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
+low_depth = "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth",
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 // export the objects
 exports = {
   sentinel : sentinel,
