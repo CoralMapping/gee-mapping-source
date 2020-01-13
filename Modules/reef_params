@@ -283,7 +283,9 @@ var east_africa = {
   tide: "both",
   asset: "projects/coral_atlas/workflow/mapping/east_africa",
   epsg: "EPSG:4326",
-  image: "project/coral_atlas/workflow/mapping/east_africa/blablablab"
+  image: "project/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
+  depth: "project/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth",
+  
   
 }
 
