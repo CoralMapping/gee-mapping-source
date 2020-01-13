@@ -281,9 +281,9 @@ var nth_cari = {
 var east_africa = {
   sname:"east_africa",
   tide: "both",
-  asset: "projects/coral_atlas/workflow/mapping/east_africa"
-  epsg: "EPSG:4326"
-  image: "project/coral_atlas/workflow/mapping/east_africa/ "
+  asset: "projects/coral_atlas/workflow/mapping/east_africa",
+  epsg: "EPSG:4326",
+  image: "project/coral_atlas/workflow/mapping/east_africa/blablablab"
   
 }
 
