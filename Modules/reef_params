@@ -298,5 +298,6 @@ exports = {
   //fiji_htcoast: fiji_htcoast,
   fiji_htocean: fiji_htocean,
   swpac: swpac,
-  wmic: wmic
+  wmic: wmic,
+  nth_cari:nth_cari,
 }
