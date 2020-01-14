@@ -258,7 +258,7 @@ var wmic = {
 var nth_cari = {
   sname: "nth_cari",
   tide: "both",
-  asset: "projects/coral_atlas/nth_cari", 
+  asset: "projects/coral_atlas", 
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
   depth: "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth",
