@@ -93,7 +93,7 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 
 // 2. Data loads & vis
 
-Map.centerObject(map_centre, 11)
+Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
