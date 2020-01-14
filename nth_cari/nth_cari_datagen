@@ -38,8 +38,8 @@ var region_params = param_module.nth_cari        //<------------ THIS IS WHERE Y
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-var global_view=ee.Image(global_mask)
-Map.addLayer(global_view)
+//var global_view=ee.Image(global_mask)
+//Map.addLayer(global_view)
 
 // Table of contents
 // 1. Setting constants
