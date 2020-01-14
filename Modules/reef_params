@@ -321,4 +321,5 @@ exports = {
   swpac: swpac,
   wmic: wmic,
   nth_cari:nth_cari,
+  east_africa: east_africa
 }
