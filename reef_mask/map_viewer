@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
     planet_mask = ee.FeatureCollection("projects/coral_atlas/global_datasets/20181001_GlobalCoralMask_v1"),
-    cari_baha = /* color: #e8fff0 */ee.Feature(
+    cari_baha = 
+    /* color: #e8fff0 */
+    /* shown: false */
+    ee.Feature(
         ee.Geometry.Polygon(
             [[[-83.74802887997924, 29.797979355890877],
               [-83.76670188165156, 29.806040314801056],
@@ -79,7 +82,10 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
         {
           "system:index": "0"
         }),
-    trimmer = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
+    trimmer = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-86.94846124811284, 30.197739678882293],
            [-87.02536554498784, 29.826723371994056],
            [-85.91574640436284, 28.79211111152925],
