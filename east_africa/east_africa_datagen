@@ -91,7 +91,6 @@ var vars = {
 var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
 
 
-
 // 2. Data loads & vis
 
 Map.centerObject(map_centre, 11)
