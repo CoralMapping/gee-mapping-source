@@ -367,7 +367,7 @@ if (vars.do_export) {
   Export.image.toAsset({
     image: all_data,
     description: output_name,
-    assetId: vars.asset_output + 'in_out/' + output_name,
+    assetId: vars.asset_output + '/in_out/' + output_name,
     scale: vars.export_scale,
     region: export_geom,
     maxPixels: 1e13,
