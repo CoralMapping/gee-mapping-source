@@ -247,10 +247,10 @@ var wmic = {
   benthic_pts: "",
   geo_train_library: "projects/coral_atlas/Micronesia/training/wmic_geo_training_v2",
   benthic_train_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_training_v2",
-  geo_val_library: "projects/coral_atlas/Micronesia/training/wmic_geo_validation",
-  benthic_val_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_validation",
-  geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo"],
-  benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic"],
+  geo_val_library: "projects/coral_atlas/Micronesia/training/wmic_geo_validation_v2",
+  benthic_val_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_validation_v2",
+  geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo_v2"],
+  benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic_v2"],
   geo_map_clean: "",
   benthic_map_clean: ""
 }
