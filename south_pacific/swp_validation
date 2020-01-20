@@ -63,10 +63,10 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  benthic: true, // assess benthic accuracy
   
-  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -74,14 +74,14 @@ var vars = {
   use_geo_points: false, // this flag is for using field photo transect points (also it is very unlikely we'll ever have geo points)
   
   // cal/val params
-  val_trim: 0.1, // percentage at which to trim the validation library i.e. if 0.1 = 10% of vlaidation library, so @ 3000 points per class = 300 points per class
+  val_trim: 0.7, // percentage at which to trim the validation library i.e. if 0.1 = 10% of vlaidation library, so @ 3000 points per class = 300 points per class
   val_trim_seed: 42,
   
   // class information for classification, sampling and reporting
   class_field: 'class_num', // the field in the training data that stores the class integer
   // TODO: consider dynamically generating these
-  classes_mapped_geo:       [11,  13,   14,   15,  16,    21,  22], // classes to map
-  classes_mapped_names_geo: ['SL','IRF','ORF','RR', 'TRF','SS','SE'],
+  classes_mapped_geo:       [2,    11,    12,  13,   14,   15,  16,    21,  22], // classes to map
+  classes_mapped_names_geo: ['DE',' SL', 'DL', 'IRF','ORF','RR', 'TRF','SS','SE'],
   // TODO: consider dynamically generating these
   classes_mapped_benthic:       [11,    12,   13,  14,    16,   17,   18], // classes to map
   classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'AL', 'BMA' ],
