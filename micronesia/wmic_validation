@@ -63,8 +63,8 @@ var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE 
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -80,11 +80,11 @@ var vars = {
   // class information for classification, sampling and reporting
   class_field: 'class_num', // the field in the training data that stores the class integer
   // TODO: consider dynamically generating these
-  classes_mapped_geo:       [11,  13,   14,   15,  16,    21,  22], // classes to map
-  classes_mapped_names_geo: ['SL','IRF','ORF','RR', 'TRF','SS','SE'],
+  classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22, 23], // classes to map
+  classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RR', 'TRF','SS','SE', 'PL'],
   // TODO: consider dynamically generating these
-  classes_mapped_benthic:       [11,    12,   13,  14,    16,   17,   18], // classes to map
-  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'AL', 'BMA' ],
+  classes_mapped_benthic:       [11,    12,   13,  14,    15,   18], // classes to map
+  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'BMA' ],
   
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
@@ -115,19 +115,17 @@ if (vars.assess_clean) {
 }
 
 // Add the raw data
-var all_training_data0 = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
 var val_map = (vars.geomorphic) ? geo_map : benthic_map // Set the validation map to either geomorphic or benthic
 var val_mapVIS = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic //Set the map visualization parameters to either geomorphic or benthic 
 
 // set the class information
-var nosamp_class = (vars.geomorphic) ? vars.nosamp_class_geo : vars.nosamp_class_benthic;
-var nosamp_numpix = (vars.geomorphic) ? vars.nosamp_numpix_geo : vars.nosamp_numpix_benthic;
 var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic;
 var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic;
 
 //clip reference data according to 'classes_mapped'
-var ref_points=ee.Filter.inList('class_num',classes_mapped);
-var all_training_data=all_training_data0.filter(ref_points);
+//var ref_points=ee.Filter.inList('class_num',classes_mapped);
+//var all_training_data=all_training_data0.filter(ref_points);
 
 // 3. Accuracy assessment
 
@@ -160,6 +158,13 @@ if (vars.assess_accuracy) {
           reducer: ee.Reducer.first(),
           scale: sensor_params.pixel,
         })
+  
+  // print out info on the join, to check classes are in order
+  //print(accuracy_collection)
+  var unique_class_train = ee.List(accuracy_collection.aggregate_array('class_num')).distinct()
+  print("Unique training data classes", unique_class_train.sort())
+  var unique_class_val = ee.List(accuracy_collection.aggregate_array('first')).distinct()
+  print("Unique mapped classes", unique_class_val.sort())
   
   // make the error matrix, and include order of classes
   var classification_errormatrix = accuracy_collection.errorMatrix({
