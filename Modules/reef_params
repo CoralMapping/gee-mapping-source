@@ -278,25 +278,25 @@ var nth_cari = {
   benthic_map_clean: ""
 }
 
-var nth_cariS2 = {
-  sname: "nth_cariS2",
+var nth_cari_S2 = {
+  sname: "nth_cari_S2",
   tide: "both",
   asset: "projects/coral_atlas/nth_cari", 
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic",
   depth: "projects/coral_atlas/workflow/proc-gee-sentinel-depth/test/northern-caribbean/depth",
-  pixels: ["projects/coral_atlas/nth_cari/in_out/nth_cari_pixelsS2"],
-  segments: ["projects/coral_atlas/nth_cari/in_out/nth_cari_segmentationS2"],
+  pixels: ["projects/coral_atlas/nth_cari/in_out/nth_cari_pixels_S2"],
+  segments: ["projects/coral_atlas/nth_cari/in_out/nth_cari_segmentation_S2"],
   waves: "",
-  geo_train: "projects/coral_atlas/nth_cari/training/nth_cari_geo_referenceS2", 
-  benthic_train: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_referenceS2",
+  geo_train: "projects/coral_atlas/nth_cari/training/nth_cari_geo_reference_S2", 
+  benthic_train: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_reference_S2",
   benthic_pts: "",
-  geo_train_library: "projects/coral_atlas/nth_cari/training/nth_cari_geo_trainingS2",
-  benthic_train_library: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_trainingS2",
+  geo_train_library: "projects/coral_atlas/nth_cari/training/nth_cari_geo_training_S2",
+  benthic_train_library: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_training_S2",
   geo_val_library: "projects/coral_atlas/nth_cari/training/nth_cari_geo_validationS2",
-  benthic_val_library: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_validationS2",
-  geo_map: ["projects/coral_atlas/Micronesia/in_out/nth_cari_geoS2"],
-  benthic_map: ["projects/coral_atlas/Micronesia/in_out/nth_cari_benthicS2"],
+  benthic_val_library: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_validation_S2",
+  geo_map: ["projects/coral_atlas/Micronesia/in_out/nth_cari_geo_S2"],
+  benthic_map: ["projects/coral_atlas/Micronesia/in_out/nth_cari_benthic_S2"],
   geo_map_clean: "",
   benthic_map_clean: ""
 }
