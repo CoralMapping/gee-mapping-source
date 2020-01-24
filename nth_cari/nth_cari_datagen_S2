@@ -15,7 +15,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Coral atlas mapping project - north Caribeean and Bahamas region (RB:this datagen is ran with S2 depth instead of dove)
+// Coral atlas mapping project - north Caribeean and Bahamas region (RB:this datagen is ran with S2 
+//depth instead of dove, that's why the '_S' was added in the end
 // Contact: mitchell.lyons@gmail.com
 // Description:
 // - Developing a process to combine OBIA and supervised classification
