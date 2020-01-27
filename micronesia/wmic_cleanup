@@ -73,7 +73,7 @@ var vars = {
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
   small_object: ee.Number(30).int(), // relates to the vars.min_object_size from the *_classification script
-  smooth_radius: ee.Number(5), // radius in pixels for initial smooth 
+  smooth_radius: ee.Number(4), // radius in pixels for initial smooth 
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
@@ -82,7 +82,7 @@ var vars = {
   - BENTHIC : can do both at once */
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
-  smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
+  smooth_output: true, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
     // results/layers to show
