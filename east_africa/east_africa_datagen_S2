@@ -15,7 +15,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([42.1031006352124, -16.89
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Coral atlas mapping project - East Africa region (RB: this is a run with S2 depth layer)
+// Coral atlas mapping project - East Africa region (RB: this is a run with S2 depth layer, waiting for East africa S2 as of 27/01/2020)
 // Contact: mitchell.lyons@gmail.com
 // Description:
 // - Developing a process to combine OBIA and supervised classification
