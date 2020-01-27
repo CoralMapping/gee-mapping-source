@@ -1,21 +1,30 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[178.11792537642418, -19.163235696114032],
-          [178.11912700606285, -19.160641289483575],
-          [178.1160371012777, -19.1590197646103],
-          [178.1149213023275, -19.161452045940777]]]),
-    export_small = 
+var eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[179.95512054878452, -16.51030303799518],
-          [179.95512054878452, -16.56691147805663],
-          [180.05640076118686, -16.56691147805663],
-          [180.05640076118686, -16.51030303799518]]], null, false),
+        [[[158.09700006133824, 6.98282032937242],
+          [158.09700006133824, 6.954194253230618],
+          [158.14678186065464, 6.954194253230618],
+          [158.14678186065464, 6.98282032937242]]], null, false),
+    export_small = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[157.9950896058224, 7.112454892191871],
+          [157.9950896058224, 6.733464175742206],
+          [158.4304228577755, 6.733464175742206],
+          [158.4304228577755, 7.112454892191871]]], null, false),
     wmic_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -104,7 +113,7 @@ if (vars.obia_2nd_pass) {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   var geo_map = geo1
 } else {
-  var geo_map = ee.Image(region_params.geo_map).clip(swp_extent)
+  var geo_map = ee.Image(region_params.geo_map).clip(wmic_extent)
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
