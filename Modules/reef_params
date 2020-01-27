@@ -325,7 +325,7 @@ var east_africa = {
   benthic_map_clean: ""
 }
 
-
+/* Waiting for S2 depth layer for East Africa
 var east_africa_S2 = {
   sname:"east_africa_S2",
   tide: "both",
@@ -348,7 +348,7 @@ var east_africa_S2 = {
   geo_map_clean:"",
   benthic_map_clean: ""
 }
-
+*/
 
 // export the objects
 exports = {
