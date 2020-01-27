@@ -370,5 +370,7 @@ exports = {
   wmic: wmic,
   nth_cari:nth_cari,
   nth_cari_S2:nth_cari_S2,
+  
   east_africa: east_africa
+  //east_africa_S2
 }
