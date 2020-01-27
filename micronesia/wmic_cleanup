@@ -379,6 +379,13 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
+    // RR with decent border to TRF --> TRF (often dark, probably seagrass)
+    clean_map = clean_map.where({
+      test: clean_map.eq(focus_class)
+              .and(nb16.gt(40)),
+      value: ee.Image(16)
+    })
+    
     /*// RR surrounded by OCL --> OCL
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
@@ -417,7 +424,7 @@ if (vars.obia_clean) {
     //var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
     //nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
     //nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
-    var nb1 = ee.Image().byte().paint(map_fc_neighbours, '1').unmask(0).rename('nb1') //Land
+    //var nb1 = ee.Image().byte().paint(map_fc_neighbours, '1').unmask(0).rename('nb1') //Land
     
     // ORF surrounded by IRF --> IRF
     clean_map = clean_map.where({
@@ -448,12 +455,12 @@ if (vars.obia_clean) {
       value: ee.Image(15)
     })
     
-    // ORF touching land --> TRF
+    /*// ORF touching land --> TRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb1.gt(10)),
       value: ee.Image(16)
-    })
+    })*/
     
     // ####
     // IRF
@@ -487,12 +494,12 @@ if (vars.obia_clean) {
       value: ee.Image(15)
     })
     
-    // IRF touching land --> TRF
+    /*// IRF touching land --> TRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb1.gt(10)),
       value: ee.Image(16)
-    })
+    })*/
     
     // ####
     // TRF
@@ -527,12 +534,12 @@ if (vars.obia_clean) {
       value: ee.Image(13)
     })
     
-    // TRF not touching land --> IRF
+    /*// TRF not touching land --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb1.lt(10)),
       value: ee.Image(13)
-    })
+    })*/
     
     
     // ####
