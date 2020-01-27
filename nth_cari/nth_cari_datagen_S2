@@ -52,7 +52,7 @@ var region_params = param_module.nth_cari_S2        //<------------ THIS IS WHER
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -83,8 +83,8 @@ var vars = {
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  segments_output_name: region_params.sname + '_'+ 'segmentation_S2',
-  pixels_output_name: region_params.sname + '_' + 'pixels_S2',
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
   asset_output: region_params.asset // asset path
 }
 
