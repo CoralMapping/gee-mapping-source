@@ -60,7 +60,7 @@ var vars = {
   reduce_max: 1500, // the max size of object to be able to reduce
   //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
   segment_all_bands: true, // segemnt on all input bands or those chosen below
-  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B2','B4'], // only handles Landsat/Sentinel-2/Dove
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
