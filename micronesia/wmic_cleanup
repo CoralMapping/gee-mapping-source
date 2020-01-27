@@ -16,7 +16,7 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [179.95512054878452, -16.56691147805663],
           [180.05640076118686, -16.56691147805663],
           [180.05640076118686, -16.51030303799518]]], null, false),
-    swp_extent = 
+    wmic_extent = 
     /* color: #d63000 */
     /* displayProperties: [
       {
@@ -24,11 +24,10 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
       }
     ] */
     ee.Geometry.Polygon(
-        [[[161.99244048631044, -7.029171821347217],
-          [161.99244048631044, -24.50136375705747],
-          [192.84204986131044, -24.50136375705747],
-          [192.84204986131044, -7.029171821347217]]], null, false),
-    geo1 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east-clean1");
+        [[[139.75611236131044, 20.946851638161274],
+          [139.75611236131044, -3.3096773397047587],
+          [179.04322173631044, -3.3096773397047587],
+          [179.04322173631044, 20.946851638161274]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - West Micronesia region
@@ -309,7 +308,7 @@ if (vars.obia_clean) {
             bestEffort: true, 
             maxPixels: 1e13,
             tileScale: 1,
-            geometry: swp_extent
+            geometry: wmic_extent
           })
     // map the function, calculate neighbour properties
     return(map_fc.map(set_neighbour_properties))
@@ -731,7 +730,7 @@ if (vars.do_export) {
     var export_convhull = export_small
   } else {
     //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-    var export_convhull = swp_extent
+    var export_convhull = wmic_extent
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
