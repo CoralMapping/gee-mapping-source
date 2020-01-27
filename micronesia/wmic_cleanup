@@ -111,7 +111,7 @@ if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(
 if (vars.obia_2nd_pass) {
   // OR ru na separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
-  var geo_map = geo1
+  var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
   var geo_map = ee.Image(region_params.geo_map).clip(wmic_extent)
 }
