@@ -104,7 +104,7 @@ if (vars.obia_2nd_pass) {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   var geo_map = geo1
 } else {
-  var geo_map ee.Image(region_params.geo_map).clip(swp_extent)
+  var geo_map = ee.Image(region_params.geo_map).clip(swp_extent)
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
@@ -123,6 +123,7 @@ Map.addLayer(depth, {}, 'Depth data', false)
 // 3. Object-based re-classificaiton and cleaning
 
 /*
+
 // if we want to retain the land/waves flags, need to add them in before makign the mask
 
 ######## Not that straight forwards - the land and bright masks are a LOT of not land and not breakign waves... =(
@@ -140,7 +141,9 @@ Map.addLayer(depth, {}, 'Depth data', false)
   })
   
   // remask
-  geo_map = geo_map.updateMask(geo_map.gt(0))*/
+  geo_map = geo_map.updateMask(geo_map.gt(0))
+
+*/
   
 var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
 
@@ -703,7 +706,7 @@ if (vars.smooth_output) {
   // smooth the output lightly to make nice edges, and get rid of noise
   var noise_smooth = clean_map.unmask(99) // unmasking to a value allows us to include masked areas in the smooth, then re-mask after
                         .focal_mode({
-                          radius: 3, // relates to smoothness required
+                          radius: 2, // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
                         })
   clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(2))
@@ -724,8 +727,8 @@ if (vars.do_export) {
   if (vars.export_small_area) {
     var export_convhull = export_small
   } else {
-    //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: swp_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-    var export_convhull = wmic_extent
+    var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    //var export_convhull = wmic_extent
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
@@ -734,7 +737,7 @@ if (vars.do_export) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
     scale: 25,
-    crs: 'EPSG:3832',
+    crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
