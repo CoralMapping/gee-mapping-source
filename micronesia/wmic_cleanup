@@ -80,9 +80,9 @@ var vars = {
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : for smaller regions, can do both at once
   - BENTHIC : can do both at once */
-  obia_2nd_pass: false,
-  obia_clean: false, // run object-based relationship rules + small object clean up
-  smooth_output: true, // run smoother over final output (includes noise removal) (should be false for second pass)
+  obia_2nd_pass: true,
+  obia_clean: true, // run object-based relationship rules + small object clean up
+  smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
     // results/layers to show
