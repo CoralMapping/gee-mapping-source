@@ -736,8 +736,8 @@ if (vars.do_export) {
   if (vars.export_small_area) {
     var export_convhull = export_small
   } else {
-    var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-    //var export_convhull = wmic_extent
+    //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_convhull = wmic_extent
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
