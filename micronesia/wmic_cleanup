@@ -18,16 +18,12 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [180.05640076118686, -16.51030303799518]]], null, false),
     wmic_extent = 
     /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
+    /* shown: false */
     ee.Geometry.Polygon(
-        [[[139.75611236131044, 20.946851638161274],
-          [139.75611236131044, -3.3096773397047587],
-          [179.04322173631044, -3.3096773397047587],
-          [179.04322173631044, 20.946851638161274]]], null, false);
+        [[[130.7551960728133, 19.915585821970126],
+          [130.7551960728133, 0.7075765650212411],
+          [163.4944538853133, 0.7075765650212411],
+          [163.4944538853133, 19.915585821970126]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - West Micronesia region
@@ -52,7 +48,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -63,7 +59,7 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -89,7 +85,7 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo_east-clean2',
+  geomorph_output_name: region_params.sname + '_geo_east-clean1',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
 
@@ -108,8 +104,7 @@ if (vars.obia_2nd_pass) {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   var geo_map = geo1
 } else {
-  //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
-  var geo_map = geo1
+  var geo_map ee.Image(region_params.geo_map).clip(swp_extent)
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
