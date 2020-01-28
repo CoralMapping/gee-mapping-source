@@ -15,7 +15,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Coral atlas mapping project - north Caribeean and Bahamas region
+// Coral atlas mapping project - north Caribeean and Bahamas region (RB:this datagen is ran with S2 
+//depth instead of dove, that's why the '_S' was added to the assets in the end (28/01/2020)
 // Contact: mitchell.lyons@gmail.com
 // Description:
 // - Developing a process to combine OBIA and supervised classification
@@ -32,9 +33,9 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.sentinel         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.nth_cari_S2        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -51,7 +52,7 @@ var region_params = param_module.nth_cari        //<------------ THIS IS WHERE Y
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -59,7 +60,7 @@ var vars = {
   reduce_max: 1500, // the max size of object to be able to reduce
   //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
   segment_all_bands: true, // segemnt on all input bands or those chosen below
-  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B2','B4'], // only handles Landsat/Sentinel-2/Dove
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
