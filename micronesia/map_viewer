@@ -25,7 +25,7 @@ Map.addLayer(depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf',
 // west micronesia
 Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
 Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - RAW", false)
-Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - 1st stage clean", false)
+Map.addLayer(geo1, map_palettes.geo, "W. Micronesia Geo - 1st stage clean", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
