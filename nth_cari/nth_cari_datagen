@@ -99,7 +99,8 @@ Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-var depth = ee.Image(region_params.depth).int16() //(NB depth is *100 in integer values)
+var depth = ee.Image(region_params.depth).int16() //(NB depth is *100 in integer values) 
+
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
