@@ -124,6 +124,7 @@ Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limi
 if (vars.global_mask) {
   // manual touch-ups if needed
   var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
+  print(manual_adds)
   global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)
   // mask the depth mask with global mask
   depth_mask = depth_mask.updateMask(global_mask)
