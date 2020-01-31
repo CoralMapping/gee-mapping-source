@@ -79,7 +79,7 @@ var vars = {
   use_brightness: false,
   
   // use global reef mask layer to remove junk + limit size
-  global_mask: true,
+  global_mask: false,
   
   // export options
   do_export: true, // export the results?
