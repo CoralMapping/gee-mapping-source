@@ -99,7 +99,7 @@ Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-
+print (reflec)
 var depthFromFloat= ee.Image(region_params.depth)//converting image from float to int16
 
 var depth = depthFromFloat.expression(
@@ -108,12 +108,15 @@ var depth = depthFromFloat.expression(
 }).int16();
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+
+
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
+var dove_mask=reflec.select('b1');
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(dove_mask.gt(0)) //.and(reflect ) //.updateMask(waves)
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
