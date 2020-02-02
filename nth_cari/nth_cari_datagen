@@ -100,7 +100,7 @@ Map.centerObject(map_centre, 6)
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
-var depthFromFloat= ee.Image(region_params.depth)//converting image to float
+var depthFromFloat= ee.Image(region_params.depth)//converting image from float to int16
 //Map.addLayer(depthFromFloat)
 //print (depthFromFloat)
 var depth = depthFromFloat.expression(
