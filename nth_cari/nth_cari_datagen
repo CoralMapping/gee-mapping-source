@@ -101,7 +101,7 @@ Map.centerObject(map_centre, 6)
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
 var depthToFloat= ee.Image(region_params.depth)//converting image to float
 var depth = depthToFloat.expression(
-  'B1 * 100', {
+  '(B1 * 100)', {
   'B1': depthToFloat.select('B2_median')//specifying that B1 is B2_median
 }).int16();
 
