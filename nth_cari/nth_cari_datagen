@@ -99,12 +99,12 @@ Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-print (reflec)
+
 var depthFromFloat= ee.Image(region_params.depth)//converting image from float to int16
 
 var depth = depthFromFloat.expression(
   '(B1 * 100)', {
-  'B1': depthFromFloat.select('B2_median')//specifying that B1 is B2_median
+  'B1': depthFromFloat.select('B2_median')//specifying that B1 is B2_median from S2
 }).int16();
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
