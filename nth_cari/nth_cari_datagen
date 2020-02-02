@@ -105,7 +105,7 @@ var depth = depthToFloat.expression(
   'B1': depthToFloat.select('B2_median')//specifying that B1 is B2_median
 }).int16();
 
-
+Map.addLayer(depth)
 print (depth)        
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
