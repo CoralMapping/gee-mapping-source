@@ -99,14 +99,17 @@ Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-var depthToFloat= ee.Image(region_params.depth)//converting image to float
-var depth = depthToFloat.expression(
+
+var depthFromFloat= ee.Image(region_params.depth)//converting image to float
+//Map.addLayer(depthFromFloat)
+//print (depthFromFloat)
+var depth = depthFromFloat.expression(
   '(B1 * 100)', {
-  'B1': depthToFloat.select('B2_median')//specifying that B1 is B2_median
+  'B1': depthFromFloat.select('B2_median')//specifying that B1 is B2_median
 }).int16();
 
-Map.addLayer(depth)
-print (depth)        
+//Map.addLayer(depth)
+//print (depth)        
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 //var waves = ee.Image(region_params.waves).unmask(0)
