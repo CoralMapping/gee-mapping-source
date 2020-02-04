@@ -102,12 +102,9 @@ var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
 var depthFromFloat= ee.Image(region_params.depth)//converting image from float to int16
 
-var depth = depthFromFloat.expression(
-  '(B1 * 100)', {
-  'B1': depthFromFloat.select('B2_median')//specifying that B1 is B2_median from S2
-}).int16();
+var depth = ee.Image(region_params.depth).multiply(100).Int16()
 
-//depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
 
 //var waves = ee.Image(region_params.waves).unmask(0)
