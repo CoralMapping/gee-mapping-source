@@ -115,8 +115,8 @@ var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var dove_maskb1=reflec.select('b1');
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(dove_maskb1.gt(0)) ////.updateMask(waves)
+
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select('b1').gt(0)) ////.updateMask(waves)
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
