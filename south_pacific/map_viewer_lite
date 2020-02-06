@@ -26,7 +26,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [190.62060959122408, -24.354642655941436],
           [190.62060959122408, -7.392471946036167]]], null, false),
     fiji_benthic = ee.Image("projects/coral_atlas/fiji/in_out/fj_benthic-clean3"),
-    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3");
+    fiji_geo = ee.Image("projects/coral_atlas/fiji/in_out/fj_geo-clean3"),
+    geo_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_geo_reference"),
+    benthic_ref = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_benthic_reference");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -123,6 +125,8 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+Map.addLayer(geo_ref, {}, "Training data - geo", false);
+Map.addLayer(benthic_ref, {}, "Training data - benthic", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
