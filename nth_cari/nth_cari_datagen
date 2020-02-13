@@ -102,7 +102,7 @@ var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
 var depthFromFloat= ee.Image(region_params.depth)//converting image from float to int16
 
-var depth = ee.Image(region_params.depth).multiply(100).Int16()
+var depth = ee.Image(region_params.depth).multiply(100).int16()
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
