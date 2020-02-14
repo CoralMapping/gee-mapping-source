@@ -80,7 +80,7 @@ var vars = {
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
-  depth_limit: 1500, // depth limit for analysis 
+  depth_limit: 2500, // depth limit for analysis 
   min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
@@ -125,18 +125,19 @@ Depth data used as follows:
 
 NB depth is 16bit s integer in centimeters)
 */
-var depth = ee.ImageCollection([ee.Image(region_params.s2_depth).rename('depth'),
-                               ee.Image(region_params.ls8_depth).rename('depth')])
-                              .mean()
+var dove_depth = ee.Image(region_params.depth).rename('depth')
+var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
 
-depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+
+//depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 //var waves = waves.rename('waves')
@@ -146,7 +147,10 @@ var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below
 var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (cm)", false) // water depth
+Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
+Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
+Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
+//Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
