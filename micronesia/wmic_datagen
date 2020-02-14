@@ -133,17 +133,18 @@ Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_l
 Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
 
 // make the depth data for modelling/mapping
-//depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+var depth = ee.ImageCollection([s2_depth, ls8_depth]).mean()
+depth = depth.where(depth.unmask(0).eq(0), dove_depth.updateMask(dove_depth.gt(0)))
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+// define a mask based on min/max depth
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
+var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
+
+//var waves = waves.rename('waves')
 
 //var waves = ee.Image(region_params.waves).unmask(0)
 var geomorph = ee.FeatureCollection(region_params.geo_train)
 var benthic = ee.FeatureCollection(region_params.benthic_train)
-
-// define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
-
-var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
-//var waves = waves.rename('waves')
 
 // define it if it's a normal shape, otherwise draw it
 //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
@@ -246,7 +247,7 @@ if (vars.use_brightness) {
 }
 
 // calculate slope
-//var slope = ee.Terrain.slope(depth) // slope in degress (SWP depth is no good for slope, and it's probably too big for slope calcs...)
+var slope = ee.Terrain.slope(depth) // slope in degress
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
