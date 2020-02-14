@@ -239,6 +239,8 @@ var wmic = {
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/Micronesia/wm_low_tide_sr/west_micronesia_low_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic",
   depth: "projects/coral_atlas/Micronesia/west_micronesia_high_tide_depth/west_micronesia_high_tide_normalized_sr_jan2017_oct2019_v2_shift_mosaic_DEPTH",
+  s2_depth: "projects/coral_atlas/Micronesia/depth/west-micronesia-buffered-hull-sentinel",
+  ls8_depth: "projects/coral_atlas/Micronesia/depth/west-micronesia-buffered-hull-landsat",
   pixels: ["projects/coral_atlas/Micronesia/in_out/wmic_pixels"],
   segments: ["projects/coral_atlas/Micronesia/in_out/wmic_segmentation"],
   waves: "",
@@ -253,7 +255,7 @@ var wmic = {
   benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic"],
   geo_map_clean: "projects/coral_atlas/Micronesia/in_out/wmic_geo-clean1",
   benthic_map_clean: "",
-  QAQC:"projects/coral_atlas/Micronesia/QAQC"
+  QAQC: "projects/coral_atlas/Micronesia/QAQC"
 };
 
 // nth_cari with S2 depth
