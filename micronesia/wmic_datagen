@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([158.060302734375, 6.791103164644259]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
-    manual_mask_additions = /* color: #d63000 */ee.FeatureCollection(
+    manual_mask_additions = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[178.0708356215348, -16.4585267896326],
@@ -122,8 +125,8 @@ Depth data used as follows:
 
 NB depth is 16bit s integer in centimeters)
 */
-var depth = ee.ImageCollection([ee.Image(region_params.s2_depth).rename('s2depth'),
-                               ee.Image(region_params.ls8_depth).rename('ls8depth')])
+var depth = ee.ImageCollection([ee.Image(region_params.s2_depth).rename('depth'),
+                               ee.Image(region_params.ls8_depth).rename('depth')])
                               .mean()
 
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
@@ -143,15 +146,16 @@ var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below
 var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (cm)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
 if (vars.global_mask) {
-  // manual touch-ups if needed
+  /*// manual touch-ups if needed
   var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
-  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)*/
   // mask the depth mask with global mask
+  global_mask = global_mask.clip(export_geom)
   depth_mask = depth_mask.updateMask(global_mask)
   Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
 }
