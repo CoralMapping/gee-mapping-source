@@ -252,8 +252,9 @@ var wmic = {
   geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo"],
   benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic"],
   geo_map_clean: "projects/coral_atlas/Micronesia/in_out/wmic_geo-clean1",
-  benthic_map_clean: ""
-}
+  benthic_map_clean: "",
+  QAQC:"projects/coral_atlas/Micronesia/QAQC"
+};
 
 // nth_cari with S2 depth
 var nth_cari = {
