@@ -296,7 +296,8 @@ if (vars.geomorphic) {var title=ui.Label({
 var legend=pkg_vis.discrete_legend(map_palettes.UserAcc_cat, map_palettes.UserAcc_cols, ' ',false);
 pkg_vis.add_lgds([title,legend]);
 
-//7. estimation of hard to map areas
+//7. confidence layer
+//7.1 estimation of hard to map areas
 
 //function to import a new column to validation datasets which will state if chosen points are true-positive (1) or true-negative (0)
 function ValrefPoints (ft) {
@@ -359,4 +360,19 @@ function HtM (pointCol) {
 var featCol=accuracy_collection.map(ValrefPoints);
 var HtMareas=HtM(featCol);
 print('HtMareas',HtMareas);
-Map.addLayer(HtMareas,{},'HtMareas');
+Map.addLayer(HtMareas,{},'HtMareas',false);
+
+//7.2 creation of zones around HtMareas in order to be used for the voting system of confidence layer
+function zones (img) {
+  var dist=img.fastDistanceTransform(200).sqrt().multiply(ee.Image.pixelArea().sqrt());
+  var img_zones=dist.expression(
+    "(b(0) < 1) ? 0"+
+      ":(b(0) < 200) ? 2"+
+        ":(b(0) < 500) ? 5"+
+          ":(b(0) < 1000) ? 8"+
+            ":10");
+  return img_zones;
+}
+
+var HtMzones=zones(HtMareas);
+Map.addLayer(HtMzones,{},'HtMzones');
