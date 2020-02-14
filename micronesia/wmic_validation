@@ -366,13 +366,51 @@ Map.addLayer(HtMareas,{},'HtMareas',false);
 function zones (img) {
   var dist=img.fastDistanceTransform(200).sqrt().multiply(ee.Image.pixelArea().sqrt());
   var img_zones=dist.expression(
-    "(b(0) < 1) ? 0"+
-      ":(b(0) < 200) ? 2"+
+    "(b(0) < 1) ? 10"+
+      ":(b(0) < 200) ? 8"+
         ":(b(0) < 500) ? 5"+
-          ":(b(0) < 1000) ? 8"+
-            ":10");
+          ":(b(0) < 1000) ? 2"+
+            ":0");
   return img_zones;
 }
 
 var HtMzones=zones(HtMareas);
-Map.addLayer(HtMzones,{},'HtMzones');
+Map.addLayer(HtMzones,{},'HtMzones',false);
+
+//7.3 creation of zones around QAQC features
+var qaqc=ee.FeatureCollection(region_params.QAQC);
+print('qaqc',qaqc)
+function ft_zones (fc){
+  var dif1000_500=qaqc.map(function (ft) {
+                var buf500=ft.buffer(500);
+                var buf1000=ft.buffer(1000);
+    return buf1000.difference(buf500).set('distScore',2);
+  });
+  var dif500_200=qaqc.map(function (ft) {
+                var buf200=ft.buffer(200);
+                var buf500=ft.buffer(500);
+    return buf500.difference(buf200).set('distScore',5);
+  });
+  var dif200_pol=qaqc.map(function (ft) {
+                var buf200=ft.buffer(200);
+    return buf200.difference(ft).set('distScore',8);
+  });
+  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
+  var buf2=ee.Image.constant(8).clip(dif200_pol).toUint8();
+  var buf5=ee.Image.constant(5).clip(dif500_200).toUint8();
+  var buf8=ee.Image.constant(2).clip(dif1000_500).toUint8();
+  
+  var img=ee.ImageCollection.fromImages([qaqc_const,buf2,buf5,buf8]).mosaic();
+  return img;
+}
+var QAQCzones=ft_zones(qaqc);
+Map.addLayer(QAQCzones,{min:0,max:8},'QAQCzones',false);
+
+//7.4 union of QAQCzones and HtMzones
+var union=(ee.ImageCollection([QAQCzones,HtMzones])).sum();
+
+var toMask=val_map.multiply(0);
+var confidence=union.updateMask(toMask.eq(0));
+
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["02818a","67a9cf","bdc9e1","f6eff7"]};
+Map.addLayer(confidence,conf_str,'confidence')
