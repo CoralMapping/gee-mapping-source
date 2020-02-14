@@ -284,7 +284,6 @@ Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false)
 //print('toMap',toMap);
 
 //6. legend  
-//based t GEE example: https://code.earthengine.google.com/c507af58b49f5467a04449837edc8337
 
 if (vars.geomorphic) {var title=ui.Label({
   value: 'User Accuracy Geomorphic (%)',
@@ -296,3 +295,68 @@ if (vars.geomorphic) {var title=ui.Label({
 
 var legend=pkg_vis.discrete_legend(map_palettes.UserAcc_cat, map_palettes.UserAcc_cols, ' ',false);
 pkg_vis.add_lgds([title,legend]);
+
+//7. estimation of hard to map areas
+
+//function to import a new column to validation datasets which will state if chosen points are true-positive (1) or true-negative (0)
+function ValrefPoints (ft) {
+  var pix=val_map.clip(ft);
+  var feature=ee.Number(ft.get('class_num'));
+  var pixSam=ee.Number(ft.get('first'));
+  return ee.Algorithms.If(feature.eq(pixSam),
+                          ft.set('valid',1),
+                          ft.set('valid',0));
+}
+
+//IDW and Kriggin methods in order to establish "Hard to Map" regions according to valid and non valid validation points
+function HtM (pointCol) {
+  var comReducer=ee.Reducer.mean().combine({
+      reducer2:ee.Reducer.stdDev(),
+      sharedInputs:true
+  });
+  var stats=pointCol.reduceColumns({
+    reducer:comReducer,
+    selectors:['valid']
+  });
+  var idw=pointCol.inverseDistance({
+    range:500,
+    propertyName:'valid',
+    mean:stats.get('mean'),
+    stdDev:stats.get('stdDev'),
+    gamma:0.3
+  });
+  var idwMask=idw.updateMask(idw.lt(0.5));
+  
+  var kriging=pointCol.kriging({
+    propertyName: 'valid',
+    shape:'gaussian',
+    range:500,
+    sill:1,
+    nugget:0.1,
+    maxDistance:500,
+    reducer: 'mean'
+  });
+  
+  var krigingMask=kriging.updateMask(kriging.lt(0.6));
+  
+  //intersect function between kriging and idw areas
+  function intersect (idw_img, krig_img) {
+    var idw_m=idw_img.expression(
+      "(img*0)+1",{
+        'img':idw_img
+      });
+    var krig_m=krig_img.expression(
+      "(img*0)+1",{
+        'img':krig_img
+      });
+    var common=idw_m.add(krig_m);
+    return common;
+  }
+  var commonAreas=intersect(idwMask,krigingMask);
+  return commonAreas;
+}
+
+var featCol=accuracy_collection.map(ValrefPoints);
+var HtMareas=HtM(featCol);
+print('HtMareas',HtMareas);
+Map.addLayer(HtMareas,{},'HtMareas');
