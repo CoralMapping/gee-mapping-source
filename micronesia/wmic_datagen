@@ -134,10 +134,10 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 
 // make the depth data for modelling/mapping
 var depth = ee.ImageCollection([s2_depth, ls8_depth]).mean()
-depth = depth.where(depth.unmask(0).eq(0), dove_depth.updateMask(dove_depth.gt(0)))
+depth = depth.where(depth.unmask(0).eq(0), dove_depth.updateMask(dove_depth.gt(-2)))
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(-2))//.updateMask(waves)
 var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
 
 //var waves = waves.rename('waves')
@@ -151,7 +151,7 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-//Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
