@@ -36,7 +36,7 @@ var vars = {
   Should be one of:
   'train' OR 'val'
   */
-  export_type: 'val',
+  export_type: 'cal',
   
   // analysis type
   geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
