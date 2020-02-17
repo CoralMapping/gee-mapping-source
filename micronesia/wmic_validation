@@ -283,18 +283,18 @@ var toMap=UserAcc
 Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false);
 //print('toMap',toMap);
 
-//6. legend  
+// //6. legend  
 
-if (vars.geomorphic) {var title=ui.Label({
-  value: 'User Accuracy Geomorphic (%)',
-  style: {fontWeight: 'bold', fontSize: '18px'}
-})} else {var title=ui.Label({
-  value:'User Accuracy Benthic (%)',
-  style: {fontWeight: 'bold', fontSize: '18px'}
-})}
+// if (vars.geomorphic) {var title=ui.Label({
+//   value: 'User Accuracy Geomorphic (%)',
+//   style: {fontWeight: 'bold', fontSize: '18px'}
+// })} else {var title=ui.Label({
+//   value:'User Accuracy Benthic (%)',
+//   style: {fontWeight: 'bold', fontSize: '18px'}
+// })}
 
-var legend=pkg_vis.discrete_legend(map_palettes.UserAcc_cat, map_palettes.UserAcc_cols, ' ',false);
-pkg_vis.add_lgds([title,legend]);
+// var legend=pkg_vis.discrete_legend(map_palettes.UserAcc_cat, map_palettes.UserAcc_cols, ' ',false);
+// pkg_vis.add_lgds([title,legend]);
 
 //7. confidence layer
 //7.1 estimation of hard to map areas
@@ -446,7 +446,7 @@ var legendLabels = ui.Panel({
   widgets: [
     ui.Label(vis.min, {margin: '4px 8px'}),
     ui.Label(
-        ('mediocre'),
+        (' '),
         {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
     ui.Label(vis.max, {margin: '4px 8px'})
   ],
