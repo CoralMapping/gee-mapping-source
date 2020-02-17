@@ -230,58 +230,58 @@ if (vars.assess_accuracy) {
 
 
 
-//5. user accuracy-based confidence layer
-Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
-Map.centerObject(validation_pts,7);
+// //5. user accuracy-based confidence layer
+// Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
+// Map.centerObject(validation_pts,7);
 
 
-var values_UA=(accuracy_cons.values());
-var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
-Map.addLayer(UAlayer, map_palettes.UA_pal, 'User Accuracy layer', false);
+// var values_UA=(accuracy_cons.values());
+// var UAlayer=val_map.remap(ee.List(classes_mapped),values_UA);//.aside(print)
+// Map.addLayer(UAlayer, map_palettes.UA_pal, 'User Accuracy layer', false);
 
-// function wide(img){
-//   var wideIm=img.expression(
+// // function wide(img){
+// //   var wideIm=img.expression(
     
-//       "(b('remapped') >= 0.9) ? 6"+
-//       ":(b('remapped') >= 0.8) ? 5"+
-//         ":(b('remapped') >= 0.7) ? 4"+
-//           ":(b('remapped') >= 0.6) ? 3"+
-//             ":(b('remapped') >= 0.5) ? 2"+
-//               ":1"
+// //       "(b('remapped') >= 0.9) ? 6"+
+// //       ":(b('remapped') >= 0.8) ? 5"+
+// //         ":(b('remapped') >= 0.7) ? 4"+
+// //           ":(b('remapped') >= 0.6) ? 3"+
+// //             ":(b('remapped') >= 0.5) ? 2"+
+// //               ":1"
+// //   );
+// // return wideIm;
+// // }
+
+// function highConf(img){
+//   var highConfIm=img.expression(
+//     "(b('remapped') >= 0.90) ? 7"+
+//       ":(b('remapped') >= 0.80) ? 6"+
+//         ":(b('remapped') >= 0.70) ? 5"+
+//           ":(b('remapped') >= 0.60) ? 4"+
+//             ":(b('remapped') >= 0.50) ? 3"+
+//               ":(b('remapped') >= 0.10) ? 2"+
+//                 ":(b('remapped') >= 0.01) ? 1"+
+//                   ":0"
 //   );
-// return wideIm;
+// return highConfIm;
 // }
 
-function highConf(img){
-  var highConfIm=img.expression(
-    "(b('remapped') >= 0.90) ? 7"+
-      ":(b('remapped') >= 0.80) ? 6"+
-        ":(b('remapped') >= 0.70) ? 5"+
-          ":(b('remapped') >= 0.60) ? 4"+
-            ":(b('remapped') >= 0.50) ? 3"+
-              ":(b('remapped') >= 0.10) ? 2"+
-                ":(b('remapped') >= 0.01) ? 1"+
-                  ":0"
-  );
-return highConfIm;
-}
+// // var listmin=values_UA.reduce(ee.Reducer.min())//.aside(print,'listimin');
+// // var reclass=ee.Image(ee.Algorithms.If(ee.Number(listmin).lt(0.6), wide(UAlayer), highConf(UAlayer)))//.aside(print);
+// var reclass=highConf(UAlayer);
 
-// var listmin=values_UA.reduce(ee.Reducer.min())//.aside(print,'listimin');
-// var reclass=ee.Image(ee.Algorithms.If(ee.Number(listmin).lt(0.6), wide(UAlayer), highConf(UAlayer)))//.aside(print);
-var reclass=highConf(UAlayer);
+// function maskUA (img) {
+//   var mask=(UAlayer.multiply(0)).eq(0);
+//   return img.updateMask(mask);
+// }
 
-function maskUA (img) {
-  var mask=(UAlayer.multiply(0)).eq(0);
-  return img.updateMask(mask);
-}
-
-var UserAcc=maskUA(reclass);
+// var UserAcc=maskUA(reclass);
 
 
-var toMap=UserAcc
+// var toMap=UserAcc
 
-Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false);
-//print('toMap',toMap);
+// Map.addLayer(toMap, map_palettes.UserAcc_pal, 'User Accuracy categories', false);
+// //print('toMap',toMap);
 
 // //6. legend  
 
@@ -454,7 +454,7 @@ var legendLabels = ui.Panel({
 });
 
 var legendTitle = ui.Label({
-  value: 'Map Legend: confidence of classification',
+  value: 'Confidence Layer',
   style: {fontWeight: 'bold',position: 'bottom-right'}
 });
 
