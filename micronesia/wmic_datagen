@@ -138,7 +138,7 @@ depth = depth.where(depth.eq(0), dove_depth.updateMask(dove_depth.gt(-2))).selfM
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
-var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
+var depth = depth.updateMask(depth_mask).int16().rename('depth') // mask out depth below set limit
 
 //var waves = waves.rename('waves')
 
