@@ -4165,7 +4165,7 @@ if (vars.obia_2nd_pass) {
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
-  var geo_map = ee.Image(region_params.geo_map).clip(wmic_extent)
+  var geo_map = ee.Image(region_params.geo_map).clip(reef_boundary)
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
@@ -4381,7 +4381,7 @@ if (vars.obia_clean) {
             bestEffort: true, 
             maxPixels: 1e13,
             tileScale: 1,
-            geometry: wmic_extent
+            geometry: reef_boundary
           })
     // map the function, calculate neighbour properties
     return(map_fc.map(set_neighbour_properties))
@@ -4812,7 +4812,7 @@ if (vars.do_export) {
     var export_convhull = export_small
   } else {
     //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-    var export_convhull = wmic_extent
+    var export_convhull = reef_boundary
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true)
   Export.image.toAsset({
@@ -4820,7 +4820,7 @@ if (vars.do_export) {
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
-    scale: 25,
+    scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
