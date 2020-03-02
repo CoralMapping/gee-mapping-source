@@ -203,12 +203,14 @@ if (vars.obia_2nd_pass) {
 /*var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
 var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)*/
 var depth = ee.Image(region_params.pixels).select('depth')
+var image = ee.Image(region_params.image)
 
 //var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {}, 'Depth data', false)
+Map.addLayer(image, {}, 'Dove low tide', false)
 
 
 
