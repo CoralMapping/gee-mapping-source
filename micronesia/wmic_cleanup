@@ -4117,7 +4117,7 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(30).int(), // relates to the vars.min_object_size from the *_classification script
+  small_object: ee.Number(400).int(), // relates to the vars.min_object_size from the *_classification script
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   
   //############
