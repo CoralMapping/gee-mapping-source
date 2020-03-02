@@ -80,8 +80,8 @@ var vars = {
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : for smaller regions, can do both at once
   - BENTHIC : can do both at once */
-  obia_2nd_pass: true,
-  obia_clean: true, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: false,
+  obia_clean: false, // run object-based relationship rules + small object clean up
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
@@ -93,16 +93,23 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean2',
+  do_export: false, // export the results?
+  geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
 
 }
 
-/*output resolution (bigger for geomorphic)
- - relates back to object size and the min mapping unit defined in classification stage*/
-if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel).pow(2)
+/* TRIAL #######
+    Looks like with the sentinel/ls8 depth we can try to retain full resolution,
+    because theres more (good) data either side of the depth threshold/marginal areas
+  ##############
+  
+  Used to be --> output resolution (bigger for geomorphic) - relates back to object size and the min mapping unit defined in classification stage
+*/
+//if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel)//.pow(2)
+
+
 
 // 2. Data loads & vis
 
