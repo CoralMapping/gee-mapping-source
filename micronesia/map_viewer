@@ -5,7 +5,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic"),
     geo = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo"),
     geo1 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo-clean1"),
-    wmic = /* color: #d63000 */ee.Geometry.Point([151.72552961318496, 7.454410756629496]);
+    wmic = /* color: #d63000 */ee.Geometry.Point([151.72552961318496, 7.454410756629496]),
+    benthic_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld"),
+    geo_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -22,10 +24,14 @@ Map.centerObject(centre_map, 10)
 Map.addLayer(rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide mosaic", false)
 Map.addLayer(depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
 
-// west micronesia
-Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
-Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - RAW", false)
-Map.addLayer(geo1, map_palettes.geo, "W. Micronesia Geo - 1st stage clean", false)
+// west micronesia (dove only)
+Map.addLayer(benthic, map_palettes.benthic, "W. Mic Benthic - dove RAW", false)
+Map.addLayer(geo, map_palettes.geo, "W. Mic Geo - dove RAW", false)
+Map.addLayer(geo1, map_palettes.geo, "W. Mic Geo - dove 1st clean", false)
+
+// west micronesia (s2 + ls8 + dove [sld])
+Map.addLayer(benthic_sld, map_palettes.benthic, "W. Mic Benthic - sld RAW", false)
+Map.addLayer(geo_sld, map_palettes.geo, "W. Mic Geo - sld RAW", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
