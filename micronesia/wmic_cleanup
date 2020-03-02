@@ -73,7 +73,7 @@ var vars = {
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
   small_object: ee.Number(30).int(), // relates to the vars.min_object_size from the *_classification script
-  smooth_radius: ee.Number(4), // radius in pixels for initial smooth 
+  smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
@@ -189,10 +189,10 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // make a smooth map with masked area as a value
   var smooth_map = geo_map
-                      .unmask(99)
+                      //.unmask(99)
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
-                        kernelType: 'circle', units: 'pixels', iterations: 1
+                        kernelType: 'circle', units: 'pixels', iterations: 2
                       })
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
@@ -200,7 +200,8 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   var clean_map = geo_map.where({
     test: geo_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
-  }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
+  //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask)
   
   // shallow lagoon > 10m == deep lagoon
   clean_map = clean_map.where({
@@ -209,7 +210,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(12)
   })
   
-  // deep lagoon == deep (to ignore - decided Dove just cannot handle deep water classes effectively over large areas)
+  // deep lagoon == deep (to hard to differentiate deep water vs. deep lagoon effectively over large areas)
   clean_map = clean_map.where({
     test: clean_map.eq(12),
     value: ee.Image(2)
