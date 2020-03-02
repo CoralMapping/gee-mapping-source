@@ -4138,7 +4138,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
@@ -4293,7 +4293,7 @@ if (!vars.geomorphic) {
   
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
   var smooth_map = benthic_map
-                      .unmask(99)
+                      //.unmask(99)
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
@@ -4304,7 +4304,8 @@ if (!vars.geomorphic) {
   var clean_map = benthic_map.where({
     test: benthic_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
     value: smooth_map
-  }).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
+  //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask)
   
   /*// CLEAN UP ALL TEMPORAL AREAS
   var smooth_notemp = benthic_map
