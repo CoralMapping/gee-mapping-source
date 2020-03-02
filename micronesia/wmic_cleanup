@@ -4204,8 +4204,12 @@ Map.addLayer(image, {}, 'Dove low tide', false)
   geo_map = geo_map.updateMask(geo_map.gt(0))
 
 */
-  
-var class_extent_mask = geo_map.gt(0) // just so it doesn't balloon out
+
+/* OUTPUT EXTENT
+  - to the mapping extent just so it doesn't balloon out
+  - to the 'reef boundary' extent for noise/deep removal
+*/  
+var class_extent_mask = geo_map.gt(0).clip(reef_boundary)
 
 Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
 //Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
