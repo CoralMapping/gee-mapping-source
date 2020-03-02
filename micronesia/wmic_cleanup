@@ -216,6 +216,12 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   })
   
+  // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
+  clean_map = clean_map.where({
+    test: depth.gt(1500),
+    value: ee.Image(2)
+  })
+  
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
   var smooth_noturbid = clean_map
@@ -733,10 +739,12 @@ if (vars.smooth_output) {
                           radius: 2, // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
                         })
-  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(2))
+  //clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(2)) // this ignores 0/land/deep water
+  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(1)) // this ignores 0/land
 } else {
   // just clip to the classified extent and move on
-  clean_map = clean_map.updateMask(geo_map.gt(2))
+  // clean_map = clean_map.updateMask(geo_map.gt(2)) // this ignores deep water
+  clean_map = clean_map.updateMask(geo_map.gt(1)) // this ignores 0/land
 }
 
 
