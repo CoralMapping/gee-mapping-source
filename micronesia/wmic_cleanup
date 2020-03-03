@@ -33,10 +33,7 @@ var eg_area =
           [130.7551960728133, 0.7075765650212411],
           [163.4944538853133, 0.7075765650212411],
           [163.4944538853133, 19.915585821970126]]], null, false),
-    reef_boundary = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    reef_boundary = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
