@@ -4307,6 +4307,12 @@ if (!vars.geomorphic) {
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask)
   
+  // cut benthic off to < 10 m
+  clean_map = clean_map.where({
+    test: depth.gt(1000),
+    value: ee.Image(0)
+  })
+  
   /*// CLEAN UP ALL TEMPORAL AREAS
   var smooth_notemp = benthic_map
                           .updateMask(benthic_map.neq(2))
@@ -4314,6 +4320,7 @@ if (!vars.geomorphic) {
                             radius: vars.smooth_radius.multiply(2),
                             kernelType: 'circle', units: 'pixels', iterations: 3
                           })
+  
   
   clean_map = clean_map1.where({
     test: benthic_map.eq(2), 
