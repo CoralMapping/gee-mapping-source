@@ -4127,6 +4127,7 @@ var vars = {
   - BENTHIC : can do both at once */
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
+  fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
@@ -4349,11 +4350,6 @@ if (vars.obia_clean) {
   // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
   // #########
   
-  // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-  var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
-  //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
-  Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
-  
   // FUNCTION that maps over feature colleciton and assigns neighbour percentages
   var set_neighbour_properties = function(f) {
     // make the 1px buffer
@@ -4394,7 +4390,12 @@ if (vars.obia_clean) {
     return(map_fc.map(set_neighbour_properties))
   }
   
-  if (vars.geomorphic) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
+  if (vars.geomorphic && !vars.fast_clean) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
+    
+    // first make a make size threshold, so we're not vecortising huge objects when we don't have to
+    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
+    //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
@@ -4698,6 +4699,35 @@ if (vars.obia_clean) {
               .and(nb16.gt(75)),
       value: ee.Image(16)
     })*/
+  
+  } else if (vars.geomorphic && vars.fast_clean) {
+    
+    /* fast version of the geo clean up
+      - at the moment it blanket assigned the underlying very smooth class
+      - uses connectedComponents with the idea that we'll transition to doing the 
+        OBIA iteration, but take the max, instead of doing the class percs, to see if that speeds things up
+    */
+    
+    // make a very smooth map to capture the broader neighbourhood
+    var smooth_map = clean_map
+                        .focal_mode({
+                          radius: vars.smooth_radius.multiply(3), // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 2
+                        })
+    
+    
+    // first make a make size threshold, so we're not vectorising huge objects when we don't have to
+    // - the unmask(99) captures small no data values/ data gaps
+    var segment_id = clean_map.unmask(99).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
+    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+    
+    
+    // replace small objects with smooth underneath
+    var clean_map = clean_map.where({
+      test: segment_id.gt(0), 
+      value: smooth_map
+    //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
+    }).updateMask(class_extent_mask)
     
   } else {
     
