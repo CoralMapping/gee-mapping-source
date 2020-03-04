@@ -4122,8 +4122,8 @@ var vars = {
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : for smaller regions, can do both at once
   - BENTHIC : can do both at once */
-  obia_2nd_pass: false,
-  obia_clean: false, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: true,
+  obia_clean: true, // run object-based relationship rules + small object clean up
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
@@ -4135,7 +4135,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
