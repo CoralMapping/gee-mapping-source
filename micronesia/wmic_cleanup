@@ -4406,13 +4406,13 @@ if (vars.obia_clean) {
     // make the 1px buffer
     var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
     // reduce the classes in the buffer zone
-    var diff_mode = ee.Number(
+    var diff_mode = ee.Number(ee.Dictionary(
       clean_map.unmask(ee.Image(0)).reduceRegion({
         reducer: ee.Reducer.mode(),
         geometry: diff.geometry(),
         scale: vars.image_data_scale,
         maxPixels: 1e11
-      }))
+      })).get('classification'))
     
     return(f.set('mode',diff_mode))
   }
@@ -4747,9 +4747,8 @@ if (vars.obia_clean) {
   } else if (vars.geomorphic && vars.fast_clean) {
     
     /* fast version of the geo clean up
-      - at the moment it blanket assigned the underlying most common in neighbourhood
-      - uses connectedComponents with the idea that we'll transition to doing the 
-        OBIA iteration, but take the max, instead of doing the class percs, to see if that speeds things up
+      - blanket version assigns the underlying most common in neighbourhood
+      - mode OBIA version iterates through objects+buffers but take the mode instead of doing the class percs, to see if that speeds things up
     */
     
     /*
@@ -4800,9 +4799,17 @@ if (vars.obia_clean) {
     })
     
     // calculate neighbours
-    var map_fc_neighbours = reduce_neighbours()
+    var map_fc_neighbours = reduce_neighbours_mode()
     
-    print(map_fc_neighbours.limit(10))
+    //print(map_fc_neighbours.limit(10))
+    
+    var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
+    
+    // replace small objects with mode underneath
+    var clean_map = clean_map.unmask(0).where({
+      test: segment_id.gt(0), 
+      value: mode_map
+    }).selfMask()
     
     //############
     //############
