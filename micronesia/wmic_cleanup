@@ -4713,7 +4713,7 @@ if (vars.obia_clean) {
       - mode OBIA version iterates through objects+buffers but take the mode instead of doing the class percs, to see if that speeds things up
     */
     
-    /*
+    
     //############
     //# blanket version
     //############
@@ -4738,9 +4738,9 @@ if (vars.obia_clean) {
     }).selfMask()
     //############
     //############
-    */
     
     
+    /*    
     //############
     //# mode OBIA version
     //############
@@ -4815,7 +4815,7 @@ if (vars.obia_clean) {
     
     //############
     //############
-    
+    */
     
   } else {
     
