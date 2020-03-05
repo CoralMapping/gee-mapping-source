@@ -4123,8 +4123,8 @@ var vars = {
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
-  -           : for smaller regions, can do both at once
-  - BENTHIC : can do both at once */
+  -           : *in an ideal world* for smaller regions, can do both at once, but not handling that at present
+  - BENTHIC : can do both at once, but production run should have obia_2nd_pass and obia_clean set to true */
   obia_2nd_pass: true,
   obia_clean: true, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic
@@ -4720,15 +4720,15 @@ if (vars.obia_clean) {
     
     // first make a make size threshold, so we're not vectorising huge objects when we don't have to
     // - the unmask(99) captures small no data values/ data gaps
-    var segment_id = clean_map.unmask(99).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
-    Map.addLayer(clean_map.unmask(99).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
+    Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     
     // replace small objects with smooth underneath
-    var clean_map = clean_map.where({
+    var clean_map = clean_map.unmask(0).where({
       test: segment_id.gt(0), 
       value: smooth_map
-    })
+    }).selfMask()
     
   } else {
     
@@ -4736,7 +4736,7 @@ if (vars.obia_clean) {
     
     
     //##################
-    // ###### ----> VERY SMOOTH MAP TO REPLACE NO DATA VALUES
+    // ###### ----> VERY SMOOTH MAP TO REPLACE NO DATA VALUES [ do it on an unmask(0) then a selfMask() ]
     //##################
     
     
@@ -4837,12 +4837,15 @@ if (vars.smooth_output) {
                           radius: 2, // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
                         })
-  //clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(2)) // this ignores 0/land/deep water
-  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(geo_map.gt(1)) // this ignores 0/land
+  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(clean_map.gt(1)) // this ignores 0/land; make it .gt(2) if you want to mask deep too
 } else {
   // just clip to the classified extent and move on
-  // clean_map = clean_map.updateMask(geo_map.gt(2)) // this ignores deep water
-  clean_map = clean_map.updateMask(geo_map.gt(1)) // this ignores 0/land
+  if (vars.geomorphic) {
+    clean_map = clean_map.updateMask(clean_map.gt(1)) // this ignores 0/land; make it .gt(2) if you want to mask deep too
+  } else {
+    clean_map = clean_map.updateMask(clean_map.gt(1)) // this ignores 0/land; make it .gt(2) if you want to mask deep too
+  }
+  
 }
 
 
