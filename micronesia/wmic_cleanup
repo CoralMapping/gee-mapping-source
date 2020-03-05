@@ -4726,8 +4726,7 @@ if (vars.obia_clean) {
     var clean_map = clean_map.where({
       test: segment_id.gt(0), 
       value: smooth_map
-    //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-    }).updateMask(class_extent_mask)
+    })
     
   } else {
     
