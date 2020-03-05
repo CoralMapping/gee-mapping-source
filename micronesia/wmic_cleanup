@@ -4183,8 +4183,8 @@ var image = ee.Image(region_params.image)
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.centerObject(eg_area, 11)
-Map.addLayer(depth, {}, 'Depth data', false)
-Map.addLayer(image, {}, 'Dove low tide', false)
+Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false)
+Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false)
 
 
 
@@ -4219,7 +4219,7 @@ Map.addLayer(image, {}, 'Dove low tide', false)
 */  
 var class_extent_mask = geo_map.gt(0).clip(reef_boundary)
 
-Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
+Map.addLayer(ee.Image(region_params.geo_map), display_pal, 'Raw GEO classification', false)
 //Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 /*
