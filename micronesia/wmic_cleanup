@@ -4352,89 +4352,51 @@ Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(va
 
 if (vars.obia_clean) {
   
-  // #########
-  // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
-  // #########
-  
-  // FUNCTION that maps over feature colleciton and assigns neighbour percentages
-  var set_neighbour_properties = function(f) {
-    // make the 1px buffer
-    var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
-    // reduce the classes in the buffer zone
-    var diff_classes = ee.Dictionary(
-      clean_map.unmask(ee.Image(0)).reduceRegion({
-        reducer: ee.Reducer.frequencyHistogram(),
-        geometry: diff.geometry(),
-        scale: vars.image_data_scale,
-        maxPixels: 1e11
-      }).get('classification')
-    )
-    // calculate the percentages
-    var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
-    var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())})
-    
-    /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
-       or we can return the neighbour % and do image logic via (painted) rasters */
-    
-    return(f.set(diff_percs))
-  }
-  
-  // FUNCTION to reduce the map to vectors and map the neighbour properties function
-  var reduce_neighbours = function() {
-    // reduce map to vectors
-    var map_fc = clean_map
-          .updateMask(segment_id).updateMask(clean_map.eq(classn)) // only vectorise class/es of interest
-          .reduceToVectors({
-            scale: vars.image_data_scale, 
-            eightConnected: false,
-            bestEffort: true, 
-            maxPixels: 1e13,
-            tileScale: 1,
-            geometry: reef_boundary
-          })
-    // map the function, calculate neighbour properties
-    return(map_fc.map(set_neighbour_properties))
-  }
-  
-  // #########
-  // THE FASTER PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
-  //                 - BUT, just assign the mode of the neighbours, so save resouces even further??
-  // #########
-  
-  // FUNCTION that maps over feature colleciton and assigns neighbour percentages
-  var set_neighbour_mode = function(f) {
-    // make the 1px buffer
-    var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
-    // reduce the classes in the buffer zone
-    var diff_mode = ee.Number(ee.Dictionary(
-      clean_map.unmask(ee.Image(0)).reduceRegion({
-        reducer: ee.Reducer.mode(),
-        geometry: diff.geometry(),
-        scale: vars.image_data_scale,
-        maxPixels: 1e11
-      })).get('classification'))
-    
-    return(f.set('mode',diff_mode))
-  }
-  
-  // FUNCTION to reduce the map to vectors and map the neighbour properties function
-  var reduce_neighbours_mode = function() {
-    // reduce map to vectors
-    var map_fc = clean_map
-          .updateMask(segment_id).updateMask(classn.lt(99)) // only vectorise class/es of interest
-          .reduceToVectors({
-            scale: vars.image_data_scale, 
-            eightConnected: false,
-            bestEffort: true, 
-            maxPixels: 1e13,
-            tileScale: 1,
-            geometry: reef_boundary
-          })
-    // map the function, calculate neighbour properties
-    return(map_fc.map(set_neighbour_mode))
-  }
-  
   if (vars.geomorphic && !vars.fast_clean) { // SHOULD TRY TO PUT THIS OUT TO A MODULE TO KEEP THE RULES THE SAME EVERYWEHRE?
+    
+    // #########
+    // THE PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
+    // #########
+    
+    // FUNCTION that maps over feature colleciton and assigns neighbour percentages
+    var set_neighbour_properties = function(f) {
+      // make the 1px buffer
+      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+      // reduce the classes in the buffer zone
+      var diff_classes = ee.Dictionary(
+        clean_map.unmask(ee.Image(0)).reduceRegion({
+          reducer: ee.Reducer.frequencyHistogram(),
+          geometry: diff.geometry(),
+          scale: vars.image_data_scale,
+          maxPixels: 1e11
+        }).get('classification')
+      )
+      // calculate the percentages
+      var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
+      var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())})
+      
+      /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
+         or we can return the neighbour % and do image logic via (painted) rasters */
+      
+      return(f.set(diff_percs))
+    }
+    
+    // FUNCTION to reduce the map to vectors and map the neighbour properties function
+    var reduce_neighbours = function() {
+      // reduce map to vectors
+      var map_fc = clean_map
+            .updateMask(segment_id).updateMask(clean_map.eq(classn)) // only vectorise class/es of interest
+            .reduceToVectors({
+              scale: vars.image_data_scale, 
+              eightConnected: false,
+              bestEffort: true, 
+              maxPixels: 1e13,
+              tileScale: 1,
+              geometry: reef_boundary
+            })
+      // map the function, calculate neighbour properties
+      return(map_fc.map(set_neighbour_properties))
+    }
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
     var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
@@ -4782,20 +4744,59 @@ if (vars.obia_clean) {
     //############
     //# mode OBIA version
     //############
+    
+    // #########
+    // THE FASTER PLAN - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
+    //                 - BUT, just assign the mode of the neighbours, so save resouces even further??
+    // #########
+    
+    // FUNCTION that maps over feature colleciton and assigns neighbour percentages
+    var set_neighbour_mode = function(f) {
+      // make the 1px buffer
+      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+      // reduce the classes in the buffer zone
+      var diff_mode = ee.Number(ee.Dictionary(
+        clean_map.unmask(ee.Image(0)).reduceRegion({
+          reducer: ee.Reducer.mode(),
+          geometry: diff.geometry(),
+          scale: vars.image_data_scale,
+          maxPixels: 1e11
+        })).get('classification'))
+      
+      return(f.set('mode',diff_mode))
+    }
+    
+    // FUNCTION to reduce the map to vectors and map the neighbour properties function
+    var reduce_neighbours_mode = function() {
+      // reduce map to vectors
+      var map_fc = clean_map.unmask(0)
+            .updateMask(classn.gt(0)) // only vectorise class/es of interest
+            .reduceToVectors({
+              scale: vars.image_data_scale, 
+              eightConnected: false,
+              bestEffort: true, 
+              maxPixels: 1e13,
+              tileScale: 1,
+              geometry: reef_boundary
+            })
+      // map the function, calculate neighbour properties
+      return(map_fc.map(set_neighbour_mode))
+    }
+    
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
     var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt().multiply(2)).select('labels')
     Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     // This is where we select the single or group of classes to vectorise for cleaning up
-    var classn = clean_map.unmask(0).where({
+    var classn = segment_id.where({
       test: clean_map.neq(16) //TRF
               .and(clean_map.neq(15)) //RR
               .and(clean_map.neq(14)) //ORF
               .and(clean_map.neq(13)) //IRF
               //.and(clean_map.neq(12)) // deep L
               .and(clean_map.neq(11)) // shallow L 
-              .and(clean_map.neq(0)), // no data values (want to reclaim the small gaps 
-      value: ee.Image(99) // 99 ensures it's ignored in logic
+              .and(clean_map.unmask(0).neq(0)), // no data values (want to reclaim the small gaps 
+      value: ee.Image(0) // 99 ensures it's ignored in logic
     })
     
     // calculate neighbours
