@@ -4140,7 +4140,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset, // asset path
@@ -4709,7 +4709,7 @@ if (vars.obia_clean) {
   } else if (vars.geomorphic && vars.fast_clean) {
     
     /* fast version of the geo clean up
-      - at the moment it blanket assigned the underlying very smooth class
+      - at the moment it blanket assigned the underlying most common in neighbourhood
       - uses connectedComponents with the idea that we'll transition to doing the 
         OBIA iteration, but take the max, instead of doing the class percs, to see if that speeds things up
     */
