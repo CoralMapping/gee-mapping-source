@@ -4182,7 +4182,7 @@ var image = ee.Image(region_params.image)
 //var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
-Map.centerObject(eg_area, 11)
+//Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false)
 Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false)
 
@@ -4804,7 +4804,7 @@ if (vars.obia_clean) {
     //print(map_fc_neighbours.limit(10))
     
     var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
-    
+    Map.addLayer(mode_map, display_pal, "mode map", false)
     // replace small objects with mode underneath
     var clean_map = clean_map.unmask(0).where({
       test: segment_id.gt(0), 
