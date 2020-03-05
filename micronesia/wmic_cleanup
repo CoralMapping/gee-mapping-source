@@ -4718,8 +4718,9 @@ if (vars.obia_clean) {
     
     // first make a make size threshold, so we're not vectorising huge objects when we don't have to
     // - the unmask(99) captures small no data values/ data gaps
-    var segment_id = clean_map.unmask(99).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
-    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+    var segment_id = clean_map.unmask(ee.Image(99)).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
+    Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'segment reduction', false)
+    Map.addLayer(clean_map.updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     
     // replace small objects with smooth underneath
