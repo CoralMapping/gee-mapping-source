@@ -4784,7 +4784,7 @@ if (vars.obia_clean) {
     }
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt().multiply(2)).select('labels')
+    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),2).select('labels')
     Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     // This is where we select the single or group of classes to vectorise for cleaning up
@@ -4804,7 +4804,7 @@ if (vars.obia_clean) {
     
     //print(map_fc_neighbours.limit(10))
     
-    //var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
+    var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
     //Map.addLayer(mode_map, display_pal, "mode map", false)
     
     // replace small objects with mode underneath
