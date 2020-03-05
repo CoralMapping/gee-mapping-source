@@ -4161,10 +4161,13 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-//var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.ImageCollection(region_params.geo_map).mosaic()
 if (vars.obia_2nd_pass) {
-  // OR ru na separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
+  // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
+  // - could change the path in reef_params to a list, check if it length is > 1, then take last element??
+  
+  // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
+  
   var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
   var geo_map = ee.Image(region_params.geo_map).clip(reef_boundary)
