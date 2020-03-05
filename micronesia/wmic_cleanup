@@ -4804,8 +4804,9 @@ if (vars.obia_clean) {
     
     //print(map_fc_neighbours.limit(10))
     
-    var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
-    Map.addLayer(mode_map, display_pal, "mode map", false)
+    //var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
+    //Map.addLayer(mode_map, display_pal, "mode map", false)
+    
     // replace small objects with mode underneath
     var clean_map = clean_map.unmask(0).where({
       test: segment_id.gt(0), 
