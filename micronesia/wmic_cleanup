@@ -4815,9 +4815,7 @@ if (vars.obia_clean) {
     // BENTHIC CLEAN-UP RULES
     
     
-    //##################
-    // ###### ----> VERY SMOOTH MAP TO REPLACE NO DATA VALUES [ do it on an unmask(0) then a selfMask() ]
-    //##################
+    // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
                         .focal_mode({
                           radius: vars.smooth_radius.multiply(3), // relates to smoothness required
