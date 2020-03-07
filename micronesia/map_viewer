@@ -8,7 +8,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wmic = /* color: #d63000 */ee.Geometry.Point([151.72552961318496, 7.454410756629496]),
     benthic_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld"),
     geo_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld"),
-    geo_sld1 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean1");
+    geo_sld1 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean1"),
+    geo_sld2 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -34,6 +35,7 @@ Map.addLayer(geo1, map_palettes.geo, "W. Mic Geo - dove 1st clean", false)
 Map.addLayer(benthic_sld.updateMask(geo_sld1.gt(2)), map_palettes.benthic, "W. Mic Benthic - sld RAW", false)
 Map.addLayer(geo_sld, map_palettes.geo, "W. Mic Geo - sld RAW", false)
 Map.addLayer(geo_sld1, map_palettes.geo, "W. Mic Geo - sld 1st clean", false)
+Map.addLayer(geo_sld2, map_palettes.geo, "W. Mic Geo - sld final", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
