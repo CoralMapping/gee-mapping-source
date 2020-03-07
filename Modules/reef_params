@@ -253,7 +253,7 @@ var wmic = {
   benthic_val_library: "projects/coral_atlas/Micronesia/training/wmic_benthic_validation",
   geo_map: ["projects/coral_atlas/Micronesia/in_out/wmic_geo_sld"],
   benthic_map: ["projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld"],
-  geo_map_clean: "projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean1",
+  geo_map_clean: "projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2",
   benthic_map_clean: "",
   QAQC: "projects/coral_atlas/Micronesia/QAQC"
 };
