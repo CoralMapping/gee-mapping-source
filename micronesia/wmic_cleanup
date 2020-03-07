@@ -4113,7 +4113,7 @@ var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE 
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -4307,17 +4307,10 @@ if (!vars.geomorphic) {
   
   //replace small objects with smooth underneath
   var clean_map = benthic_map.where({
-    test: benthic_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+    test: benthic_map.connectedPixelCount(vars.small_object.divide(3), false).lt(vars.small_object.divide(3)), //benthic size threshold is much smaller
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask)
-  
-  // cut benthic off to < 10 m
-  clean_map = clean_map.where({
-    test: depth.gt(1000),
-    value: ee.Image(0)
-  })
-  
   
   
   /*// CLEAN UP ALL TEMPORAL AREAS
@@ -4825,8 +4818,22 @@ if (vars.obia_clean) {
     //##################
     // ###### ----> VERY SMOOTH MAP TO REPLACE NO DATA VALUES [ do it on an unmask(0) then a selfMask() ]
     //##################
+    var smooth_map = clean_map
+                        .focal_mode({
+                          radius: vars.smooth_radius.multiply(3), // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 2
+                        })
     
+    var clean_map = clean_map.unmask(0).where({
+      test: geo_map.gt(2).and(clean_map.eq(0)), 
+      value: smooth_map
+    }).selfMask()
     
+    // cut benthic off to < 10 m
+    clean_map = clean_map.where({
+      test: depth.gt(1000),
+      value: ee.Image(0)
+    })
     
     // Deep (or land or missing) in geo == masked from benthic
     clean_map = clean_map.where({
