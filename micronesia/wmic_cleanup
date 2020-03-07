@@ -4174,18 +4174,18 @@ if (vars.obia_2nd_pass) {
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
-/*var geo_map = (vars.obia_2nd_pass) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.geo_map)
-var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.Image(region_params.benthic_map)*/
+var benthic_map = ee.Image(region_params.benthic_map)
+
 var depth = ee.Image(region_params.pixels).select('depth')
 var image = ee.Image(region_params.image)
-
-//var input_map = (vars.geomorphic) ? geo_map : benthic_map // Set the map to either geomorphic or benthic
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 //Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false)
 Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false)
 
+Map.addLayer(ee.Image(region_params.geo_map), display_pal, 'Raw GEO classification', false)
+if (!vars.geomorphic) Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 
 // 3. Object-based re-classificaiton and cleaning
@@ -4219,14 +4219,8 @@ Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide
 */  
 var class_extent_mask = geo_map.gt(0).clip(reef_boundary)
 
-Map.addLayer(ee.Image(region_params.geo_map), display_pal, 'Raw GEO classification', false)
-//Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 
 /*
-
-// define the cleaned map to either do OBIA on or just export later
-var clean_map = smooth_map
-//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, "output_scale", true)
 
 ########
 Initial small object clean
