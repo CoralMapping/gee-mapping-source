@@ -9,7 +9,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld"),
     geo_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld"),
     geo_sld1 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean1"),
-    geo_sld2 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2");
+    geo_sld2 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2"),
+    benthic_sld1 = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -32,7 +33,8 @@ Map.addLayer(geo, map_palettes.geo, "W. Mic Geo - dove RAW", false)
 Map.addLayer(geo1, map_palettes.geo, "W. Mic Geo - dove 1st clean", false)
 
 // west micronesia (s2 + ls8 + dove [sld])
-Map.addLayer(benthic_sld.updateMask(geo_sld1.gt(2)), map_palettes.benthic, "W. Mic Benthic - sld RAW", false)
+Map.addLayer(benthic_sld, map_palettes.benthic, "W. Mic Benthic - sld RAW", false)
+Map.addLayer(benthic_sld1, map_palettes.benthic, "W. Mic Benthic - sld final", false)
 Map.addLayer(geo_sld, map_palettes.geo, "W. Mic Geo - sld RAW", false)
 Map.addLayer(geo_sld1, map_palettes.geo, "W. Mic Geo - sld 1st clean", false)
 Map.addLayer(geo_sld2, map_palettes.geo, "W. Mic Geo - sld final", false)
