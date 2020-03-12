@@ -4118,6 +4118,7 @@ var vars = {
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
   small_object: ee.Number(400).int(), // relates to the vars.min_object_size from the *_classification script
+  benthic_reduc: ee.Number(3), // the factor by which the small object filter is reduced for benthic (i.e. small_object / benthic_reduc)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   
   //############
