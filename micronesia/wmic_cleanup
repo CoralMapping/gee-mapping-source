@@ -4117,8 +4117,8 @@ var vars = {
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
-  small_object: ee.Number(400).int(), // relates to the vars.min_object_size from the *_classification script
-  benthic_reduc: ee.Number(3), // the factor by which the small object filter is reduced for benthic (i.e. small_object / benthic_reduc)
+  small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
+  small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   
   //############
@@ -4251,7 +4251,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   //replace small objects with smooth underneath
   var clean_map = geo_map.where({
-    test: geo_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+    test: geo_map.connectedPixelCount(vars.small_object_geo, false).lt(vars.small_object_geo), 
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask)
@@ -4285,7 +4285,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
                           })
   
   clean_map = clean_map.where({
-    test: clean_map.eq(3).connectedPixelCount(vars.small_object.multiply(10), false).lt(vars.small_object.multiply(10)), 
+    test: clean_map.eq(3).connectedPixelCount(vars.small_object_geo.multiply(10), false).lt(vars.small_object_geo.multiply(10)), 
     value: smooth_noturbid
   }).updateMask(class_extent_mask)*/
 }
@@ -4304,7 +4304,7 @@ if (!vars.geomorphic) {
   
   //replace small objects with smooth underneath
   var clean_map = benthic_map.where({
-    test: benthic_map.connectedPixelCount(vars.small_object.divide(3).int(), false).lt(vars.small_object.divide(3).int()), //benthic size threshold is much smaller
+    test: benthic_map.connectedPixelCount(vars.small_object_benthic, false).lt(vars.small_object_benthic),
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask)
@@ -4389,7 +4389,7 @@ if (vars.obia_clean) {
     }
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt()).select('labels')
+    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
     //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
     Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
@@ -4717,7 +4717,7 @@ if (vars.obia_clean) {
     
     // first make a make size threshold, so we're not vectorising huge objects when we don't have to
     // - the unmask(99) captures small no data values/ data gaps
-    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object.sqrt().multiply(2)).select('labels')
+    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt().multiply(2)).select('labels')
     Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     
@@ -4774,7 +4774,7 @@ if (vars.obia_clean) {
     }
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),2).select('labels')
+    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
     Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     // This is where we select the single or group of classes to vectorise for cleaning up
@@ -4904,6 +4904,8 @@ if (vars.obia_clean) {
   // Final small object clean (safety net for oddities with scaling and border buffers??)
   // ####
   
+  var clean_size = (vars.geomorphic) ? vars.small_object_geo : vars.small_object_benthic
+  
   var map_vsmooth = clean_map
                         .focal_mode({
                           radius: 10, // relates to smoothness required
@@ -4912,7 +4914,7 @@ if (vars.obia_clean) {
                         .updateMask(class_extent_mask)
   
   clean_map = clean_map.where({
-    test: clean_map.connectedPixelCount(vars.small_object, false).lt(vars.small_object), 
+    test: clean_map.connectedPixelCount(clean_size, false).lt(clean_size), 
     value: map_vsmooth
   })*/
 
