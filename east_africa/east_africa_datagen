@@ -13,7 +13,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([44.658908032610896, -16.
               "mask": 1,
               "system:index": "0"
             })]),
-    eastaf_extent = /* color: #98ff00 */ee.Geometry.Polygon(
+    eastaf_extent = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[40.35842048249674, -1.8731644797702776],
           [39.69924079499674, -2.3562322691693933],
           [39.07302009187174, -3.8591024804159404],
