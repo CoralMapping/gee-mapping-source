@@ -124,8 +124,12 @@ exports = {
   geo_cols : geo_cols,
   geo_gbr_names : geo_gbr_names,
   geo_gbr_cols : geo_gbr_cols,
+  geo_atlas_names : geo_atlas_names,
+  geo_atlas_cols : geo_atlas_cols,
   benthic_names : benthic_names,
   benthic_cols : benthic_cols,
+  benthic_atlas_names : benthic_atlas_names,
+  benthic_atlas_cols : benthic_atlas_cols,
   UserAcc_cat:UserAcc_cat,
   UserAcc_cols:UserAcc_cols
 }
