@@ -40,10 +40,10 @@ Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 
 // combine into single stack
-var export_stack = depth.updateMask(geo.gte(2)).rename('depth')
+var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
-                    .addBands(geo.rename('geomorphic'))
-                    .addBands(benthic.rename('benthic'))
+                    .addBands(geo.where(geo.lte(2), 0).rename('geomorphic'))
+                    .addBands(benthic.where(geo.lte(2), 0).rename('benthic'))
                     .toInt16()
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
