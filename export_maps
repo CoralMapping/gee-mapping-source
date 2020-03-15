@@ -46,8 +46,9 @@ var export_stack = depth.updateMask(geo.gte(2)).rename('depth')
                     .addBands(benthic.rename('benthic'))
                     .toInt16()
 
+Map.addLayer(export_stack, {}, "export raster stack", false)
 
-// add export region
+/*// add export region
 var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
 var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
 Map.addLayer(export_geom_west, {}, "export footprint west", true)
@@ -61,7 +62,7 @@ var export_stack_east = export_stack.updateMask(latlong.lte(0))
 var export_stack_west = export_stack.updateMask(latlong.gt(0))
 
 Map.addLayer(export_stack_east, {}, "export raster stack east", false)
-Map.addLayer(export_stack_west, {}, "export raster stack west", false)
+Map.addLayer(export_stack_west, {}, "export raster stack west", false)*/
 
 // make east/west export geometries
 /*var export_geom_east = latlong.lt(0).and(latlong.gt(-179.99998)).selfMask()
@@ -85,6 +86,19 @@ var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
 
 // run the export
 Export.image.toCloudStorage({
+  image: export_stack,
+  description: 'wm_stack',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/west_micro/west_micro_stack',
+  region: export_geom_east, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})
+
+/*// run the export
+Export.image.toCloudStorage({
   image: export_stack_east,
   description: 'swp_stack_east',
   bucket: 'coral-atlas-data-pipeline',
@@ -107,7 +121,7 @@ Export.image.toCloudStorage({
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
-})
+})*/
 
 
 // export the convex hull boundary
