@@ -1,8 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    depth = ee.Image("projects/coral_atlas/sw_pacific/full_mosaic/sw_pacific_high_tide_depth/sw_pac_ht_depth_tif"),
-    geo = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_final"),
-    benthic = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_final");
+    geo = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2"),
+    benthic = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld-clean"),
+    pixels = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels_sld");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -24,6 +24,9 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+
+// will need to import depth mosaic from pixels now
+var depth = pixels.select('depth')
 
 // make reef/non-reef layer 
 var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
