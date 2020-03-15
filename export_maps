@@ -90,7 +90,7 @@ Export.image.toCloudStorage({
   description: 'wm_stack',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/west_micro/west_micro_stack',
-  region: export_geom_east, 
+  region: export_geom, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
