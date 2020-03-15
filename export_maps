@@ -4078,6 +4078,10 @@ var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
 var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
 var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 
+// finalise layers (include 'mapped area' as zeros)
+geo = geo.where(geo.lte(2), 0)
+benthic = benthic.unmask(0).updateMask(geo.gte(0))
+
 // check before export
 Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
@@ -4087,8 +4091,8 @@ Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf',
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
-                    .addBands(geo.where(geo.lte(2), 0).rename('geomorphic'))
-                    .addBands(benthic.where(geo.lte(2), 0).rename('benthic'))
+                    .addBands(geo.rename('geomorphic'))
+                    .addBands(benthic.rename('benthic'))
                     .toInt16()
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
