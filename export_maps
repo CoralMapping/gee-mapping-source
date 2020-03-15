@@ -2,7 +2,15 @@
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
     geo = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2"),
     benthic = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld-clean"),
-    pixels = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels_sld");
+    pixels = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels_sld"),
+    wmic_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[130.7551960728133, 19.915585821970126],
+          [130.7551960728133, 0.7075765650212411],
+          [163.4944538853133, 0.7075765650212411],
+          [163.4944538853133, 19.915585821970126]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
