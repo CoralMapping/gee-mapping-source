@@ -3,10 +3,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     geo = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_geo_sld-clean2"),
     benthic = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_benthic_sld-clean"),
     pixels = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels_sld"),
-    reef_boundary = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    reef_boundary = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
