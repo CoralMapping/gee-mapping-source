@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787600416741807]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-80.72399065220269, 22.708018942582775]),
     eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -20,19 +20,18 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    wmic_extent = 
+    ncari_extent = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[130.7551960728133, 19.915585821970126],
-          [130.7551960728133, 0.7075765650212411],
-          [163.4944538853133, 0.7075765650212411],
-          [163.4944538853133, 19.915585821970126]]], null, false);
+        [[[-89.58660080218672, 34.038156451192194],
+          [-89.58660080218672, 10.578615696271369],
+          [-61.94499923968672, 10.578615696271369],
+          [-61.94499923968672, 34.038156451192194]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - north caribbean & bahamas region
@@ -70,7 +69,7 @@ var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE 
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -87,7 +86,7 @@ var vars = {
   object data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
     */
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s'],
+  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p','b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -260,7 +259,7 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   
   Map.addLayer(export_geom, {}, "export footprint", true)
   
