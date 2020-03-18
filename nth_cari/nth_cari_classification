@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-80.72399065220269, 22.708018942582775]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.079294121145775]),
     eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -22,6 +22,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-80.72399065220269, 22.7
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     ncari_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -58,7 +59,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
