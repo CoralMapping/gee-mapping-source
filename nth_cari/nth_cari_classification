@@ -22,17 +22,16 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     ncari_extent = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[-89.58660080218672, 34.038156451192194],
-          [-89.58660080218672, 10.578615696271369],
-          [-61.94499923968672, 10.578615696271369],
-          [-61.94499923968672, 34.038156451192194]]], null, false);
+        [[[-85.98308517718672, 29.977841924871946],
+          [-85.98308517718672, 16.51411805544282],
+          [-70.33855392718672, 16.51411805544282],
+          [-70.33855392718672, 29.977841924871946]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - north caribbean & bahamas region
