@@ -22,6 +22,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     ncari_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
