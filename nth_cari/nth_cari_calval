@@ -48,7 +48,7 @@ var vars = {
   slope_fix: true, //slope is tempermental for noisy depth products - if this is true, slope is unamsked to 0 - DON'T USE SLOPE IN CLASSIFICATION IN THIS INSTANCE
   
   // class information for classification, sampling and reporting
-  train_size: 3000,
+  train_size: 2000,
   local_epsg: region_params.epsg,
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
