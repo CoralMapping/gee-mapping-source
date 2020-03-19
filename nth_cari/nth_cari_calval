@@ -45,6 +45,7 @@ var vars = {
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
   class_field: 'class_num', // the field in the training data that stores the class integer
+  slope_fix: true, //slope is tempermental for noisy depth products - if this is true, slope is unamsked to 0 - DON'T USE SLOPE IN CLASSIFICATION IN THIS INSTANCE
   
   // class information for classification, sampling and reporting
   train_size: 2000,
