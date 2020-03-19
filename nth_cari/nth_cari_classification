@@ -136,7 +136,7 @@ var vars = {
 if (vars.test_mode) {
   vars.rf_trees = 10
   vars.trim_training_data = true
-  vars.trim_training_perc = 0.1
+  vars.trim_training_perc = 0.2
 }
 
 
