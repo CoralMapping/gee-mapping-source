@@ -92,7 +92,7 @@ var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^
 
 if (vars.slope_fix) {
   pixsegs = pixsegs.addBands({
-    srcImg: ee.Image([pixsegs.select('slope_p').unmask(0),pixsegs.select('slope_s').unmask(0)]),
+    srcImg: ee.Image([pixsegs.select('slope_p').unmask(0),pixsegs.select('slope_s').unmask(0)]).updateMask(pixsegs.select('depth_p')),
     overwrite: true})
 }
 
