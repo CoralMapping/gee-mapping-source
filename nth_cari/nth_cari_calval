@@ -90,6 +90,11 @@ var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^
                 // test remoing depth from classification
                 //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
 
+if (vars.slope_fix) {
+  pixsegs = pixsegs.addBands({
+    srcImg: ee.Image([pixsegs.select('slope_p').unmask(0),pixsegs.select('slope_s').unmask(0)]),
+    overwrite: true})
+}
 
 // training data
 var geomorph = ee.FeatureCollection(region_params.geo_train)
