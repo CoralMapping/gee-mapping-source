@@ -36,10 +36,10 @@ var vars = {
   Should be one of:
   'train' OR 'val'
   */
-  export_type: 'val',
+  export_type: 'train',
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
