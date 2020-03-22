@@ -6,7 +6,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     high_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     low_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]);
+    ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
+    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -28,9 +29,9 @@ Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9
 Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
 Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 
-// east africa
-/*Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
-Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - RAW", false)*/
+// nth cari
+//Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
+Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
