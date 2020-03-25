@@ -9,7 +9,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
-    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels");
+    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
+    geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -48,6 +49,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 
 // #############
 // example confidence layers
