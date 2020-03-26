@@ -10,7 +10,18 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
-    geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training");
+    geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
+    RB_annotationsToDiscuss = /* color: #0ad628 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.LineString(
+                [[-83.2045100405349, 21.62961514243942],
+                 [-83.18845970178978, 21.628976844920345],
+                 [-83.16614372278588, 21.60168699010823],
+                 [-83.17541343714134, 21.59649973947855],
+                 [-83.20511085535423, 21.62961514243942]]),
+            {
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
