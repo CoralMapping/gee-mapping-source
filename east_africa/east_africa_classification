@@ -1,7 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.079294121145775]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([-77.14244768345269, 24.079294121145775]),
     eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -59,7 +63,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -121,10 +125,10 @@ var vars = {
   to test (in real-time in the map viewer)
   whether classification output is working
   */
-  test_mode: false,
+  test_mode: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
