@@ -112,7 +112,7 @@ var vars = {
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
-  show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
+  show_eg_area: true, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   /*
   Use test mode?
