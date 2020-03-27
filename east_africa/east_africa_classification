@@ -3,6 +3,7 @@ var rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"ma
     map_centre = /* color: #98ff00 */ee.Geometry.Point([41.74464016557656, -15.761113939339115]),
     east_africa_extent = 
     /* color: #0b4a8b */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -13,7 +14,10 @@ var rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"ma
           [30.58253079057656, -30.572237471480907],
           [51.017101103076556, -30.572237471480907],
           [51.017101103076556, -1.110150033997842]]], null, false),
-    eg_area = /* color: #ffc82d */ee.Geometry.Polygon(
+    eg_area = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[39.30567800403558, -2.14380791283709],
           [38.07520925403558, -5.213271852184973],
           [37.19630300403558, -7.745607660192833],
