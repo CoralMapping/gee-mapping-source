@@ -273,7 +273,7 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: east_africa_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   
   Map.addLayer(export_geom, {}, "export footprint", true)
   
