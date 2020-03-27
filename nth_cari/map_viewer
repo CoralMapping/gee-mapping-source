@@ -21,7 +21,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
                  [-83.20511085535423, 21.62961514243942]]),
             {
               "system:index": "0"
-            })]);
+            })]),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -61,6 +62,9 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
 Map.addLayer(geo_train, {}, "geomorphic training locations", false)
+
+// WCMC
+Map.addLayer(wcmc, {}, "WCMC layer", false)
 
 // #############
 // example confidence layers
