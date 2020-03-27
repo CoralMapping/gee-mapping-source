@@ -31,7 +31,8 @@ var eg_area =
         [[[30.58253079057656, -1.110150033997842],
           [30.58253079057656, -30.572237471480907],
           [51.017101103076556, -30.572237471480907],
-          [51.017101103076556, -1.110150033997842]]], null, false);
+          [51.017101103076556, -1.110150033997842]]], null, false),
+    eg_area1 = /* color: #ffc82d */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa region
