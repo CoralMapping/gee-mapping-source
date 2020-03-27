@@ -1,24 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var eg_area = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      },
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.MultiPolygon(
-        [[[[178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502]]],
-         [[[178.1896083331153, -19.126039427046837],
-           [178.1896083331153, -19.156203209515112],
-           [178.24265169859382, -19.156203209515112],
-           [178.24265169859382, -19.126039427046837]]]], null, false),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
+var rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     map_centre = /* color: #98ff00 */ee.Geometry.Point([41.74464016557656, -15.761113939339115]),
     east_africa_extent = 
     /* color: #0b4a8b */
@@ -32,7 +13,7 @@ var eg_area =
           [30.58253079057656, -30.572237471480907],
           [51.017101103076556, -30.572237471480907],
           [51.017101103076556, -1.110150033997842]]], null, false),
-    eg_area1 = /* color: #ffc82d */ee.Geometry.MultiPoint();
+    eg_area = /* color: #ffc82d */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa region
