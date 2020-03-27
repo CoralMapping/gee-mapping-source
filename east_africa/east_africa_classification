@@ -134,10 +134,10 @@ var vars = {
   to test (in real-time in the map viewer)
   whether classification output is working
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
