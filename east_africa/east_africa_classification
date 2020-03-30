@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     map_centre = /* color: #98ff00 */ee.Geometry.Point([41.74464016557656, -15.761113939339115]),
-    east_africa_extent = 
+    region_extent = 
     /* color: #0b4a8b */
     /* shown: false */
     /* displayProperties: [
@@ -273,7 +273,7 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: east_africa_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   
   Map.addLayer(export_geom, {}, "export footprint", true)
   
