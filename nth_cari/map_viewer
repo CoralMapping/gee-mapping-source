@@ -739,7 +739,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choose where to centre (link this dynamically to map app?)
-var centre_map = ncab
+//var centre_map = ncab
 //Map.centerObject(centre_map, 10)
 
 
