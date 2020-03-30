@@ -574,7 +574,7 @@ var places = {
 var select = ui.Select({
   items: Object.keys(places),
   onChange: function(key) {
-    Map.setCenter(places[key][0], places[key][1], 10);
+    Map.setCenter(places[key][0], places[key][1], 7);
   }
 });
 
