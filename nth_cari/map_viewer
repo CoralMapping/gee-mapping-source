@@ -829,8 +829,8 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 // })
 
 var places = {
-  poly_splitBahamas_poly1: [-76.54718473709681, 24.115946758898467],
-  restOfNorthCari_poly2: [-81.07355192459681, 22.420447181024812],
+  bahamas: [-76.54718473709681, 24.115946758898467],
+  restOfNorthCari: [-81.07355192459681, 22.420447181024812],
   floridaRefined: [-82.83136442459681, 27.322266117392424]
 };
 
