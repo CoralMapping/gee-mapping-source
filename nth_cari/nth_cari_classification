@@ -20,7 +20,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    ncari_extent = 
+    region_extent = 
     /* color: #d63000 */
     /* shown: false */
     /* displayProperties: [
@@ -200,7 +200,7 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 var region_dic = ee.Dictionary({bahamas: bahamas, caribbean: caribbean}) // <- include all splits here
-var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region)))
+var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
 
 if (region_idx > -1) {
   subregion_clip = region.dic.get(vars.split_region)
@@ -344,7 +344,7 @@ if (vars.do_export) {
   if (region_idx > -1) {
     var export_geom = subregion_clip
   } else {
-    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
