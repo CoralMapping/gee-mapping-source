@@ -727,8 +727,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-85.415661670299, 29.908250254810213],
           [-85.46508675158945, 29.907191185515885],
           [-85.47131214294, 29.907078445032827],
-          [-85.47134030799383, 29.907083601901718]]]),
-    geometry = /* color: #00ff00 */ee.Geometry.Point([-81.8586499614054, 25.137776215272638]);
+          [-85.47134030799383, 29.907083601901718]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
