@@ -105,7 +105,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-77.87841347732181, 27.375099738773045],
           [-78.20800332107181, 27.37022161752178],
           [-78.21898964919681, 27.531085935309363]]]),
-    restOfNorthCari = /* color: #98ff00 */ee.Geometry.Polygon(
+    floridaRefined = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[-85.92040566482181, 29.97833876962857],
           [-85.92040566482181, 29.70674846276091],
           [-85.76110390700931, 29.697205579770436],
@@ -394,7 +394,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-84.7290161624865, 29.908250254810213],
           [-85.415661670299, 29.908250254810213],
           [-85.789196826549, 29.922534065572343]]]),
-    floridaRefined = /* color: #ef3dff */ee.Geometry.Polygon(
+    restOfNorthCari = /* color: #ef3dff */ee.Geometry.Polygon(
         [[[-85.47133950271244, 29.907088075303662],
           [-85.47132877387638, 29.90709737543468],
           [-85.47132877387638, 29.907097375434653],
@@ -733,7 +733,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 
 
           
-Map.addLayer(floridaRefined)
+Map.addLayer(restOfNorthCari)
 // imports
 var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
