@@ -760,7 +760,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 //var centre_map = ncab
 //Map.centerObject(centre_map, 10)
 var everythingElseButBahamas =floridaRefined.difference(clipWestFlori, ee.ErrorMargin(1));
-Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'diff1');
+Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'everythingElseButBahamas');
 
 
 // add some background data
