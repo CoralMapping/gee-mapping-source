@@ -6,10 +6,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     high_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     low_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    ncab = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
+    ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
@@ -831,3 +828,20 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
+var places = {
+  poly_splitBahamas_poly1: [-76.54718473709681, 24.115946758898467, 1],
+  restOfNorthCari_poly2: [-81.07355192459681, 22.420447181024812, 1],
+  floridaRefined: [-82.83136442459681, 27.322266117392424, 1]
+};
+
+var select = ui.Select({
+  items: Object.keys(places),
+  onChange: function(key) {
+    Map.setCenter(places[key][0], places[key][1]);
+  }
+});
+
+// Set a place holder.
+select.setPlaceholder('Choose a split...');
+
+print(select);
