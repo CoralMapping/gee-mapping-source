@@ -400,7 +400,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-84.7290161624865, 29.908250254810213],
           [-85.415661670299, 29.908250254810213],
           [-85.789196826549, 29.922534065572343]]]),
-    floridaRefined = /* color: #ef3dff */ee.Geometry.Polygon(
+    floridaRefined = 
+    /* color: #ef3dff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-85.47133950271244, 29.907088075303662],
           [-85.47132877387638, 29.90709737543468],
           [-85.47132877387638, 29.907097375434653],
@@ -734,7 +737,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-85.46508675158945, 29.907191185515885],
           [-85.47131214294, 29.907078445032827],
           [-85.47134030799383, 29.907083601901718]]]),
-    clipWestFlori = /* color: #516ad6 */ee.Geometry.Polygon(
+    clipWestFlori = 
+    /* color: #516ad6 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-81.88456494808199, 27.686438741723514],
           [-82.45585401058199, 28.26857738163213],
           [-82.34599072933199, 29.135841228878046],
@@ -756,8 +762,8 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 // choose where to centre (link this dynamically to map app?)
 //var centre_map = ncab
 //Map.centerObject(centre_map, 10)
-//var diff1 =clipWestFlori.difference(floridaRefined, ee.ErrorMargin(1));
-//Map.addLayer(diff1, {color: 'FFFF00'}, 'diff1');
+var everythingElseButBahamas =floridaRefined.difference(clipWestFlori, ee.ErrorMargin(1));
+Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'diff1');
 
 
 // add some background data
@@ -847,8 +853,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 var places = {
   bahamas: [-76.54718473709681, 24.115946758898467],
-  restOfNorthCari: [-81.8586499614054, 25.137776215272638],
-  floridaRefined: [-81.07355192459681, 22.420447181024812],
+  everythingElseButBahamas: [-81.07355192459681, 22.420447181024812],
 };
 
 var select = ui.Select({
