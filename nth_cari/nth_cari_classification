@@ -520,7 +520,7 @@ var vars = {
   object data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
     */
-  input_bands: ['depth_stdDev_p', 'depth_s', 'rg_s', 'gb_s'],
+  input_bands: ['depth_stdDev_p', 'depth_s', 'rg_s'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -546,7 +546,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' (or any string that is not a sub-region)
-  split_region: 'bahamas', 
+  split_region: 'none', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
