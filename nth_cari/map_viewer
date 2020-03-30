@@ -567,8 +567,8 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 // })
 
 var places = {
-  bahamas: [-76.54718473709681, 24.115946758898467],
-  everythingElseButBahamas: [-81.07355192459681, 22.420447181024812],
+  bahamas_BluePoly: [-76.54718473709681, 24.115946758898467],
+  everythingElseButBahamas_yellowPoly: [-81.07355192459681, 22.420447181024812],
 };
 
 var select = ui.Select({
