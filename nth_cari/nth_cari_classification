@@ -32,7 +32,63 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
         [[[-85.98308517718672, 29.977841924871946],
           [-85.98308517718672, 16.51411805544282],
           [-70.33855392718672, 16.51411805544282],
-          [-70.33855392718672, 29.977841924871946]]], null, false);
+          [-70.33855392718672, 29.977841924871946]]], null, false),
+    bahamas = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[-83.13294571684324, 24.970918291047816],
+          [-83.59785865947877, 24.559976686509692],
+          [-80.48872780010377, 23.445974326192655],
+          [-79.45601295635377, 23.123046023422937],
+          [-78.57710670635377, 22.738557476432998],
+          [-77.91792701885377, 22.51546228942888],
+          [-77.61030983135377, 22.210660879130547],
+          [-76.46773170635377, 21.660351181705895],
+          [-74.18257545635377, 20.656289024274205],
+          [-71.12837623760377, 20.450549238411714],
+          [-70.13960670635377, 20.162050606841838],
+          [-68.88716530010377, 19.417758605711274],
+          [-68.05220436260377, 19.624854549563434],
+          [-68.49165748760377, 21.47644422847084],
+          [-75.52290748760377, 25.63445708440291],
+          [-77.21480201885377, 27.4233298038994],
+          [-79.96909780900535, 27.624729542512103],
+          [-80.41153059243044, 28.58496559512943],
+          [-81.15456023131104, 30.239913137495215],
+          [-85.48957332068215, 30.1838689551361],
+          [-85.64131569072877, 29.557080914173955],
+          [-84.89038116740669, 29.46813287853176],
+          [-83.93812847399992, 29.80139499443965],
+          [-83.0789281651522, 28.815210030228403],
+          [-83.17336000590824, 28.24526978115051],
+          [-82.83980201885377, 27.23789093364772],
+          [-81.41157936260377, 25.05859415544099]]]),
+    caribbean = /* color: #0b4a8b */ee.Geometry.Polygon(
+        [[[-85.31570111732977, 21.71372888937999],
+          [-84.68367789930886, 20.717002139051697],
+          [-82.66219352430886, 17.56227184050665],
+          [-75.98250602430886, 16.68032806153099],
+          [-71.93953727430886, 16.76450178324257],
+          [-69.21492789930886, 17.016798878132406],
+          [-64.29305289930886, 16.76450178324257],
+          [-63.54598258680886, 18.481623847910917],
+          [-66.33650993055886, 19.147175030435292],
+          [-67.91854118055886, 19.167930835325677],
+          [-69.20394157118386, 19.44787744813654],
+          [-70.23665641493386, 19.954693212970003],
+          [-72.63899635479127, 20.257417608575057],
+          [-74.42976783916627, 20.607450924988996],
+          [-75.38557838604127, 21.02848189221677],
+          [-76.05574440166627, 21.346036014599175],
+          [-76.90169166729127, 21.713946676482358],
+          [-77.46199440166627, 21.968888847986857],
+          [-77.54439186260377, 22.154708435657763],
+          [-77.74214576885377, 22.304712399820232],
+          [-78.01680397197877, 22.505313008152807],
+          [-78.35738014385377, 22.616914072824592],
+          [-79.07149147197877, 22.839844391751853],
+          [-80.18111061260377, 23.244235885385596],
+          [-81.38960670635377, 23.587008338894],
+          [-83.78462623760377, 23.203851465160604],
+          [-85.21284889385377, 22.39362180655535]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - north caribbean & bahamas region
@@ -110,6 +166,10 @@ var vars = {
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.80,
+  // split into sub-regions
+  // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
+  // set to 'none' (or any string that is not a sub-region)
+  split_region: 'bahamas', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -130,6 +190,13 @@ var vars = {
   benthic_output_name: region_params.sname + '_' + 'benthic',
   asset_output: region_params.asset, // asset path
 
+}
+
+// dictionary to control sub-region geometries (add new ones)
+var region_dic = ee.Dictionary({bahamas: bahamas, caribbean: caribbean}) // <- include all splits here
+
+if (vars.split_region.indexOf(region_dic.keys()).gt(0)) {
+  subregion_clip = region.dic.get(vars.split_region)
 }
 
 // if running in test mode, over-write the trianing params
@@ -164,6 +231,13 @@ var training_data = (vars.geomorphic) ? geomorph : benthic // Set the training p
 if (vars.trim_training_data) {
   training_data = training_data.randomColumn("random")
   training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
+}
+
+
+// trim the image and training data to sub-region, if desired
+if (vars.split_region.indexOf(region_dic.keys()).gt(0)) {
+  pixsegs = pixsegs.clip(subregion_clip)
+  training_data = training_data.filterBounds(subregion_clip)
 }
 
 print("Number of training samples:", training_data.size())
