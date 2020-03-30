@@ -394,7 +394,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-84.7290161624865, 29.908250254810213],
           [-85.415661670299, 29.908250254810213],
           [-85.789196826549, 29.922534065572343]]]),
-    floridaRefined = /* color: #ffffff */ee.Geometry.Polygon(
+    floridaRefined = /* color: #ef3dff */ee.Geometry.Polygon(
         [[[-85.47133950271244, 29.907088075303662],
           [-85.47132877387638, 29.90709737543468],
           [-85.47132877387638, 29.907097375434653],
@@ -829,9 +829,9 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 // })
 
 var places = {
-  poly_splitBahamas_poly1: [-76.54718473709681, 24.115946758898467, 12],
-  restOfNorthCari_poly2: [-81.07355192459681, 22.420447181024812, 12],
-  floridaRefined: [-82.83136442459681, 27.322266117392424, 12]
+  poly_splitBahamas_poly1: [-76.54718473709681, 24.115946758898467, 20],
+  restOfNorthCari_poly2: [-81.07355192459681, 22.420447181024812, 20],
+  floridaRefined: [-82.83136442459681, 27.322266117392424, 20]
 };
 
 var select = ui.Select({
