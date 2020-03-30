@@ -33,7 +33,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
           [-85.98308517718672, 16.51411805544282],
           [-70.33855392718672, 16.51411805544282],
           [-70.33855392718672, 29.977841924871946]]], null, false),
-    bahamas = /* color: #98ff00 */ee.Geometry.Polygon(
+    bahamas = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-83.13294571684324, 24.970918291047816],
           [-83.59785865947877, 24.559976686509692],
           [-80.48872780010377, 23.445974326192655],
@@ -61,7 +64,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.0
           [-83.17336000590824, 28.24526978115051],
           [-82.83980201885377, 27.23789093364772],
           [-81.41157936260377, 25.05859415544099]]]),
-    caribbean = /* color: #0b4a8b */ee.Geometry.Polygon(
+    caribbean = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-85.31570111732977, 21.71372888937999],
           [-84.68367789930886, 20.717002139051697],
           [-82.66219352430886, 17.56227184050665],
@@ -169,7 +175,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' (or any string that is not a sub-region)
-  split_region: 'bahamas', 
+  split_region: 'caribbean', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -195,7 +201,7 @@ var vars = {
 // dictionary to control sub-region geometries (add new ones)
 var region_dic = ee.Dictionary({bahamas: bahamas, caribbean: caribbean}) // <- include all splits here
 
-if (vars.split_region.indexOf(region_dic.keys()).gt(0)) {
+if (region_dic.keys().indexOf(vars.split_region) > -1) {
   subregion_clip = region.dic.get(vars.split_region)
 }
 
@@ -235,7 +241,7 @@ if (vars.trim_training_data) {
 
 
 // trim the image and training data to sub-region, if desired
-if (vars.split_region.indexOf(region_dic.keys()).gt(0)) {
+if (region_dic.keys().indexOf(vars.split_region) > -1) {
   pixsegs = pixsegs.clip(subregion_clip)
   training_data = training_data.filterBounds(subregion_clip)
 }
@@ -334,8 +340,11 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-  
+  if (region_dic.keys().indexOf(vars.split_region) > -1) {
+    var export_geom = subregion_clip
+  } else {
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
   Export.image.toAsset({
