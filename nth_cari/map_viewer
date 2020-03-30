@@ -764,7 +764,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 //Map.centerObject(centre_map, 10)
 var everythingElseButBahamas =floridaRefined.difference(clipWestFlori, ee.ErrorMargin(1));
 Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'everythingElseButBahamas');
-Map.addLayer(bahamas,{color: 'acac00'}, 'Bahamas' )
+Map.addLayer(bahamas,{color: '0f0fff'}, 'Bahamas' )
 
 // add some background data
 //Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
