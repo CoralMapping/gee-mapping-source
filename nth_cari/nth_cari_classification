@@ -200,8 +200,9 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 var region_dic = ee.Dictionary({bahamas: bahamas, caribbean: caribbean}) // <- include all splits here
+var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region)))
 
-if (region_dic.keys().indexOf(vars.split_region) > -1) {
+if (region_idx > -1) {
   subregion_clip = region.dic.get(vars.split_region)
 }
 
@@ -241,7 +242,7 @@ if (vars.trim_training_data) {
 
 
 // trim the image and training data to sub-region, if desired
-if (region_dic.keys().indexOf(vars.split_region) > -1) {
+if (region_idx > -1) {
   pixsegs = pixsegs.clip(subregion_clip)
   training_data = training_data.filterBounds(subregion_clip)
 }
@@ -340,7 +341,7 @@ if (vars.do_export) {
   //export_classification() // export if wanted
   
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  if (region_dic.keys().indexOf(vars.split_region) > -1) {
+  if (region_idx > -1) {
     var export_geom = subregion_clip
   } else {
     var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: ncari_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
