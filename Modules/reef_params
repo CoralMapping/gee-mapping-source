@@ -114,6 +114,7 @@ var gbr_eomap = {
   sname: "gbr",
   tide: "anytide",
   asset: "projects/coral_atlas/gbr_eomap/",
+  epsg: "EPSG:4326",
   image: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_ssr",
   rrb: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_sfr",
   depth: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth",
