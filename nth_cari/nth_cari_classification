@@ -203,7 +203,7 @@ var region_dic = ee.Dictionary({bahamas: bahamas, caribbean: caribbean}) // <- i
 var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
 
 if (region_idx > -1) {
-  subregion_clip = region.dic.get(vars.split_region)
+  var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
 }
 
 // if running in test mode, over-write the trianing params
@@ -243,8 +243,8 @@ if (vars.trim_training_data) {
 
 // trim the image and training data to sub-region, if desired
 if (region_idx > -1) {
-  pixsegs = pixsegs.clip(subregion_clip)
-  training_data = training_data.filterBounds(subregion_clip)
+  pixsegs = ee.Image(pixsegs.clip(subregion_clip))
+  training_data = ee.FeatureCollection(training_data.filterBounds(subregion_clip))
 }
 
 print("Number of training samples:", training_data.size())
