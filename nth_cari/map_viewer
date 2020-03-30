@@ -400,10 +400,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-84.7290161624865, 29.908250254810213],
           [-85.415661670299, 29.908250254810213],
           [-85.789196826549, 29.922534065572343]]]),
-    floridaRefined = 
-    /* color: #ef3dff */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    floridaRefined = /* color: #ef3dff */ee.Geometry.Polygon(
         [[[-85.47133950271244, 29.907088075303662],
           [-85.47132877387638, 29.90709737543468],
           [-85.47132877387638, 29.907097375434653],
@@ -737,10 +734,18 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-85.46508675158945, 29.907191185515885],
           [-85.47131214294, 29.907078445032827],
           [-85.47134030799383, 29.907083601901718]]]),
-    clipWestFlori = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPoint();
+    clipWestFlori = /* color: #516ad6 */ee.Geometry.Polygon(
+        [[[-81.88456494808199, 27.686438741723514],
+          [-82.45585401058199, 28.26857738163213],
+          [-82.34599072933199, 29.135841228878046],
+          [-83.13700635433199, 29.900655091169604],
+          [-85.07060010433199, 30.166968177621744],
+          [-85.66386182308199, 29.862552012150267],
+          [-85.64188916683199, 29.49984846966519],
+          [-83.29081494808199, 28.982187416057798],
+          [-83.26884229183199, 28.249223488196193],
+          [-82.03837354183199, 25.604866468889778],
+          [-81.42313916683199, 26.178108838339305]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -751,8 +756,8 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 // choose where to centre (link this dynamically to map app?)
 //var centre_map = ncab
 //Map.centerObject(centre_map, 10)
-var diff1 =clipWestFlori.difference(floridaRefined, ee.ErrorMargin(1));
-Map.addLayer(diff1, {color: 'FFFF00'}, 'diff1');
+//var diff1 =clipWestFlori.difference(floridaRefined, ee.ErrorMargin(1));
+//Map.addLayer(diff1, {color: 'FFFF00'}, 'diff1');
 
 
 // add some background data
