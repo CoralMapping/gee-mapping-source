@@ -830,8 +830,8 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 var places = {
   bahamas: [-76.54718473709681, 24.115946758898467],
+  restOfNorthCari: [-81.8586499614054, 25.137776215272638],
   floridaRefined: [-81.07355192459681, 22.420447181024812],
-  restOfNorthCari: [-81.8586499614054, 25.137776215272638]
 };
 
 var select = ui.Select({
