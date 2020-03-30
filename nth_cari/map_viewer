@@ -506,6 +506,12 @@ Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 // WCMC
 Map.addLayer(wcmc, {}, "WCMC layer", false)
 
+
+//splitting North Cari regions
+var everythingElseButBahamas =floridaRefined.difference(diffWestFlori, ee.ErrorMargin(1));
+Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'everythingElseButBahamas');
+Map.addLayer(bahamas,{color: '0f0fff'}, 'Bahamas' )
+
 // #############
 // example confidence layers
 
