@@ -633,7 +633,7 @@ var vars = {
             : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
   obia_2nd_pass: true,
   obia_clean: true, // run object-based relationship rules + small object clean up
-  fast_clean: false, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
+  fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
