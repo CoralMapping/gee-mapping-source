@@ -683,7 +683,7 @@ if (vars.obia_2nd_pass) {
   
   var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
-  if (region_params.geo_map.length() > 1) {
+  if (ee.List(region_params.geo_map).length() > 1) {
     var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
              .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
              .selfMask().clip(reef_boundary)
