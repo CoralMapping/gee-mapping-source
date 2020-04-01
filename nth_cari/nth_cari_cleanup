@@ -683,7 +683,8 @@ if (vars.obia_2nd_pass) {
   
   var geo_map = ee.Image(region_params.geo_map_clean)
 } else {
-  if (ee.List(region_params.geo_map).length() > 1) {
+  //print(ee.List(region_params.geo_map).length())
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
              .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
              .selfMask().clip(reef_boundary)
@@ -703,7 +704,13 @@ var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false)
 Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false)
 
-if (vars.geomorphic) Map.addLayer(ee.Image(region_params.geo_map), display_pal, 'Raw GEO classification', false)
+if (vars.geomorphic) {
+  if (vars.obia_2nd_pass) {
+    print("PLEASE FIX RAW CLASSIFICATION DISPLAY FOR A TWO PART MAP")
+  } else {
+    Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
+  }
+}
 if (!vars.geomorphic) {
   Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
   Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
