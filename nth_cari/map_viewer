@@ -595,6 +595,13 @@ var everythingElseButBahamas =floridaRefined.difference(diffWestFlori, ee.ErrorM
 Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'everythingElseButBahamas');
 Map.addLayer(bahamas,{color: '0f0fff'}, 'Bahamas' )
 
+//refining bahamas
+var bahamasRefined =bahamas.difference(diffBahamas, ee.ErrorMargin(1));
+Map.addLayer(bahamasRefined, {color: '00FF00'}, 'bahamasRefined');
+
+
+
+
 // #############
 // example confidence layers
 
@@ -652,6 +659,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 var places = {
   bahamas_BluePoly: [-76.54718473709681, 24.115946758898467],
   everythingElseButBahamas_yellowPoly: [-81.07355192459681, 22.420447181024812],
+  bahamasRefined:[-76.54718473709681, 24.115946758898467]
 };
 
 var select = ui.Select({
