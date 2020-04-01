@@ -588,13 +588,7 @@ var eg_area =
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-bahamas = /* color: #d63000 */geometry,
-    floridaRefined = /* color: #ef3dff *//* color: #ef3dff */
-fl_cari_extent,
-    diffWestFlori = /* color: #516ad6 *//* color: #516ad6 */
-flor_cut,
-    diffBahamas = /* color: #d63000 *//* color: #d63000 */
-baha_cut
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
