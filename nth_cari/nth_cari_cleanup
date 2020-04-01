@@ -1222,6 +1222,7 @@ if (vars.obia_clean) {
     })*/
   
   } else if (vars.geomorphic && vars.fast_clean) {
+    print("Executing the fast version OBIA")
     
     /* fast version of the geo clean up
       - blanket version assigns the underlying most common in neighbourhood
