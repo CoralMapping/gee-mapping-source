@@ -494,7 +494,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry.Polygon(
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-79.07473582066122, 25.251896209960623],
           [-79.05825632847372, 25.035585789249854],
           [-79.07408764564498, 24.841327386241993],
@@ -648,6 +651,14 @@ var vars = {
   asset_output: region_params.asset, // asset path
 
 }
+
+/*
+############################
+MANUAL ADDITION
+############################
+*/
+reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 /* TRIAL #######
     Looks like with the sentinel/ls8 depth we can try to retain full resolution,
