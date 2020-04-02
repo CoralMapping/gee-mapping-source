@@ -660,12 +660,22 @@ var vars = {
 MANUAL ADDITION
 ############################
 */
+
+// This can be hand drawn or imported from elsewhere, or could just be a big box
+reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
+
 if (vars.manual_clean) {
-
-  reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
-  Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
-
-
+  
+  obia_2nd_pass: true,
+  obia_clean: false,
+  fast_clean: false,
+  smooth_output: false,
+  
+  print("Doing manual clean ups - make sure this is what you want to do")
+  print("Only export the manual map")
+  
+  
 
 }
 
