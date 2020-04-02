@@ -546,7 +546,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' (or any string that is not a sub-region)
-  split_region: 'bahamas', 
+  split_region: 'nthcari', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -559,7 +559,7 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
   do_export: true, // export the results?
