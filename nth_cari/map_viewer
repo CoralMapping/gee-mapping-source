@@ -593,12 +593,12 @@ Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 Map.addLayer(wcmc, {}, "WCMC layer", false)
 
 
-//splitting North Cari regions
+//splitting North Cari regions (RB)
 var everythingElseButBahamas =floridaRefined.difference(diffWestFlori, ee.ErrorMargin(1));
 Map.addLayer(everythingElseButBahamas, {color: 'FFFF00'}, 'everythingElseButBahamas');
 Map.addLayer(bahamas,{color: '0f0fff'}, 'Bahamas' )
 
-//refining bahamas
+//refining bahamas (RB)
 var bahamasRefined =bahamas.difference(diffBahamas, ee.ErrorMargin(1));
 Map.addLayer(bahamasRefined, {color: '00FF00'}, 'bahamasRefined');
 
