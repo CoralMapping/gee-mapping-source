@@ -637,7 +637,10 @@ var vars = {
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
-    // results/layers to show
+  // apply any manual touch ups
+  manual_clean: true,
+  
+  // results/layers to show
   export_small_area: false,
   show_eg_area: false, // contrain the map add toe the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
@@ -657,8 +660,15 @@ var vars = {
 MANUAL ADDITION
 ############################
 */
-reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
-Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
+if (vars.manual_clean) {
+
+  reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+  Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
+
+
+
+}
+
 
 /* TRIAL #######
     Looks like with the sentinel/ls8 depth we can try to retain full resolution,
