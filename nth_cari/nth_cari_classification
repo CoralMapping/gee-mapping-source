@@ -520,7 +520,7 @@ var vars = {
   object data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
     */
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s'],
+  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -535,7 +535,7 @@ var vars = {
   // classification params
   rf_trees: 15, // number of random forest trees (per class)
   rf_minLeafPop: 1, // minimum leaf population for random forest
-  rf_varPerSplit: 0, // default sqrt(n(k))
+  rf_varPerSplit: null, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
 
   // class information for classification, sampling and reporting
@@ -677,13 +677,34 @@ training_data = training_data.filter(ee.Filter.notNull(vars.input_bands))
 print('Number of sampels after null filter', training_data.size())
 
 // parameterise and train the classifier (random forest in this case)
-var rf_classifier = ee.Classifier.randomForest({
+var rf_classifier = ee.Classifier.smileRandomForest({
   numberOfTrees: vars.rf_trees,
   minLeafPopulation: vars.rf_minLeafPop,
   variablesPerSplit: vars.rf_varPerSplit,
   seed: vars.set_seed
 }).train(training_data, vars.class_field, vars.input_bands)
 // fit the classificaiton model
+
+// print some stats in test mode
+if (vars.test_mode) {
+  
+  var rf_dic = rf_classifier.explain()
+  print(rf_dic)
+  
+  var chart =
+    ui.Chart.feature.byProperty(ee.Feature(null, ee.Dictionary(rf_dic).get('importance')))
+    .setChartType('ColumnChart')
+    .setOptions({
+    title: 'Random Forest Variable Importance',
+    legend: {position: 'none'},
+    hAxis: {title: 'Bands'},
+    vAxis: {title: 'Importance'}
+    })
+   
+  print(chart);
+
+}
+
 var raw_classification = pixsegs.classify(rf_classifier).toUint8()
 
 
