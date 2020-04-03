@@ -493,7 +493,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-79.29378948462767, 25.61549193911499],
            [-79.21139012823052, 25.42215643006412],
            [-79.15031544744708, 25.23347934007564],
@@ -915,11 +918,29 @@ if (vars.manual_clean) {
   
   var man_geo = ee.Image(region_params.geo_map_clean)
   
+  // deep -> plateau
   man_geo = man_geo.where({
-    test: baha_img.eq(1).and(man_geo.eq(2)),
+    test: baha_img.eq(1)
+                  .and(man_geo.eq(2)),
     value: ee.Image(23)
   })
-
+  
+  // slope -> shallow lagoon
+  man_geo = man_geo.where({
+    test: baha_img.eq(1)
+                  .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(21)
+  })
+  
+  // reef crest -> TRF
+  man_geo = man_geo.where({
+    test: baha_img.eq(1)
+                  .and(man_geo.eq(15)),
+    value: ee.Image(16)
+  })
+  
+   Map.addLayer(man_geo, display_pal, 'Manually cleaned GEO', false)
+  
 }
 /*
 ############################
