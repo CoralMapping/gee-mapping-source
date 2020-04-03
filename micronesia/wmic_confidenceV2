@@ -255,6 +255,7 @@ print('HtMareas',HtMareas);
 Map.addLayer(HtMareas,{},'HtMareas',false);
 
 //7.2 creation of zones around HtMareas in order to be used for the voting system of confidence layer
+//not trustworthy=10, trustworthy=0
 function zones (img) {
   var dist=img.fastDistanceTransform(300).sqrt().multiply(ee.Image.pixelArea().sqrt());
   var img_zones=dist.expression(
@@ -276,27 +277,11 @@ Map.addLayer(HtMzones,{},'HtMzones',false);
 var qaqc=ee.FeatureCollection(region_params.QAQC);
 print('qaqc',qaqc)
 
+//set qaqc polygons as not trustworthy=10
 function ft_zones (fc){
-  // var dif1000_500=qaqc.map(function (ft) {
-  //               var buf500=ft.buffer(500);
-  //               var buf1000=ft.buffer(1000);
-  //   return buf1000.difference(buf500).set('distScore',2);
-  // });
-  // var dif500_200=qaqc.map(function (ft) {
-  //               var buf200=ft.buffer(200);
-  //               var buf500=ft.buffer(500);
-  //   return buf500.difference(buf200).set('distScore',5);
-  // });
-  // var dif200_pol=qaqc.map(function (ft) {
-  //               var buf200=ft.buffer(200);
-  //   return buf200.difference(ft).set('distScore',8);
-  // });
-  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
-  // var buf2=ee.Image.constant(8).clip(dif200_pol).toUint8();
-  // var buf5=ee.Image.constant(5).clip(dif500_200).toUint8();
-  // var buf8=ee.Image.constant(2).clip(dif1000_500).toUint8();
   
-  var img=ee.ImageCollection.fromImages([qaqc_const/*,buf2,buf5,buf8*/]).mosaic();
+  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
+  var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
   return img;
 }
 var QAQCzones=ft_zones(qaqc);
@@ -307,7 +292,7 @@ Map.addLayer(QAQCzones,{},'QAQCzones',false);
 var prob=(vars.geomorphic) ? prob_geo.expression('100-img',{'img':prob_geo}) : prob_benthic.expression('100-img',{'img':prob_benthic}) ;
 print('prob',prob);
 // Map.addLayer(prob,{},'prob');
-var scaledprob=prob.divide(10).aside(print,'scaledprob')//.addBands(val_map);
+var scaledprob=prob.divide(10).round().aside(print,'scaledprob')//.addBands(val_map);
 
 //transformation of single image with bands to an image collection with the bands been the images
 
@@ -363,10 +348,23 @@ Map.addLayer(fprob,{},'fprob',false);
 var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
 
 var toMask=val_map.multiply(0);
-var confidence=union.updateMask(toMask.eq(0)).aside(print,'confidence');
+//clip area of interst according to val_map and transform the 
+//range of confidence values 
+//from high conf:0 , low conf=30 
+//to high conf:0 , low conf=100,
+//x=(ConfValue * 10)/3
 
-var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]};
-Map.addLayer(confidence,conf_str,'confidence',true);
+var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
+
+//remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
+var confidenceEXP=confidence.expression(
+  "(b(0) >= 90) ? 3"+
+    ":(b(0) >= 60) ? 2"+
+      ":(b(0) >= 30) ? 1"+
+      ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
+
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":3,"palette":["02818a","67a9cf","bdc9e1","f6eff7"]};
+Map.addLayer(confidenceEXP,conf_str,'confidence',true);
 
 //7.6 confidence legend
 
