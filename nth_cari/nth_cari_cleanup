@@ -923,7 +923,7 @@ if (vars.manual_clean) {
   man_geo = man_geo.where({
     test: baha_img.eq(1)
                   .and(man_geo.eq(2)),
-    value: ee.Image(23)
+    value: ee.Image(12)
   })
   
   // slope -> shallow lagoon
