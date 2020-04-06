@@ -2024,7 +2024,15 @@ if (vars.manual_clean) {
   // slope -> shallow lagoon
   man_geo = man_geo.where({
     test: baha_extent.eq(1)
-                     .and(depth.lt(1300).or(baha_img.eq(1)))
+                     .and(depth.lt(1300))
+                     .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(11)
+  })
+  
+  // slope -> shallow lagoon
+  man_geo = man_geo.where({
+    test: baha_extent.eq(1)
+                     .and(baha_img.eq(1))
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
   })
