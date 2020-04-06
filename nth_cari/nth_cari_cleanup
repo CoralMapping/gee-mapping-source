@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -913,17 +914,45 @@ if (vars.manual_clean) {
   print("Doing manual clean ups - make sure this is what you want to do")
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
   
+  var depth = ee.Image(region_params.pixels).select('depth')
+  Map.addLayer(depth.lt(1500), {}, "15m depth contour", false)
+  
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
+  var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
   var flor_img = ee.Image().byte().paint(ee.Feature(flor_cut, {zone: 1}), "zone").clip(flor_cut)
   
   var man_geo = ee.Image(region_params.geo_map_clean)
   
   //BAHAMAS clean
+  // deep -> deep lagoon
+  man_geo = man_geo.where({
+    test: baha_extent.eq(1)
+                     .and(depth.lt(1400))
+                     .and(man_geo.eq(2).or(man_geo.eq(23))),
+    value: ee.Image(12)
+  })
+  
+  // slope -> shallow lagoon
+  man_geo = man_geo.where({
+    test: baha_extent.eq(1)
+                     .and(depth.lt(1400))
+                     .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(11)
+  })
+  
+  // reef crest -> TRF
+  man_geo = man_geo.where({
+    test: baha_img.eq(1)
+                  .and(man_geo.eq(15)),
+    value: ee.Image(16)
+  })
+  
+/*  //BAHAMAS clean
   // deep -> plateau
   man_geo = man_geo.where({
     test: baha_img.eq(1)
                   .and(man_geo.eq(2)),
-    value: ee.Image(12)
+    value: ee.Image(23)
   })
   
   // slope -> shallow lagoon
@@ -938,7 +967,7 @@ if (vars.manual_clean) {
     test: baha_img.eq(1)
                   .and(man_geo.eq(15)),
     value: ee.Image(16)
-  })
+  })*/
   
   //FLORIDA CLEAN
   // remove
