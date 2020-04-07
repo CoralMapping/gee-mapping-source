@@ -1900,7 +1900,24 @@ var eg_area =
         }
       ],
       "coordinates": []
-    });
+    }),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    flor_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-85.74176953236804, 29.301352175756932],
+          [-84.15973828236804, 29.435393954992637],
+          [-83.34675000111804, 28.859691191651],
+          [-83.28083203236804, 28.04833102109194],
+          [-81.72077343861804, 25.180690862408717],
+          [-83.63239453236804, 25.061324895096977],
+          [-84.02790234486804, 24.462757252341],
+          [-82.48981640736804, 24.082182665495107],
+          [-81.17145703236804, 24.202487175151422],
+          [-79.54548046986804, 24.88205782430196],
+          [-79.54548046986804, 30.083931261534957],
+          [-86.02741406361804, 30.045898424650336]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -2001,6 +2018,8 @@ if (vars.manual_clean) {
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
   var flor_img = ee.Image().byte().paint(ee.Feature(flor_cut, {zone: 1}), "zone").clip(flor_cut)
+  var wcmc_buff = wcmc.buffer(1000)
+  var wcmc_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(flor_extent).aside(Map.addLayer)
   
   var man_geo = ee.Image(region_params.geo_map_clean)
   
@@ -2044,28 +2063,7 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
-/*  //BAHAMAS clean
-  // deep -> plateau
-  man_geo = man_geo.where({
-    test: baha_img.eq(1)
-                  .and(man_geo.eq(2)),
-    value: ee.Image(23)
-  })
-  
-  // slope -> shallow lagoon
-  man_geo = man_geo.where({
-    test: baha_img.eq(1)
-                  .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
-    value: ee.Image(11)
-  })
-  
-  // reef crest -> TRF
-  man_geo = man_geo.where({
-    test: baha_img.eq(1)
-                  .and(man_geo.eq(15)),
-    value: ee.Image(16)
-  })*/
-  
+
   //FLORIDA CLEAN
   // remove
   man_geo = man_geo.where({
