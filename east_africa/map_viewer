@@ -30,7 +30,7 @@ Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a
 Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 
 // east africa
-Map.addLayer(benthic, map_palettes.benthic, "W. Micronesia Benthic - RAW", false)
+Map.addLayer(benthic, map_palettes.benthic, "East Africa Benthic - RAW", false)
 //Map.addLayer(geo, map_palettes.geo, "W. Micronesia Geo - RAW", false)*/
 
 // wave data
