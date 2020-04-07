@@ -2327,7 +2327,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: true,
+  manual_clean: false,
   
   // results/layers to show
   export_small_area: false,
