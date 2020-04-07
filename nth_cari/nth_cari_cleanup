@@ -2420,13 +2420,13 @@ if (vars.manual_clean) {
   })
   
 
-  /*//FLORIDA CLEAN
+  //FLORIDA CLEAN
   // remove
   man_geo = man_geo.where({
     test: wcmc_img.eq(0),
                   //.and(man_geo.eq(15)),
     value: ee.Image(0)
-  })*/
+  })
   
   
   // CUBA WEST CLEAN
@@ -2482,6 +2482,18 @@ if (vars.manual_clean) {
   
   // Add the manual layer to the map
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
+  // Export
+  Export.image.toAsset({
+    image: man_geo,
+    description: vars.geomorph_output_name,
+    assetId: vars.asset_output + 'in_out/' + vars.geomorph_output_name,
+    region: reef_boundary,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  })
+  
   
 }
 /*
