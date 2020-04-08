@@ -12,9 +12,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean2"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
-    benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari");
+    benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
+    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -22,7 +22,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
-// choose where to centre (link this dynamically to map app?)
+// choogse where to centre (link this dynamically to map app?)
 //var centre_map = ncab
 //Map.centerObject(centre_map, 10)
 //splitting North Cari regions
@@ -42,7 +42,7 @@ Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic().updateMask(geo_clean.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - clean auto", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - manual + cleanup", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
