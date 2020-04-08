@@ -77,7 +77,7 @@ var title = ui.Label({
 // generate the legend
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
-Map.addLayer(geo_legend, map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, "East Africa Benthic - RAW", false)
+Map.addLayer(geo_legend, "East Africa Benthic - RAW", false)
 
 
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
