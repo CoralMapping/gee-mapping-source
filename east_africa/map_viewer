@@ -7,7 +7,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     high_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     low_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic");
+    benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic"),
+    geo = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
