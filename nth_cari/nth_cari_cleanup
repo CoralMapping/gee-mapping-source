@@ -493,7 +493,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry({
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2010,10 +2013,7 @@ var eg_area =
           [-79.54548046986804, 24.88205782430196],
           [-79.54548046986804, 30.083931261534957],
           [-86.02741406361804, 30.045898424650336]]]),
-    cuba_west_cut = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    cuba_west_cut = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[-83.96350550183911, 22.04822742875456],
           [-83.95835566053051, 22.032952286909733],
           [-83.96213221082348, 22.022449670722995],
@@ -2182,10 +2182,7 @@ var eg_area =
           [-83.86324082962014, 22.146689473532323],
           [-83.94563829055764, 22.11615883676264],
           [-83.96486436477639, 22.052532113014678]]]),
-    cuba_east_cut = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    cuba_east_cut = /* color: #0b4a8b */ee.Geometry.Polygon(
         [[[-80.021700861283, 21.77429293155287],
           [-80.01758098661789, 21.744957796803508],
           [-79.9997281981424, 21.725822958877373],
@@ -2459,7 +2456,7 @@ if (vars.manual_clean) {
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
   
   var depth = ee.Image(region_params.pixels).select('depth')
-  Map.addLayer(depth.lt(1100), {}, "11m depth contour", false)
+  Map.addLayer(depth.lt(1200), {}, "12m depth contour", false)
   
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
@@ -2476,7 +2473,7 @@ if (vars.manual_clean) {
   // deep -> deep lagoon
   man_geo = man_geo.where({
     test: baha_extent.eq(1)
-                     .and(depth.lt(1300))
+                     .and(depth.lt(1200))
                      .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
@@ -2492,7 +2489,7 @@ if (vars.manual_clean) {
   // slope -> shallow lagoon
   man_geo = man_geo.where({
     test: baha_extent.eq(1)
-                     .and(depth.lt(1300))
+                     .and(depth.lt(1200))
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
   })
@@ -2526,7 +2523,7 @@ if (vars.manual_clean) {
   // deep classes -> deep lagoon
   man_geo = man_geo.where({
     test: cuba_west.eq(1)
-                   .and(depth.lt(1300))
+                   .and(depth.lt(1200))
                    .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
@@ -2534,7 +2531,7 @@ if (vars.manual_clean) {
   // shallow classes -> shallow lagoon
   man_geo = man_geo.where({
     test: cuba_west.eq(1)
-                   .and(depth.lt(1300))
+                   .and(depth.lt(12100))
                    .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24)).or(man_geo.eq(13)).or(man_geo.eq(14))),
     value: ee.Image(11)
   })
@@ -2551,7 +2548,7 @@ if (vars.manual_clean) {
   // deep classes -> deep lagoon
   man_geo = man_geo.where({
     test: cuba_east.eq(1)
-                   //.and(depth.lt(1300))
+                   //.and(depth.lt(1200))
                    .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
@@ -2559,7 +2556,7 @@ if (vars.manual_clean) {
   // shallow classes -> shallow lagoon
   man_geo = man_geo.where({
     test: cuba_east.eq(1)
-                   //.and(depth.lt(1300))
+                   //.and(depth.lt(1200))
                    .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(13)).or(man_geo.eq(14))),
     value: ee.Image(11)
   })
