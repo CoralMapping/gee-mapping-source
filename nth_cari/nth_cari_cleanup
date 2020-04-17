@@ -2621,22 +2621,22 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask)
   
-  // shallow lagoon > 10m == deep lagoon
+  // shallow lagoon > 5m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
-                   .and(depth.gt(1000)),
+                   .and(depth.gt(500)),
     value: ee.Image(12)
   })
   
-  // deep lagoon == deep (to hard to differentiate deep water vs. deep lagoon effectively over large areas)
+  /*// deep lagoon == deep (to hard to differentiate deep water vs. deep lagoon effectively over large areas)
   clean_map = clean_map.where({
     test: clean_map.eq(12),
     value: ee.Image(2)
-  })
+  })*/
   
   // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
-    test: depth.gt(1500),
+    test: depth.gt(2000),
     value: ee.Image(2)
   })
   
