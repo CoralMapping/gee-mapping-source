@@ -26,5 +26,5 @@ var geometry = /* color: #09fc27 */ee.Geometry.MultiPolygon(
            [46.82463062708323, -24.782528311925947]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
-//these are just the geometry that Chris draw to be used to mask out non reef areas
+//these are just the geometries that Chris drawn to be used to mask out non reef areas.
 Map.addLayer(geometry)
