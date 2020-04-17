@@ -14,7 +14,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
-    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3");
+    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
@@ -42,7 +42,7 @@ Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic().updateMask(geo_clean.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - manual + cleanup", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - 1st stage clean", false)
 
 // wave data
 /*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
