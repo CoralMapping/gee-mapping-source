@@ -281,7 +281,7 @@ var nth_cari = {
   benthic_val_library: "projects/coral_atlas/nth_cari/training/nth_cari_benthic_validation",
   geo_map: ["projects/coral_atlas/nth_cari/in_out/nth_cari_geo_cari","projects/coral_atlas/nth_cari/in_out/nth_cari_geo_baha"],
   benthic_map: ["projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari","projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"],
-  geo_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean1",
+  geo_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean2-man",
   benthic_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"
 }
 
