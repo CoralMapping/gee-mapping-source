@@ -14,7 +14,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
-    Mask_NoReef = /* color: #ff2705 */ee.Geometry.MultiPolygon(
+    Mask_NoReef = 
+    /* color: #ff2705 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-77.6908298412265, 17.939251182238742],
            [-78.014926520914, 17.68952937580111],
            [-78.03277930411713, 17.53507699179179],
