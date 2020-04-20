@@ -1260,7 +1260,10 @@ var eg_area =
           [-77.07769330914988, 20.670764004602106],
           [-78.70641688010475, 21.697698227118224],
           [-79.95885863570581, 21.78954017135712]]]),
-    not_reef = /* color: #ff2705 */ee.Geometry.MultiPolygon(
+    not_reef = 
+    /* color: #ff2705 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-77.6908298412265, 17.939251182238742],
            [-78.014926520914, 17.68952937580111],
            [-78.03277930411713, 17.53507699179179],
@@ -1416,7 +1419,7 @@ if (vars.manual_clean) {
   var depth = ee.Image(region_params.pixels).select('depth')
   Map.addLayer(depth.lt(1000), {}, "10m depth contour", false)
   
-  Map.addLayer(waves.lt(0.6), {}, "0.6m Hs95 threshold", false)
+  Map.addLayer(waves.lt(0.3), {}, "0.6m Hs95 threshold", false)
   
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
@@ -1425,7 +1428,7 @@ if (vars.manual_clean) {
   
   // "not reef" extents to be moved over to _datagen script
   var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
-  var wcmc_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0)
+  var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
@@ -1433,7 +1436,7 @@ if (vars.manual_clean) {
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
-    test: wcmc_img.eq(0),
+    test: not_reef_img.eq(0),
                   //.and(man_geo.eq(15)),
     value: ee.Image(0)
   })
