@@ -1596,7 +1596,16 @@ if (vars.obia_2nd_pass) {
 }
 
 //var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
-var benthic_map = ee.Image(region_params.benthic_map)
+//var benthic_map = ee.Image(region_params.benthic_map)
+
+if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+             .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
+             .selfMask().clip(reef_boundary)
+} else {
+    var benthic_map = ee.Image(region_params.benthic_map)
+}
+
 
 var depth = ee.Image(region_params.pixels).select('depth')
 var image = ee.Image(region_params.image)
