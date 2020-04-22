@@ -1,0 +1,400 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var prob_geo = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_geo"),
+    prob_benthic = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_benthic"),
+    imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
+    nth_cari_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-85.65349533343668, 30.110984371566527],
+          [-85.65349533343668, 15.881108065617013],
+          [-69.23992111468668, 15.881108065617013],
+          [-69.23992111468668, 30.110984371566527]]], null, false),
+    poi = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([-77.5198670014832, 21.768093412861553]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+
+Map.centerObject(poi,6)
+
+///////////////////////////////
+// Global coral atlas project - South West Pacific Region
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the cleaned up classification and assesses accuracy
+// - Corresponding '_calval', '_classification' and '_cleanup' script performs the data gathering/segmentation
+///////////////////////////////
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. Accuracy assessment
+// 7. Confidence layer
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+
+
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  
+  // analysis type
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
+  
+  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  
+  // analysis parameters
+  image_data_scale: sensor_params.pixel, // pixel size of the image data
+  use_benthic_points: false, // this flag is for using field photo transect points
+  use_geo_points: false, // this flag is for using field photo transect points (also it is very unlikely we'll ever have geo points)
+  
+  // cal/val params
+  val_trim: 0.1, // percentage at which to trim the validation library i.e. if 0.1 = 10% of vlaidation library, so @ 3000 points per class = 300 points per class
+  val_trim_seed: 42,
+  
+  // class information for classification, sampling and reporting
+  class_field: 'class_num', // the field in the training data that stores the class integer
+  // TODO: consider dynamically generating these
+  classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23], // classes to map
+  classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RR', 'TRF','SS','SE', 'PL'],
+  // TODO: consider dynamically generating these
+  classes_mapped_benthic:       [11,    12,   13,  14,    15,   18], // classes to map
+  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'BMA' ],
+  
+  // results/layers to show
+  assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
+  show_accuracy: true, // print error stats to console? 
+  
+  // export options
+  do_export: false, // export the results?
+  export_scale: sensor_params.pixel, // pixel size to export at
+  geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-val',
+  benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-val',
+  asset_output: region_params.asset, // asset path
+
+}
+
+// 2. Data loads & vis
+
+// load input data
+var pixels = ee.Image(region_params.dove_pixels)
+var segments = ee.Image(region_params.dove_segments)
+var geomorph = (vars.use_geo_points) ? ee.FeatureCollection(region_params.geo_pts) : ee.FeatureCollection(region_params.geo_val_library)
+var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_val_library)
+if (vars.assess_clean) {
+  var geo_map = ee.Image(region_params.geo_map_clean)
+  var benthic_map = ee.Image(region_params.benthic_map_clean)  
+} else {
+  var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
+  var benthic_map = ee.ImageCollection(region_params.benthic_map).mosaic()
+}
+
+// Add the raw data
+var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var val_map = (vars.geomorphic) ? geo_map : benthic_map // Set the validation map to either geomorphic or benthic
+var val_mapVIS = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic //Set the map visualization parameters to either geomorphic or benthic 
+
+// set the class information
+var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic;
+var classes_mapped_names = (vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic;
+
+//clip reference data according to 'classes_mapped'
+//var ref_points=ee.Filter.inList('class_num',classes_mapped);
+//var all_training_data=all_training_data0.filter(ref_points);
+
+// 3. Accuracy assessment
+
+if (vars.assess_accuracy) {
+  
+  if (vars.benthic && vars.use_benthic_points) { 
+    
+    var validation_pts = all_training_data // if we're doign a point based assessment (from field data) then use those
+    
+  } else if (vars.geomorphic && vars.use_geo_points) {
+    
+    var validation_pts = all_training_data // if we're doign a point based assessment (from field data) then use those
+    
+  } else {
+    
+    // otherwise use the cal/val library and sub-sample it somehow
+    
+    // here we just randomly sample it down, but could do a range of different things here
+    
+    var validation_pts = all_training_data.randomColumn({seed: vars.val_trim_seed}).filterMetadata('random', 'less_than', vars.val_trim)
+    
+  }
+  
+  Map.addLayer(validation_pts, {}, "validation points used", false)
+  
+  // calculate an error matrix - won't account for unmapped areas though
+  var accuracy_collection = val_map.unmask()
+        .reduceRegions({
+          collection: validation_pts,
+          reducer: ee.Reducer.first(),
+          scale: sensor_params.pixel,
+        })
+}
+
+
+Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
+
+
+
+//7. confidence layer
+//7.1 estimation of hard to map areas
+
+//function to import a new column to validation datasets which will state if chosen points are true-positive (1) or true-negative (0)
+function ValrefPoints (ft) {
+  var pix=val_map.clip(ft);
+  var feature=ee.Number(ft.get('class_num'));
+  var pixSam=ee.Number(ft.get('first'));
+  return ee.Algorithms.If(feature.eq(pixSam),
+                          ft.set('valid',1),
+                          ft.set('valid',0));
+}
+
+//IDW and Kriggin methods in order to establish "Hard to Map" regions according to valid and non valid validation points
+function HtM (pointCol) {
+  var comReducer=ee.Reducer.mean().combine({
+      reducer2:ee.Reducer.stdDev(),
+      sharedInputs:true
+  });
+  var stats=pointCol.reduceColumns({
+    reducer:comReducer,
+    selectors:['valid']
+  });
+  var idw=pointCol.inverseDistance({
+    range:500,
+    propertyName:'valid',
+    mean:stats.get('mean'),
+    stdDev:stats.get('stdDev'),
+    gamma:0.3
+  });
+  var idwMask=idw.updateMask(idw.lt(0.5));
+  
+  var kriging=pointCol.kriging({
+    propertyName: 'valid',
+    shape:'gaussian',
+    range:500,
+    sill:1,
+    nugget:0.1,
+    maxDistance:500,
+    reducer: 'mean'
+  });
+  
+  var krigingMask=kriging.updateMask(kriging.lt(0.6));
+  
+  //intersect function between kriging and idw areas
+  function intersect (idw_img, krig_img) {
+    var idw_m=idw_img.expression(
+      "(img*0)+1",{
+        'img':idw_img
+      });
+    var krig_m=krig_img.expression(
+      "(img*0)+1",{
+        'img':krig_img
+      });
+    var common=idw_m.add(krig_m);
+    return common;
+  }
+  var commonAreas=intersect(idwMask,krigingMask);
+  return commonAreas;
+}
+
+var featCol=accuracy_collection.map(ValrefPoints);
+var HtMareas=HtM(featCol);
+print('HtMareas',HtMareas);
+Map.addLayer(HtMareas,{},'HtMareas',false);
+
+//7.2 creation of zones around HtMareas in order to be used for the voting system of confidence layer
+//not trustworthy=10, trustworthy=0
+function zones (img) {
+  var dist=img.fastDistanceTransform(300).sqrt().multiply(ee.Image.pixelArea().sqrt());
+  var img_zones=dist.expression(
+    "(b(0) < 1) ? 10"+
+      ":(b(0) < 200) ? 8"+
+        ":(b(0) < 500) ? 5"+
+          ":(b(0) < 1000) ? 2"+
+            ":(b(0) < 1150) ? 5"+
+              ":(b(0) < 1300) ? 8"+
+                ":(b(0) < 1450) ? 10"+
+            ":10");
+  return img_zones;
+}
+
+var HtMzones=zones(HtMareas);
+Map.addLayer(HtMzones,{},'HtMzones',false);
+
+//7.3 creation of zones around QAQC features
+var qaqc=ee.FeatureCollection(region_params.QAQC);
+print('qaqc',qaqc)
+
+//set qaqc polygons as not trustworthy=10
+function ft_zones (fc){
+  
+  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
+  var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
+  return img;
+}
+var QAQCzones=ft_zones(qaqc);
+Map.addLayer(QAQCzones,{},'QAQCzones',false);
+
+//7.4 import of prob layer. 
+//cross ref each classified pixel with the respective prob layer of soft classification
+var prob=(vars.geomorphic) ? prob_geo.expression('100-img',{'img':prob_geo}) : prob_benthic.expression('100-img',{'img':prob_benthic}) ;
+print('prob',prob);
+// Map.addLayer(prob,{},'prob');
+var scaledprob=prob.divide(10).round().aside(print,'scaledprob')//.addBands(val_map);
+
+//transformation of single image with bands to an image collection with the bands been the images
+
+var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
+  return scaledprob.select([b])
+}));//.aside(print,'scaledprob')
+
+
+//for benthic
+var fprob_benthic=val_map.expression(
+                  "(b('classification') == 11) ? img11"+
+                    ":(b('classification') == 12) ? img12"+
+                      ":(b('classification') == 13) ? img13"+
+                        ":(b('classification') == 14) ? img14"+
+                          ":(b('classification') == 15) ? img15"+
+                            ":(b('classification') == 18) ? img18"+
+                            ":0",{
+                              'img11':scaledprob.select('SA'),
+                              'img12':scaledprob.select('RU'),
+                              'img13':scaledprob.select('RO'),
+                              'img14':scaledprob.select('SG'),
+                              'img15':scaledprob.select('CO'),
+                              'img18':scaledprob.select('BMA')
+                            });
+
+//for geomorphic
+var fprob_geo=val_map.expression(
+                  "(b('classification') == 11) ? img11"+
+                    ":(b('classification') == 12) ? img12"+
+                      ":(b('classification') == 13) ? img13"+
+                        ":(b('classification') == 14) ? img14"+
+                          ":(b('classification') == 15) ? img15"+
+                            ":(b('classification') == 16) ? img16"+
+                              ":(b('classification') == 21) ? img21"+
+                                ":(b('classification') == 22) ? img22"+
+                                  ":(b('classification') == 23) ? img23"+
+                            ":0",{
+                                    'img11':scaledprob.select('SL'),
+                                    'img12':scaledprob.select('DL'),
+                                    'img13':scaledprob.select('IRF'),
+                                    'img14':scaledprob.select('ORF'),
+                                    'img15':scaledprob.select('RR'),
+                                    'img16':scaledprob.select('TRF'),
+                                    'img21':scaledprob.select('SS'),
+                                    'img22':scaledprob.select('SE'),
+                                    'img23':scaledprob.select('PL')
+                            });
+                            
+var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic).toUint8();
+Map.addLayer(fprob,{},'fprob',false);
+
+//7.5 union of QAQCzones and HtMzones
+var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
+
+var toMask=val_map.multiply(0);
+//clip area of interst according to val_map and transform the 
+//range of confidence values 
+//from high conf:0 , low conf=30 
+//to high conf:0 , low conf=100,
+//x=(ConfValue * 10)/3
+
+var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
+
+//remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
+var confidenceEXP=confidence.expression(
+  "(b(0) >= 90) ? 3"+
+    ":(b(0) >= 60) ? 2"+
+      ":(b(0) >= 30) ? 1"+
+      ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
+
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":3,"palette":["02818a","67a9cf","bdc9e1","f6eff7"]};
+Map.addLayer(confidenceEXP,conf_str,'confidence',true);
+
+//7.6 confidence legend
+
+var legend=ui.Panel({
+  style: {
+    position: 'bottom-right',
+    padding: "8px 15px"
+  }
+});
+
+var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+function makeColorBarParams(palette) {
+  return {
+    bbox: [0, 0, 1, 0.1],
+    dimensions: '100x10',
+    format: 'png',
+    min: 0,
+    max: 1,
+    palette: palette,
+  };
+}
+
+var colorBar=ui.Thumbnail({
+  image: ee.Image.pixelLonLat().select(0),
+  params: makeColorBarParams(vis.palette),
+  style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
+})
+// Create a panel with three numbers for the legend.
+var legendLabels = ui.Panel({
+  widgets: [
+    ui.Label(vis.min, {margin: '4px 8px'}),
+    ui.Label(
+        (' '),
+        {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
+    ui.Label(vis.max, {margin: '4px 8px'})
+  ],
+  layout: ui.Panel.Layout.flow('horizontal')
+});
+
+var legendTitle = ui.Label({
+  value: 'Confidence Layer',
+  style: {fontWeight: 'bold',position: 'bottom-right'}
+});
+
+legend.add(legendTitle);
+legend.add(colorBar)
+legend.add(legendLabels);
+
+Map.add(legend)
+
+Export.image.toAsset({
+  image:confidence,
+  description:'connf_geoV2',
+  assetId:'projects/coral_atlas/Micronesia/in_out/wmic_conf_geoV2',
+  region:nth_cari_extent,
+  scale:vars.export_scale,
+  maxPixels:1e13
+});
