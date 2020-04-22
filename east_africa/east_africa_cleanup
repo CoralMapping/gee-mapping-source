@@ -25,6 +25,7 @@ var eg_area =
           [158.4304228577755, 7.112454892191871]]], null, false),
     region_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -36,7 +37,10 @@ var eg_area =
           [51.182930272342325, -30.595651061601146],
           [51.182930272342325, -1.137341931686524]]], null, false),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    not_reef = /* color: #09fc27 */ee.Geometry.MultiPolygon(
+    not_reef = 
+    /* color: #09fc27 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[38.35401789079527, -16.424735032322175],
            [34.88233820329527, -18.228546805551858],
            [33.82765070329527, -20.034493928429058],
@@ -61,7 +65,10 @@ var eg_area =
            [48.86808765833323, -18.18320498875907],
            [46.49504078333323, -24.422927003569175],
            [46.82463062708323, -24.782528311925947]]]]),
-    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
+    reef_boundary = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[40.35842048249674, -1.8731644797702776],
           [39.69924079499674, -2.3562322691693933],
           [39.07302009187174, -3.8591024804159404],
@@ -230,9 +237,6 @@ MANUAL ADDITION
 ############################
 */
 
-// This can be hand drawn or imported from elsewhere, or could just be a big box
-reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
-Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
   
