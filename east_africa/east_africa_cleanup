@@ -157,7 +157,8 @@ var eg_area =
           [40.28151618562174, -6.042563586602855],
           [40.74294196687174, -3.787850297032323],
           [42.45680915437174, -1.3295556688150814],
-          [40.30348884187174, -1.3734887548247627]]]);
+          [40.30348884187174, -1.3734887548247627]]]),
+    mod_land = ee.ImageCollection("MODIS/006/MOD44W");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa
@@ -278,7 +279,24 @@ if (vars.manual_clean) {
     value: ee.Image(21)
   })*/
   
+  // LAND mask clean ############# ---> to be moved to first stage clean up
+  var land_mask = mod_land.select('water_mask').mean().eq(0).clip(region_extent)
+
+  var land_mask_buff = ee.Image(1)
+    .cumulativeCost({
+      source: land_mask, 
+      maxDistance: 2000,
+      geodeticDistance: false,
+    }).lt(2000).unmask(0)
   
+  Map.addLayer(land_mask_buff, {}, "Land mask", false)
+  
+  // reef crest close to land -> ORF
+  man_geo = man_geo.where({
+    test: land_mask_buff.eq(1)
+                        .and(man_geo.eq(15)),
+    value: ee.Image(14)
+  })
   
   // Add the manual layer to the map
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
