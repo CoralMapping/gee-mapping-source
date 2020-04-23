@@ -3293,7 +3293,10 @@ var eg_area =
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
     waves = ee.Image("users/danleeharris/reefwave/nth_cari_d2"),
-    cuba_west_cut2 = /* color: #d63000 */ee.Geometry.Polygon(
+    cuba_west_cut2 = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-84.00071513329121, 22.65069839505786],
           [-84.02680766258808, 22.703917561076125],
           [-84.07487284813496, 22.73305263182036],
@@ -3312,7 +3315,10 @@ var eg_area =
           [-84.35983073387715, 22.279494719980292],
           [-84.31039225731465, 22.386198492016938],
           [-84.12225138817402, 22.5372220930426]]]),
-    cuba_west_cut2x = /* color: #98ff00 */ee.Geometry.Polygon(
+    cuba_west_cut2x = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-84.8185099330959, 21.981819831970586],
           [-84.7580851284084, 21.969084696523737],
           [-84.62762248192402, 22.022564585171153],
@@ -3325,7 +3331,8 @@ var eg_area =
           [-84.5438517299709, 22.412861667818987],
           [-84.61663615379902, 22.34174850875155],
           [-84.65508830223652, 22.25407703901961],
-          [-84.80340373192402, 22.018745262013894]]]);
+          [-84.80340373192402, 22.018745262013894]]]),
+    mod_land = ee.ImageCollection("MODIS/006/MOD44W");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -3433,7 +3440,7 @@ if (vars.manual_clean) {
   var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
   var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
   
-  // "not reef" extents to be moved over to _datagen script
+  // "not reef" extents ############# --->  to be moved over to _datagen script
   var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
   var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
   
@@ -3449,13 +3456,16 @@ if (vars.manual_clean) {
   })
   
   
-  // WAVE clean (to be integrated into RF classifier)
+  // WAVE clean ############# ---> (to be integrated into RF classifier)
   // remove
   man_geo = man_geo.where({
     test: waves.lte(0.4)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
+  
+  // LAND mask clean ############# ---> to be moved to first stage clean up
+  
   
   //BAHAMAS clean
   // deep -> deep lagoon
