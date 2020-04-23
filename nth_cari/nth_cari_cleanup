@@ -3465,7 +3465,8 @@ if (vars.manual_clean) {
   })
   
   // LAND mask clean ############# ---> to be moved to first stage clean up
-  
+  var land_mask = mod_land
+  Map.addLayer(mod_land, {}, "Land mask", false)
   
   //BAHAMAS clean
   // deep -> deep lagoon
