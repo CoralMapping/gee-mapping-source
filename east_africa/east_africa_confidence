@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var prob_geo = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_geo"),
-    prob_benthic = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_benthic"),
-    imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
+var fprob_str = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
     east_africa_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -319,7 +317,7 @@ var fprob_geo=(val_map.expression(
                             }));
                             
 var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic);
-Map.addLayer(fprob,{},'fprob',false);
+Map.addLayer(fprob,fprob_str,'fprob',false);
 print('HtMzones',HtMzones);
 //7.5 union of QAQCzones and HtMzones
 var union=(ee.ImageCollection([/*QAQCzones,*/HtMzones,fprob])).sum();
