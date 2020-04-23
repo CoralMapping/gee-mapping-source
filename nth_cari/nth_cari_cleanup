@@ -3522,6 +3522,39 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
+  // CUBA WEST 2 CLEAN
+  // deep classes -> deep lagoon
+  man_geo = man_geo.where({
+    test: cuba_west2.eq(1)
+                   .and(depth_cont)
+                   .and(man_geo.eq(2).or(man_geo.eq(23))),
+    value: ee.Image(12)
+  })
+  
+  // shallow classes -> shallow lagoon
+  man_geo = man_geo.where({
+    test: cuba_west2.eq(1)
+                   .and(depth_cont)
+                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(11)
+  })
+  
+  // deep classes -> deep lagoon
+  man_geo = man_geo.where({
+    test: cuba_west2x.eq(1)
+                   //.and(depth_cont)
+                   .and(man_geo.eq(2).or(man_geo.eq(23))),
+    value: ee.Image(12)
+  })
+  
+  // shallow classes -> shallow lagoon
+  man_geo = man_geo.where({
+    test: cuba_west2x.eq(1)
+                   //.and(depth_cont)
+                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(11)
+  })
+  
   
   //CUBA EAST
   // deep classes -> deep lagoon
