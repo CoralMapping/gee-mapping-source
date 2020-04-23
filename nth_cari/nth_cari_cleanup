@@ -493,7 +493,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry({
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2730,7 +2733,7 @@ if (vars.manual_clean) {
   // deep classes -> deep lagoon
   man_geo = man_geo.where({
     test: cuba_east.eq(1)
-                   //.and(depth.lt(1000))
+                   //.and(depth_cont)
                    .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
@@ -2738,7 +2741,7 @@ if (vars.manual_clean) {
   // shallow classes -> shallow lagoon
   man_geo = man_geo.where({
     test: cuba_east.eq(1)
-                   //.and(depth.lt(1000))
+                   //.and(depth_cont)
                    .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24)).or(man_geo.eq(13)).or(man_geo.eq(14))),
     value: ee.Image(11)
   })
