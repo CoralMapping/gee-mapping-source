@@ -2124,7 +2124,10 @@ var eg_area =
           [-79.54548046986804, 24.88205782430196],
           [-79.54548046986804, 30.083931261534957],
           [-86.02741406361804, 30.045898424650336]]]),
-    cuba_west_cut = /* color: #98ff00 */ee.Geometry.Polygon(
+    cuba_west_cut = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-83.96350550183911, 22.04822742875456],
           [-83.95835566053051, 22.032952286909733],
           [-83.96213221082348, 22.022449670722995],
@@ -2293,7 +2296,10 @@ var eg_area =
           [-83.86324082962014, 22.146689473532323],
           [-83.94563829055764, 22.11615883676264],
           [-83.96486436477639, 22.052532113014678]]]),
-    cuba_east_cut = /* color: #0b4a8b */ee.Geometry.Polygon(
+    cuba_east_cut = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-80.021700861283, 21.77429293155287],
           [-80.01758098661789, 21.744957796803508],
           [-79.9997281981424, 21.725822958877373],
@@ -2830,7 +2836,14 @@ Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide
 
 if (vars.geomorphic) {
   if (vars.obia_2nd_pass) {
-    print("PLEASE FIX RAW CLASSIFICATION DISPLAY FOR A TWO PART MAP")
+    if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+      var geo_map_display = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                       .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
+                       .selfMask().clip(reef_boundary)
+    } else {
+    var geo_map_display = ee.Image(region_params.geo_map).clip(reef_boundary)
+    }
+    Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false)
   } else {
     Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
   }
