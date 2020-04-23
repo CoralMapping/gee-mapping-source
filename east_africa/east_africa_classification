@@ -274,7 +274,7 @@ Map.addLayer(probabilities,{},'probabilities')
 
 Export.image.toAsset({image:probabilities,
                       description:'prob_geo',
-                      assetId:'projects/coral_atlas/Micronesia/in_out/east_africa_prob_geo',
+                      assetId:'projects/coral_atlas/east_africa/in_out/east_africa_prob_geo',
                       region:export_geom,
                       scale:vars.export_scale,
                       maxPixels:1e13
