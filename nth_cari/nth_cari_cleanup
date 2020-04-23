@@ -493,7 +493,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-79.29383962962757, 25.613236311678587],
            [-79.16749769829556, 25.42486175976503],
            [-79.0737784745865, 25.335496487197535],
@@ -1354,7 +1357,7 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -1375,7 +1378,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -1385,7 +1388,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
