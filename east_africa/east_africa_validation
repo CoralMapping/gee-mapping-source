@@ -125,7 +125,7 @@ if (vars.assess_accuracy) {
   }
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
-  
+  print('validation num',validation_pts.size())
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
