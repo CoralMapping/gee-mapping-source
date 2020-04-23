@@ -3678,10 +3678,15 @@ if (vars.manual_clean) {
   
   // LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0).clip(region_extent)
-                          .distance(ee.Kernel.euclidean(5000, 'meters'))
-                          .lt(5000)
-                          .unmask(0)
-  Map.addLayer(land_mask, {}, "Land mask", false)
+
+  var land_mask_buff = ee.Image(1)
+    .cumulativeCost({
+      source: land_mask, 
+      maxDistance: 5000,
+      geodeticDistance: false,
+    }).lt(5000);
+  
+  Map.addLayer(land_mask_buff, {}, "Land mask", false)
   
   // reef crest close to land -> ORF
   man_geo = man_geo.where({
