@@ -3682,16 +3682,16 @@ if (vars.manual_clean) {
   var land_mask_buff = ee.Image(1)
     .cumulativeCost({
       source: land_mask, 
-      maxDistance: 5000,
+      maxDistance: 2000,
       geodeticDistance: false,
-    }).lt(5000);
+    }).lt(2000).unmask(0)
   
   Map.addLayer(land_mask_buff, {}, "Land mask", false)
   
   // reef crest close to land -> ORF
   man_geo = man_geo.where({
-    test: land_mask.eq(1)
-                  .and(man_geo.eq(15)),
+    test: land_mask_buff.eq(1)
+                        .and(man_geo.eq(15)),
     value: ee.Image(14)
   })
   
