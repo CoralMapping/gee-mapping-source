@@ -493,7 +493,10 @@ var eg_area =
           [-83.26884229183199, 28.249223488196193],
           [-82.03837354183199, 25.604866468889778],
           [-81.42313916683199, 26.178108838339305]]]),
-    baha_cut = /* color: #d63000 */ee.Geometry({
+    baha_cut = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3289,7 +3292,40 @@ var eg_area =
            [-80.21071385145622, 26.79503360454802],
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
-    waves = ee.Image("users/danleeharris/reefwave/nth_cari_d2");
+    waves = ee.Image("users/danleeharris/reefwave/nth_cari_d2"),
+    cuba_west_cut2 = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[-84.00071513329121, 22.65069839505786],
+          [-84.02680766258808, 22.703917561076125],
+          [-84.07487284813496, 22.73305263182036],
+          [-84.65028178368183, 22.413496442996383],
+          [-84.87138163719746, 22.13009983545922],
+          [-85.02793681297871, 21.940426467212085],
+          [-84.99223124657246, 21.84740670014392],
+          [-84.93317973290058, 21.867799785873586],
+          [-84.76701152000996, 21.885641346620098],
+          [-84.61251628075215, 21.93915263404405],
+          [-84.48480021629902, 21.971631814988264],
+          [-84.34884440575215, 21.9652639331799],
+          [-84.21838175926777, 22.013652670975606],
+          [-84.22387492333027, 22.102746561944453],
+          [-84.3186320034084, 22.15108828192084],
+          [-84.35983073387715, 22.279494719980292],
+          [-84.31039225731465, 22.386198492016938],
+          [-84.12225138817402, 22.5372220930426]]]),
+    cuba_west_cut2x = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[-84.8185099330959, 21.981819831970586],
+          [-84.7580851284084, 21.969084696523737],
+          [-84.62762248192402, 22.022564585171153],
+          [-84.46282756004902, 22.086204799716267],
+          [-84.47656047020527, 22.214670514951926],
+          [-84.4230021205959, 22.34301870511986],
+          [-84.44360148583027, 22.378579502697264],
+          [-84.4999064174709, 22.363340272664345],
+          [-84.4779337612209, 22.4445968722333],
+          [-84.5438517299709, 22.412861667818987],
+          [-84.61663615379902, 22.34174850875155],
+          [-84.65508830223652, 22.25407703901961],
+          [-84.80340373192402, 22.018745262013894]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -3393,6 +3429,8 @@ if (vars.manual_clean) {
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
   var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
+  var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
+  var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
   var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
   
   // "not reef" extents to be moved over to _datagen script
