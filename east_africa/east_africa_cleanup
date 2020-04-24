@@ -374,7 +374,14 @@ Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide
 
 if (vars.geomorphic) {
   if (vars.obia_2nd_pass) {
-    print("PLEASE FIX RAW CLASSIFICATION DISPLAY FOR A TWO PART MAP")
+    if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+      var geo_map_display = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                       .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
+                       .selfMask().clip(reef_boundary)
+    } else {
+    var geo_map_display = ee.Image(region_params.geo_map).clip(reef_boundary)
+    }
+    Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false)
   } else {
     Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
   }
