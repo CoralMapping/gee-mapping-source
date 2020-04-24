@@ -158,7 +158,8 @@ var eg_area =
           [40.74294196687174, -3.787850297032323],
           [42.45680915437174, -1.3295556688150814],
           [40.30348884187174, -1.3734887548247627]]]),
-    mod_land = ee.ImageCollection("MODIS/006/MOD44W");
+    mod_land = ee.ImageCollection("MODIS/006/MOD44W"),
+    waves = ee.Image("users/danleeharris/reefwave/est_afr_d1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa
@@ -271,13 +272,13 @@ if (vars.manual_clean) {
   })
   
   
-  /*// WAVE clean (to be integrated into RF classifier)
+  // WAVE clean (to be integrated into RF classifier)
   // remove
   man_geo = man_geo.where({
     test: waves.lte(0.4)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
+  })
   
   // LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0).clip(region_extent)
