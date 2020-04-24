@@ -254,7 +254,7 @@ if (vars.manual_clean) {
   var depth = ee.Image(region_params.pixels).select('depth')
   Map.addLayer(depth.lt(1000), {}, "10m depth contour", false)
   
-  //Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
+  Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   // "not reef" extents to be moved over to _datagen script
   var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
