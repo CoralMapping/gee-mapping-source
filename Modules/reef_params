@@ -309,7 +309,7 @@ var east_africa = {
   benthic_val_library:"projects/coral_atlas/east_africa/training/east_africa_benthic_validation",
   geo_map: ["projects/coral_atlas/east_africa/in_out/east_africa_geo"],
   benthic_map: ["projects/coral_atlas/east_africa/in_out/east_africa_benthic"],
-  geo_map_clean:"projects/coral_atlas/east_africa/in_out/east_africa_geo",
+  geo_map_clean:"projects/coral_atlas/east_africa/in_out/east_africa_geo-clean1",
   benthic_map_clean: "",
   prob_geo:["projects/coral_atlas/east_africa/in_out/east_africa_prob_geo"],
   prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"]
