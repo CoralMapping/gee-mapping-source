@@ -4440,11 +4440,18 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })*/
     
-    // Deep/shallow lagoon in geo && rock/coral in benthic == seagrass
+    // Deep/shallow lagoon in geo && rock in benthic == seagrass
     clean_map = clean_map.where({
       test: geo_map.eq(11).or(geo_map.eq(12))
-                   .and(clean_map.eq(13).or(clean_map.eq(13))),
+                   .and(clean_map.eq(13)),
       value: ee.Image(14)
+    })
+    
+    // Deep/shallow lagoon in geo && coral in benthic == sand
+    clean_map = clean_map.where({
+      test: geo_map.eq(11).or(geo_map.eq(12))
+                   .and(clean_map.eq(15)),
+      value: ee.Image(11)
     })
     
     /*// turbid in geo == turbid (temporal - class num 2)
