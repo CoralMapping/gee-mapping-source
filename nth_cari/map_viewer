@@ -1,11 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    any_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    any_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191219T041346Z/north_caribbean_bahamas_any_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    high_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    high_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191217T172951Z/north_caribbean_bahamas_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    low_depth = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
