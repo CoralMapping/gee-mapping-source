@@ -4422,9 +4422,9 @@ if (vars.obia_clean) {
       value: smooth_map
     }).selfMask()
     
-    // cut benthic off to < 10 m
+    // cut benthic off to < 10 - 15 m
     clean_map = clean_map.where({
-      test: depth.gt(1000),
+      test: depth.gt(1500),
       value: ee.Image(0)
     })
     
@@ -4439,6 +4439,13 @@ if (vars.obia_clean) {
       test: geo_map.eq(12),
       value: ee.Image(0)
     })*/
+    
+    // Deep/shallow lagoon in geo && rock/coral in benthic == seagrass
+    clean_map = clean_map.where({
+      test: geo_map.eq(11).or(geo_map.eq(12))
+                   .and(clean_map.eq(13).or(clean_map.eq(13))),
+      value: ee.Image(14)
+    })
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
@@ -4488,12 +4495,14 @@ if (vars.obia_clean) {
       value: ee.Image(14)
     })
     
-    // BMA in benthic and slope/plat in geo == sand
+    /*// BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(11)
-    })
+    })*/
+    
+    
     
     
   }
