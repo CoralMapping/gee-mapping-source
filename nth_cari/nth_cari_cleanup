@@ -3456,7 +3456,7 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -3487,7 +3487,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
