@@ -3483,11 +3483,11 @@ var vars = {
   export_small_area: false,
   show_eg_area: false, // contrain the map add toe the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
-  reproject_display: false,
+  reproject_display: true,
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
