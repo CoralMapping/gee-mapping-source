@@ -3483,7 +3483,7 @@ var vars = {
   export_small_area: false,
   show_eg_area: false, // contrain the map add toe the corresponding example_area polygon geomtery (you can change that)
                               // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
-  reproject_display: true,
+  reproject_display: false,
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
@@ -4497,7 +4497,7 @@ if (vars.obia_clean) {
     
     // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
-      test: clean_map.eq(16)
+      test: clean_map.eq(15)
                      .and(geo_map.eq(16)),
       value: ee.Image(14)
     })
@@ -4518,7 +4518,7 @@ if (vars.obia_clean) {
     
     // coral or algae in benthic + plat in geo == seagrass
     clean_map = clean_map.where({
-      test: clean_map.eq(16)
+      test: clean_map.eq(15)
                      .and(geo_map.eq(23)),
       value: ee.Image(14)
     })
