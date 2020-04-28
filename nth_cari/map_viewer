@@ -70,8 +70,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-80.21071385145622, 26.79503360454802],
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
-    benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3");
+    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
+    benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region
 
