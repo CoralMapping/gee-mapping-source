@@ -245,22 +245,22 @@ function zones (img) {
   return img_zones;
 }
 
-var HtMzones=zones(HtMareas).double();
+var HtMzones=zones(HtMareas).toDouble();
 Map.addLayer(HtMzones,{},'HtMzones',false);
 
-//7.3 creation of zones around QAQC features
-// var qaqc=ee.FeatureCollection(region_params.QAQC);
-// print('qaqc',qaqc)
+// 7.3 creation of zones around QAQC features
+var qaqc=ee.FeatureCollection(region_params.QAQC);
+print('qaqc',qaqc)
 
 //set qaqc polygons as not trustworthy=10
 function ft_zones (fc){
   
-  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
+  var qaqc_const=ee.Image.constant(10).clip(qaqc).toDouble();
   var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
   return img;
 }
-// var QAQCzones=ft_zones(qaqc);
-// Map.addLayer(QAQCzones,{},'QAQCzones',false);
+var QAQCzones=ft_zones(qaqc);
+Map.addLayer(QAQCzones,{},'QAQCzones',false);
 
 //7.4 import of prob layer. 
 //cross ref each classified pixel with the respective prob layer of soft classification
@@ -314,11 +314,11 @@ var fprob_geo=(val_map.expression(
                                     'img23':scaledprob.select('PL')
                             }));
                             
-var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic);
+var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic).toDouble();
 Map.addLayer(fprob,fprob_str,'fprob',false);
 print('HtMzones',HtMzones);
 //7.5 union of QAQCzones and HtMzones
-var union=(ee.ImageCollection([/*QAQCzones,*/HtMzones,fprob])).sum();
+var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
 
 var toMask=val_map.multiply(0);
 //clip area of interst according to val_map and transform the 
