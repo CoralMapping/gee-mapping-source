@@ -60,7 +60,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -308,7 +308,7 @@ var fprob_geo=val_map.expression(
                                     'img12':scaledprob.select('DL'),
                                     'img13':scaledprob.select('IRF'),
                                     'img14':scaledprob.select('ORF'),
-                                    'img15':scaledprob.select('RR'),
+                                    'img15':scaledprob.select('RC'),
                                     'img16':scaledprob.select('TRF'),
                                     'img21':scaledprob.select('SS'),
                                     'img22':scaledprob.select('SE'),
