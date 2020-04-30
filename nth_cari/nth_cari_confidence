@@ -278,12 +278,12 @@ var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
 
 //for benthic
 var fprob_benthic=val_map.expression(
-                  "(b('classification') == 11) ? img11"+
-                    ":(b('classification') == 12) ? img12"+
-                      ":(b('classification') == 13) ? img13"+
-                        ":(b('classification') == 14) ? img14"+
-                          ":(b('classification') == 15) ? img15"+
-                            ":(b('classification') == 18) ? img18"+
+                  "(b('classification') == 11) ? img11*0.9"+
+                    ":(b('classification') == 12) ? img12*0.3"+
+                      ":(b('classification') == 13) ? img13*0.7"+
+                        ":(b('classification') == 14) ? img14*0.6"+
+                          ":(b('classification') == 15) ? img15*0.7"+
+                            ":(b('classification') == 18) ? img18*0.5"+
                             ":0",{
                               'img11':scaledprob.select('SA'),
                               'img12':scaledprob.select('RU'),
@@ -295,15 +295,15 @@ var fprob_benthic=val_map.expression(
 
 //for geomorphic
 var fprob_geo=val_map.expression(
-                  "(b('classification') == 11) ? img11"+
-                    ":(b('classification') == 12) ? img12"+
-                      ":(b('classification') == 13) ? img13"+
-                        ":(b('classification') == 14) ? img14"+
-                          ":(b('classification') == 15) ? img15"+
-                            ":(b('classification') == 16) ? img16"+
-                              ":(b('classification') == 21) ? img21"+
-                                ":(b('classification') == 22) ? img22"+
-                                  ":(b('classification') == 23) ? img23"+
+                  "(b('classification') == 11) ? img11*0.8"+
+                    ":(b('classification') == 12) ? img12*0.8"+
+                      ":(b('classification') == 13) ? img13*0.7"+
+                        ":(b('classification') == 14) ? img14*0.8"+
+                          ":(b('classification') == 15) ? img15*0.8"+
+                            ":(b('classification') == 16) ? img16*0.7"+
+                              ":(b('classification') == 21) ? img21*0.7"+
+                                ":(b('classification') == 22) ? img22*0.8"+
+                                  ":(b('classification') == 23) ? img23*0.6"+
                             ":0",{
                                     'img11':scaledprob.select('SL'),
                                     'img12':scaledprob.select('DL'),
