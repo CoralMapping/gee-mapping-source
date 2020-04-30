@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    benthic = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_benthic-clean-pts"),
-    geo = ee.Image("users/mitchest/gbr_reefs/cancook_dove_htv2_geo-clean2"),
-    pixels = ee.Image("projects/coral_atlas/cairnscook/in_out/cc_high_pixels"),
     reef_boundary = 
     /* color: #d63000 */
     /* shown: false */
@@ -24,7 +21,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [145.86541820260027, -14.88283213321465],
           [145.57977367135027, -14.377904183886152],
           [145.34356761666277, -14.324686730603185],
-          [145.09088206978777, -14.558748512209931]]]);
+          [145.09088206978777, -14.558748512209931]]]),
+    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
+    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
+    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -48,7 +48,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // will need to import depth mosaic from pixels now
-var depth = pixels.select('depth').multiply(100).uint16()
+var depth = pixels.select('depth')//.multiply(100).uint16()
 
 // make reef/non-reef layer 
 var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
