@@ -325,8 +325,8 @@ var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
 var toMask=val_map.multiply(0);
 //clip area of interst according to val_map and transform the 
 //range of confidence values 
-//from high conf:0 , low conf=30 
-//to high conf:0 , low conf=100,
+//initial range high conf:0 , low conf=30 
+//reduction to the unit
 //x=(ConfValue * 10)/3
 
 var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
