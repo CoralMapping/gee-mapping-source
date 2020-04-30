@@ -72,7 +72,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-79.92506932020622, 27.088851286645333]]]]),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    Artifact_layer = /* color: #ff0000 */ee.FeatureCollection(
+    Artifact_layer = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.LinearRing(
                 [[-82.78903930917363, 24.46725101244383],
