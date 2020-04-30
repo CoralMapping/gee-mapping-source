@@ -16,7 +16,8 @@ var fprob_str = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["0
     poi = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.Point([40.07778924851678, -18.65829648681499]);
+    ee.Geometry.Point([40.07778924851678, -18.65829648681499]),
+    image = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
@@ -267,53 +268,52 @@ Map.addLayer(QAQCzones,{},'QAQCzones',false);
 var probf=prob.expression('100-img',{'img':prob});
 print('probf',probf);
 Map.addLayer(probf,{},'probf');
-var scaledprob=probf.divide(10).round().aside(print,'scaledprob')//.addBands(val_map);
+var scaledprob=probf.divide(10).aside(print,'scaledprob')//.addBands(val_map);
 
 //transformation of single image with bands to an image collection with the bands been the images
 
 var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
   return scaledprob.select([b]);
-}));//.aside(print,'scaledCol')
+})).aside(print,'scaledCol')
 
 
 //for benthic
-var fprob_benthic=(val_map.expression(
-                  "(b('classification') == 11) ? img11"+
-                    ":(b('classification') == 12) ? img12"+
-                      ":(b('classification') == 13) ? img13"+
-                        ":(b('classification') == 14) ? img14"+
-                          ":(b('classification') == 15) ? img15"+
+var fprob_benthic=val_map.expression(
+                  "(b('classification') == 11) ? img11*0.9"+
+                    ":(b('classification') == 12) ? img12*0.3"+
+                      ":(b('classification') == 13) ? img13*0.7"+
+                        ":(b('classification') == 14) ? img14*0.6"+
+                          ":(b('classification') == 15) ? img15*0.7"+
                             ":0",{
                               'img11':scaledprob.select('SA'),
                               'img12':scaledprob.select('RU'),
                               'img13':scaledprob.select('RO'),
                               'img14':scaledprob.select('SG'),
-                              'img15':scaledprob.select('CO'),
-                            }));
+                              'img15':scaledprob.select('CO')
+                            });
 
 //for geomorphic
-var fprob_geo=(val_map.expression(
-                  "(b('classification') == 11) ? img11"+
-                    ":(b('classification') == 12) ? img12"+
-                      ":(b('classification') == 13) ? img13"+
-                        ":(b('classification') == 14) ? img14"+
-                          ":(b('classification') == 15) ? img15"+
-                            ":(b('classification') == 16) ? img16"+
-                              ":(b('classification') == 21) ? img21"+
-                                ":(b('classification') == 22) ? img22"+
-                                  ":(b('classification') == 23) ? img23"+
+var fprob_geo=val_map.expression(
+                  "(b('classification') == 11) ? img11*0.8"+
+                    ":(b('classification') == 12) ? img12*0.8"+
+                      ":(b('classification') == 13) ? img13*0.7"+
+                        ":(b('classification') == 14) ? img14*0.8"+
+                          ":(b('classification') == 15) ? img15*0.8"+
+                            ":(b('classification') == 16) ? img16*0.7"+
+                              ":(b('classification') == 21) ? img21*0.7"+
+                                ":(b('classification') == 22) ? img22*0.8"+
+                                  ":(b('classification') == 23) ? img23*0.6"+
                             ":0",{
                                     'img11':scaledprob.select('SL'),
                                     'img12':scaledprob.select('DL'),
                                     'img13':scaledprob.select('IRF'),
                                     'img14':scaledprob.select('ORF'),
-                                    'img15':scaledprob.select('RC'),
+                                    'img15':scaledprob.select('RR'),
                                     'img16':scaledprob.select('TRF'),
                                     'img21':scaledprob.select('SS'),
                                     'img22':scaledprob.select('SE'),
                                     'img23':scaledprob.select('PL')
-                            }));
-                            
+                            });
 var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic).toDouble();
 Map.addLayer(fprob,fprob_str,'fprob',false);
 print('HtMzones',HtMzones);
