@@ -245,7 +245,7 @@ function zones (img) {
   return img_zones;
 }
 
-var HtMzones=zones(HtMareas);
+var HtMzones=zones(HtMareas).toDouble();
 Map.addLayer(HtMzones,{},'HtMzones',false);
 
 //7.3 creation of zones around QAQC features
@@ -255,7 +255,7 @@ print('qaqc',qaqc)
 //set qaqc polygons as not trustworthy=10
 function ft_zones (fc){
   
-  var qaqc_const=ee.Image.constant(10).clip(qaqc).toUint8();
+  var qaqc_const=ee.Image.constant(10).clip(qaqc).toDouble();
   var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
   return img;
 }
@@ -316,7 +316,7 @@ var fprob_geo=val_map.expression(
                                     'img23':scaledprob.select('PL')
                             });
                             
-var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic).toUint8();
+var fprob=((vars.geomorphic) ? fprob_geo : fprob_benthic).toDouble();
 Map.addLayer(fprob,{},'fprob',false);
 
 //7.5 union of QAQCzones and HtMzones
