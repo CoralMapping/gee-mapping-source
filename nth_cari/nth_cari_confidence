@@ -267,7 +267,7 @@ Map.addLayer(QAQCzones,{},'QAQCzones',false);
 var prob=(vars.geomorphic) ? prob_geo.expression('100-img',{'img':prob_geo}) : prob_benthic.expression('100-img',{'img':prob_benthic}) ;
 print('prob',prob);
 // Map.addLayer(prob,{},'prob');
-var scaledprob=prob.divide(10).round().aside(print,'scaledprob')//.addBands(val_map);
+var scaledprob=prob.divide(10).aside(print,'scaledprob')//.addBands(val_map);
 
 //transformation of single image with bands to an image collection with the bands been the images
 
