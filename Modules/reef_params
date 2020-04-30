@@ -284,7 +284,8 @@ var nth_cari = {
   geo_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean2-man",
   benthic_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean",
   prob_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo"],
-  prob_benthic:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_benthic"]
+  prob_benthic:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_benthic"],
+  QAQC: "projects/coral_atlas/nth_cari/QAQC"
 }
 
 
@@ -312,7 +313,8 @@ var east_africa = {
   geo_map_clean:"projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2",
   benthic_map_clean: "",
   prob_geo:["projects/coral_atlas/east_africa/in_out/east_africa_prob_geo"],
-  prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"]
+  prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"],
+  QAQC: "projects/coral_atlas/east_africa/QAQC"
 };
 
 /* Waiting for S2 depth layer for East Africa
