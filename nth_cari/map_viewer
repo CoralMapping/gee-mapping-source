@@ -3438,7 +3438,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 //Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
 
 Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
-Map.addLayer(Artifact_layer, {}, 'Artifact Layer', false)
+Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
 //Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
