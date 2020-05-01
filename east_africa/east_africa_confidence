@@ -60,7 +60,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
