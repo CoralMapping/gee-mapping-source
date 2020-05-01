@@ -60,7 +60,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -394,7 +394,7 @@ Map.add(legend)
 Export.image.toAsset({
   image:confidence,
   description:'connf_geoV2',
-  assetId:'projects/coral_atlas/Micronesia/in_out/wmic_conf_geoV2',
+  assetId:'projects/coral_atlas/east_africa/in_out/east_africa_conf_geoV2',
   region:east_africa_extent,
   scale:vars.export_scale,
   maxPixels:1e13
