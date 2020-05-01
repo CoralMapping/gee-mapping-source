@@ -4,6 +4,7 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
     Artifact_layer = 
     /* color: #ff0000 */
     /* shown: false */
+    /* locked: true */
     ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.LinearRing(
@@ -8250,17 +8251,11 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
                  [-156.86350272368097, 21.164036506170685]]),
             {
               "system:index": "491"
-            })]);
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
-//a very simple script for Chris to create masks for non reef areas 
-
-//table of content
-//1. filter wcmc by hawaii extent
-//2. Load layers
-
-//1. filter wcmc by hawaii extent
-
-hawaii_extent = 
+            })]),
+    extent_to_wcmc = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
     ee.Geometry.Polygon(
         [[[-178.72425115542498, 29.25056772882539],
           [179.342155094575, 26.767793457054754],
@@ -8271,13 +8266,20 @@ hawaii_extent =
           [-154.20276678042498, 16.65999363526341],
           [-151.39026678042498, 21.066675697353528],
           [-165.45276678042498, 26.61074079928138]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//a very simple script for Chris to create masks for non reef areas 
 
-var hawaiwcmc_extent = wcmc.filterBounds(hawaii_extent);
+//table of content
+//1. filter wcmc by hawaii extent
+//2. Load layers
+
+//1. filter wcmc by hawaii extent
+
+
+var hawaiwcmc_extent = wcmc.filterBounds(extent_to_wcmc);
 Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 
 //2. Load layers
 
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
-
-
 Map.addLayer(low_rrs, {}, 'Dove sr lowtide', false)
