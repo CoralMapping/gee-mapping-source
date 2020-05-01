@@ -8273,7 +8273,7 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
     /* locked: true */
     ee.Geometry.Point([-166.80017829931444, 24.372404312456162]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-//a very simple script for Chris to create masks for non reef areas 
+//a very simple script for Chris to create masks for non reef areas for Hawai 
 
 //table of content
 //1. Load mosaic
