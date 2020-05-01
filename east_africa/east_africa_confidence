@@ -330,7 +330,7 @@ var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
 //reduction to the unit,
 //x=(ConfValue * 10)/3
 
-var confidence=((union.updateMask(toMask.eq(0))));//.multiply(ee.Number(10))).divide(ee.Number(3));
+var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
 
 //remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
 var confidenceEXP=confidence.expression(
