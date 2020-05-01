@@ -60,7 +60,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -165,6 +165,8 @@ Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
 
 
 //7. confidence layer
+
+var toMask=val_map.multiply(0);
 //7.1 estimation of hard to map areas
 
 //function to import a new column to validation datasets which will state if chosen points are true-positive (1) or true-negative (0)
@@ -246,7 +248,7 @@ function zones (img) {
   return img_zones;
 }
 
-var HtMzones=zones(HtMareas).toDouble();
+var HtMzones=zones(HtMareas).updateMask(toMask.eq(0)).toDouble();
 Map.addLayer(HtMzones,{},'HtMzones',false);
 
 // 7.3 creation of zones around QAQC features
@@ -257,8 +259,9 @@ print('qaqc',qaqc)
 function ft_zones (fc){
   
   var qaqc_const=ee.Image.constant(10).clip(qaqc).toDouble();
-  var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
-  return img;
+  var qaqc_extent=ee.Image.constant(0).updateMask(toMask.eq(0)).toDouble();
+  var img=ee.ImageCollection.fromImages([qaqc_const,qaqc_extent]).sum();
+  return img.updateMask(toMask.eq(0));
 }
 var QAQCzones=ft_zones(qaqc);
 Map.addLayer(QAQCzones,{},'QAQCzones',false);
@@ -320,14 +323,14 @@ print('HtMzones',HtMzones);
 //7.5 union of QAQCzones and HtMzones
 var union=(ee.ImageCollection([QAQCzones,HtMzones,fprob])).sum();
 
-var toMask=val_map.multiply(0);
+
 //clip area of interst according to val_map and transform the 
 //range of confidence values 
 //high conf:0 , low conf=30 
 //reduction to the unit,
 //x=(ConfValue * 10)/3
 
-var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
+var confidence=((union.updateMask(toMask.eq(0))));//.multiply(ee.Number(10))).divide(ee.Number(3));
 
 //remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
 var confidenceEXP=confidence.expression(
