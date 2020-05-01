@@ -8274,13 +8274,14 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
 //1. filter wcmc by hawaii extent
 //2. Load layers
 
-//1. filter wcmc by hawaii extent
+
+//1. Load mosaic
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
 Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
+
+//2. filter wcmc by hawaii extent
 var hawaiwcmc_extent = wcmc.filterBounds(extent_to_wcmc);
 Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
-//Map.addLayer(hawaiwcmc_extent, {}, 'UNEP', false)
-//2. Load layers
-
+//3. Load artifact layer
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 
