@@ -8271,9 +8271,9 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
 //a very simple script for Chris to create masks for non reef areas 
 
 //table of content
-//1. filter wcmc by hawaii extent
-//2. Load layers
-
+//1. Load mosaic
+//2. filter wcmc by hawaii extent
+//3. Load artifact layer
 
 //1. Load mosaic
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
