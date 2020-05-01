@@ -8266,7 +8266,8 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
           [-154.20276678042498, 16.65999363526341],
           [-151.39026678042498, 21.066675697353528],
           [-165.45276678042498, 26.61074079928138]]]),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1},
+    geometry = /* color: #bf04c2 */ee.Geometry.Point([-166.80017829931444, 24.372404312456162]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //a very simple script for Chris to create masks for non reef areas 
 
@@ -8285,3 +8286,4 @@ Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 
+Map.setCenter(-166.80017829931444,24.372404312456162, 7)
