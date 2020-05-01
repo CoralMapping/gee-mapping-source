@@ -1,7 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-77.14244768345269, 24.079294121145775]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([-77.14244768345269, 24.079294121145775]),
     eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
