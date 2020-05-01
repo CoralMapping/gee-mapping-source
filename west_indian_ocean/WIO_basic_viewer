@@ -24,7 +24,11 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.82775138818556, -5.763256998170763],
           [49.98204826318556, -8.3796848102697],
           [45.76329826318556, -7.944684366846614]]]),
-    Artifact_layer = /* color: #ff0000 */ee.FeatureCollection(
+    Artifact_layer = 
+    /* color: #ff0000 */
+    /* shown: false */
+    /* locked: true */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.LinearRing(
                 [[43.041240905195764, -11.809274190877371],
@@ -6843,6 +6847,6 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 var hawaiwcmc_extent = wcmc.filterBounds(extent_to_wcmc);
 Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
-Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
+Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'WIO_artifacts', false)
 
 Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
