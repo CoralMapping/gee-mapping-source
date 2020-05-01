@@ -8286,4 +8286,4 @@ Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 
-Map.setCenter(-166.80017829931444,24.372404312456162, 7)
+Map.setCenter(-166.80017829931444, 24.372404312456162, 7)
