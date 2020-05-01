@@ -8268,16 +8268,27 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
 //a very simple script for Chris to create masks for non reef areas 
 
 //table of content
-//1. clip the wcmc layer to hawai extent. 
+//1. filter wcmc by hawaii extent
 //2. Load layers
 
-//1. clip wcmc
+//1. filter wcmc by hawaii extent
 
+hawaii_extent = 
+    ee.Geometry.Polygon(
+        [[[-178.72425115542498, 29.25056772882539],
+          [179.342155094575, 26.767793457054754],
+          [-171.60511053042498, 21.884553441493406],
+          [-170.81409490542498, 14.118051190267005],
+          [-166.15589178042498, 14.032799365775649],
+          [-164.22229803042498, 19.251632297313535],
+          [-154.20276678042498, 16.65999363526341],
+          [-151.39026678042498, 21.066675697353528],
+          [-165.45276678042498, 26.61074079928138]]]);
 
 var hawaiwcmc_extent = wcmc.filterBounds(hawaii_extent);
 Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 
-
+//2. Load layers
 
 Map.addLayer(low_rrs, {}, 'Dove sr lowtide', false)
 
