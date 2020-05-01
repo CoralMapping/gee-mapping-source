@@ -6829,7 +6829,12 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
                  [55.285960690382126, -21.190464233391502]]),
             {
               "system:index": "429"
-            })]);
+            })]),
+    geometry = 
+    /* color: #999900 */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Point([54.157376174260776, -12.603525790684419]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //a very simple script for Chris to create masks for non reef areas for WIO
 
@@ -6849,4 +6854,4 @@ Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'WIO_artifacts', false)
 
-Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
+Map.setCenter(54.157376174260776, -12.603525790684419, 5)
