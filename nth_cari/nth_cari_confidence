@@ -164,6 +164,8 @@ Map.addLayer(val_map, val_mapVIS, 'Valdiation map', false);
 
 
 //7. confidence layer
+
+var toMask=val_map.multiply(0);
 //7.1 estimation of hard to map areas
 
 //function to import a new column to validation datasets which will state if chosen points are true-positive (1) or true-negative (0)
@@ -245,10 +247,10 @@ function zones (img) {
   return img_zones;
 }
 
-var HtMzones=zones(HtMareas).toDouble();
+var HtMzones=zones(HtMareas).updateMask(toMask.eq(0)).toDouble();
 Map.addLayer(HtMzones,{},'HtMzones',false);
 
-//7.3 creation of zones around QAQC features
+// 7.3 creation of zones around QAQC features
 var qaqc=ee.FeatureCollection(region_params.QAQC);
 print('qaqc',qaqc)
 
@@ -256,8 +258,9 @@ print('qaqc',qaqc)
 function ft_zones (fc){
   
   var qaqc_const=ee.Image.constant(10).clip(qaqc).toDouble();
-  var img=ee.ImageCollection.fromImages([qaqc_const]).mosaic();
-  return img;
+  var qaqc_extent=ee.Image.constant(0).updateMask(toMask.eq(0)).toDouble();
+  var img=ee.ImageCollection.fromImages([qaqc_const,qaqc_extent]).sum();
+  return img.updateMask(toMask.eq(0));
 }
 var QAQCzones=ft_zones(qaqc);
 Map.addLayer(QAQCzones,{},'QAQCzones',false);
