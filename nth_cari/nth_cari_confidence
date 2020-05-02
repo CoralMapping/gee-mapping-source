@@ -312,7 +312,7 @@ var fprob_geo=val_map.expression(
                                     'img12':scaledprob.select('DL'),
                                     'img13':scaledprob.select('IRF'),
                                     'img14':scaledprob.select('ORF'),
-                                    'img15':scaledprob.select('RR'),
+                                    'img15':scaledprob.select('RC'),
                                     'img16':scaledprob.select('TRF'),
                                     'img21':scaledprob.select('SS'),
                                     'img22':scaledprob.select('SE'),
@@ -396,7 +396,7 @@ Map.add(legend)
 Export.image.toAsset({
   image:confidence,
   description:'connf_geoV2',
-  assetId:'projects/coral_atlas/Micronesia/in_out/wmic_conf_geoV2',
+  assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geoV2',
   region:nth_cari_extent,
   scale:vars.export_scale,
   maxPixels:1e13
