@@ -61,7 +61,7 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -111,6 +111,9 @@ if (vars.assess_clean) {
   var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
   var benthic_map = ee.ImageCollection(region_params.benthic_map).mosaic()
 }
+var prob= (vars.geomorphic) ? ee.Image(region_params.prob_geo) : ee.Image(region_params.prob_benthic);
+Map.addLayer(prob,{},'prob1')
+print('prob1',prob);
 
 // Add the raw data
 var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
@@ -267,11 +270,10 @@ Map.addLayer(QAQCzones,{},'QAQCzones',false);
 
 //7.4 import of prob layer. 
 //cross ref each classified pixel with the respective prob layer of soft classification
-var prob=(vars.geomorphic) ? prob_geo.expression('100-img',{'img':prob_geo}) : prob_benthic.expression('100-img',{'img':prob_benthic}) ;
-print('prob',prob);
-// Map.addLayer(prob,{},'prob');
-var scaledprob=prob.divide(10).aside(print,'scaledprob')//.addBands(val_map);
-
+var probf=prob.expression('100-img',{'img':prob});
+print('probf',probf);
+Map.addLayer(probf,{},'probf');
+var scaledprob=probf.divide(10).aside(print,'scaledprob')//.addBands(val_map);
 //transformation of single image with bands to an image collection with the bands been the images
 
 var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
@@ -286,14 +288,12 @@ var fprob_benthic=val_map.expression(
                       ":(b('classification') == 13) ? img13*0.7"+
                         ":(b('classification') == 14) ? img14*0.6"+
                           ":(b('classification') == 15) ? img15*0.7"+
-                            ":(b('classification') == 18) ? img18*0.5"+
                             ":0",{
                               'img11':scaledprob.select('SA'),
                               'img12':scaledprob.select('RU'),
                               'img13':scaledprob.select('RO'),
                               'img14':scaledprob.select('SG'),
-                              'img15':scaledprob.select('CO'),
-                              'img18':scaledprob.select('BMA')
+                              'img15':scaledprob.select('CO')
                             });
 
 //for geomorphic
