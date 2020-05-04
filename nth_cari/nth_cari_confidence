@@ -18,9 +18,7 @@ var prob_geo = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_geo"),
     poi = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.Point([-77.5198670014832, 21.768093412861553]),
-    image = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geo"),
-    image2 = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_conf_benthic");
+    ee.Geometry.Point([-77.5198670014832, 21.768093412861553]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
