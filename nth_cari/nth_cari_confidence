@@ -285,7 +285,7 @@ var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
 var fprob_benthic=val_map.expression(
                   "(b('classification') == 11) ? img11*0.9"+
                     ":(b('classification') == 12) ? img12*0.3"+
-                      ":(b('classification') == 13) ? img13*0.7"+
+                      ":(b('classification') == 13) ? img13*0.6"+
                         ":(b('classification') == 14) ? img14*0.6"+
                           ":(b('classification') == 15) ? img15*0.7"+
                             ":0",{
