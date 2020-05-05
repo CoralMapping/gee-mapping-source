@@ -270,7 +270,7 @@ Map.addLayer(QAQCzones,{},'QAQCzones',false);
 
 //7.4 import of prob layer. 
 //cross ref each classified pixel with the respective prob layer of soft classification
-var probf=prob.expression('100-img',{'img':prob}).rename((vars.geomorphic) ? vars.classes_mapped_names_geo : vars.classes_mapped_names_benthic);
+var probf=prob.expression('100-img',{'img':prob}).rename(classes_mapped_names);
 print('probf',probf);
 Map.addLayer(probf,{},'probf', false);
 var scaledprob=probf.divide(10).aside(print,'scaledprob')//.addBands(val_map);
