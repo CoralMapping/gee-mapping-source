@@ -36,7 +36,7 @@ Map.addLayer(benthic, map_palettes.benthic, "East Africa Benthic - RAW", false)
 Map.addLayer(geo, map_palettes.geo, "East Africa Geo - RAW", false)
 Map.addLayer(geo_clean1, map_palettes.geo, "East Africa Geo - CLEAN1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "East Africa Geo - CLEAN2", false)
-Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - CLEAN3man", false)
+//Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - CLEAN3man", false)
 Map.addLayer(wcmc, {}, "WCMC (UNEP)", false )
 
 // wave data
