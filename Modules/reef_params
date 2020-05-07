@@ -345,6 +345,34 @@ var hawaii = {
   QAQC: ""
 };
 
+var wio = {
+  sname:"wio",
+  tide: "both",
+  asset: "projects/coral_atlas/west_indian_ocean/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200214T213747Z/west_indian_ocean_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic_depth",
+  s2_depth: "projects/coral_atlas/west_indian_ocean/depth/west_indian_ocean_sentinel",
+  ls8_depth: "projects/coral_atlas/west_indian_ocean/depth/west_indian_ocean_landsat8",
+  pixels:[""],
+  segments:[""],
+  waves:"",
+  geo_train:"",
+  benthic_train:"",
+  benthic_pts:"",
+  geo_train_library: "",
+  benthic_train_library:"",
+  geo_val_library:"",
+  benthic_val_library:"",
+  geo_map: [""],
+  benthic_map: [""],
+  geo_map_clean:"",
+  benthic_map_clean: "",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
+
 // export the objects
 exports = {
   sentinel : sentinel,
