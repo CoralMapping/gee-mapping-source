@@ -1,8 +1,17 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61402686529598]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([-78.9153107173891, 23.61402686529598]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
-    manual_mask_additions = /* color: #d63000 */ee.FeatureCollection([]),
-    caribaha_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    manual_mask_additions = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection([]),
+    caribaha_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-86.23220524863909, 28.976153347784912],
           [-84.29861149863909, 29.014590503768016],
           [-82.80447087363909, 25.658078859703004],
@@ -30,7 +39,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61
           [-76.60818181113909, 26.977610819053098],
           [-83.55154118613909, 30.046951074246888],
           [-86.05642399863909, 30.046951074246888]]]),
-    not_reef = /* color: #ff2705 */ee.Geometry.MultiPolygon(
+    not_reef = 
+    /* color: #ff2705 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-77.6908298412265, 17.939251182238742],
            [-78.014926520914, 17.68952937580111],
            [-78.03277930411713, 17.53507699179179],
@@ -193,9 +205,12 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 
 // make the depth data for modelling/mapping
 // --> Use S2 where possible, then LS8, then Dove
-var depth = s2_depth.unmask(0)
+
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+
+/*var depth = s2_depth.unmask(0)
 depth = depth.where(depth.eq(0), ls8_depth.updateMask(ls8_depth.gt(0)))
-depth = depth.where(depth.eq(0), dove_depth.updateMask(dove_depth.gt(-2))).selfMask()
+depth = depth.where(depth.eq(0), dove_depth.updateMask(dove_depth.gt(-2))).selfMask()*/
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
 // define a mask based on min/max depth
