@@ -1,25 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61402686529598]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
-    manual_mask_additions = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection(
-        [ee.Feature(
-            ee.Geometry.Polygon(
-                [[[178.0708356215348, -16.4585267896326],
-                  [178.16284611958167, -16.444039023103436],
-                  [178.2136578871598, -16.39134712666384],
-                  [178.07907536762855, -16.39398206044838],
-                  [178.00354436176917, -16.44799033943158]]]),
-            {
-              "mask": 1,
-              "system:index": "0"
-            })]),
-    caribaha_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    manual_mask_additions = /* color: #d63000 */ee.FeatureCollection([]),
+    caribaha_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[-86.23220524863909, 28.976153347784912],
           [-84.29861149863909, 29.014590503768016],
           [-82.80447087363909, 25.658078859703004],
@@ -107,7 +90,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-78.9153107173891, 23.61
            [-80.22170017958122, 26.534859871299503],
            [-80.21071385145622, 26.79503360454802],
            [-80.26564549208122, 27.030149059506883],
-           [-79.92506932020622, 27.088851286645333]]]]);
+           [-79.92506932020622, 27.088851286645333]]]]),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - north Caribeean and Bahamas region 
