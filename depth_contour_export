@@ -1,0 +1,103 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[31.121204467946882, -31.411041599774755],
+          [32.79112634294688, -29.364180356061105],
+          [34.10948571794688, -26.64864146898624],
+          [35.16417321794688, -26.09744332836087],
+          [36.13097009294688, -24.50834739053567],
+          [36.57042321794688, -22.979842292013522],
+          [36.30675134294688, -21.270132913139985],
+          [38.50401696794688, -21.270132913139985],
+          [39.73448571794688, -22.979842292013522],
+          [41.14073571794688, -23.06073386453583],
+          [40.52550134294688, -20.77789632365656],
+          [36.21886071794688, -20.53117240693014],
+          [38.15245446794688, -18.87635491764573],
+          [40.26182946794688, -17.45673496942927],
+          [42.19542321794688, -17.708088759853805],
+          [42.98643884294688, -18.79317053176866],
+          [42.28331384294688, -20.366468148176708],
+          [42.01964196794688, -22.00540190430658],
+          [42.45909509294688, -24.027605336930787],
+          [42.98643884294688, -26.09744332836087],
+          [44.65636071794688, -26.884060773354015],
+          [46.23839196794688, -26.884060773354015],
+          [47.64464196794688, -26.09744332836087],
+          [51.07237634294688, -17.121057194275338],
+          [51.16026696794688, -14.414681842418576],
+          [51.07237634294688, -12.362758617469154],
+          [50.10557946794688, -11.244359975643313],
+          [48.87511071794688, -10.98563423171387],
+          [47.11729821794688, -11.58896577521693],
+          [46.41417321794688, -13.988660305261345],
+          [44.92003259294688, -14.499789335930576],
+          [43.16222009294688, -16.025967619458346],
+          [41.14073571794688, -16.70060775272479],
+          [42.19542321794688, -14.073928568030755],
+          [42.63487634294688, -12.190997297629886],
+          [41.31651696794688, -9.68870289099965],
+          [40.61339196794688, -8.299779771952322],
+          [40.96495446794688, -4.807683386635547],
+          [42.98643884294688, -1.7368970884329196],
+          [41.75597009294688, -0.5945743798816179],
+          [40.08604821794688, -1.6490448370107085],
+          [38.76768884294688, -4.019019543952347],
+          [38.15245446794688, -5.770352494982221],
+          [38.32823571794688, -8.038783727240958],
+          [39.73448571794688, -10.81302398266445],
+          [39.82237634294688, -15.264265206946897],
+          [33.58214196794688, -19.208678189877617],
+          [34.54893884294688, -23.14157684632459],
+          [32.26378259294688, -24.90756749127227],
+          [31.824329467946882, -27.82081513216125],
+          [30.066516967946882, -29.746450625472228]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - depth contour export script
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Primarily for use in generating exports for wave modelling
+///////////////////////////////
+
+// load analysis params module
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var region_params = param_module.nth_cari        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+
+// load data dynamically
+var dove_depth = ee.Image(region_params.depth).rename('depth')
+var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+
+// make the depth data for modelling/mapping
+// --> Use S2 where possible, then LS8, then Dove
+// --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+// get back the negative retrievals as very shallow
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+
+// #############################
+// OK now do the data for the wave contours
+// choose a depth (in cm) cutoff that oy think looks good, then export it =)
+var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
+// #############################
+
+var depth_contour = depth.lt(depth_thresh) 
+var depth_contour_smooth = depth.focal_mean({radius:5, iterations: 3}).lt(depth_thresh)
+
+Map.addLayer(depth, {min: 0, max: 2500}, "Depth data", true)
+Map.addLayer(depth_contour, {min: 0, max: 1}, "Depth contour", true)
+Map.addLayer(depth_contour_smooth, {min: 0, max: 1}, "Depth contour", true)
+
+Export.image.toDrive({
+  image: depth_contour_smooth, // <--- ######## CHANGE TO THE NON-SMOOTH ONE IF YOU PREFER IT?
+  description: 'depth_contour_export',
+  folder: ' your/folder',
+  fileNamePrefix: 'xx_depth_contour',
+  region: region_extent,
+  scale: 10,
+  maxPixels: 10e13,
+  skipEmptyTiles: true
+})
