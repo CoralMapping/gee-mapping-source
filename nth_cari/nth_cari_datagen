@@ -207,7 +207,7 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 // --> Use S2 where possible, then LS8, then Dove
 // --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
 var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
-// get back the negative retrievals as v shallow
+// get back the negative retrievals as very shallow
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
 // define a mask based on min/max depth
