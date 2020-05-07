@@ -37,7 +37,10 @@ var eg_area =
           [51.182930272342325, -30.595651061601146],
           [51.182930272342325, -1.137341931686524]]], null, false),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    not_reef = /* color: #09fc27 */ee.Geometry.MultiPolygon(
+    not_reef = 
+    /* color: #09fc27 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[38.35401789079527, -16.424735032322175],
            [34.88233820329527, -18.228546805551858],
            [33.82765070329527, -20.034493928429058],
@@ -251,7 +254,7 @@ if (vars.manual_clean) {
   var depth = ee.Image(region_params.pixels).select('depth')
   Map.addLayer(depth.lt(1000), {}, "10m depth contour", false)
   
-  Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
+  Map.addLayer(waves.lt(0.25), {}, "0.25m Hs95 threshold", false)
   
   // "not reef" extents to be moved over to _datagen script
   var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
@@ -272,7 +275,7 @@ if (vars.manual_clean) {
   // WAVE clean (to be integrated into RF classifier)
   // remove
   man_geo = man_geo.where({
-    test: waves.lte(0.4)
+    test: waves.lte(0.25)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
