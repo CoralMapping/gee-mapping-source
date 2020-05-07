@@ -132,7 +132,10 @@ var eg_area =
           [40.30348884187174, -1.3734887548247627]]]),
     mod_land = ee.ImageCollection("MODIS/006/MOD44W"),
     waves = ee.Image("users/danleeharris/reefwave/est_afr_d1"),
-    not_reef = /* color: #09fc27 */ee.Geometry({
+    not_reef = 
+    /* color: #09fc27 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
