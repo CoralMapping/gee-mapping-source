@@ -2546,6 +2546,14 @@ if (vars.manual_clean) {
     value: ee.Image(14)
   })
   
+   // TRF far from land -> ORF
+  man_geo = man_geo.where({
+    test: land_mask_buff.eq(1)
+                        .and(man_geo.eq(16)),
+    value: ee.Image(14)
+  })
+  
+  
   // Add the manual layer to the map
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
   // Export
