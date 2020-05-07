@@ -64,7 +64,7 @@ var region_extent =
 
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
-var region_params = param_module.nth_cari        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.hawaii        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 
 // load data dynamically
 var dove_depth = ee.Image(region_params.depth).rename('depth')
