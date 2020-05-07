@@ -37,10 +37,7 @@ var eg_area =
           [51.182930272342325, -30.595651061601146],
           [51.182930272342325, -1.137341931686524]]], null, false),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    not_reef = 
-    /* color: #09fc27 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    not_reef = /* color: #09fc27 */ee.Geometry.MultiPolygon(
         [[[[38.35401789079527, -16.424735032322175],
            [34.88233820329527, -18.228546805551858],
            [33.82765070329527, -20.034493928429058],
@@ -195,7 +192,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -216,7 +213,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -226,7 +223,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean3-man',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
