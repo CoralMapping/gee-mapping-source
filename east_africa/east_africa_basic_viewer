@@ -23,8 +23,10 @@ var geometry = /* color: #09fc27 */ee.Geometry.MultiPolygon(
            [49.98869312708323, -18.537724121455103],
            [48.86808765833323, -18.18320498875907],
            [46.49504078333323, -24.422927003569175],
-           [46.82463062708323, -24.782528311925947]]]]);
+           [46.82463062708323, -24.782528311925947]]]]),
+    dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
-Map.addLayer(geometry)
+Map.addLayer(dove_low, {}, "Dove low tide", true)
+Map.addLayer(geometry, {}, "no reef geoms", false)
