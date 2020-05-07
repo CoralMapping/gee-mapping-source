@@ -388,5 +388,6 @@ exports = {
   wmic: wmic,
   nth_cari:nth_cari,
   east_africa: east_africa,
-  hawaii: hawaii
+  hawaii: hawaii,
+  wio: wio
 }
