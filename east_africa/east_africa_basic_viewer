@@ -352,10 +352,12 @@ var geometry = /* color: #09fc27 */ee.Geometry({
     }),
     dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":29.1,"max":1233.9,"gamma":1},
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    geometry2 = /* color: #d63000 */ee.Geometry.Point([41.28051744634149, -18.63339750396896]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
 Map.addLayer(dove_low, imageVisParam, "Dove low tide", true)
 Map.addLayer(geometry, {}, "no reef geoms", false)
 Map.addLayer(wcmc, {}, "UNEP", false)
+Map.setCenter(41.28051744634149, -18.6333975039689, 4)
