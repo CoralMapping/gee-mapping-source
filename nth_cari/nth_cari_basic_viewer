@@ -8266,12 +8266,7 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
           [-154.20276678042498, 16.65999363526341],
           [-151.39026678042498, 21.066675697353528],
           [-165.45276678042498, 26.61074079928138]]]),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1},
-    geometry = 
-    /* color: #bf04c2 */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry.Point([-166.80017829931444, 24.372404312456162]);
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //a very simple script for Chris to create masks for non reef areas for NCB
 
