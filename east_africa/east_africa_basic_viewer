@@ -363,15 +363,18 @@ var geometry = /* color: #09fc27 */ee.Geometry({
 
 //1. Load mosaic
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
-Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
+Map.addLayer(dove_low, imageVisParam, 'Dove sr lowtide', false)
 
 //2. filter wcmc by hawaii extent
-var hawaiwcmc_extent = wcmc.filterBounds(extent_to_wcmc);
-Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
+var eastAfrica_extent = wcmc.filterBounds(extent_to_wcmc);
+Map.addLayer(eastAfrica_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
+
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 
 Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
+
+
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
 Map.addLayer(dove_low, imageVisParam, "Dove low tide", true)
 Map.addLayer(geometry, {}, "no reef geoms", false)
