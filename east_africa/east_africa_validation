@@ -38,7 +38,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -125,7 +125,16 @@ if (vars.assess_accuracy) {
   }
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
-  print('validation num',validation_pts.size())
+  
+  // var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
+  print('validation points in total',validation_pts.size());
+  var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
+  var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
+  var classN=ee.String(classOfInt.first().get('class_num'));
+  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  return classOfInt
+  }));
+  print(NumOfValPointsPerClass)
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
