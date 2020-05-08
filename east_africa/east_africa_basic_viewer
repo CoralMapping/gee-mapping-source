@@ -1473,6 +1473,7 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
     not_reef = 
     /* color: #09fc27 */
     /* shown: false */
+    /* locked: true */
     ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
