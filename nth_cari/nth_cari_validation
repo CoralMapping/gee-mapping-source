@@ -126,6 +126,14 @@ if (vars.assess_accuracy) {
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
   
+   print('validation points in total',validation_pts.size());
+  var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
+  var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
+  var classN=ee.String(classOfInt.first().get('class_num'));
+  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  return classOfInt
+  }));
+  
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
@@ -160,7 +168,7 @@ if (vars.assess_accuracy) {
   })
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-    print("Overall accuracy", accuracy_oa)
+    print("Overall accuracy", accuracy_oa.format('%.2f'))
     print("User's accuracy", accuracy_cons)
     print("Producer's accuracy", accuracy_prod)
     
