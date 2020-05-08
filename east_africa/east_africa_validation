@@ -134,7 +134,7 @@ if (vars.assess_accuracy) {
   print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
   return classOfInt
   }));
-  print(NumOfValPointsPerClass)
+  // print(NumOfValPointsPerClass)
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
         .reduceRegions({
@@ -169,8 +169,8 @@ if (vars.assess_accuracy) {
   })
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-    print("Overall accuracy", accuracy_oa)
-    print("User's accuracy", accuracy_cons)
+    print("Overall accuracy", accuracy_oa.format('%.2f'))
+    print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')}))
     print("Producer's accuracy", accuracy_prod)
     
     var classification_errormatrix_array = classification_errormatrix.array()
