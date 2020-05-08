@@ -1,7 +1,21 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":29.1,"max":1233.9,"gamma":1},
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    extent_to_wcmc = 
+    /* color: #ff0000 */
+    /* shown: false */
+    /* locked: true */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[30.469970571341502, -1.1728826654567437],
+          [30.469970571341502, -31.003657935009787],
+          [51.739501821341506, -31.003657935009787],
+          [51.739501821341506, -1.1728826654567437]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //a very simple script for Chris to create masks for non reef areas for East Africa
 
@@ -16,9 +30,7 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
 //1. Load mosaic
 //2. filter wcmc by hawaii extent
 //3. Load artifact layer
-var geometry = Artifact_layer;
-
-
+//var geometry = Artifact_layer;
 
 
 //1. Load mosaic
