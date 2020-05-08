@@ -3771,13 +3771,12 @@ var eastAfrica_extent = wcmc.filterBounds(extent_to_wcmc);
 Map.addLayer(eastAfrica_extent, {color:'ffff00'}, 'UNEP', false)
 //3. Load artifact layer
 
-Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
+Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'EastAfrica_artifacts', false)
 
 Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
 
 
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
-Map.addLayer(dove_low, imageVisParam, "Dove low tide", true)
 Map.addLayer(not_reef, {}, "no reef geoms", false)
 Map.addLayer(wcmc, {}, "UNEP", false)
 Map.setCenter(41.28051744634149, -18.6333975039689, 4)
