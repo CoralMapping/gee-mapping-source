@@ -16,7 +16,7 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
           [30.469970571341502, -31.003657935009787],
           [51.739501821341506, -31.003657935009787],
           [51.739501821341506, -1.1728826654567437]]], null, false),
-    geometry = /* color: #ff0000 */ee.FeatureCollection(
+    Artifact_layer = /* color: #ff0000 */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.LinearRing(
                 [[31.308504140652303, -29.40993962919032],
@@ -1480,7 +1480,7 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
 //1. Load mosaic
 //2. filter wcmc by hawaii extent
 //3. Load artifact layer
-var geometry = Artifact_layer;
+
 
 
 
