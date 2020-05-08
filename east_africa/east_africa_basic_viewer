@@ -1471,7 +1471,7 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
 
 //table of content
 //1. Load mosaic
-//2. filter wcmc by hawaii extent
+//2. filter wcmc by East Africa extent
 //3. Load artifact layer
 
 
