@@ -16,7 +16,11 @@ var dove_low = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_
           [30.469970571341502, -31.003657935009787],
           [51.739501821341506, -31.003657935009787],
           [51.739501821341506, -1.1728826654567437]]], null, false),
-    Artifact_layer = /* color: #ff0000 */ee.FeatureCollection(
+    Artifact_layer = 
+    /* color: #ff0000 */
+    /* shown: false */
+    /* locked: true */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.LinearRing(
                 [[31.308504140652303, -29.40993962919032],
@@ -3777,6 +3781,6 @@ Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
 
 
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
-Map.addLayer(not_reef, {}, "no reef geoms", false)
-Map.addLayer(wcmc, {}, "UNEP", false)
+Map.addLayer(not_reef, {color:'#09fc27'}, "no reef geoms", false)
+
 Map.setCenter(41.28051744634149, -18.6333975039689, 4)
