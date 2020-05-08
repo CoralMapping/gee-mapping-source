@@ -354,7 +354,24 @@ var geometry = /* color: #09fc27 */ee.Geometry({
     imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":29.1,"max":1233.9,"gamma":1},
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+//a very simple script for Chris to create masks for non reef areas for East Africa
 
+//table of content
+//1. Load mosaic
+//2. filter wcmc by hawaii extent
+//3. Load artifact layer
+
+//1. Load mosaic
+var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
+Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
+
+//2. filter wcmc by hawaii extent
+var hawaiwcmc_extent = wcmc.filterBounds(extent_to_wcmc);
+Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
+//3. Load artifact layer
+Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
+
+Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
 //these are just the geometries that Chris drawn to be used to mask out non reef areas.
 Map.addLayer(dove_low, imageVisParam, "Dove low tide", true)
 Map.addLayer(geometry, {}, "no reef geoms", false)
