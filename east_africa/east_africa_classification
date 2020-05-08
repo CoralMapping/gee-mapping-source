@@ -262,7 +262,7 @@ var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : cla
 var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
   var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1,'classId',classes_names)})//.aside(print,'classOfInt');
   var classN=ee.String(classOfInt.first().get('class_num'));
-   print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
   var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)})//.aside(print,'classOfNoInt');
   var training=pixsegs.sampleRegions(classOfInt.merge(classesOfNoInt),['od'],10);
   var trained=ee.Classifier.smileRandomForest(10).train(training,'od').setOutputMode('PROBABILITY');
