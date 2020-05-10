@@ -9,7 +9,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     geo_clean1 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean1"),
-    geo_clean2 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2");
+    geo_clean2 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2"),
+    geo_clean3man = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
@@ -36,7 +37,7 @@ Map.addLayer(benthic, map_palettes.benthic, "East Africa Benthic - RAW", false)
 Map.addLayer(geo, map_palettes.geo, "East Africa Geo - RAW", false)
 Map.addLayer(geo_clean1, map_palettes.geo, "East Africa Geo - CLEAN1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "East Africa Geo - CLEAN2", false)
-//Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - CLEAN3man", false)
+Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - CLEAN3man", false)
 Map.addLayer(wcmc, {}, "WCMC (UNEP)", false )
 
 // wave data
