@@ -24,7 +24,11 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-168.05953654736723, 22.
           [-173.69225663633324, 26.624877028124494],
           [-175.49401444883324, 28.57198464676731],
           [-178.30651444883324, 29.18766050725135]]]),
-    not_reef = /* color: #ff2705 */ee.Geometry.MultiPoint(),
+    not_reef = /* color: #ff2705 */ee.Geometry.Polygon(
+        [[[-159.57441353482778, 21.899198848683866],
+          [-159.5812799899059, 21.883907672452633],
+          [-159.52772164029653, 21.874987062523306],
+          [-159.52428841275747, 21.890279195163462]]]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
