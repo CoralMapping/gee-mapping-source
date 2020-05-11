@@ -105,6 +105,7 @@ var map_centre =
 ///////////////////////////////
 // Coral atlas mapping project - Hawaii region 
 // Contact: mitchell.lyons@gmail.com
+// Region coordinator: Paul Tudman (tuddy117@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script generates the data as an asset (for quick load)
@@ -114,7 +115,7 @@ var map_centre =
 // Need to load the segmentation package
 // https://earthengine.googlesource.com/users/gena/packages/+/master/slic#
 // TODO: need to modify the source code to be able to use 2 bands?
-//var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
+// var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
@@ -122,7 +123,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.hawaii       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -146,7 +147,7 @@ var vars = {
   //segment_max: 1499, // must be <reduce_max below (~1500 at this point seems fair)
   reduce_max: 1500, // the max size of object to be able to reduce
   //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
-  segment_all_bands: true, // segemnt on all input bands or those chosen below
+  segment_all_bands: true, // segement on all input bands or those chosen below
   segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
   
   // analysis parameters
