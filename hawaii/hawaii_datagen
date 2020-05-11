@@ -8,7 +8,7 @@ var map_centre =
     /* color: #d63000 */
     /* shown: false */
     ee.FeatureCollection([]),
-    caribaha_extent = 
+    hawaii_extent = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Polygon(
