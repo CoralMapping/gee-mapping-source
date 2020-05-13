@@ -105,8 +105,8 @@ var geo_gbr_names = ['Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer 
 var geo_gbr_cols =  ['5ce0ff',         '3690c0',      'ffffbf',           'ffcc7a',         'a50f15',    'd9f0a3',                'd4d417',    'bdbdbd',   '02818a',                    ]
 
 // benthic legend
-var benthic_names = ['No benthic class',  'Temporal* (2)', 'Sand (11)',    'Rubble (12) ', 'Rock (13)', 'Coral/Algae (15)', 'Algae (17)' , 'Coral (16)', 'Mud (4)',  'Mangrove (3)', 'Seagrass (14)', 'BMA (18)']
-var benthic_cols = ['ffffff',              '08306b',      'ffffcc',        'fcbba1',       '993404',     '1c9099',           'c994c7',       '5cfaff',  'ffff5c',      '99d8c9',       'a6d96a',      '756bb1']
+var benthic_names = [ 'Sand',    'Rubble', 'Rock',    'Coral/Algae', 'Algae' ,  'Coral',   'Seagrass',  'BMA']
+var benthic_cols = ['ffffcc',  'fcbba1',   '993404',    '1c9099',    'c994c7',  '5cfaff',  'a6d96a',   '756bb1']
 
 var benthic_atlas_names = ['No benthic class',  'Sand (11)',    'Rubble (12) ', 'Rock (13)', 'Coral/Algae (15)',   'Seagrass (14)', 'Macroalgal mats (18)']
 var benthic_atlas_cols = ['ffffff',             'ffffcc',        'fcbba1',       '993404',     '1c9099',             'a6d96a',      '756bb1']
