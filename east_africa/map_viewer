@@ -235,7 +235,7 @@ var centre_map = eaaf
 Map.centerObject(centre_map, 10)
 
 
-//var geom =ee.Geometry.MultiPolygon(geometry1)
+//ad the latest mask from Chris Roelfsema for his perusal, these masks will b eventually applied to the map
 Map.addLayer(RiverMouth, {}, 'RivermouthDrwanCR', false)
 
 
