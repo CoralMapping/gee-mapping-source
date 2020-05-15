@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-168.05953654736723, 22.30794502522426]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([50.26077595263271, -9.927142570159555]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
     manual_mask_additions = 
     /* color: #d63000 */
