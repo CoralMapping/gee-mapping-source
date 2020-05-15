@@ -336,9 +336,9 @@ var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide
 
 //remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
 var confidenceEXP=confidence.expression(
-  "(b(0) >= 90) ? 3"+
-    ":(b(0) >= 60) ? 2"+
-      ":(b(0) >= 30) ? 1"+
+  "(b(0) >= 70) ? 3"+
+    ":(b(0) >= 40) ? 2"+
+      ":(b(0) >= 10) ? 1"+
       ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
 
 var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":3,"palette":["02818a","67a9cf","bdc9e1","f6eff7"]};
