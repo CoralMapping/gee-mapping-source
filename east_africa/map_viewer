@@ -24,6 +24,13 @@ var centre_map = eaaf
 Map.centerObject(centre_map, 10)
 
 
+var geom =ee.Geometry.MultiPolygon(geometry1)
+Map.addLayer(geom, {color:'#01ffff'}, 'rivermouth_mask', false)
+
+
+
+
+
 // add some background data
 //Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
 Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
