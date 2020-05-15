@@ -56,10 +56,10 @@ var vars = {
   class_field: 'class_num', // the field in the training data that stores the class integer
   // TODO: consider dynamically generating these
   classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23], // classes to map
-  classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RR', 'TRF','SS','SE', 'PL'],
+  classes_mapped_names_geo: ['Shallow_Lagoon','Deep_Lagoon', 'Inner_Reef_Flat','Outer_Reef_Flat','Reef_Rim', 'Terrestial_Reef_Flat','Slope_Sheltered','Slope_Exposed', 'Plateau'],
   // TODO: consider dynamically generating these
   classes_mapped_benthic:       [11,    12,   13,  14,    15], // classes to map
-  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO'],
+  classes_mapped_names_benthic: ['Sand', 'Rubble', 'Rock', 'Seagrass', 'Coral'],
   
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
