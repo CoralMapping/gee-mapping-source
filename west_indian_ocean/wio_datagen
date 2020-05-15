@@ -29,7 +29,19 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([50.26077595263271, -9.92
           [-159.5812799899059, 21.883907672452633],
           [-159.52772164029653, 21.874987062523306],
           [-159.52428841275747, 21.890279195163462]]]),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    wio_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[42.30667439013271, -2.264194671054589],
+          [42.30667439013271, -27.04098225287308],
+          [66.74026814013271, -27.04098225287308],
+          [66.74026814013271, -2.264194671054589]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - West indian Ocean region 
@@ -162,7 +174,7 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define it if it's a normal shape, otherwise draw it
 //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: hawaii_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wio_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
