@@ -237,7 +237,8 @@ Map.centerObject(centre_map, 10)
 
 //ad the latest mask from Chris Roelfsema for his perusal, these masks will b eventually applied to the export_maps
 // scripts as a quick fix for EA
-Map.addLayer(RiverMouth, {}, 'RivermouthDrwanCR', false)
+Map.addLayer(RiverMouth, {}, 'RivermouthDrawnByCR', false)
+Map.addLayer()
 
 
 
