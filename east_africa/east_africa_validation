@@ -126,7 +126,7 @@ if (vars.assess_accuracy) {
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
   
-  // var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
+  
   print('validation points in total',validation_pts.size());
   var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
   var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
@@ -134,16 +134,13 @@ if (vars.assess_accuracy) {
   print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
   return classOfInt
   }));
-  // print(NumOfValPointsPerClass)
-  // calculate an error matrix - won't account for unmapped areas though
-  var accuracy_collection = val_map.unmask()
-        .reduceRegions({
-          collection: validation_pts,
-          reducer: ee.Reducer.first(),
-          scale: sensor_params.pixel,
-        })
   
-  // print out info on the join, to check classes are in order
+var accuracy_collection = val_map.unmask()
+    .reduceRegions({
+        collection: validation_pts,
+        reducer: ee.Reducer.first(),
+        scale: sensor_params.pixel,
+    });
   //print(accuracy_collection)
   var unique_class_train = ee.List(accuracy_collection.aggregate_array('class_num')).distinct()
   print("Unique training data classes", unique_class_train.sort())
