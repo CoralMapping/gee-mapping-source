@@ -5,10 +5,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([50.26077595263271, -9.92
     /* color: #d63000 */
     /* shown: false */
     ee.FeatureCollection([]),
-    hawaii_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    hawaii_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[-179.31725663633324, 28.224071136335866],
           [-174.26354569883324, 25.241720017689445],
           [-166.83678788633324, 23.11712771738747],
@@ -32,16 +29,24 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([50.26077595263271, -9.92
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     wio_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
+      {
+        "type": "rectangle"
+      },
       {
         "type": "rectangle"
       }
     ] */
-    ee.Geometry.Polygon(
-        [[[42.30667439013271, -2.264194671054589],
-          [42.30667439013271, -27.04098225287308],
-          [66.74026814013271, -27.04098225287308],
-          [66.74026814013271, -2.264194671054589]]], null, false);
+    ee.Geometry.MultiPolygon(
+        [[[[42.30667439013271, -2.264194671054589],
+           [42.30667439013271, -27.04098225287308],
+           [66.74026814013271, -27.04098225287308],
+           [66.74026814013271, -2.264194671054589]]],
+         [[[-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445]]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - West indian Ocean region 
