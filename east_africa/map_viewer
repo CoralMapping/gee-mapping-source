@@ -12,7 +12,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_clean2 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2"),
     geo_clean3man = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man"),
     benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
-    geometry = /* color: #01ffff */ee.Geometry.MultiPolygon(
+    RiverMouth = /* color: #01ffff */ee.Geometry.MultiPolygon(
         [[[[47.71868486166308, -14.481513594664204],
            [47.66375322103808, -14.532034888954438],
            [47.63903398275683, -14.553303561139657],
@@ -236,7 +236,7 @@ Map.centerObject(centre_map, 10)
 
 
 //var geom =ee.Geometry.MultiPolygon(geometry1)
-Map.addLayer(geometry)
+Map.addLayer(RiverMouth, {}, 'RivermouthDrwanCR', false)
 
 
 
