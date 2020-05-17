@@ -3768,7 +3768,7 @@ if (vars.manual_clean) {
   
   
   // Add the manual layer to the map
-  //Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
+ //Rbtoremembertorevert//Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
   // Export
   Export.image.toAsset({
     image: man_geo,
@@ -3855,7 +3855,7 @@ if (vars.geomorphic) {
   }
 }
 if (!vars.geomorphic) {
-  //Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
+  //Rbtoremembertorevert//Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
   Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 }
 
@@ -4006,7 +4006,7 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
   var clean_map = geo_map
 }
 
-//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
+//Rbtoremembertorevert//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
   
@@ -4059,7 +4059,7 @@ if (vars.obia_clean) {
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
     var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
     //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
-    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+//Rbtoremembertorevert//Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
     
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
@@ -4650,7 +4650,7 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+     //RBtoRemembertorevert Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
       Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
     }
