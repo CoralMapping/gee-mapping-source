@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    eaaf = /* color: #98ff00 */ee.Geometry.Point([40.98887512457759, -15.133024788287958]),
+    eaaf = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Point([40.98887512457759, -15.133024788287958]),
     high_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     high_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
@@ -3512,7 +3515,8 @@ Map.centerObject(centre_map, 10)
 // script that move the final geo and benthic products to Vulcan's GCS. Its quick fix for EA
 Map.addLayer(Rivermouth, {color:'#00ff00'}, 'RivermouthDrawnByCR', false)
 Map.addLayer(no_reef, {}, 'no_reef', false)
-
+var mergeMasks = Rivermouth.merge(no_reef)
+Map.addLayer(mergeMasks, {color:'#ff0000'}, 'mergedMasks');
 
 
 
