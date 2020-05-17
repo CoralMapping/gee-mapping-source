@@ -4650,15 +4650,15 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-     //RBtoRemembertorevert Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+     Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
-     //RBtoRemembertorevert  Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
+     Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
     }
   } else {
     if (vars.reproject_display) {
-      //RBtoRemembertorevert Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
-      //RBtoRemembertorevert Map.addLayer(clean_map, display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map, display_pal, output_name + '_final', false)
     }
   }
 }
