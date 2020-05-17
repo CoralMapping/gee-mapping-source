@@ -3510,7 +3510,7 @@ Map.centerObject(centre_map, 10)
 
 //latest masks (12/05/2020) from Chris Roelfsema. These masks are overlayed here for CR's perusal, these masks will b eventually applied to the export_maps
 // script that move the final geo and benthic products to Vulcan's GCS. Its quick fix for EA
-Map.addLayer(Rivermouth, {}, 'RivermouthDrawnByCR', false)
+Map.addLayer(Rivermouth, {color:'#00ff00'}, 'RivermouthDrawnByCR', false)
 Map.addLayer(no_reef, {}, 'no_reef', false)
 
 
