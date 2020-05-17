@@ -3667,7 +3667,7 @@ var vars = {
   - BENTHIC : can do both at once
             : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
   obia_2nd_pass: true,
-  obia_clean: true, // run object-based relationship rules + small object clean up
+  obia_clean: false, // run object-based relationship rules + small object clean up
   fast_clean: false, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
@@ -4652,13 +4652,13 @@ if (vars.do_export) {
     if (vars.reproject_display) {
      //RBtoRemembertorevert Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
-      Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
+     //RBtoRemembertorevert  Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
     }
   } else {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+      //RBtoRemembertorevert Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
     } else {
-      Map.addLayer(clean_map, display_pal, output_name + '_final', false)
+      //RBtoRemembertorevert Map.addLayer(clean_map, display_pal, output_name + '_final', false)
     }
   }
 }
