@@ -3768,7 +3768,7 @@ if (vars.manual_clean) {
   
   
   // Add the manual layer to the map
-  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
+  //Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
   // Export
   Export.image.toAsset({
     image: man_geo,
@@ -3855,7 +3855,7 @@ if (vars.geomorphic) {
   }
 }
 if (!vars.geomorphic) {
-  Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
+  //Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
   Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 }
 
@@ -4006,7 +4006,7 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
   var clean_map = geo_map
 }
 
-Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
+//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
 
 if (vars.obia_clean) {
   
