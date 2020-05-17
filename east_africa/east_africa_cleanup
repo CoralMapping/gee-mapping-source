@@ -3855,7 +3855,7 @@ if (vars.geomorphic) {
   }
 }
 if (!vars.geomorphic) {
-  //Rbtoremembertorevert//Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
+  Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
   Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
 }
 
