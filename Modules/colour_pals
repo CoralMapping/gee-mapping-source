@@ -108,7 +108,7 @@ var geo_gbr_cols =  ['5ce0ff',         '3690c0',      'ffffbf',           'ffcc7
 var benthic_names = [ 'Sand',    'Rubble', 'Rock',    'Coral/Algae', 'Algae' ,  'Coral',   'Seagrass',  'BMA']
 var benthic_cols = ['ffffcc',  'fcbba1',   '993404',    '1c9099',    'c994c7',  '5cfaff',  'a6d96a',   '756bb1']
 
-var benthic_atlas_names = ['No benthic class',  'Sand (11)',    'Rubble (12) ', 'Rock (13)', 'Coral/Algae (15)',   'Seagrass (14)', 'Macroalgal mats (18)']
+var benthic_atlas_names = ['No benthic class',  'Sand (11)',    'Rubble (12) ', 'Rock (13)', 'Coral/Algae (15)',   'Seagrass (14)', 'Microalgal mats (18)']
 var benthic_atlas_cols = ['ffffff',             'ffffcc',        'fcbba1',       '993404',     '1c9099',             'a6d96a',      '756bb1']
 
 // Accuracy categories legend
