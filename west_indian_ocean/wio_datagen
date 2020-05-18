@@ -13,6 +13,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([50.26077595263271, -9.92
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     wio_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
