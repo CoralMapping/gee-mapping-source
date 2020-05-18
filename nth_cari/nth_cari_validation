@@ -126,11 +126,11 @@ if (vars.assess_accuracy) {
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
   
-   print('validation points in total',validation_pts.size());
+   print('Validation points in total',validation_pts.size());
   var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
   var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
   var classN=ee.String(classOfInt.first().get('class_num'));
-  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  print('class_num' , classN,'Number of samples',classOfInt.size());
   return classOfInt
   }));
   
