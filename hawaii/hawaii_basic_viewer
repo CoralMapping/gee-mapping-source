@@ -8271,7 +8271,8 @@ var low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_isla
     /* color: #bf04c2 */
     /* shown: false */
     /* locked: true */
-    ee.Geometry.Point([-166.80017829931444, 24.372404312456162]);
+    ee.Geometry.Point([-166.80017829931444, 24.372404312456162]),
+    turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //a very simple script for Chris to create masks for non reef areas for Hawai 
 
@@ -8291,3 +8292,6 @@ Map.addLayer(hawaiwcmc_extent, {color:'ffff00'}, 'UNEP', false)
 Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 
 Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
+
+//4. add turbidity for reference
+Map.addLayer(turbidity, {min:0, max:20}, "Accumulative turbidity (S2)", false)
