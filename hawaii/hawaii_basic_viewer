@@ -8294,4 +8294,5 @@ Map.addLayer(Artifact_layer, {color: 'ff0000'}, 'hawaii_artifacts', false)
 Map.setCenter(-166.80017829931444, 24.372404312456162, 5)
 
 //4. add turbidity for reference
-Map.addLayer(turbidity, {min:0, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (S2)", false)
+Map.addLayer(turbidity.focal_mode(5), {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (smooth)", false)
+Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity", false)
