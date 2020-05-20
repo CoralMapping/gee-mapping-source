@@ -1,0 +1,14 @@
+var land_mask = mod_land.select('water_mask').mean().eq(0)
+
+var land_mask_buff = land_mask.fastDistanceTransform(20).sqrt()//.unmask(0)
+
+Map.addLayer(land_mask_buff, {}, "Land mask", false)
+
+/*Export.image.toAsset({
+  image: land_mask,
+  description: 'global_land_mask',
+  assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
+  region: ,
+  scale; 250,
+  maxPixels: 10e13
+})*/
