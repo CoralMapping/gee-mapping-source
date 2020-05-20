@@ -3872,6 +3872,13 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(14)
   })
   
+  // TRF far from land -> ORF
+  clean_map = clean_map.where({
+    test: land_dist.gt(vars.dist_to_land)
+                   .and(clean_map.eq(16)),
+    value: ee.Image(14)
+  })
+  
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
   var smooth_noturbid = clean_map
