@@ -24,7 +24,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-168.05953654736723, 22.
           [-173.69225663633324, 26.624877028124494],
           [-175.49401444883324, 28.57198464676731],
           [-178.30651444883324, 29.18766050725135]]]),
-    not_reef = /* color: #ff2705 */ee.Geometry.Polygon(
+    not_reef = 
+    /* color: #ff2705 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-159.57441353482778, 21.899198848683866],
           [-159.5812799899059, 21.883907672452633],
           [-159.52772164029653, 21.874987062523306],
@@ -144,11 +147,11 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
-var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
+//var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
+var not_reef_img = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone")
 // remove
 depth_mask = depth_mask.where({
-  test: not_reef_img.eq(0),
+  test: not_reef_img.eq(1),
   value: ee.Image(0)
 })
 
