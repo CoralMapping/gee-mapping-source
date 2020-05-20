@@ -3862,7 +3862,8 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   })
   
-  // LAND mask clean
+  
+  // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false)
   
   // reef crest close to land -> ORF
@@ -3878,6 +3879,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
                    .and(clean_map.eq(16)),
     value: ee.Image(14)
   })
+  
   
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
