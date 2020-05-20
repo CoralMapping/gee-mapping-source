@@ -15,7 +15,7 @@ Export.image.toAsset({
   image: land_mask,
   description: 'global_land_dist',
   assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
-  region: land_mask.geometry().bounds(),
+  region: ee.Geometry.Polygon([-180, 60, 0, 60, 180, 60, 180, -60, 10, -60, -180, -60], null, false),
   scale: 250,
   maxPixels: 1e13
 })
