@@ -4505,7 +4505,7 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })
     
-    // Deep lagoon in geo && coral/algae in benthic == sand in benthic
+    // Deep lagoon in geo + coral/algae in benthic == sand in benthic
     clean_map = clean_map.where({
       test: geo_map.eq(12).and(clean_map.eq(15)),
       value: ee.Image(11)
