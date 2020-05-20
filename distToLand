@@ -12,7 +12,7 @@ Map.addLayer(land_mask_buff, {min:0, max: 10000}, "Land mask", false)
 Map.addLayer(ee.Geometry.Polygon([-180, 60, 0, 60, 180, 60, 180, -60, 10, -60, -180, -60], null, false), {}, "product bounds", false)
 
 Export.image.toAsset({
-  image: land_mask,
+  image: land_mask_buff,
   description: 'global_land_dist',
   assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
   region: ee.Geometry.Polygon([-180, 60, 0, 60, 180, 60, 180, -60, 10, -60, -180, -60], null, false),
