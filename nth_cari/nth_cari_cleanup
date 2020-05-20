@@ -3533,19 +3533,6 @@ if (vars.manual_clean) {
   var man_geo = ee.Image(region_params.geo_map_clean)
   
   
-  /*// "not reef" extents ############# --->  to be moved over to _datagen script
-  var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
-  var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
-  
-  // "NOT REEF" CLEAN
-  // remove
-  man_geo = man_geo.where({
-    test: not_reef_img.eq(0),
-                  //.and(man_geo.eq(15)),
-    value: ee.Image(0)
-  })*/
-  
-  
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
@@ -3679,7 +3666,7 @@ if (vars.manual_clean) {
   
   
   // LAND mask clean ############# ---> to be moved to first stage clean up
-  var land_mask = mod_land.select('water_mask').mean().eq(0).clip(region_extent)
+  var land_mask = mod_land.select('water_mask').mean().eq(0)
 
   var land_mask_buff = ee.Image(1)
     .cumulativeCost({
@@ -3745,9 +3732,9 @@ if (vars.obia_2nd_pass) {
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
              .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-             .selfMask().clip(reef_boundary)
+             .selfMask()
   } else {
-    var geo_map = ee.Image(region_params.geo_map).clip(reef_boundary)
+    var geo_map = ee.Image(region_params.geo_map)
   }
 }
 
@@ -3757,7 +3744,7 @@ if (vars.obia_2nd_pass) {
 if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
-             .selfMask().clip(reef_boundary)
+             .selfMask()
 } else {
     var benthic_map = ee.Image(region_params.benthic_map)
 }
@@ -3776,9 +3763,9 @@ if (vars.geomorphic) {
     if (ee.List(region_params.geo_map).length().getInfo() > 1) {
       var geo_map_display = ee.Image(region_params.geo_map[0]).unmask(0, false)
                        .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-                       .selfMask().clip(reef_boundary)
+                       .selfMask()
     } else {
-    var geo_map_display = ee.Image(region_params.geo_map).clip(reef_boundary)
+    var geo_map_display = ee.Image(region_params.geo_map)
     }
     Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false)
   } else {
@@ -3819,7 +3806,7 @@ if (!vars.geomorphic) {
   - to the mapping extent just so it doesn't balloon out
   - to the 'reef boundary' extent for noise/deep removal
 */  
-var class_extent_mask = geo_map.gt(0).clip(reef_boundary)
+var class_extent_mask = geo_map.gt(0)
 
 
 /*
