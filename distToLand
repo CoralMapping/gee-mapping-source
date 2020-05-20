@@ -13,7 +13,7 @@ Map.addLayer(land_mask.geometry().bounds(), {}, "product bounds", false)
 
 Export.image.toAsset({
   image: land_mask,
-  description: 'global_land_mask',
+  description: 'global_land_dist',
   assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
   region: land_mask.geometry().bounds(),
   scale: 250,
