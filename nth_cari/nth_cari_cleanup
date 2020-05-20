@@ -3665,7 +3665,7 @@ if (vars.manual_clean) {
   })
   
   
-  // LAND mask clean ############# ---> to be moved to first stage clean up
+  /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
   var land_mask_buff = ee.Image(1)
@@ -3682,7 +3682,7 @@ if (vars.manual_clean) {
     test: land_mask_buff.eq(1)
                         .and(man_geo.eq(15)),
     value: ee.Image(14)
-  })
+  })*/
   
   
   // Add the manual layer to the map
@@ -3859,6 +3859,19 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   clean_map = clean_map.where({
     test: depth.gt(2000),
     value: ee.Image(2)
+  })
+  
+  // LAND mask clean
+  var land_mask = mod_land.select('water_mask').mean().eq(0)
+  var land_mask_buff = land_mask.fastDistanceTransform(9).sqrt().lt(9).unmask(0)
+                                .reproject({crs:'EPSG:4326', scale: 250})
+  Map.addLayer(land_mask_buff, {}, "Land mask", false)
+  
+  // reef crest close to land -> ORF
+  man_geo = man_geo.where({
+    test: land_mask_buff.eq(1)
+                        .and(man_geo.eq(15)),
+    value: ee.Image(14)
   })
   
   
