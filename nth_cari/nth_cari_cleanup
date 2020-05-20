@@ -3866,11 +3866,11 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false)
   
-  // reef crest close to land -> ORF
+  // reef crest close to land -> TRF
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
                    .and(clean_map.eq(15)),
-    value: ee.Image(14)
+    value: ee.Image(16)
   })
   
   // TRF far from land -> ORF
