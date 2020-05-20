@@ -17,5 +17,5 @@ Export.image.toAsset({
   assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
   region: land_mask.geometry().bounds(),
   scale: 250,
-  maxPixels: 10e13
+  maxPixels: 1e13
 })
