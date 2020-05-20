@@ -3,15 +3,19 @@ var mod_land = ee.ImageCollection("MODIS/006/MOD44W");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var land_mask = mod_land.select('water_mask').mean().eq(0)
 
-var land_mask_buff = land_mask.fastDistanceTransform(20).sqrt()//.unmask(0)
+var land_mask_buff = land_mask.fastDistanceTransform(100).sqrt()
+                              .multiply(ee.Image.pixelArea().sqrt())
+                              .uint16()
 
-Map.addLayer(land_mask_buff, {}, "Land mask", false)
+Map.addLayer(land_mask_buff, {min:0, max: 10000}, "Land mask", true)
 
-/*Export.image.toAsset({
+Map.addLayer(land_mask.geometry().bounds(), {}, "product bounds", false)
+
+Export.image.toAsset({
   image: land_mask,
   description: 'global_land_mask',
   assetId: 'projects/coral_atlas/global_datasets/mod44w6_global_distToLand',
-  region: ,
-  scale; 250,
+  region: land_mask.geometry().bounds(),
+  scale: 250,
   maxPixels: 10e13
-})*/
+})
