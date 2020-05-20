@@ -3868,9 +3868,9 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   Map.addLayer(land_mask_buff, {}, "Land mask", false)
   
   // reef crest close to land -> ORF
-  man_geo = man_geo.where({
+  clean_map = clean_map.where({
     test: land_mask_buff.eq(1)
-                        .and(man_geo.eq(15)),
+                        .and(clean_map.eq(15)),
     value: ee.Image(14)
   })
   
