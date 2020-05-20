@@ -3863,15 +3863,12 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   })
   
   // LAND mask clean
-  var land_mask = mod_land.select('water_mask').mean().eq(0)
-  var land_mask_buff = land_mask.fastDistanceTransform(9).sqrt().lt(9).unmask(0)
-                                .reproject({crs:'EPSG:4326', scale: 250})
-  Map.addLayer(land_mask_buff, {}, "Land mask", false)
+  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false)
   
   // reef crest close to land -> ORF
   clean_map = clean_map.where({
-    test: land_mask_buff.eq(1)
-                        .and(clean_map.eq(15)),
+    test: land_dist.lte(vars.dist_to_land)
+                   .and(clean_map.eq(15)),
     value: ee.Image(14)
   })
   
