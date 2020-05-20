@@ -1,3 +1,6 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var mod_land = ee.ImageCollection("MODIS/006/MOD44W");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 var land_mask = mod_land.select('water_mask').mean().eq(0)
 
 var land_mask_buff = land_mask.fastDistanceTransform(20).sqrt()//.unmask(0)
