@@ -3420,7 +3420,7 @@ var eg_area =
           [-84.61663615379902, 22.34174850875155],
           [-84.65508830223652, 22.25407703901961],
           [-84.80340373192402, 22.018745262013894]]]),
-    mod_land = ee.ImageCollection("MODIS/006/MOD44W");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -3463,6 +3463,7 @@ var vars = {
   small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
+  dist_to_land: 2000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
