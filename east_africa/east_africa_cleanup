@@ -3652,7 +3652,7 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -3667,13 +3667,13 @@ var vars = {
   - BENTHIC : can do both at once
             : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
   obia_2nd_pass: true,
-  obia_clean: false, // run object-based relationship rules + small object clean up
-  fast_clean: false, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
+  obia_clean: true, // run object-based relationship rules + small object clean up
+  fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
   // apply any manual touch ups
-  manual_clean: true,
+  manual_clean: false,
   
   // results/layers to show
   export_small_area: false,
