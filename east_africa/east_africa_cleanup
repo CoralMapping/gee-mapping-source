@@ -3683,7 +3683,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean3-man',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
@@ -4505,11 +4505,11 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })
     
-    /*// Deep lagoon in geo == masked from benthic
+    // Deep lagoon in geo && coral/algae in benthic == sand in benthic
     clean_map = clean_map.where({
-      test: geo_map.eq(12),
-      value: ee.Image(0)
-    })*/
+      test: geo_map.eq(12).and(clean_map.eq(15)),
+      value: ee.Image(11)
+    })
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
