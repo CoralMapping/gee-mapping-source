@@ -7,7 +7,7 @@ var land_mask_buff = land_mask.fastDistanceTransform(100).sqrt()
                               .multiply(ee.Image.pixelArea().sqrt())
                               .uint16()
 
-Map.addLayer(land_mask_buff, {min:0, max: 10000}, "Land mask", true)
+Map.addLayer(land_mask_buff, {min:0, max: 10000}, "Land mask", false)
 
 Map.addLayer(land_mask.geometry().bounds(), {}, "product bounds", false)
 
