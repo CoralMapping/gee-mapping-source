@@ -1,9 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    eaaf = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Point([40.98887512457759, -15.133024788287958]),
+    eaaf = /* color: #98ff00 */ee.Geometry.Point([40.98887512457759, -15.133024788287958]),
     high_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     high_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191215T174409Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
@@ -17,7 +14,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     Rivermouth = 
     /* color: #01ffff */
     /* shown: false */
-    /* locked: true */
     ee.Geometry.MultiPolygon(
         [[[[47.71868486166308, -14.481513594664204],
            [47.66375322103808, -14.532034888954438],
@@ -229,11 +225,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [40.90871017915845, -2.395767560507544],
            [40.94853561861157, -2.360097252031308],
            [40.9389225815022, -2.3127581001629425]]]]),
-    no_reef = 
-    /* color: #09fc27 */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry({
+    no_reef = /* color: #09fc27 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1808,12 +1800,16 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
                 -17.000423610489996
               ],
               [
-                38.64296501546901,
-                -17.119471150521402
+                38.62373894125026,
+                -17.124720855065707
               ],
               [
-                38.736901765128216,
+                38.725915437003216,
                 -17.362031159335807
+              ],
+              [
+                38.76268851561682,
+                -17.465564516576222
               ],
               [
                 38.82698487413612,
