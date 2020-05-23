@@ -1229,7 +1229,9 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                 [[[38.59198216911038, -17.09513040205679],
                   [38.71008519645413, -17.375817499189814],
                   [38.77051000114163, -17.35484633268941],
-                  [38.67437963004788, -17.07412735829768]]]),
+                  [38.66781521262444, -17.098354346015707],
+                  [38.71557836051663, -16.985494762759473],
+                  [38.618092820371984, -16.962182007795274]]]),
             {
               "system:index": "0"
             }),
@@ -1320,7 +1322,8 @@ Map.addLayer(exclude_fc, {}, "vector mask zone", false)
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
-geo = geo.where(exclude_mask.eq(0), ee.Image(0))
+geo = geo.where(exclude_mask.eq(1), ee.Image(0))
+benthic = benthic.where(geo.eq(0), ee.Image(0)) // may not always need this (only if extra masking is applied here)
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
