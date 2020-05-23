@@ -14,7 +14,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_clean1 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean1"),
     geo_clean2 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2"),
     geo_clean3man = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man"),
-    benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
     Rivermouth = 
     /* color: #01ffff */
     /* shown: false */
@@ -3498,7 +3497,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
         }
       ],
       "coordinates": []
-    });
+    }),
+    benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
