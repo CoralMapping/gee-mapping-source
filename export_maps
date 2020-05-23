@@ -1268,11 +1268,13 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 
 // addiitonal masking 
 
-var exclude_fc = not_reef.merge(Rivermouth)
-Map.addLayer(exclude_fc, {}, "extra mask zone", false)
+var add_zone = function(f) {return(f.set('zone', 1))}
+
+var exclude_fc = not_reef.merge(Rivermouth).map(add_zone)
+Map.addLayer(exclude_fc, {}, "vector mask zone", false)
 
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
-
+Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
 //geo = geo.where()
 
