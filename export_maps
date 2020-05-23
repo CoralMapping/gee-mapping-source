@@ -1220,7 +1220,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             {
               "system:index": "12"
             })]),
-    slithers = /* color: #d63000 */ee.FeatureCollection(
+    slithers = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[38.59198216911038, -17.09513040205679],
@@ -1232,26 +1235,6 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             }),
         ee.Feature(
             ee.Geometry.Polygon(
-                [[[32.79532982193438, -25.973993260397215],
-                  [32.86124779068438, -26.0332381107067],
-                  [32.97660423599688, -25.98386947697881],
-                  [32.98484398209063, -25.92212952082061],
-                  [32.82554222427813, -25.917188925936173]]]),
-            {
-              "system:index": "1"
-            }),
-        ee.Feature(
-            ee.Geometry.Polygon(
-                [[[35.07751089214097, -24.502495132626798],
-                  [35.112873135793315, -24.615846651586864],
-                  [35.248485623586284, -24.582757354526596],
-                  [35.25157552837144, -24.4687509518419],
-                  [35.07510763286363, -24.50155791650607]]]),
-            {
-              "system:index": "2"
-            }),
-        ee.Feature(
-            ee.Geometry.Polygon(
                 [[[47.22062030862082, -24.895706615296657],
                   [47.109727059109105, -24.855526943003586],
                   [47.08981433938254, -24.86051117786147],
@@ -1260,35 +1243,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [47.11831012795676, -24.877954417642812],
                   [47.21238056252707, -24.909719705405795]]]),
             {
-              "system:index": "3"
-            }),
-        ee.Feature(
-            ee.Geometry.Polygon(
-                [[[47.16294208596457, -24.804426959991034],
-                  [47.229546700222386, -24.810659794018818],
-                  [47.237786446316136, -24.753305905793134],
-                  [47.17118183205832, -24.743952216172815]]]),
-            {
-              "system:index": "4"
-            }),
-        ee.Feature(
-            ee.Geometry.Polygon(
-                [[[47.94263897252286, -22.204100933574956],
-                  [48.03739605260098, -22.2396970903253],
-                  [48.25025616002286, -21.736706562821144],
-                  [48.16236553502286, -21.71629481223624]]]),
-            {
-              "system:index": "5"
-            }),
-        ee.Feature(
-            ee.Geometry.Polygon(
-                [[[48.83665142369473, -19.544429917036467],
-                  [48.89707622838223, -19.58583788803073],
-                  [48.98496685338223, -19.575486892514576],
-                  [49.00968609166348, -19.471940410081967],
-                  [48.92179546666348, -19.40978072273475]]]),
-            {
-              "system:index": "6"
+              "system:index": "1"
             }),
         ee.Feature(
             ee.Geometry.Polygon(
@@ -1308,7 +1263,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [44.17083660868285, -16.515863886019655],
                   [43.97857586649535, -16.915702050506706]]]),
             {
-              "system:index": "7"
+              "system:index": "2"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
@@ -1359,14 +1314,13 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 // addiitonal masking 
 
 var add_zone = function(f) {return(f.set('zone', 1))}
-
-var exclude_fc = not_reef.merge(Rivermouth).map(add_zone)
+var exclude_fc = not_reef.merge(Rivermouth).merge(slithers).map(add_zone)
 Map.addLayer(exclude_fc, {}, "vector mask zone", false)
 
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
-//geo = geo.where()
+geo = geo.where(exclude_mask.eq(0), ee.Image(0))
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
