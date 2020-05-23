@@ -225,10 +225,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [40.90871017915845, -2.395767560507544],
            [40.94853561861157, -2.360097252031308],
            [40.9389225815022, -2.3127581001629425]]]]),
-    no_reef = 
-    /* color: #09fc27 */
-    /* shown: false */
-    ee.Geometry({
+    no_reef = /* color: #09fc27 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
