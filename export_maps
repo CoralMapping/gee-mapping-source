@@ -1390,7 +1390,8 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [35.54948103074776, -22.297707613135643]]]),
             {
               "system:index": "11"
-            })]);
+            })]),
+    east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
@@ -1437,6 +1438,8 @@ var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = not_reef.merge(Rivermouth).merge(slithers).map(add_zone)
 Map.addLayer(exclude_fc, {}, "vector mask zone", false)
 
+
+
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
@@ -1457,7 +1460,7 @@ Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
-
+Map.addLayer(east_africa_lt_sr, {}, 'east_africa_lt_sr')
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
