@@ -2130,6 +2130,18 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [49.49355502341558, -17.29656382017166]]]),
             {
               "system:index": "56"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[49.50454135154058, -17.562214462067754],
+                  [49.50179476950933, -17.596907101443648],
+                  [49.505227997048394, -17.616868714662374],
+                  [49.52960391257574, -17.637809672840387],
+                  [49.521707489235894, -17.648933567369433],
+                  [49.597581817849175, -17.663982448625067],
+                  [49.551919891579644, -17.551085225269176]]]),
+            {
+              "system:index": "57"
             })]),
     east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
