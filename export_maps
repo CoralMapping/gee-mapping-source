@@ -1220,10 +1220,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             {
               "system:index": "12"
             })]),
-    slithers = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection(
+    slithers = /* color: #d63000 */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[38.59198216911038, -17.09513040205679],
@@ -1266,6 +1263,15 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [43.97857586649535, -16.915702050506706]]]),
             {
               "system:index": "2"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[35.5815811787121, -23.075698216657425],
+                  [35.55308539013788, -23.131592526602564],
+                  [35.580207887696474, -23.134433988470327],
+                  [35.585701051758974, -23.096227078165672]]]),
+            {
+              "system:index": "3"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
