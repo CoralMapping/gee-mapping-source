@@ -233,6 +233,6 @@ if (vars.export_type == 'val') {
 }
 
 // last so it sits on top
-Map.addLayer(train_pts, {}, "Training/validation point distribution", false) // Training data points
+Map.addLayer(train_pts, {}, "Training_validation", false) // Training data points //point distribution
 if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training/validation field point distribution", false) // Training data points
-Map.addLayer(training_data, {}, "Image reference data distribution", false) // Training data points
+Map.addLayer(training_data, {}, "Image reference", false) // Training data points //data distribution
