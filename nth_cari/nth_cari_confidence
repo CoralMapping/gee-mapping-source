@@ -61,7 +61,7 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -336,12 +336,18 @@ var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide
 
 //remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
 var confidenceEXP=confidence.expression(
-  "(b(0) >= 70) ? 3"+
-    ":(b(0) >= 40) ? 2"+
-      ":(b(0) >= 10) ? 1"+
-      ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
+  "(b(0) > 90) ? 9"+
+    ":(b(0) > 80) ? 8"+
+      ":(b(0) > 70) ? 7"+
+        ":(b(0) > 60) ? 6"+
+          ":(b(0) > 50) ? 5"+
+            ":(b(0) > 40) ? 4"+
+              ":(b(0) > 30) ? 3"+
+                ":(b(0) > 20) ? 2"+
+                  ":(b(0) > 10) ? 1"+
+                    ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
 
-var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":3,"palette":["02818a","67a9cf","bdc9e1","f6eff7"]};
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["014636","016c59","02818a","3690c0","67a9cf","a6bddb","d0d1e6","ece2f0","fff7fb","FFFFFF"]};
 Map.addLayer(confidenceEXP,conf_str,'confidence',true);
 
 //7.6 confidence legend
@@ -393,11 +399,11 @@ legend.add(legendLabels);
 
 Map.add(legend)
 
-// Export.image.toAsset({
-//   image:confidenceEXP,
-//   description:'conf_geomorphic',
-//   assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geomorphic',
-//   region:nth_cari_extent,
-//   scale:vars.export_scale,
-//   maxPixels:1e13
-// });
+Export.image.toAsset({
+  image:confidenceEXP,
+  description:'conf_benthic',
+  assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_conf_benthic',
+  region:nth_cari_extent,
+  scale:vars.export_scale,
+  maxPixels:1e13
+});
