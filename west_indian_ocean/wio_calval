@@ -77,18 +77,27 @@ var segments = ee.ImageCollection(region_params.segments).mosaic().regexpRename(
 
 /*
 make the combined pixels and segemnts data
-and ensure they're masked the same
-- not sure why, but this masking cross-reference fucks things??
-- leaving out for time being
-//segments = segments.updateMask(pixels)
-//pixels = pixels.updateMask(segments)
+ - test if there's more than one image asset to make up the region, then construct appropriately
 */
-var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
-                  .addBands(
-              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
-                           )
-                // test remoing depth from classification
-                //.select('b1','b2','b3','b4','waves','red_asm','red_stdDev','ndwi','b1_1','b2_1','b3_1','b4_1','waves_1','red_asm_1','red_stdDev_1','ndwi_1')
+
+if (ee.List(region_params.pixels).length().getInfo() > 1) {
+    var pixels = ee.Image(region_params.pixels[0]).unmask(0, false)
+             .add(ee.Image(region_params.pixels[1]).unmask(0,false))
+             .selfMask()
+  } else {
+    var pixels = ee.Image(region_params.pixels)
+  }
+  
+if (ee.List(region_params.segments).length().getInfo() > 1) {
+    var segments = ee.Image(region_params.segments[0]).unmask(0, false)
+             .add(ee.Image(region_params.segments[1]).unmask(0,false))
+             .selfMask()
+  } else {
+    var segments = ee.Image(region_params.pixels)
+  }
+
+var pixsegs = pixels.regexpRename('(^.*$)','$1_p').addBands(
+              segments.regexpRename('(^.*$)','$1_s'))
 
 
 // training data
