@@ -285,7 +285,9 @@ var nth_cari = {
   benthic_map_clean: "projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean",
   prob_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo"],
   prob_benthic:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_benthic"],
-  QAQC: "projects/coral_atlas/nth_cari/QAQC"
+  QAQC: "projects/coral_atlas/nth_cari/QAQC",
+  conf_benthic: ["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_bentic"],
+  conf_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geo"]
 }
 
 
@@ -314,7 +316,9 @@ var east_africa = {
   benthic_map_clean: "",
   prob_geo:["projects/coral_atlas/east_africa/in_out/east_africa_prob_geo"],
   prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"],
-  QAQC: "projects/coral_atlas/east_africa/QAQC"
+  QAQC: "projects/coral_atlas/east_africa/QAQC",
+  conf_benthic: ["projects/coral_atlas/east_africa/in_out/east_africa_conf_bentic"],
+  conf_geo:["projects/coral_atlas/east_africa/in_out/east_africa_conf_geo"]
 };
 
 var hawaii = {
