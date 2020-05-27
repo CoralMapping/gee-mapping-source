@@ -23,7 +23,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.wio          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.hawaii          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -37,7 +37,7 @@ var vars = {
   Should be one of:
   'train' OR 'val'
   */
-  export_type: 'val',
+  export_type: 'train',
   
   // analysis type
   geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
