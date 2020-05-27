@@ -50,6 +50,7 @@ var rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"ma
 ///////////////////////////////
 // Global coral atlas project - East Africa region
 // Contact: mitchell.lyons@gmail.com
+// Region Coordinator: Rodney Borrego (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
