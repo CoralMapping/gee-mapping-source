@@ -122,7 +122,8 @@ var gbr_eomap = {
   pixels: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_pixels",
   segments: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_segmentation",
   geo_train: "projects/coral_atlas/gbr_eomap/training/gbr_geo_reference", 
-  benthic_train: "projects/coral_atlas/gbr_eomap/training/gbr_benthic_reference",
+  benthic_train: "",
+  benthic_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_benthic_pts",
   geo_train_library: "projects/coral_atlas/gbr_eomap/training/gbr_geo_training",
   benthic_train_library: "projects/coral_atlas/gbr_eomap/training/gbr_benthic_training",
   geo_val_library: "",
@@ -286,7 +287,7 @@ var nth_cari = {
   prob_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo"],
   prob_benthic:["projects/coral_atlas/nth_cari/in_out/nth_cari_prob_benthic"],
   QAQC: "projects/coral_atlas/nth_cari/QAQC",
-  conf_benthic: ["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_benthic"],
+  conf_benthic: ["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_bentic"],
   conf_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geo"]
 }
 
@@ -317,7 +318,7 @@ var east_africa = {
   prob_geo:["projects/coral_atlas/east_africa/in_out/east_africa_prob_geo"],
   prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"],
   QAQC: "projects/coral_atlas/east_africa/QAQC",
-  conf_benthic: ["projects/coral_atlas/east_africa/in_out/east_africa_conf_benthic"], 
+  conf_benthic: ["projects/coral_atlas/east_africa/in_out/east_africa_conf_bentic"],
   conf_geo:["projects/coral_atlas/east_africa/in_out/east_africa_conf_geo"]
 };
 
