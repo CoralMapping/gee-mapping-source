@@ -3620,6 +3620,7 @@ var eg_area =
 ///////////////////////////////
 // Global coral atlas project - East Africa
 // Contact: mitchell.lyons@gmail.com
+// Region Coordinator: Rodney Borrego (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
