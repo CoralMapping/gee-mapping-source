@@ -110,6 +110,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([44.658908032610896, -16.
 ///////////////////////////////
 // Coral atlas mapping project - east africa region 
 // Contact: mitchell.lyons@gmail.com
+// Region Coordinator: Rodney Borrego (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script generates the data as an asset (for quick load)
