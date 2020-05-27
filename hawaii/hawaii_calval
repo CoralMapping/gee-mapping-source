@@ -96,7 +96,7 @@ if (ee.List(region_params.segments).length().getInfo() > 1) {
             .add(ee.Image(region_params.segments[1]).unmask(0,false))
             .selfMask()
   } else {
-    var segments = ee.Image(region_params.pixels)
+    var segments = ee.Image(region_params.segments)
   }
 
 var pixsegs = pixels.regexpRename('(^.*$)','$1_p').addBands(
