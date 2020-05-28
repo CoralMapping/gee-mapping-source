@@ -3447,6 +3447,8 @@ Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 //Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
 
+/*
+
 // nth cari
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
@@ -3472,13 +3474,14 @@ Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 Map.addLayer(wcmc, {}, "WCMC layer", false)
 
 
-
+/*
 
 
 // #############
 // example confidence layers
 
-/*// depth and nir combos
+/*
+// depth and nir combos
 var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
 //Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
 var conf_flag = fiji_high_depth_ocean.eq(-1)
@@ -3494,7 +3497,11 @@ var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
 //Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
 */
 
+
+
+
 ////////// UI SET UP //////////
+
 
 //Generate title
 var title = ui.Label({
@@ -3528,3 +3535,5 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     scale: 10,
 //     maxPixels: 1e13
 // })
+
+/*
