@@ -1,0 +1,150 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var benthic_col = {"opacity":1,"bands":["classification"],"max":21,"palette":["ffffff","004529","08306b","99d8c9","ffff5c","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffcc","fcbba1","993404","a6d96a","1c9099","5cfaff","c994c7","756bb1","ffffff","ffffff","ffffff"]},
+    geo_col = {"opacity":1,"bands":["classification"],"max":30,"palette":["ffffff","004529","023858","f768a1","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","5ce0ff","3690c0","ffffbf","ffcc7a","a50f15","addd8e","ffffff","ffffff","ffffff","ffffff","d9f0a3","d4d417","bdbdbd","02818a","deebf7","deebf7","ffffff","ffffff","ffffff","ffffff"]},
+    rgb_str = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":-147.57330947255974,"max":784.9199038064958,"gamma":0.767};
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//////////////
+//1.DATA///////
+//////////////
+//1.1 ROI
+//libraries
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+
+//sensor generic
+var sensor_params=param_module.dove;
+//variables
+var ROI={
+  East_Africa: [param_module.east_africa],
+  North_Caribbean: [param_module.nth_cari]
+};
+
+var LAYER={
+  Benthic: [false],
+  Geomorphic: [true]
+};
+
+var input_bands= ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'red_stdDev_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s'];
+var blue_nir_bands= (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5']; // only handles Landsat/Sentinel-2/Dove
+var blue_band=(sensor_params.sname == 'dove') ? 'b1' : 'B2' ;// only handles Landsat/Sentinel-2/Dove
+var class_field= 'class_num';
+//////////////
+//2.API///////
+//////////////
+//2.1 title
+var label=ui.Label('choose ROI');
+label.style().set('position','top-center');
+Map.add(label);
+
+// Create a panel to hold the widjet.
+var panel = ui.Panel();
+panel.style().set({
+  width: '400px',
+  position: 'bottom-right'
+});
+Map.add(panel);
+
+//2.1 roi slider
+var selectROI=ui.Select({
+  items: Object.keys(ROI),
+  onChange:function(key){
+    panel.clear();
+    var region_params=ROI[key][0];
+    print('region_params',region_params);
+    //2.2 layer slider
+    var selectLAYER=ui.Select({
+      items:Object.keys(LAYER),
+      onChange:function(key){
+        panel.clear();
+        // label.clear();
+        // label.add(LAYER[key]);
+        panel.add(selectROI);
+        var geomorphic=LAYER[key][0];//.aside(print,'geomorphic loc37');
+        print('geomorphic',geomorphic);
+        
+        var val_map=(geomorphic) ? ee.Image(region_params.geo_map) : ee.Image(region_params.benthic_map);
+        print('val_map',val_map);
+        var visParam=(geomorphic) ? (geo_col) : (benthic_col);
+        Map.centerObject(val_map,5);
+        Map.addLayer(val_map,visParam,'classification layer');
+        
+        var confidence=(geomorphic) ? ee.Image(region_params.conf_geo) : ee.Image(region_params.conf_benthic);
+        var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["014636","016c59","02818a","3690c0","67a9cf","a6bddb","d0d1e6","ece2f0","fff7fb","FFFFFF"]};
+        
+        Map.addLayer(confidence,conf_str,'confidence',true);
+        
+        var rgb=ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+                  .addBands(
+              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
+                          )
+                  .select(input_bands);
+        Map.addLayer(rgb,rgb_str,'rgb composite')
+        
+        
+        //Generate geomorphic/benthic classes legend
+        var title = ui.Label({
+          value: 'Coral Atlas map classes',
+          style: {fontWeight: 'bold', fontSize: '18px'}
+        });
+
+        // generate the legend
+        var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
+        var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+        pkg_vis.add_lgds([title, geo_legend, benthic_legend]);
+
+        // confidence legend
+
+      var legend=ui.Panel({
+        style: {
+          position: 'bottom-right',
+          padding: "8px 15px"
+        }
+      });
+
+      var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+      function makeColorBarParams(palette) {
+        return {
+          bbox: [0, 0, 1, 0.1],
+          dimensions: '100x10',
+          format: 'png',
+          min: 0,
+          max: 1,
+          palette: palette,
+        };
+      }
+
+      var colorBar=ui.Thumbnail({
+        image: ee.Image.pixelLonLat().select(0),
+        params: makeColorBarParams(vis.palette),
+        style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
+      })
+      // Create a panel with three numbers for the legend.
+      var legendLabels = ui.Panel({
+        widgets: [
+          ui.Label(vis.min, {margin: '4px 8px'}),
+          ui.Label(
+              (' '),
+              {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
+          ui.Label(vis.max, {margin: '4px 8px'})
+        ],
+        layout: ui.Panel.Layout.flow('horizontal')
+      });
+
+      var legendTitle = ui.Label({
+        value: 'Confidence Layer',
+        style: {fontWeight: 'bold',position: 'bottom-right'}
+      }); 
+
+      legend.add(legendTitle);
+      legend.add(colorBar)
+      legend.add(legendLabels);
+      panel.add(legend)
+      }
+    });
+    selectLAYER.setPlaceholder('geomorphic or benthic layer?');
+    panel.add(selectLAYER);
+  }
+});
+selectROI.setPlaceholder('Choose Region Of Interest');
+panel.add(selectROI);
