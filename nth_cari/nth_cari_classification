@@ -549,7 +549,7 @@ var vars = {
   trim_training_perc: 0.80,
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
-  // set to 'none' (or any string that is not a sub-region)
+  // set to 'none' for normal operation without splitting
   split_region: 'nthcari', 
   
   // results/layers to show
@@ -575,12 +575,14 @@ var vars = {
 }
 
 // dictionary to control sub-region geometries (add new ones)
-var region_dic = ee.Dictionary({bahamas: bahamas, nthcari: nthcari}) // <- include all splits here
-var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
-
-if (region_idx > -1) {
+if (vars.split_region != 'none') {
+  var region_dic = ee.Dictionary({bahamas: bahamas, nthcari: nthcari}) // <- include all splits here
+  //var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
+  //if (region_idx > -1) {
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
+  //}
 }
+
 
 // if running in test mode, over-write the trianing params
 if (vars.test_mode) {
