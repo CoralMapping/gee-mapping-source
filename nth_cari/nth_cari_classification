@@ -577,10 +577,9 @@ var vars = {
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
   var region_dic = ee.Dictionary({bahamas: bahamas, nthcari: nthcari}) // <- include all splits here
-  //var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
-  //if (region_idx > -1) {
+  var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
-  //}
+  print('Running classificaiton for region split: ', vars.split_region)
 }
 
 
@@ -621,7 +620,7 @@ if (vars.trim_training_data) {
 
 // trim the image and training data to sub-region, if desired
 if (region_idx > -1) {
-  pixsegs = ee.Image(pixsegs.clip(subregion_clip))
+  //pixsegs = ee.Image(pixsegs.clip(subregion_clip))
   training_data = ee.FeatureCollection(training_data.filterBounds(subregion_clip))
 }
 
