@@ -550,7 +550,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'none', 
+  split_region: 'nthcari', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -744,7 +744,7 @@ var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
 }));
 var probabilities=(probabilities.toBands()).rename(classes_names);
 print('probabilities',probabilities);
-Map.addLayer(probabilities,{},'probabilities')
+Map.addLayer(probabilities,{},'probabilities', false)
 
 Export.image.toAsset({image:probabilities,
                       description:'prob_geo',
@@ -781,6 +781,7 @@ if (vars.do_export) {
   //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
   if (region_idx > -1) {
     var export_geom = subregion_clip
+    output_name = output_name + vars.split_region
   } else {
     var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
