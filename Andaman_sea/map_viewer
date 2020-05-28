@@ -3426,8 +3426,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //in the workflow 
 
 // imports
-var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+//var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+//var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
 //var centre_map = ncab
@@ -3457,7 +3457,7 @@ Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
 Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
 // wave data
-/*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
 var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
 Map.addLayer(kd1, {}, "waves - kd1", false)
@@ -3468,13 +3468,12 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
-Map.addLayer(geo_train, {}, "geomorphic training locations", false)
+//Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 
 // WCMC
-Map.addLayer(wcmc, {}, "WCMC layer", false)
+//Map.addLayer(wcmc, {}, "WCMC layer", false)
 
 
-/*
 
 
 // #############
@@ -3498,7 +3497,7 @@ var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
 */
 
 
-
+/*
 
 ////////// UI SET UP //////////
 
@@ -3536,4 +3535,4 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
-/*
+*/
