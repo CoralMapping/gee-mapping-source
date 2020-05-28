@@ -550,7 +550,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'nthcari', 
+  split_region: 'none', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -734,7 +734,7 @@ var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : cla
 var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
   var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1)});
   var classN=ee.String(classOfInt.first().get('class_num'));
-  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  //print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
   var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)});
   var training=pixsegs.sampleRegions(classOfInt.merge(classesOfNoInt),['od'],10);
   var trained=ee.Classifier.smileRandomForest(10).train(training,'od').setOutputMode('PROBABILITY');
