@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
@@ -71,7 +70,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-79.92506932020622, 27.088851286645333]]]]),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    AndS = /* color: #d63000 */ee.Geometry.Point([95.68022366345264, 12.587883996209781]);
+    AndS = /* color: #d63000 */ee.Geometry.Point([95.68022366345264, 12.587883996209781]),
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_feb2020/20200317T185458Z/andaman_sea_low_tide_normalized_sr_feb2018_feb2020");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region onwards the map_viewer script is going to be used from the very beginning
@@ -123,7 +123,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 
 // WCMC
-Map.addLayer(wcmc, {}, "WCMC layer", false)
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 
 
