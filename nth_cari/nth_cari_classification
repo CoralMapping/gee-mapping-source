@@ -571,6 +571,9 @@ var vars = {
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
   asset_output: region_params.asset, // asset path
+  
+  // accuracy/confidence options
+  run_probabilities: false
 
 }
 
@@ -719,41 +722,42 @@ var raw_classification = pixsegs.classify(rf_classifier).toUint8();
 // Map.addLayer(pixsegs,{},'pixsegs');
 // print('pixsegs',pixsegs);
 
-var classesList={
-   classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23],
-   classes_mapped_benthic:      [11,    12,   13,  14,    15],
-   classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RC', 'TRF','SS','SE', 'PL'],
-   classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO' ],
-};
-
-
-var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
-var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
-
-
-var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
-  var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1)});
-  var classN=ee.String(classOfInt.first().get('class_num'));
-  //print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
-  var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)});
-  var training=pixsegs.sampleRegions(classOfInt.merge(classesOfNoInt),['od'],10);
-  var trained=ee.Classifier.smileRandomForest(10).train(training,'od').setOutputMode('PROBABILITY');
-  var classified=pixsegs.classify(trained).multiply(100).toInt8();
-  var classs=classified//.expression('1-img',{'img':classified});
-  return classs;
-}));
-var probabilities=(probabilities.toBands()).rename(classes_names);
-print('probabilities',probabilities);
-Map.addLayer(probabilities,{},'probabilities', false)
-
-Export.image.toAsset({image:probabilities,
-                      description:'prob_geo',
-                      assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo',
-                      region:export_geom,
-                      scale:vars.export_scale,
-                      maxPixels:1e13
-                      });
-
+if (vars.run_probabilities) {
+  var classesList={
+     classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23],
+     classes_mapped_benthic:      [11,    12,   13,  14,    15],
+     classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RC', 'TRF','SS','SE', 'PL'],
+     classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO' ],
+  };
+  
+  
+  var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
+  var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
+  
+  
+  var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
+    var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1)});
+    var classN=ee.String(classOfInt.first().get('class_num'));
+    print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+    var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)});
+    var training=pixsegs.sampleRegions(classOfInt.merge(classesOfNoInt),['od'],10);
+    var trained=ee.Classifier.smileRandomForest(10).train(training,'od').setOutputMode('PROBABILITY');
+    var classified=pixsegs.classify(trained).multiply(100).toInt8();
+    var classs=classified//.expression('1-img',{'img':classified});
+    return classs;
+  }));
+  var probabilities=(probabilities.toBands()).rename(classes_names);
+  print('probabilities',probabilities);
+  Map.addLayer(probabilities,{},'probabilities')
+  
+  Export.image.toAsset({image:probabilities,
+                        description:'prob_geo',
+                        assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo',
+                        region:export_geom,
+                        scale:vars.export_scale,
+                        maxPixels:1e13
+                        });
+}
 
 // 5. Export data
 
