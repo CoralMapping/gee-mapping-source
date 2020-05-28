@@ -3419,7 +3419,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
             {
               "system:index": "314"
             })]),
-    AndS = /* color: #d63000 */ee.Geometry.MultiPoint();
+    AndS = /* color: #d63000 */ee.Geometry.Point([95.68022366345264, 12.587883996209781]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region onwards the map_viewer script is going to be used from the very beginning
