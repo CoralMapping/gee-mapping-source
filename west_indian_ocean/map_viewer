@@ -9,7 +9,11 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.Polygon(
+    BondariesWCMCForWIO = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Polygon(
         [[[54.701770985703206, -2.9751249685105154],
           [52.548450673203206, -4.772691629173448],
           [52.196888173203206, -5.910289150084192],
