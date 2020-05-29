@@ -62,10 +62,11 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [96.37236233532768, 17.786428365136604],
           [96.26249905407768, 17.409430504634983],
           [95.75712796032768, 17.178658281709335],
-          [95.62529202282768, 16.84247692714126]]]);
+          [95.62529202282768, 16.84247692714126]]]),
+    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
-//From this region onwards the map_viewer script is going to be used from the very beginning
+//From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
 //in the workflow 
 
 // imports
