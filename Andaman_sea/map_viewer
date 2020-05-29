@@ -7,71 +7,63 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
-    Mask_NoReef = 
-    /* color: #ff2705 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
-        [[[[-77.6908298412265, 17.939251182238742],
-           [-78.014926520914, 17.68952937580111],
-           [-78.03277930411713, 17.53507699179179],
-           [-77.9215427318515, 17.456491321064465],
-           [-77.57858671943977, 17.474591134093934],
-           [-77.28195586006477, 17.401221189510085],
-           [-77.18307890693977, 17.422187041414787],
-           [-77.3067247743465, 17.71316271026819],
-           [-77.28686729336015, 17.7779688370626],
-           [-77.25082113799874, 17.88223019866347],
-           [-77.36789419708077, 17.944952557251366],
-           [-77.66301925382572, 17.959616187218742]]],
-         [[[-83.01690576170415, 24.88280012027823],
-           [-82.65435693357915, 24.773120340500828],
-           [-82.48406884764165, 24.743190828730295],
-           [-82.35346593519307, 24.716159508277997],
-           [-82.04447545667745, 24.650025297105987],
-           [-81.90714635511495, 24.62256306267632],
-           [-81.75471105238057, 24.66812210467808],
-           [-81.63248815198995, 24.73175208416546],
-           [-81.57137670179463, 24.777271217309117],
-           [-81.48976051950895, 24.803427689862843],
-           [-81.4320822968527, 24.854528085146324],
-           [-81.3277121796652, 24.880693287992354],
-           [-81.2672873749777, 24.8582663103129],
-           [-81.2233420624777, 24.822125402353972],
-           [-81.2013694062277, 24.753553339479954],
-           [-81.18900978708707, 24.731103346698955],
-           [-80.88551247263395, 24.840820293007475],
-           [-80.8553000702902, 24.889413791286202],
-           [-80.77564919138395, 24.885676508121424],
-           [-80.64381325388395, 24.99525643507288],
-           [-80.57926857614957, 25.15447107454967],
-           [-80.5641623749777, 25.33706310272239],
-           [-80.89545732346333, 26.187344644893876],
-           [-81.56562333908833, 27.55928025699306],
-           [-83.21357255783833, 30.156868837088904],
-           [-85.32294755783833, 30.422491697404215],
-           [-86.48749833908833, 29.83336269866816],
-           [-86.00409990158833, 28.779561312249186],
-           [-84.57587724533833, 28.760300974368253],
-           [-83.67499833908833, 27.129898289111296],
-           [-83.19159990158833, 25.276847798301855]]],
-         [[[-79.85915135145622, 27.093741751695887],
-           [-79.71083592176872, 27.8443089332789],
-           [-80.21071385145622, 28.666863837682545],
-           [-80.77650974989372, 28.974878094316022],
-           [-81.64442967176872, 29.066144120228167],
-           [-81.67189549208122, 28.541473334329403],
-           [-81.34779881239372, 27.751983553925765],
-           [-81.16652439833122, 26.84405635406664],
-           [-80.97975682020622, 26.47095321618231],
-           [-80.77101658583122, 26.06703365755045],
-           [-80.22170017958122, 26.534859871299503],
-           [-80.21071385145622, 26.79503360454802],
-           [-80.26564549208122, 27.030149059506883],
-           [-79.92506932020622, 27.088851286645333]]]]),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     AndS = /* color: #d63000 */ee.Geometry.Point([95.68022366345264, 12.587883996209781]),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_feb2020/20200317T185458Z/andaman_sea_low_tide_normalized_sr_feb2018_feb2020");
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_feb2020/20200317T185458Z/andaman_sea_low_tide_normalized_sr_feb2018_feb2020"),
+    no_reefs = /* color: #ffc82d */ee.Geometry.MultiPoint(),
+    BondariesWCMCForAS = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Polygon(
+        [[[95.33964749157768, 16.695208856448673],
+          [94.52665921032768, 16.716254129013105],
+          [94.53013127193786, 16.325955825315507],
+          [94.18255928154173, 16.130520451735464],
+          [93.79599336585677, 15.923912941488357],
+          [92.63701077282768, 14.281497396856706],
+          [91.91191311657768, 13.449542299295437],
+          [91.69218655407768, 9.791427198556617],
+          [92.37333889782768, 10.029519571253923],
+          [92.32939358532768, 8.533299882177115],
+          [93.69169827282768, 6.0270213246383095],
+          [94.35087796032768, 6.20180251803793],
+          [94.26298733532768, 7.532488322545196],
+          [94.10917874157768, 8.7288141619164],
+          [92.81279202282768, 9.726463092351683],
+          [94.04326077282768, 11.411190094259377],
+          [95.05400296032768, 14.387940164517607],
+          [94.57060452282768, 14.749464259117644],
+          [95.64726467907768, 14.5794091414448],
+          [96.63603421032768, 15.51304919048502],
+          [97.03154202282768, 13.812555573922232],
+          [96.85576077282768, 12.292853979096211],
+          [96.74589749157768, 11.001670519523495],
+          [97.16337796032768, 9.878026222910373],
+          [97.03154202282768, 8.598482547196216],
+          [97.20732327282768, 7.924402770453385],
+          [98.02031155407768, 6.376525792771139],
+          [99.16288967907768, 5.392979274561236],
+          [99.58037014782768, 5.19606917966658],
+          [99.73417874157768, 4.057233177125881],
+          [100.54716702282768, 2.4778242025663926],
+          [102.15117092907768, 2.4119662418636683],
+          [101.55790921032768, 4.101067163409808],
+          [100.98662014782768, 5.633560206346016],
+          [100.72294827282768, 6.834887057813266],
+          [98.94316311657768, 8.81567666647138],
+          [99.22880764782768, 11.432727589597851],
+          [99.16288967907768, 12.31432197234051],
+          [98.98710842907768, 13.235746870414042],
+          [98.39384671032768, 14.791957346870896],
+          [98.30595608532768, 17.05266104344462],
+          [97.60283108532768, 17.01064303748174],
+          [97.00956936657768, 18.037320002837806],
+          [96.37236233532768, 17.786428365136604],
+          [96.26249905407768, 17.409430504634983],
+          [95.75712796032768, 17.178658281709335],
+          [95.62529202282768, 16.84247692714126]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region onwards the map_viewer script is going to be used from the very beginning
@@ -123,10 +115,38 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 
 // WCMC
+
+//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+//Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
+//Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
+//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
+//Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
+/*
+
+// nth cari
+//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
+Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
+Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
+Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
+
+// wave data
+var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+
+Map.addLayer(kd1, {}, "waves - kd1", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)*/
+// add training data / sample point distributions
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+//Map.addLayer(geo_train, {}, "geomorphic training locations", false)
+// WCMC
+
+var wcmc=wcmc.filterBounds(BondariesWCMCForAS)
+
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
-
-
-
 
 // #############
 // example confidence layers
