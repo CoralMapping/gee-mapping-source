@@ -11,7 +11,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.MultiPoint(),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     noreefmask = /* color: #01ff14 */ee.Geometry.Polygon(
         [[[55.2248077855843, -20.980851493012523],
           [55.33741764886555, -21.08595829180467],
@@ -24,7 +23,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [55.6917267308968, -20.672797751973356],
           [55.42530827386555, -20.62910598668815],
           [55.1479034887093, -20.793527159750223],
-          [55.1204376683968, -20.867971649301655]]]);
+          [55.1204376683968, -20.867971649301655]]]),
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
@@ -43,8 +43,6 @@ Map.centerObject(centre_map, 5)
 //4. add turbidity for reference
 Map.addLayer(turbidity.focal_mode(5), {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (smooth)", false)
 Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity", false)
-
-
 
 
 
