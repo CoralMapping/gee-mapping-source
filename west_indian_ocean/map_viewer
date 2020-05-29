@@ -95,9 +95,6 @@ Map.centerObject(centre_map, 5)
 
 
 
-
-
-
 // add some background data
 //Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
 //Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
