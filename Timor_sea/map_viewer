@@ -9,12 +9,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_feb2020/20200317T185458Z/andaman_sea_low_tide_normalized_sr_feb2018_feb2020"),
     noreefmask = /* color: #43ff06 */ee.Geometry.MultiPoint(),
-    BondariesWCMCForAS = 
+    BondariesWCMCForTS = 
     /* color: #00ffff */
     /* shown: false */
-    /* locked: true */
     ee.Geometry.Polygon(
         [[[95.33964749157768, 16.695208856448673],
           [94.52665921032768, 16.716254129013105],
@@ -63,7 +61,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [96.26249905407768, 17.409430504634983],
           [95.75712796032768, 17.178658281709335],
           [95.62529202282768, 16.84247692714126]]]),
-    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint();
+    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -144,7 +143,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 // WCMC
 
-var wcmc=wcmc.filterBounds(BondariesWCMCForAS)
+var wcmc=wcmc.filterBounds(BondariesWCMCForTS)
 
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
