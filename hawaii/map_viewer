@@ -53,8 +53,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-175.1224133920856, 28.710324938451418]]]),
     rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
-    geometry = /* color: #00ff00 */ee.Geometry.Point([-157.2904165142968, 20.910911768679238]);
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
