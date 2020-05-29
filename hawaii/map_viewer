@@ -10,7 +10,11 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     noreefmask = /* color: #43ff06 */ee.Geometry.MultiPoint(),
-    BondariesWCMCForHI = /* color: #00ffff */ee.Geometry.Polygon(
+    BondariesWCMCForHI = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Polygon(
         [[[-178.98452301460918, 29.245682688458757],
           [-178.9896008920856, 28.09183309274485],
           [-178.5062024545856, 27.411255440594505],
@@ -49,7 +53,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-175.1224133920856, 28.710324938451418]]]),
     rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
+    geometry = /* color: #00ff00 */ee.Geometry.Point([-157.2904165142968, 20.910911768679238]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -60,17 +65,14 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([134.3895004228908, -10.96544281366157])
+var centre_map = ee.Geometry.Point([-157.2904165142968, 20.910911768679238])
 Map.centerObject(centre_map, 5)
 //splitting North Cari regions
-
 
 
 //4. add turbidity for reference
 Map.addLayer(turbidity.focal_mode(5), {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (smooth)", false)
 Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity", false)
-
-
 
 
 // add some background data
