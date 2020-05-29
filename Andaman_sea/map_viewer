@@ -9,9 +9,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    AndS = /* color: #d63000 */ee.Geometry.Point([95.68022366345264, 12.587883996209781]),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_feb2020/20200317T185458Z/andaman_sea_low_tide_normalized_sr_feb2018_feb2020"),
-    no_reefs = /* color: #ffc82d */ee.Geometry.MultiPoint(),
+    noreefmask = /* color: #43ff06 */ee.Geometry.MultiPoint(),
     BondariesWCMCForAS = 
     /* color: #00ffff */
     /* shown: false */
@@ -74,7 +73,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = AndS
+var centre_map = ee.Geometry.Point([95.68022366345264, 12.587883996209781])
 Map.centerObject(centre_map, 7)
 //splitting North Cari regions
 
