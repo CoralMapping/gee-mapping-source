@@ -9,47 +9,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
-    BondariesWCMCForHI = 
-    /* color: #00ffff */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry.Polygon(
-        [[[-178.98452301460918, 29.245682688458757],
-          [-178.9896008920856, 28.09183309274485],
-          [-178.5062024545856, 27.411255440594505],
-          [-176.2210462045856, 27.11828381981855],
-          [-174.4852063608356, 26.84414952724335],
-          [-174.5511243295856, 25.463592275178765],
-          [-173.5623547983356, 24.847045514492123],
-          [-172.9910657358356, 25.721211852601478],
-          [-172.5296399545856, 25.622193074195295],
-          [-172.0901868295856, 24.647498100361688],
-          [-170.2005383920856, 24.287509180079482],
-          [-167.3221204233356, 23.46373172551175],
-          [-164.67846669903568, 22.64306485701608],
-          [-166.78442411354348, 21.659670946601192],
-          [-168.68984316095035, 19.689403197458088],
-          [-170.5960462045856, 15.982962215730796],
-          [-168.9866169009752, 15.85814285567876],
-          [-168.07873304700556, 20.291800334858316],
-          [-163.4549329233356, 22.533342458570626],
-          [-161.6092297983356, 22.39120316943024],
-          [-161.0818860483356, 21.33080797247133],
-          [-159.9612805795856, 20.920891177438953],
-          [-159.1702649545856, 21.08499380379387],
-          [-156.8191907358356, 19.705155740417748],
-          [-156.4896008920856, 19.14566807569612],
-          [-156.0501477670856, 18.0837039133581],
-          [-154.6658704233356, 18.792418684173427],
-          [-154.0945813608356, 19.994495723204004],
-          [-156.0281751108356, 21.69875714966666],
-          [-158.2034680795856, 22.634781085064407],
-          [-162.5101087045856, 23.986736050416525],
-          [-167.1683118295856, 24.587571507481186],
-          [-169.3436047983356, 25.93876291772303],
-          [-171.8704602670856, 26.90294876694871],
-          [-173.0130383920856, 26.804933056111935],
-          [-175.1224133920856, 28.710324938451418]]]),
+    BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.MultiPoint(),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     noreefmask = /* color: #01ff14 */ee.Geometry.Polygon(
@@ -158,7 +118,7 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 // WCMC
 //filter wcmc by hawaii extent
 
-var wcmc=wcmc.filterBounds(BondariesWCMCForHI)
+var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
 
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
