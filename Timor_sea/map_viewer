@@ -10,7 +10,11 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     noreefmask = /* color: #43ff06 */ee.Geometry.MultiPoint(),
-    BondariesWCMCForTS = /* color: #00ffff */ee.Geometry.Polygon(
+    BondariesWCMCForTS = 
+    /* color: #00ffff */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Polygon(
         [[[120.81295245249498, -15.710944939289138],
           [118.17703031620081, -17.018187576419784],
           [118.17730013080954, -18.357613658838176],
