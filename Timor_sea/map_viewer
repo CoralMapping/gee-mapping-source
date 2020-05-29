@@ -44,8 +44,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [123.66819734315233, -10.578080993296727],
           [120.85649657570211, -13.243724247024405]]]),
     rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
-    geometry = /* color: #ff0000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]);
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -56,7 +55,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([134.3895004228908, -10.96544281366157])
+var centre_map = ee.Geometry.Point([134.3895004228908, -10.96544281366157, 7])
 Map.centerObject(centre_map, 7)
 //splitting North Cari regions
 
