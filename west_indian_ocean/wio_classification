@@ -474,7 +474,7 @@ var map_centre =
 ///////////////////////////////
 // Global coral atlas project - north caribbean & bahamas region
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: 
+// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
@@ -497,7 +497,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
