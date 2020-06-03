@@ -39,7 +39,7 @@ var map_centre =
           [-159.49711601408126, 24.285181932548678],
           [-178.92094413908126, 30.78729795469936],
           [179.23335273591871, 29.57169668865391]]]),
-    hawii_west = 
+    hawaii_west = 
     /* color: #ef3dff */
     /* shown: false */
     ee.Geometry.Polygon(
@@ -175,7 +175,7 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
-  var region_dic = ee.Dictionary({hawaii_east: hawaii_east, hawaii_west: hawii_west}) // <- include all splits here
+  var region_dic = ee.Dictionary({hawaii_east: hawaii_east, hawaii_west: hawaii_west}) // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
   print('Running classificaiton for region split: ', vars.split_region)
