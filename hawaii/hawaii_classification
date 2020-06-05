@@ -121,7 +121,7 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
+  input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p',], //input bands for geomorphic
   //input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p'], //input bands for benthic
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
@@ -322,8 +322,8 @@ var raw_classification = pixsegs.classify(rf_classifier).toUint8();
 
 if (vars.run_probabilities) {
   var classesList={
-     classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23],
-     classes_mapped_benthic:      [11,    12,   13,  14,    15],
+     classes_mapped_geo:       [11,  12, 13, 14, 15, 16, 21, 22, 23],
+     classes_mapped_benthic:      [11, 12, 13,  14, 15],
      classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RC', 'TRF','SS','SE', 'PL'],
      classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO' ],
   };
@@ -457,5 +457,6 @@ var title = ui.Label({
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
+var legend = (vars.geomorphic) ? geo_legend : benthic_legend
+pkg_vis.add_lgds([title, legend])//, mask_legend])
 // generate the legend
