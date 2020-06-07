@@ -161,7 +161,7 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
   do_export: false, // export the results?
