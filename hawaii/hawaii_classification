@@ -39,7 +39,7 @@ var map_centre =
           [-159.49711601408126, 24.285181932548678],
           [-178.92094413908126, 30.78729795469936],
           [179.23335273591871, 29.57169668865391]]]),
-    hawaii_west = 
+    west = 
     /* color: #ef3dff */
     /* shown: false */
     ee.Geometry.Polygon(
@@ -55,7 +55,7 @@ var map_centre =
           [-179.21131756314966, 27.701525535727267],
           [-174.21253826627472, 25.084107254287407],
           [-168.27992107877472, 23.48189007138448]]]),
-    hawaii_east = 
+    east = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Polygon(
@@ -164,7 +164,7 @@ var vars = {
   test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
@@ -177,7 +177,7 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
-  var region_dic = ee.Dictionary({hawaii_east: hawaii_east, hawaii_west: hawaii_west}) // <- include all splits here
+  var region_dic = ee.Dictionary({hawaii_east: east, hawaii_west: west}) // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
   print('Running classificaiton for region split: ', vars.split_region)
