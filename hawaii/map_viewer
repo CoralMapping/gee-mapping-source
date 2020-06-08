@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
-    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
@@ -221,15 +219,16 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-157.33579381802988, 21.102820831591774],
            [-157.30592473844004, 21.102180234026704]]]]),
     hawaii_geo_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_east"),
-    hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west");
+    hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west"),
+    pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
 //in the workflow 
 
 // imports
-//var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
-//var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
 var centre_map = ee.Geometry.Point([-157.2904165142968, 20.910911768679238])
