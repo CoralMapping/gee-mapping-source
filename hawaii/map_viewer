@@ -220,7 +220,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_geo_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_east"),
     hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west"),
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
-    geo_train = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_geo_training");
+    geo_train = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_geo_training"),
+    centre_map = /* color: #d63000 */ee.Geometry.Point([-157.2904165142968, 20.910911768679238]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -231,7 +232,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([-157.2904165142968, 20.910911768679238])
+
 Map.centerObject(centre_map, 5)
 //splitting North Cari regions
 
