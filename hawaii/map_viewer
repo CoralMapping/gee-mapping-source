@@ -220,7 +220,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-157.43123754361582, 21.11210918563888],
            [-157.33579381802988, 21.102820831591774],
            [-157.30592473844004, 21.102180234026704]]]]),
-    hawaii_geo_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_east");
+    hawaii_geo_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_east"),
+    hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -261,15 +262,15 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 //Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 //Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(ee.ImageCollection([hawaii_geo_east,hawaii_geo_east]).mosaic(), map_palettes.benthic, "Hawaii east/west Geo - RAW", false)
+Map.addLayer(ee.ImageCollection([hawaii_geo_east,hawaii_geo_west]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
 // wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
-var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+//var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+//var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
-Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)*/
+//Map.addLayer(kd1, {}, "waves - kd1", false)
+//Map.addLayer(kd2, {}, "waves - kd2", false)*/
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
