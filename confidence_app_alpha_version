@@ -91,7 +91,8 @@ var selectROI=ui.Select({
         // generate the legend
         var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
         var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
-        pkg_vis.add_lgds([title, geo_legend, benthic_legend]);
+        var final_legend=(geomorphic) ? geo_legend : benthic_legend;
+        pkg_vis.add_lgds([title, final_legend]);
 
         // confidence legend
 
