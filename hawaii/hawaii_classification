@@ -218,7 +218,7 @@ if (vars.trim_training_data) {
 
 // trim the image and training data to sub-region, if desired
 if (region_idx > -1) {
-  //pixsegs = ee.Image(pixsegs.clip(subregion_clip))
+  pixsegs = pixsegs.clip(subregion_clip)
   training_data = ee.FeatureCollection(training_data.filterBounds(subregion_clip))
 }
 
