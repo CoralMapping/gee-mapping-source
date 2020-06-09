@@ -1,10 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
-    benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
-    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
-    benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     BondariesWCMCForHI = 
     /* color: #00ffff */
     /* shown: false */
@@ -48,10 +44,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-175.1224133920856, 28.710324938451418]]]),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
-    rivermouth = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    rivermouth = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[-157.24561225226518, 21.08670903118609],
            [-157.24355231574174, 21.083505668270888],
            [-157.23720084479447, 21.081903960918915],
@@ -139,10 +132,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-160.1811268285754, 21.94953682553811],
            [-160.18859409847286, 21.936878412674925],
            [-160.17142796077755, 21.92238752604182]]]]),
-    noreefmask = 
-    /* color: #0dff09 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    noreefmask = /* color: #0dff09 */ee.Geometry.MultiPolygon(
         [[[[-155.75950064387715, 20.11176724970261],
            [-155.4326573821584, 19.946617631774327],
            [-155.2019444915334, 19.817474101263812],
@@ -227,32 +217,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west"),
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_geo_training"),
-    centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([-157.2904165142968, 20.910911768679238]),
-    west = /* color: #ef3dff */ee.Geometry.Polygon(
-        [[[-170.05421307096222, 16.6451400858547],
-          [-169.26319744596222, 16.276379337331182],
-          [-166.52210857877472, 22.956876785083164],
-          [-161.24867107877472, 21.900749850607188],
-          [-159.88636639127472, 23.118638908420024],
-          [-168.41175701627472, 25.956563835498525],
-          [-172.8005727562403, 27.17740555675168],
-          [-178.03578045377466, 29.409455643699086],
-          [-179.88075843416314, 29.138941969116722],
-          [-179.21131756314966, 27.701525535727267],
-          [-174.21253826627472, 25.084107254287407],
-          [-168.27992107877472, 23.48189007138448]]]),
-    east = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-160.10125396109765, 22.64228527575897],
-          [-161.24383208609765, 21.675686283465996],
-          [-155.13543364859765, 17.913808970579183],
-          [-153.16888091422265, 20.074384925080125],
-          [-159.26629302359765, 23.138220615639327]]]);
+    centre_map = /* color: #d63000 */ee.Geometry.Point([-157.2904165142968, 20.910911768679238]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -293,7 +258,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 //Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 //Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
+Map.addLayer(ee.ImageCollection([hawaii_geo_east,hawaii_geo_west]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
 // wave data
