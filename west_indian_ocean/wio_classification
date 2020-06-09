@@ -85,7 +85,7 @@ var vars = {
   object data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
     */
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s'],
+  input_bands: ['depth_s', 'depth_stdDev_p',  'b1_s', 'b2_s'],
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
