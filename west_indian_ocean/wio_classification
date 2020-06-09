@@ -420,5 +420,3 @@ if (vars.do_export) {
 Map.addLayer(training_data, {}, "Training point distribution", false) // Training data points
 if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training field point distribution", false) // Training data points
 
-// Display output
-Map.addLayer(wio_geo, display_pal, "wio_geo")
