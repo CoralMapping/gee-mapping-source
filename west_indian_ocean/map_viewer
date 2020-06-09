@@ -79,6 +79,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //The map_viewer WIO script is going to be used from the very beginning
 //in the workflow to annotate masks 
 
+// Current Region: West Indian Ocean  <--------- Indicate region here
+
 // imports
 //var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 //var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
