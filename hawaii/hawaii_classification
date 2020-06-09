@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
     eg_area = 
     /* color: #d63000 */
     /* shown: false */
@@ -148,7 +145,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'east', 
+  split_region: 'west', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -161,10 +158,10 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
