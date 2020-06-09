@@ -86,7 +86,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 //var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([55.404895985703206, -13.805267318322514])
+var centre_map = ee.Geometry.Point([50.26077595263271,-9.927142570159555])
 Map.centerObject(centre_map, 5)
 //splitting North Cari regions
 
