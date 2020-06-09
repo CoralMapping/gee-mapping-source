@@ -75,7 +75,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 
 // imports
 //var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
-//var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
 var centre_map = ee.Geometry.Point([50.26077595263271,-9.927142570159555]) // <---- change for region
