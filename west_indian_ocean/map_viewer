@@ -99,7 +99,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 // wio
-Map.addLayer(wio_geo, display_pal, "wio_geo")
+Map.addLayer(wio_geo, map_palettes.geo, "wio_geo")
 
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
