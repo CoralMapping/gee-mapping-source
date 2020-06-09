@@ -377,7 +377,6 @@ var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 if (vars.do_export) {
   //export_classification() // export if wanted
   
-  //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
   if (region_idx > -1) {
     var export_geom = subregion_clip
     output_name = output_name + '_' + vars.split_region
