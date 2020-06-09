@@ -351,7 +351,7 @@ if (vars.do_export) {
     var export_geom = subregion_clip
     output_name = output_name + '_' + vars.split_region
   } else {
-    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wio, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
