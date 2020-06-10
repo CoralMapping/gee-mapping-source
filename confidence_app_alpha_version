@@ -1,7 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var benthic_col = {"opacity":1,"bands":["classification"],"max":21,"palette":["ffffff","004529","08306b","99d8c9","ffff5c","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffcc","fcbba1","993404","a6d96a","1c9099","5cfaff","c994c7","756bb1","ffffff","ffffff","ffffff"]},
     geo_col = {"opacity":1,"bands":["classification"],"max":30,"palette":["ffffff","004529","023858","f768a1","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","5ce0ff","3690c0","ffffbf","ffcc7a","a50f15","addd8e","ffffff","ffffff","ffffff","ffffff","d9f0a3","d4d417","bdbdbd","02818a","deebf7","deebf7","ffffff","ffffff","ffffff","ffffff"]},
-    rgb_str = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":-147.57330947255974,"max":784.9199038064958,"gamma":0.767};
+    rgb_str = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":-147.57330947255974,"max":784.9199038064958,"gamma":0.767},
+    low_tide = {"opacity":1,"bands":["b3","b2","b1"],"min":26.88,"max":933.12,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //////////////
 //1.DATA///////
@@ -63,24 +64,35 @@ var selectROI=ui.Select({
         var geomorphic=LAYER[key][0];//.aside(print,'geomorphic loc37');
         print('geomorphic',geomorphic);
         
+        var low_depth=ee.Image(region_params.low_rrs);
+        
+        var QAQC=ee.FeatureCollection(region_params.QAQC);
+        
+        var prob=(geomorphic) ? ee.Image(region_params.prob_geo) : ee.Image(region_params.prob_benthic);
+        
         var val_map=(geomorphic) ? ee.Image(region_params.geo_map) : ee.Image(region_params.benthic_map);
-        print('val_map',val_map);
+        // print('val_map',val_map);
         var visParam=(geomorphic) ? (geo_col) : (benthic_col);
         Map.centerObject(val_map,5);
-        Map.addLayer(val_map,visParam,'classification layer');
         
         var confidence=(geomorphic) ? ee.Image(region_params.conf_geo) : ee.Image(region_params.conf_benthic);
         var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["014636","016c59","02818a","3690c0","67a9cf","a6bddb","d0d1e6","ece2f0","fff7fb","FFFFFF"]};
-        
-        Map.addLayer(confidence,conf_str,'confidence',true);
         
         var rgb=ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
                           )
                   .select(input_bands);
-        Map.addLayer(rgb,rgb_str,'rgb composite')
         
+        Map.addLayer(low_depth,low_tide,'low_tide') ;         
+        
+        Map.addLayer(QAQC,{},'QAQC');   
+        
+        Map.addLayer(prob,{},'probability layer');
+        
+        Map.addLayer(val_map,visParam,'classification layer');          
+        Map.addLayer(rgb,rgb_str,'rgb composite')
+        Map.addLayer(confidence,conf_str,'confidence',true);
         
         //Generate geomorphic/benthic classes legend
         var title = ui.Label({
