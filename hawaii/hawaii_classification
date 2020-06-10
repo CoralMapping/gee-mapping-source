@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
     eg_area = 
     /* color: #d63000 */
     /* shown: false */
@@ -118,8 +121,8 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
-  //input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p'], //input bands for benthic
+  //input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
+  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p'], //input bands for benthic
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -145,7 +148,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'east', 
+  split_region: 'west', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
