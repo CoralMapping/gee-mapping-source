@@ -289,7 +289,7 @@ var nth_cari = {
   QAQC: "projects/coral_atlas/nth_cari/QAQC",
   conf_benthic: ["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_benthic"],
   conf_geo:["projects/coral_atlas/nth_cari/in_out/nth_cari_conf_geo"],
-  low_depth:""
+  low_rrs:"projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"
 }
 
 
@@ -321,7 +321,7 @@ var east_africa = {
   QAQC: "projects/coral_atlas/east_africa/QAQC",
   conf_benthic: ["projects/coral_atlas/east_africa/in_out/east_africa_conf_benthic"],
   conf_geo:["projects/coral_atlas/east_africa/in_out/east_africa_conf_geo"],
-  low_depth:["projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"]
+  low_rrs:['projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic']
 };
 
 var hawaii = {
