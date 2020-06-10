@@ -38,8 +38,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([50.21106794154735, -9.80
           [53.725642428271215, -23.46464222872693],
           [67.43657992827121, -21.67926239049737],
           [56.010798678271215, -0.5947727639399382],
-          [47.397517428271215, -3.2297903228646567]]]),
-    wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo");
+          [47.397517428271215, -3.2297903228646567]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - West Indian Ocean
