@@ -319,7 +319,8 @@ var east_africa = {
   prob_benthic:["projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic"],
   QAQC: "projects/coral_atlas/east_africa/QAQC",
   conf_benthic: ["projects/coral_atlas/east_africa/in_out/east_africa_conf_benthic"],
-  conf_geo:["projects/coral_atlas/east_africa/in_out/east_africa_conf_geo"]
+  conf_geo:["projects/coral_atlas/east_africa/in_out/east_africa_conf_geo"],
+  low_depth:["projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"]
 };
 
 var hawaii = {
