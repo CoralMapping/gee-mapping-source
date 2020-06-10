@@ -63,7 +63,8 @@ var map_centre =
           [-161.24383208609765, 21.675686283465996],
           [-155.13543364859765, 17.913808970579183],
           [-153.16888091422265, 20.074384925080125],
-          [-159.26629302359765, 23.138220615639327]]]);
+          [-159.26629302359765, 23.138220615639327]]]),
+    imageVisParam = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":33,"max":2579,"gamma":1.165};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -122,7 +123,7 @@ var vars = {
   */
   
   //input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p'], //input bands for benthic
+  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p'], //input bands for benthic
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
