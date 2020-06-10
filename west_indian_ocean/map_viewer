@@ -108,7 +108,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 //Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
-Map.addLayer(wio_benthic, map_palettes.geo, "wio_benthic - RAW", false)
+Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
