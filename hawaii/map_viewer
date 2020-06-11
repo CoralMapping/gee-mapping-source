@@ -279,7 +279,7 @@ Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391',
 //Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
 
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
-Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
+Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
