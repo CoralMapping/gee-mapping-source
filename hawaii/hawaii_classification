@@ -64,7 +64,9 @@ var map_centre =
           [-155.13543364859765, 17.913808970579183],
           [-153.16888091422265, 20.074384925080125],
           [-159.26629302359765, 23.138220615639327]]]),
-    imageVisParam = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":33,"max":2579,"gamma":1.165};
+    imageVisParamold = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":33,"max":2579,"gamma":1.165},
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -149,7 +151,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'west', 
+  split_region: 'east', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -229,6 +231,8 @@ if (region_idx > -1) {
 print("Number of training samples:", training_data.size())
 
 //Map.centerObject(map_centre, 14)
+
+Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 Map.addLayer(pixsegs, imageVisParam, 'segments + pixels', false)
 
 
