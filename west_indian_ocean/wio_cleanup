@@ -111,8 +111,9 @@ var eg_area =
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - North Caribbean and Bahamas
+// Global coral atlas project - West Indian Ocean
 // Contact: mitchell.lyons@gmail.com
+// Region Coordinator: Eva Kovacs (kovacsevam2@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
@@ -133,7 +134,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
