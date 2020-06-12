@@ -375,7 +375,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 // generate the legend
 
-
+// What is wrong with the diesel engine of Mitch as it does not make sense
 
 
 ///////// LINK TO DATA EXPORT /////////
