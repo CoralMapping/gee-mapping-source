@@ -2,7 +2,8 @@
 var benthic_col = {"opacity":1,"bands":["classification"],"max":21,"palette":["ffffff","004529","08306b","99d8c9","ffff5c","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffcc","fcbba1","993404","a6d96a","1c9099","5cfaff","c994c7","756bb1","ffffff","ffffff","ffffff"]},
     geo_col = {"opacity":1,"bands":["classification"],"max":30,"palette":["ffffff","004529","023858","f768a1","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","ffffff","5ce0ff","3690c0","ffffbf","ffcc7a","a50f15","addd8e","ffffff","ffffff","ffffff","ffffff","d9f0a3","d4d417","bdbdbd","02818a","deebf7","deebf7","ffffff","ffffff","ffffff","ffffff"]},
     rgb_str = {"opacity":1,"bands":["b3_p","b2_p","b1_p"],"min":-147.57330947255974,"max":784.9199038064958,"gamma":0.767},
-    low_tide = {"opacity":1,"bands":["b3","b2","b1"],"min":26.88,"max":933.12,"gamma":1};
+    low_tide = {"opacity":1,"bands":["b3","b2","b1"],"min":26.88,"max":933.12,"gamma":1},
+    prob = {"opacity":1,"bands":["CO"],"min":0,"max":90,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //////////////
 //1.DATA///////
@@ -86,18 +87,16 @@ var selectROI=ui.Select({
                           )
                   .select(input_bands);
         
-        Map.addLayer(low_depth,low_tide,'low_tide') ;         
+        Map.addLayer(low_depth,low_tide,'low_tide',false) ;         
         
-        Map.addLayer(QAQC,{},'QAQC');   
+        Map.addLayer(QAQC,{},'QAQC',false);   
         
-        Map.addLayer(mask,{color:'red'},'mask',false);
-        
-        Map.addLayer(prob,{},'probability layer');
+        Map.addLayer(prob,prob,'probability layer (% for Coral/Algae)',false);
         
         Map.addLayer(val_map,visParam,'classification layer');          
-        Map.addLayer(rgb,rgb_str,'rgb composite')
+        Map.addLayer(rgb,rgb_str,'rgb composite');
         Map.addLayer(confidence,conf_str,'confidence',true);
-        
+        Map.addLayer(mask,{color:'red'},'mask',false);
         //Generate geomorphic/benthic classes legend
         var title = ui.Label({
           value: 'Coral Atlas map classes',
