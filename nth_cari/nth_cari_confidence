@@ -61,10 +61,10 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
-  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -345,10 +345,10 @@ var confidenceEXP=confidence.expression(
               ":(b(0) > 30) ? 3"+
                 ":(b(0) > 20) ? 2"+
                   ":(b(0) > 10) ? 1"+
-                    ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
+                    ":0").updateMask(toMask.eq(0))//.aside(print,'confidence');
 
-var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["014636","016c59","02818a","3690c0","67a9cf","a6bddb","d0d1e6","ece2f0","fff7fb","FFFFFF"]};
-Map.addLayer(confidenceEXP,conf_str,'confidence',true);
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["f7fcfd","e0ecf4","bfd3e6","9ebcda","8c96c6","8c6bb1","88419d","810f7c","4d004b","FFFFFF"]};
+Map.addLayer(confidence,conf_str,'confidence',true);
 
 //7.6 confidence legend
 
