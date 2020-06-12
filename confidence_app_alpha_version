@@ -68,6 +68,8 @@ var selectROI=ui.Select({
         
         var QAQC=ee.FeatureCollection(region_params.QAQC);
         
+        var mask=ee.FeatureCollection(region_params.mask);
+        
         var prob=(geomorphic) ? ee.Image(region_params.prob_geo) : ee.Image(region_params.prob_benthic);
         
         var val_map=(geomorphic) ? ee.Image(region_params.geo_map) : ee.Image(region_params.benthic_map);
@@ -87,6 +89,8 @@ var selectROI=ui.Select({
         Map.addLayer(low_depth,low_tide,'low_tide') ;         
         
         Map.addLayer(QAQC,{},'QAQC');   
+        
+        Map.addLayer(mask,{color:'red'},'mask',false);
         
         Map.addLayer(prob,{},'probability layer');
         
