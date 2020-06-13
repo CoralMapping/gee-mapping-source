@@ -61,7 +61,7 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
   assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
@@ -332,24 +332,23 @@ var toMask=val_map.multiply(0);
 //reduction to the unit
 //x=(ConfValue * 10)/3
 
-var confidence=((union.updateMask(toMask.eq(0))).multiply(ee.Number(10))).divide(ee.Number(3));
+var confidence=((union.updateMask(toMask.eq(0))))//.multiply(ee.Number(10))).divide(ee.Number(3));
 
 //remap confidence layer into 4 confidence zones [high conf:0,very low conf=3]
 var confidenceEXP=confidence.expression(
-  "(b(0) > 90) ? 9"+
-    ":(b(0) > 80) ? 8"+
-      ":(b(0) > 70) ? 7"+
-        ":(b(0) > 60) ? 6"+
-          ":(b(0) > 50) ? 5"+
-            ":(b(0) > 40) ? 4"+
-              ":(b(0) > 30) ? 3"+
-                ":(b(0) > 20) ? 2"+
-                  ":(b(0) > 10) ? 1"+
-                    ":0").updateMask(toMask.eq(0))//.aside(print,'confidence');
+  "(b(0) > 27) ? 9"+
+    ":(b(0) > 24) ? 8"+
+      ":(b(0) > 21) ? 7"+
+        ":(b(0) > 18) ? 6"+
+          ":(b(0) > 15) ? 5"+
+            ":(b(0) > 12) ? 4"+
+              ":(b(0) > 9) ? 3"+
+                ":(b(0) > 6) ? 2"+
+                  ":(b(0) > 3) ? 1"+
+                    ":0").updateMask(toMask.eq(0)).aside(print,'confidence');
 
-var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["f7fcfd","e0ecf4","bfd3e6","9ebcda","8c96c6","8c6bb1","88419d","810f7c","4d004b","FFFFFF"]};
-Map.addLayer(confidence,conf_str,'confidence',true);
-
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
+Map.addLayer(confidenceEXP,conf_str,'confidence',true);
 //7.6 confidence legend
 
 var legend=ui.Panel({
