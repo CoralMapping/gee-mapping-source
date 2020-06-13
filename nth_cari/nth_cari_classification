@@ -573,7 +573,7 @@ var vars = {
   asset_output: region_params.asset, // asset path
   
   // accuracy/confidence options
-  run_probabilities: false
+  run_probabilities: true
 
 }
 
