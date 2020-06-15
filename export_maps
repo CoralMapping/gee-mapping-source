@@ -5607,6 +5607,27 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                39.64036742011874,
+                -5.008668964234979
+              ],
+              [
+                39.64071074287265,
+                -5.003966285407445
+              ],
+              [
+                39.63547507087558,
+                -5.00482132043624
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
