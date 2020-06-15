@@ -3425,6 +3425,7 @@ var eg_area =
 ///////////////////////////////
 // Global coral atlas project - Hawaii
 // Contact: mitchell.lyons@gmail.com
+// Region coordinator: Paul Tudman (tuddy117@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
