@@ -60,10 +60,10 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
   benthic: true, // assess benthic accuracy
   
-  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
