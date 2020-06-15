@@ -72,14 +72,14 @@ var selectROI=ui.Select({
         
         var prob=(geomorphic) ? ee.Image(region_params.prob_geo) : ee.Image(region_params.prob_benthic);
         
-        var val_map=(geomorphic) ? ee.Image(region_params.geo_map) : ee.Image(region_params.benthic_map);
+        var val_map=(geomorphic) ? ee.Image(region_params.geo_map_clean) : ee.Image(region_params.benthic_map_clean);
         // print('val_map',val_map);
         var visParam=(geomorphic) ? (geo_col) : (benthic_col);
         Map.centerObject(val_map,5);
         
         var confidence=(geomorphic) ? ee.Image(region_params.conf_geo) : ee.Image(region_params.conf_benthic);
-        var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["014636","016c59","02818a","3690c0","67a9cf","a6bddb","d0d1e6","ece2f0","fff7fb","FFFFFF"]};
-        
+        var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
+
         var rgb=ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
@@ -117,7 +117,7 @@ var selectROI=ui.Select({
         }
       });
 
-      var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+      var vis = {min: 'low', max: 'high', palette: 'ece2f0,8c96c6,4d004b'};
       function makeColorBarParams(palette) {
         return {
           bbox: [0, 0, 1, 0.1],
