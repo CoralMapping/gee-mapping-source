@@ -90,7 +90,7 @@ var selectROI=ui.Select({
         
         Map.addLayer(QAQC,{},'QAQC',false);   
         
-        Map.addLayer(prob,{},'probability layer (% for Coral/Algae)',false);
+        Map.addLayer(prob,{},'probability layer (%)',false);
         
         Map.addLayer(val_map,visParam,'classification layer');          
         Map.addLayer(rgb,rgb_str,'rgb composite');
