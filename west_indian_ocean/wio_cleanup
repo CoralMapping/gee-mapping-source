@@ -165,7 +165,7 @@ MANUAL ADDITION
 */
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
-reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+reef_boundary = ee.Feature(wio_extent).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
@@ -183,14 +183,14 @@ if (vars.manual_clean) {
   var depth_cont = depth.lt(900)
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
-  Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
+  //Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
-  var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
-  var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
-  var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
-  var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
-  var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
+  var wio_extent = ee.Image().byte().paint(ee.Feature(wio_extent, {zone: 1}), "zone").clip(wio_extent)
+ // var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
+//  var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
+//  var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
+//  var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
   
   
   // define the manually edited map
