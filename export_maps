@@ -6036,7 +6036,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 */
 
 
-var toEldang = ee.FeatureCollection(ee.Geometry(Rivermouth)));
+var toEldang = ee.FeatureCollection(ee.Feature(ee.Geometry(Rivermouth)));
 
 
 
