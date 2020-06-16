@@ -60,7 +60,6 @@ var not_reef =
            [-80.21071385145622, 26.79503360454802],
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
-    waves = ee.Image("users/danleeharris/reefwave/nth_cari_d2"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     wio_extent = 
     /* color: #d63000 */
