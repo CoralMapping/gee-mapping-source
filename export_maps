@@ -6036,7 +6036,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
 */
 
 
-toEldang= ee.FeatureCollection(ee.Feature(ee.Geometry.Polygon(Rivermouth))),
+toEldang = ee.FeatureCollection(ee.Feature(ee.Geometry.Polygon(Rivermouth)));
 
 
 
@@ -6152,7 +6152,7 @@ Export.image.toCloudStorage({
 
 
 Export.table.toDrive({
-  collection:toEldang, 
+  collection: toEldang, 
   description:'EA_maskedOutAreasInV2',
   fileFormat: 'SHP'
 });
