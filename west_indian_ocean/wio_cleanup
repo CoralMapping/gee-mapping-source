@@ -204,7 +204,7 @@ if (vars.manual_clean) {
   // remove
   
   //man_geo = man_geo.where({
-  //  test: waves.lte(0.4)
+  //  test: waves.lte(0.4) // this is a relative threshold which will change for each region
   //             .and(man_geo.eq(22)),
   //  value: ee.Image(21)
   //})
