@@ -3117,7 +3117,7 @@ if (vars.manual_clean) {
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
  // update these values based on inspection of the layer
-  Map.addLayer(waves.lt(wave_height), {}, wave_height + "m Hs95 threshold", false)
+  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   // add no reef and river mouth here (check east africa)
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
@@ -3135,7 +3135,7 @@ if (vars.manual_clean) {
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
-    test: waves.lte(wave_height)
+    test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
