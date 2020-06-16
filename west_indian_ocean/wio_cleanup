@@ -393,7 +393,7 @@ if (vars.obia_2nd_pass) {
   // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   
-  var geo_map = ee.Image(region_params.geo_map_clean)
+  var geo_map = ee.Image(region_params.geo_map_clean) // needs to be updated in reef_params
 } else {
   //print(ee.List(region_params.geo_map).length())
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
