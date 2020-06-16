@@ -3095,7 +3095,8 @@ MANUAL ADDITION
 ############################
 */
 
-// This can be hand drawn or imported from elsewhere, or could just be a big box (defines export extent)
+// This can be hand drawn or imported from elsewhere, or could just be a big box
+// Reef_boundary defines export extent and can be used to clip out unwanted areas
 reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
