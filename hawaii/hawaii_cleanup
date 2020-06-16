@@ -3229,7 +3229,7 @@ if (vars.manual_clean) {
                    //.and(depth_cont)
                    .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
-  })
+  });
   
   // shallow classes -> shallow lagoon
   man_geo = man_geo.where({
@@ -3237,7 +3237,7 @@ if (vars.manual_clean) {
                    //.and(depth_cont)
                    .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
-  })
+  });
   
   
   //CUBA EAST
@@ -3247,7 +3247,7 @@ if (vars.manual_clean) {
                    //.and(depth_cont)
                    .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
-  })
+  });
   
   // shallow classes -> shallow lagoon
   man_geo = man_geo.where({
@@ -3255,14 +3255,14 @@ if (vars.manual_clean) {
                    //.and(depth_cont)
                    .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24)).or(man_geo.eq(13)).or(man_geo.eq(14))),
     value: ee.Image(11)
-  })
+  });
   
   // reef crest -> TRF
   man_geo = man_geo.where({
     test: cuba_east.eq(1)
                   .and(man_geo.eq(15)),
     value: ee.Image(16)
-  })
+  });
   
   
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
@@ -3286,7 +3286,7 @@ if (vars.manual_clean) {
   
   
   // Add the manual layer to the map
-  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
+  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
   // Export
   Export.image.toAsset({
     image: man_geo,
@@ -3297,7 +3297,7 @@ if (vars.manual_clean) {
     crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
-  })
+  });
   
   
 }
@@ -3326,16 +3326,16 @@ if (vars.obia_2nd_pass) {
   // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   
-  var geo_map = ee.Image(region_params.geo_map_clean)
+  var geo_map = ee.Image(region_params.geo_map_clean);
 } else {
   //print(ee.List(region_params.geo_map).length())
   // Run check to see if the region has been split into multiple areas
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
              .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-             .selfMask()
+             .selfMask();
   } else {
-    var geo_map = ee.Image(region_params.geo_map)
+    var geo_map = ee.Image(region_params.geo_map);
   }
 }
 
@@ -3346,37 +3346,37 @@ if (vars.obia_2nd_pass) {
 if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
-             .selfMask()
+             .selfMask();
 } else {
-    var benthic_map = ee.Image(region_params.benthic_map)
+    var benthic_map = ee.Image(region_params.benthic_map);
 }
 
 
-var depth = ee.Image(region_params.pixels).select('depth')
-var image = ee.Image(region_params.image)
+var depth = ee.Image(region_params.pixels).select('depth');
+var image = ee.Image(region_params.image);
 
-var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
+var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 //Map.centerObject(eg_area, 11)
-Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false)
-Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false)
+Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false);
+Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
 
 if (vars.geomorphic) {
   if (vars.obia_2nd_pass) {
     if (ee.List(region_params.geo_map).length().getInfo() > 1) {
       var geo_map_display = ee.Image(region_params.geo_map[0]).unmask(0, false)
                        .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-                       .selfMask()
+                       .selfMask();
     } else {
-    var geo_map_display = ee.Image(region_params.geo_map)
+    var geo_map_display = ee.Image(region_params.geo_map);
     }
-    Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false)
+    Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false);
   } else {
-    Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false)
+    Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false);
   }
 }
 if (!vars.geomorphic) {
-  Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false)
-  Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false)
+  Map.addLayer(geo_map, map_palettes.geo, 'Clean GEO classification', false);
+  Map.addLayer(benthic_map, display_pal, 'Raw BENTHIC classification', false);
 }
 
 // 3. Object-based re-classificaiton and cleaning
