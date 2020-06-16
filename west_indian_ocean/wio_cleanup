@@ -1,26 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var export_small = 
-    /* color: #d63000 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[157.9950896058224, 7.112454892191871],
-          [157.9950896058224, 6.733464175742206],
-          [158.4304228577755, 6.733464175742206],
-          [158.4304228577755, 7.112454892191871]]], null, false),
-    reef_boundary = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-85.98308517718672, 29.977841924871946],
-          [-85.98308517718672, 16.51411805544282],
-          [-70.33855392718672, 16.51411805544282],
-          [-70.33855392718672, 29.977841924871946]]], null, false),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     not_reef = 
     /* color: #ff2705 */
     /* shown: false */
@@ -83,7 +62,27 @@ var export_small =
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
     waves = ee.Image("users/danleeharris/reefwave/nth_cari_d2"),
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
+    wio_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      },
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.MultiPolygon(
+        [[[[42.30667439013271, -2.264194671054589],
+           [42.30667439013271, -27.04098225287308],
+           [66.74026814013271, -27.04098225287308],
+           [66.74026814013271, -2.264194671054589]]],
+         [[[-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445],
+           [-9.812466234867285, -13.177329702571445]]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - West Indian Ocean
