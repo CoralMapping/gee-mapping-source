@@ -64,8 +64,8 @@ Map.addLayer(export_geom, {}, "export_geom", true)
 Export.image.toDrive({
   image: depth_contour, // <--- ######## CHANGE TO THE NON-SMOOTH ONE IF YOU PREFER IT?
   description: 'depth_contour_export',
-  folder: 'gee_test',
-  fileNamePrefix: 'hi_depth_test',
+  folder: 'folder/',
+  fileNamePrefix: 'output_name',
   region: export_geom,
   scale: 10,
   maxPixels: 1e13,
