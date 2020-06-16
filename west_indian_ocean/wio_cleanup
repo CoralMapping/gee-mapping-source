@@ -132,6 +132,9 @@ var vars = {
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : *in an ideal world* for smaller regions, can do both at once, but not handling that at present
+  -           : 1st pass  - obia_2nd_pass + obia_clean set to false  
+  -           : 2nd pass -  obia_2nd_pass + obia_clean set to true (review any OBIA rules)
+  -           : 3rd pass - manual_clean set to true 
   - BENTHIC : can do both at once
             : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
   obia_2nd_pass: false,
