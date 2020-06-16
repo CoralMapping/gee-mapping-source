@@ -3055,7 +3055,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 2000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
-  wave_height: 0.4, //cut off height for waves
+  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
@@ -3117,7 +3117,7 @@ if (vars.manual_clean) {
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
  // update these values based on inspection of the layer
-  Map.addLayer(waves.lt(wave_height), {}, "0.4m Hs95 threshold", false)
+  Map.addLayer(waves.lt(wave_height), {}, wave_height + "m Hs95 threshold", false)
   
   // add no reef and river mouth (check east africa)
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
