@@ -7,10 +7,10 @@ var region_extent =
       }
     ] */
     ee.Geometry.Polygon(
-        [[[37.89401551474691, -2.3363376608760342],
-          [37.89401551474691, -23.611485855473017],
-          [65.2719452022469, -23.611485855473017],
-          [65.2719452022469, -2.3363376608760342]]], null, false);
+        [[[-179.1958282352531, 28.876256252351663],
+          [-179.1958282352531, 16.92316282733554],
+          [-153.9272735477531, 16.92316282733554],
+          [-153.9272735477531, 28.876256252351663]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
@@ -21,7 +21,7 @@ var region_extent =
 
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
-var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.hawaii        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 
 // load data dynamically
 var dove_depth = ee.Image(region_params.depth).rename('depth')
