@@ -165,7 +165,7 @@ MANUAL ADDITION
 */
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
-reef_boundary = ee.Feature(wio_extent).geometry()
+reef_boundary = ee.Feature(reef_boundary).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
