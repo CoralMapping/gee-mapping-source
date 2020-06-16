@@ -1,17 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var eg_area = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[158.09700006133824, 6.98282032937242],
-          [158.09700006133824, 6.954194253230618],
-          [158.14678186065464, 6.954194253230618],
-          [158.14678186065464, 6.98282032937242]]], null, false),
-    export_small = 
+var export_small = 
     /* color: #d63000 */
     /* shown: false */
     /* displayProperties: [
