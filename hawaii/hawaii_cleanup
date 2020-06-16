@@ -3029,9 +3029,9 @@ var eg_area =
 // 4. Export
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
-var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
-var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // ###########################################
 // SENSOR GENERICS
@@ -3051,7 +3051,7 @@ var vars = {
   geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
-  image_data_scale: ee.Number(sensor_params.pixel),
+  image_data_scale: sensor_params.pixel,
   small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
