@@ -2427,7 +2427,6 @@ var eg_area =
       ],
       "coordinates": []
     }),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     flor_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -3093,7 +3092,7 @@ MANUAL ADDITION
 ############################
 */
 
-// This can be hand drawn or imported from elsewhere, or could just be a big box
+// This can be hand drawn or imported from elsewhere, or could just be a big box (defines export extent)
 reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
@@ -3112,8 +3111,10 @@ if (vars.manual_clean) {
   var depth_cont = depth.lt(900)
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
+ // update these values based on inspection of the layer
   Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
+  // add no reef and river mouth (check east africa)
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
   var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
@@ -3134,7 +3135,7 @@ if (vars.manual_clean) {
     value: ee.Image(21)
   })
   
-  //BAHAMAS clean
+  //BAHAMAS clean (can delete all these - see East AFrica for examples)
   // deep -> deep lagoon
   man_geo = man_geo.where({
     test: baha_extent.eq(1)
