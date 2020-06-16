@@ -4019,7 +4019,6 @@ if (vars.obia_clean) {
     
     // BENTHIC CLEAN-UP RULES
     
-    
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
                         .focal_mode({
@@ -4140,9 +4139,6 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })*/
     
-    
-    
-    
   }
   
 /*  // ####
@@ -4181,14 +4177,11 @@ if (vars.smooth_output) {
   } else {
     clean_map = clean_map.updateMask(clean_map.gt(1)) // this ignores 0/land; make it .gt(2) if you want to mask deep too
   }
-  
 }
-
 
 // 4. Export data
 
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
-
 
 if (vars.do_export) {
   print("For export, the image data scale must be set to:", vars.image_data_scale)
@@ -4220,7 +4213,6 @@ if (vars.do_export) {
     crs: 'EPSG:4326',
     maxPixels: 1e13
   })*/
-  
   
 } else {
   if (vars.show_eg_area) {
