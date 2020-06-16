@@ -7,10 +7,10 @@ var region_extent =
       }
     ] */
     ee.Geometry.Polygon(
-        [[[-179.0200469852531, 29.49012542911037],
-          [-179.0200469852531, 16.586525785415052],
-          [-153.5757110477531, 16.586525785415052],
-          [-153.5757110477531, 29.49012542911037]]], null, false);
+        [[[37.89401551474691, -2.3363376608760342],
+          [37.89401551474691, -23.611485855473017],
+          [65.2719452022469, -23.611485855473017],
+          [65.2719452022469, -2.3363376608760342]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
@@ -21,7 +21,7 @@ var region_extent =
 
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
-var region_params = param_module.hawaii        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 
 // load data dynamically
 var dove_depth = ee.Image(region_params.depth).rename('depth')
@@ -39,11 +39,11 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 // export region generation
 var export_geom = depth.reduceToVectors({
   geometry: region_extent,
-  scale: 1000,
+  scale: 5000,
   bestEffort: true,
   eightConnected: false,
   maxPixels: 1e13
-}).geometry().convexHull(500)
+}).geometry().bounds()
 
 // #############################
 // OK now do the data for the wave contours
@@ -54,6 +54,8 @@ var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
 var depth_contour = depth.lt(depth_thresh) 
 //var depth_contour_smooth = depth.focal_mean({radius:5, iterations: 3}).lt(depth_thresh)
 
+// display it all
+Map.centerObject(region_extent, 3)
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth (cm)", true) // water depth
 Map.addLayer(depth_contour, {min: 0, max: 1}, "Depth contour", true)
 Map.addLayer(export_geom, {}, "export_geom", true)
