@@ -3119,7 +3119,7 @@ if (vars.manual_clean) {
  // update these values based on inspection of the layer
   Map.addLayer(waves.lt(wave_height), {}, wave_height + "m Hs95 threshold", false)
   
-  // add no reef and river mouth (check east africa)
+  // add no reef and river mouth here (check east africa)
   var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
   var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
