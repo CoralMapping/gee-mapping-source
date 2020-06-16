@@ -185,7 +185,7 @@ if (vars.manual_clean) {
   var depth_cont = depth.lt(900)
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
-  //Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
+  // Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   // add waves, river mouth, no reef (check East Africa foe examples of no reef etc)
  // var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
