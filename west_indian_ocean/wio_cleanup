@@ -83,7 +83,7 @@ var not_reef =
            [-9.812466234867285, -13.177329702571445]]]], null, false),
     reef_boundary = 
     /* color: #5fd60d */
-    /* locked: true */
+    /* shown: false */
     ee.Geometry.Polygon(
         [[[42.08226481318289, -9.537534607196232],
           [41.20335856318289, -10.489592260155874],
