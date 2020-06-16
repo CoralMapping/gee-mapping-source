@@ -45,10 +45,7 @@ var eg_area =
           [-85.98308517718672, 16.51411805544282],
           [-70.33855392718672, 16.51411805544282],
           [-70.33855392718672, 29.977841924871946]]], null, false),
-    bahamas_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    bahamas_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[-79.27871392650289, 27.537785351450797],
           [-79.27871392650289, 26.58390229138518],
           [-79.10842584056539, 26.588814612773167],
@@ -141,10 +138,7 @@ var eg_area =
           [-77.87841347732181, 27.375099738773045],
           [-78.20800332107181, 27.37022161752178],
           [-78.21898964919681, 27.531085935309363]]]),
-    fl_cari_extent = 
-    /* color: #ef3dff */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    fl_cari_extent = /* color: #ef3dff */ee.Geometry.Polygon(
         [[[-85.47133950271244, 29.907088075303662],
           [-85.47132877387638, 29.90709737543468],
           [-85.47132877387638, 29.907097375434653],
@@ -3419,7 +3413,32 @@ var eg_area =
           [-84.61663615379902, 22.34174850875155],
           [-84.65508830223652, 22.25407703901961],
           [-84.80340373192402, 22.018745262013894]]]),
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
+    west = 
+    /* color: #ef3dff */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-170.05421307096222, 16.6451400858547],
+          [-169.26319744596222, 16.276379337331182],
+          [-166.52210857877472, 22.956876785083164],
+          [-161.24867107877472, 21.900749850607188],
+          [-159.88636639127472, 23.118638908420024],
+          [-168.41175701627472, 25.956563835498525],
+          [-172.8005727562403, 27.17740555675168],
+          [-178.03578045377466, 29.409455643699086],
+          [-179.88075843416314, 29.138941969116722],
+          [-179.21131756314966, 27.701525535727267],
+          [-174.21253826627472, 25.084107254287407],
+          [-168.27992107877472, 23.48189007138448]]]),
+    east = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-160.10125396109765, 22.64228527575897],
+          [-161.24383208609765, 21.675686283465996],
+          [-155.13543364859765, 17.913808970579183],
+          [-153.16888091422265, 20.074384925080125],
+          [-159.26629302359765, 23.138220615639327]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -3502,7 +3521,7 @@ MANUAL ADDITION
 */
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
-reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
