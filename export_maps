@@ -6149,6 +6149,14 @@ Export.image.toCloudStorage({
   skipEmptyTiles: true
 })
 
+Export.table.toDrive({
+  collection: Rivermouth,
+  description:'EA_maskedOutAreasInV2',
+  fileFormat: 'SHP'
+});
+
+
+
 /*// run the export
 Export.image.toCloudStorage({
   image: export_stack_east,
