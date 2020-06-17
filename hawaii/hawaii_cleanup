@@ -3287,6 +3287,7 @@ if (vars.manual_clean) {
   
   // Add the manual layer to the map
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
+  var output_name = (vars.manual_clean) ? output_name + "-man" : output_name;
   // Export
   Export.image.toAsset({
     image: man_geo,
