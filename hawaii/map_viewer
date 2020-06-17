@@ -220,7 +220,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [-157.30592473844004, 21.102180234026704]]]]),
     hawaii_geo_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_east"),
     hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west"),
-    hawaii_geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo"),
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_geo_training"),
     centre_map = 
