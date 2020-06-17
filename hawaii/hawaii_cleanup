@@ -3067,8 +3067,8 @@ var vars = {
   -           : 3rd pass - manual_clean set to true 
   - BENTHIC : can do both at once
             : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
-  obia_2nd_pass: true,
-  obia_clean: true, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: false,
+  obia_clean: false, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
@@ -4193,7 +4193,7 @@ if (vars.do_export) {
     var export_convhull = reef_boundary;
   }
   Map.addLayer(export_convhull, {}, "Export footprint", true);
-  var output_name = (vars.obia_2nd_pass) ? output_name + "_p2" : output_name;
+  var output_name = (vars.obia_2nd_pass) ? output_name + "-p2" : output_name;
   Export.image.toAsset({
     image: clean_map.set(vars),
     description: output_name,
@@ -4218,13 +4218,13 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
     } else {
-      Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
     }
   } else {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false)
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
     } else {
       Map.addLayer(clean_map, display_pal, output_name + '_final', false);
     }
@@ -4238,9 +4238,9 @@ var title = ui.Label({
 });
 
 // generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-var legend = (vars.geomorphic) ? geo_legend : benthic_legend
-pkg_vis.add_lgds([title, legend])//, mask_legend])
+var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
+pkg_vis.add_lgds([title, legend]);//, mask_legend])
 // generate the legend
