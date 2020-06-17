@@ -3226,9 +3226,10 @@ Export.image.toCloudStorage({
 
 
 
-Export.table.toDrive({
+Export.table.toCloudStorage({
   collection: Rivermouth, 
-  description:'EA_maskedOutAreasInV2',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200615/Masks',
   fileFormat: 'SHP'
 });
 
