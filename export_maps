@@ -3257,9 +3257,6 @@ Map.addLayer(ee.Image().byte().paint({featureCollection:Rivermouth, color: 1, wi
 Map.addLayer(ee.Image().byte().paint({featureCollection: slithers, color:1, width:1}), {}, 'SlithersOutline')
 
 
-
-
-
 /*// add export region
 var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
 var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
