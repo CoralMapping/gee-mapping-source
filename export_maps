@@ -951,7 +951,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             {
               "system:index": "12"
             })]),
-    slithers = /* color: #d63000 */ee.FeatureCollection(
+    slithers = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[38.59198216911038, -17.09513040205679],
