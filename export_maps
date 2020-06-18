@@ -3250,9 +3250,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false)
 
 //removing the fills in the masks to visually detect gaps between them
 
-Map.addLayer(ee.Image().byte().paint({featureCollection:not_reef, color:1, width: 1}), {}, 'not_reefOutline')
-Map.addLayer(ee.Image().byte().paint({featureCollection:Rivermouth, color: 1, width: 1}), {}, 'RivermouthOutline')
-Map.addLayer(ee.Image().byte().paint({featureCollection: slithers, color:1, width:1}), {}, 'SlithersOutline')
+Map.addLayer(ee.Image().byte().paint({featureCollection:not_reef, color:1, width: 1}), {}, 'not_reefOutline', false)
+Map.addLayer(ee.Image().byte().paint({featureCollection:Rivermouth, color: 1, width: 1}), {}, 'RivermouthOutline', false)
+Map.addLayer(ee.Image().byte().paint({featureCollection: slithers, color:1, width:1}), {}, 'SlithersOutline', false)
 
 
 /*// add export region
