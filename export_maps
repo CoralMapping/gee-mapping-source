@@ -2019,6 +2019,33 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [35.367735581082684, -24.29758260528652]]]),
             {
               "system:index": "69"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[35.63295240847526, -24.44378426880535],
+                  [35.62230940310417, -24.458473260311223],
+                  [35.69200392214714, -24.50096792528031],
+                  [35.696810440701825, -24.47972238650814]]]),
+            {
+              "system:index": "70"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[35.53888197390495, -24.396893062106273],
+                  [35.536478714627606, -24.405647409877876],
+                  [35.54918165652214, -24.412525400249237],
+                  [35.555704788846356, -24.400644999738066]]]),
+            {
+              "system:index": "71"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[35.43351531295646, -24.25758404205811],
+                  [35.42948127059806, -24.26306159884979],
+                  [35.447076561735756, -24.274563699800048],
+                  [35.45445800094474, -24.26251385379114]]]),
+            {
+              "system:index": "72"
             })]),
     east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     Rivermouth = 
