@@ -3296,7 +3296,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'ea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200615/ea_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200618/ea_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
@@ -3307,9 +3307,9 @@ Export.image.toCloudStorage({
 
 
 Export.table.toCloudStorage({
-  collection: Rivermouth, 
+  collection: slithers, 
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200615/Masks',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200618/Masks',
   fileFormat: 'SHP'
 });
 
