@@ -3,10 +3,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man"),
     pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
-    reef_boundary = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[40.35842048249674, -1.8731644797702776],
           [39.69924079499674, -2.3562322691693933],
           [39.07302009187174, -3.8591024804159404],
@@ -951,10 +948,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             {
               "system:index": "12"
             })]),
-    slithers = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection(
+    slithers = /* color: #d63000 */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[38.59198216911038, -17.09513040205679],
@@ -2004,9 +1998,21 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [38.89172005140472, -17.166732572117418]]]),
             {
               "system:index": "67"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[35.368338478251275, -21.14305412656541],
+                  [35.11633957688409, -21.39324700498676],
+                  [35.140372169657525, -21.414343531807663],
+                  [35.40885056321221, -21.165467215349935]]]),
+            {
+              "system:index": "68"
             })]),
     east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    Rivermouth = /* color: #01ffff */ee.FeatureCollection(
+    Rivermouth = 
+    /* color: #01ffff */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[47.70495195150683, -14.493480205766339],
@@ -3174,6 +3180,18 @@ var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .toInt16()
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
+
+//removing the fills in the masks to visually detect gaps between them
+
+Map.addLayer(Rivermouth, {}, 'Rivermouth')
+//var not_reefOutline = ee.Image().byte().paint({featureCollection: not_reef, color:1, width: 1}),
+Map.addLayer(ee.Image().byte().paint({featureCollection:not_reef, color:1, width: 1}), {}, 'not_reefOutline')
+Map.addLayer(ee.Image().byte().paint({featureCollection:Rivermouth, color: 1, width: 1}), {}, 'RivermouthOutline')
+Map.addLayer(ee.Image().byte().paint({featureCollection: slithers, color:1, width:1}), {}, 'SlithersOutline')
+
+
+
+
 
 /*// add export region
 var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
