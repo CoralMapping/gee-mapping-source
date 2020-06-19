@@ -78,6 +78,8 @@ var selectROI=ui.Select({
         Map.centerObject(val_map,5);
         
         var confidence=(geomorphic) ? ee.Image(region_params.conf_geo) : ee.Image(region_params.conf_benthic);
+        var confidence_clean=(geomorphic) ? ee.Image(region_params.conf_geo_clean) : ee.Image(region_params.conf_benthic_clean);
+        
         var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
 
         var rgb=ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
@@ -94,7 +96,8 @@ var selectROI=ui.Select({
         
         Map.addLayer(val_map,visParam,'classification layer');          
         Map.addLayer(rgb,rgb_str,'rgb composite');
-        Map.addLayer(confidence,conf_str,'confidence',true);
+        Map.addLayer(confidence,conf_str,'confidence',false);
+        Map.addLayer(confidence_clean,conf_str,'confidence_clean',true);
         Map.addLayer(mask,{color:'red'},'mask',false);
         //Generate geomorphic/benthic classes legend
         var title = ui.Label({
