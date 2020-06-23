@@ -421,8 +421,8 @@ if (vars.manual_clean) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
  // var mergedMasks=ee.FeatureCollection(Rivermouth).merge(not_reef)
- var wcmc_buff = wcmc.filterBounds(mergedMasks).geometry(100).buffer(2000)
- var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
+ // var wcmc_buff = wcmc.filterBounds(mergedMasks).geometry(100).buffer(2000)
+ // var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
@@ -430,11 +430,11 @@ if (vars.manual_clean) {
   
   // "NOT REEF" CLEAN
   // remove
-  man_geo = man_geo.where({
-    test: not_reef_img.eq(0),
-                  //.and(man_geo.eq(15)),
-    value: ee.Image(0)
-  })
+  //man_geo = man_geo.where({
+  //  test: not_reef_img.eq(0),
+  //                //.and(man_geo.eq(15)),
+  //  value: ee.Image(0)
+  //})
 
   
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
