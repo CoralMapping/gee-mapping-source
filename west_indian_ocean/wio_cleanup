@@ -312,7 +312,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [51.14992797505207, -10.023437814320967],
            [51.09499633442707, -10.074822273536423],
            [51.00710570942707, -10.123494736696722],
-           [50.97414672505207, -10.201895942344246]]]]);
+           [50.97414672505207, -10.201895942344246]]]]),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - West Indian Ocean
