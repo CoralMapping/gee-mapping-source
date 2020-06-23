@@ -314,9 +314,9 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean',
-  benthic_output_name: region_params.sname + '_benthic-clean',
+  do_export: true, // export the results?
+  geomorph_output_name: region_params.sname + '_geo_clean',
+  benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
 
 }
@@ -706,7 +706,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
-    test: depth.gt(2000),
+    test: depth.gt(1000),
     value: ee.Image(2)
   })
   
