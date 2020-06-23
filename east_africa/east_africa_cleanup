@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -13,6 +14,7 @@ var eg_area =
           [158.14678186065464, 6.98282032937242]]], null, false),
     export_small = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -135,7 +137,6 @@ var eg_area =
     Rivermouth = 
     /* color: #01ffff */
     /* shown: false */
-    /* locked: true */
     ee.Geometry.MultiPolygon(
         [[[[47.71868486166308, -14.481513594664204],
            [47.66375322103808, -14.532034888954438],
@@ -347,11 +348,7 @@ var eg_area =
            [40.90871017915845, -2.395767560507544],
            [40.94853561861157, -2.360097252031308],
            [40.9389225815022, -2.3127581001629425]]]]),
-    not_reef = 
-    /* color: #09fc27 */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry({
+    not_reef = /* color: #09fc27 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3674,7 +3671,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -3718,8 +3715,16 @@ if (vars.manual_clean) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   var mergedMasks=ee.FeatureCollection(Rivermouth).merge(not_reef)
+  /* previous code after paul observations
   var wcmc_buff = wcmc.filterBounds(mergedMasks).geometry(100).buffer(2000)
+  Map.addLayer(wcmc_buff, {}, "buffer")
   var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
+  print(not_reef_img)
+  Map.addLayer(not_reef_img, {}, "buffer2")
+  
+  */
+  
+  var not_reef_image=ee.Image().byte().paint(ee.Feature(mergedMasks, {zone: 1}), "zone").clip(not_reef)
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
