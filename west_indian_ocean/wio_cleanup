@@ -188,7 +188,7 @@ if (vars.manual_clean) {
   
   Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
-  var wio_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(wio_extent)
+  var wio_extent = ee.Image().byte().paint(ee.Feature(wio_extent, {zone: 1}), "zone").clip(wio_extent)
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
@@ -196,16 +196,16 @@ if (vars.manual_clean) {
   
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
-  man_geo = man_geo.where({
-    test: waves.lte(0.4)
-               .and(man_geo.eq(22)),
-    value: ee.Image(21)
+ //man_geo = man_geo.where({
+ //   test: waves.lte(0.4)
+ //              .and(man_geo.eq(22)),
+  //  value: ee.Image(21)
   })
   
-  //BAHAMAS clean
+  //WIO clean
   // deep -> deep lagoon
   man_geo = man_geo.where({
-    test: baha_extent.eq(1)
+    test: wio_extent.eq(1)
                      .and(depth_cont)
                      .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
@@ -213,7 +213,7 @@ if (vars.manual_clean) {
   
   // deep -> deep lagoon
   man_geo = man_geo.where({
-    test: baha_extent.eq(1)
+    test: wio_extent.eq(1)
                      .and(baha_img.eq(1))
                      .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
@@ -221,7 +221,7 @@ if (vars.manual_clean) {
   
   // slope -> shallow lagoon
   man_geo = man_geo.where({
-    test: baha_extent.eq(1)
+    test: wio_extent.eq(1)
                      .and(depth_cont)
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
@@ -229,7 +229,7 @@ if (vars.manual_clean) {
   
   // slope -> shallow lagoon
   man_geo = man_geo.where({
-    test: baha_extent.eq(1)
+    test: wio_extent.eq(1)
                      .and(baha_img.eq(1))
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
@@ -237,94 +237,10 @@ if (vars.manual_clean) {
   
   // reef crest -> TRF
   man_geo = man_geo.where({
-    test: baha_img.eq(1)
+    test: wio_img.eq(1)
                   .and(man_geo.eq(15)),
     value: ee.Image(16)
   })
-  
-
-  // CUBA WEST CLEAN
-  // deep classes -> deep lagoon
-  man_geo = man_geo.where({
-    test: cuba_west.eq(1)
-                   .and(depth_cont)
-                   .and(man_geo.eq(2).or(man_geo.eq(23))),
-    value: ee.Image(12)
-  })
-  
-  // shallow classes -> shallow lagoon
-  man_geo = man_geo.where({
-    test: cuba_west.eq(1)
-                   .and(depth_cont)
-                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24)).or(man_geo.eq(13)).or(man_geo.eq(14))),
-    value: ee.Image(11)
-  })
-  
-  // reef crest -> TRF
-  man_geo = man_geo.where({
-    test: cuba_west.eq(1)
-                  .and(man_geo.eq(15)),
-    value: ee.Image(16)
-  })
-  
-  // CUBA WEST 2 CLEAN
-  // deep classes -> deep lagoon
-  man_geo = man_geo.where({
-    test: cuba_west2.eq(1)
-                   .and(depth_cont)
-                   .and(man_geo.eq(2).or(man_geo.eq(23))),
-    value: ee.Image(12)
-  })
-  
-  // shallow classes -> shallow lagoon
-  man_geo = man_geo.where({
-    test: cuba_west2.eq(1)
-                   .and(depth_cont)
-                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
-    value: ee.Image(11)
-  })
-  
-  // deep classes -> deep lagoon
-  man_geo = man_geo.where({
-    test: cuba_west2x.eq(1)
-                   //.and(depth_cont)
-                   .and(man_geo.eq(2).or(man_geo.eq(23))),
-    value: ee.Image(12)
-  })
-  
-  // shallow classes -> shallow lagoon
-  man_geo = man_geo.where({
-    test: cuba_west2x.eq(1)
-                   //.and(depth_cont)
-                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
-    value: ee.Image(11)
-  })
-  
-  
-  //CUBA EAST
-  // deep classes -> deep lagoon
-  man_geo = man_geo.where({
-    test: cuba_east.eq(1)
-                   //.and(depth_cont)
-                   .and(man_geo.eq(2).or(man_geo.eq(23))),
-    value: ee.Image(12)
-  })
-  
-  // shallow classes -> shallow lagoon
-  man_geo = man_geo.where({
-    test: cuba_east.eq(1)
-                   //.and(depth_cont)
-                   .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24)).or(man_geo.eq(13)).or(man_geo.eq(14))),
-    value: ee.Image(11)
-  })
-  
-  // reef crest -> TRF
-  man_geo = man_geo.where({
-    test: cuba_east.eq(1)
-                  .and(man_geo.eq(15)),
-    value: ee.Image(16)
-  })
-  
   
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
