@@ -3731,9 +3731,9 @@ if (vars.manual_clean) {
 
 //This is waht Paul did he got the script from NC so in my case its not working
  var not_reef1 = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef)
- Map.addLayer(not_reef1)
+ Map.addLayer(not_reef1, {}, 'not_reef', false)
  var Rivermouth1 = ee.Image().byte().paint(ee.Feature(Rivermouth, {zone: 1}), "zone").clip(Rivermouth)
- Map.addLayer(Rivermouth1)
+ Map.addLayer(Rivermouth1, {}, 'river_mouth', false)
   
   // define the manually edited map - uses the output from the second pass of cleaning
  var man_geo = ee.Image(region_params.geo_map_clean)
