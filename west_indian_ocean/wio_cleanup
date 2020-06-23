@@ -1,13 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_boundary = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-85.98308517718672, 29.977841924871946],
-          [-85.98308517718672, 16.51411805544282],
-          [-70.33855392718672, 16.51411805544282],
-          [-70.33855392718672, 29.977841924871946]]], null, false),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     not_reef = 
     /* color: #ff2705 */
     /* shown: false */
@@ -70,7 +62,19 @@ var reef_boundary =
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent");
+    region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
+    reef_boundary = 
+    /* color: #d6b113 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[40.859926354273455, -2.4006076916703782],
+          [40.859926354273455, -16.11519697690699],
+          [64.81012166677345, -16.11519697690699],
+          [64.81012166677345, -2.4006076916703782]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -188,7 +192,7 @@ if (vars.manual_clean) {
  //   test: waves.lte(0.4)
  //              .and(man_geo.eq(22)),
   //  value: ee.Image(21)
-  })
+  //})
   
   //WIO clean
   // deep -> deep lagoon
