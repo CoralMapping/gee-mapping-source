@@ -380,7 +380,7 @@ var wio = {
   benthic_val_library:"projects/coral_atlas/west_indian_ocean/training/wio_benthic_validation",
   geo_map: ["projects/coral_atlas/west_indian_ocean/in_out/wio_geo"],
   benthic_map: ["projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"],
-  geo_map_clean:"projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean2",
+  geo_map_clean:"projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean",
   benthic_map_clean: "projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean",
   prob_geo:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_geo"],
   prob_benthic:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_benthic"],
