@@ -353,12 +353,8 @@ if (vars.manual_clean) {
   //var mergedMasks = ee.FeatureCollection(rivermouth).merge(noreefmask)
   //var mergedMasksFlat = mergedMasks.flatten()
   //var not_reef_img = ee.Image().byte().paint(ee.Feature(mergedMasksFlat, {zone: 0}), "zone").clip(mergedMasksFlat)
-  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 0}), "zone").clip(noreefmask)
-  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 0}), "zone").clip(rivermouth)
-  /*var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
-  var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
-  var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
-  var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)*/
+  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask)
+  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth)
   
   
   // define the manually edited map - uses the output from the second pass of cleaning
