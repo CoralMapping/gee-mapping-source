@@ -417,7 +417,7 @@ if (vars.manual_clean) {
   
  // Map.addLayer(waves.lt(0.25), {}, "0.25m Hs95 threshold", false)
   
-  var wio_extent = ee.Image().byte().paint(ee.Feature(wio_extent, {zone: 1}), "zone").clip(wio_extent)
+  var regioin_extent = ee.Image().byte().paint(ee.Feature(wio_extent, {zone: 1}), "zone").clip(wio_extent)
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
  // var mergedMasks=ee.FeatureCollection(Rivermouth).merge(not_reef)
