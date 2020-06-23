@@ -3129,7 +3129,7 @@ if (vars.manual_clean) {
   var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
   
   
-  // define the manually edited map
+  // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
   
