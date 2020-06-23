@@ -352,7 +352,7 @@ var hawaii = {
   geo_map: ["projects/coral_atlas/hawaii/in_out/hawaii_geo_east", "projects/coral_atlas/hawaii/in_out/hawaii_geo_west"],
   benthic_map: ["projects/coral_atlas/hawaii/in_out/hawaii_benthic_east", "projects/coral_atlas/hawaii/in_out/hawaii_benthic_west"],
   geo_map_clean:"projects/coral_atlas/hawaii/in_out/hawaii_ge_clean",
-  geo_map_clean_p2:"projects/coral_atlas/hawaii/in_out/hawaii_geo-clean-p2",
+  geo_map_clean_p2:"projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_p2",
   benthic_map_clean: "projects/coral_atlas/hawaii/in_out/hawaii_benthic-clean",
   prob_geo:["projects/coral_atlas/hawaii/in_out/hawaii_prob_geo"],
   prob_benthic:["projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic"],
