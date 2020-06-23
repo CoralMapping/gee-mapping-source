@@ -1,17 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var region_extent = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[40.45619400515151, -1.881859862245799],
-          [40.45619400515151, -16.291900170834857],
-          [61.33021744265151, -16.291900170834857],
-          [61.33021744265151, -1.881859862245799]]], null, false),
-    reef_boundary = 
+var reef_boundary = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Polygon(
@@ -81,7 +69,8 @@ var region_extent =
            [-80.21071385145622, 26.79503360454802],
            [-80.26564549208122, 27.030149059506883],
            [-79.92506932020622, 27.088851286645333]]]]),
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
+    region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
