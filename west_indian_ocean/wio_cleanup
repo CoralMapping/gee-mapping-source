@@ -432,7 +432,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -443,8 +443,8 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean2',
-  benthic_output_name: region_params.sname + '_benthic-clean2',
+  geomorph_output_name: region_params.sname + '_geo-clean3',
+  benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
 }
@@ -464,7 +464,7 @@ if (vars.manual_clean) {
   vars.obia_clean = false
   vars.fast_clean = false
   vars.smooth_output = false
-  vars.do_export = false
+  vars.do_export = true
   
   print("Doing manual clean ups - make sure this is what you want to do")
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
@@ -482,7 +482,7 @@ if (vars.manual_clean) {
   var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
   
   // define the manually edited map
-  var man_geo = ee.Image(region_params.geo_map_clean)
+  var man_geo = ee.Image(region_params.geo_map_clean3)
   
   
   // "NOT REEF" CLEAN
