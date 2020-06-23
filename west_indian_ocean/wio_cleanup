@@ -214,7 +214,7 @@ if (vars.manual_clean) {
   // deep -> deep lagoon
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
-                     .and(baha_img.eq(1))
+                     .and(wio_img.eq(1))
                      .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
@@ -230,7 +230,7 @@ if (vars.manual_clean) {
   // slope -> shallow lagoon
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
-                     .and(baha_img.eq(1))
+                     .and(wio_img.eq(1))
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
   })
