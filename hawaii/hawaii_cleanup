@@ -3074,7 +3074,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -3084,7 +3084,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
