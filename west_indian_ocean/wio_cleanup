@@ -147,7 +147,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
@@ -170,7 +170,7 @@ if (vars.manual_clean) {
   vars.obia_clean = false
   vars.fast_clean = false
   vars.smooth_output = false
-  vars.do_export = true
+  vars.do_export = false
   
   print("Doing manual clean ups - make sure this is what you want to do")
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
