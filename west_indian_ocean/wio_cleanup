@@ -65,6 +65,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
     reef_boundary = 
     /* color: #d6b113 */
+    /* locked: true */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -160,16 +161,16 @@ MANUAL ADDITION
 */
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
-reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
+//reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
   
-  vars.obia_2nd_pass = true
+  vars.obia_2nd_pass = false
   vars.obia_clean = false
   vars.fast_clean = false
   vars.smooth_output = false
-  vars.do_export = false
+  vars.do_export = true
   
   print("Doing manual clean ups - make sure this is what you want to do")
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
