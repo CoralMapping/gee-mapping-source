@@ -71,10 +71,7 @@ var eg_area =
           [-155.13543364859765, 17.913808970579183],
           [-153.16888091422265, 20.074384925080125],
           [-159.26629302359765, 23.138220615639327]]]),
-    rivermouth = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    rivermouth = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[-157.24561225226518, 21.08670903118609],
            [-157.24355231574174, 21.083505668270888],
            [-157.23720084479447, 21.081903960918915],
@@ -162,7 +159,10 @@ var eg_area =
            [-160.1811268285754, 21.94953682553811],
            [-160.18859409847286, 21.936878412674925],
            [-160.17142796077755, 21.92238752604182]]]]),
-    noreefmask = /* color: #0dff09 */ee.Geometry.MultiPolygon(
+    noreefmask = 
+    /* color: #0dff09 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-155.75950064387715, 20.11176724970261],
            [-155.4326573821584, 19.946617631774327],
            [-155.2019444915334, 19.817474101263812],
@@ -353,8 +353,11 @@ if (vars.manual_clean) {
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
-  var mergedMasks = ee.FeatureCollection(rivermouth).merge(noreefmask)
-  var not_reef_img = ee.Image().byte().paint(ee.Feature(mergedMasks, {zone: 0}), "zone").clip(mergedMasks)
+  //var mergedMasks = ee.FeatureCollection(rivermouth).merge(noreefmask)
+  //var mergedMasksFlat = mergedMasks.flatten()
+  //var not_reef_img = ee.Image().byte().paint(ee.Feature(mergedMasksFlat, {zone: 0}), "zone").clip(mergedMasksFlat)
+  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 0}), "zone").clip(noreefmask)
+  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 0}), "zone").clip(rivermouth)
   /*var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
   var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
   var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
@@ -367,11 +370,18 @@ if (vars.manual_clean) {
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
-    test: not_reef_img.eq(0),
+    test: not_reef.eq(0),
                   //.and(man_geo.eq(15)),
     value: ee.Image(0)
   })
   
+   // "Rivermouth" CLEAN
+  // remove
+  man_geo = man_geo.where({
+    test: river.eq(0),
+                  //.and(man_geo.eq(15)),
+    value: ee.Image(0)
+  })
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
@@ -527,12 +537,12 @@ if (vars.manual_clean) {
   
   // Add the manual layer to the map
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
-  var output_name = (vars.manual_clean) ? output_name + "-man" : output_name;
+  var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "-man" : output_name;
   // Export
   Export.image.toAsset({
     image: man_geo,
-    description: vars.geomorph_output_name,
-    assetId: vars.asset_output + 'in_out/' + vars.geomorph_output_name,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
