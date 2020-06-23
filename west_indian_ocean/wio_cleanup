@@ -3329,6 +3329,7 @@ var eg_area =
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
 // Contact: mitchell.lyons@gmail.com
+// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
@@ -3349,7 +3350,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -3373,8 +3374,11 @@ var vars = {
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
   - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
   -           : *in an ideal world* for smaller regions, can do both at once, but not handling that at present
+              : 1st stage  - obia_2nd_pass + obia_clean set to false (no changes needed ML thinks); 
+              : 2nd stage -  obia_2nd_pass + obia_clean set to true (object-based clean-up; review any OBIA rules); 
+              : 3rd stage - manual_clean set to true (chop out all non-region-specific code, review final masks and any manual edits)
   - BENTHIC : can do both at once
-            : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
+            : One stage only - should have obia_2nd_pass and obia_clean set to true (so it uses the most recent geo map) */
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
