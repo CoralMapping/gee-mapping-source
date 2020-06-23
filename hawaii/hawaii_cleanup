@@ -354,13 +354,7 @@ if (vars.manual_clean) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   var mergedMasks = ee.FeatureCollection(rivermouth).merge(noreefmask)
-  //var not_reef_img = ee.Image().byte().paint(ee.Feature(wcmc_buff, {zone: 1}), "zone").clip(not_reef).unmask(0).uint8()
-  
-  //var noreefmask = 
   var not_reef_img = ee.Image().byte().paint(ee.Feature(mergedMasks, {zone: 0}), "zone").clip(mergedMasks)
-
-  
-  
   /*var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
   var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
   var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
@@ -385,7 +379,7 @@ if (vars.manual_clean) {
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
+  })
   
   //BAHAMAS clean (can delete all these - see East AFrica for examples)
   // deep -> deep lagoon
@@ -508,7 +502,7 @@ if (vars.manual_clean) {
     test: cuba_east.eq(1)
                   .and(man_geo.eq(15)),
     value: ee.Image(16)
-  });
+  });*/
   
   
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
