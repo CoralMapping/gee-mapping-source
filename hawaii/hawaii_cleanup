@@ -529,6 +529,8 @@ if (vars.manual_clean) {
   
   
   // Add the manual layer to the map
+  var image = ee.Image(region_params.image);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
   var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "-man" : output_name;
   // Export
