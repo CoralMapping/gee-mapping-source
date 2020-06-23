@@ -148,7 +148,7 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean',
+  geomorph_output_name: region_params.sname + '_geo-clean_p2',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
