@@ -304,7 +304,7 @@ var vars = {
   //############
   
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -334,7 +334,7 @@ Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
 if (vars.manual_clean) {
   
-  vars.obia_2nd_pass = true
+  vars.obia_2nd_pass = false
   vars.obia_clean = false
   vars.fast_clean = false
   vars.smooth_output = false
@@ -532,8 +532,12 @@ if (vars.manual_clean) {
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
   Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
-  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
-  var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "-man" : output_name;
+  
+  var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
+  Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
+  
+  Map.addLayer(man_geo, map_palettes.geo, 'GEO Clean Manual', false);
+  var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "_man" : output_name;
   // Export
   Export.image.toAsset({
     image: man_geo,
