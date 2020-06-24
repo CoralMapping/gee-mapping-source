@@ -1401,6 +1401,13 @@ if (vars.manual_clean) {
     value: ee.Image(14)
   })
   
+  // Reef crest -> Outer reef flat
+  man_geo = man_geo.where({
+    test: east_extent.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(14)
+  })
+  
   // Sheltered reef slope -> Reef slope
   man_geo = man_geo.where({
     test: east_extent.eq(1)
