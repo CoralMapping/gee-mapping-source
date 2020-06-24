@@ -14,7 +14,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
         [[[40.859926354273455, -2.4006076916703782],
           [40.859926354273455, -16.11519697690699],
           [64.81012166677345, -16.11519697690699],
-          [64.81012166677345, -2.4006076916703782]]], null, false);
+          [64.81012166677345, -2.4006076916703782]]], null, false),
+    mod_land = ee.Image("MODIS/MOD44W/MOD44W_005_2000_02_24");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -174,7 +175,7 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
-  /*// LAND mask clean ############# ---> to be moved to first stage clean up
+  // LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
   var land_mask_buff = ee.Image(1)
@@ -191,7 +192,7 @@ if (vars.manual_clean) {
     test: land_mask_buff.eq(1)
                         .and(man_geo.eq(15)),
     value: ee.Image(14)
-  })*/
+  })
   
   
   // Add the manual layer to the map
