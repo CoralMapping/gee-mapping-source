@@ -335,6 +335,7 @@ if (vars.manual_clean) {
   var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
   var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
   var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+  var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2)
@@ -368,6 +369,15 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(2)),
     value: ee.Image(12)
   })
+  
+  //East Hawaii clean
+  // TRF -> deep lagoon
+  man_geo = man_geo.where({
+    test: east_extent.eq(1)
+                     .and(man_geo.eq(16)),
+    value: ee.Image(14)
+  })
+  
   
   /*// deep -> deep lagoon
   man_geo = man_geo.where({
@@ -507,7 +517,7 @@ if (vars.manual_clean) {
   Map.addLayer(geo_clean_p1, map_palettes.geo, 'Geo Clean Pass 1', false);
   var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
   Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
-  Map.addLayer(man_geo, map_palettes.geo, 'Geo Clean Manual', false);
+  Map.addLayer(man_geo, map_palettes.geo, 'Geo Clean Manual', true);
   var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "_man" : output_name;
   // Export
   Export.image.toAsset({
