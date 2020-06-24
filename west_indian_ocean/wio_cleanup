@@ -150,6 +150,8 @@ var vars = {
 
 }
 Map.addLayer(region_extent, {}, "region_extent", false)
+var depth = ee.Image(region_params.pixels).select('depth')
+Map.addLayer(depth, {}, "depth", false)
 /*
 ############################
 MANUAL ADDITION
