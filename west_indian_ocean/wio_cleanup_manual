@@ -450,7 +450,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
-    test: depth.gt(2000),
+    test: depth.gt(2000), // set at 20m (2000) but may need changing based on depth data
     value: ee.Image(2)
   })
   
