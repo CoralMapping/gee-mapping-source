@@ -244,7 +244,7 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
-  // LAND mask clean ############# ---> to be moved to first stage clean up
+  // LAND mask clean ############# ---> to be moved to first stage clean up; import mod44w land water mask from search
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
   var land_mask_buff = ee.Image(1)
