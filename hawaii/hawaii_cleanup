@@ -71,10 +71,7 @@ var eg_area =
           [-155.13543364859765, 17.913808970579183],
           [-153.16888091422265, 20.074384925080125],
           [-159.26629302359765, 23.138220615639327]]]),
-    rivermouth = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    rivermouth = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[-157.24561225226518, 21.08670903118609],
            [-157.24355231574174, 21.083505668270888],
            [-157.23720084479447, 21.081903960918915],
@@ -162,10 +159,7 @@ var eg_area =
            [-160.1811268285754, 21.94953682553811],
            [-160.18859409847286, 21.936878412674925],
            [-160.17142796077755, 21.92238752604182]]]]),
-    noreefmask = 
-    /* color: #0dff09 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    noreefmask = /* color: #0dff09 */ee.Geometry.MultiPolygon(
         [[[[-155.75950064387715, 20.11176724970261],
            [-155.4326573821584, 19.946617631774327],
            [-155.2019444915334, 19.817474101263812],
@@ -358,27 +352,24 @@ if (vars.manual_clean) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
-  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask)
-  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth)
-  var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west)
-  
-  
+  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
+  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
+  var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
-    test: not_reef.eq(0),
-                  //.and(man_geo.eq(15)),
+    test: not_reef.eq(1),
     value: ee.Image(0)
   })
   
    // "Rivermouth" CLEAN
   // remove
   man_geo = man_geo.where({
-    test: river.eq(0),
-                  //.and(man_geo.eq(15)),
+    test: river.eq(1),
     value: ee.Image(0)
   })
   
@@ -393,7 +384,7 @@ if (vars.manual_clean) {
   //West Hawaii clean
   // deep -> deep lagoon
   man_geo = man_geo.where({
-    test: west_extent.eq(0)
+    test: west_extent.eq(1)
                      .and(man_geo.eq(2)),
     value: ee.Image(12)
   })
