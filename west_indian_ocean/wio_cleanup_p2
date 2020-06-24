@@ -64,17 +64,22 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [55.6917267308968, -20.672797751973356],
           [55.42530827386555, -20.62910598668815],
           [55.1479034887093, -20.793527159750223],
-          [55.1204376683968, -20.867971649301655]]]);
+          [55.1204376683968, -20.867971649301655]]]),
+    reef_boundary = 
+    /* color: #d6b113 */
+    /* shown: false */
+    /* locked: true */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[40.859926354273455, -2.4006076916703782],
+          [40.859926354273455, -23.630158061970967],
+          [65.42535604177345, -23.630158061970967],
+          [65.42535604177345, -2.4006076916703782]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-///////////////////////////////
-// Global coral atlas project - North Caribbean and Bahamas
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
-// Description:
-// - Developing a process to combine OBIA and supervised classification
-// - This script loads the raw classification data (from *_classification script)
-// - Then applied some cleanup and object-based relational rules
-///////////////////////////////
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
 // Contact: mitchell.lyons@gmail.com
