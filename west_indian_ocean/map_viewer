@@ -51,7 +51,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [57.602161610703206, -5.647957630653708],
           [57.206653798203206, -4.422260866394937],
           [56.547474110703206, -3.4138941523262103]]]),
-    noreefmask = 
+    no_reef = 
     /* color: #01ff14 */
     /* shown: false */
     ee.Geometry.Polygon(
