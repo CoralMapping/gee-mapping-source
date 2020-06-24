@@ -682,7 +682,10 @@ var eg_area =
       "coordinates": []
     }),
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    no_reef_crest = /* color: #d63000 */ee.Geometry.Polygon(
+    pearl_atoll_inner = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-175.89639792544625, 27.90988615101279],
           [-175.910079081705, 27.902629213030995],
           [-175.92556104747942, 27.896584339141803],
