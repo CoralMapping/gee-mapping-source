@@ -1344,6 +1344,7 @@ if (vars.manual_clean) {
   var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
   var noreefcrest = ee.Image().byte().paint(ee.Feature(no_reef_crest, {zone: 1}), "zone").clip(no_reef_crest);
   var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
+  var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2)
@@ -1429,7 +1430,7 @@ if (vars.manual_clean) {
   
   // Kaneohe Bay Reefs -> Outer reef flat
   man_geo = man_geo.where({
-    test: kaneohebay.eq(1),
+    test: kaneohebayreef.eq(1),
     value: ee.Image(14)
   })
   
