@@ -4,7 +4,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
     reef_boundary = 
     /* color: #d6b113 */
-    /* locked: true */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -16,11 +16,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [64.81012166677345, -16.11519697690699],
           [64.81012166677345, -2.4006076916703782]]], null, false),
     mod_land = ee.Image("MODIS/MOD44W/MOD44W_005_2000_02_24"),
-    BondariesWCMCForWIO = 
-    /* color: #00ffff */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry.Polygon(
+    BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.Polygon(
         [[[54.701770985703206, -2.9751249685105154],
           [52.548450673203206, -4.772691629173448],
           [52.196888173203206, -5.910289150084192],
