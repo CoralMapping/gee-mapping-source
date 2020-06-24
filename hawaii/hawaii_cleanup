@@ -1315,23 +1315,23 @@ MANUAL ADDITION
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry()
-Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
+var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
+Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
 if (vars.manual_clean) {
   
-  vars.obia_2nd_pass = false
-  vars.obia_clean = false
-  vars.fast_clean = false
-  vars.smooth_output = false
-  vars.do_export = false
+  vars.obia_2nd_pass = false;
+  vars.obia_clean = false;
+  vars.fast_clean = false;
+  vars.smooth_output = false;
+  vars.do_export = false;
   
-  print("Doing manual clean ups - make sure this is what you want to do")
-  print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
+  print("Doing manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer and ignore the 'final' map layer");
   
-  var depth = ee.Image(region_params.pixels).select('depth')
-  var depth_cont = depth.lt(900)
-  Map.addLayer(depth_cont, {}, "depth contour", false)
+  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth_cont = depth.lt(900);
+  Map.addLayer(depth_cont, {}, "depth contour", false);
   
 // update these values based on inspection of the layer
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
@@ -1347,21 +1347,21 @@ if (vars.manual_clean) {
   var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
 
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean_p2)
+  var man_geo = ee.Image(region_params.geo_map_clean_p2);
   
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
     test: not_reef.eq(1),
     value: ee.Image(0)
-  })
+  });
   
    // "Rivermouth" CLEAN
   // remove
   man_geo = man_geo.where({
     test: river.eq(1),
     value: ee.Image(0)
-  })
+  });
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
