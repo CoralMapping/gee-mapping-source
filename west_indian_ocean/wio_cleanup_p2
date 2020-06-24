@@ -372,7 +372,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   })
   
   
-  // LAND mask cleaning
+ /* // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false)
   
   // reef crest close to land -> TRF
@@ -388,7 +388,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
                    .and(clean_map.eq(16)),
     value: ee.Image(14)
   })
-  
+  */
   
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
@@ -444,10 +444,8 @@ if (!vars.geomorphic) {
     test: clean_map.unmask(99).eq(99).and(clean_map1.eq(2)),
     value: ee.Image(2)
   })*/
-  
+
 }
-
-
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
   var clean_map = geo_map
