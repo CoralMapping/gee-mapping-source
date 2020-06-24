@@ -65,7 +65,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
     reef_boundary = 
     /* color: #d6b113 */
-    /* locked: true */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -153,7 +153,7 @@ var vars = {
   asset_output: region_params.asset // asset path
 
 }
-
+Map.addLayer(region_extenty, {}, "region_extent", false)
 /*
 ############################
 MANUAL ADDITION
