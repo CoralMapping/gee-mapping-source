@@ -682,10 +682,7 @@ var eg_area =
       "coordinates": []
     }),
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    no_reef_crest = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    no_reef_crest = /* color: #d63000 */ee.Geometry.Polygon(
         [[[-175.9132362942667, 27.89788475443826],
           [-175.98499074983312, 27.859343202885718],
           [-175.99975362825109, 27.78950865757036],
@@ -860,7 +857,7 @@ if (vars.manual_clean) {
   })
   
   //East Hawaii clean
-  // TRF -> deep lagoon
+  // TRF -> Outer reef flat
   man_geo = man_geo.where({
     test: east_extent.eq(1)
                      .and(man_geo.eq(16)),
