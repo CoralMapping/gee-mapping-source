@@ -184,7 +184,7 @@ if (vars.manual_clean) {
   var no_reef = ee.Image().byte().paint(ee.Feature(no_reef, {zone: 1}), "zone").clip(no_reef)
   
   // define the manually edited map
-  var man_geo = ee.Image(region_params.geo_map_clean)
+  var man_geo = ee.Image(region_params.geo_map_clean) // change in reef_params to *geo-clean2
   
   
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
