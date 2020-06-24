@@ -97,7 +97,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-var wcmc = wcmc2, land_dist = land_dist2, region_extent = region_extent2, reef_boundary = reef_boundary2, mod_land = mod_land2;
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
