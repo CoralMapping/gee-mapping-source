@@ -2,19 +2,6 @@
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
-    reef_boundary = 
-    /* color: #d6b113 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[40.859926354273455, -2.4006076916703782],
-          [40.859926354273455, -16.11519697690699],
-          [64.81012166677345, -16.11519697690699],
-          [64.81012166677345, -2.4006076916703782]]], null, false),
     mod_land = ee.Image("MODIS/MOD44W/MOD44W_005_2000_02_24"),
     BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.Polygon(
         [[[54.701770985703206, -2.9751249685105154],
@@ -62,10 +49,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [57.602161610703206, -5.647957630653708],
           [57.206653798203206, -4.422260866394937],
           [56.547474110703206, -3.4138941523262103]]]),
-    no_reef = 
-    /* color: #01ff14 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    no_reef = /* color: #01ff14 */ee.Geometry.Polygon(
         [[[55.2248077855843, -20.980851493012523],
           [55.33741764886555, -21.08595829180467],
           [55.4884796605843, -21.2191575703884],
@@ -77,7 +61,19 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [55.6917267308968, -20.672797751973356],
           [55.42530827386555, -20.62910598668815],
           [55.1479034887093, -20.793527159750223],
-          [55.1204376683968, -20.867971649301655]]]);
+          [55.1204376683968, -20.867971649301655]]]),
+    reef_boundary = 
+    /* color: #d6b113 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[40.859926354273455, -2.4006076916703782],
+          [40.859926354273455, -23.630158061970967],
+          [65.42535604177345, -23.630158061970967],
+          [65.42535604177345, -2.4006076916703782]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -88,16 +84,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-///////////////////////////////
-// Global coral atlas project - North Caribbean and Bahamas
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
-// Description:
-// - Developing a process to combine OBIA and supervised classification
-// - This script loads the raw classification data (from *_classification script)
-// - Then applied some cleanup and object-based relational rules
-///////////////////////////////
-var wcmc = wcmc2;
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
