@@ -153,7 +153,7 @@ var vars = {
   asset_output: region_params.asset // asset path
 
 }
-Map.addLayer(region_extenty, {}, "region_extent", false)
+Map.addLayer(region_extent, {}, "region_extent", false)
 /*
 ############################
 MANUAL ADDITION
