@@ -351,11 +351,10 @@ if (vars.manual_clean) {
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
-  //var mergedMasks = ee.FeatureCollection(rivermouth).merge(noreefmask)
-  //var mergedMasksFlat = mergedMasks.flatten()
-  //var not_reef_img = ee.Image().byte().paint(ee.Feature(mergedMasksFlat, {zone: 0}), "zone").clip(mergedMasksFlat)
+  
   var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask)
   var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth)
+  var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west)
   
   
   // define the manually edited map - uses the output from the second pass of cleaning
@@ -383,18 +382,17 @@ if (vars.manual_clean) {
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })
+  })*/
   
-  //BAHAMAS clean (can delete all these - see East AFrica for examples)
+  //West Hawaii clean
   // deep -> deep lagoon
   man_geo = man_geo.where({
-    test: baha_extent.eq(1)
-                     .and(depth_cont)
-                     .and(man_geo.eq(2).or(man_geo.eq(23))),
+    test: west_extent.eq(0)
+                     .and(man_geo.eq(2)),
     value: ee.Image(12)
   })
   
-  // deep -> deep lagoon
+  /*// deep -> deep lagoon
   man_geo = man_geo.where({
     test: baha_extent.eq(1)
                      .and(baha_img.eq(1))
