@@ -164,7 +164,10 @@ var eg_area =
            [-160.19872211971315, 21.939107648872696],
            [-160.17837944482383, 21.93042967166117],
            [-160.17142796077755, 21.92238752604182]]]]),
-    noreefmask = /* color: #0dff09 */ee.Geometry({
+    noreefmask = 
+    /* color: #0dff09 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1486,7 +1489,10 @@ var eg_area =
       "coordinates": []
     }),
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    not_reef_crest = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    not_reef_crest = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-175.89639792544625, 27.90988615101279],
            [-175.910079081705, 27.902629213030995],
            [-175.92556104747942, 27.896584339141803],
@@ -2154,10 +2160,7 @@ var eg_area =
            [-157.81079365198752, 21.451548210156233],
            [-157.81119061892173, 21.45165805192568],
            [-157.81151248400352, 21.45162809508767]]]]),
-    not_deep_water = 
-    /* color: #ff0000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    not_deep_water = /* color: #ff0000 */ee.Geometry.MultiPolygon(
         [[[[-178.3598226344293, 28.39266160992541],
            [-178.3634275233453, 28.390320895893513],
            [-178.34991415800334, 28.383222930933783],
