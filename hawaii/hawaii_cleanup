@@ -2891,7 +2891,7 @@ if (vars.manual_clean) {
     test: backreefslope.eq(1)
                      .and(man_geo.eq(2)).or(man_geo.eq(21)),
     value: ee.Image(24)
-  })
+  });
   
   // Make area back reef slope
   man_geo = man_geo.where({
@@ -2904,7 +2904,21 @@ if (vars.manual_clean) {
     test: reefflat.eq(1)
                      .and(man_geo.eq(11)).or(man_geo.eq(12)),
     value: ee.Image(13)
-  })
+  });
+  
+   // Deep water -> Deep lagoon
+  man_geo = man_geo.where({
+    test: west_extent.eq(1)
+                     .and(man_geo.eq(2)),
+    value: ee.Image(12)
+  });
+  
+   // Sheltered slope -> Reef slope
+  man_geo = man_geo.where({
+    test: west_extent.eq(21)
+                     .and(man_geo.eq(22)),
+    value: ee.Image(14)
+  });
   
   //East Hawaii clean
   
