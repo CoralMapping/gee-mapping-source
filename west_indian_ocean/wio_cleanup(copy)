@@ -147,7 +147,7 @@ var vars = {
   reproject_display: true,
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
-  // export options - CHANGE DEPENDING FOR EACH PASS
+  // export options - CHANGE DEPENDING WHICH EACH PASS
   do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-cleanA',
   benthic_output_name: region_params.sname + '_benthic-clean',
