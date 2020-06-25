@@ -4285,8 +4285,7 @@ if (vars.manual_clean) {
     value: ee.Image(11)
   });
   
-  notDLshallowlagoon
-  
+
   //East Hawaii clean
   
   // Inner reef flat -> Outer reef flat
