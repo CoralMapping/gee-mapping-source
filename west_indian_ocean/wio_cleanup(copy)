@@ -1,8 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
-    BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.Polygon(
+    json_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
+    region_extent = /* color: #00ffff */ee.Geometry.Polygon(
         [[[54.701770985703206, -2.9751249685105154],
           [52.548450673203206, -4.772691629173448],
           [52.196888173203206, -5.910289150084192],
