@@ -158,7 +158,8 @@ MANUAL ADDITION
 ############################
 */
 
-// This can be hand drawn or imported from elsewhere, or could just be a big box
+//REEF BOUNDARY
+//This can be hand drawn or imported from elsewhere, or could just be a big box
 
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
@@ -174,12 +175,15 @@ if (vars.manual_clean) {
   print("Doing manual clean ups - make sure this is what you want to do")
   print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
   
+  //ADD DEPTH
   var depth = ee.Image(region_params.pixels).select('depth')
   var depth_cont = depth.lt(900)
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
+  //ADD WAVES
   Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
+  //DEFINE AREAS OF NO REEF and/or SPLITS
   var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
   //var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
   //var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
@@ -189,7 +193,7 @@ if (vars.manual_clean) {
   //var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
   
   
-  // define the manually edited map
+  // DEFINE THE MANUALLY EDITED MAP
   var man_geo = ee.Image(region_params.geo_map_clean)
   
    // "NOT REEF" CLEAN
@@ -249,6 +253,7 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
+  // LAND MASK DONE MORE 'ELEGANTLY' BELOW
   /*/// LAND mask clean ############# ---> to be moved to first stage clean up; import mod44w land water mask from search
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
