@@ -2864,7 +2864,10 @@ var eg_area =
            [-173.93688980929937, 25.944283038056614],
            [-173.9437562643775, 25.95138344508345],
            [-173.95663086764898, 25.95832908108216]]]]),
-    not_reef_slope = /* color: #d63000 */ee.Geometry({
+    not_reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4037,7 +4040,8 @@ var eg_area =
           [-170.54364793924333, 25.44151549937528],
           [-170.53781145242692, 25.428183524346892],
           [-170.5455362143898, 25.41965648788534],
-          [-170.56235902933122, 25.41841614142272]]]);
+          [-170.56235902933122, 25.41841614142272]]]),
+    not_DL_shallow_lagoon = /* color: #999900 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
@@ -4169,6 +4173,9 @@ if (vars.manual_clean) {
   var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
   var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
+  var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
+
+
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2);
