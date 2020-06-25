@@ -4185,8 +4185,8 @@ if (vars.manual_clean) {
   // Reef slope -> Inner reef flat (insided the reef)
   man_geo = man_geo.where({
     test: not_reef_slope.eq(1)
-                     .and(man_geo.eq(13)),
-    value: ee.Image(22)
+                     .and(man_geo.eq(22)),
+    value: ee.Image(13)
   });
   
   
