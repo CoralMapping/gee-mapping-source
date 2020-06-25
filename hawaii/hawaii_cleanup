@@ -2716,7 +2716,19 @@ var eg_area =
           [-166.0830191084725, 23.816022203468027],
           [-166.13074097126548, 23.84821220091113],
           [-166.1951139876229, 23.87207474660744],
-          [-166.2179878661019, 23.856729436309]]]);
+          [-166.2179878661019, 23.856729436309]]]),
+    not_deep_lagoon = /* color: #00ff00 */ee.Geometry.Polygon(
+        [[[-177.40189825993468, 28.198534464511646],
+          [-177.39546095829894, 28.185674224548936],
+          [-177.3703125665753, 28.192331483104535],
+          [-177.34095847111632, 28.190515908249044],
+          [-177.32327734929015, 28.192180186377726],
+          [-177.31014525395324, 28.200728115660013],
+          [-177.31383597355773, 28.21744377084172],
+          [-177.33349120121886, 28.224250301594203],
+          [-177.33658110600402, 28.214721037042818],
+          [-177.34662329655578, 28.203829407682864],
+          [-177.3655918787091, 28.20292172177442]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -2839,6 +2851,7 @@ if (vars.manual_clean) {
   var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
   var backreefslopeall = ee.Image().byte().paint(ee.Feature(back_reef_slope_all, {zone: 1}), "zone").clip(back_reef_slope_all);
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
+  var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2);
