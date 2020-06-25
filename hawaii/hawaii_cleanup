@@ -4278,6 +4278,14 @@ if (vars.manual_clean) {
     value: ee.Image(14)
   });
   
+  // Deep lagoon -> Shallow lagoon (insided the reef)
+  man_geo = man_geo.where({
+    test: notDLshallowlagoon.eq(1)
+                     .and(man_geo.eq(12)),
+    value: ee.Image(11)
+  });
+  
+  notDLshallowlagoon
   
   //East Hawaii clean
   
