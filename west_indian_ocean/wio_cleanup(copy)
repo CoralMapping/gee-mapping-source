@@ -2,7 +2,6 @@
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     region_extent = ee.FeatureCollection("projects/coral_atlas/wio_extent"),
-    mod_land = ee.Image("MODIS/MOD44W/MOD44W_005_2000_02_24"),
     BondariesWCMCForWIO = /* color: #00ffff */ee.Geometry.Polygon(
         [[[54.701770985703206, -2.9751249685105154],
           [52.548450673203206, -4.772691629173448],
@@ -49,7 +48,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [57.602161610703206, -5.647957630653708],
           [57.206653798203206, -4.422260866394937],
           [56.547474110703206, -3.4138941523262103]]]),
-    no_reef = /* color: #01ff14 */ee.Geometry.Polygon(
+    not_reef = /* color: #01ff14 */ee.Geometry.Polygon(
         [[[55.2248077855843, -20.980851493012523],
           [55.33741764886555, -21.08595829180467],
           [55.4884796605843, -21.2191575703884],
@@ -146,12 +145,12 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean_manual',
+  geomorph_output_name: region_params.sname + '_geo-clean',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
 }
-
+Map.addLayer(region_extent, {}, "region_extent", false)
 /*
 ############################
 MANUAL ADDITION
@@ -179,7 +178,7 @@ if (vars.manual_clean) {
   
   //Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
-  var no_reef = ee.Image().byte().paint(ee.Feature(no_reef, {zone: 1}), "zone").clip(no_reef) //import CR no_reef layer
+  var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
@@ -195,11 +194,11 @@ if (vars.manual_clean) {
   
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
- //man_geo = man_geo.where({
- //   test: waves.lte(0.4)
- //              .and(man_geo.eq(22)),
-  //  value: ee.Image(21)
-  //})
+ man_geo = man_geo.where({
+    test: waves.lte(0.4)
+               .and(man_geo.eq(22)),
+    value: ee.Image(21)
+  })
   
   //WIO clean
   // deep -> deep lagoon
