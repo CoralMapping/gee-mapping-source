@@ -2840,7 +2840,10 @@ var eg_area =
            [-170.6118565330779, 25.48369192574818],
            [-170.59881026842947, 25.511116726726797],
            [-170.63623244860526, 25.525523858373617]]]]),
-    not_reef_slope = /* color: #d63000 */ee.Geometry({
+    not_reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4094,6 +4097,8 @@ if (vars.manual_clean) {
   var backreefslopeall = ee.Image().byte().paint(ee.Feature(back_reef_slope_all, {zone: 1}), "zone").clip(back_reef_slope_all);
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
+  var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
+  var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2);
@@ -4177,16 +4182,23 @@ if (vars.manual_clean) {
   
   // Deep lagoon -> Reef slope (around the reef edge)
   man_geo = man_geo.where({
-    test: not_deep_lagoon.eq(1)
+    test: notdeeplagoon.eq(1)
                      .and(man_geo.eq(12)),
     value: ee.Image(22)
   });
   
   // Reef slope -> Inner reef flat (insided the reef)
   man_geo = man_geo.where({
-    test: not_reef_slope.eq(1)
+    test: notreefslope.eq(1)
                      .and(man_geo.eq(22)),
     value: ee.Image(13)
+  });
+  
+  // Deep lagoon -> Outer reef flat (insided the reef)
+  man_geo = man_geo.where({
+    test: notDLouterreef.eq(1)
+                     .and(man_geo.eq(12)),
+    value: ee.Image(14)
   });
   
   
