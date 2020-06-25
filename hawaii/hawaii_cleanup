@@ -2919,19 +2919,27 @@ if (vars.manual_clean) {
     value: ee.Image(13)
   });
   
-   // Deep water -> Deep lagoon
+  // Deep water -> Deep lagoon
   man_geo = man_geo.where({
     test: west_extent.eq(1)
                      .and(man_geo.eq(2)),
     value: ee.Image(12)
   });
   
-   // Sheltered slope -> Reef slope
+  // Sheltered slope -> Reef slope
   man_geo = man_geo.where({
     test: west_extent.eq(1)
                      .and(man_geo.eq(21)),
     value: ee.Image(22)
   });
+  
+  // Deep lagoon -> Reef slope (around the reef edge)
+  man_geo = man_geo.where({
+    test: not_deep_lagoon.eq(1)
+                     .and(man_geo.eq(12)),
+    value: ee.Image(22)
+  });
+  
   
   //East Hawaii clean
   
