@@ -186,8 +186,8 @@ if (vars.manual_clean) {
   Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   //DEFINE AREAS OF NO REEF and/or SPLITS
-  var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
-  var region_extent = ee.Image(region_extent)
+  var no_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef); //import CR not_reef layer
+  var wio_extent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent)
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
  // var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
  // var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
@@ -210,7 +210,7 @@ if (vars.manual_clean) {
    // "NOT REEF" CLEAN
   // remove
  man_geo = man_geo.where({
-   test: not_reef.eq(0),
+   test: no_reef.eq(0),
                   //.and(man_geo.eq(15)),
   value: ee.Image(0)
  })
@@ -228,15 +228,21 @@ if (vars.manual_clean) {
 
   // deep -> deep lagoon
   man_geo = man_geo.where({
-    test: region_extent.eq(1)
+    test: wio_extent.eq(1)
                     // .and(wio_img.eq(1))
                      .and(man_geo.eq(2).or(man_geo.eq(23))),
     value: ee.Image(12)
   })
+    // Sheltered slope -> Reef slope
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(21)),
+    value: ee.Image(22)
+  });
   
   // slope -> shallow lagoon
   man_geo = man_geo.where({
-    test: region_extent.eq(1)
+    test: wio_extent.eq(1)
                      .and(depth_cont)
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
@@ -244,30 +250,10 @@ if (vars.manual_clean) {
  
   // reef crest -> TRF
   man_geo = man_geo.where({
-    test: region_extent.eq(1)
+    test: wio_extent.eq(1)
                   .and(man_geo.eq(15)),
     value: ee.Image(16)
   })
-  
-  // LAND MASK DONE MORE 'ELEGANTLY' BELOW
-  /*/// LAND mask clean ############# ---> to be moved to first stage clean up; import mod44w land water mask from search
-  var land_mask = mod_land.select('water_mask').mean().eq(0)
-
-  var land_mask_buff = ee.Image(1)
-    .cumulativeCost({
-      source: land_mask, 
-      maxDistance: 2000,
-      geodeticDistance: false,
-    }).lt(2000).unmask(0)
-  
-  Map.addLayer(land_mask_buff, {}, "Land mask", false)
-  
-  // reef crest close to land -> ORF
-  man_geo = man_geo.where({
-    test: land_mask_buff.eq(1)
-                        .and(man_geo.eq(15)),
-    value: ee.Image(14)
-  })*/
   
   
   // Add the manual layer to the map
