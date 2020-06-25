@@ -2915,9 +2915,9 @@ if (vars.manual_clean) {
   
    // Sheltered slope -> Reef slope
   man_geo = man_geo.where({
-    test: west_extent.eq(21)
-                     .and(man_geo.eq(22)),
-    value: ee.Image(14)
+    test: west_extent.eq(1)
+                     .and(man_geo.eq(21)),
+    value: ee.Image(22)
   });
   
   //East Hawaii clean
