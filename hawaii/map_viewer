@@ -253,9 +253,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-159.26629302359765, 23.138220615639327]]]),
     hawaii_benthic_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_west"),
     hawaii_benthic_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_east"),
-    geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo-clean-p2");
+    geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_p2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// little viewing script for looking at reefs and classifications for each region. 
+//Viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
 //in the workflow 
 
@@ -263,10 +263,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
-// choogse where to centre (link this dynamically to map app?)
+// choose where to centre (link this dynamically to map app?)
 
 Map.centerObject(centre_map, 5)
-//splitting North Cari regions
 
 
 //4. add turbidity for reference
@@ -293,7 +292,6 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Hawaii east/west Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
-//Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
 Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", true)
 Map.addLayer(geo_clean_p2, map_palettes.geo, "Hawaii Geo Clean pass 2", true)
 //Map.addLayer(geo_clean_p2, map_palettes.geo, "Hawaii Geo - FINAL", false)
@@ -327,14 +325,7 @@ var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
 Map.addLayer(kd1, {}, "waves - kd1", false)
 Map.addLayer(kd2, {}, "waves - kd2", false)*/
-// add training data / sample point distributions
-// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
-//Map.addLayer(geo_train, {}, "geomorphic training locations", false)
-// WCMC
-//filter wcmc by hawaii extent
+
 
 var wcmc=wcmc.filterBounds(BondariesWCMCForHI)
 
