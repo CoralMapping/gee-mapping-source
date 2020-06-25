@@ -248,7 +248,7 @@ if (vars.manual_clean) {
     value: ee.Image(11)
   })
  
-  // reef crest -> TRF
+  /*// reef crest -> TRF
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
                   .and(man_geo.eq(15)),
@@ -288,7 +288,7 @@ if (vars.manual_clean) {
     test: wio_extent.eq(1)
                      .and(man_geo.eq(11)),
     value: ee.Image(14)
-  })
+  })*/
   
   
   // Add the manual layer to the map
