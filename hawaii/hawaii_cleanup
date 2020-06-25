@@ -2546,7 +2546,10 @@ var eg_area =
            [-169.42693279757486, 16.768424601118614],
            [-169.42307041659342, 16.766123517781352],
            [-169.41955135836588, 16.77015039534793]]]]),
-    back_reef_slope = /* color: #00ffff */ee.Geometry.MultiPolygon(
+    back_reef_slope = 
+    /* color: #00ffff */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-178.37205282418523, 28.41368511029238],
            [-178.3771597501496, 28.414289037289233],
            [-178.3778463956574, 28.40783438923465],
@@ -2620,7 +2623,10 @@ var eg_area =
           [-175.96244853880052, 27.848817488570017],
           [-175.97506565000657, 27.862325077788405],
           [-175.99892658140305, 27.871885612305903]]]),
-    reef_flat = /* color: #ff0000 */ee.Geometry.Polygon(
+    reef_flat = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-166.21371107050032, 23.843668372314337],
           [-166.21482686945052, 23.83644569302389],
           [-166.2126811022386, 23.834796981571717],
@@ -2815,6 +2821,7 @@ if (vars.manual_clean) {
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
   var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
   var backreefslopeall = ee.Image().byte().paint(ee.Feature(back_reef_slope_all, {zone: 1}), "zone").clip(back_reef_slope_all);
+  var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2);
@@ -2875,6 +2882,12 @@ if (vars.manual_clean) {
     value: ee.Image(24)
   });
   
+  // Shallow lagoon -> Inner reef flat
+  man_geo = man_geo.where({
+    test: reefflat.eq(1)
+                     .and(man_geo.eq(2)).or(man_geo.eq(21)),
+    value: ee.Image(24)
+  })
   
   //East Hawaii clean
   
