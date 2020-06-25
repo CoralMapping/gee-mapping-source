@@ -882,7 +882,7 @@ if (vars.obia_clean) {
               .and(objsize.lte(max_size))
               .and(nb13.gt(80)),
       value: ee.Image(13)
-    })
+    });
     
     /*// DL/SL touching OCL --> OCL
     clean_map = clean_map.where({
@@ -920,7 +920,7 @@ if (vars.obia_clean) {
     })*/
   
   } else if (vars.geomorphic && vars.fast_clean) {
-    print("Executing the fast version OBIA")
+    print("Executing the fast version OBIA");
     
     /* fast version of the geo clean up
       - blanket version assigns the underlying most common in neighbourhood
@@ -1253,3 +1253,17 @@ if (vars.do_export) {
     }
   }
 }
+
+//Generate title
+var title = ui.Label({
+  value: 'Classes',
+  style: {fontWeight: 'bold', fontSize: '12px'}
+});
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
+pkg_vis.add_lgds([title, legend]);//, mask_legend])
+// generate the legend
