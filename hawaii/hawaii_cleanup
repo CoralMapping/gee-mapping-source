@@ -164,7 +164,10 @@ var eg_area =
            [-160.19872211971315, 21.939107648872696],
            [-160.17837944482383, 21.93042967166117],
            [-160.17142796077755, 21.92238752604182]]]]),
-    noreefmask = /* color: #0dff09 */ee.Geometry({
+    noreefmask = 
+    /* color: #0dff09 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2837,10 +2840,7 @@ var eg_area =
            [-170.6118565330779, 25.48369192574818],
            [-170.59881026842947, 25.511116726726797],
            [-170.63623244860526, 25.525523858373617]]]]),
-    not_reef_slope = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    not_reef_slope = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3963,7 +3963,8 @@ var eg_area =
         }
       ],
       "coordinates": []
-    });
+    }),
+    not_DL_outer_reef = /* color: #0000ff */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
@@ -4178,6 +4179,13 @@ if (vars.manual_clean) {
   man_geo = man_geo.where({
     test: not_deep_lagoon.eq(1)
                      .and(man_geo.eq(12)),
+    value: ee.Image(22)
+  });
+  
+  // Reef slope -> Inner reef flat (insided the reef)
+  man_geo = man_geo.where({
+    test: not_reef_slope.eq(1)
+                     .and(man_geo.eq(13)),
     value: ee.Image(22)
   });
   
