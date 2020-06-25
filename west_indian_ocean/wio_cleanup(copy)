@@ -214,14 +214,7 @@ if (vars.manual_clean) {
   })
   
   //WIO clean
-  // deep -> deep lagoon
-  man_geo = man_geo.where({
-    test: wio_extent.eq(1)
-                     .and(depth_cont)
-                     .and(man_geo.eq(2).or(man_geo.eq(23))),
-    value: ee.Image(12)
-  })
-  
+
   // deep -> deep lagoon
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
@@ -237,15 +230,7 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
   })
-  
-  // slope -> shallow lagoon
-  man_geo = man_geo.where({
-    test: wio_extent.eq(1)
-                     .and(wio_img.eq(1))
-                     .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
-    value: ee.Image(11)
-  })
-  
+ 
   // reef crest -> TRF
   man_geo = man_geo.where({
     test: wio_img.eq(1)
@@ -444,9 +429,9 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   })*/
   
-  // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
+  // DEEP WATER in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
-    test: depth.gt(2000), // set at 20m (2000) but may need changing based on depth data
+    test: depth.gt(1000), // set at 20m (2000) but may need changing based on depth data
     value: ee.Image(2)
   })
   
