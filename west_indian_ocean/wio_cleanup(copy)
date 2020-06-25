@@ -226,7 +226,7 @@ if (vars.manual_clean) {
   
   //WIO clean
 
-  // deep -> deep lagoon
+  // Deep -> deep lagoon
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
                     // .and(wio_img.eq(1))
@@ -238,7 +238,7 @@ if (vars.manual_clean) {
     test: wio_extent.eq(1)
                      .and(man_geo.eq(21)),
     value: ee.Image(22)
-  });
+  })
   
   // slope -> shallow lagoon
   man_geo = man_geo.where({
@@ -255,8 +255,54 @@ if (vars.manual_clean) {
     value: ee.Image(16)
   })
   
+   // Inner reef flat -> Outer reef flat
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(13)),
+    value: ee.Image(14)
+  })
+  
+  // Reef crest -> Outer reef flat
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(14)
+  })
+  
+  // Sheltered reef slope -> Reef slope
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(21)),
+    value: ee.Image(22)
+  })
+  
+  // Deep lagoon -> Reef slope
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(12)),
+    value: ee.Image(22)
+  })
+  
+  // Shallow lagoon -> Outer reef flat
+  man_geo = man_geo.where({
+    test: wio_extent.eq(1)
+                     .and(man_geo.eq(11)),
+    value: ee.Image(14)
+  })
+  
   
   // Add the manual layer to the map
+  var image = ee.Image(region_params.image);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
+  
+  var geo_clean_p1 = ee.Image(region_params.geo_map_clean)
+  Map.addLayer(geo_clean_p1, map_palettes.geo, 'Geo Clean Pass 1', false);
+  
+  var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
+  Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
+  
+  Map.addLayer(man_geo, map_palettes.geo, 'Geo Clean Manual', true);
+  
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
   // Export
   Export.image.toAsset({
