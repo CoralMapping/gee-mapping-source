@@ -159,6 +159,7 @@ MANUAL ADDITION
 */
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
+
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 
@@ -180,6 +181,13 @@ if (vars.manual_clean) {
   Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
+  //var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
+  //var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
+  //var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
+  //var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
+  //var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
+  //var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
+  
   
   // define the manually edited map
   var man_geo = ee.Image(region_params.geo_map_clean)
