@@ -128,14 +128,17 @@ var vars = {
               : 3rd stage - manual_clean set to true (chop out all non-region-specific code, review final masks and any manual edits)
   - BENTHIC : can do both at once
             : One stage only - should have obia_2nd_pass and obia_clean set to true (so it uses the most recent geo map) */
+  
+  // CHANGE FOR EACH PASS
   obia_2nd_pass: false,
   obia_clean: false, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
+  //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: true,
+  manual_clean: false,
   
   // results/layers to show
   export_small_area: false,
@@ -144,7 +147,7 @@ var vars = {
   reproject_display: true,
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
-  // export options
+  // export options - CHANGE DEPENDING FOR EACH PASS
   do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-cleanA',
   benthic_output_name: region_params.sname + '_benthic-clean',
