@@ -4404,7 +4404,7 @@ if (vars.manual_clean) {
   
   // Reef slope -> Plateau (Corona reef)
   man_geo = man_geo.where({
-    test: notreefslope.eq(1)
+    test: notRSplateau.eq(1)
                      .and(man_geo.eq(22)),
     value: ee.Image(23)
   });
