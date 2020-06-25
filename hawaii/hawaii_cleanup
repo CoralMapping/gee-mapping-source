@@ -2794,8 +2794,14 @@ if (vars.manual_clean) {
     value: ee.Image(24)
   })
   
-  //East Hawaii clean
+  // Make area back reef slope
+  man_geo = man_geo.where({
+    test: backreefslopeall.eq(1),
+    value: ee.Image(24)
+  });
   
+  
+  //East Hawaii clean
   
   // Inner reef flat -> Outer reef flat
   man_geo = man_geo.where({
