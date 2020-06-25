@@ -250,6 +250,8 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(21).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(11)
   })
+  
+  
  
   /*// reef crest -> TRF
   man_geo = man_geo.where({
@@ -1269,4 +1271,4 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
 var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
 pkg_vis.add_lgds([title, legend]);//, mask_legend])
-// generate the legend
+// generate the legend*/
