@@ -187,7 +187,7 @@ if (vars.manual_clean) {
   
   //DEFINE AREAS OF NO REEF and/or SPLITS
   var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
-  var wio_extent = ee.Image(region_extent)
+  var region_extent = ee.Image(region_extent)
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
  // var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
  // var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
