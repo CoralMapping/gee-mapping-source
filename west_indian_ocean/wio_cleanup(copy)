@@ -151,18 +151,20 @@ var vars = {
   asset_output: region_params.asset // asset path
 
 }
-Map.addLayer(region_extent, {}, "region_extent", false)
+
 /*
 ############################
 MANUAL ADDITION
 ############################
 */
 
+
 //REEF BOUNDARY
 //This can be hand drawn or imported from elsewhere, or could just be a big box
 
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
+Map.addLayer(region_extent, {}, "region_extent", false)
 
 if (vars.manual_clean) {
   
@@ -185,13 +187,22 @@ if (vars.manual_clean) {
   
   //DEFINE AREAS OF NO REEF and/or SPLITS
   var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
-  //var baha_img = ee.Image().byte().paint(ee.Feature(baha_cut, {zone: 1}), "zone").clip(baha_cut)
-  //var baha_extent = ee.Image().byte().paint(ee.Feature(bahamas_extent, {zone: 1}), "zone").clip(bahamas_extent)
-  //var cuba_west = ee.Image().byte().paint(ee.Feature(cuba_west_cut, {zone: 1}), "zone").clip(cuba_west_cut)
-  //var cuba_west2 = ee.Image().byte().paint(ee.Feature(cuba_west_cut2, {zone: 1}), "zone").clip(cuba_west_cut2)
-  //var cuba_west2x = ee.Image().byte().paint(ee.Feature(cuba_west_cut2x, {zone: 1}), "zone").clip(cuba_west_cut2x)
-  //var cuba_east = ee.Image().byte().paint(ee.Feature(cuba_east_cut, {zone: 1}), "zone").clip(cuba_east_cut)
-  
+  var wio_extent = ee.Image(region_extent)
+  //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
+ // var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+ // var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
+ // var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
+ // var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
+ // var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
+ // var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+ // var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
+ // var backreefslopeall = ee.Image().byte().paint(ee.Feature(back_reef_slope_all, {zone: 1}), "zone").clip(back_reef_slope_all);
+ // var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
+ // var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
+ // var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
+//  var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
+//  var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
+ // var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
   
   // DEFINE THE MANUALLY EDITED MAP
   var man_geo = ee.Image(region_params.geo_map_clean)
