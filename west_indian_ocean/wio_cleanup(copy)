@@ -155,6 +155,8 @@ var vars = {
 
 }
 
+//CHANGE NAME OF INPUT LAYER AT circa LINE 136 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
+
 /*
 ############################
 MANUAL ADDITION
@@ -211,7 +213,7 @@ if (vars.manual_clean) {
   // 1st pass
   var man_geo = ee.Image(region_params.geo_map_clean)
   // 2nd pass
-  var man_geo = ee.Image(region_params.geo_map_clean_p2)
+  //var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
    // "NOT REEF" CLEAN
   // remove
