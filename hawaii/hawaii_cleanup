@@ -2364,6 +2364,7 @@ if (vars.manual_clean) {
   var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
   var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+  var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean_p2);
@@ -2405,7 +2406,12 @@ if (vars.manual_clean) {
     value: ee.Image(13)
   })
   
- 
+ // Deep water/shelter slope -> Back reef slope
+  man_geo = man_geo.where({
+    test: backreefslope.eq(1)
+                     .and(man_geo.eq(2)).or(man_geo.eq(21)),
+    value: ee.Image(24)
+  })
   
   //East Hawaii clean
   // TRF -> Outer reef flat
