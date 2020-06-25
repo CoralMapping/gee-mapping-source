@@ -72,7 +72,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
         [[[40.859926354273455, -2.4006076916703782],
           [40.859926354273455, -23.630158061970967],
           [65.42535604177345, -23.630158061970967],
-          [65.42535604177345, -2.4006076916703782]]], null, false);
+          [65.42535604177345, -2.4006076916703782]]], null, false),
+    waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -176,7 +177,7 @@ if (vars.manual_clean) {
   var depth_cont = depth.lt(900)
   Map.addLayer(depth_cont, {}, "depth contour", false)
   
-  //Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
+  Map.addLayer(waves.lt(0.4), {}, "0.4m Hs95 threshold", false)
   
   var not_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef) //import CR not_reef layer
   
