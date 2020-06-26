@@ -4934,7 +4934,7 @@ if (vars.geomorphic) {
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
   var geo_map = ee.Image(region_params.geo_map_clean_man);
-  Map.addLayer(geo_map, map_palettes.geo, 'Geo Clean Manual', false);
+  Map.addLayer(geo_map, map_palettes.geo, 'Geo Clean Manual', true);
   Map.addLayer(benthic_map, display_pal, 'Benthic RAW', false);
 }
 
@@ -5610,6 +5610,13 @@ if (vars.obia_clean) {
     })*/
     
     
+    // Reef slope in geo && sand in benthic == coral/algae
+    clean_map = clean_map.where({
+      test: geo_map.eq(22)
+                   .and(clean_map.eq(11)),
+      value: ee.Image(15)
+    })
+    
     // Deep/shallow lagoon in geo && coral in benthic == sand
     clean_map = clean_map.where({
       test: geo_map.eq(11).or(geo_map.eq(12))
@@ -5752,7 +5759,7 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
+      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
     } else {
       Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
     }
