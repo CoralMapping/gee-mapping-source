@@ -4602,7 +4602,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean',
   benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
@@ -5577,7 +5577,7 @@ if (vars.obia_clean) {
     // BENTHIC CLEAN-UP RULES
     
     // Use the manually cleaned geomorphic map as input for the benthic clean
-    var geo_map = region_params.geo_map_clean_man;
+    var geo_map = ee.Image(region_params.geo_map_clean_man);
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
                         .focal_mode({
@@ -5751,7 +5751,7 @@ if (vars.do_export) {
     //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
     var export_convhull = reef_boundary;
   }
-  Map.addLayer(export_convhull, {}, "Export footprint", true);
+  Map.addLayer(export_convhull, {}, "Export footprint", false);
   var output_name = (vars.obia_2nd_pass) ? output_name + "_p2" : output_name;
   Export.image.toAsset({
     image: clean_map.set(vars),
