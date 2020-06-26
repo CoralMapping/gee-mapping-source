@@ -5624,7 +5624,7 @@ if (vars.obia_clean) {
     clean_map = clean_map.where({
       test: west_extent.eq(1)
                        .and(geo_map.eq(22))
-                       .and(clean_map.eq(11)),
+                       .and(clean_map.eq(11)).or(clean_map(18)),
       value: ee.Image(15)
     })
     
