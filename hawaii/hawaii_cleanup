@@ -5620,14 +5620,22 @@ if (vars.obia_clean) {
     
     
     // West Hawaii
-    // Reef slope in geo && sand in benthic == coral/algae
+    // Reef slope in geo && (sand or BMA) in benthic == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
                        .and(geo_map.eq(22))
-                       .and(clean_map.eq(11)).or(clean_map(18)),
+                       .and(clean_map.eq(11)).or(clean_map.eq(18)),
       value: ee.Image(15)
     })
     
+    
+    // East and West Hawaii
+    // BMA in benthic and slope/plat/BRS/DL/DW in geo == sand
+    clean_map = clean_map.where({
+      test: clean_map.eq(18)
+                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
+      value: ee.Image(11)
+    })
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
@@ -5678,12 +5686,12 @@ if (vars.obia_clean) {
     })*/
     
     
-    /*// BMA in benthic and slope/plat in geo == sand
+    //BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(11)
-    })*/
+    })
     
   }
   
