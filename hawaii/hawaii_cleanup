@@ -5643,7 +5643,7 @@ if (vars.obia_clean) {
     })
     
     // East and West Hawaii
-    // BMA in benthic and slope/plat/BRS/DL/DW in geo == sand
+    // BMA on reef slope/plateau/BRS/DL/DW == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
