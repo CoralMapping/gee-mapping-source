@@ -5577,7 +5577,7 @@ if (vars.obia_clean) {
   } else {
     
     // BENTHIC CLEAN-UP RULES
-    // Copied here, but originally defined under manual cleanup - sort out later PT
+    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
     var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
     var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
     
@@ -5643,7 +5643,7 @@ if (vars.obia_clean) {
     })
     
     // East and West Hawaii
-    // BMA on reef slope/plateau/BRS/DL/DW == sand
+    // BMA on DW/DL/SRS/RS/plateau/BRS == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
