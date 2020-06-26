@@ -4934,7 +4934,7 @@ if (vars.geomorphic) {
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
   var geo_map = ee.Image(region_params.geo_map_clean_man);
-  Map.addLayer(geo_map, map_palettes.geo, 'Geomorphic clean man', false);
+  Map.addLayer(geo_map, map_palettes.geo, 'Geo Clean Manual', false);
   Map.addLayer(benthic_map, display_pal, 'Benthic RAW', false);
 }
 
