@@ -130,8 +130,8 @@ var vars = {
             : One stage only - should have obia_2nd_pass and obia_clean set to true (so it uses the most recent geo map) */
   
   // CHANGE FOR EACH PASS
-  obia_2nd_pass: false,
-  obia_clean: false, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: true,
+  obia_clean: true, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
@@ -151,7 +151,7 @@ var vars = {
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
     // export options 
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-cleanA',
+  geomorph_output_name: region_params.sname + '_geo-clean2B',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
