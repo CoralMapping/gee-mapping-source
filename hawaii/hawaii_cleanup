@@ -5605,12 +5605,12 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })
     
-    /*// Deep lagoon in geo == masked from benthic
+    // Deep lagoon in geo == masked from benthic
     clean_map = clean_map.where({
       test: geo_map.eq(12),
       value: ee.Image(0)
-    })*/
-     
+    })
+    
     // Coral in benthic && Deep/shallow lagoon in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(15)
@@ -5629,8 +5629,8 @@ if (vars.obia_clean) {
     // Reef slope in geo && (sand or BMA) in benthic == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
-                       .and(geo_map.eq(22)
-                       .and(clean_map.eq(11)).or(clean_map.eq(18))),
+                       .and(geo_map.eq(22))
+                       .and(clean_map.eq(11).or(clean_map.eq(18))),
       value: ee.Image(15)
     })
     
