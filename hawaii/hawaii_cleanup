@@ -5618,6 +5618,12 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
+    // BMA in benthic and inner/outer RF in geo == rubble
+    clean_map = clean_map.where({
+      test: geo_map.eq(13).or(geo_map.eq(14))
+                   .and(clean_map.eq(18)),
+      value: ee.Image(12)
+    })
     
     // West Hawaii
     // Reef slope in geo && (sand or BMA) in benthic == coral/algae
