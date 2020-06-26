@@ -123,7 +123,7 @@ var depth_names = ['0-3m', '3-6m', '6-9m', '9-12m', '12m+']
 var depth_cols = ['#f1eef6','#bdc9e1','#74a9cf','#2b8cbe','#045a8d']
 
 // coral type legend
-var type_names = ['type 1', 'type 2', 'type 3', 'type 4']
+var type_names = ['branching', 'mixed', 'plate', 'massive']
 var type_cols = ['#e41a1c','#377eb8','#4daf4a','#984ea3']
 
 // Accuracy categories legend
