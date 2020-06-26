@@ -5577,7 +5577,7 @@ if (vars.obia_clean) {
   } else {
     
     // BENTHIC CLEAN-UP RULES
-    // Copied here originally defined under manual cleanup
+    // Copied here, but originally defined under manual cleanup - sort out later PT
     var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
     var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
     
@@ -5618,7 +5618,7 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
-    // BMA in benthic && inner/outer RF in geo == rubble
+    // BMA in benthic && inner/outer RF in geo == rubble 
     clean_map = clean_map.where({
       test: geo_map.eq(13).or(geo_map.eq(14))
                    .and(clean_map.eq(18)),
