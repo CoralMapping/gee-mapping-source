@@ -5611,14 +5611,14 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })*/
      
-    // Deep/shallow lagoon in geo && coral in benthic == sand
+    // Coral in benthic && Deep/shallow lagoon in geo == sand
     clean_map = clean_map.where({
       test: geo_map.eq(11).or(geo_map.eq(12))
                    .and(clean_map.eq(15)),
       value: ee.Image(11)
     })
     
-    // BMA in benthic and inner/outer RF in geo == rubble
+    // BMA in benthic && inner/outer RF in geo == rubble
     clean_map = clean_map.where({
       test: geo_map.eq(13).or(geo_map.eq(14))
                    .and(clean_map.eq(18)),
