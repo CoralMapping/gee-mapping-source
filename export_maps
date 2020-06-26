@@ -214,7 +214,7 @@ Export.image.toCloudStorage({
 });
 
 
-
+/*
 Export.table.toCloudStorage({
   collection: slithers, 
   bucket: 'coral-atlas-data-pipeline',
@@ -222,7 +222,7 @@ Export.table.toCloudStorage({
   fileFormat: 'SHP'
 });
 
-
+*/
 
 /*// run the export
 Export.image.toCloudStorage({
