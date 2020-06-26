@@ -5626,7 +5626,7 @@ if (vars.obia_clean) {
     })
     
     // West Hawaii
-    // Reef slope in geo && (sand or BMA) in benthic == coral/algae
+    // Sand or BMA in benthic on Reef slope == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
                        .and(geo_map.eq(22))
@@ -5634,6 +5634,13 @@ if (vars.obia_clean) {
       value: ee.Image(15)
     })
     
+    // BMA in benthic on Reef Reef == coral/algae
+    clean_map = clean_map.where({
+      test: west_extent.eq(1)
+                       .and(geo_map.eq(15))
+                       .and(clean_map.eq(18)),
+      value: ee.Image(15)
+    })
     
     // East and West Hawaii
     // BMA in benthic and slope/plat/BRS/DL/DW in geo == sand
