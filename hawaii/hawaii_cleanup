@@ -5577,7 +5577,7 @@ if (vars.obia_clean) {
     // BENTHIC CLEAN-UP RULES
     
     // Use the manually cleaned geomorphic map as input for the benthic clean
-    var geo_map = reef_params.geo_map_clean_man;
+    var geo_map = region_params.geo_map_clean_man;
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
                         .focal_mode({
