@@ -5629,7 +5629,7 @@ if (vars.obia_clean) {
     // Reef slope in geo && (sand or BMA) in benthic == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
-                       .and(geo_map.eq(22))
+                       .and(geo_map.eq(22)
                        .and(clean_map.eq(11)).or(clean_map.eq(18))),
       value: ee.Image(15)
     })
