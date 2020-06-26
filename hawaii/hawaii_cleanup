@@ -5577,7 +5577,9 @@ if (vars.obia_clean) {
   } else {
     
     // BENTHIC CLEAN-UP RULES
-    
+    // Copied here originally defined under manual cleanup
+    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
     
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
@@ -5608,12 +5610,12 @@ if (vars.obia_clean) {
       test: geo_map.eq(12),
       value: ee.Image(0)
     })*/
-    
-    
-    // Reef slope in geo && sand in benthic == coral/algae
+     
+    // Reef slope in geo && sand in benthic (west) == coral/algae
     clean_map = clean_map.where({
-      test: geo_map.eq(22)
-                   .and(clean_map.eq(11)),
+      test: west_extent.eq(1)
+                       .and(geo_map.eq(22))
+                       .and(clean_map.eq(11)),
       value: ee.Image(15)
     })
     
@@ -5759,13 +5761,13 @@ if (vars.do_export) {
 } else {
   if (vars.show_eg_area) {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
+      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
     } else {
       Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
     }
   } else {
     if (vars.reproject_display) {
-      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
     } else {
       Map.addLayer(clean_map, display_pal, output_name + '_final', false);
     }
