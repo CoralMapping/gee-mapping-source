@@ -5611,7 +5611,16 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })*/
      
-    // Reef slope in geo && sand in benthic (west) == coral/algae
+    // Deep/shallow lagoon in geo && coral in benthic == sand
+    clean_map = clean_map.where({
+      test: geo_map.eq(11).or(geo_map.eq(12))
+                   .and(clean_map.eq(15)),
+      value: ee.Image(11)
+    })
+    
+    
+    // West Hawaii
+    // Reef slope in geo && sand in benthic == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
                        .and(geo_map.eq(22))
@@ -5619,12 +5628,6 @@ if (vars.obia_clean) {
       value: ee.Image(15)
     })
     
-    // Deep/shallow lagoon in geo && coral in benthic == sand
-    clean_map = clean_map.where({
-      test: geo_map.eq(11).or(geo_map.eq(12))
-                   .and(clean_map.eq(15)),
-      value: ee.Image(11)
-    })
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
