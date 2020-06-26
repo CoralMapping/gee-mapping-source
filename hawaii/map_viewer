@@ -294,10 +294,11 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 
 // Hawaii classification
 Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Hawaii east/west Benthic - RAW", false)
-//Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
+
 Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
 Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
 Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual", true)
+Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean", true)
 
 // wave data
 //var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
