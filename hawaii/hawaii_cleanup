@@ -5593,7 +5593,7 @@ if (vars.obia_clean) {
     
     // cut benthic off to < 10 - 15 m
     clean_map = clean_map.where({
-      test: depth.gt(1500),
+      test: depth.gt(1000),
       value: ee.Image(0)
     })
     
@@ -5609,12 +5609,6 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })*/
     
-    // Deep/shallow lagoon in geo && rock in benthic == seagrass
-    clean_map = clean_map.where({
-      test: geo_map.eq(11).or(geo_map.eq(12))
-                   .and(clean_map.eq(13)),
-      value: ee.Image(14)
-    })
     
     // Deep/shallow lagoon in geo && coral in benthic == sand
     clean_map = clean_map.where({
@@ -5664,13 +5658,6 @@ if (vars.obia_clean) {
     
     // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
     
-    // coral or algae in benthic + TRF in geo == seagrass
-    clean_map = clean_map.where({
-      test: clean_map.eq(15)
-                     .and(geo_map.eq(16)),
-      value: ee.Image(14)
-    })
-    
     // rock in benthic + TRF in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(13)
@@ -5678,19 +5665,6 @@ if (vars.obia_clean) {
       value: ee.Image(11)
     })
     
-    // seagrass in benthic and slope in geo == coral
-    clean_map = clean_map.where({
-      test: clean_map.eq(14)
-                     .and(geo_map.eq(21).or(geo_map.eq(22))),
-      value: ee.Image(15)
-    })
-    
-    // coral or algae in benthic + plat in geo == seagrass
-    clean_map = clean_map.where({
-      test: clean_map.eq(15)
-                     .and(geo_map.eq(23)),
-      value: ee.Image(14)
-    })
     
     /*// BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
