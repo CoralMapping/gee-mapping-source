@@ -5658,12 +5658,12 @@ if (vars.obia_clean) {
     
     // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
     
-    // rock in benthic + TRF in geo == sand
+    /*// rock in benthic + TRF in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(13)
                      .and(geo_map.eq(16)),
       value: ee.Image(11)
-    })
+    })*/
     
     
     /*// BMA in benthic and slope/plat in geo == sand
