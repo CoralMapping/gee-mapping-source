@@ -13,7 +13,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [-153.52755471286838, 20.385834406814258],
           [-159.43420248789334, 22.893106923083444],
           [-167.4874893752415, 24.965604306992145],
-          [-178.49607022870134, 28.945982949974336]]]),
+          [-178.2214120255763, 29.123686786807387]]]),
     geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
     benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
