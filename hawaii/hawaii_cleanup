@@ -5640,7 +5640,7 @@ if (vars.obia_clean) {
                        .and(geo_map.eq(15))
                        .and(clean_map.eq(18)),
       value: ee.Image(15)
-    })
+    });
     
     // East and West Hawaii
     // BMA on DW/DL/SRS/RS/plateau/BRS == sand
@@ -5648,7 +5648,16 @@ if (vars.obia_clean) {
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
       value: ee.Image(11)
-    })
+    });
+    
+    // East Hawaii
+    // Sand on RS and plateau == rock
+    clean_map = clean_map.where({
+    test: east_extent.eq(1)
+                     .and(clean_map.eq(11))
+                     .and(man_geo.eq(22).or(geo_map(23))),
+    value: ee.Image(13)
+  });
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
@@ -5697,15 +5706,7 @@ if (vars.obia_clean) {
                      .and(geo_map.eq(16)),
       value: ee.Image(11)
     })*/
-    
-    
-    //BMA in benthic and slope/plat in geo == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(18)
-                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23))),
-      value: ee.Image(11)
-    })
-    
+
   }
   
 /*  // ####
