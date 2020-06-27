@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
     reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[-178.9902899370743, 28.223543414829674],
           [-174.31670726951845, 25.35687341614974],
@@ -15,7 +14,8 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [-167.4874893752415, 24.965604306992145],
           [-178.2214120255763, 29.123686786807387]]]),
     geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean");
+    benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
+    pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS, ready for smoothing
