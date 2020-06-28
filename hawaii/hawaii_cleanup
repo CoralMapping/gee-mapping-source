@@ -4602,7 +4602,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean',
   benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
@@ -5653,11 +5653,11 @@ if (vars.obia_clean) {
     // East Hawaii
     // Sand on RS and plateau == rock
     clean_map = clean_map.where({
-    test: east_extent.eq(1)
-                     .and(clean_map.eq(11))
-                     .and(man_geo.eq(22).or(geo_map(23))),
-    value: ee.Image(13)
-  });
+      test: east_extent.eq(1)
+                       .and(clean_map.eq(11))
+                       .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
+      value: ee.Image(13)
+    });
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
