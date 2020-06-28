@@ -339,7 +339,7 @@ if (vars.run_probabilities) {
   
   
   var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
-var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
+  var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
 
 
   var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
@@ -359,7 +359,7 @@ Map.addLayer(probabilities,{},'probabilities')
 
 Export.image.toAsset({image:probabilities,
                       description:'prob_geo',
-                      assetId:'projects/coral_atlas/east_africa/in_out/east_africa_prob_benthic',
+                      assetId:'projects/coral_atlas/hawai/in_out/hawaii_prob_benthic',
                       region:export_geom,
                       scale:vars.export_scale,
                       maxPixels:1e13
