@@ -392,7 +392,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
-//7.6 confidence legend
+// confidence legend to be shown
 
 var legend=ui.Panel({
   style: {
