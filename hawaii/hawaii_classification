@@ -151,7 +151,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'west', 
+  split_region: 'none', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
