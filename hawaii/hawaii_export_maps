@@ -18,7 +18,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-/* Hawaii
+/* Hawaii export to Vulcan bucket
 Script to export maps to GCS, ready for smoothing
 - note the eventual smoothed output still needs to be QC'd by UQ, 
   to ensure smoothing has not done naything untoward
