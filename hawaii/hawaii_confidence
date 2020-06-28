@@ -400,8 +400,8 @@ Map.add(legend)
 
 Export.image.toAsset({
   image:confidenceEXP,
-  description:'conf_benthic',
-  assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_conf_benthic',
+  description:'conf_geo',
+  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_geo',
   region:nth_cari_extent,
   scale:vars.export_scale,
   maxPixels:1e13
