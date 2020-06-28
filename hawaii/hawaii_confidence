@@ -285,14 +285,14 @@ var fprob_benthic=val_map.expression(
                   "(b('classification') == 11) ? img11*0.9"+
                     ":(b('classification') == 12) ? img12*0.3"+
                       ":(b('classification') == 13) ? img13*0.6"+
-                        ":(b('classification') == 15) ? img14*0.6"+
-                          ":(b('classification') == 18) ? img15*0.7"+
+                        ":(b('classification') == 15) ? img15*0.6"+
+                          ":(b('classification') == 18) ? img18*0.7"+
                             ":0",{
                               'img11':scaledprob.select('Sand'),
                               'img12':scaledprob.select('Rubble'),
                               'img13':scaledprob.select('Rock'),
                               'img15':scaledprob.select('Coral/Algae'),
-                              'img15':scaledprob.select('Microalgal mats')
+                              'img18':scaledprob.select('Microalgal mats')
                             });
 
 
