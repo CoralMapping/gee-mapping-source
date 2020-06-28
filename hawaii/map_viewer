@@ -392,12 +392,13 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
+/*
 // confidence legend to be shown
 
 var legend=ui.Panel({
   style: {
     position: 'bottom-right',
-    padding: "8px 15px"
+    padding: "8px 30px"
   }
 });
 
@@ -416,22 +417,22 @@ function makeColorBarParams(palette) {
 var colorBar=ui.Thumbnail({
   image: ee.Image.pixelLonLat().select(0),
   params: makeColorBarParams(vis.palette),
-  style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
+  style:{stretch:'horizontal', margin: '0px 15px',maxHeight: '24px'}
 })
 // Create a panel with three numbers for the legend.
 var legendLabels = ui.Panel({
   widgets: [
-    ui.Label(vis.min, {margin: '4px 8px'}),
+    ui.Label(vis.min, {margin: '4px 20px'}),
     ui.Label(
         (' '),
-        {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
-    ui.Label(vis.max, {margin: '4px 8px'})
+        {margin: '4px 20px', textAlign: 'center', stretch: 'horizontal'}),
+    ui.Label(vis.max, {margin: '4px 20px'})
   ],
   layout: ui.Panel.Layout.flow('horizontal')
 });
 
 var legendTitle = ui.Label({
-  value: 'Confidence Layer',
+  value: 'Confidence legend',
   style: {fontWeight: 'bold',position: 'bottom-right'}
 });
 
@@ -440,3 +441,5 @@ legend.add(colorBar)
 legend.add(legendLabels);
 
 Map.add(legend)
+
+*/
