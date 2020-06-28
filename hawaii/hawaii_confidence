@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var prob_geo = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_geo"),
-    prob_benthic = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_benthic"),
-    imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
+var imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
     nth_cari_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -15,7 +13,9 @@ var prob_geo = ee.Image("users/spychristof/DLR/ALAN_CORAL_ATLAS/prob_geo"),
           [-85.65349533343668, 15.881108065617013],
           [-69.23992111468668, 15.881108065617013],
           [-69.23992111468668, 30.110984371566527]]], null, false),
-    poi = /* color: #d63000 */ee.Geometry.Point([-161.63269024552196, 22.877190015580936]);
+    poi = /* color: #d63000 */ee.Geometry.Point([-161.63269024552196, 22.877190015580936]),
+    prob_geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_geo"),
+    prob_benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
