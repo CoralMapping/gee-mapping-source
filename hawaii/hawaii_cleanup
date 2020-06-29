@@ -5661,7 +5661,7 @@ if (vars.obia_clean) {
     
     // West Hawaii
 
-    // Sand or BMA on Reef slope == coral/algae (on steep sloping reef)
+    // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
     clean_map = clean_map.where({
      test: steepslope.eq(1)
                       .and(geo_map.eq(22))
