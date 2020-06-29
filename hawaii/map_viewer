@@ -431,7 +431,7 @@ var legendLabels = ui.Panel({
 });
 
 var legendTitle = ui.Label({
-  value: 'Confidence Layer',
+  value: 'Confidence Layer legend',
   style: {fontWeight: 'bold',position: 'bottom-right'}
 });
 
@@ -439,13 +439,3 @@ legend.add(legendTitle);
 legend.add(colorBar)
 legend.add(legendLabels);
 
-Map.add(legend)
-
-Export.image.toAsset({
-  image:confidenceEXP,
-  description:'conf_benthic',
-  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_benthic_clean',
-  region:hawai_extent,
-  scale:vars.export_scale,
-  maxPixels:1e13
-});
