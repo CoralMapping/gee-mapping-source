@@ -5589,6 +5589,8 @@ if (vars.obia_clean) {
     // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
     var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
     var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
+    var gradualreefslope = ee.Image().byte().paint(ee.Feature(gradual_reef_slope, {zone: 1}), "zone").clip(gradual_reef_slope);
+    
     
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
@@ -5639,6 +5641,7 @@ if (vars.obia_clean) {
     // Sand or BMA on Reef slope == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
+                       .and(!gradualreefslope.eq(1))
                        .and(geo_map.eq(22))
                        .and(clean_map.eq(11).or(clean_map.eq(18))),
       value: ee.Image(15)
