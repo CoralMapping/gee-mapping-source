@@ -151,7 +151,7 @@ var vars = {
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
     // export options 
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean2B',
+  geomorph_output_name: region_params.sname + '_geo-clean_man',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
