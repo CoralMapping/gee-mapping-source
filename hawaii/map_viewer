@@ -413,7 +413,7 @@ var legendLabels = ui.Panel({
 });
 
 var legendTitle = ui.Label({
-  value: 'Confidence Layer',
+  value: 'Confidence Layer Legend',
   style: {fontWeight: 'bold',position: 'bottom-right'}
 });
 
