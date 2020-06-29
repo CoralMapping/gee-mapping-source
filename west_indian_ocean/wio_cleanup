@@ -212,10 +212,10 @@ if (vars.manual_clean) {
  // var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
   
   // DEFINE THE MANUALLY EDITED MAP
-  // 1st pass
-  var man_geo = ee.Image(region_params.geo_map_clean)
-  // 2nd pass
-  //var man_geo = ee.Image(region_params.geo_map_clean_p2)
+  // 1st pass output for 2nd pass run
+  // var man_geo = ee.Image(region_params.geo_map_clean)
+  // 2nd pass output for manual run
+  var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
    // "NOT REEF" CLEAN
   // remove
