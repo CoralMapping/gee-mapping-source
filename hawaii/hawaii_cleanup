@@ -4540,7 +4540,27 @@ var eg_area =
          [[[-174.46870831788434, 26.47656621755535],
            [-174.50166730225934, 25.48403631800407],
            [-173.34810284913434, 25.503869512306185],
-           [-173.33711652100934, 26.520810912272115]]]]);
+           [-173.33711652100934, 26.520810912272115]]]]),
+    steep_slope = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-179.5463281908895, 29.271216909487254],
+          [179.83843743411046, 28.076010056289288],
+          [-174.5805078783895, 24.451307168012036],
+          [-168.1205469408895, 21.702508944676243],
+          [-170.2299219408895, 16.3877727492622],
+          [-169.0433985033895, 15.881201909553383],
+          [-166.2089258471395, 22.96259860288609],
+          [-161.7265039721395, 21.947281728146223],
+          [-160.2543360033895, 23.608446782108963],
+          [-167.38160548584972, 24.810826989087744],
+          [-171.46851954834972, 24.85070964850898],
+          [-171.00709376709972, 26.51399137830625],
+          [-172.10572657959972, 26.592611192864478],
+          [-173.33619532959972, 24.810826989087744],
+          [-175.66529689209972, 25.68525324259878],
+          [-174.12721095459972, 28.19226902675772]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -5592,8 +5612,8 @@ if (vars.obia_clean) {
     // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
     var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
     var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-    var gradualreefslope = ee.Image().byte().paint(ee.Feature(gradual_reef_slope, {zone: 1}), "zone").clip(gradual_reef_slope);
-    
+    var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
+    //var west_slope = west_extent.subtract(gradualreefslope)
     
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
@@ -5607,7 +5627,7 @@ if (vars.obia_clean) {
       value: smooth_map
     }).selfMask();
     
-    // cut benthic off to < 10 - 15 m
+    // cut benthic off to < 10 - 15 m (eastern extent only because of Dove depth in the west)
     clean_map = clean_map.where({
       test: east_extent.eq(1)
                        .and(depth.gt(1000)),
@@ -5641,25 +5661,14 @@ if (vars.obia_clean) {
     })
     
     // West Hawaii
-    // Sand or BMA on Reef slope == coral/algae
+
+    // Sand or BMA on Reef slope == coral/algae (on gradual sloping reef flat)
     clean_map = clean_map.where({
-      test: west_extent.eq(1)
-                       .and(geo_map.eq(22))
-                       .and(clean_map.eq(11).or(clean_map.eq(18)))
-                       .and(gradualreefslope.neq(1)),
-      value: ee.Image(15)
-    })
-    
-    /*// Sand or BMA on Reef slope == coral/algae
-    clean_map = clean_map.where({
-      test: gradualreefslope.neq(1)
-                       .and(west_extent.eq(1))
-                       .and(geo_map.eq(22))
-                       .and(clean_map.eq(11).or(clean_map.eq(18)))
-                       ,
-      value: ee.Image(15)
-    })*/
-    
+     test: steepslope.eq(1)
+                      .and(geo_map.eq(22))
+                      .and(clean_map.eq(11).or(clean_map.eq(18))),
+     value: ee.Image(15)
+     });
     
     // BMA on Reef Crest == coral/algae
     clean_map = clean_map.where({
