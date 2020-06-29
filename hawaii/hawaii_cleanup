@@ -5644,11 +5644,22 @@ if (vars.obia_clean) {
     // Sand or BMA on Reef slope == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
-                       .and(gradualreefslope.eq(1))
                        .and(geo_map.eq(22))
-                       .and(clean_map.eq(11).or(clean_map.eq(18))),
+                       .and(clean_map.eq(11).or(clean_map.eq(18)))
+                       .and(gradualreefslope.neq(1)),
       value: ee.Image(15)
     })
+    
+    /*// Sand or BMA on Reef slope == coral/algae
+    clean_map = clean_map.where({
+      test: gradualreefslope.neq(1)
+                       .and(west_extent.eq(1))
+                       .and(geo_map.eq(22))
+                       .and(clean_map.eq(11).or(clean_map.eq(18)))
+                       ,
+      value: ee.Image(15)
+    })*/
+    
     
     // BMA on Reef Crest == coral/algae
     clean_map = clean_map.where({
