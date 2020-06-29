@@ -104,7 +104,7 @@ var segments = ee.Image(region_params.dove_segments)
 var geomorph = (vars.use_geo_points) ? ee.FeatureCollection(region_params.geo_pts) : ee.FeatureCollection(region_params.geo_val_library)
 var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_val_library)
 if (vars.assess_clean) {
-  var geo_map = ee.Image(region_params.geo_map_clean)
+  var geo_map = ee.Image(region_params.geo_map_clean_man)
   var benthic_map = ee.Image(region_params.benthic_map_clean)  
 } else {
   var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
