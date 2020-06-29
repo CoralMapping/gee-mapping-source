@@ -403,7 +403,7 @@ Map.add(legend)
 Export.image.toAsset({
   image:confidenceEXP,
   description:'conf_geo',
-  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_geo',
+  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_geo_clean',
   region:hawai_extent,
   scale:vars.export_scale,
   maxPixels:1e13
