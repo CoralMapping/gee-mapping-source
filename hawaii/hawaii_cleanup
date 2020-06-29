@@ -4634,7 +4634,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean',
   benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
