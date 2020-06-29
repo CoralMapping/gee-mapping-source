@@ -256,8 +256,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_benthic_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_east"),
     geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_p2"),
     geo_clean_man = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
-    benthic_clean_OLD = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean_OLD");
+    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -299,8 +298,7 @@ Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), ma
 Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
 Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual", true)
 Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Benthic RAW", false)
-Map.addLayer(benthic_clean_OLD, map_palettes.benthic, "Benthic Clean 1", true)
-Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean 2", true)
+Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 
 // wave data
 //var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
