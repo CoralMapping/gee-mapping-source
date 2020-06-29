@@ -61,8 +61,8 @@ var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  benthic: true, // assess benthic accuracy
   
   assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -403,8 +403,8 @@ Map.add(legend)
 
 Export.image.toAsset({
   image:confidenceEXP,
-  description:'conf_geo',
-  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_geo_clean',
+  description:'conf_benthic',
+  assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_benthic_clean',
   region:hawai_extent,
   scale:vars.export_scale,
   maxPixels:1e13
