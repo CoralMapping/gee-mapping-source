@@ -1,21 +1,23 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette":["016c59","1c9099","67a9cf","a6bddb","d0d1e6","f6eff7"]},
-    nth_cari_extent = 
+    poi = 
     /* color: #d63000 */
     /* shown: false */
+    ee.Geometry.Point([-161.63269024552196, 22.877190015580936]),
+    prob_geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_geo"),
+    prob_benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic"),
+    hawai_extent = 
+    /* color: #d63000 */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[-85.65349533343668, 30.110984371566527],
-          [-85.65349533343668, 15.881108065617013],
-          [-69.23992111468668, 15.881108065617013],
-          [-69.23992111468668, 30.110984371566527]]], null, false),
-    poi = /* color: #d63000 */ee.Geometry.Point([-161.63269024552196, 22.877190015580936]),
-    prob_geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_geo"),
-    prob_benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic");
+        [[[-179.6065270047154, 31.190284688786466],
+          [-179.6065270047154, 15.692896745194234],
+          [-151.8330895047154, 15.692896745194234],
+          [-151.8330895047154, 31.190284688786466]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
@@ -402,7 +404,7 @@ Export.image.toAsset({
   image:confidenceEXP,
   description:'conf_geo',
   assetId:'projects/coral_atlas/hawaii/in_out/hawaii_conf_geo',
-  region:nth_cari_extent,
+  region:hawai_extent,
   scale:vars.export_scale,
   maxPixels:1e13
 });
