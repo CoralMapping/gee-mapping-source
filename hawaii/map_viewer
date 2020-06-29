@@ -256,8 +256,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_benthic_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_east"),
     geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_p2"),
     geo_clean_man = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic_clean_OLD = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
-    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean_2");
+    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
+    benthic_clean_OLD = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean_OLD");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
