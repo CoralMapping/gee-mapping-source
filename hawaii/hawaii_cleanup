@@ -4529,7 +4529,10 @@ var eg_area =
           [-170.5413981082095, 25.429761137404064],
           [-170.54331326679474, 25.43183789740008],
           [-170.5454001445838, 25.432131808363437]]]),
-    gradual_reef_slope = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    gradual_reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[-171.0790572046785, 25.854478384558874],
            [-171.084550368741, 25.083310691834104],
            [-170.03810261483474, 25.063408608386965],
@@ -5641,7 +5644,7 @@ if (vars.obia_clean) {
     // Sand or BMA on Reef slope == coral/algae
     clean_map = clean_map.where({
       test: west_extent.eq(1)
-                       .and(!gradualreefslope.eq(1))
+                       .and(gradualreefslope.eq(1))
                        .and(geo_map.eq(22))
                        .and(clean_map.eq(11).or(clean_map.eq(18))),
       value: ee.Image(15)
