@@ -256,9 +256,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_benthic_east = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_east"),
     geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_p2"),
     geo_clean_man = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
-    geo_conf_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_conf_geo_clean"),
-    benthic_conf_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_conf_benthic_clean");
+    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -298,7 +296,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 
 Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
 Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
-Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual", true)
+Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual (FINAL)", true)
 Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Benthic RAW", false)
 Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 
@@ -393,51 +391,4 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     scale: 10,
 //     maxPixels: 1e13
 // })
-
-//Confidence level legend
-
-var legend=ui.Panel({
-  style: {
-    position: 'bottom-right',
-    padding: "8px 15px"
-  }
-});
-
-var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
-function makeColorBarParams(palette) {
-  return {
-    bbox: [0, 0, 1, 0.1],
-    dimensions: '100x10',
-    format: 'png',
-    min: 0,
-    max: 1,
-    palette: palette,
-  };
-}
-
-var colorBar=ui.Thumbnail({
-  image: ee.Image.pixelLonLat().select(0),
-  params: makeColorBarParams(vis.palette),
-  style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
-})
-// Create a panel with three numbers for the legend.
-var legendLabels = ui.Panel({
-  widgets: [
-    ui.Label(vis.min, {margin: '4px 8px'}),
-    ui.Label(
-        (' '),
-        {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
-    ui.Label(vis.max, {margin: '4px 8px'})
-  ],
-  layout: ui.Panel.Layout.flow('horizontal')
-});
-
-var legendTitle = ui.Label({
-  value: 'Confidence Layer legend',
-  style: {fontWeight: 'bold',position: 'bottom-right'}
-});
-
-legend.add(legendTitle);
-legend.add(colorBar)
-legend.add(legendLabels);
 
