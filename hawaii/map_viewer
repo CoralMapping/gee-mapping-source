@@ -372,7 +372,12 @@ var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palet
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
 pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
-// generate the legend
+
+
+//show confidence layer
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
+Map.addLayer(benthic_conf_clean,conf_str,'confidence_benthic',false);
+Map.addLayer(benthic_conf_clean,conf_str,'confidence_geo',false);
 
 //Confidence legend
 
