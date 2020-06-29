@@ -8,6 +8,7 @@ var imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette"
     prob_benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic"),
     hawai_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
