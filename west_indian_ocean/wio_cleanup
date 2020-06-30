@@ -746,21 +746,13 @@ if (vars.manual_clean) {
   //DEFINE AREAS OF NO REEF and/or SPLITS
   var no_reef = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef); //import CR not_reef layer
   var wio_extent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent)
-  //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
- // var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
- // var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
- // var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
- // var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
- // var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
- // var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
- // var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
- // var backreefslopeall = ee.Image().byte().paint(ee.Feature(back_reef_slope_all, {zone: 1}), "zone").clip(back_reef_slope_all);
- // var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
- // var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
- // var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-//  var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
-//  var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
- // var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
+  var notReefSlope = ee.Image().byte().paint(ee.Feature(notRS, {zone: 1}), "zone").clip(notRS)
+  var notBackReefSlope = ee.Image().byte().paint(ee.Feature(notBRS, {zone: 1}), "zone").clip(notBRS)
+  var notShelteredReefSlope = ee.Image().byte().paint(ee.Feature(notSRS, {zone: 1}), "zone").clip(notSRS)
+  var notReefCrest = ee.Image().byte().paint(ee.Feature(notRC, {zone: 1}), "zone").clip(notRC)
+  var notShallowLagoon = ee.Image().byte().paint(ee.Feature(notSL, {zone: 1}), "zone").clip(notSL)
+  var notTRFlat = ee.Image().byte().paint(ee.Feature(notTRF, {zone: 1}), "zone").clip(notTRF)
+  var DeepWater = ee.Image().byte().paint(ee.Feature(Deep, {zone: 1}), "zone").clip(Deep)
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
