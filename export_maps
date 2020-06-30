@@ -126,7 +126,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'hi_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/hawaii',
+  fileNamePrefix: 'coral-gee-export-bucket/hawaii/hawaii_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
