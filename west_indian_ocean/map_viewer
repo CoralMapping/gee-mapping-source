@@ -608,6 +608,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
 //in the workflow to annotate masks 
+// little viewing script for looking at reefs and classifications for each region. 
+//The map_viewer WIO script is going to be used from the very beginning
+//in the workflow to annotate masks 
+
 
 // Current Region: West Indian Ocean  <--------- Indicate region here
 
