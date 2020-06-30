@@ -2207,6 +2207,13 @@ if (vars.manual_clean) {
     value: ee.Image(13)
   })
   
+  //Inner Reef Flat to Outer Reef Flat
+   man_geo = man_geo.where({
+    test: notIRFlat.eq(1)
+                     .and(man_geo.eq(13)),
+    value: ee.Image(14)
+  })
+  
    /* // Sheltered slope -> Reef slope
   man_geo = man_geo.where({
     test: wio_extent.eq(1)
