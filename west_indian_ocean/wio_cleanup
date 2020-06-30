@@ -2132,6 +2132,7 @@ if (vars.manual_clean) {
   var notReefCrest = ee.Image().byte().paint(ee.Feature(notRC, {zone: 1}), "zone").clip(notRC)
   var notShallowLagoon = ee.Image().byte().paint(ee.Feature(notSL, {zone: 1}), "zone").clip(notSL)
   var notTRFlat = ee.Image().byte().paint(ee.Feature(notTRF, {zone: 1}), "zone").clip(notTRF)
+  var notIRFlat = ee.Image().byte().paint(ee.Feature(notIRF, {zone: 1}), "zone").clip(notITRF)
   var DeepWater = ee.Image().byte().paint(ee.Feature(Deep, {zone: 1}), "zone").clip(Deep)
   
   // DEFINE THE MANUALLY EDITED MAP
