@@ -51,7 +51,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [57.602161610703206, -5.647957630653708],
           [57.206653798203206, -4.422260866394937],
           [56.547474110703206, -3.4138941523262103]]]),
-    no_reef = /* color: #01ff14 */ee.Geometry.Polygon(
+    no_reef = 
+    /* color: #01ff14 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[55.2248077855843, -20.980851493012523],
           [55.33741764886555, -21.08595829180467],
           [55.4884796605843, -21.2191575703884],
@@ -187,7 +190,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [53.29733608390358, -5.435563232677452],
            [53.31175563956764, -5.420097536532065],
            [53.2873797240403, -5.4095874727034285]]]]),
-    notRC = /* color: #8b1b05 */ee.Geometry({
+    notRC = 
+    /* color: #8b1b05 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1613,7 +1619,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    notSL = /* color: #18faff */ee.Geometry.MultiPolygon(
+    notSL = 
+    /* color: #18faff */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[59.638051022284046, -16.385113304999265],
            [59.63747166513683, -16.386719023397536],
            [59.63845871805431, -16.39303883777417],
@@ -1778,7 +1787,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [53.28683661138869, -5.409844537241894],
            [53.31018255865432, -5.419243785958078],
            [53.30983923590041, -5.430693582195367]]]]),
-    Deep = /* color: #0c16c2 */ee.Geometry.MultiPolygon(
+    Deep = 
+    /* color: #0c16c2 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[55.22752818329987, -4.408108871795463],
            [55.24091777070221, -4.414227587181845],
            [55.24602469666657, -4.4121737582671585],
@@ -1893,7 +1905,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [53.3865441776217, -4.890829207974152],
            [53.384913394540646, -4.8732977528464385],
            [53.377703616708615, -4.8717583837001905]]]]),
-    notTRF = /* color: #007a00 */ee.Geometry.MultiPolygon(
+    notTRF = 
+    /* color: #007a00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[55.93983436648838, -4.5775170906586435],
            [55.94567085330478, -4.59719490946505],
            [55.95803047244541, -4.58701384482381],
@@ -1904,7 +1919,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [56.744541851189915, -10.477202937392848],
            [56.64909812560398, -10.333352679822562],
            [56.581463543084446, -10.328961842868994]]]]),
-    notIRF = /* color: #fffe64 */ee.Geometry.MultiPolygon(
+    notIRF = 
+    /* color: #fffe64 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[45.13792558395689, -12.60845678017535],
            [45.121617753146346, -12.61515755996249],
            [45.13775392257994, -12.618675399148652],
@@ -2047,7 +2065,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
 Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
 Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
-//Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
+Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
 Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
