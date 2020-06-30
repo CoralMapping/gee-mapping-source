@@ -386,7 +386,7 @@ var legend=ui.Panel({
   }
 });
 
-var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+//var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
 var vis = {min: 'low', max: 'high', palette: '4d004b,810f7c,88419d,8c6bb1,8c96c6,9ebcda,bfd3e6,e0ecf4,f7fcfd'};
 
 function makeColorBarParams(palette) {
