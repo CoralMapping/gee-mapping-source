@@ -201,15 +201,6 @@ var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
 //Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
 */
 
-// generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
-//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([ geo_legend, benthic_legend])//, mask_legend,title,])
-// generate the legend
-
-/*
-
 ////////// UI SET UP //////////
 
 
@@ -219,26 +210,65 @@ var title = ui.Label({
   style: {fontWeight: 'bold', fontSize: '18px'}
 })
 
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 
+//show confidence layers
+var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
+Map.addLayer(benthic_conf_clean,conf_str,'confidence_benthic',false);
+Map.addLayer(geo_conf_clean,conf_str,'confidence_geo',false);
 
+//Confidence legend
 
+var legend=ui.Panel({
+  style: {
+    position: 'bottom-right',
+    padding: "8px 15px"
+  }
+});
 
-///////// LINK TO DATA EXPORT /////////
-// hopefully eventually we can link this to a download link in the app?
+//var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+var vis = {min: 'low', max: 'high', palette: '4d004b,810f7c,88419d,8c6bb1,8c96c6,9ebcda,bfd3e6,e0ecf4,f7fcfd'};
 
-// // map to export 
-// var export_map = gbr_geo_map10
-// // extent
-// var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
-// // export
-// Export.image.toDrive({
-//     image: export_map,
-//     description: 'gbr_sent2_geo_map',
-//     folder: 'GBR Mapping',
-//     region: export_convhull,
-//     scale: 10,
-//     maxPixels: 1e13
-// })
+function makeColorBarParams(palette) {
+  return {
+    bbox: [0, 0, 1, 0.1],
+    dimensions: '100x10',
+    format: 'png',
+    min: 0,
+    max: 1,
+    palette: palette,
+  };
+}
 
-*/
+var colorBar=ui.Thumbnail({
+  image: ee.Image.pixelLonLat().select(0),
+  params: makeColorBarParams(vis.palette),
+  style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
+})
+// Create a panel with three numbers for the legend.
+var legendLabels = ui.Panel({
+  widgets: [
+    ui.Label(vis.min, {margin: '4px 8px'}),
+    ui.Label(
+        (' '),
+        {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
+    ui.Label(vis.max, {margin: '4px 8px'})
+  ],
+  layout: ui.Panel.Layout.flow('horizontal')
+});
+
+var legendTitle = ui.Label({
+  value: 'Confidence Layer Legend',
+  style: {fontWeight: 'bold',position: 'bottom-right'}
+});
+
+legend.add(legendTitle);
+legend.add(colorBar)
+legend.add(legendLabels);
+
+Map.add(legend)
