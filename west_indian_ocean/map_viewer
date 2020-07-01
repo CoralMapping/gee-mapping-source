@@ -4161,4 +4161,4 @@ legend.add(legendTitle);
 legend.add(colorBar)
 legend.add(legendLabels);
 
-Map.add(legend
+Map.add(legend)
