@@ -124,6 +124,7 @@ var gbr_eomap = {
   geo_train: "projects/coral_atlas/gbr_eomap/training/gbr_geo_reference", 
   benthic_train: "",
   benthic_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_benthic",
+  coral_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_coral",
   geo_train_library: "projects/coral_atlas/gbr_eomap/training/gbr_geo_training",
   benthic_train_library: "projects/coral_atlas/gbr_eomap/training/gbr_benthic_training",
   geo_val_library: "",
