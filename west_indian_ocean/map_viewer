@@ -72,7 +72,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
     geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean"),
     geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean2"),
-    notBRS = /* color: #6a87ff */ee.Geometry({
+    notBRS = 
+    /* color: #6a87ff */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -737,12 +740,78 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
                 -9.527282144078118
               ],
               [
+                50.97071585246313,
+                -9.588052558995026
+              ],
+              [
+                50.982390057612704,
+                -9.610313710010008
+              ],
+              [
+                51.043504612114354,
+                -9.605490154337069
+              ],
+              [
                 51.172585272570245,
                 -9.43856087273725
               ],
               [
                 51.17121199262463,
                 -9.316617163025764
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                52.7317163262088,
+                -7.187090045550269
+              ],
+              [
+                52.79832094046661,
+                -7.1632456539209555
+              ],
+              [
+                52.794201067419735,
+                -7.132586746939729
+              ],
+              [
+                52.72141664359161,
+                -7.168014632151676
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                52.77188508841583,
+                -7.007886132129423
+              ],
+              [
+                52.761071160492904,
+                -7.031397760126753
+              ],
+              [
+                52.736522844763485,
+                -7.0467309128523
+              ],
+              [
+                52.755748918982235,
+                -7.053886175831244
+              ],
+              [
+                52.786991289587704,
+                -7.014701240610714
               ]
             ]
           ],
@@ -3031,7 +3100,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    Deep = /* color: #0c16c2 */ee.Geometry({
+    Deep = 
+    /* color: #0c16c2 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3839,7 +3911,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [46.43530566465188, -12.351140535986133],
            [46.42706591855813, -12.352985100579016]]]]),
     geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man2"),
-    RCtoORF = /* color: #d6c772 */ee.Geometry.Polygon(
+    RCtoORF = 
+    /* color: #d6c772 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.15282304509833, -10.12348653193581],
           [51.13909013494208, -10.129232100275852],
           [51.121237351738955, -10.141060887393227],
@@ -3870,7 +3945,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [51.103814224570655, -10.159823055376146],
           [51.15016080911878, -10.144612361229905],
           [51.15737058695081, -10.127376174201675]]]),
-    RCtoDL = /* color: #b6a6ff */ee.Geometry.Polygon(
+    RCtoDL = 
+    /* color: #b6a6ff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.058150311071905, -10.192598421010974],
           [51.06398679788831, -10.208817428727594],
           [51.07668973978284, -10.211858400669174],
