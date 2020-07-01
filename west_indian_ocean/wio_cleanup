@@ -4149,6 +4149,13 @@ if (vars.manual_clean) {
     value: ee.Image(14)
   })
   
+     // Reef crest -> Deep Lagoon
+  man_geo = man_geo.where({
+    test: notReefCrest.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(12)
+  })
+  
   //Reef Slope to Back Reef Slope
    man_geo = man_geo.where({
     test: notReefSlope.eq(1)
