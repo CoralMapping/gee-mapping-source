@@ -81,8 +81,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [65.42535604177345, -23.630158061970967],
           [65.42535604177345, -2.4006076916703782]]], null, false),
     waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
-    geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean"),
-    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean2"),
     notBRS = 
     /* color: #6a87ff */
     /* shown: false */
