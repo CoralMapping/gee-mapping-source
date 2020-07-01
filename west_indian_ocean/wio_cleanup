@@ -4097,6 +4097,8 @@ if (vars.manual_clean) {
   var notTRFlat = ee.Image().byte().paint(ee.Feature(notTRF, {zone: 1}), "zone").clip(notTRF)
   var notIRFlat = ee.Image().byte().paint(ee.Feature(notIRF, {zone: 1}), "zone").clip(notIRF)
   var DeepWater = ee.Image().byte().paint(ee.Feature(Deep, {zone: 1}), "zone").clip(Deep)
+  var CrestToORF = ee.Image().byte().paint(ee.Feature(RCtoORF, {zone: 1}), "zone").clip(RCtoORF)
+  var CrestToDL = ee.Image().byte().paint(ee.Feature(RCtoDL, {zone: 1}), "zone").clip(RCtoDL)
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
@@ -4144,7 +4146,7 @@ if (vars.manual_clean) {
   
      // Reef crest -> Outer reef flat
   man_geo = man_geo.where({
-    test: notReefCrest.eq(1)
+    test: CrestToORF.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(14)
   })
