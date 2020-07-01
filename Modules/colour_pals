@@ -116,7 +116,7 @@ var benthic_gbr_cols = ['ffffcc',   'fcbba1', '993404',   '1c9099',        'a6d9
 
 // coral legend
 var coral_names = ['Low',    'Med',   'High']
-var coral_cols = ['#bdc9e1',  '#67a9cf', '#1c9099']
+var coral_cols = ['#e0ecf4',  '#9ebcda', '#8856a7']
 
 //depth legend
 var depth_names = ['0-3m', '3-6m', '6-9m', '9-12m', '12m+']
