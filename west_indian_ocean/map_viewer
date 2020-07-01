@@ -3910,7 +3910,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [46.4363356329136, -12.359021766490427],
            [46.43530566465188, -12.351140535986133],
            [46.42706591855813, -12.352985100579016]]]]),
-    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man2"),
     RCtoORF = 
     /* color: #d6c772 */
     /* shown: false */
@@ -4161,4 +4160,4 @@ legend.add(legendTitle);
 legend.add(colorBar)
 legend.add(legendLabels);
 
-Map.add(legend)
+Map.add(legend
