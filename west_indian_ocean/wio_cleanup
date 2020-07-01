@@ -4092,7 +4092,7 @@ if (vars.manual_clean) {
   var notReefSlope = ee.Image().byte().paint(ee.Feature(notRS, {zone: 1}), "zone").clip(notRS)
   var notBackReefSlope = ee.Image().byte().paint(ee.Feature(notBRS, {zone: 1}), "zone").clip(notBRS)
   var notShelteredReefSlope = ee.Image().byte().paint(ee.Feature(notSRS, {zone: 1}), "zone").clip(notSRS)
-  var notReefCrest = ee.Image().byte().paint(ee.Feature(notRC, {zone: 1}), "zone").clip(notRC)
+  var CresttoIRF = ee.Image().byte().paint(ee.Feature(notRC, {zone: 1}), "zone").clip(notRC)
   var notShallowLagoon = ee.Image().byte().paint(ee.Feature(notSL, {zone: 1}), "zone").clip(notSL)
   var notTRFlat = ee.Image().byte().paint(ee.Feature(notTRF, {zone: 1}), "zone").clip(notTRF)
   var notIRFlat = ee.Image().byte().paint(ee.Feature(notIRF, {zone: 1}), "zone").clip(notIRF)
@@ -4139,7 +4139,7 @@ if (vars.manual_clean) {
   
     // Reef crest -> Inner reef flat
   man_geo = man_geo.where({
-    test: notReefCrest.eq(1)
+    test: CresttoIRF.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(13)
   })
