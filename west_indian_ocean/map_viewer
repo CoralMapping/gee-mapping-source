@@ -3626,7 +3626,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    notSRS = /* color: #e7ff78 */ee.Geometry({
+    notSRS = 
+    /* color: #e7ff78 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
