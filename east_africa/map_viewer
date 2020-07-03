@@ -7009,7 +7009,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean");
+    benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
+    table = ee.FeatureCollection("users/rodbio2008/Rivermouth-finalRB"),
+    table2 = ee.FeatureCollection("users/rodbio2008/slithers-finalRB");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
