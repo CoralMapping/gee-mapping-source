@@ -830,7 +830,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    notRC = /* color: #8b1b05 */ee.Geometry({
+    notRC = 
+    /* color: #8b1b05 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2313,7 +2316,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    notSL = /* color: #18faff */ee.Geometry.MultiPolygon(
+    notSL = 
+    /* color: #18faff */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[59.638051022284046, -16.385113304999265],
            [59.63747166513683, -16.386719023397536],
            [59.63845871805431, -16.39303883777417],
@@ -3629,7 +3635,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    notSRS = /* color: #e7ff78 */ee.Geometry({
+    notSRS = 
+    /* color: #e7ff78 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3798,7 +3807,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    notTRF = /* color: #007a00 */ee.Geometry.MultiPolygon(
+    notTRF = 
+    /* color: #007a00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[55.93983436648838, -4.5775170906586435],
            [55.94567085330478, -4.59719490946505],
            [55.95803047244541, -4.58701384482381],
@@ -3809,7 +3821,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [56.744541851189915, -10.477202937392848],
            [56.64909812560398, -10.333352679822562],
            [56.581463543084446, -10.328961842868994]]]]),
-    notIRF = /* color: #fffe64 */ee.Geometry.MultiPolygon(
+    notIRF = 
+    /* color: #fffe64 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[45.13792558395689, -12.60845678017535],
            [45.121617753146346, -12.61515755996249],
            [45.13775392257994, -12.618675399148652],
@@ -3907,7 +3922,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [46.4363356329136, -12.359021766490427],
            [46.43530566465188, -12.351140535986133],
            [46.42706591855813, -12.352985100579016]]]]),
-    RCtoORF = /* color: #d6c772 */ee.Geometry.Polygon(
+    RCtoORF = 
+    /* color: #d6c772 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.15282304509833, -10.12348653193581],
           [51.13909013494208, -10.129232100275852],
           [51.121237351738955, -10.141060887393227],
@@ -3938,7 +3956,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.103814224570655, -10.159823055376146],
           [51.15016080911878, -10.144612361229905],
           [51.15737058695081, -10.127376174201675]]]),
-    RCtoDL = /* color: #b6a6ff */ee.Geometry.Polygon(
+    RCtoDL = 
+    /* color: #b6a6ff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.058150311071905, -10.192598421010974],
           [51.06398679788831, -10.208817428727594],
           [51.07668973978284, -10.211858400669174],
@@ -3949,7 +3970,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.119605084021124, -10.154750861504667],
           [51.07325651224378, -10.183136951867535]]]),
     wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo"),
-    SRStoRS = /* color: #ffc82d */ee.Geometry.Polygon(
+    SRStoRS = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.04249849390029, -9.529458675251796],
           [51.06447115015029, -9.539616077350798],
           [51.172961140384665, -9.425835961085388],
@@ -3965,7 +3989,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.093310261478415, -9.450897914355268],
           [51.06172456811904, -9.485439776946954],
           [51.04524507593154, -9.522009721569372]]]),
-    SStoBRS = /* color: #fffea1 */ee.Geometry.Polygon(
+    SStoBRS = 
+    /* color: #fffea1 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[50.98138704370498, -9.258484085944575],
           [50.958727741947165, -9.347251574723215],
           [50.92714204858779, -9.522686905891337],
@@ -3975,7 +4002,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.030138874759665, -9.325569994345427],
           [51.030138874759665, -9.232052782573744],
           [51.01434602807998, -9.213075239587427]]]),
-    SStoSL = /* color: #9ea3c2 */ee.Geometry.Polygon(
+    SStoSL = 
+    /* color: #9ea3c2 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[51.103266621341696, -10.213196560152781],
           [51.134508991947165, -10.20711461278597],
           [51.15236177515029, -10.190557611755981],
@@ -3992,7 +4022,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.05588808130263, -10.196639875416235],
           [51.06000795434951, -10.205425162328847],
           [51.09537019800185, -10.212182910333796]]]),
-    SLtoPR = /* color: #dfff4a */ee.Geometry.Polygon(
+    SLtoPR = 
+    /* color: #dfff4a */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[59.55947283863478, -16.703979259656336],
           [59.58144549488478, -16.71318642892292],
           [59.59517840504103, -16.71680340960515],
@@ -4011,7 +4044,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [59.566240883328945, -16.588194182529648],
           [59.56864414260629, -16.635398783398433],
           [59.5583444599891, -16.682104455834114]]]),
-    SLSStoBRS = /* color: #ffba95 */ee.Geometry.Polygon(
+    SLSStoBRS = 
+    /* color: #ffba95 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[59.60774313927436, -16.46454771896152],
           [59.616669530875924, -16.494177494481185],
           [59.63383566857124, -16.520511264618612],
@@ -4036,7 +4072,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [59.66413386247613, -16.523802733611387],
           [59.64834101579644, -16.509319850593403],
           [59.60645563981988, -16.450060402090916]]]),
-    SLtoIRF = /* color: #8bd64d */ee.Geometry.Polygon(
+    SLtoIRF = 
+    /* color: #8bd64d */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[47.37853515357988, -11.531730267212449],
           [47.370982052993945, -11.541821860546376],
           [47.358965756607226, -11.550231244406472],
@@ -4047,13 +4086,19 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [47.35862243385332, -11.573776176786515],
           [47.39776122779863, -11.539467187889219],
           [47.37887847633379, -11.528366322160965]]]),
-    TRFtoRC = /* color: #ff0d29 */ee.Geometry.Polygon(
+    TRFtoRC = 
+    /* color: #ff0d29 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[57.30602622889162, -20.51525287836684],
           [57.519572981821305, -20.53197250575586],
           [57.53124595545412, -20.508821766204775],
           [57.34997154139162, -20.467656257069574],
           [57.287143477426774, -20.479556797464383]]]),
-    TRFtoORF = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    TRFtoORF = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[42.864168097189484, -11.195905049205999],
            [42.754304815939484, -12.056769746682779],
            [43.193757940939484, -12.807773662116553],
@@ -4112,7 +4157,28 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
          [[[57.42045324190348, -20.144874147496573],
            [57.446545771200356, -20.17839182024517],
            [57.534436396200356, -20.094584152099692],
-           [57.46714513643473, -20.06749823078436]]]]);
+           [57.46714513643473, -20.06749823078436]]]]),
+    toBRS = /* color: #0b4a8b */ee.Geometry.Polygon(
+        [[[59.56485328086489, -16.70555169311087],
+          [59.55524024375551, -16.715416419058073],
+          [59.56210669883364, -16.745007535686085],
+          [59.57858619102114, -16.766047310893093],
+          [59.58819922813051, -16.764732393101173],
+          [59.6039920748102, -16.742377400269024],
+          [59.64038428672426, -16.707524679089552],
+          [59.66098365195864, -16.684505241032184],
+          [59.67746314414614, -16.660825212573428],
+          [59.69668921836489, -16.602270355226818],
+          [59.66373023398989, -16.52460831630403],
+          [59.60605201133364, -16.44954921472659],
+          [59.60605201133364, -16.46271958221853],
+          [59.61566504844301, -16.494324813182942],
+          [59.63489112266176, -16.520658563255797],
+          [59.641070932232076, -16.548963341128403],
+          [59.627338022075826, -16.594373951613655],
+          [59.649310678325826, -16.661483030712805],
+          [59.61772498496645, -16.70292101342137],
+          [59.59369239219301, -16.716731677321615]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -4259,7 +4325,7 @@ if (vars.manual_clean) {
   var SStoBackReefSlope = ee.Image().byte().paint(ee.Feature(SStoBRS, {zone: 1}), "zone").clip(SStoBRS)
   var SStoShallowLagoon = ee.Image().byte().paint(ee.Feature(SStoSL, {zone: 1}), "zone").clip(SStoSL)
   var SLtoPatchReef = ee.Image().byte().paint(ee.Feature(SLtoPR, {zone: 1}), "zone").clip(SLtoPR)
-  //var SLSStoBackReefSlope = ee.Image().byte().paint(ee.Feature(SLSStoBRS, {zone: 1}), "zone").clip(SLSStoBRS)
+  var SLSStoBRS = ee.Image().byte().paint(ee.Feature(toBRS, {zone: 1}), "zone").clip(toBRS)
   var SLtoInnerRF = ee.Image().byte().paint(ee.Feature(SLtoIRF, {zone: 1}), "zone").clip(SLtoIRF)
   var TRFtoReefCrest = ee.Image().byte().paint(ee.Feature(TRFtoRC, {zone: 1}), "zone").clip(TRFtoRC)
   var TRFtoOuterRF = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF)
