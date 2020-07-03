@@ -4391,7 +4391,7 @@ if (vars.manual_clean) {
   
   //BRS to RS
    man_geo = man_geo.where({
-    test: BRStoReefSlope.eq(1)
+    test: notBackReefSlope.eq(1)
                      .and(man_geo.eq(24)), //brs
     value: ee.Image(22) //rs
   })
