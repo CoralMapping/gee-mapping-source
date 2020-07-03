@@ -81,7 +81,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [65.42535604177345, -23.630158061970967],
           [65.42535604177345, -2.4006076916703782]]], null, false),
     waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
-    notBRS = /* color: #6a87ff */ee.Geometry({
+    notBRS = 
+    /* color: #6a87ff */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2333,7 +2336,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [53.402850988694155, -4.894643931190626],
            [53.3986452849588, -4.87181031955577],
            [53.3905782199801, -4.866171016616823]]]]),
-    notRS = /* color: #cdffb1 */ee.Geometry({
+    notRS = 
+    /* color: #cdffb1 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3097,7 +3103,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    Deep = /* color: #0c16c2 */ee.Geometry({
+    Deep = 
+    /* color: #0c16c2 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3898,7 +3907,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [46.4363356329136, -12.359021766490427],
            [46.43530566465188, -12.351140535986133],
            [46.42706591855813, -12.352985100579016]]]]),
-    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man2"),
     RCtoORF = /* color: #d6c772 */ee.Geometry.Polygon(
         [[[51.15282304509833, -10.12348653193581],
           [51.13909013494208, -10.129232100275852],
@@ -3940,98 +3948,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.137801189978155, -10.158130290206838],
           [51.119605084021124, -10.154750861504667],
           [51.07325651224378, -10.183136951867535]]]),
-    depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    wcmc2 = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    BondariesWCMCForWIO = 
-    /* color: #00ffff */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry.Polygon(
-        [[[54.701770985703206, -2.9751249685105154],
-          [52.548450673203206, -4.772691629173448],
-          [52.196888173203206, -5.910289150084192],
-          [51.757435048203206, -8.091037974566733],
-          [48.285755360703206, -8.65623438835204],
-          [44.814075673203206, -9.350691639103687],
-          [46.440052235703206, -10.864858654100164],
-          [45.736927235703206, -11.72673086956205],
-          [43.583606923203206, -10.605801768506067],
-          [41.781849110703206, -10.605801768506067],
-          [41.737903798203206, -12.543027437564627],
-          [44.638294423203206, -13.954584744088688],
-          [46.352161610703206, -13.783928424683062],
-          [48.857044423203206, -10.99430318398806],
-          [49.955677235703206, -10.908013101551091],
-          [52.680286610703206, -10.95116128603305],
-          [53.339466298203206, -8.438948520327026],
-          [54.613880360703206, -6.827435160865552],
-          [55.624622548203206, -6.914694536706059],
-          [56.108020985703206, -11.511507059571993],
-          [58.788685048203206, -15.865441173681486],
-          [56.942981923203206, -19.631456469862268],
-          [54.438099110703206, -20.539442163648662],
-          [54.130481923203206, -21.482966628121225],
-          [54.965442860703206, -22.420415520660942],
-          [55.844349110703206, -22.095048738332846],
-          [57.074817860703206, -21.196440284100703],
-          [58.481067860703206, -20.827232047085705],
-          [59.184192860703206, -17.883867297837703],
-          [63.754505360703206, -20.909357190677294],
-          [64.9849741107032, -20.00354040738218],
-          [63.666614735703206, -19.009403584868657],
-          [61.776966298203206, -19.175515382142862],
-          [60.370716298203206, -18.009288625640345],
-          [60.458606923203206, -15.187980739313776],
-          [58.964466298203206, -15.187980739313776],
-          [56.811145985703206, -11.55456509703201],
-          [57.514270985703206, -10.216806458907836],
-          [56.327747548203206, -9.17720313716965],
-          [56.327747548203206, -7.786369242288465],
-          [57.250599110703206, -7.089164748909251],
-          [56.108020985703206, -5.866575713917645],
-          [57.602161610703206, -5.647957630653708],
-          [57.206653798203206, -4.422260866394937],
-          [56.547474110703206, -3.4138941523262103]]]),
-    no_reef = 
-    /* color: #01ff14 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[55.2248077855843, -20.980851493012523],
-          [55.33741764886555, -21.08595829180467],
-          [55.4884796605843, -21.2191575703884],
-          [55.5763702855843, -21.37014202611179],
-          [55.5763702855843, -21.549074333518252],
-          [55.95265202386555, -21.487750868105195],
-          [56.05702214105305, -21.23195887279921],
-          [55.8839874730843, -20.93981411727935],
-          [55.6917267308968, -20.672797751973356],
-          [55.42530827386555, -20.62910598668815],
-          [55.1479034887093, -20.793527159750223],
-          [55.1204376683968, -20.867971649301655]]]),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo"),
-    wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
-    geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean"),
-    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean2"),
-    RSBRStoSL = /* color: #6b8b6e */ee.Geometry.Polygon(
-        [[[47.61139328005424, -9.695462003701698],
-          [47.60040695192924, -9.687678276163288],
-          [47.59610546687489, -9.69513339303441],
-          [47.57636440852528, -9.688872576786023],
-          [47.574991117509654, -9.718483514040292],
-          [47.56812466243153, -9.720683079189333],
-          [47.56211651423817, -9.722205846588377],
-          [47.58752239802723, -9.758073471016083],
-          [47.596963773759654, -9.756043331085202],
-          [47.61104000666981, -9.7426779345875],
-          [47.6187647686327, -9.738448267189328],
-          [47.62357128718739, -9.739125017574784],
-          [47.62872112849598, -9.741662819300426],
-          [47.63850582698231, -9.74589244595624],
-          [47.649148832353404, -9.724912971509577],
-          [47.64949215510731, -9.712392335085022],
-          [47.6378191814745, -9.698179153277389],
-          [47.61481655696278, -9.698179153277389]]]),
     SRStoRS = /* color: #ffc82d */ee.Geometry.Polygon(
         [[[51.04249849390029, -9.529458675251796],
           [51.06447115015029, -9.539616077350798],
@@ -4094,7 +4011,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [59.566240883328945, -16.588194182529648],
           [59.56864414260629, -16.635398783398433],
           [59.5583444599891, -16.682104455834114]]]),
-    SLtoBRS = /* color: #ffba95 */ee.Geometry.Polygon(
+    SLSStoBRS = /* color: #ffba95 */ee.Geometry.Polygon(
         [[[59.60774313927436, -16.46454771896152],
           [59.616669530875924, -16.494177494481185],
           [59.63383566857124, -16.520511264618612],
@@ -4338,6 +4255,15 @@ if (vars.manual_clean) {
   var CrestToORF = ee.Image().byte().paint(ee.Feature(RCtoORF, {zone: 1}), "zone").clip(RCtoORF)
   var CrestToDL = ee.Image().byte().paint(ee.Feature(RCtoDL, {zone: 1}), "zone").clip(RCtoDL)
   
+  var SRStoReefSlope = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS)
+  var SStoBackReefSlope = ee.Image().byte().paint(ee.Feature(SStoBRS, {zone: 1}), "zone").clip(SStoBRS)
+  var SStoShallowLagoon = ee.Image().byte().paint(ee.Feature(SStoSL, {zone: 1}), "zone").clip(SStoSL)
+  var SLtoPatchReef = ee.Image().byte().paint(ee.Feature(SLtoPR, {zone: 1}), "zone").clip(SLtoPR)
+  //var SLSStoBackReefSlope = ee.Image().byte().paint(ee.Feature(SLSStoBRS, {zone: 1}), "zone").clip(SLSStoBRS)
+  var SLtoInnerRF = ee.Image().byte().paint(ee.Feature(SLtoIRF, {zone: 1}), "zone").clip(SLtoIRF)
+  var TRFtoReefCrest = ee.Image().byte().paint(ee.Feature(TRFtoRC, {zone: 1}), "zone").clip(TRFtoRC)
+  var TRFtoOuterRF = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF)
+  
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
   // var man_geo = ee.Image(region_params.geo_map_clean)
@@ -4430,6 +4356,8 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(13)), //IRF
     value: ee.Image(14) //ORF
   })
+  
+  //
   
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
