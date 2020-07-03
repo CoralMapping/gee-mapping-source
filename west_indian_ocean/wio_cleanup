@@ -4307,6 +4307,7 @@ if (vars.manual_clean) {
   var SLtoInnerRF = ee.Image().byte().paint(ee.Feature(SLtoIRF, {zone: 1}), "zone").clip(SLtoIRF)
   var TRFtoReefCrest = ee.Image().byte().paint(ee.Feature(TRFtoRC, {zone: 1}), "zone").clip(TRFtoRC)
   var TRFtoOuterRF = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF)
+  var SLSStoBRS = ee.Image().byte().paint(ee.Feature(toBRS, {zone: 1}), "zone").clip(toBRS)
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
