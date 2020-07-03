@@ -4323,7 +4323,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [57.53124595545412, -20.508821766204775],
           [57.34997154139162, -20.467656257069574],
           [57.287143477426774, -20.479556797464383]]]),
-    geometry = /* color: #d63000 */ee.Geometry.Point([58.11155337003791, -20.32430187016198]);
+    notTRFtoORF = /* color: #d63000 */ee.Geometry.Point([58.11155337003791, -20.32430187016198]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
