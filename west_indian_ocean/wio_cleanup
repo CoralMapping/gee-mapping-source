@@ -4408,7 +4408,7 @@ if (vars.manual_clean) {
   
   //SRS to RS
    man_geo = man_geo.where({
-    test: SStoReefSlope.eq(1)
+    test: SRStoReefSlope.eq(1)
                      .and(man_geo.eq(21)), //ss
     value: ee.Image(22) //rs
   })
