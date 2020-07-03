@@ -4118,8 +4118,8 @@ if (vars.manual_clean) {
   // remove
  man_geo = man_geo.where({
     test: waves.lte(0.4)
-               .and(man_geo.eq(22)),
-    value: ee.Image(21)
+               .and(man_geo.eq(22)), //Reef Slope
+    value: ee.Image(21) //Sheltered Slope
   })
   
   //WIO clean
@@ -4133,64 +4133,64 @@ if (vars.manual_clean) {
   
   // Deep water anomalies
   man_geo = man_geo.where({
-    test: DeepWater.eq(1),
+    test: DeepWater.eq(1), 
     value: ee.Image(2)
   })
   
     // Reef crest -> Inner reef flat
   man_geo = man_geo.where({
     test: CresttoIRF.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(13)
+                     .and(man_geo.eq(15)), // RC
+    value: ee.Image(13) //IRF
   })
   
      // Reef crest -> Outer reef flat
   man_geo = man_geo.where({
     test: CrestToORF.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(14)
+                     .and(man_geo.eq(15)), //RC
+    value: ee.Image(14) //ORF
   })
   
      // Reef crest -> Deep Lagoon
   man_geo = man_geo.where({
     test: CrestToDL.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(12)
+                     .and(man_geo.eq(15)), //RC
+    value: ee.Image(12) //DL
   })
   
   //Reef Slope to Back Reef Slope
    man_geo = man_geo.where({
     test: notReefSlope.eq(1)
-                     .and(man_geo.eq(22)),
-    value: ee.Image(24)
+                     .and(man_geo.eq(22)), //RS
+    value: ee.Image(24) //BRS
   })
   
   // Shallow Lagoon to Inner Reef Flat
    man_geo = man_geo.where({
     test: notShallowLagoon.eq(1)
-                     .and(man_geo.eq(11)),
-    value: ee.Image(13)
+                     .and(man_geo.eq(11)), //SL
+    value: ee.Image(13) //IRF
   })
   
   // Sheltered Reef Slope to Back Reef Slope
    man_geo = man_geo.where({
     test: notShelteredReefSlope.eq(1)
-                     .and(man_geo.eq(21)),
-    value: ee.Image(24)
+                     .and(man_geo.eq(21)), //SRS
+    value: ee.Image(24) //BRS
   })
   
   // Terrestrial Reef Flat to Inner Reef Flat
    man_geo = man_geo.where({
     test: notTRFlat.eq(1)
-                     .and(man_geo.eq(16)),
-    value: ee.Image(13)
+                     .and(man_geo.eq(16)), //TRF
+    value: ee.Image(13) //IRF
   })
   
   //Inner Reef Flat to Outer Reef Flat
    man_geo = man_geo.where({
     test: notIRFlat.eq(1)
-                     .and(man_geo.eq(13)),
-    value: ee.Image(14)
+                     .and(man_geo.eq(13)), //IRF
+    value: ee.Image(14) //ORF
   })
   
   // Add the manual layer to the map
