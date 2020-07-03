@@ -4112,7 +4112,13 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [47.31124389381426, -11.600345934768361],
           [47.35862243385332, -11.573776176786515],
           [47.39776122779863, -11.539467187889219],
-          [47.37887847633379, -11.528366322160965]]]);
+          [47.37887847633379, -11.528366322160965]]]),
+    TRFtoRC = /* color: #ff0d29 */ee.Geometry.Polygon(
+        [[[57.30602622889162, -20.51525287836684],
+          [57.519572981821305, -20.53197250575586],
+          [57.53124595545412, -20.508821766204775],
+          [57.34997154139162, -20.467656257069574],
+          [57.287143477426774, -20.479556797464383]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
