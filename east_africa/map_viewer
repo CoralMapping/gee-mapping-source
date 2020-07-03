@@ -7029,10 +7029,10 @@ Map.centerObject(centre_map, 10)
 // script that move the final geo and benthic products to Vulcan's GCS. Its quick fix for EA
 Map.addLayer(Rivermouth, {color:'#00ff00'}, 'RivermouthDrawnByCR', false)
 Map.addLayer(Rivermouth_exported_byRB, {color:'#01ffff'}, 'RivermouthExportedByRB', false) 
-Map.addLayer(slithers_exported_byRB, {color:'#d63000'}, 'SlithersExportedByRB', false) 
+
 Map.addLayer(no_reef, {color:'#09fc27'}, 'no_reefDrawByCR', false)
 Map.addLayer(no_reefs_exported_byRB, {color:'#09fc27'}, 'no_reefExportedByRB', false)
-
+Map.addLayer(slithers_exported_byRB, {color:'#d63000'}, 'SlithersExportedByRB', false) 
 //Vizualize the last two masks from Chris to reapply them to 3rd pass manual geo and benthic
 var mergeMasks = ee.FeatureCollection(Rivermouth).merge(no_reef)
 Map.addLayer(mergeMasks, {color:'#ff0000'}, 'mergedMasks', false);
