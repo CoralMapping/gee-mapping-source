@@ -4044,7 +4044,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [59.566240883328945, -16.588194182529648],
           [59.56864414260629, -16.635398783398433],
           [59.5583444599891, -16.682104455834114]]]),
-    SLSStoBRS = 
+    toBRS = 
     /* color: #ffba95 */
     /* shown: false */
     ee.Geometry.Polygon(
@@ -4157,28 +4157,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
          [[[57.42045324190348, -20.144874147496573],
            [57.446545771200356, -20.17839182024517],
            [57.534436396200356, -20.094584152099692],
-           [57.46714513643473, -20.06749823078436]]]]),
-    toBRS = /* color: #0b4a8b */ee.Geometry.Polygon(
-        [[[59.56485328086489, -16.70555169311087],
-          [59.55524024375551, -16.715416419058073],
-          [59.56210669883364, -16.745007535686085],
-          [59.57858619102114, -16.766047310893093],
-          [59.58819922813051, -16.764732393101173],
-          [59.6039920748102, -16.742377400269024],
-          [59.64038428672426, -16.707524679089552],
-          [59.66098365195864, -16.684505241032184],
-          [59.67746314414614, -16.660825212573428],
-          [59.69668921836489, -16.602270355226818],
-          [59.66373023398989, -16.52460831630403],
-          [59.60605201133364, -16.44954921472659],
-          [59.60605201133364, -16.46271958221853],
-          [59.61566504844301, -16.494324813182942],
-          [59.63489112266176, -16.520658563255797],
-          [59.641070932232076, -16.548963341128403],
-          [59.627338022075826, -16.594373951613655],
-          [59.649310678325826, -16.661483030712805],
-          [59.61772498496645, -16.70292101342137],
-          [59.59369239219301, -16.716731677321615]]]);
+           [57.46714513643473, -20.06749823078436]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -4325,7 +4304,6 @@ if (vars.manual_clean) {
   var SStoBackReefSlope = ee.Image().byte().paint(ee.Feature(SStoBRS, {zone: 1}), "zone").clip(SStoBRS)
   var SStoShallowLagoon = ee.Image().byte().paint(ee.Feature(SStoSL, {zone: 1}), "zone").clip(SStoSL)
   var SLtoPatchReef = ee.Image().byte().paint(ee.Feature(SLtoPR, {zone: 1}), "zone").clip(SLtoPR)
-  var SLSStoBRS = ee.Image().byte().paint(ee.Feature(toBRS, {zone: 1}), "zone").clip(toBRS)
   var SLtoInnerRF = ee.Image().byte().paint(ee.Feature(SLtoIRF, {zone: 1}), "zone").clip(SLtoIRF)
   var TRFtoReefCrest = ee.Image().byte().paint(ee.Feature(TRFtoRC, {zone: 1}), "zone").clip(TRFtoRC)
   var TRFtoOuterRF = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF)
