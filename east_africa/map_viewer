@@ -7011,7 +7011,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     }),
     benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
     Rivermouth_exported_byRB = ee.FeatureCollection("users/rodbio2008/Rivermouth-finalRB"),
-    slithers_exported_byRB = ee.FeatureCollection("users/rodbio2008/slithers-finalRB");
+    slithers_exported_byRB = ee.FeatureCollection("users/rodbio2008/slithers-finalRB"),
+    no_reefs_exported_byRB = ee.FeatureCollection("users/rodbio2008/not_reefExportedByRB");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
@@ -7029,8 +7030,8 @@ Map.centerObject(centre_map, 10)
 Map.addLayer(Rivermouth, {color:'#00ff00'}, 'RivermouthDrawnByCR', false)
 Map.addLayer(Rivermouth_exported_byRB, {color:'#01ffff'}, 'RivermouthExportedByRB', false) 
 Map.addLayer(slithers_exported_byRB, {color:'#d63000'}, 'SlithersExportedByRB', false) 
-Map.addLayer(no_reef, {}, 'no_reefDrawByCR', false)
-
+Map.addLayer(no_reef, {color:'#09fc27'}, 'no_reefDrawByCR', false)
+Map.addLayer(no_reefs_exported_byRB, {color:'#09fc27'}, 'no_reefExportedByRB', false)
 
 //Vizualize the last two masks from Chris to reapply them to 3rd pass manual geo and benthic
 var mergeMasks = ee.FeatureCollection(Rivermouth).merge(no_reef)
