@@ -7010,8 +7010,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       "coordinates": []
     }),
     benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
-    table = ee.FeatureCollection("users/rodbio2008/Rivermouth-finalRB"),
-    table2 = ee.FeatureCollection("users/rodbio2008/slithers-finalRB");
+    Rivermouth_exported_byRB = ee.FeatureCollection("users/rodbio2008/Rivermouth-finalRB"),
+    slithers_exported_byRB = ee.FeatureCollection("users/rodbio2008/slithers-finalRB");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
@@ -7027,6 +7027,7 @@ Map.centerObject(centre_map, 10)
 //latest masks (12/05/2020) from Chris Roelfsema. These masks are overlayed here for CR's perusal, these masks will b eventually applied to the export_maps
 // script that move the final geo and benthic products to Vulcan's GCS. Its quick fix for EA
 Map.addLayer(Rivermouth, {color:'#00ff00'}, 'RivermouthDrawnByCR', false)
+Map.addLayer(Rivermouth_exported_byRB, {color:'#01ffff'}, 'RivermouthExportedByRB', false)
 Map.addLayer(no_reef, {}, 'no_reef', false)
 //Vizualize the last two masks from Chris to reapply them to 3rd pass manual geo and benthic
 var mergeMasks = ee.FeatureCollection(Rivermouth).merge(no_reef)
