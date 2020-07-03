@@ -4021,10 +4021,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [47.64949215510731, -9.712392335085022],
           [47.6378191814745, -9.698179153277389],
           [47.61481655696278, -9.698179153277389]]]),
-    SRStoRS = 
-    /* color: #ffc82d */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    SRStoRS = /* color: #ffc82d */ee.Geometry.Polygon(
         [[[51.04249849390029, -9.529458675251796],
           [51.06447115015029, -9.539616077350798],
           [51.172961140384665, -9.425835961085388],
@@ -4040,10 +4037,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [51.093310261478415, -9.450897914355268],
           [51.06172456811904, -9.485439776946954],
           [51.04524507593154, -9.522009721569372]]]),
-    SStoBRS = 
-    /* color: #fffea1 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    SStoBRS = /* color: #fffea1 */ee.Geometry.Polygon(
         [[[50.98138704370498, -9.258484085944575],
           [50.958727741947165, -9.347251574723215],
           [50.92714204858779, -9.522686905891337],
@@ -4089,7 +4083,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [59.566240883328945, -16.588194182529648],
           [59.56864414260629, -16.635398783398433],
           [59.5583444599891, -16.682104455834114]]]),
-    waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves");
+    waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
+    SLtoBRS = /* color: #ffba95 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
