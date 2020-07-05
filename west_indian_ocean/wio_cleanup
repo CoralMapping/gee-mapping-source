@@ -4408,10 +4408,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [51.030138874759665, -9.325569994345427],
           [51.030138874759665, -9.232052782573744],
           [51.01434602807998, -9.213075239587427]]]),
-    SStoSL = 
-    /* color: #9ea3c2 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    SStoSL = /* color: #9ea3c2 */ee.Geometry.Polygon(
         [[[51.103266621341696, -10.213196560152781],
           [51.134508991947165, -10.20711461278597],
           [51.15236177515029, -10.190557611755981],
@@ -4563,7 +4560,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
          [[[57.42045324190348, -20.144874147496573],
            [57.446545771200356, -20.17839182024517],
            [57.534436396200356, -20.094584152099692],
-           [57.46714513643473, -20.06749823078436]]]]);
+           [57.46714513643473, -20.06749823078436]]]]),
+    man = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -4640,7 +4638,7 @@ var vars = {
   
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
     // export options 
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   //geomorph_output_name: region_params.sname + '_geo-clean_man4',
   benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
