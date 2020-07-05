@@ -73,7 +73,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean"),
     geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean2"),
     geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man3"),
-    geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man4");
+    geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man4"),
+    benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
@@ -114,8 +115,8 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 //Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-//Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
+Map.addLayer(benthic_clean, map_palettes.benthic, "WIO benthic - clean #1", false)
 Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
 //Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
 //Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
