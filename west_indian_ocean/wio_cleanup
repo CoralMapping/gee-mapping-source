@@ -4560,7 +4560,46 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
          [[[57.42045324190348, -20.144874147496573],
            [57.446545771200356, -20.17839182024517],
            [57.534436396200356, -20.094584152099692],
-           [57.46714513643473, -20.06749823078436]]]]);
+           [57.46714513643473, -20.06749823078436]]]]),
+    depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
+    wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
+    RCtoIRF = /* color: #fffe44 */ee.Geometry.MultiPolygon(
+        [[[[55.659204329888894, -4.334751664179756],
+           [55.669160689752175, -4.329274193622515],
+           [55.66529830877073, -4.323283164810927],
+           [55.65182289067991, -4.329445365177744]]],
+         [[[55.641437377374245, -4.348102832274304],
+           [55.65422614995725, -4.352638752251315],
+           [55.647445525567605, -4.339202079783282]]]]),
+    SSBRStoSL = /* color: #61f1f4 */ee.Geometry.MultiPolygon(
+        [[[[47.59276366952485, -9.687179116346291],
+           [47.585897214446724, -9.690224948811181],
+           [47.55602813485688, -9.724404059517544],
+           [47.583150632415474, -9.759594740247222],
+           [47.602376706634224, -9.75485774946257],
+           [47.61027312997407, -9.741999863736947],
+           [47.62675262216157, -9.741323119180288],
+           [47.635335691009224, -9.753504311155895],
+           [47.64460540536469, -9.738277751694888],
+           [47.65112853768891, -9.715605810020225],
+           [47.640828855071724, -9.702746413933353],
+           [47.59894347909516, -9.685486975255515]]],
+         [[[46.25038479518611, -9.40622340341489],
+           [46.25931118678767, -9.425867826694434],
+           [46.330036784724705, -9.429933909852755],
+           [46.334842192647045, -9.405545989593882],
+           [46.270640837666576, -9.387932764844745]]]]),
+    RCtoORF2 = /* color: #ffc756 */ee.Geometry.Polygon(
+        [[[55.33929678436959, -5.819532133315801],
+          [55.333116974799275, -5.8584678623598325],
+          [55.36813589569771, -5.845148049131459],
+          [55.363329377143025, -5.816116589567722]]]),
+    MoreDeep = /* color: #1b27ff */ee.Geometry.Polygon(
+        [[[54.97193475746061, -4.238376289551878],
+          [55.42237421058561, -4.271244437181423],
+          [55.45533319496061, -4.068535503752379],
+          [55.23147412172192, -3.952120122279829],
+          [55.01313348792936, -3.9753817066470383]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -4571,7 +4610,16 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-
+///////////////////////////////
+// Global coral atlas project - North Caribbean and Bahamas
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the raw classification data (from *_classification script)
+// - Then applied some cleanup and object-based relational rules
+///////////////////////////////
+var wcmc = wcmc2, wio_geo = wio_geo2, RCtoORF = RCtoORF2;
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
@@ -4597,7 +4645,7 @@ var region_params = param_module.wio          //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -4625,7 +4673,7 @@ var vars = {
   
   //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -4637,9 +4685,9 @@ var vars = {
   
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
     // export options 
-  do_export: false, // export the results?
-  //geomorph_output_name: region_params.sname + '_geo-clean_man4',
-  benthic_output_name: region_params.sname + '_benthic-clean',
+  do_export: true, // export the results?
+  geomorph_output_name: region_params.sname + '_geo-clean_man5',
+  benthic_output_name: region_params.sname + '_benthic-clean2',
   asset_output: region_params.asset // asset path
 
 }
