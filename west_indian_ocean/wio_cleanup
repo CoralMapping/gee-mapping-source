@@ -4659,8 +4659,8 @@ var vars = {
             : One stage only - should have obia_2nd_pass and obia_clean set to true (so it uses the most recent geo map) */
   
   // CHANGE FOR EACH PASS
-  obia_2nd_pass: false,
-  obia_clean: false, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: true,
+  obia_clean: true, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
@@ -4678,15 +4678,13 @@ var vars = {
   
   
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
+  //CHANGE NAME OF INPUT LAYER AT circa LINE 140 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
     // export options 
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean_p1',
+  geomorph_output_name: region_params.sname + '_geo-clean_p2',
   //benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
-
 }
-
-//CHANGE NAME OF INPUT LAYER AT circa LINE 136 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
 
 /*
 ############################
@@ -4752,7 +4750,7 @@ if (vars.manual_clean) {
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
-  //var man_geo = ee.Image(region_params.geo_map_clean)
+  var man_geo = ee.Image(region_params.geo_map_clean)
   // 2nd pass output for manual run
   //var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
