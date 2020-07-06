@@ -3821,7 +3821,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [56.744541851189915, -10.477202937392848],
            [56.64909812560398, -10.333352679822562],
            [56.581463543084446, -10.328961842868994]]]]),
-    notIRF = /* color: #fffe64 */ee.Geometry({
+    notIRF = 
+    /* color: #fffe64 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
