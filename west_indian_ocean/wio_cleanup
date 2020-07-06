@@ -4780,6 +4780,11 @@ if (vars.manual_clean) {
   
   // Deep water anomalies
   man_geo = man_geo.where({
+    test: DeepMore.eq(1), 
+    value: ee.Image(2)
+  })
+ 
+   man_geo = man_geo.where({
     test: DeepWater.eq(1), 
     value: ee.Image(2)
   })
@@ -4796,6 +4801,19 @@ if (vars.manual_clean) {
     test: CrestToORF.eq(1)
                      .and(man_geo.eq(15)), //RC
     value: ee.Image(14) //ORF
+  })
+  // and
+  man_geo = man_geo.where({
+    test: RCtoOuterRF2.eq(1)
+                     .and(man_geo.eq(15)), //RC
+    value: ee.Image(14) //ORF
+  })
+  
+  // RC to IRF
+  man_geo = man_geo.where({
+    test: RCtoInnerRF.eq(1)
+                     .and(man_geo.eq(15)), //RC
+    value: ee.Image(13) //ORF
   })
   
      // Reef crest -> Deep Lagoon
@@ -4865,6 +4883,13 @@ if (vars.manual_clean) {
    man_geo = man_geo.where({
     test: SStoShallowLagoon.eq(1)
                      .and(man_geo.eq(21)), //srs
+    value: ee.Image(11) //sl
+  })
+  
+    //SRS and BRS to SL
+   man_geo = man_geo.where({
+    test: SSBRStoShallowLagoon.eq(1)
+                     .and(man_geo.eq(21).or(man_geo.eq(24))), //srs or BRS
     value: ee.Image(11) //sl
   })
   
