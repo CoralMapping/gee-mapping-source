@@ -75,19 +75,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man3"),
     geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man4"),
     benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
-    MoreDeep = /* color: #130bd6 */ee.Geometry.MultiPolygon(
-        [[[[55.10291954301248, -4.002374579484128],
-           [55.07202049516092, -4.171544666417926],
-           [55.372771227582795, -4.227698414847735],
-           [55.45722862504373, -4.051006062590058],
-           [55.31097313187967, -3.998949717883249],
-           [55.22823256563453, -3.954774295582412]]],
-         [[[50.95228325278429, -9.730014481363348],
-           [50.64466606528429, -9.911338828997842],
-           [50.808087696143666, -10.095267034152206],
-           [51.31208549887804, -9.97761907134978],
-           [51.402297580927915, -9.599582393215806],
-           [51.221023166865415, -9.558958125979169]]]]),
     RCtoIRF = /* color: #fffe44 */ee.Geometry.MultiPolygon(
         [[[[55.659204329888894, -4.334751664179756],
            [55.669160689752175, -4.329274193622515],
@@ -118,7 +105,13 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
         [[[55.33929678436959, -5.819532133315801],
           [55.333116974799275, -5.8584678623598325],
           [55.36813589569771, -5.845148049131459],
-          [55.363329377143025, -5.816116589567722]]]);
+          [55.363329377143025, -5.816116589567722]]]),
+    MoreDeep = /* color: #1b27ff */ee.Geometry.Polygon(
+        [[[54.97193475746061, -4.238376289551878],
+          [55.42237421058561, -4.271244437181423],
+          [55.45533319496061, -4.068535503752379],
+          [55.23147412172192, -3.952120122279829],
+          [55.01313348792936, -3.9753817066470383]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
