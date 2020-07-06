@@ -5693,7 +5693,7 @@ if (vars.obia_clean) {
     
     // cut benthic off to < 10 - 15 m
     clean_map = clean_map.where({
-      test: depth.gt(1500),
+      test: depth.gt(1000), // match to geo at least, not deeper!
       value: ee.Image(0)
     })
     
