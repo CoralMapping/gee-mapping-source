@@ -75,7 +75,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man3"),
     geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man4"),
     benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
-    RCtoIRF = /* color: #fffe44 */ee.Geometry.MultiPolygon(
+    RCtoIRF = 
+    /* color: #fffe44 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[55.659204329888894, -4.334751664179756],
            [55.669160689752175, -4.329274193622515],
            [55.66529830877073, -4.323283164810927],
@@ -83,7 +86,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
          [[[55.641437377374245, -4.348102832274304],
            [55.65422614995725, -4.352638752251315],
            [55.647445525567605, -4.339202079783282]]]]),
-    SSBRStoSL = /* color: #61f1f4 */ee.Geometry.MultiPolygon(
+    SSBRStoSL = 
+    /* color: #61f1f4 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[47.59276366952485, -9.687179116346291],
            [47.585897214446724, -9.690224948811181],
            [47.55602813485688, -9.724404059517544],
@@ -101,12 +107,18 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [46.330036784724705, -9.429933909852755],
            [46.334842192647045, -9.405545989593882],
            [46.270640837666576, -9.387932764844745]]]]),
-    RCtoORF = /* color: #ffc756 */ee.Geometry.Polygon(
+    RCtoORF = 
+    /* color: #ffc756 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[55.33929678436959, -5.819532133315801],
           [55.333116974799275, -5.8584678623598325],
           [55.36813589569771, -5.845148049131459],
           [55.363329377143025, -5.816116589567722]]]),
-    MoreDeep = /* color: #1b27ff */ee.Geometry.Polygon(
+    MoreDeep = 
+    /* color: #1b27ff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[54.97193475746061, -4.238376289551878],
           [55.42237421058561, -4.271244437181423],
           [55.45533319496061, -4.068535503752379],
@@ -155,8 +167,8 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
 Map.addLayer(benthic_clean, map_palettes.benthic, "WIO benthic - clean #1", false)
 Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
-//Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
-//Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
+Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
+Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
 Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
 Map.addLayer(geoclean4, map_palettes.geo, "wio_geo - manual CR edits", false)
 //Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
