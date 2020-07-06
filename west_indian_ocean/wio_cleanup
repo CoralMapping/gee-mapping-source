@@ -4610,16 +4610,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-///////////////////////////////
-// Global coral atlas project - North Caribbean and Bahamas
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
-// Description:
-// - Developing a process to combine OBIA and supervised classification
-// - This script loads the raw classification data (from *_classification script)
-// - Then applied some cleanup and object-based relational rules
-///////////////////////////////
-var wcmc = wcmc2, wio_geo = wio_geo2, RCtoORF = RCtoORF2;
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
@@ -4750,6 +4741,11 @@ if (vars.manual_clean) {
   var TRFtoReefCrest = ee.Image().byte().paint(ee.Feature(TRFtoRC, {zone: 1}), "zone").clip(TRFtoRC)
   var TRFtoOuterRF = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF)
   var SLSStoBRS = ee.Image().byte().paint(ee.Feature(toBRS, {zone: 1}), "zone").clip(toBRS)
+  
+  var DeepMore = ee.Image().byte().paint(ee.Feature(MoreDeep, {zone: 1}), "zone").clip(MoreDeep)
+  var RCtoInnerRF = ee.Image().byte().paint(ee.Feature(RCtoIRF, {zone: 1}), "zone").clip(RCtoIRF)
+  var RCtoOuterRF2 = ee.Image().byte().paint(ee.Feature(RCtoORF2, {zone: 1}), "zone").clip(RCtoORF2)
+  var SSBRStoShallowLagoon = ee.Image().byte().paint(ee.Feature(SSBRStoSL, {zone: 1}), "zone").clip(SSBRStoSL)
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
