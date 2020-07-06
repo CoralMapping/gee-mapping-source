@@ -4646,7 +4646,7 @@ var vars = {
   small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
-  dist_to_land: 2000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
+  dist_to_land: 2500, //distance to land in METERS to disallow reef crest, and convert to terrestrial reef flat
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
@@ -4659,15 +4659,15 @@ var vars = {
             : One stage only - should have obia_2nd_pass and obia_clean set to true (so it uses the most recent geo map) */
   
   // CHANGE FOR EACH PASS
-  obia_2nd_pass: true,
-  obia_clean: true, // run object-based relationship rules + small object clean up
+  obia_2nd_pass: false,
+  obia_clean: false, // run object-based relationship rules + small object clean up
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
   
   //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: true,
+  manual_clean: false,
   
   // results/layers to show
   export_small_area: false,
@@ -4680,8 +4680,8 @@ var vars = {
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, OR MANUAL
     // export options 
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean_man5',
-  benthic_output_name: region_params.sname + '_benthic-clean2',
+  geomorph_output_name: region_params.sname + '_geo-clean_p1',
+  //benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 
 }
@@ -4752,9 +4752,9 @@ if (vars.manual_clean) {
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
-  // var man_geo = ee.Image(region_params.geo_map_clean)
+  //var man_geo = ee.Image(region_params.geo_map_clean)
   // 2nd pass output for manual run
-  var man_geo = ee.Image(region_params.geo_map_clean_p2)
+  //var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
    // "NOT REEF" CLEAN
   // remove
