@@ -4646,7 +4646,7 @@ var vars = {
   small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
-  dist_to_land: 2500, //distance to land in METERS to disallow reef crest, and convert to terrestrial reef flat
+  dist_to_land: 3500, //distance to land in METERS to disallow reef crest, and convert to terrestrial reef flat
   
   //############
   /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
