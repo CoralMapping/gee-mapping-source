@@ -4582,6 +4582,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+Map.addLayer(man, map_palettes.geo, "man geo", false)
 
 // ###########################################
 // SENSOR GENERICS
@@ -4660,7 +4661,7 @@ MANUAL ADDITION
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 Map.addLayer(region_extent, {}, "region_extent", false)
-Map.addLayer(man, map_palettes.geo, "man geo", false)
+
 
 if (vars.manual_clean) {
   
