@@ -4802,7 +4802,7 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(15)), //RC
     value: ee.Image(14) //ORF
   })
-  // and
+  // and again
   man_geo = man_geo.where({
     test: RCtoOuterRF2.eq(1)
                      .and(man_geo.eq(15)), //RC
