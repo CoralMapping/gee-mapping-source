@@ -7766,6 +7766,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // DEEP WATER in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
     test: depth.gt(1000), // set at 20m (2000) but may need changing based on depth data
+    // if you change this value, change the value in the benthic rules to be the same
     value: ee.Image(2)
   })
   
@@ -8546,7 +8547,7 @@ if (vars.do_export) {
   }
 }
 
-//Generate title
+//Generate Legend title
 var title = ui.Label({
   value: 'Classes',
   style: {fontWeight: 'bold', fontSize: '12px'}
