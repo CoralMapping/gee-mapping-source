@@ -40,7 +40,7 @@ var vars = {
   export_type: 'train',
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
@@ -142,22 +142,19 @@ Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 Map.addLayer(all_training_data, {}, "Training polygons", false)
 
-// paint the trinaing data out to a raster
-var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
-
-// print a histogram to see if oyu need to adjust sampling strategy
+// print a plot to see if oyu need to adjust sampling strategy
+var get_area = function(f) {
+  return(f.set("area", f.area()))
+}
 print(
- ui.Chart.feature.histogram({
-   features: training_painting.sample({
-     region: all_training_data.geometry().bounds(),
-     scale: 5,
-     numPixels: 1000
-   }), 
-   property: vars.class_field
- })
+  "Area distribution of reference data:",
+  "Need to up- or down-sample any classes?",
+  ui.Chart.feature.byFeature(all_training_data.map(get_area), "glob_class", "area")
+      .setChartType('ColumnChart')
 )
 
-
+// paint the trinaing data out to a raster
+var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
 
 var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666) // the default values should mix up the seeds, but this guarantees it
 
