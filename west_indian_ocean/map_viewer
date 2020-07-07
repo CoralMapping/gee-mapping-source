@@ -70,8 +70,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo"),
     wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
-    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man3"),
-    geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_man4"),
     benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
     RCtoIRF = 
     /* color: #fffe44 */
@@ -123,7 +121,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [55.23147412172192, -3.952120122279829],
           [55.01313348792936, -3.9753817066470383]]]),
     geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p1"),
-    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2");
+    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2"),
+    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
