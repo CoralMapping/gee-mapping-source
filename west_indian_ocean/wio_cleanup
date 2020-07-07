@@ -7594,6 +7594,7 @@ if (vars.manual_clean) {
   var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
   Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
   
+  
   Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
   
   
