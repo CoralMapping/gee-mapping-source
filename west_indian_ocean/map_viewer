@@ -70,7 +70,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo"),
     wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
-    RCtoIRF = /* color: #fffe44 */ee.Geometry({
+    RCtoIRF = 
+    /* color: #fffe44 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -883,7 +886,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [46.330036784724705, -9.429933909852755],
            [46.334842192647045, -9.405545989593882],
            [46.270640837666576, -9.387932764844745]]]]),
-    RCtoORF = /* color: #ffc756 */ee.Geometry({
+    RCtoORF = 
+    /* color: #ffc756 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2666,7 +2672,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [55.01313348792936, -3.9753817066470383]]]),
     geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p1"),
     geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2"),
-    RCtoTRF = /* color: #1bb154 */ee.Geometry.MultiPolygon(
+    RCtoTRF = 
+    /* color: #1bb154 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[45.073189372763345, -12.641816757163951],
            [45.03061644512276, -12.704790238145707],
            [45.04022966177205, -12.822656060410678],
