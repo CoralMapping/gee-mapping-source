@@ -4750,9 +4750,9 @@ if (vars.manual_clean) {
   
   // DEFINE THE MANUALLY EDITED MAP
   // 1st pass output for 2nd pass run
-  var man_geo = ee.Image(region_params.geo_map_clean)
+  //var man_geo = ee.Image(region_params.geo_map_clean)
   // 2nd pass output for manual run
-  //var man_geo = ee.Image(region_params.geo_map_clean_p2)
+  var man_geo = ee.Image(region_params.geo_map_clean_p2)
   
    // "NOT REEF" CLEAN
   // remove
