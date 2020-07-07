@@ -4667,7 +4667,7 @@ var vars = {
   
   //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -4681,7 +4681,7 @@ var vars = {
   //CHANGE NAME OF INPUT LAYER AT circa LINE 140 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
     // export options 
   do_export: true, // export the results?
-  geomorph_output_name: region_params.sname + '_geo-clean_p2',
+  geomorph_output_name: region_params.sname + '_geo-clean_manual',
   //benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 }
@@ -4921,14 +4921,14 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(16)), //TRF
     value: ee.Image(15) //rc
   })
-  
+  /*
   //TRF to ORF
    man_geo = man_geo.where({
     test: TRFtoOuterRF.eq(1)
                      .and(man_geo.eq(16)), //TRF
     value: ee.Image(14) //ORF
   })
-  
+  */
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
   Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
