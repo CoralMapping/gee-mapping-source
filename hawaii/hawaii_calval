@@ -143,16 +143,21 @@ Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 Map.addLayer(all_training_data, {}, "Training polygons", false)
 
 // paint the trinaing data out to a raster
-var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)
+var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
 
 // print a histogram to see if oyu need to adjust sampling strategy
 print(
-  ui.Chart.image.histogram({
-    image: training_painting,
-    region: training_painting.geometry().bounds(),
-    scale: 250//, maxBuckets, minBucketWidth, maxRaw
-  })
+ ui.Chart.feature.histogram({
+   features: training_painting.sample({
+     region: all_training_data.geometry().bounds(),
+     scale: 5,
+     numPixels: 1000
+   }), 
+   property: vars.class_field
+ })
 )
+
+
 
 var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666) // the default values should mix up the seeds, but this guarantees it
 
