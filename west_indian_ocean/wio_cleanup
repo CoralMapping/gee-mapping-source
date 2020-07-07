@@ -7588,14 +7588,14 @@ if (vars.manual_clean) {
   var image = ee.Image(region_params.image);
   Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
   
-  var geo_clean_p1 = ee.Image(region_params.geo_map_clean)
+  var geo_clean_p1 = ee.Image(region_params.geo_map_clean);
   Map.addLayer(geo_clean_p1, map_palettes.geo, 'Geo Clean Pass 1', false);
   
-  var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
+  var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2);
   Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
   
-  var man_geo = ee.Image(region_params.geo_map_clean_man)
-  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false)
+  var man_geo = ee.Image(region_params.geo_map_clean_man);
+  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
   
   var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "_man" : output_name;
   
@@ -7609,14 +7609,11 @@ if (vars.manual_clean) {
     crs: 'EPSG:4326',
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
-  })
-  
-  
+  });
 }
 /*
 ############################
 */
-
 /* TRIAL #######
     Looks like with the sentinel/ls8 depth we can try to retain full resolution,
     because theres more (good) data either side of the depth threshold/marginal areas
@@ -7625,8 +7622,6 @@ if (vars.manual_clean) {
   Used to be --> output resolution (bigger for geomorphic) - relates back to object size and the min mapping unit defined in classification stage
 */
 //if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel)//.pow(2)
-
-
 
 // 2. Data loads & vis
 
