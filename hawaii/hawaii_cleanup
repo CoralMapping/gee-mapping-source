@@ -4598,7 +4598,7 @@ var region_params = param_module.hawaii;  //<------------ THIS IS WHERE YOU CHOO
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4613,7 +4613,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -5077,7 +5077,6 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map);
 }
 
-
 // set the geo map for further processing
 if (vars.geomorphic && vars.obia_2nd_pass) {
   // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
@@ -5102,7 +5101,7 @@ if (vars.geomorphic) {
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
   var geo_map = ee.Image(region_params.geo_map_clean3);
-  Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
+  if (!vars.manual_clean) Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
   Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
 }
 
@@ -5131,12 +5130,12 @@ if (!vars.geomorphic) {
 
 */
 
+
 /* OUTPUT EXTENT
   - to the mapping extent just so it doesn't balloon out
   - to the 'reef boundary' extent for noise/deep removal
 */  
 var class_extent_mask = geo_map.gt(0);
-
 
 /*
 
@@ -5757,10 +5756,9 @@ if (vars.obia_clean) {
         value: smooth_map
       }).selfMask();
       
-      // cut benthic off to < 10 - 15 m (eastern extent only because of Dove depth in the west)
+      // cut benthic off to < 10 - 15 m
       clean_map = clean_map.where({
-        test: east_extent.eq(1)
-                         .and(depth.gt(vars.benthic_depth_cutoff)),
+        test: depth.gt(vars.benthic_depth_cutoff),
         value: ee.Image(0)
       })
       
@@ -5829,20 +5827,22 @@ if (vars.obia_clean) {
 }
 
 // final smooth
-if (vars.smooth_output) {
-  // smooth the output lightly to make nice edges, and get rid of noise
-  var noise_smooth = clean_map.unmask(99) // unmasking to a value allows us to include masked areas in the smooth, then re-mask after
-                        .focal_mode({
-                          radius: 2, // relates to smoothness required
-                          kernelType: 'circle', units: 'pixels', iterations: 2
-                        });
-  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too;
-} else {
-  // just clip to the classified extent and move on
-  if (vars.geomorphic) {
-    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+if (!vars.manual_clean) {
+  if (vars.smooth_output) {
+    // smooth the output lightly to make nice edges, and get rid of noise
+    var noise_smooth = clean_map.unmask(99) // unmasking to a value allows us to include masked areas in the smooth, then re-mask after
+                          .focal_mode({
+                            radius: 2, // relates to smoothness required
+                            kernelType: 'circle', units: 'pixels', iterations: 2
+                          });
+    clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too;
   } else {
-    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+    // just clip to the classified extent and move on
+    if (vars.geomorphic) {
+      clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+    } else {
+      clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+    }
   }
 }
 
