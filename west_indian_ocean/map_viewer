@@ -2670,8 +2670,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [55.45533319496061, -4.068535503752379],
           [55.23147412172192, -3.952120122279829],
           [55.01313348792936, -3.9753817066470383]]]),
-    geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p1"),
-    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2"),
     RCtoTRF = 
     /* color: #1bb154 */
     /* shown: false */
