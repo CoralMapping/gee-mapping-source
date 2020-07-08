@@ -4658,14 +4658,12 @@ var vars = {
 
 if (vars.geomorphic) {
   var temp_outname = vars.geomorph_output_name
-  print(temp_outname)
   if (vars.cleanup_stage == 1) {
     vars.obia_2nd_pass = false
     vars.obia_clean = false
     vars.fast_clean = true
     vars.manual_clean = false
     vars.geomorph_output_name = temp_outname + '1'
-    print(vars.geomorph_output_name)
   } else if (vars.cleanup_stage == 2) {
     vars.obia_2nd_pass = true
     vars.obia_clean = true
