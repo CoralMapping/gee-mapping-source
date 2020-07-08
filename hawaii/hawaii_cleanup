@@ -4598,7 +4598,7 @@ var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4607,24 +4607,33 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 2000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
+  geo_depth_cutoff: 1000,
+  shallowlag_depth_cutoff: 500,
+  benthic_depth_cutoff: 1000,
   
   //############
-  /* This is a stop-gap until we figure out how to chain together vectorisations in GEE
-  - GEOMORPHIC: for large regions, the first pass does the small object filter, then the second pass does the OBIA clean
-  -           : *in an ideal world* for smaller regions, can do both at once, but not handling that at present
-  -           : 1st pass - obia_2nd_pass + obia_clean set to false (fast clean not used in this pass, can be left as true)
-  -           : 2nd pass - obia_2nd_pass + obia_clean set to true (review any OBIA rules)
-  -           : 3rd pass - manual_clean set to true 
-  - BENTHIC : can do both at once
-            : production run should have obia_2nd_pass and obia_clean set to true (so it uses best geo map) */
-  obia_2nd_pass: true,
-  obia_clean: true, // run object-based relationship rules + small object clean up
-  fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
+  // Clean-up stage selection
+  cleanup_stage: 1, // set to 1, 2 or 3
+  
+  /*
+  - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
+  -            2: The second pass runs the OBIA cleanup rules
+  -            3: The third pass is the MANUAL cleanup stage, which includes AT LEAST the no_reef masking
+                        - see below where it starts/ends (only that section is run)
+
+  - BENTHIC 1: This is the main benthic stge - it does noise removal, no data reclaim and OBIA rules - review those if needed
+            2: The second mas is the MANUAL stage - it's optional, but shuold include ALL region specific stuff
+  */
+  
+  // DON'T TOUCH --->
+  obia_2nd_pass: null,
+  obia_clean: null, // run object-based relationship rules + small object clean up
+  fast_clean: null, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
+  manual_clean: false, // apply manual touch ups
+  // --------------<
+  //############
+  
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
-  //############
-  
-  // apply any manual touch ups
-  manual_clean: false,
   
   // results/layers to show
   export_small_area: false,
@@ -4641,9 +4650,57 @@ var vars = {
 
 }
 
+
+// Clean up stage auto-parameterisation (DON'T TOUCH) --->
+
+if (vars.geomorphic) {
+  if (vars.cleanup_stage == 1) {
+    vars.obia_2nd_pass = false,
+    vars.obia_clean = false, 
+    vars.fast_clean = true, 
+    vars.manual_clean = false
+    vars.geomorph_output_name = vars.geomorph_output_name + '1'
+  } else if (vars.cleanup_stage == 2) {
+    vars.obia_2nd_pass = true,
+    vars.obia_clean = true, 
+    vars.fast_clean = true, 
+    vars.manual_clean = false
+    vars.geomorph_output_name = vars.geomorph_output_name + '2'
+  } else if (vars.cleanup_stage == 3) {
+    vars.manual_clean = true
+    vars.obia_2nd_pass = false,
+    vars.obia_clean = false, 
+    vars.fast_clean = false,
+    vars.smooth_output = false,
+    vars.do_export = false
+    vars.geomorph_output_name = vars.geomorph_output_name + '3'
+  }
+}
+
+if (!vars.geomorphic) {
+  if (vars.cleanup_stage == 1) {
+    vars.obia_2nd_pass = true,
+    vars.obia_clean = true, 
+    vars.fast_clean = false, 
+    vars.manual_clean = false
+    vars.benthic_output_name = vars.benthic_output_name + '1'
+  } else if (vars.cleanup_stage == 2) {
+    vars.manual_clean = true
+    vars.obia_2nd_pass = false,
+    vars.obia_clean = false, 
+    vars.fast_clean = false,
+    vars.smooth_output = false,
+    vars.do_export = false
+    vars.benthic_output_name = vars.benthic_output_name + '2'
+  }
+}
+// -----------------------------------------<
+
 /*
 ############################
 MANUAL ADDITION
+- review everything in there
+- first review the reef_boundary object - as it is required for all cleanup stages
 ############################
 */
 
@@ -4652,16 +4709,17 @@ MANUAL ADDITION
 var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
-if (vars.manual_clean) {
+
+
+// ############################
+// This is the section to add/remove manual cleanups
+// You MUST review it for each region
+// ############################
+
+if (vars.manual_clean && vars.geomorphic) {
   
-  vars.obia_2nd_pass = false;
-  vars.obia_clean = false;
-  vars.fast_clean = false;
-  vars.smooth_output = false;
-  vars.do_export = false;
-  
-  print("Doing manual clean ups - make sure this is what you want to do");
-  print("Export the manual map, check 'manual' layer and ignore the 'final' map layer");
+  print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer in the viewer for effects");
   
   var depth = ee.Image(region_params.pixels).select('depth');
   var depth_cont = depth.lt(900);
@@ -4688,10 +4746,8 @@ if (vars.manual_clean) {
   var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
   var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
 
-
-
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean_p2);
+  var man_geo = ee.Image(region_params.geo_map_clean2);
   
   // "NOT REEF" CLEAN
   // remove
@@ -4869,18 +4925,17 @@ if (vars.manual_clean) {
   var image = ee.Image(region_params.image);
   Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
   
-  var geo_clean_p1 = ee.Image(region_params.geo_map_clean)
-  Map.addLayer(geo_clean_p1, map_palettes.geo, 'Geo Clean Pass 1', false);
-  var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2)
-  Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
-  Map.addLayer(man_geo, map_palettes.geo, 'Geo Clean Manual', true);
+  var geo_clean1 = ee.Image(region_params.geo_map_clean1)
+  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
+  var geo_clean2 = ee.Image(region_params.geo_map_clean2)
+  Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
+  Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   
-  var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "_man" : output_name;
   // Export
   Export.image.toAsset({
     image: man_geo,
-    description: output_name,
-    assetId: vars.asset_output + 'in_out/' + output_name,
+    description: vars.output_name,
+    assetId: vars.asset_output + 'in_out/' + vars.output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
@@ -4888,50 +4943,123 @@ if (vars.manual_clean) {
     pyramidingPolicy: {'.default': 'mode'}
   });
   
+} else if (vars.manual_clean && !vars.geomorphic) {
+  
+  print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer in the viewer for effects");
+  
+  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth_cont = depth.lt(900);
+  Map.addLayer(depth_cont, {}, "depth contour", false);
+  
+  // define the final geomorphic map (the manually edited geo map - stage 3)
+  var geo_map = ee.Image(region_params.geo_map_clean3);
+  
+  var man_benthic = ee.Image(region_params.benthic_map_clean1);
+  
+  // Generic benthic rules
+    // Coral in benthic && Deep/shallow lagoon in geo == sand
+    man_benthic = man_benthic.where({
+      test: man_benthic.eq(15)
+                     .and(geo_map.eq(11).or(geo_map.eq(12))),
+      value: ee.Image(11)
+    })
+    
+    // BMA in benthic && inner/outer RF in geo == rubble 
+    man_benthic = man_benthic.where({
+      test: man_benthic.eq(18)
+                     .and(geo_map.eq(13).or(geo_map.eq(14))),
+      value: ee.Image(12)
+    })
+    
+    
+    // manual polygon guided rules
+    // West Hawaii
+    
+    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
+    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
+    var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
+    
+    // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
+    man_benthic = man_benthic.where({
+     test: steepslope.eq(1)
+                      .and(geo_map.eq(22))
+                      .and(man_benthic.eq(11).or(man_benthic.eq(18))),
+     value: ee.Image(15)
+     });
+    
+    // BMA on Reef Crest == coral/algae
+    man_benthic = man_benthic.where({
+      test: west_extent.eq(1)
+                       .and(geo_map.eq(15))
+                       .and(man_benthic.eq(18)),
+      value: ee.Image(15)
+    });
+    
+    // East and West Hawaii
+    // BMA on DW/DL/SRS/RS/plateau/BRS == sand
+    man_benthic = man_benthic.where({
+      test: man_benthic.eq(18)
+                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
+      value: ee.Image(11)
+    });
+    
+    // East Hawaii
+    // Sand on RS and plateau == rock
+    man_benthic = man_benthic.where({
+      test: east_extent.eq(1)
+                       .and(man_benthic.eq(11))
+                       .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
+      value: ee.Image(13)
+    });
+  
+  
+  // Add the manual layer to the map
+  var image = ee.Image(region_params.image);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
+  
+  var benthic_clean1 = ee.Image(region_params.benthic_map_clean1)
+  Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
+  Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
+  
+  // Export
+  Export.image.toAsset({
+    image: man_benthic,
+    description: vars.output_name,
+    assetId: vars.asset_output + 'in_out/' + vars.output_name,
+    region: reef_boundary,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  });
   
 }
-/*
-############################
-*/
 
-/* TRIAL #######
-    Looks like with the sentinel/ls8 depth we can try to retain full resolution,
-    because theres more (good) data either side of the depth threshold/marginal areas
-  ##############
-  
-  Used to be --> output resolution (bigger for geomorphic) - relates back to object size and the min mapping unit defined in classification stage
-*/
-//if (vars.geomorphic) vars.image_data_scale = ee.Number(sensor_params.pixel)//.pow(2)
-
+// ############################
+// END OF MANUAL SECTION
+// ############################
 
 
 // 2. Data loads & vis
 
 // load input data
-if (vars.obia_2nd_pass) {
-  // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
-  // - could change the path in reef_params to a list, check if it length is > 1, then take last element??
-  
-  // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
-  //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
-  
-  var geo_map = ee.Image(region_params.geo_map_clean);
+
+// define raw geo/benthic outputs
+// Run check to see if the region has been split into multiple areas
+
+// geo
+if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+  var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+               .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
+               .selfMask();
 } else {
-  //print(ee.List(region_params.geo_map).length())
-  // Run check to see if the region has been split into multiple areas
-  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
-    var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
-             .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-             .selfMask();
-  } else {
-    var geo_map = ee.Image(region_params.geo_map);
-  }
+  var geo_map_raw = ee.Image(region_params.geo_map);
 }
 
-//var benthic_map = (vars.obia_2nd_pass) ? ee.Image(region_params.benthic_map_clean) : ee.ImageCollection(region_params.benthic_map).mosaic()
-//var benthic_map = ee.Image(region_params.benthic_map)
-
-// Run check to see if the region has been split into multiple areas
+// benthic
 if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
@@ -4941,6 +5069,14 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
 }
 
 
+// set the geo map for further processing
+if (vars.obia_2nd_pass) {
+  // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
+  var geo_map = ee.Image(region_params.geo_map_clean1);
+} else {
+  var geo_map = geo_map_raw;
+}
+
 var depth = ee.Image(region_params.pixels).select('depth');
 var image = ee.Image(region_params.image);
 
@@ -4949,25 +5085,16 @@ var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false);
 Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
 
+// load for display purposes
 if (vars.geomorphic) {
-  if (vars.obia_2nd_pass) {
-    if (ee.List(region_params.geo_map).length().getInfo() > 1) {
-      var geo_map_display = ee.Image(region_params.geo_map[0]).unmask(0, false)
-                       .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-                       .selfMask();
-    } else {
-    var geo_map_display = ee.Image(region_params.geo_map);
-    }
-    Map.addLayer(geo_map_display, display_pal, 'Raw GEO classification', false);
-  } else {
-    Map.addLayer(geo_map, display_pal, 'Raw GEO classification', false);
-  }
+  Map.addLayer(geo_map_raw, display_pal, 'Geomorphic map RAW', false);
+  if (vars.cleanup_stage == 2) Map.addLayer(ee.Image(region_params.geo_map_clean1), display_pal, 'Geomorphic map - stage 1 clean', false);
 }
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
-  var geo_map = ee.Image(region_params.geo_map_clean_man);
-  Map.addLayer(geo_map, map_palettes.geo, 'Geo Clean Manual', true);
-  Map.addLayer(benthic_map, display_pal, 'Benthic RAW', false);
+  var geo_map = ee.Image(region_params.geo_map_clean3);
+  Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', true);
+  Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
 }
 
 // 3. Object-based re-classificaiton and cleaning
@@ -5038,7 +5165,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // shallow lagoon > 5m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
-                   .and(depth.gt(500)),
+                   .and(depth.gt(vars.shallowlag_depth_cutoff)),
     value: ee.Image(12)
   })
   
@@ -5050,13 +5177,13 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
   clean_map = clean_map.where({
-    test: depth.gt(1000),
+    test: depth.gt(vars.geo_depth_cutoff),
     value: ee.Image(2)
   })
   
   
   // LAND mask cleaning
-  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false)
+  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false)
   
   // reef crest close to land -> TRF
   clean_map = clean_map.where({
@@ -5135,8 +5262,6 @@ if (!vars.geomorphic) {
 if (vars.geomorphic && vars.obia_2nd_pass) {
   var clean_map = geo_map
 }
-
-Map.addLayer(clean_map, display_pal, 'Clean map - init smooth/loaded', false)
 
 if (vars.obia_clean) {
   
@@ -5609,10 +5734,6 @@ if (vars.obia_clean) {
   } else {
     
     // BENTHIC CLEAN-UP RULES
-    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-    var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
     
     // reclaim shallow no data to surrounding class
     var smooth_map = clean_map
@@ -5629,7 +5750,7 @@ if (vars.obia_clean) {
     // cut benthic off to < 10 - 15 m (eastern extent only because of Dove depth in the west)
     clean_map = clean_map.where({
       test: east_extent.eq(1)
-                       .and(depth.gt(1000)),
+                       .and(depth.gt(vars.benthic_depth_cutoff)),
       value: ee.Image(0)
     })
     
@@ -5645,54 +5766,6 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     })
     
-    // Coral in benthic && Deep/shallow lagoon in geo == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(15)
-                     .and(geo_map.eq(11).or(geo_map.eq(12))),
-      value: ee.Image(11)
-    })
-    
-    // BMA in benthic && inner/outer RF in geo == rubble 
-    clean_map = clean_map.where({
-      test: clean_map.eq(18)
-                     .and(geo_map.eq(13).or(geo_map.eq(14))),
-      value: ee.Image(12)
-    })
-    
-    // West Hawaii
-
-    // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
-    clean_map = clean_map.where({
-     test: steepslope.eq(1)
-                      .and(geo_map.eq(22))
-                      .and(clean_map.eq(11).or(clean_map.eq(18))),
-     value: ee.Image(15)
-     });
-    
-    // BMA on Reef Crest == coral/algae
-    clean_map = clean_map.where({
-      test: west_extent.eq(1)
-                       .and(geo_map.eq(15))
-                       .and(clean_map.eq(18)),
-      value: ee.Image(15)
-    });
-    
-    // East and West Hawaii
-    // BMA on DW/DL/SRS/RS/plateau/BRS == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(18)
-                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
-      value: ee.Image(11)
-    });
-    
-    // East Hawaii
-    // Sand on RS and plateau == rock
-    clean_map = clean_map.where({
-      test: east_extent.eq(1)
-                       .and(clean_map.eq(11))
-                       .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
-      value: ee.Image(13)
-    });
     
     /*// turbid in geo == turbid (temporal - class num 2)
     // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
@@ -5743,25 +5816,6 @@ if (vars.obia_clean) {
     })*/
 
   }
-  
-/*  // ####
-  // Final small object clean (safety net for oddities with scaling and border buffers??)
-  // ####
-  
-  var clean_size = (vars.geomorphic) ? vars.small_object_geo : vars.small_object_benthic
-  
-  var map_vsmooth = clean_map
-                        .focal_mode({
-                          radius: 10, // relates to smoothness required
-                          kernelType: 'circle', units: 'pixels', iterations: 1
-                        })
-                        .updateMask(class_extent_mask)
-  
-  clean_map = clean_map.where({
-    test: clean_map.connectedPixelCount(clean_size, false).lt(clean_size), 
-    value: map_vsmooth
-  })*/
-
 }
 
 // final smooth
@@ -5796,11 +5850,11 @@ if (vars.do_export) {
     var export_convhull = reef_boundary;
   }
   Map.addLayer(export_convhull, {}, "Export footprint", false);
-  var output_name = (vars.obia_2nd_pass) ? output_name + "_p2" : output_name;
+  
   Export.image.toAsset({
     image: clean_map.set(vars),
-    description: output_name,
-    assetId: vars.asset_output + 'in_out/' + output_name,
+    description: vars.output_name,
+    assetId: vars.asset_output + 'in_out/' + vars.output_name,
     region: export_convhull,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
@@ -5819,17 +5873,19 @@ if (vars.do_export) {
   })*/
   
 } else {
-  if (vars.show_eg_area) {
-    if (vars.reproject_display) {
-      Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
+  if (!vars.manual_clean) {
+    if (vars.show_eg_area) {
+      if (vars.reproject_display) {
+        Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
+      } else {
+        Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
+      }
     } else {
-      Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
-    }
-  } else {
-    if (vars.reproject_display) {
-      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
-    } else {
-      Map.addLayer(clean_map, display_pal, output_name + '_final', false);
+      if (vars.reproject_display) {
+        Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
+      } else {
+        Map.addLayer(clean_map, display_pal, output_name + '_final', false);
+      }
     }
   }
 }
