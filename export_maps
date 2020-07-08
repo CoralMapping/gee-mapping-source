@@ -1,6 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
+var reef_boundary = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-178.9902899370743, 28.223543414829674],
           [-174.31670726951845, 25.35687341614974],
           [-167.09539623806367, 22.871758319961504],
@@ -12,52 +14,36 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [-153.52755471286838, 20.385834406814258],
           [-159.43420248789334, 22.893106923083444],
           [-167.4874893752415, 24.965604306992145],
-          [-178.2214120255763, 29.123686786807387]]]),
-    geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
-    pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
+          [-178.2214120255763, 29.123686786807387]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
-Script to export maps to GCS, ready for smoothing
-- note the eventual smoothed output still needs to be QC'd by UQ, 
-  to ensure smoothing has not done naything untoward
+Script to export maps to GCS
  
-TODO: define output params up front
-  - e.g. description, export path, GCS bucket etc.
- 
-TODO: link this to the reef_params module
-  - in that case you'd just choose the region, and the exrpot would all happen automatically
-  - let's just see if this process takes off, then i'll invest time to link it up with automation
-  
-TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
+TODO: deal with change in dateline (i.e. WGS-84 projection wrapping) in an automated way
   - Fiji/south pacific might be the only region where this happens? worth it?
   **A: resonable solution below**
 */
 
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+//var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
-/*
-Script to export maps to GCS, ready for smoothing
-- note the eventual smoothed output still needs to be QC'd by UQ, 
-  to ensure smoothing has not done naything untoward
- 
-TODO: define output params up front
-  - e.g. description, export path, GCS bucket etc.
- 
-TODO: link this to the reef_params module
-  - in that case you'd just choose the region, and the exrpot would all happen automatically
-  - let's just see if this process takes off, then i'll invest time to link it up with automation
-  
-TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
-  - Fiji/south pacific might be the only region where this happens? worth it?
-  **A: resonable solution below**
-*/
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.hawaii;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
 
-// so we can visualise maps before export
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+// imports
+var geo = ee.Image(region_params.geo_map_clean3)
+var benthic = ee.Image(region_params.benthic_map_clean1) // - OR -
+//var benthic = ee.Image(region_params.benthic_map_clean2)
 
 // will need to import depth mosaic from pixels now
-var depth = pixels.select('depth')//.multiply(100).uint16()
+var depth = ee.Image(region_params.pixels.select('depth'))//.multiply(100).uint16()
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
