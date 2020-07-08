@@ -41,9 +41,8 @@ var region_params = param_module.hawaii;       //<------------ THIS IS WHERE YOU
 var geo = ee.Image(region_params.geo_map_clean3)
 var benthic = ee.Image(region_params.benthic_map_clean1) // - OR -
 //var benthic = ee.Image(region_params.benthic_map_clean2)
-
-// will need to import depth mosaic from pixels now
-var depth = ee.Image(region_params.pixels.select('depth'))//.multiply(100).uint16()
+var image = ee.Image(region_params.image)
+var depth = ee.Image(region_params.pixels).select('depth') // will need to import depth mosaic from pixels now
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
@@ -59,7 +58,7 @@ Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
-Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false)
+Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
