@@ -4598,7 +4598,7 @@ var region_params = param_module.hawaii;  //<------------ THIS IS WHERE YOU CHOO
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4613,7 +4613,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4646,7 +4646,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean',
   benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
@@ -4682,7 +4682,7 @@ if (vars.geomorphic) {
 }
 
 if (!vars.geomorphic) {
-  var temp_outname = vars.geomorph_output_name;
+  var temp_outname = vars.benthic_output_name;
   if (vars.cleanup_stage == 1) {
     vars.obia_2nd_pass = true,
     vars.obia_clean = true, 
