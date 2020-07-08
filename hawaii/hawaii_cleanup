@@ -4657,18 +4657,21 @@ var vars = {
 // Clean up stage auto-parameterisation (DON'T TOUCH) --->
 
 if (vars.geomorphic) {
+  var temp_outname = vars.geomorph_output_name
+  print(temp_outname)
   if (vars.cleanup_stage == 1) {
     vars.obia_2nd_pass = false
     vars.obia_clean = false
     vars.fast_clean = true
     vars.manual_clean = false
-    vars.geomorph_output_name = vars.geomorph_output_name + '1'
+    vars.geomorph_output_name = temp_outname + '1'
+    print(vars.geomorph_output_name)
   } else if (vars.cleanup_stage == 2) {
     vars.obia_2nd_pass = true
     vars.obia_clean = true
     vars.fast_clean = true
     vars.manual_clean = false
-    vars.geomorph_output_name = vars.geomorph_output_name + '2'
+    vars.geomorph_output_name = temp_outname + '2'
   } else if (vars.cleanup_stage == 3) {
     vars.manual_clean = true
     vars.obia_2nd_pass = false
@@ -4676,17 +4679,18 @@ if (vars.geomorphic) {
     vars.fast_clean = false
     vars.smooth_output = false
     vars.do_export = false
-    vars.geomorph_output_name = vars.geomorph_output_name + '3'
+    vars.geomorph_output_name = temp_outname + '3'
   }
 }
 
 if (!vars.geomorphic) {
+  var temp_outname = vars.geomorph_output_name
   if (vars.cleanup_stage == 1) {
     vars.obia_2nd_pass = true,
     vars.obia_clean = true, 
     vars.fast_clean = false, 
     vars.manual_clean = false
-    vars.benthic_output_name = vars.benthic_output_name + '1'
+    vars.benthic_output_name = temp_outname + '1'
   } else if (vars.cleanup_stage == 2) {
     vars.manual_clean = true
     vars.obia_2nd_pass = false,
@@ -4694,7 +4698,7 @@ if (!vars.geomorphic) {
     vars.fast_clean = false,
     vars.smooth_output = false,
     vars.do_export = false
-    vars.benthic_output_name = vars.benthic_output_name + '2'
+    vars.benthic_output_name = temp_outname + '2'
   }
 }
 // -----------------------------------------<
@@ -4935,10 +4939,11 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   
   // Export
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
   Export.image.toAsset({
     image: man_geo,
-    description: vars.output_name,
-    assetId: vars.asset_output + 'in_out/' + vars.output_name,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
@@ -5020,7 +5025,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
-  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
   
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1)
   Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
@@ -5028,10 +5033,11 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
   // Export
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
   Export.image.toAsset({
     image: man_benthic,
-    description: vars.output_name,
-    assetId: vars.asset_output + 'in_out/' + vars.output_name,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
@@ -5086,7 +5092,7 @@ var image = ee.Image(region_params.image);
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 //Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false);
-Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', true);
+Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
 
 // load for display purposes
 if (vars.geomorphic) {
@@ -5856,8 +5862,8 @@ if (vars.do_export) {
   
   Export.image.toAsset({
     image: clean_map.set(vars),
-    description: vars.output_name,
-    assetId: vars.asset_output + 'in_out/' + vars.output_name,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
     region: export_convhull,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
