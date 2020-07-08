@@ -4585,9 +4585,9 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.hawaii;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -4598,7 +4598,7 @@ var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4613,7 +4613,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4646,57 +4646,57 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean',
   benthic_output_name: region_params.sname + '_benthic_clean',
   asset_output: region_params.asset // asset path
 
-}
+};
 
 
 // Clean up stage auto-parameterisation (DON'T TOUCH) --->
 
 if (vars.geomorphic) {
-  var temp_outname = vars.geomorph_output_name
+  var temp_outname = vars.geomorph_output_name;
   if (vars.cleanup_stage == 1) {
-    vars.obia_2nd_pass = false
-    vars.obia_clean = false
-    vars.fast_clean = true
-    vars.manual_clean = false
-    vars.geomorph_output_name = temp_outname + '1'
+    vars.obia_2nd_pass = false;
+    vars.obia_clean = false;
+    vars.fast_clean = true;
+    vars.manual_clean = false;
+    vars.geomorph_output_name = temp_outname + '1';
   } else if (vars.cleanup_stage == 2) {
-    vars.obia_2nd_pass = true
-    vars.obia_clean = true
-    vars.fast_clean = true
-    vars.manual_clean = false
-    vars.geomorph_output_name = temp_outname + '2'
+    vars.obia_2nd_pass = true;
+    vars.obia_clean = true;
+    vars.fast_clean = true;
+    vars.manual_clean = false;
+    vars.geomorph_output_name = temp_outname + '2';
   } else if (vars.cleanup_stage == 3) {
-    vars.manual_clean = true
-    vars.obia_2nd_pass = false
-    vars.obia_clean = false
-    vars.fast_clean = false
-    vars.smooth_output = false
-    vars.do_export = false
-    vars.geomorph_output_name = temp_outname + '3'
+    vars.manual_clean = true;
+    vars.obia_2nd_pass = false;
+    vars.obia_clean = false;
+    vars.fast_clean = false;
+    vars.smooth_output = false;
+    vars.do_export = false;
+    vars.geomorph_output_name = temp_outname + '3';
   }
 }
 
 if (!vars.geomorphic) {
-  var temp_outname = vars.geomorph_output_name
+  var temp_outname = vars.geomorph_output_name;
   if (vars.cleanup_stage == 1) {
     vars.obia_2nd_pass = true,
     vars.obia_clean = true, 
     vars.fast_clean = false, 
-    vars.manual_clean = false
-    vars.benthic_output_name = temp_outname + '1'
+    vars.manual_clean = false;
+    vars.benthic_output_name = temp_outname + '1';
   } else if (vars.cleanup_stage == 2) {
-    vars.manual_clean = true
+    vars.manual_clean = true;
     vars.obia_2nd_pass = false,
     vars.obia_clean = false, 
     vars.fast_clean = false,
     vars.smooth_output = false,
-    vars.do_export = false
-    vars.benthic_output_name = temp_outname + '2'
+    vars.do_export = false;
+    vars.benthic_output_name = temp_outname + '2';
   }
 }
 // -----------------------------------------<
@@ -4772,7 +4772,7 @@ if (vars.manual_clean && vars.geomorphic) {
   man_geo = man_geo.where({
     test: man_geo.eq(16),
     value: ee.Image(14)
-  })
+  });
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
@@ -4788,14 +4788,14 @@ if (vars.manual_clean && vars.geomorphic) {
     test: notdeepwater.eq(1)
                      .and(man_geo.eq(2)),
     value: ee.Image(22)
-  })
+  });
   
   // Reef crest -> Inner reef flat
   man_geo = man_geo.where({
     test: notreefcrest.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(13)
-  })
+  });
   
  // Deep water/shelter slope -> Back reef slope
   man_geo = man_geo.where({
@@ -4868,47 +4868,47 @@ if (vars.manual_clean && vars.geomorphic) {
     test: east_extent.eq(1)
                      .and(man_geo.eq(13)),
     value: ee.Image(14)
-  })
+  });
   
   // Reef crest -> Outer reef flat
   man_geo = man_geo.where({
     test: east_extent.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(14)
-  })
+  });
   
   // Sheltered reef slope -> Reef slope
   man_geo = man_geo.where({
     test: east_extent.eq(1)
                      .and(man_geo.eq(21)),
     value: ee.Image(22)
-  })
+  });
   
   // Deep lagoon -> Reef slope
   man_geo = man_geo.where({
     test: east_extent.eq(1)
                      .and(man_geo.eq(12)),
     value: ee.Image(22)
-  })
+  });
   
   // Shallow lagoon -> Outer reef flat
   man_geo = man_geo.where({
     test: east_extent.eq(1)
                      .and(man_geo.eq(11)),
     value: ee.Image(14)
-  })
+  });
   
   // Kaneohe Bay -> Deep lagoon
   man_geo = man_geo.where({
     test: kaneohebay.eq(1),
     value: ee.Image(12)
-  })
+  });
   
   // Kaneohe Bay Reefs -> Outer reef flat
   man_geo = man_geo.where({
     test: kaneohebayreef.eq(1),
     value: ee.Image(14)
-  })
+  });
   
   
     /*// LAND mask clean ############# ---> to be moved to first stage clean up
@@ -4930,9 +4930,9 @@ if (vars.manual_clean && vars.geomorphic) {
   //var image = ee.Image(region_params.image);
   //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
   
-  var geo_clean1 = ee.Image(region_params.geo_map_clean1)
+  var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
-  var geo_clean2 = ee.Image(region_params.geo_map_clean2)
+  var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   
@@ -4949,7 +4949,9 @@ if (vars.manual_clean && vars.geomorphic) {
     pyramidingPolicy: {'.default': 'mode'}
   });
   
-} else if (vars.manual_clean && !vars.geomorphic) {
+} 
+
+if (vars.manual_clean && !vars.geomorphic) {
   
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
@@ -4969,14 +4971,14 @@ if (vars.manual_clean && vars.geomorphic) {
       test: man_benthic.eq(15)
                      .and(geo_map.eq(11).or(geo_map.eq(12))),
       value: ee.Image(11)
-    })
+    });
     
     // BMA in benthic && inner/outer RF in geo == rubble 
     man_benthic = man_benthic.where({
       test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14))),
       value: ee.Image(12)
-    })
+    });
     
     
     // manual polygon guided rules
@@ -5025,8 +5027,8 @@ if (vars.manual_clean && vars.geomorphic) {
   //var image = ee.Image(region_params.image);
   //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
   
-  var benthic_clean1 = ee.Image(region_params.benthic_map_clean1)
-  Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
+  Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
   Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
@@ -5077,10 +5079,10 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
 
 
 // set the geo map for further processing
-if (vars.obia_2nd_pass) {
+if (vars.geomorphic && vars.obia_2nd_pass) {
   // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
   var geo_map = ee.Image(region_params.geo_map_clean1);
-} else {
+} else if (vars.geomorphic) {
   var geo_map = geo_map_raw;
 }
 
@@ -5100,7 +5102,7 @@ if (vars.geomorphic) {
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
   var geo_map = ee.Image(region_params.geo_map_clean3);
-  Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', true);
+  Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
   Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
 }
 
@@ -5133,7 +5135,7 @@ if (!vars.geomorphic) {
   - to the mapping extent just so it doesn't balloon out
   - to the 'reef boundary' extent for noise/deep removal
 */  
-var class_extent_mask = geo_map.gt(0)
+var class_extent_mask = geo_map.gt(0);
 
 
 /*
@@ -5159,7 +5161,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 2
-                      })
+                      });
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
@@ -5167,14 +5169,14 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     test: geo_map.connectedPixelCount(vars.small_object_geo, false).lt(vars.small_object_geo), 
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-  }).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask);
   
   // shallow lagoon > 5m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
                    .and(depth.gt(vars.shallowlag_depth_cutoff)),
     value: ee.Image(12)
-  })
+  });
   
   /*// deep lagoon == deep (to hard to differentiate deep water vs. deep lagoon effectively over large areas)
   clean_map = clean_map.where({
@@ -5186,25 +5188,25 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   clean_map = clean_map.where({
     test: depth.gt(vars.geo_depth_cutoff),
     value: ee.Image(2)
-  })
+  });
   
   
   // LAND mask cleaning
-  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false)
+  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
   // reef crest close to land -> TRF
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
-  })
+  });
   
   // TRF far from land -> ORF
   clean_map = clean_map.where({
     test: land_dist.gt(vars.dist_to_land)
                    .and(clean_map.eq(16)),
     value: ee.Image(14)
-  })
+  });
   
   
   
@@ -5223,7 +5225,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
 }
 
 
-if (!vars.geomorphic) {
+if (!vars.geomorphic && vars.cleanup_stage == 1) {
   
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
   var smooth_map = benthic_map
@@ -5231,7 +5233,7 @@ if (!vars.geomorphic) {
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
-                      })
+                      });
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
@@ -5239,7 +5241,7 @@ if (!vars.geomorphic) {
     test: benthic_map.connectedPixelCount(vars.small_object_benthic, false).lt(vars.small_object_benthic),
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-  }).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask);
   
   
   /*// CLEAN UP ALL TEMPORAL AREAS
@@ -5267,7 +5269,7 @@ if (!vars.geomorphic) {
 
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
-  var clean_map = geo_map
+  var clean_map = geo_map;
 }
 
 if (vars.obia_clean) {
@@ -5281,7 +5283,7 @@ if (vars.obia_clean) {
     // FUNCTION that maps over feature colleciton and assigns neighbour percentages
     var set_neighbour_properties = function(f) {
       // make the 1px buffer
-      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5));
       // reduce the classes in the buffer zone
       var diff_classes = ee.Dictionary(
         clean_map.unmask(ee.Image(0)).reduceRegion({
@@ -5290,16 +5292,16 @@ if (vars.obia_clean) {
           scale: vars.image_data_scale,
           maxPixels: 1e11
         }).get('classification')
-      )
+      );
       // calculate the percentages
-      var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
-      var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())})
+      var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0]);
+      var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())});
       
       /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
          or we can return the neighbour % and do image logic via (painted) rasters */
       
-      return(f.set(diff_percs))
-    }
+      return(f.set(diff_percs));
+    };
     
     // FUNCTION to reduce the map to vectors and map the neighbour properties function
     var reduce_neighbours = function() {
@@ -5313,15 +5315,15 @@ if (vars.obia_clean) {
               maxPixels: 1e13,
               tileScale: 1,
               geometry: reef_boundary
-            })
+            });
       // map the function, calculate neighbour properties
-      return(map_fc.map(set_neighbour_properties))
-    }
+      return(map_fc.map(set_neighbour_properties));
+    };
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
+    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels');
     //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
-    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false);
     
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
@@ -5333,12 +5335,12 @@ if (vars.obia_clean) {
               //.and(clean_map.neq(12)) // deep L
               .and(clean_map.neq(11)), // shallow L 
       value: ee.Image(99) // 99 ensures it's ignored in logic
-    })
+    });
     
     // Minimum size of object to reclass based on neighbourhood
-    var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2) // the first number is the square dimension of the desired min size
+    var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2); // the first number is the square dimension of the desired min size;
     // calculate neighbours
-    var map_fc_neighbours = reduce_neighbours()
+    var map_fc_neighbours = reduce_neighbours();
     
     // #########
     // REEF RIM
@@ -5445,7 +5447,7 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb15.gt(85)),
       value: ee.Image(15)
-    })
+    });
     
     // ORF touching slope and RR --> RR
     clean_map = clean_map.where({
@@ -5453,7 +5455,7 @@ if (vars.obia_clean) {
               .and(nb21.gt(0).or(nb22.gt(0)))
               .and(nb15.gt(0)),
       value: ee.Image(15)
-    })
+    });
     
     /*// ORF touching land --> TRF
     clean_map = clean_map.where({
@@ -5466,7 +5468,7 @@ if (vars.obia_clean) {
     // IRF
     // ####
     
-    focus_class = ee.Number(13) // IRF
+    focus_class = ee.Number(13); // IRF
     
     //classn = ee.Number(13)
     //map_fc_neighbours = reduce_neighbours()
@@ -5478,21 +5480,21 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
-    })
+    });
     
     // IRF surrounded by TRF --> TRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb16.gt(75)),
       value: ee.Image(16)
-    })
+    });
     
     // IRF surrounded by RR --> RR
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb15.gt(85)),
       value: ee.Image(15)
-    })
+    });
     
     /*// IRF touching land --> TRF
     clean_map = clean_map.where({
@@ -5505,7 +5507,7 @@ if (vars.obia_clean) {
     // TRF
     // ####
     
-    focus_class = ee.Number(16) // TRF
+    focus_class = ee.Number(16); // TRF
     
     //classn = ee.Number(16)
     //map_fc_neighbours = reduce_neighbours()
@@ -5518,21 +5520,21 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
-    })
+    });
     
     // TRF surrounded by IRF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     // TRF surrounded by IRF + ORF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.add(nb14).gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     /*// TRF not touching land --> IRF
     clean_map = clean_map.where({
@@ -5546,7 +5548,7 @@ if (vars.obia_clean) {
     // LAGOONS
     // ####
     
-    var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') // shallow lag
+    var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11'); // shallow lag
     //var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //deep lag
     
     // DL touching SL --> SL
@@ -5643,20 +5645,20 @@ if (vars.obia_clean) {
                         .focal_mode({
                           radius: vars.smooth_radius.multiply(3), // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
-                        })
+                        });
     
     
     // first make a make size threshold, so we're not vectorising huge objects when we don't have t
     // - the unmask(99) captures small no data values/ data gaps
-    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt().multiply(2)).select('labels').pow(2).log().int()
-    Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+    var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt().multiply(2)).select('labels').pow(2).log().int();
+    Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false);
     
     
     // replace small objects with smooth underneath
     var clean_map = clean_map.unmask(0).where({
       test: segment_id.gt(0), 
       value: smooth_map
-    }).selfMask()
+    }).selfMask();
     //############
     //############
     
@@ -5740,88 +5742,89 @@ if (vars.obia_clean) {
     
   } else {
     
-    // BENTHIC CLEAN-UP RULES
-    
-    // reclaim shallow no data to surrounding class
-    var smooth_map = clean_map
-                        .focal_mode({
-                          radius: vars.smooth_radius.multiply(3), // relates to smoothness required
-                          kernelType: 'circle', units: 'pixels', iterations: 2
-                        });
-    
-    var clean_map = clean_map.unmask(0).where({
-      test: geo_map.gt(2).and(clean_map.eq(0)), 
-      value: smooth_map
-    }).selfMask();
-    
-    // cut benthic off to < 10 - 15 m (eastern extent only because of Dove depth in the west)
-    clean_map = clean_map.where({
-      test: east_extent.eq(1)
-                       .and(depth.gt(vars.benthic_depth_cutoff)),
-      value: ee.Image(0)
-    })
-    
-    // Deep (or land or missing) in geo == masked from benthic
-    clean_map = clean_map.where({
-      test: geo_map.unmask(0).lte(2),
-      value: ee.Image(0)
-    })
-    
-    // Deep lagoon in geo == masked from benthic
-    clean_map = clean_map.where({
-      test: geo_map.eq(12),
-      value: ee.Image(0)
-    })
-    
-    
-    /*// turbid in geo == turbid (temporal - class num 2)
-    // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
-    clean_map = clean_map.where({
-      test: geo_map.eq(3),
-      value: ee.Image(2)
-    })*/
-    
-    /*
-    // Ignore in benthic + ORF in geo == rock
-    clean_map = clean_map.where({
-      test: clean_map.eq(0)
-                     .and(geo_map.eq(14)),
-      value: ee.Image(13)
-    })
-    
-    // Ignore in benthic + IRF in geo == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(0)
-                     .and(geo_map.eq(13)),
-      value: ee.Image(11)
-    })
-    
-    // Ignore in benthic + TRF in geo == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(0)
-                     .and(geo_map.eq(16)),
-      value: ee.Image(11)
-    })
-    
-    // Ignore in benthic + RR in geo == rock
-    */
-    
-    /*// seagrass in benthic + ORF/RR/slope in geo == coral/algae
-    clean_map = clean_map.where({
-      test: clean_map.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
-      value: ee.Image(15)
-    })*/
-    
-    // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
-    
-    /*// rock in benthic + TRF in geo == sand
-    clean_map = clean_map.where({
-      test: clean_map.eq(13)
-                     .and(geo_map.eq(16)),
-      value: ee.Image(11)
-    })*/
-
+    if (vars.cleanup_stage == 1) {
+      // BENTHIC CLEAN-UP RULES
+      
+      // reclaim shallow no data to surrounding class
+      var smooth_map = clean_map
+                          .focal_mode({
+                            radius: vars.smooth_radius.multiply(3), // relates to smoothness required
+                            kernelType: 'circle', units: 'pixels', iterations: 2
+                          });
+      
+      var clean_map = clean_map.unmask(0).where({
+        test: geo_map.gt(2).and(clean_map.eq(0)), 
+        value: smooth_map
+      }).selfMask();
+      
+      // cut benthic off to < 10 - 15 m (eastern extent only because of Dove depth in the west)
+      clean_map = clean_map.where({
+        test: east_extent.eq(1)
+                         .and(depth.gt(vars.benthic_depth_cutoff)),
+        value: ee.Image(0)
+      })
+      
+      // Deep (or land or missing) in geo == masked from benthic
+      clean_map = clean_map.where({
+        test: geo_map.unmask(0).lte(2),
+        value: ee.Image(0)
+      })
+      
+      // Deep lagoon in geo == masked from benthic
+      clean_map = clean_map.where({
+        test: geo_map.eq(12),
+        value: ee.Image(0)
+      })
+      
+      
+      /*// turbid in geo == turbid (temporal - class num 2)
+      // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
+      clean_map = clean_map.where({
+        test: geo_map.eq(3),
+        value: ee.Image(2)
+      })*/
+      
+      /*
+      // Ignore in benthic + ORF in geo == rock
+      clean_map = clean_map.where({
+        test: clean_map.eq(0)
+                       .and(geo_map.eq(14)),
+        value: ee.Image(13)
+      })
+      
+      // Ignore in benthic + IRF in geo == sand
+      clean_map = clean_map.where({
+        test: clean_map.eq(0)
+                       .and(geo_map.eq(13)),
+        value: ee.Image(11)
+      })
+      
+      // Ignore in benthic + TRF in geo == sand
+      clean_map = clean_map.where({
+        test: clean_map.eq(0)
+                       .and(geo_map.eq(16)),
+        value: ee.Image(11)
+      })
+      
+      // Ignore in benthic + RR in geo == rock
+      */
+      
+      /*// seagrass in benthic + ORF/RR/slope in geo == coral/algae
+      clean_map = clean_map.where({
+        test: clean_map.eq(14)
+                       .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
+        value: ee.Image(15)
+      })*/
+      
+      // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
+      
+      /*// rock in benthic + TRF in geo == sand
+      clean_map = clean_map.where({
+        test: clean_map.eq(13)
+                       .and(geo_map.eq(16)),
+        value: ee.Image(11)
+      })*/
+    }
   }
 }
 
@@ -5832,8 +5835,8 @@ if (vars.smooth_output) {
                         .focal_mode({
                           radius: 2, // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
-                        })
-  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(clean_map.gt(1)) // this ignores 0/land; make it .gt(2) if you want to mask deep too
+                        });
+  clean_map = clean_map.updateMask(noise_smooth.neq(99)).updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too;
 } else {
   // just clip to the classified extent and move on
   if (vars.geomorphic) {
