@@ -4757,11 +4757,11 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 var no_reefc = no_reef.difference(donnuts_masks)
 Map.addLayer(no_reefc, {color:'#09fc27'}, 'no_reefclipped', false)
-
+print (no_reefc)
 
 //2. merge all masks in a single one to export and apply to export maps.
 
-var final_mask=no_reefc.merge()
+var final_mask=no_reefc.merge(slithers_exported_byRB).merge(Rivermouth)
 
 
 
