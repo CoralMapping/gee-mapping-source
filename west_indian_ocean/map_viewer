@@ -2738,7 +2738,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [57.51269724933418, -20.13869287240998],
            [57.56556895343574, -20.02325522930491],
            [57.5521793660334, -20.01357782636538]]]]),
-    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual2");
+    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual2"),
+    benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
