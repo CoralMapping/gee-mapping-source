@@ -2032,12 +2032,12 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 var no_reefc = no_reef.difference(donnuts_masks)
 Map.addLayer(no_reefc, {color:'#09fc27'}, 'no_reefclipped', false)
-var no_reefc=ee.FeatureCollection(ee.Feature(no_reefc))
+//var no_reefc=ee.FeatureCollection(ee.Feature(no_reefc))
 
 //2. merge all masks in a single one to export and apply to export maps.
 
-var final_mask1=no_reefc.merge(ee.FeatureCollection(Rivermouth))
-Map.addLayer(final_mask, {}, 'final_mask1', false)
+//var final_mask1=no_reefc.merge(slithers_exported_byRB)
+//Map.addLayer(final_mask1, {}, 'final_mask1', false)
 
 
 
