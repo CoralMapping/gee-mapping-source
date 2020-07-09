@@ -4753,13 +4753,16 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 //Masks to finally be applied after revision on 7/7/2020
 
-
-
-
-//cliping no_reefs with donnuts masks (only two feautures)
+//1. cliping no_reefs with donnuts masks (only two feautures)
 
 var no_reefc = no_reef.difference(donnuts_masks)
 Map.addLayer(no_reefc, {color:'#09fc27'}, 'no_reefclipped', false)
+
+
+//2. merge all masks in a single one to export and apply to export maps.
+
+var final_mask=no_reefc.merge()
+
 
 
 
