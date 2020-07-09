@@ -4762,12 +4762,7 @@ print (no_reefc)
 //2. merge all masks in a single one to export and apply to export maps.
 
 var final_mask=no_reefc.merge(slithers_exported_byRB).merge(Rivermouth)
-
-
-
-
-
-
+Map.addLayer(final_mask, {}, 'final_mask', false)
 
 
 
