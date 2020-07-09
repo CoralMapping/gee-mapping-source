@@ -4751,6 +4751,8 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
+//Masks to finally be applied after revision on 7/7/2020
+
 //cliping no_reefs with donnuts masks (only two feautures)
 
 var no_reefc = no_reef.difference(donnuts_masks)
