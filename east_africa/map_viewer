@@ -2036,7 +2036,7 @@ var no_reefc=ee.FeatureCollection(ee.Feature(no_reefc))
 
 //2. merge all masks in a single one to export and apply to export maps.
 
-var final_mask1=no_reefc.merge(Rivermouth)
+var final_mask1=no_reefc.merge(ee.FeatureCollection(Rivermouth))
 Map.addLayer(final_mask, {}, 'final_mask1', false)
 
 
