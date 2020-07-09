@@ -1912,7 +1912,17 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [34.42654820188891, -24.86414999691144],
            [34.20544834837329, -24.94760358391307],
            [34.01456089720141, -25.009845567775365],
-           [33.68497105345141, -25.116827998362517]]]]);
+           [33.68497105345141, -25.116827998362517]]]]),
+    final_refinements = /* color: #98ff00 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[32.18985235256849, -27.034359396753377],
+                  [33.60983526272474, -27.295826332170265],
+                  [33.70321905178724, -27.173721736738415],
+                  [32.23929082913099, -26.946251805658076]]]),
+            {
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
 
