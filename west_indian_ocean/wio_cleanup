@@ -10344,8 +10344,8 @@ if (vars.manual_clean) {
   var geo_clean_p2 = ee.Image(region_params.geo_map_clean_p2);
   Map.addLayer(geo_clean_p2, map_palettes.geo, 'Geo Clean Pass 2', false);
   
-  var man_geo = ee.Image(region_params.geo_map_clean_man);
-  Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
+  //var man_geo = ee.Image(region_params.geo_map_clean_man);
+  //Map.addLayer(man_geo, map_palettes.geo, 'Manually cleaned GEO', false);
   
   var output_name = (vars.manual_clean) ? vars.geomorph_output_name + "_man" : output_name;
   
