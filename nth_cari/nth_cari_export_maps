@@ -21,7 +21,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask"),
-    Final_refinements_RB = /* color: #010000 */ee.Feature(
+    Final_refinements_RB = 
+    /* color: #010000 */
+    /* shown: false */
+    ee.Feature(
         ee.Geometry.MultiPolygon(
             [[[[-75.67606535402598, 18.603710355987985],
                [-75.86832609621348, 18.74811912620401],
