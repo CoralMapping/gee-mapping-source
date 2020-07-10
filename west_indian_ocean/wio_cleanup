@@ -2527,7 +2527,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [53.402850988694155, -4.894643931190626],
            [53.3986452849588, -4.87181031955577],
            [53.3905782199801, -4.866171016616823]]]]),
-    notRS = /* color: #cdffb1 */ee.Geometry({
+    notRS = 
+    /* color: #cdffb1 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -7801,7 +7804,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [57.50426614294534, -20.16893637346761],
            [57.51269724933418, -20.13869287240998],
            [57.56556895343574, -20.02325522930491],
-           [57.5521793660334, -20.01357782636538]]]]);
+           [57.5521793660334, -20.01357782636538]]]]),
+    geo_M2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -7879,9 +7883,9 @@ var vars = {
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, MANUAL OR BENTHIC
   //CHANGE NAME OF INPUT LAYER AT circa LINE 140 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
     // export options 
-  do_export: true, // export the results?
-  //geomorph_output_name: region_params.sname + '_geo-clean_manual2',
-  benthic_output_name: region_params.sname + '_benthic-clean',
+  do_export: false, // export the results?
+  geomorph_output_name: region_params.sname + '_geo-clean_manual_July10',
+  //benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
 }
 
@@ -7898,7 +7902,7 @@ MANUAL ADDITION
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 Map.addLayer(region_extent, {}, "region_extent", false)
-
+Map.addLayer(geo_M2, display_pal, 'manual2', false)
 
 if (vars.manual_clean) {
   
