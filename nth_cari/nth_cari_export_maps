@@ -92,7 +92,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'ncb_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ncb/ncb_updated20200711',
+  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/ncb_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
@@ -100,4 +100,9 @@ Export.image.toCloudStorage({
   skipEmptyTiles: true
 });
 
-
+Export.table.toCloudStorage({
+  collection: exclude_mask, 
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/nth_cari_updatedmask20200711',
+  fileFormat: 'SHP'
+});
