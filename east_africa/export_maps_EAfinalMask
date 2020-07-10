@@ -3,10 +3,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man"),
     pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
-    reef_boundary = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[40.35842048249674, -1.8731644797702776],
           [39.69924079499674, -2.3562322691693933],
           [39.07302009187174, -3.8591024804159404],
@@ -3285,7 +3282,8 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [43.809106119514524, -18.01189109838641]]]),
             {
               "system:index": "7"
-            })]);
+            })]),
+    geometry = /* color: #d63000 */ee.Geometry.Point([40.88921865706851, -18.633283103654982]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)
 Script to export maps to GCS, ready for smoothing
@@ -3304,7 +3302,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
   **A: resonable solution below**
 */
 
-
+Map.setCenter(40.88921865706851, -18.633283103654982, 6)
 /*
 Script to export maps to GCS, ready for smoothing
 - note the eventual smoothed output still needs to be QC'd by UQ, 
