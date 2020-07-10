@@ -104,6 +104,7 @@ var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
+/*
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
@@ -116,7 +117,7 @@ Export.image.toCloudStorage({
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
-
+*/
 Export.table.toCloudStorage({
   collection: exclude_fc, 
   bucket: 'coral-atlas-data-pipeline',
