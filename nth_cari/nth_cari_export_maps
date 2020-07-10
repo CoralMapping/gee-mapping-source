@@ -21,10 +21,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask"),
-    Final_refinements_RB = 
-    /* color: #010000 */
-    /* shown: false */
-    ee.Feature(
+    Final_refinements_RB = /* color: #010000 */ee.Feature(
         ee.Geometry.MultiPolygon(
             [[[[-75.67606535402598, 18.603710355987985],
                [-75.86832609621348, 18.74811912620401],
@@ -73,11 +70,11 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 var nth_cari_finalmask = nth_cari_finalmask.merge(Final_refinements_RB)
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = nth_cari_finalmask.map(add_zone)
-//Map.addLayer(exclude_fc, {}, "vector mask zone", false)
-
+Map.addLayer(exclude_fc, {}, "vector mask zone", false)
+print (exclude_fc)
 
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
-
+//print (exclude_mask)
 
 geo = geo.where(exclude_mask.eq(1), ee.Image(0))
 benthic = benthic.where(geo.eq(0), ee.Image(0)) 
@@ -121,7 +118,7 @@ Export.image.toCloudStorage({
 });
 
 Export.table.toCloudStorage({
-  collection: exclude_mask, 
+  collection: exclude_fc, 
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/nth_cari_updatedmask20200711',
   fileFormat: 'SHP'
