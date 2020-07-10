@@ -9171,7 +9171,7 @@ if (vars.obia_clean) {
     // Seagrass in ben + ORF in geo == Rubble
     clean_map = clean_map.where({
       test: SGtoRubble.eq(1)
-                     .and(clean_map.eq(14)),
+                     .and(clean_map.eq(14))
                      .and(geo_map.eq(14)),
       value: ee.Image(12)
     })
@@ -9179,7 +9179,7 @@ if (vars.obia_clean) {
     // Seagrass in ben + ORF in geo == Rock
     clean_map = clean_map.where({
       test: SGtoRock.eq(1)
-                     .and(clean_map.eq(14)),
+                     .and(clean_map.eq(14))
                      .and(geo_map.eq(14)),
       value: ee.Image(13)
     })
@@ -9187,7 +9187,7 @@ if (vars.obia_clean) {
     // Deep lagoon in geo + Seagrass in Ben == Sand
     clean_map = clean_map.where({
       test: SGtoSand.eq(1)
-                     .and(clean_map.eq(14)),
+                     .and(clean_map.eq(14))
                      .and(geo_map.eq(12)),
       value: ee.Image(11)
     })
@@ -9195,35 +9195,35 @@ if (vars.obia_clean) {
     // BMA to Coral/Algae
     clean_map = clean_map.where({
       test: BMAtoCA.eq(1)
-                     .and(clean_map.eq(18)),
+                     .and(clean_map.eq(18))
       value: ee.Image(15)
     })
     
     // MAYOTTE RB to Coral/Algae on PRs
     clean_map = clean_map.where({
       test: MayNotRB.eq(1)
-                     .and(clean_map.eq(12)),
+                     .and(clean_map.eq(12))
                      .and(geo_map.eq(13)),
       value: ee.Image(15)
     
     // MAYOTTE IRF Rubble to Rock 
     clean_map = clean_map.where({
       test: MayNotRB.eq(1)
-                     .and(clean_map.eq(12)),
+                     .and(clean_map.eq(12))
                      .and(geo_map.eq(13)),
       value: ee.Image(13)
     
     // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
       test: clean_map.eq(15)
-                     .and(geo_map.eq(16)),
+                     .and(geo_map.eq(16))
       value: ee.Image(14)
     })
     
     // rock in benthic + TRF in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(13)
-                     .and(geo_map.eq(16)),
+                     .and(geo_map.eq(16))
       value: ee.Image(11)
     })
     
