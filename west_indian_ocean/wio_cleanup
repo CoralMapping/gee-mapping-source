@@ -10019,7 +10019,7 @@ var region_params = param_module.wio          //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: ee.Number(sensor_params.pixel),
@@ -10047,7 +10047,7 @@ var vars = {
   
   //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -10060,7 +10060,7 @@ var vars = {
   //CHANGE DEPENDING ON WHETHER 1ST PASS, 2ND PASSS, MANUAL OR BENTHIC
   //CHANGE NAME OF INPUT LAYER AT circa LINE 140 DEPENDING ON PASS (// DEFINE THE MANUALLY EDITED MAP)
     // export options 
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo-clean_manual_July10',
   //benthic_output_name: region_params.sname + '_benthic-clean',
   asset_output: region_params.asset // asset path
