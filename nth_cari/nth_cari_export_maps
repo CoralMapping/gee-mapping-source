@@ -31,6 +31,19 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 // will need to import depth mosaic from pixels now
 var depth = pixels.select('depth')//.multiply(100).uint16()
 
+//additional masks (this session was created by RB on 11/07/2020 to address an easy way to mask the stack and re-export)
+
+// addiitonal masking 
+var add_zone = function(f) {return(f.set('zone', 1))}
+var exclude_fc = nth_cari_finalmask.map(add_zone)
+Map.addLayer(exclude_fc, {}, "vector mask zone", false)
+
+
+var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
+Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
+
+
+
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
 benthic = benthic.unmask(0).updateMask(geo.gte(0))
