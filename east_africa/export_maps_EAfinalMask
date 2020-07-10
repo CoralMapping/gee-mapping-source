@@ -3494,6 +3494,16 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
                   [49.553839544568675, -12.302493851216271]]]),
             {
               "system:index": "23"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[49.60734921708945, -12.399471398634528],
+                  [49.58606320634726, -12.392765022433492],
+                  [49.573016941698825, -12.410871842070122],
+                  [49.60116940751914, -12.447752207538896],
+                  [49.61730557695273, -12.428306848712527]]]),
+            {
+              "system:index": "24"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)
