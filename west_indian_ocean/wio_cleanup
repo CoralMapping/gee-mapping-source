@@ -10079,7 +10079,7 @@ MANUAL ADDITION
 //reef_boundary = ee.FeatureCollection([ee.Feature(fl_cari_extent),ee.Feature(bahamas_extent)]).geometry()
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false)
 Map.addLayer(region_extent, {}, "region_extent", false)
-Map.addLayer(geo_M2, map_palettes.geo, 'manual2', false)
+
 
 if (vars.manual_clean) {
   
