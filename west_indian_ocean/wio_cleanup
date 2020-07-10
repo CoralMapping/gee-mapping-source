@@ -9237,11 +9237,11 @@ if (vars.obia_clean) {
     });
     
     // coral or algae in benthic + plat in geo == seagrass
-    clean_map = clean_map.where({
-      test: clean_map.eq(15)
-                     .and(geo_map.eq(23)),
-      value: ee.Image(14)
-    });
+   // clean_map = clean_map.where({
+    //  test: clean_map.eq(15)
+      //               .and(geo_map.eq(23)),
+     // value: ee.Image(14)*
+   // });
     
     /*// BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
@@ -9354,10 +9354,10 @@ var title = ui.Label({
   style: {fontWeight: 'bold', fontSize: '12px'}
 });
 
-/*// generate the legend
+/*/// generate the legend
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
 var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
 pkg_vis.add_lgds([title, legend]);//, mask_legend])
-// generate the legend*/
+*/
