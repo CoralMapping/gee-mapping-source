@@ -16,10 +16,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [-159.43420248789334, 22.893106923083444],
           [-167.4874893752415, 24.965604306992145],
           [-178.2214120255763, 29.123686786807387]]]),
-    geo = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean_man"),
-    benthic = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean"),
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
+    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
+    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
+    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // NCB (last export 11/07/2020) export to Vulcan bucket
 
