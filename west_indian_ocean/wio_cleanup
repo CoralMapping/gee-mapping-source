@@ -9008,6 +9008,7 @@ if (vars.obia_clean) {
     // Seagrass in ben + ORF in geo == Rubble
     clean_map = clean_map.where({
       test: SGtoRock.eq(1)
+                     .and(clean_map.eq(14)),
                      .and(geo_map.eq(14)),
       value: ee.Image(12)
     })
@@ -9015,9 +9016,20 @@ if (vars.obia_clean) {
     // Seagrass in ben + ORF in geo == Rock
     clean_map = clean_map.where({
       test: SGtoRock.eq(1)
+                     .and(clean_map.eq(14)),
                      .and(geo_map.eq(14)),
       value: ee.Image(13)
     })
+    
+    // Deep lagoon in geo + Seagrass in Ben == Sand
+    clean_map = clean_map.where({
+      test: SGtoSand.eq(1)
+                     .and(clean_map.eq(14)),
+                     .and(geo_map.eq(12)),
+      value: ee.Image(11)
+    })
+     
+    
         // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
       test: clean_map.eq(15)
