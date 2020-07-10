@@ -9237,11 +9237,11 @@ if (vars.obia_clean) {
     });
     
     // coral or algae in benthic + plat in geo == seagrass
-   // clean_map = clean_map.where({
-    //  test: clean_map.eq(15)
-      //               .and(geo_map.eq(23)),
-     // value: ee.Image(14)*
-   // });
+   clean_map = clean_map.where({
+    test: clean_map.eq(15)
+                 .and(geo_map.eq(23)),
+     value: ee.Image(14)
+   });
     
     /*// BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
