@@ -90,9 +90,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false)
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'hi_stack',
+  description: 'ncb_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/hawaii',
+  fileNamePrefix: 'coral-gee-export-bucket/ncb/ncb_updated20200711',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
