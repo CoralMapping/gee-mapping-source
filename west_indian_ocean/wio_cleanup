@@ -9007,7 +9007,7 @@ if (vars.obia_clean) {
     
     // Seagrass in ben + ORF in geo == Rubble
     clean_map = clean_map.where({
-      test: SGtoRock.eq(1)
+      test: SGtoRubble.eq(1)
                      .and(clean_map.eq(14)),
                      .and(geo_map.eq(14)),
       value: ee.Image(12)
@@ -9031,10 +9031,18 @@ if (vars.obia_clean) {
      
     // BMA to Coral/Algae
     clean_map = clean_map.where({
-      test: clean_map.eq(18),
+      test: BMAtoCoral.eq(1)
+                     .and(clean_map.eq(18)),
       value: ee.Image(15)
     })
-      
+    
+    // MAYOTTE RB to Coral/Algae 
+    clean_map = clean_map.where({
+      test: SGtoRock.eq(1)
+                     .and(clean_map.eq(14)),
+                     .and(geo_map.eq(14)),
+      value: ee.Image(13)
+    
     // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
       test: clean_map.eq(15)
