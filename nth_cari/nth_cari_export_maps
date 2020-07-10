@@ -42,7 +42,8 @@ var exclude_fc = nth_cari_finalmask.map(add_zone)
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, 'nth_cari_finalmask_11-7_2020', false)
 
-
+geo = geo.where(exclude_mask.eq(1), ee.Image(0))
+benthic = benthic.where(geo.eq(0), ee.Image(0)) 
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
