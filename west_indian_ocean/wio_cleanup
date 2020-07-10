@@ -9012,7 +9012,13 @@ if (vars.obia_clean) {
       value: ee.Image(12)
     })
         
-    // coral or algae in benthic + TRF in geo == seagrass
+    // Seagrass in ben + ORF in geo == Rock
+    clean_map = clean_map.where({
+      test: SGtoRock.eq(1)
+                     .and(geo_map.eq(14)),
+      value: ee.Image(13)
+    })
+        // coral or algae in benthic + TRF in geo == seagrass
     clean_map = clean_map.where({
       test: clean_map.eq(15)
                      .and(geo_map.eq(16)),
