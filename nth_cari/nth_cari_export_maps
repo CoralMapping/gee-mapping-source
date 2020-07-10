@@ -20,7 +20,23 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask");
+    nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask"),
+    Final_refinements_RB = /* color: #010000 */ee.Feature(
+        ee.Geometry.MultiPolygon(
+            [[[[-75.67606535402598, 18.603710355987985],
+               [-75.86832609621348, 18.74811912620401],
+               [-75.86283293215098, 18.53341305388216],
+               [-75.72962370363535, 18.496951206969467]]],
+             [[[-78.35398283449473, 16.82467434420116],
+               [-77.98182096926035, 16.995482992191484],
+               [-77.87333097902598, 17.030939178634956],
+               [-77.65085783449473, 17.213366264309578],
+               [-77.64536467043223, 17.294678742544118],
+               [-78.30179777590098, 17.354984155749893],
+               [-78.38968840090098, 17.298612307548762]]]]),
+        {
+          "system:index": "0"
+        });
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // NCB (last export 11/07/2020) export to Vulcan bucket
 
@@ -34,6 +50,7 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 //additional masks (this session was created by RB on 11/07/2020 to address an easy way to mask the stack and re-export)
 
 // addiitonal masking 
+var nth_cari_finalmask = nth_cari_finalmask.merge(Final_refinements_RB)
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = nth_cari_finalmask.map(add_zone)
 //Map.addLayer(exclude_fc, {}, "vector mask zone", false)
