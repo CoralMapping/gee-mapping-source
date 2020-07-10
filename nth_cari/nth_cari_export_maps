@@ -16,10 +16,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [-159.43420248789334, 22.893106923083444],
           [-167.4874893752415, 24.965604306992145],
           [-178.2214120255763, 29.123686786807387]]]),
-    pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
-    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean");
+    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
+    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
+    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // NCB (last export 11/07/2020) export to Vulcan bucket
 
@@ -28,7 +28,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // will need to import depth mosaic from pixels now
-var depth = pixels.select('depth')//.multiply(100).uint16()
+var depth = pixels1.select('depth')//.multiply(100).uint16()
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
