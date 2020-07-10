@@ -217,7 +217,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [43.65171139444642, -12.357618329894171],
            [43.66647427286439, -12.350743190256194],
            [43.675400664465954, -12.34001090393033],
-           [43.67025082315736, -12.330452091129242]]]]);
+           [43.67025082315736, -12.330452091129242]]]]),
+    geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
@@ -264,7 +265,7 @@ Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
 //Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
 //Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
 Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
-//Map.addLayer(geoclean4, map_palettes.geo, "wio_geo - manual CR edits", false)
+Map.addLayer(geoclean4, map_palettes.geo, "GEO manual July10", false)
 //Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
