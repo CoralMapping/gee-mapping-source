@@ -5929,7 +5929,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    SStoBRS = /* color: #fffea1 */ee.Geometry({
+    SStoBRS = 
+    /* color: #fffea1 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
