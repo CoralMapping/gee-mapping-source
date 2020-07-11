@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    reef_boundary = 
+var reef_boundary = 
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.Polygon(
