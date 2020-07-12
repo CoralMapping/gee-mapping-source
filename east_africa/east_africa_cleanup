@@ -4218,13 +4218,14 @@ if (vars.obia_clean) {
     //nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
     //var nb1 = ee.Image().byte().paint(map_fc_neighbours, '1').unmask(0).rename('nb1') //Land
     
+ 
     // ORF surrounded by IRF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
     });
-    
+ 
     
     // ORF surrounded by TRF --> TRF
     clean_map = clean_map.where({
