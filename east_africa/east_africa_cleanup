@@ -4125,29 +4125,29 @@ if (vars.obia_clean) {
               //.and(clean_map.neq(12)) // deep L
               .and(clean_map.neq(11)), // shallow L 
       value: ee.Image(99) // 99 ensures it's ignored in logic
-    })
+    });
     
     // Minimum size of object to reclass based on neighbourhood
-    var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2) // the first number is the square dimension of the desired min size
+    var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2); // the first number is the square dimension of the desired min size
     // calculate neighbours
-    var map_fc_neighbours = reduce_neighbours()
+    var map_fc_neighbours = reduce_neighbours();
     
     // #########
     // REEF RIM
     // #########
     
-    var focus_class = ee.Number(15) //RR
+    var focus_class = ee.Number(15); //RR;
     
     // start the object-based neighbourhood rules
     // paint out to rasters (only paint the layers needed)
-    var objsize = ee.Image(30000).paint(map_fc_neighbours, 'count').rename('count')
+    var objsize = ee.Image(30000).paint(map_fc_neighbours, 'count').rename('count');
     //var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
-    var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22') //SL ex
-    var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21') //Sl sh
-    var nb16 = ee.Image().byte().paint(map_fc_neighbours, '16').unmask(0).rename('nb16') //TRF
-    var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15') //RR
-    var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14') //ORF
-    var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13') //IRF
+    var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22'); //SL ex
+    var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21'); //Sl sh
+    var nb16 = ee.Image().byte().paint(map_fc_neighbours, '16').unmask(0).rename('nb16'); //TRF
+    var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15'); //RR
+    var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14'); //ORF
+    var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13'); //IRF
     //var nb3 = ee.Image().byte().paint(map_fc_neighbours, '3').unmask(0).rename('nb3') //Turbid
     
     // RR surrounded by ORF --> ORF
@@ -4155,7 +4155,7 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
-    })
+    });
     
     // RR surrounded by IRF --> IRF
     clean_map = clean_map.where({
