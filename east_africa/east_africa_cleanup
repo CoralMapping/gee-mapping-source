@@ -3751,7 +3751,7 @@ if (vars.manual_clean) {
   // define the manually edited map - uses the output from the second pass of cleaning
  var man_geo = ee.Image(region_params.geo_map_clean)
   
-  // "NOT REEF" CLEAN
+  // "full mask clean" CLEAN
   // remove
  man_geo = man_geo.where({
    test: full_mask.eq(0),
