@@ -3745,11 +3745,11 @@ if (vars.manual_clean) {
  Map.addLayer(Rivermouth1, {}, 'river_mouth', false)
  */
  
- var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA)
- Map.addLayer(full_mask, {}, 'FINAL_MASK_TO_GEOPASS_EA', false)
+ var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA);
+ Map.addLayer(full_mask, {}, 'FINAL_MASK_TO_GEOPASS_EA', false);
   
   // define the manually edited map - uses the output from the second pass of cleaning
- var man_geo = ee.Image(region_params.geo_map_clean)
+ var man_geo = ee.Image(region_params.geo_map_clean);
   
   // "full mask clean" CLEAN
   // remove
@@ -3758,7 +3758,7 @@ if (vars.manual_clean) {
                   //.and(man_geo.eq(15)),
   value: ee.Image(0)
  })
-  
+  ;
    // "Rivermouth" CLEAN
   // remove
   //man_geo = man_geo.where({
@@ -3835,7 +3835,7 @@ if (vars.manual_clean) {
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   })
-  
+  ;
   
 }
 /*
@@ -3863,15 +3863,15 @@ if (vars.obia_2nd_pass) {
   // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   
-  var geo_map = ee.Image(region_params.geo_map_clean)
+  var geo_map = ee.Image(region_params.geo_map_clean);
 } else {
   //print(ee.List(region_params.geo_map).length())
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map = ee.Image(region_params.geo_map[0]).unmask(0, false)
              .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-             .selfMask().clip(reef_boundary)
+             .selfMask().clip(reef_boundary);
   } else {
-    var geo_map = ee.Image(region_params.geo_map).clip(reef_boundary)
+    var geo_map = ee.Image(region_params.geo_map).clip(reef_boundary);
   }
 }
 
@@ -3881,9 +3881,9 @@ if (vars.obia_2nd_pass) {
 if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
-             .selfMask().clip(reef_boundary)
+             .selfMask().clip(reef_boundary);
 } else {
-    var benthic_map = ee.Image(region_params.benthic_map)
+    var benthic_map = ee.Image(region_params.benthic_map);
 }
 
 
