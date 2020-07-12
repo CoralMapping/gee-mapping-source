@@ -3740,7 +3740,7 @@ if (vars.manual_clean) {
  */
  
  var Rivermouth1 = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA)
- Map.addLayer(Rivermouth1, {}, 'river_mouth', false)
+ Map.addLayer(FINAL_MASK_TO_GEOPASS_EA, {}, 'FINAL_MASK_TO_GEOPASS_EA', false)
   
   // define the manually edited map - uses the output from the second pass of cleaning
  var man_geo = ee.Image(region_params.geo_map_clean)
