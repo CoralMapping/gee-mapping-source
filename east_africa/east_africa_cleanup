@@ -4223,7 +4223,7 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     
     
@@ -4232,14 +4232,14 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb16.gt(75)),
       value: ee.Image(16)
-    })
+    });
     
     // ORF surrounded by RR --> RR
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb15.gt(85)),
       value: ee.Image(15)
-    })
+    });
     
     // ORF touching slope and RR --> RR
     clean_map = clean_map.where({
@@ -4247,7 +4247,7 @@ if (vars.obia_clean) {
               .and(nb21.gt(0).or(nb22.gt(0)))
               .and(nb15.gt(0)),
       value: ee.Image(15)
-    })
+    });
     
     /*// ORF touching land --> TRF
     clean_map = clean_map.where({
@@ -4260,7 +4260,7 @@ if (vars.obia_clean) {
     // IRF
     // ####
     
-    focus_class = ee.Number(13) // IRF
+    focus_class = ee.Number(13); // IRF
     
     //classn = ee.Number(13)
     //map_fc_neighbours = reduce_neighbours()
@@ -4272,21 +4272,21 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
-    })
+    });
     
     // IRF surrounded by TRF --> TRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb16.gt(75)),
       value: ee.Image(16)
-    })
+    });
     
     // IRF surrounded by RR --> RR
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb15.gt(85)),
       value: ee.Image(15)
-    })
+    });
     
     /*// IRF touching land --> TRF
     clean_map = clean_map.where({
@@ -4299,7 +4299,7 @@ if (vars.obia_clean) {
     // TRF
     // ####
     
-    focus_class = ee.Number(16) // TRF
+    focus_class = ee.Number(16); // TRF
     
     //classn = ee.Number(16)
     //map_fc_neighbours = reduce_neighbours()
@@ -4312,21 +4312,21 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb14.gt(75)),
       value: ee.Image(14)
-    })
+    });
     
     // TRF surrounded by IRF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     // TRF surrounded by IRF + ORF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.add(nb14).gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     /*// TRF not touching land --> IRF
     clean_map = clean_map.where({
@@ -4340,7 +4340,7 @@ if (vars.obia_clean) {
     // LAGOONS
     // ####
     
-    var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11') // shallow lag
+    var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11'); // shallow lag
     //var nb12 = ee.Image().byte().paint(map_fc_neighbours, '12').unmask(0).rename('nb12') //deep lag
     
     // DL touching SL --> SL
@@ -4383,7 +4383,7 @@ if (vars.obia_clean) {
               .and(objsize.lte(max_size))
               .and(nb13.gt(80)),
       value: ee.Image(13)
-    })
+    });
     
     /*// DL/SL touching OCL --> OCL
     clean_map = clean_map.where({
@@ -4421,7 +4421,7 @@ if (vars.obia_clean) {
     })*/
   
   } else if (vars.geomorphic && vars.fast_clean) {
-    print("Executing the fast version OBIA")
+    print("Executing the fast version OBIA");
     
     /* fast version of the geo clean up
       - blanket version assigns the underlying most common in neighbourhood
@@ -4437,8 +4437,8 @@ if (vars.obia_clean) {
                         .focal_mode({
                           radius: vars.smooth_radius.multiply(3), // relates to smoothness required
                           kernelType: 'circle', units: 'pixels', iterations: 2
-                        })
-    
+                        });
+                 
     
     // first make a make size threshold, so we're not vectorising huge objects when we don't have t
     // - the unmask(99) captures small no data values/ data gaps
