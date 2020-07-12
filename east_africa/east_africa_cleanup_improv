@@ -4791,6 +4791,9 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(21)
   })*/
   
+  
+  /*
+  //PAUL JOB IN HAWAI
   //West Hawaii clean
   // Deep water -> Reef slope
   man_geo = man_geo.where({
@@ -4919,7 +4922,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(14)
   });
   
-  
+  */
     /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
