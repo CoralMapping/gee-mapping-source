@@ -4226,7 +4226,6 @@ if (vars.obia_clean) {
     });
     
     
-    
     // ORF surrounded by TRF --> TRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
