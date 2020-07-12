@@ -4208,7 +4208,7 @@ if (vars.obia_clean) {
     // ORF
     // ####
     
-    focus_class = ee.Number(14) // ORF
+  focus_class = ee.Number(14); // ORF
     
     //classn = ee.Number(14)
     //map_fc_neighbours = reduce_neighbours()
