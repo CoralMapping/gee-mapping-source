@@ -1884,7 +1884,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     slithers_exported_byRB = ee.FeatureCollection("users/rodbio2008/slithers-finalRB"),
     no_reefs_exported_byRB = ee.FeatureCollection("users/rodbio2008/not_reefExportedByRB"),
     donnuts = ee.FeatureCollection("users/rodbio2008/NOreefTocheckDonnut"),
-    donnuts_masks = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    donnuts_masks = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[32.910419004125764, -25.96176266956],
            [32.89428283469217, -25.969479336984033],
            [32.89874603049295, -25.98398530133282],
@@ -1910,19 +1913,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [34.20544834837329, -24.94760358391307],
            [34.01456089720141, -25.009845567775365],
            [33.68497105345141, -25.116827998362517]]]]),
-    final_refinements = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.FeatureCollection(
-        [ee.Feature(
-            ee.Geometry.Polygon(
-                [[[32.18985235256849, -27.034359396753377],
-                  [33.60983526272474, -27.295826332170265],
-                  [33.70321905178724, -27.173721736738415],
-                  [32.23929082913099, -26.946251805658076]]]),
-            {
-              "system:index": "0"
-            })]),
     FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
@@ -2041,15 +2031,15 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 //1. cliping no_reefs with donnuts masks (only two feautures)
 
-var no_reefc = no_reef.difference(donnuts_masks)
-Map.addLayer(no_reefc, {color:'#09fc27'}, 'no_reefclipped', false)
-var no_reefc=ee.FeatureCollection(ee.Feature(no_reefc))
+//var no_reefc = no_reef.difference(donnuts_masks)
+//Map.addLayer(no_reefc, {color:'#09fc27'}, 'no_reefclipped', false)
+//var no_reefc=ee.FeatureCollection(ee.Feature(no_reefc))
 
 //2. merge all masks in a single one to export and apply to export maps.
 
-var final_mask1=no_reefc.merge(slithers_exported_byRB).merge(Rivermouth)
-Map.addLayer(final_mask1, {}, 'final_mask1', false)
-
+//var final_mask1=no_reefc.merge(slithers_exported_byRB).merge(Rivermouth)
+//Map.addLayer(final_mask1, {}, 'final_mask1', false)
+Map.addLayer(FINAL_MASK_TO_GEOPASS_EA, {}, 'final_mask1', false)
 
 
 
