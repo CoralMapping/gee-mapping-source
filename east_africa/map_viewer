@@ -1934,7 +1934,7 @@ Map.centerObject(centre_map, 10)
 //Map.addLayer(no_reef, {color:'#09fc27'}, 'no_reefDrawByCR', false)
 //Map.addLayer(no_reefs_exported_byRB, {color:'#09fc27'}, 'no_reefExportedByRB', false)
 //Map.addLayer(slithers_exported_byRB, {color:'#d63000'}, 'SlithersExportedByRB', false) 
-Map.addLayer(donnuts, {color:'#d63000'}, 'donnuts', false) 
+//Map.addLayer(donnuts, {color:'#d63000'}, 'donnuts', false) 
 //Vizualize the last two masks from Chris to reapply them to 3rd pass manual geo and benthic
 //var mergeMasks = ee.FeatureCollection(Rivermouth).merge(no_reef)
 //Map.addLayer(mergeMasks, {color:'#ff0000'}, 'mergedMasks', false);
@@ -1946,7 +1946,7 @@ Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide m
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
 Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
-Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
+//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 
 // east africa
 Map.addLayer(benthic, map_palettes.benthic, "East Africa Benthic - RAW", false)
