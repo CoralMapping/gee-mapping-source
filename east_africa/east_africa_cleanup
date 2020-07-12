@@ -4058,7 +4058,7 @@ if (!vars.geomorphic) {
 
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
-  var clean_map = geo_map;
+  var clean_map = geo_map
 }
 
 //Rbtoremembertorevert//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
@@ -4208,7 +4208,7 @@ if (vars.obia_clean) {
     // ORF
     // ####
     
-    focus_class = ee.Number(14); // ORF
+    focus_class = ee.Number(14) // ORF
     
     //classn = ee.Number(14)
     //map_fc_neighbours = reduce_neighbours()
