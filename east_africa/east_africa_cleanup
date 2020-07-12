@@ -3749,7 +3749,7 @@ if (vars.manual_clean) {
  
  
  
- var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clipToCollection(FINAL_MASK_TO_GEOPASS_EA);
+ var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA);
 // print (full_mask)
 
 //var full_mask = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone").clip(not_reef)
