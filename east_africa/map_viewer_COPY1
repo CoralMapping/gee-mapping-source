@@ -1950,7 +1950,7 @@ Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9
 
 // east africa
 Map.addLayer(benthic, map_palettes.benthic, "East Africa Benthic - RAW", false)
-Map.addLayer(benthic_clean, map_palettes.benthic, "East Africa Benthic - FINAL", false)
+Map.addLayer(benthic_clean, map_palettes.benthic, "East Africa Benthic - FINALv1", false)
 Map.addLayer(geo, map_palettes.geo, "East Africa Geo - RAW", false)
 Map.addLayer(geo_clean1, map_palettes.geo, "East Africa Geo - CLEAN1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "East Africa Geo - CLEAN2", false)
