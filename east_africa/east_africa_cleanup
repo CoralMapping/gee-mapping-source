@@ -4162,21 +4162,21 @@ if (vars.obia_clean) {
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     // RR surrounded by IRF + ORF --> IRF
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb13.add(nb14).gt(75)),
       value: ee.Image(13)
-    })
+    });
     
     // RR with decent border to TRF --> TRF (often dark, probably seagrass)
     clean_map = clean_map.where({
       test: clean_map.eq(focus_class)
               .and(nb16.gt(40)),
       value: ee.Image(16)
-    })
+    });
     
     /*// RR surrounded by OCL --> OCL
     clean_map = clean_map.where({
