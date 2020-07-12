@@ -3169,7 +3169,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
               "system:index": "30"
             })]),
     Final_mask = ee.FeatureCollection("users/rodbio2008/FinalmasktoRefineExport"),
-    Final_refinements_8_7_2020 = /* color: #ff0b3e */ee.FeatureCollection(
+    Final_refinements_12_7_2020 = /* color: #ff0b3e */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[35.547460256298415, -23.808429777638718],
