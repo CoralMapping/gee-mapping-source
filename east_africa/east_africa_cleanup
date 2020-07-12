@@ -3616,7 +3616,8 @@ var eg_area =
       ],
       "coordinates": []
     }),
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
+    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa
