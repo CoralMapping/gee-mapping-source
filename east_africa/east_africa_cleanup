@@ -3617,7 +3617,8 @@ var eg_area =
       "coordinates": []
     }),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA");
+    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
+    image = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - East Africa
@@ -3635,6 +3636,7 @@ var eg_area =
 // 3. OBIA clean up rules
 // 4. Export
 
+print(image)
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -3745,7 +3747,11 @@ if (vars.manual_clean) {
  Map.addLayer(Rivermouth1, {}, 'river_mouth', false)
  */
  
+ 
+ 
  var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA);
+ print (full_mask)
+
  Map.addLayer(full_mask, {}, 'FINAL_MASK_TO_GEOPASS_EA', false);
   
   // define the manually edited map - uses the output from the second pass of cleaning
