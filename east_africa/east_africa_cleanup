@@ -3943,7 +3943,7 @@ if (!vars.geomorphic) {
   - to the mapping extent just so it doesn't balloon out
   - to the 'reef boundary' extent for noise/deep removal
 */  
-var class_extent_mask = geo_map.gt(0).clip(reef_boundary)
+var class_extent_mask = geo_map.gt(0).clip(reef_boundary);
 
 
 /*
@@ -3969,7 +3969,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 2
-                      })
+                      });
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
@@ -3977,14 +3977,14 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     test: geo_map.connectedPixelCount(vars.small_object_geo, false).lt(vars.small_object_geo), 
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-  }).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask);
   
   // shallow lagoon > 5m == deep lagoon
   clean_map = clean_map.where({
     test: clean_map.eq(11)
                    .and(depth.gt(500)),
     value: ee.Image(12)
-  })
+  });
   
   /*// deep lagoon == deep (to hard to differentiate deep water vs. deep lagoon effectively over large areas)
   clean_map = clean_map.where({
@@ -3996,7 +3996,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   clean_map = clean_map.where({
     test: depth.gt(2000),
     value: ee.Image(2)
-  })
+  });
   
   
   /*//CLEAN UP SMALL (but slightly larger) TURBID AREAS
@@ -4022,7 +4022,7 @@ if (!vars.geomorphic) {
                       .focal_mode({
                         radius: vars.smooth_radius, // relates to smoothness required
                         kernelType: 'circle', units: 'pixels', iterations: 1
-                      })
+                      });
   //smooth_map = smooth_map.updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   
   //replace small objects with smooth underneath
@@ -4030,7 +4030,7 @@ if (!vars.geomorphic) {
     test: benthic_map.connectedPixelCount(vars.small_object_benthic, false).lt(vars.small_object_benthic),
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
-  }).updateMask(class_extent_mask)
+  }).updateMask(class_extent_mask);
   
   
   /*// CLEAN UP ALL TEMPORAL AREAS
@@ -4058,7 +4058,7 @@ if (!vars.geomorphic) {
 
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
-  var clean_map = geo_map
+  var clean_map = geo_map;
 }
 
 //Rbtoremembertorevert//Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Initial smooth classification', false)
@@ -4074,7 +4074,7 @@ if (vars.obia_clean) {
     // FUNCTION that maps over feature colleciton and assigns neighbour percentages
     var set_neighbour_properties = function(f) {
       // make the 1px buffer
-      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+      var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5));
       // reduce the classes in the buffer zone
       var diff_classes = ee.Dictionary(
         clean_map.unmask(ee.Image(0)).reduceRegion({
@@ -4083,15 +4083,15 @@ if (vars.obia_clean) {
           scale: vars.image_data_scale,
           maxPixels: 1e11
         }).get('classification')
-      )
+      );
       // calculate the percentages
-      var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0])
-      var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())})
+      var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0]);
+      var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())});
       
       /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
          or we can return the neighbour % and do image logic via (painted) rasters */
       
-      return(f.set(diff_percs))
+      return(f.set(diff_percs));
     }
     
     // FUNCTION to reduce the map to vectors and map the neighbour properties function
