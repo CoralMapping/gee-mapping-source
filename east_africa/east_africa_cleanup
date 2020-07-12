@@ -3673,7 +3673,7 @@ var vars = {
   fast_clean: true, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
   smooth_output: false, // run smoother over final output (includes noise removal) (should be false for second pass)
   //############
-  
+  dist_to_land: 2000, //distance to land in METERS to disallow reef crest, and convert to terrestrial reef flat
   // apply any manual touch ups
   manual_clean: true,
   
