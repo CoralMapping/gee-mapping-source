@@ -3636,7 +3636,7 @@ var eg_area =
 // 3. OBIA clean up rules
 // 4. Export
 
-print(image)
+
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
