@@ -1954,7 +1954,7 @@ Map.addLayer(benthic_clean, map_palettes.benthic, "East Africa Benthic - FINAL",
 Map.addLayer(geo, map_palettes.geo, "East Africa Geo - RAW", false)
 Map.addLayer(geo_clean1, map_palettes.geo, "East Africa Geo - CLEAN1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "East Africa Geo - CLEAN2", false)
-Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - FINAL", false)
+Map.addLayer(geo_clean3man, map_palettes.geo, "East Africa Geo - FINALMANUALv1", false)
 Map.addLayer(wcmc, {color:'#FFFF33'}, "WCMC (UNEP)", false )
 
 // wave data
