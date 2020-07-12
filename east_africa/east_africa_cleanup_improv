@@ -4796,6 +4796,8 @@ if (vars.manual_clean && vars.geomorphic) {
   
   /*
   //PAUL JOB IN HAWAI
+  
+  
   //West Hawaii clean
   // Deep water -> Reef slope
   man_geo = man_geo.where({
