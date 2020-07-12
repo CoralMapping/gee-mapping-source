@@ -1667,10 +1667,7 @@ var eg_area =
            [-169.55793906487781, 16.71535779566639],
            [-169.55801415559606, 16.711617461469398],
            [-169.5562868241246, 16.711000936570777]]]]),
-    kaneohe_bay = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    kaneohe_bay = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[-157.82884328522664, 21.458737313163464],
           [-157.82717706617763, 21.45803360473115],
           [-157.82563211378505, 21.457154906685158],
@@ -2016,10 +2013,7 @@ var eg_area =
           [-157.82749667905347, 21.460327599075498],
           [-157.8284408166267, 21.459888257629107],
           [-157.82912746213452, 21.459488855165]]]),
-    kaneohe_bay_reef = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    kaneohe_bay_reef = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
         [[[[-157.79121087028642, 21.435250769203154],
            [-157.79078171684404, 21.434292039510304],
            [-157.79110358192582, 21.434052356103013],
@@ -4560,7 +4554,20 @@ var eg_area =
           [-172.10572657959972, 26.592611192864478],
           [-173.33619532959972, 24.810826989087744],
           [-175.66529689209972, 25.68525324259878],
-          [-174.12721095459972, 28.19226902675772]]]);
+          [-174.12721095459972, 28.19226902675772]]]),
+    region_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[30.13312558484233, -1.137341931686524],
+          [30.13312558484233, -30.595651061601146],
+          [51.182930272342325, -30.595651061601146],
+          [51.182930272342325, -1.137341931686524]]], null, false),
+    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -4613,7 +4620,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4711,8 +4718,8 @@ MANUAL ADDITION
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
-Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
+//var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
+Map.addLayer(region_extent, {}, "Manual reef outline", false);
 
 
 
@@ -4735,7 +4742,8 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
-  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
+  var not_reef = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA);
+  /*
   var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
   var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
   var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
@@ -4750,7 +4758,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
   var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
   var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
-
+  */
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
