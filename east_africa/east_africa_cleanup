@@ -3637,14 +3637,14 @@ var eg_area =
 
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
-var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove    ;     //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.east_africa ; //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -3698,7 +3698,7 @@ var vars = {
   asset_output: region_params.asset // asset path
 
 }
-
+;
 
 
 /*
@@ -3710,19 +3710,19 @@ MANUAL ADDITION
 
 if (vars.manual_clean) {
   
-  vars.obia_2nd_pass = true
-  vars.obia_clean = false
-  vars.fast_clean = false
-  vars.smooth_output = false
-  vars.do_export = false
+  vars.obia_2nd_pass = true;
+  vars.obia_clean = false;
+  vars.fast_clean = false;
+  vars.smooth_output = false;
+  vars.do_export = false;
   
-  print("Doing manual clean ups - make sure this is what you want to do")
-  print("Export the manual map, check 'manual' layer and ignore the 'final' map layer")
+  print("Doing manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer and ignore the 'final' map layer");
   
-  var depth = ee.Image(region_params.pixels).select('depth')
-  Map.addLayer(depth.lt(1000), {}, "10m depth contour", false)
+  var depth = ee.Image(region_params.pixels).select('depth');
+  Map.addLayer(depth.lt(1000), {}, "10m depth contour", false);
   
-  Map.addLayer(waves.lt(0.25), {}, "0.25m Hs95 threshold", false)
+  Map.addLayer(waves.lt(0.25), {}, "0.25m Hs95 threshold", false);
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   //this is a code I generated to merge both masks involving UNEP but its better to clean this up and avoid using UNEP at all
@@ -4220,7 +4220,7 @@ if (vars.obia_clean) {
     //var nb1 = ee.Image().byte().paint(map_fc_neighbours, '1').unmask(0).rename('nb1') //Land
     
     // ORF surrounded by IRF --> IRF
-    clean_map = clean_map.where({
+    clean_map = clean_map.wher;e({
       test: clean_map.eq(focus_class)
               .and(nb13.gt(75)),
       value: ee.Image(13)
