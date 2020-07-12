@@ -4567,7 +4567,9 @@ var eg_area =
           [30.13312558484233, -30.595651061601146],
           [51.182930272342325, -30.595651061601146],
           [51.182930272342325, -1.137341931686524]]], null, false),
-    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA");
+    FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
+    geo_clean1 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean1"),
+    geo_clean2 = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -4942,11 +4944,13 @@ if (vars.manual_clean && vars.geomorphic) {
   //var image = ee.Image(region_params.image);
   //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
   
-  var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+  
+  
+  var geo_clean1 = ee.Image(geo_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
-  var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+  var geo_clean2 = ee.Image(geo_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  //Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
