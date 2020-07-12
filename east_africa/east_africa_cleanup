@@ -4092,7 +4092,7 @@ if (vars.obia_clean) {
          or we can return the neighbour % and do image logic via (painted) rasters */
       
       return(f.set(diff_percs));
-    }
+    };
     
     // FUNCTION to reduce the map to vectors and map the neighbour properties function
     var reduce_neighbours = function() {
@@ -4106,16 +4106,15 @@ if (vars.obia_clean) {
               maxPixels: 1e13,
               tileScale: 1,
               geometry: reef_boundary
-            })
+            });
       // map the function, calculate neighbour properties
-      return(map_fc.map(set_neighbour_properties))
-    }
+      return(map_fc.map(set_neighbour_properties));
+    };
     
     // first make a make size threshold, so we're not vecortising huge objects when we don't have to
-    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
+    var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels');
     //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
-    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
-    
+    Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false);
     // This is where we select the single or group of classes to vectorise for cleaning up
     //var classn = ee.Number(15) // one class
     var classn = clean_map.where({
