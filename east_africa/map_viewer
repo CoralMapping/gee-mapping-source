@@ -1880,39 +1880,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [44.74149370760602, -15.380944360365854],
            [44.17157793612164, -15.420663712621096]]]]),
     benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
-    Rivermouth_exported_byRB = ee.FeatureCollection("users/rodbio2008/Rivermouth-finalRB"),
-    slithers_exported_byRB = ee.FeatureCollection("users/rodbio2008/slithers-finalRB"),
-    no_reefs_exported_byRB = ee.FeatureCollection("users/rodbio2008/not_reefExportedByRB"),
-    donnuts = ee.FeatureCollection("users/rodbio2008/NOreefTocheckDonnut"),
-    donnuts_masks = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
-        [[[[32.910419004125764, -25.96176266956],
-           [32.89428283469217, -25.969479336984033],
-           [32.89874603049295, -25.98398530133282],
-           [32.89908935324686, -25.992317705545602],
-           [32.90046264426248, -26.00620373300334],
-           [32.89084960715311, -26.021630726970344],
-           [32.88707305686014, -26.056796690282955],
-           [32.972560422582795, -26.09331492822489],
-           [32.97874023215311, -26.04952374783819],
-           [32.97942687766092, -26.01682388741183],
-           [33.00345947043436, -25.97670784616097],
-           [33.002772824926545, -25.96250965942528],
-           [32.931361692114045, -25.959422870344163]]],
-         [[[33.70282383665454, -25.139207838754032],
-           [33.74264927610766, -25.12428840070797],
-           [33.78934117063891, -25.103149411315325],
-           [33.91156407102954, -25.06459243580699],
-           [33.99258824095141, -25.044687311141125],
-           [34.53778477415454, -24.865395987567563],
-           [34.55014439329516, -24.851689399784853],
-           [34.54602452024829, -24.840473789119667],
-           [34.42654820188891, -24.86414999691144],
-           [34.20544834837329, -24.94760358391307],
-           [34.01456089720141, -25.009845567775365],
-           [33.68497105345141, -25.116827998362517]]]]),
     FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region/
