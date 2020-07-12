@@ -4762,7 +4762,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
   */
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean2);
+  var man_geo = ee.Image(region_params.geo_map_clean);
   
   // "NOT REEF" CLEAN
   // remove
@@ -4938,6 +4938,9 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(land_mask_buff, {}, "Land mask", false)
   
   */
+  
+  
+  
   
   
   // Add the manual layer to the map
