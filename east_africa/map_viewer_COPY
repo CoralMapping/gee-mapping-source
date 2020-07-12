@@ -2039,7 +2039,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 //var final_mask1=no_reefc.merge(slithers_exported_byRB).merge(Rivermouth)
 //Map.addLayer(final_mask1, {}, 'final_mask1', false)
-Map.addLayer(FINAL_MASK_TO_GEOPASS_EA, {}, 'final_mask1', false)
+Map.addLayer(FINAL_MASK_TO_GEOPASS_EA, {}, 'FINAL_MASK_TO_GEOPASS_3', false)
 
 
 
