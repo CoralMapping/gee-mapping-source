@@ -3780,6 +3780,15 @@ if (vars.manual_clean) {
   
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false);
   
+
+  // reef crest close to land -> TRF
+  clean_map = clean_map.where({
+    test: land_dist.lte(vars.dist_to_land)
+                   .and(clean_map.eq(15)),
+    value: ee.Image(16)
+  })
+  
+  
   // TRF far from land -> ORF
   clean_map = clean_map.where({
     test: land_dist.gt(vars.dist_to_land)
