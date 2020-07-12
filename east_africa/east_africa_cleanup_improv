@@ -4769,6 +4769,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
+  /*
    // "Rivermouth" CLEAN
   // remove
   man_geo = man_geo.where({
@@ -4781,7 +4782,7 @@ if (vars.manual_clean && vars.geomorphic) {
     test: man_geo.eq(16),
     value: ee.Image(14)
   });
-  
+  */
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
