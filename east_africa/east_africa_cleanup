@@ -3745,7 +3745,7 @@ if (vars.manual_clean) {
  Map.addLayer(Rivermouth1, {}, 'river_mouth', false)
  */
  
- var Rivermouth1 = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA)
+ var full_mask = ee.Image().byte().paint(ee.Feature(FINAL_MASK_TO_GEOPASS_EA, {zone: 1}), "zone").clip(FINAL_MASK_TO_GEOPASS_EA)
  Map.addLayer(FINAL_MASK_TO_GEOPASS_EA, {}, 'FINAL_MASK_TO_GEOPASS_EA', false)
   
   // define the manually edited map - uses the output from the second pass of cleaning
@@ -3754,7 +3754,7 @@ if (vars.manual_clean) {
   // "NOT REEF" CLEAN
   // remove
  man_geo = man_geo.where({
-   test: not_reef1.eq(0),
+   test: full_mask.eq(0),
                   //.and(man_geo.eq(15)),
   value: ee.Image(0)
  })
