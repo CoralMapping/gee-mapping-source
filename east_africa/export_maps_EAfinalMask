@@ -3853,7 +3853,19 @@ Export.table.toCloudStorage({
   fileFormat: "SHP"
 })*/
 
-Map.addLayer((Final_refinements_12_7_2020.merge(Final_mask)), {}, 'FINAL MASK TO GEOPASS', false)
+var final_maks_toGEOpass= Final_refinements_12_7_2020.merge(Final_mask);
+Map.addLayer(final_maks_toGEOpass, {}, 'FINAL MASK TO GEOPASS', false);
 
-//Export.table.toAsset([
-  //collection: final_refinements])
+Export.table.toAsset({
+  collection: final_maks_toGEOpass,
+  description: 'FINAL_MASK_TO_GEOPASS',
+  
+});
+  
+  
+  
+  
+  
+  
+  
+  
