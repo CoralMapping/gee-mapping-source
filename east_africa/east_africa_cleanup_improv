@@ -4764,6 +4764,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean);
   
+  
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
@@ -4940,7 +4941,25 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(land_mask_buff, {}, "Land mask", false)
   
   */
+ // LAND mask cleaning
+  Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false);
   
+  
+  // reef crest close to land -> TRF
+  clean_map = clean_map.where({
+    test: land_dist.lte(vars.dist_to_land)
+                   .and(clean_map.eq(15)),
+    value: ee.Image(16)
+  })
+
+  
+  // TRF far from land -> ORF
+  clean_map = clean_map.where({
+    test: land_dist.gt(vars.dist_to_land)
+                   .and(clean_map.eq(16)),
+    value: ee.Image(14)
+  });
+   
   
   
   
