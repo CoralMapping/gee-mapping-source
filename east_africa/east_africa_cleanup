@@ -3780,18 +3780,25 @@ if (vars.manual_clean) {
   
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask", false);
   
-  // reef crest close to land -> ORF
-  man_geo = man_geo.where({
-    test: land_mask_buff.eq(1)
-                        .and(man_geo.eq(15)),
+  // TRF far from land -> ORF
+  clean_map = clean_map.where({
+    test: land_dist.gt(vars.dist_to_land)
+                   .and(clean_map.eq(16)),
     value: ee.Image(14)
-  })
+  });
+  
+  // reef crest close to land -> ORF
+  //man_geo = man_geo.where({
+  //  test: land_mask_buff.eq(1)
+      //                  .and(man_geo.eq(15)),
+    //value: ee.Image(14)
+  //})
   
    // TRF far from land -> ORF
-  man_geo = man_geo.where({
-    test: land_mask_buff.eq(0)
-                        .and(man_geo.eq(16)),
-    value: ee.Image(14)
+  //man_geo = man_geo.where({
+  //  test: land_mask_buff.eq(0)
+       //                 .and(man_geo.eq(16)),
+  //  value: ee.Image(14)
   })
   
   
