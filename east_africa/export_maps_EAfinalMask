@@ -3849,3 +3849,8 @@ Export.table.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/swp/new_geom/swp_convex_hull',
   fileFormat: "SHP"
 })*/
+
+Map.addLayer((Final_refinements_12_7_2020.merge(Final_mask)), {}, 'FINAL MASK TO GEOPASS', 'false')
+
+//Export.table.toAsset([
+  //collection: final_refinements])
