@@ -3740,8 +3740,8 @@ Map.addLayer(east_africa_lt_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"m
 // combine into single stack
 var export_stack = depth.updateMask(geoquick.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
-                    .addBands(geoquick.rename('geomorphic'))
-                    .addBands(benthicquick.rename('benthic'))
+                    .addBands(geo.rename('geomorphic'))
+                    .addBands(benthic.rename('benthic'))
                     .toInt16()
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
