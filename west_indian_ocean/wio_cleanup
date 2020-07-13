@@ -7962,7 +7962,38 @@ var MayotteNotRB =
            [57.50426614294534, -20.16893637346761],
            [57.51269724933418, -20.13869287240998],
            [57.56556895343574, -20.02325522930491],
-           [57.5521793660334, -20.01357782636538]]]]);
+           [57.5521793660334, -20.01357782636538]]]]),
+    MayotteNotRB2 = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[44.93353752487357, -12.911249544927387],
+           [44.94109062545951, -12.95809511901116],
+           [45.033101123506384, -13.06714418570024],
+           [45.121676458316315, -13.103275530389817],
+           [45.211628955537634, -13.077845799375721],
+           [45.25969414108451, -13.020319175455509],
+           [45.25076774948295, -12.995565235483856],
+           [45.214375537568884, -13.011622126750671],
+           [45.17729668014701, -13.039719183798846],
+           [45.090779346162634, -13.04105705936047],
+           [45.03996757858451, -13.014298174238446],
+           [45.000142139131384, -12.931996527163442],
+           [44.97130302780326, -12.861717532702869],
+           [44.931477588350134, -12.871758596798994]]],
+         [[[45.066060107881384, -12.576102055618168],
+           [45.06194023483451, -12.606928082828533],
+           [45.12511162155326, -12.620999601831386],
+           [45.13335136764701, -12.634400329135246],
+           [45.16425041549857, -12.65048027450181],
+           [45.203389209443884, -12.686656446537798],
+           [45.24046806686576, -12.71679932983544],
+           [45.274800342256384, -12.746938634929284],
+           [45.30913261764701, -12.787118795281767],
+           [45.324238818818884, -12.740241321207941],
+           [45.283040088350134, -12.666559207025417],
+           [45.200642627412634, -12.606257991208416],
+           [45.12305168502982, -12.57744239467687]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - North Caribbean and Bahamas
@@ -8372,7 +8403,7 @@ if (vars.obia_2nd_pass) {
   // OR run a separate operation that joins the east/west clean1 maps via EPSG:3832, load via one ee.Image(), then save here as EPSG:4326
   //var geo_map = geo1.unmask(0, false).add(geo2.unmask(0,false)).selfMask().clip(swp_extent)
   
-  var geo_map = ee.Image(region_params.geo_map_clean);
+  var geo_map = ee.Image(region_params.geo_map_clean_man);
 } else {
   //print(ee.List(region_params.geo_map).length())
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
@@ -9195,10 +9226,10 @@ if (vars.obia_clean) {
                      .and(clean_map.eq(18)),
       value: ee.Image(15)
     });
-    
+
     // MAYOTTE RB to Coral/Algae on PRs
     clean_map = clean_map.where({
-      test: MayNotRB.eq(1)
+      test: MayotteNotRB.eq(1)
                      .and(clean_map.eq(12))
                      .and(geo_map.eq(13)),
       value: ee.Image(15)
@@ -9206,7 +9237,7 @@ if (vars.obia_clean) {
     
     // MAYOTTE IRF Rubble to Rock 
     clean_map = clean_map.where({
-      test: MayNotRB.eq(1)
+      test: MayotteNotRB.eq(1)
                      .and(clean_map.eq(12))
                      .and(geo_map.eq(13)),
       value: ee.Image(13)
@@ -9240,12 +9271,12 @@ if (vars.obia_clean) {
     value: ee.Image(14)
    });
     
-    /*// BMA in benthic and slope/plat in geo == sand
+    // BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(11)
-    })*/
+    })
     
     
     
