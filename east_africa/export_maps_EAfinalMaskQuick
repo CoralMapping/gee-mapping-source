@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
-    geo = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_geo-clean3-man"),
     pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
     reef_boundary = 
     /* color: #98ff00 */
@@ -3661,8 +3659,8 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
               "system:index": "37"
             })]),
     Final_mask = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
-    benthicquick = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean1"),
-    geoquick = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4");
+    benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean1"),
+    geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)(quick fix)
 Script to export maps to GCS, ready for smoothing
@@ -3715,18 +3713,18 @@ Map.addLayer(exclude_fc, {}, "vector mask zone", false)
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
-geo = geoquick.where(exclude_mask.eq(1), ee.Image(0))
-benthic = benthicquick.where(geoquick.eq(0), ee.Image(0)) // may not always need this (only if extra masking is applied here)
+geo = geo.where(exclude_mask.eq(1), ee.Image(0))
+benthic = benthic.where(geo.eq(0), ee.Image(0)) // may not always need this (only if extra masking is applied here)
 
 // finalise layers (include 'mapped area' as zeros)
-geo = geoquick.where(geoquick.lte(2), 0)
+geo = geo.where(geo.lte(2), 0)
 //print (geo)
-benthic = benthicquick.unmask(0).updateMask(geoquick.gte(0))
+benthic = benthic.unmask(0).updateMask(geo.gte(0))
 
 // make reef/non-reef layer 
-var reef_top = geoquick.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
+var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
 print (reef_top)
-var reef_all = geoquick.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
 var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 print (reef_layer)
 
