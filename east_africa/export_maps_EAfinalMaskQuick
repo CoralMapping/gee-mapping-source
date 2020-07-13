@@ -3716,12 +3716,12 @@ var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
 geo = geoquick.where(exclude_mask.eq(1), ee.Image(0))
-benthic = benthicquick.where(geo.eq(0), ee.Image(0)) // may not always need this (only if extra masking is applied here)
+benthic = benthicquick.where(geoquick.eq(0), ee.Image(0)) // may not always need this (only if extra masking is applied here)
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geoquick.where(geoquick.lte(2), 0)
 //print (geo)
-benthic = benthicquick.unmask(0).updateMask(geo.gte(0))
+benthic = benthicquick.unmask(0).updateMask(geoquick.gte(0))
 
 // make reef/non-reef layer 
 var reef_top = geoquick.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
@@ -3740,10 +3740,10 @@ Map.addLayer(Final_mask, {}, 'Final_mask', false)
 //Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 Map.addLayer(east_africa_lt_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'east_africa_lt_sr', false)
 // combine into single stack
-var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
+var export_stack = depth.updateMask(geoquick.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
-                    .addBands(geo.rename('geomorphic'))
-                    .addBands(benthic.rename('benthic'))
+                    .addBands(geoquick.rename('geomorphic'))
+                    .addBands(benthicquick.rename('benthic'))
                     .toInt16()
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
