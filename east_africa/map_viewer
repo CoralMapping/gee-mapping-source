@@ -1881,7 +1881,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [44.17157793612164, -15.420663712621096]]]]),
     benthic_clean = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean"),
     FINAL_MASK_TO_GEOPASS_EA = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
-    Donnuts = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    Donnuts = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[33.6881512349472, -25.119691037859607],
            [33.70257079061126, -25.13834075254055],
            [33.77123534139251, -25.112230354855367],
