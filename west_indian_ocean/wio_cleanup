@@ -9241,12 +9241,12 @@ if (vars.obia_clean) {
     value: ee.Image(14)
    });
     
-    // BMA in benthic and slope/plat in geo == sand
+    /*// BMA in benthic and slope/plat in geo == sand
     clean_map = clean_map.where({
       test: clean_map.eq(18)
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(11)
-    })
+    })*/
     
     
     
