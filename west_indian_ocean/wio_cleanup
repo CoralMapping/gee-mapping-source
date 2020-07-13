@@ -9087,11 +9087,11 @@ if (vars.obia_clean) {
       value: ee.Image(0)
     });
     
-    // No reef == masked from benthic
+    /*// No reef == masked from benthic
     clean_map = clean_map.where({
       test: no_reef.eq(1),
       value: ee.Image(0)
-    });
+    });*/
     
     // Deep (or land or missing) in geo == masked from benthic
     clean_map = clean_map.where({
