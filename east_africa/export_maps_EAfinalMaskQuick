@@ -3661,13 +3661,20 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     Final_mask = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean1"),
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4"),
-    geometry = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[34.55559356820494, -24.75758014862102],
-          [33.61351593148619, -25.068954968034124],
-          [32.77031524789244, -26.03533773619744],
-          [33.22899444711119, -25.696753953170422],
-          [33.63548858773619, -25.213165150662764],
-          [34.64073761117369, -24.892190478265668]]]);
+    cutDonnutsraw = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[34.53223156249471, -24.815475632058902],
+          [33.66431164061971, -25.12670434020963],
+          [33.69315075194783, -25.162755814867186],
+          [32.85269665038533, -25.965520824818125],
+          [32.83896374022908, -26.091389466355107],
+          [33.01474499022908, -26.128383933343613],
+          [33.02573131835408, -25.93588506611245],
+          [33.01749157226033, -25.8395173816016],
+          [33.79477428710408, -25.122974269727646],
+          [34.06393932616658, -25.043372325274873],
+          [34.28091930663533, -24.97367820507462],
+          [34.50888561522908, -24.89148799412816],
+          [34.59952282226033, -24.861587065066463]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)(quick fix)
 Script to export maps to GCS, ready for smoothing
@@ -3742,7 +3749,7 @@ print (reef_layer)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 //clip the littel bit
-var donnutsraw=benthic.clip(geometry)
+var donnutsraw=benthic.clip(cutDonnutsraw)
 Map.addLayer(donnutsraw, {}, 'donnutsraw')
 Map.addLayer(Final_mask, {}, 'Final_mask', false)
 //Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
