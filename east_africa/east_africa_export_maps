@@ -1660,13 +1660,6 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
           "evenOdd": true
         },
         {
-          "type": "Point",
-          "coordinates": [
-            43.20700433377822,
-            -22.107227613051812
-          ]
-        },
-        {
           "type": "Polygon",
           "coordinates": [
             [
