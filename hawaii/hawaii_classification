@@ -104,7 +104,7 @@ var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -139,7 +139,7 @@ var vars = {
   
   // classification params
   rf_trees: 15, // number of random forest trees (per class)
-  rf_minLeafPop: 1, // minimum leaf population for random forest
+  rf_minLeafPop: 10, // minimum leaf population for random forest
   rf_varPerSplit: null, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
 
@@ -174,7 +174,7 @@ var vars = {
   asset_output: region_params.asset, // asset path
   
   // accuracy/confidence options
-  run_probabilities: true
+  run_probabilities: false
 
 }
 
