@@ -657,9 +657,10 @@ var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(re
 var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone");
 var tmask = ee.FeatureCollection(region_params.turbid_mask);
 var tmas_img = ee.Image().byte().paint(ee.Feature(tmask, {zone: 1}), "zone");
+var mask_img = ee.ImageCollection([not_reef_img, tmas_img]).mosaic()
 // remove
 depth_mask = depth_mask.where({
-  test: not_reef_img.eq(1),
+  test: mask_img.eq(1),
   value: ee.Image(0)
 });
 
