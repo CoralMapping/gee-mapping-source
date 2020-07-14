@@ -471,5 +471,7 @@ exports = {
   nth_cari:nth_cari,
   east_africa: east_africa,
   hawaii: hawaii,
-  wio: wio
+  wio: wio,
+  timor: timor,
+  andm: andm
 }
