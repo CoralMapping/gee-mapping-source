@@ -654,15 +654,15 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone")
+var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
   test: not_reef_img.eq(1),
   value: ee.Image(0)
-})
+});
 
 // clip and load other variables
-var depth = depth.updateMask(depth_mask).int16().rename('depth') // mask out depth below set limit
+var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
 
 //var waves = waves.rename('waves')
 //var waves = ee.Image(region_params.waves).unmask(0)
@@ -671,10 +671,10 @@ var depth = depth.updateMask(depth_mask).int16().rename('depth') // mask out dep
 
 // define it if it's a normal shape, otherwise draw it
 //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100});
 
-Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
+Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
