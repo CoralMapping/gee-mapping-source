@@ -7,10 +7,10 @@ var region_extent =
       }
     ] */
     ee.Geometry.Polygon(
-        [[[-179.1958282352531, 28.876256252351663],
-          [-179.1958282352531, 16.92316282733554],
-          [-153.9272735477531, 16.92316282733554],
-          [-153.9272735477531, 28.876256252351663]]], null, false);
+        [[[42.11276551474697, -2.863136793758789],
+          [42.11276551474697, -22.3167193487775],
+          [64.56882020224697, -22.3167193487775],
+          [64.56882020224697, -2.863136793758789]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
@@ -23,7 +23,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // #############################
 // load analysis params module
-var region_params = param_module.hawaii        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
 var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
 // #############################
@@ -41,16 +41,33 @@ var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
 // get back the negative retrievals as very shallow
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
-var depth_thresh = depth.lt(depth_thresh) 
+var depth_binary = depth.lt(depth_thresh) 
 //var depth_thresh_smooth = depth.focal_mean({radius:5, iterations: 3}).lt(depth_thresh)
 
+// depth contour generation
+var lines = ee.List.sequence(500, 1500, 100) // <- contour lines 5m to 15m @ intervals of 1m
 
+var contour_lines = ee.ImageCollection(
+  lines.map(function(line) {
+    var mycontour = depth
+        .convolve(ee.Kernel.gaussian(5, 3))
+        .subtract(ee.Image.constant(line)).zeroCrossing() 
+        .multiply(ee.Image.constant(line)).toFloat();
+    return mycontour.mask(mycontour);
+  })
+).mosaic()
+
+//contourlines = ee.ImageCollection(contourlines).mosaic()
+
+var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
 
 // display it all
 Map.centerObject(region_extent, 3)
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth (cm)", true) // water depth
-Map.addLayer(depth_thresh, {min: 0, max: 1}, "Depth contour", true)
-Map.addLayer(export_geom, {}, "export_geom", true)
+Map.addLayer(depth_binary, {min: 0, max: 1}, "Depth threshold", true)
+Map.addLayer(contour_lines, {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
+Map.addLayer(contour_thresh, {min:0, max:1}, 'threshold contour')
+
 //Map.addLayer(depth_thresh_smooth, {min: 0, max: 1}, "Depth contour", true)
 
 
@@ -64,6 +81,8 @@ var export_geom = depth.reduceToVectors({
   eightConnected: false,
   maxPixels: 1e13
 }).geometry().bounds()
+
+Map.addLayer(export_geom, {}, "export_geom", true)
 
 // depth threshold
 Export.image.toDrive({
