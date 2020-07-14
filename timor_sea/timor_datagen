@@ -1,9 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
-    manual_mask_additions = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection([]),
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
