@@ -950,7 +950,6 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
               "system:index": "12"
             })]),
     east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    Final_mask = ee.FeatureCollection("users/rodbio2008/FinalmasktoRefineExport"),
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4"),
     FINAL_MASK_TO_GEOBENTHIC = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-cleanFinal"),
