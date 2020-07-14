@@ -424,6 +424,37 @@ var andm = {
   QAQC: "projects/coral_atlas/andm/QAQC"
 };
 
+var timor = {
+  sname:"timor",
+  tide: "both",
+  asset: "projects/coral_atlas/Timor/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020",
+  depth: "projects/coral_atlas/workflow/mapping/",
+  s2_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_landsat8_depth",
+  pixels:["projects/coral_atlas/Timor/in_out/timor_pixels"],
+  segments:["projects/coral_atlas/Timor/in_out/timor_segmentation"],
+  waves:"",
+  geo_train:"projects/coral_atlas/Timor/training/timor_geo_reference",
+  benthic_train:"projects/coral_atlas/Timor/training/timor_benthic_reference",
+  benthic_pts:"",
+  geo_train_library: "projects/coral_atlas/Timor/training/timor_geo_training",
+  benthic_train_library:"projects/coral_atlas/Timor/training/timor_benthic_training",
+  geo_val_library:"projects/coral_atlas/Timor/training/timor_geo_validation",
+  benthic_val_library:"projects/coral_atlas/Timor/training/timor_benthic_validation",
+  geo_map: ["projects/coral_atlas/Timor/in_out/timor_geo"],
+  benthic_map: ["projects/coral_atlas/Timor/in_out/timor_benthic"],
+  geo_map_clean1:"projects/coral_atlas/Timor/in_out/timor_geo_clean1",
+  geo_map_clean2:"projects/coral_atlas/Timor/in_out/timor_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/Timor/in_out/timor_geo_clean3",
+  benthic_map_clean1: "projects/coral_atlas/Timor/in_out/timor_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/Timor/in_out/timor_benthic_clean2",
+  prob_geo:["projects/coral_atlas/Timor/in_out/timor_prob_geo"],
+  prob_benthic:["projects/coral_atlas/Timor/in_out/timor_prob_benthic"],
+  QAQC: "projects/coral_atlas/Timor/QAQC"
+};
+
 // export the objects
 exports = {
   sentinel : sentinel,
