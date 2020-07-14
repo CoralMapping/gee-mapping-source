@@ -339,7 +339,7 @@ var hawaii = {
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic",
   depth: "projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200317T205841Z/hawaii_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic_depth",
-  s2_depth: "projects/coral_atlas/hawaii/depth/hawaii_east_sentinel",
+  s2_depth: "projects/coral_atlas/Andaman_sea/depth/hawaii_east_sentinel",
   ls8_depth: "projects/coral_atlas/hawaii/depth/hawaii_east_landsat8",
   pixels:["projects/coral_atlas/hawaii/in_out/hawaii_pixels"],
   segments:["projects/coral_atlas/hawaii/in_out/hawaii_segmentation"],
@@ -391,6 +391,37 @@ var wio = {
   prob_geo:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_geo"],
   prob_benthic:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_benthic"],
   QAQC: "projects/coral_atlas/west_indian_ocean/QAQC"
+};
+
+var andm = {
+  sname:"andm",
+  tide: "both",
+  asset: "projects/coral_atlas/Andaman_sea/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/workflow/mapping/andaman_sea/",
+  depth: "projects/coral_atlas/workflow/mapping/andaman_sea/",
+  s2_depth: "projects/coral_atlas/Andaman_sea/depth/",
+  ls8_depth: "projects/coral_atlas/Andaman_sea/depth/",
+  pixels:["projects/coral_atlas/Andaman_sea/in_out/andm_pixels"],
+  segments:["projects/coral_atlas/Andaman_sea/in_out/andm_segmentation"],
+  waves:"",
+  geo_train:"projects/coral_atlas/Andaman_sea/training/andm_geo_reference",
+  benthic_train:"projects/coral_atlas/Andaman_sea/training/andm_benthic_reference",
+  benthic_pts:"",
+  geo_train_library: "projects/coral_atlas/Andaman_sea/training/andm_geo_training",
+  benthic_train_library:"projects/coral_atlas/Andaman_sea/training/andm_benthic_training",
+  geo_val_library:"projects/coral_atlas/Andaman_sea/training/andm_geo_validation",
+  benthic_val_library:"projects/coral_atlas/Andaman_sea/training/andm_benthic_validation",
+  geo_map: ["projects/coral_atlas/Andaman_sea/in_out/andm_geo"],
+  benthic_map: ["projects/coral_atlas/Andaman_sea/in_out/andm_benthic"],
+  geo_map_clean1:"projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1",
+  geo_map_clean2:"projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3",
+  benthic_map_clean1: "projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2",
+  prob_geo:["projects/coral_atlas/Andaman_sea/in_out/andm_prob_geo"],
+  prob_benthic:["projects/coral_atlas/Andaman_sea/in_out/andm_prob_benthic"],
+  QAQC: "projects/coral_atlas/andm/QAQC"
 };
 
 // export the objects
