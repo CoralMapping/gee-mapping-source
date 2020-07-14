@@ -674,8 +674,8 @@ var depth = depth.updateMask(depth_mask).int16().rename('depth') // mask out dep
 
 //var waves = waves.rename('waves')
 //var waves = ee.Image(region_params.waves).unmask(0)
-var geomorph = ee.FeatureCollection(region_params.geo_train)
-var benthic = ee.FeatureCollection(region_params.benthic_train)
+//var geomorph = ee.FeatureCollection(region_params.geo_train)
+//var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define it if it's a normal shape, otherwise draw it
 //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
