@@ -1,11 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([98.33694782763278, 12.424284653543896]),
-    andm_extent = /* color: #d63000 */ee.Geometry.MultiPoint(),
-    not_reef = /* color: #ff2705 */ee.Geometry.Polygon(
-        [[[-159.62727485648608, 21.84694355303057],
-          [-159.6341388062697, 21.831652379631514],
-          [-159.5806000435232, 21.8227317675072],
-          [-159.577168079049, 21.838023901563368]]]);
+    andm_extent = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Andaman Sea region (+ Myanmar)
