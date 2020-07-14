@@ -390,7 +390,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [96.26249905407768, 17.409430504634983],
           [95.75712796032768, 17.178658281709335],
           [95.62529202282768, 16.84247692714126]]]),
-    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint();
+    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
+    low_rrs_southasia = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200526T213437Z/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -411,6 +412,7 @@ Map.centerObject(centre_map, 7)
 //Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
 
 Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
+Map.addLayer(low_rrs_southasia, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
