@@ -987,8 +987,7 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
           [33.77662102920954, -25.10746446977701],
           [33.75327508194391, -25.11679061597904],
           [33.71791283829157, -25.128913542189007],
-          [33.69422356827204, -25.138548856164583]]]),
-    geometry = /* color: #d63000 */ee.Geometry.Point([41.21433231415011, -18.933550222113603]);
+          [33.69422356827204, -25.138548856164583]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)
 Script to export maps to GCS, ready for smoothing
