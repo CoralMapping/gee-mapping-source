@@ -1,17 +1,3 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var region_extent = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[42.11276551474697, -2.863136793758789],
-          [42.11276551474697, -22.3167193487775],
-          [64.56882020224697, -22.3167193487775],
-          [64.56882020224697, -2.863136793758789]]], null, false);
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
 // Contact: mitchell.lyons@gmail.com
@@ -25,7 +11,10 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // load analysis params module
 var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
-var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
+var depth_thresh = 1000 // <--- ######## CHOOSE THE DEPTH HERE
+
+// ** Check the "export_geom" layer covers the full extent =)
+
 // #############################
 
 
@@ -62,7 +51,7 @@ var contour_lines = ee.ImageCollection(
 var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
 
 // display it all
-Map.centerObject(region_extent, 3)
+//Map.centerObject(dove_depth, 5)
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth (cm)", true) // water depth
 Map.addLayer(depth_binary, {min: 0, max: 1}, "Depth threshold", true)
 Map.addLayer(contour_lines, {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
@@ -74,9 +63,9 @@ Map.addLayer(contour_thresh, {min:0, max:1}, 'threshold contour')
 // exports
 
 // region generation
-var export_geom = depth.reduceToVectors({
-  geometry: region_extent,
-  scale: 5000,
+var export_geom = depth.gt(0).reduceToVectors({
+  geometry: dove_depth.geometry().bounds(),
+  scale: 1000,
   bestEffort: true,
   eightConnected: false,
   maxPixels: 1e13
@@ -91,7 +80,7 @@ Export.image.toDrive({
   folder: 'folder/',
   fileNamePrefix: 'output_name',
   region: export_geom,
-  scale: 10,
+  scale: 100,
   maxPixels: 1e13,
   skipEmptyTiles: true
 })
