@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
     manual_mask_additions = 
     /* color: #d63000 */
     /* shown: false */
@@ -503,12 +500,16 @@ var map_centre =
                 -15.804081626600253
               ],
               [
-                124.36722711521907,
-                -15.952021787900824
+                124.41597894627375,
+                -15.937496767651067
               ],
               [
-                124.27384332615657,
-                -16.06818398975981
+                124.33152154881282,
+                -16.096554239321133
+              ],
+              [
+                124.26221594586022,
+                -16.385937232856374
               ],
               [
                 124.12552789646907,
@@ -540,6 +541,7 @@ var map_centre =
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         }
       ],
