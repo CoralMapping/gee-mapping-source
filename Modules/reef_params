@@ -430,7 +430,7 @@ var timor = {
   asset: "projects/coral_atlas/Timor/",
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020",
-  depth: "projects/coral_atlas/workflow/mapping/",
+  depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_depth",
   s2_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_landsat8_depth",
   pixels:["projects/coral_atlas/Timor/in_out/timor_pixels"],
