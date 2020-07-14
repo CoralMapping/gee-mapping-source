@@ -3660,7 +3660,14 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
             })]),
     Final_mask = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-clean1"),
-    geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4");
+    geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4"),
+    geometry = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[34.55559356820494, -24.75758014862102],
+          [33.61351593148619, -25.068954968034124],
+          [32.77031524789244, -26.03533773619744],
+          [33.22899444711119, -25.696753953170422],
+          [33.63548858773619, -25.213165150662764],
+          [34.64073761117369, -24.892190478265668]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020)(quick fix)
 Script to export maps to GCS, ready for smoothing
@@ -3734,6 +3741,9 @@ print (reef_layer)
 //Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
+//clip the littel bit
+var donnutsraw=benthic.clip(geometry)
+Map.addLayer(donnutsraw, {}, 'donnutsraw')
 Map.addLayer(Final_mask, {}, 'Final_mask', false)
 //Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 Map.addLayer(east_africa_lt_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'east_africa_lt_sr', false)
