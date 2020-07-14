@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([-168.05953654736723, 22.30794502522426]),
-    global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([124.61624470263276, -14.818918006282706]),
     manual_mask_additions = 
     /* color: #d63000 */
     /* shown: false */
@@ -28,8 +27,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-168.05953654736723, 22.
         [[[-159.62727485648608, 21.84694355303057],
           [-159.6341388062697, 21.831652379631514],
           [-159.5806000435232, 21.8227317675072],
-          [-159.577168079049, 21.838023901563368]]]),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
+          [-159.577168079049, 21.838023901563368]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Timor Sea region 
