@@ -46,9 +46,31 @@ var contour_lines = ee.ImageCollection(
   })
 ).mosaic()
 
-//contourlines = ee.ImageCollection(contourlines).mosaic()
-
 var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
+
+
+// Define a "fat" Gaussian kernel.
+var fat = ee.Kernel.gaussian({
+  radius: 3,
+  sigma: 3,
+  units: 'pixels',
+  normalize: true,
+  magnitude: -1
+});
+
+// Define a "skinny" Gaussian kernel.
+var skinny = ee.Kernel.gaussian({
+  radius: 3,
+  sigma: 1,
+  units: 'pixels',
+  normalize: true,
+});
+
+// Compute a difference-of-Gaussians (DOG) kernel.
+var dog = fat.add(skinny);
+
+// Compute the zero crossings of the second derivative, display.
+var zeroXings = depth.lt(depth_thresh).convolve(dog).zeroCrossing().selfMask();
 
 // display it all
 //Map.centerObject(dove_depth, 5)
@@ -56,6 +78,7 @@ Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6
 Map.addLayer(depth_binary, {min: 0, max: 1}, "Depth threshold", true)
 Map.addLayer(contour_lines, {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
 Map.addLayer(contour_thresh, {min:0, max:1}, 'threshold contour')
+Map.addLayer(zeroXings, {}, 'edge threshold')
 
 //Map.addLayer(depth_thresh_smooth, {min: 0, max: 1}, "Depth contour", true)
 
