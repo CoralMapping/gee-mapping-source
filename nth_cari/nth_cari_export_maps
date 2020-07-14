@@ -119,7 +119,8 @@ Export.image.toCloudStorage({
 */
 Export.table.toCloudStorage({
   collection: exclude_fc, 
+  description: 'updatedMask20200711',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/nth_cari_updatedmask20200711',
+  fileNamePrefix: 'coral-gee-export-bucket/nth_cari_updatedmask20200711',
   fileFormat: 'SHP'
 });
