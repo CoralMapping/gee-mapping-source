@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
-    reef_boundary = 
+var reef_boundary = 
     /* color: #98ff00 */
     /* shown: false */
     /* locked: true */
@@ -4272,7 +4271,8 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
         }
       ],
       "coordinates": []
-    });
+    }),
+    pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for WIO (This is to send another go to Eldang 16/07/2020) 
 Script to export maps to GCS, ready for smoothing
@@ -4313,7 +4313,7 @@ Map.setCenter(41.21433231415011, -18.933550222113603, 6)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // will need to import depth mosaic from pixels now
-var depth = pixels.select('depth')//.multiply(100).uint16()
+var depth = pixels1.select('depth')//.multiply(100).uint16()
 
 // addiitonal masking 
 
