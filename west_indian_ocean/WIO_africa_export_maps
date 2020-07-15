@@ -94,10 +94,29 @@ var reef_boundary =
           [42.45680915437174, -1.3295556688150814],
           [40.30348884187174, -1.3734887548247627]]]),
     pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"),
-    extra_masking = /* color: #d63000 */ee.Geometry.MultiPoint(),
+    extra_masking = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPoint(),
     wio_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
-    benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10");
+    benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10"),
+    not_reef = 
+    /* color: #01ff14 */
+    /* locked: true */
+    ee.Geometry.Polygon(
+        [[[55.2248077855843, -20.980851493012523],
+          [55.33741764886555, -21.08595829180467],
+          [55.4884796605843, -21.2191575703884],
+          [55.5763702855843, -21.37014202611179],
+          [55.5763702855843, -21.549074333518252],
+          [55.95265202386555, -21.487750868105195],
+          [56.05702214105305, -21.23195887279921],
+          [55.8839874730843, -20.93981411727935],
+          [55.6917267308968, -20.672797751973356],
+          [55.42530827386555, -20.62910598668815],
+          [55.1479034887093, -20.793527159750223],
+          [55.1204376683968, -20.867971649301655]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for WIO (This is to send another go to Eldang 16/07/2020) 
 Script to export maps to GCS, ready for smoothing
@@ -142,12 +161,12 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 
 // addiitonal masking 
 
-var FINAL_MASK_TO_GEOBENTHIC= extra_masking
+
+
+
+var FINAL_MASK_TO_GEOBENTHIC= not_reef.merge(extra_masking);
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = FINAL_MASK_TO_GEOBENTHIC.map(add_zone)
-
-
-
 
 
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
