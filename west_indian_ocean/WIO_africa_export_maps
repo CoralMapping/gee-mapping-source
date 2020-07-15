@@ -147,6 +147,9 @@ var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = FINAL_MASK_TO_GEOBENTHIC.map(add_zone)
 
 
+
+
+
 var exclude_mask = ee.Image().byte().paint(exclude_fc, 'zone').uint8()
 //Map.addLayer(exclude_mask, {}, "image extra mask zone", false)
 
