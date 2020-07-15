@@ -121,8 +121,7 @@ var reef_boundary =
                   [55.1204376683968, -20.867971649301655]]]),
             {
               "system:index": "0"
-            })]),
-    geometry = /* color: #98ff00 */ee.Geometry.Point([53.62766108666353, -11.173976110741622]);
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for WIO (This is to send another go to Eldang 16/07/2020) 
 Script to export maps to GCS, ready for smoothing
