@@ -138,7 +138,7 @@ Map.setCenter(41.21433231415011, -18.933550222113603, 6)
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // will need to import depth mosaic from pixels now
-var depth = pixels1.select('depth')//.multiply(100).uint16()
+var depth = pixels.select('depth')//.multiply(100).uint16()
 
 // addiitonal masking 
 
