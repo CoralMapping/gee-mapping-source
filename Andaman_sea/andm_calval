@@ -23,7 +23,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.andm          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wio          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -40,7 +40,7 @@ var vars = {
   export_type: 'train',
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
@@ -154,13 +154,13 @@ print(
 )
 
 // paint the trinaing data out to a raster
-var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
+//var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
 
 var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666) // the default values should mix up the seeds, but this guarantees it
 
 if (!vars.geomorphic && vars.use_benthic_points) {
   // draw trainign/validation points from cal/val map + input point data set
-  var map_pts = training_painting
+  var map_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
                       .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
@@ -178,7 +178,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
   
 } else {
   // draw trainign/validation points from cal/val map
-  var train_pts = training_painting
+  var train_pts = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
                       .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
                       .stratifiedSample({
