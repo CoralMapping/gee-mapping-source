@@ -142,7 +142,7 @@ Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 Map.addLayer(all_training_data, {}, "Training polygons", false);
 
-// print a plot to see if oyu need to adjust sampling strategy
+// print a plot to see if you need to adjust sampling strategy
 var get_area = function(f) {
   return(f.set("area", f.area()));
 };
