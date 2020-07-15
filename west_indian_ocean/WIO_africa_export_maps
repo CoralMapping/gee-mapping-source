@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"),
-    extra_masking = /* color: #d63000 */ee.Geometry.Polygon(
+    Refined_masks = /* color: #d63000 */ee.Geometry.Polygon(
         [[[46.16883746799445, -9.314531487909539],
           [46.16265765842414, -9.456796659566903],
           [46.17982379611945, -9.456796659566903],
@@ -77,7 +77,7 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 // addiitonal masking 
 
 
-var FINAL_MASK_TO_GEOBENTHIC= not_reef.merge(extra_masking);
+var FINAL_MASK_TO_GEOBENTHIC= not_reef.merge(Refined_masks);
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = FINAL_MASK_TO_GEOBENTHIC.map(add_zone)
 
