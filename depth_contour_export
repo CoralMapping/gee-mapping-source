@@ -12,6 +12,10 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
 var depth_thresh = 800 // <--- ######## CHOOSE THE DEPTH HERE
+// choose an appropriate scale
+var export_scale = ee.Number(250)
+// choose "small" object to remove (in m x m, eg, 1000 = 1000m x 1000m patch)
+var small_objects = ee.Number(1000)
 
 // ** Check the "export_geom" layer covers the full extent =)
 
@@ -49,8 +53,9 @@ var contour_lines = ee.ImageCollection(
 var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
 
 // smooth edge
+var small_object_pixels = small_objects.divide(export_scale).pow(2)
 var depth_edge = depth_binary.where({
-  test: depth_binary.connectedPixelCount(100, false).lt(100),
+  test: depth_binary.connectedPixelCount(small_object_pixels, false).lt(small_object_pixels),
   value: ee.Image(0)
 }).selfMask().unmask(-1).zeroCrossing().selfMask()
 
