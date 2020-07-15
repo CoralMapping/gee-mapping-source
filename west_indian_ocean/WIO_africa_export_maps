@@ -1,12 +1,88 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"),
-    Refined_masks = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[46.16883746799445, -9.314531487909539],
-          [46.16265765842414, -9.456796659566903],
-          [46.17982379611945, -9.456796659566903],
-          [46.19424335178351, -9.417510216611321],
-          [46.19698993381476, -9.361959694124929],
-          [46.20248309787726, -9.317919430876863]]]),
+    Refined_masks = /* color: #d63000 */ee.Geometry({
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                46.16883746799445,
+                -9.314531487909539
+              ],
+              [
+                46.16265765842414,
+                -9.456796659566903
+              ],
+              [
+                46.17982379611945,
+                -9.456796659566903
+              ],
+              [
+                46.19424335178351,
+                -9.417510216611321
+              ],
+              [
+                46.19698993381476,
+                -9.361959694124929
+              ],
+              [
+                46.20248309787726,
+                -9.317919430876863
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                46.45650935965564,
+                -9.312266659241466
+              ],
+              [
+                46.41702724295642,
+                -9.358340162918868
+              ],
+              [
+                46.431446798620485,
+                -9.36782512737417
+              ],
+              [
+                46.47573543387439,
+                -9.354613856068685
+              ],
+              [
+                46.50251460867908,
+                -9.362066429830495
+              ],
+              [
+                46.52517391043689,
+                -9.356307636859759
+              ],
+              [
+                46.523800619421266,
+                -9.335642947998812
+              ],
+              [
+                46.494618185339235,
+                -9.308539859872441
+              ],
+              [
+                46.48054195242908,
+                -9.304474215245325
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        }
+      ],
+      "coordinates": []
+    }),
     wio_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
     benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10"),
