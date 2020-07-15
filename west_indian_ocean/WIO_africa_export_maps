@@ -101,7 +101,10 @@ var reef_boundary =
     wio_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
     benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10"),
-    not_reef = /* color: #01ff14 */ee.FeatureCollection(
+    not_reef = 
+    /* color: #01ff14 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[55.2248077855843, -20.980851493012523],
@@ -118,7 +121,8 @@ var reef_boundary =
                   [55.1204376683968, -20.867971649301655]]]),
             {
               "system:index": "0"
-            })]);
+            })]),
+    geometry = /* color: #98ff00 */ee.Geometry.Point([53.62766108666353, -11.173976110741622]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for WIO (This is to send another go to Eldang 16/07/2020) 
 Script to export maps to GCS, ready for smoothing
@@ -154,7 +158,7 @@ TODO: deal with change in dateline (i.e. WGS-84 projection wrapping)
   - Fiji/south pacific might be the only region where this happens? worth it?
   **A: resonable solution below**
 */
-Map.setCenter(41.21433231415011, -18.933550222113603, 6)
+Map.setCenter(53.62766108666353, -11.173976110741622, 6)
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
