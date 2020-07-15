@@ -97,7 +97,13 @@ var reef_boundary =
     extra_masking = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.MultiPoint(),
+    ee.Geometry.Polygon(
+        [[[46.16883746799445, -9.314531487909539],
+          [46.16265765842414, -9.456796659566903],
+          [46.17982379611945, -9.456796659566903],
+          [46.19424335178351, -9.417510216611321],
+          [46.19698993381476, -9.361959694124929],
+          [46.20248309787726, -9.317919430876863]]]),
     wio_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
     benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10"),
