@@ -142,7 +142,7 @@ var depth = pixels1.select('depth')//.multiply(100).uint16()
 
 // addiitonal masking 
 
-var FINAL_MASK_TO_GEOBENTHIC=extra_masking
+var FINAL_MASK_TO_GEOBENTHIC= extra_masking
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = FINAL_MASK_TO_GEOBENTHIC.map(add_zone)
 
