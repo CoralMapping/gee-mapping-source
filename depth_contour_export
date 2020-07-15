@@ -11,7 +11,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // load analysis params module
 var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
-var depth_thresh = 1000 // <--- ######## CHOOSE THE DEPTH HERE
+var depth_thresh = 800 // <--- ######## CHOOSE THE DEPTH HERE
 
 // ** Check the "export_geom" layer covers the full extent =)
 
@@ -48,37 +48,20 @@ var contour_lines = ee.ImageCollection(
 
 var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
 
+// smooth edge
+var depth_edge = depth_binary.where({
+  test: depth_binary.connectedPixelCount(100, false).lt(100),
+  value: ee.Image(0)
+}).selfMask().unmask(-1).zeroCrossing().selfMask()
 
-// Define a "fat" Gaussian kernel.
-var fat = ee.Kernel.gaussian({
-  radius: 3,
-  sigma: 3,
-  units: 'pixels',
-  normalize: true,
-  magnitude: -1
-});
-
-// Define a "skinny" Gaussian kernel.
-var skinny = ee.Kernel.gaussian({
-  radius: 3,
-  sigma: 1,
-  units: 'pixels',
-  normalize: true,
-});
-
-// Compute a difference-of-Gaussians (DOG) kernel.
-var dog = fat.add(skinny);
-
-// Compute the zero crossings of the second derivative, display.
-var zeroXings = depth.lt(depth_thresh).convolve(dog).zeroCrossing().selfMask();
 
 // display it all
 //Map.centerObject(dove_depth, 5)
 Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth (cm)", true) // water depth
-Map.addLayer(depth_binary, {min: 0, max: 1}, "Depth threshold", true)
-Map.addLayer(contour_lines, {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
-Map.addLayer(contour_thresh, {min:0, max:1}, 'threshold contour')
-Map.addLayer(zeroXings, {}, 'edge threshold')
+Map.addLayer(depth_binary.reproject({crs:"EPSG:4326", scale: 100}), {min: 0, max: 1}, "Depth threshold", true)
+Map.addLayer(contour_lines.reproject({crs:"EPSG:4326", scale: 100}), {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
+Map.addLayer(contour_thresh.reproject({crs:"EPSG:4326", scale: 100}), {min:0, max:1}, 'threshold contour')
+Map.addLayer(depth_edge.reproject({crs:"EPSG:4326", scale: 100}), {}, 'edge threshold')
 
 //Map.addLayer(depth_thresh_smooth, {min: 0, max: 1}, "Depth contour", true)
 
@@ -98,8 +81,32 @@ Map.addLayer(export_geom, {}, "export_geom", true)
 
 // depth threshold
 Export.image.toDrive({
-  image: depth_thresh, // <--- ######## CHANGE TO THE NON-SMOOTH ONE IF YOU PREFER IT?
+  image: depth_binary, 
   description: 'depth_thresh_export',
+  folder: 'folder/',
+  fileNamePrefix: 'output_name',
+  region: export_geom,
+  scale: 100,
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+
+// depth contour
+Export.image.toDrive({
+  image: contour_thresh, 
+  description: 'contour_thresh_export',
+  folder: 'folder/',
+  fileNamePrefix: 'output_name',
+  region: export_geom,
+  scale: 100,
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+
+// depth edge
+Export.image.toDrive({
+  image: depth_edge, 
+  description: 'depth_edge_export',
   folder: 'folder/',
   fileNamePrefix: 'output_name',
   region: export_geom,
