@@ -16,14 +16,14 @@
 // 5. Export data
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
-var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor         //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.timor  ;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -140,26 +140,26 @@ Map.addLayer(pixsegs, {}, 'segments + pixels', false)
 
 // 4. Create training data
 
-Map.addLayer(all_training_data, {}, "Training polygons", false)
+Map.addLayer(all_training_data, {}, "Training polygons", false);
 
 // print a plot to see if oyu need to adjust sampling strategy
 var get_area = function(f) {
-  return(f.set("area", f.area()))
-}
+  return(f.set("area", f.area()));
+};
 print(
   "Area distribution of reference data:",
   "Need to up- or down-sample any classes?",
   ui.Chart.feature.byFeature(all_training_data.map(get_area), "glob_class", "area")
       .setChartType('ColumnChart')
-)
+);
 
 // paint the trinaing data out to a raster
-var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field)//.selfMask()
+var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field);//.selfMask()
 
 var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666) // the default values should mix up the seeds, but this guarantees it
 
 if (!vars.geomorphic && vars.use_benthic_points) {
-  // draw trainign/validation points from cal/val map + input point data set
+  // draw training/validation points from cal/val map + input point data set
   var map_pts = training_painting
                       .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
@@ -172,9 +172,9 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                         classPoints: nosamp_numpix,
                         seed: samp_seed
                       }).map(function(f) {
-                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-                      })
-  var train_pts = benthic_pts.merge(map_pts) // use benthic field data poitns to train a map
+                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]));
+                      });
+  var train_pts = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   
 } else {
   // draw trainign/validation points from cal/val map
@@ -190,8 +190,8 @@ if (!vars.geomorphic && vars.use_benthic_points) {
                         classPoints: nosamp_numpix,
                         seed: samp_seed
                       }).map(function(f) {
-                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]))
-                      })
+                        return f.setGeometry(ee.Geometry.Point([f.get('longitude'), f.get('latitude')]));
+                      });
 }
 // ## If you have training points from multiple UTM zones (and the local epsg is a UTM crs),
 // ## then you need to run the above block within each zone and then merge.
@@ -254,7 +254,7 @@ if (vars.export_type == 'train') {
     collection: training_data, 
     description:  cal_desc, 
     assetId: cal_name
-  })
+  });
 }
 
 if (vars.export_type == 'val') {
@@ -262,7 +262,7 @@ if (vars.export_type == 'val') {
     collection: train_pts, 
     description:  val_desc, 
     assetId: val_name
-  })
+  });
 }
 
 // last so it sits on top
