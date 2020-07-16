@@ -1048,6 +1048,31 @@ var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                53.316839046098764,
+                -5.724521262174956
+              ],
+              [
+                53.28671247444349,
+                -5.723325623846112
+              ],
+              [
+                53.27727109871107,
+                -5.734000877496413
+              ],
+              [
+                53.31795484504896,
+                -5.731865842731939
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -1079,7 +1104,7 @@ var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"
             })]),
     reef_boundary = 
     /* color: #d63000 */
-    /* locked: true */
+    /* shown: false */
     ee.Geometry.Polygon(
         [[[54.04514155541353, -2.3678612513908717],
           [41.38889155541353, -10.828875034298534],
