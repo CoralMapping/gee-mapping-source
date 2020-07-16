@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
     eg_area = 
     /* color: #d63000 */
     /* shown: false */
@@ -36,7 +39,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([128.43372419154727, -13.
           [-159.49711601408126, 24.285181932548678],
           [-178.92094413908126, 30.78729795469936],
           [179.23335273591871, 29.57169668865391]]]),
-    outer = /* color: #ef3dff */ee.Geometry.Polygon(
+    outer = 
+    /* color: #ef3dff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[118.17062403776815, -17.45084971526682],
           [119.02755763151815, -18.14124675533064],
           [122.71896388151815, -13.726673468011827],
@@ -48,7 +54,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([128.43372419154727, -13.
           [129.59585259552577, -9.368874063395277],
           [123.61984278776815, -10.936433881827663],
           [121.48849513151815, -13.27800259234443]]]),
-    inner = /* color: #d63000 */ee.Geometry.Polygon(
+    inner = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[120.98677765293615, -16.891338232004127],
           [122.23921905918615, -17.918686136314374],
           [124.61226593418615, -16.386076635784576],
@@ -72,8 +81,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([128.43372419154727, -13.
           [128.54537140293615, -13.926120826322153],
           [126.45796905918615, -13.092905792744665],
           [125.55709015293615, -13.285443251877613],
-          [122.94234405918615, -15.223290002478876]]]),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
+          [122.94234405918615, -15.223290002478876]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -240,8 +248,9 @@ if (region_idx > -1) {
 print("Number of training samples:", training_data.size())
 
 //Map.centerObject(map_centre, 14)
+var reflec = ee.Image(region_params.image).select(vars.all_bands)
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
-Map.addLayer(image, imageVisParam, 'Dove sr lowtide', true)
+Map.addLayer(reflec, imageVisParam, 'Dove sr lowtide', true)
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
 
 
