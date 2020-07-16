@@ -153,7 +153,7 @@ print(
       .setChartType('ColumnChart')
 );
 
-// paint the trinaing data out to a raster
+// paint the training data out to a raster
 var training_painting = ee.Image().byte().paint(all_training_data, vars.class_field).rename(vars.class_field);//.selfMask()
 
 var samp_seed = (vars.export_type == 'train') ? ee.Number(42) : ee.Number(666) // the default values should mix up the seeds, but this guarantees it
