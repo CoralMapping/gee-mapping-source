@@ -4350,6 +4350,7 @@ Map.addLayer(benthic, map_palettes.benthic, "benthic map", false);
 //Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 Map.addLayer(east_africa_lt_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'east_africa_lt_sr', false);
 Map.addLayer(exclude_fc, {}, "vector mask zone", false);
+print (exclude_fc)
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
