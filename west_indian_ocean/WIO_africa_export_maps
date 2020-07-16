@@ -1247,7 +1247,7 @@ var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'ea_stack',
+  description: 'wio_stack',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/wio20200716/wio_stack',
   region: reef_boundary, 
