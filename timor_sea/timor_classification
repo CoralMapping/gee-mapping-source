@@ -247,7 +247,7 @@ if (region_idx > -1) {
 
 print("Number of training samples:", training_data.size());
 
-//Map.centerObject(map_centre, 14)
+Map.centerObject(map_centre, 14)
 var reflec = ee.Image(region_params.image).select(vars.all_bands);
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
