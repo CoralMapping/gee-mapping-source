@@ -177,7 +177,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
   var train_pts = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   
 } else {
-  // draw trainign/validation points from cal/val map
+  // draw training/validation points from cal/val map
   var train_pts = training_painting
                       .updateMask(pixsegs.select(1).gte(0))
                       .addBands(ee.Image.pixelLonLat())
