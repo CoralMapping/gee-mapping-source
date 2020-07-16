@@ -1224,7 +1224,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'ea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/wio_delivery20201716/wio_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/wio20200716/wio_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
