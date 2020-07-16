@@ -24,7 +24,10 @@ var map_centre =
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[119.13366458665041, -17.26571296388731],
           [122.56139896165041, -19.7243418542321],
           [127.17565677415041, -15.45265589282407],
@@ -143,6 +146,7 @@ var vars = {
   
   benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
   
+  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -249,8 +253,8 @@ if (region_idx > -1) {
 print("Number of training samples:", training_data.size());
 
 Map.centerObject(map_centre, 6);
-var image = ee.Image(region_params.image).select(vars.all_bands);
-Map.addLayer(image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 
