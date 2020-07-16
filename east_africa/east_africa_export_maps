@@ -1877,7 +1877,7 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 
 // addiitonal masking 
 
-var FINAL_MASK_TO_GEOBENTHIC=FINAL_MASK_TO_GEOBENTHIC.merge(extra_masking)
+var FINAL_MASK_TO_GEOBENTHIC=FINAL_MASK_TO_GEOBENTHIC.merge(extra_masking)//Extra masking needs to be a featCollection to export as Shp later, otherise its not gonna work
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = FINAL_MASK_TO_GEOBENTHIC.map(add_zone)
 
