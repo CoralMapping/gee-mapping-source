@@ -1076,7 +1076,14 @@ var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"
                   [55.1204376683968, -20.867971649301655]]]),
             {
               "system:index": "0"
-            })]);
+            })]),
+    reef_boundary = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[54.04514155541353, -2.3678612513908717],
+          [41.38889155541353, -10.828875034298534],
+          [44.11350093041353, -15.025328720481847],
+          [55.36350093041353, -24.92220360800561],
+          [67.49240718041354, -21.12128945135642],
+          [59.58225093041353, -3.4211882584226188]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for WIO (This is to send another go to Eldang 16/07/2020) 
 Script to export maps to GCS, ready for smoothing
