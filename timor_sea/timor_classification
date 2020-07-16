@@ -247,7 +247,7 @@ if (region_idx > -1) {
 
 print("Number of training samples:", training_data.size());
 
-Map.centerObject(map_centre, 14)
+Map.centerObject(map_centre, 14);
 var image = ee.Image(region_params.image).select(vars.all_bands);
 Map.addLayer(image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
@@ -259,10 +259,10 @@ Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 if (vars.thresholding) {
   
-  var thresh_dat = (vars.threshold_pixels) ? pixels : segments
+  var thresh_dat = (vars.threshold_pixels) ? pixels : segments;
   
-  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999}
-  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
+  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999};
+  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999};
   
   // N.B. these are all generic and come from mitchest/global_reefs/Modules/threshold_sliders
   slider_module.add_depth(thresh_dat);
