@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
     eg_area = 
     /* color: #d63000 */
     /* shown: false */
