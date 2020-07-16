@@ -101,16 +101,16 @@ var map_centre =
 // 5. Export data
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
-var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
-var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
-var slider_module = require('users/mitchest/global_reefs:Modules/threshold_sliders')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var slider_module = require('users/mitchest/global_reefs:Modules/threshold_sliders');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -215,7 +215,7 @@ if (vars.test_mode) {
 // 2. Data loads & vis
 
 // load input data
-var input_bands = (vars.geomorphic) ? vars.geo_input_bands : vars.benthic_input_bands // Set the input bands to either geomorphic or benthic
+var input_bands = (vars.geomorphic) ? vars.geo_input_bands : vars.benthic_input_bands; // Set the input bands to either geomorphic or benthic
 var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
