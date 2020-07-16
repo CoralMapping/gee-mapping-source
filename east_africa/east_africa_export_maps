@@ -954,7 +954,10 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4"),
     FINAL_MASK_TO_GEOBENTHIC = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-cleanFinal"),
-    extra_masking = /* color: #d63000 */ee.Geometry({
+    extra_masking = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4418,7 +4421,7 @@ Export.image.toCloudStorage({
 
 
 Export.table.toCloudStorage({
-  collection: slithers, 
+  collection: exclude_fc, 
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716/Updated_Mask',
   fileFormat: 'SHP'
