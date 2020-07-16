@@ -215,6 +215,7 @@ if (vars.test_mode) {
 // 2. Data loads & vis
 
 // load input data
+var input_bands = (vars.geomorphic) ? geo_input_bands : benthic_input_bands // Set the input bands for geomorphic or benthic
 var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
