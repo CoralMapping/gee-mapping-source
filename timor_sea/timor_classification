@@ -249,10 +249,7 @@ print("Number of training samples:", training_data.size());
 
 //Map.centerObject(map_centre, 14)
 var reflec = ee.Image(region_params.image).select(vars.all_bands);
-
-var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
-//Map.addLayer(reflec, imageVisParam, 'Dove sr lowtide', true)
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 
