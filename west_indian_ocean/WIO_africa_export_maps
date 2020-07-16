@@ -1077,7 +1077,10 @@ var pixels = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"
             {
               "system:index": "0"
             })]),
-    reef_boundary = /* color: #d63000 */ee.Geometry.Polygon(
+    reef_boundary = 
+    /* color: #d63000 */
+    /* locked: true */
+    ee.Geometry.Polygon(
         [[[54.04514155541353, -2.3678612513908717],
           [41.38889155541353, -10.828875034298534],
           [44.11350093041353, -15.025328720481847],
