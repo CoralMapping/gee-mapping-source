@@ -197,18 +197,18 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
-  var region_dic = ee.Dictionary({east: inner, west: outer}) // <- include all splits here
-  var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo()
-  var subregion_clip = ee.Geometry(region_dic.get(vars.split_region))
-  print('Running classificaiton for region split: ', vars.split_region)
+  var region_dic = ee.Dictionary({east: inner, west: outer}); // <- include all splits here
+  var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
+  var subregion_clip = ee.Geometry(region_dic.get(vars.split_region));
+  print('Running classificaiton for region split: ', vars.split_region);
 }
 
 
 // if running in test mode, over-write the trianing params
 if (vars.test_mode) {
-  vars.rf_trees = 10
-  vars.trim_training_data = true
-  vars.trim_training_perc = 0.2
+  vars.rf_trees = 10;
+  vars.trim_training_data = true;
+  vars.trim_training_perc = 0.2;
 }
 
 
@@ -219,10 +219,10 @@ var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
                            )
-                  .select(vars.input_bands)
-var geomorph = ee.FeatureCollection(region_params.geo_train_library)
-var benthic = ee.FeatureCollection(region_params.benthic_train_library)
-if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
+                  .select(vars.input_bands);
+var geomorph = ee.FeatureCollection(region_params.geo_train_library);
+var benthic = ee.FeatureCollection(region_params.benthic_train_library);
+if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts);
 
 // Load training data samples (from '*_calval' script)
 
@@ -477,9 +477,9 @@ if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training field point
 var title = ui.Label({
   value: 'Classes',
   style: {fontWeight: 'bold', fontSize: '12px'}
-})
+});
 
-// generate the legend
+// generate the legend depending on whether geo or benthic is being run
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
