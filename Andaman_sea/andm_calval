@@ -40,7 +40,7 @@ var vars = {
   export_type: 'train',
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
@@ -181,7 +181,7 @@ if (!vars.geomorphic && vars.use_benthic_points) {
   
   var sample_class_n = function(classn) {
     var target_features = all_training_data.filterMetadata(vars.class_field, 'equals', classn).geometry();
-    var target_pts = ee.FeatureCollection.randomPoints(target_features, vars.train_size)
+    var target_pts = ee.FeatureCollection.randomPoints(target_features, vars.train_size, samp_seed)
                       .map(function(f){
                         return(f.set(vars.class_field, classn));
                       });
