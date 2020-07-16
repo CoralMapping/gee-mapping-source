@@ -139,9 +139,9 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  //input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
+  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
   
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
   
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
@@ -193,7 +193,7 @@ var vars = {
   // accuracy/confidence options
   run_probabilities: false
 
-}
+};
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
@@ -231,7 +231,7 @@ if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_param
 //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
 //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
 
-var training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var training_data = (vars.geomorphic) ? geomorph : benthic; // Set the training points to either geomorphic or benthic
 // trim the data (randomly) if needed
 if (vars.trim_training_data) {
   training_data = training_data.randomColumn("random");
