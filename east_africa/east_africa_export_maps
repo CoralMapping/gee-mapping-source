@@ -4420,7 +4420,7 @@ Export.image.toCloudStorage({
 Export.table.toCloudStorage({
   collection: slithers, 
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200618/Slither_Masks',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716/Updated_Mask',
   fileFormat: 'SHP'
 });
 
