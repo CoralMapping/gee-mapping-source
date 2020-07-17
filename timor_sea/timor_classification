@@ -124,7 +124,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -172,7 +172,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'none', 
+  split_region: 'subreg1', 
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -201,7 +201,7 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
-  var region_dic = ee.Dictionary({east: inner, west: outer}); // <- include all splits here
+  var region_dic = ee.Dictionary({subreg1: inner, subreg2: outer}); // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region));
   print('Running classificaiton for region split: ', vars.split_region);
