@@ -124,7 +124,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -169,10 +169,11 @@ var vars = {
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.80,
+  
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'subreg1', 
+  split_region: 'subreg2',
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -264,7 +265,7 @@ Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 if (vars.thresholding) {
   
-  var thresh_dat = (vars.threshold_pixels) ? pixels : segments;
+  var thresh_dat = (vars.threshold_pixels) ? param_module.pixels : segments;
   
   var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999};
   var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999};
