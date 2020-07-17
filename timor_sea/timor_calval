@@ -131,7 +131,7 @@ var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_
 
 
 
-//Map.centerObject(pixsegs, 11)
+Map.centerObject(pixsegs, 6)
 
 //Map.addLayer(pixels, {}, 'per-pixel image data', false)
 //Map.addLayer(segments, {}, 'segmented image data', false)
