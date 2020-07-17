@@ -41,7 +41,7 @@ var vars = {
   
   // analysis type
   geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
-  use_benthic_points: true, // true = use benthic field points instead of map
+  use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
