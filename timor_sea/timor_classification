@@ -224,7 +224,7 @@ var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^
                   .addBands(
               ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
                            )
-                  .select(vars.input_bands);
+                  .select(input_bands);
 var geomorph = ee.FeatureCollection(region_params.geo_train_library);
 var benthic = ee.FeatureCollection(region_params.benthic_train_library);
 if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts);
@@ -307,7 +307,7 @@ if (vars.show_intermediates) {
 // 4. Train and fit models
 
 // filter nulls
-training_data = training_data.filter(ee.Filter.notNull(vars.input_bands))
+training_data = training_data.filter(ee.Filter.notNull(input_bands))
 print('Number of samples after null filter', training_data.size())
 
 // parameterise and train the classifier (random forest in this case)
@@ -316,7 +316,7 @@ var rf_classifier = ee.Classifier.smileRandomForest({
   minLeafPopulation: vars.rf_minLeafPop,
   variablesPerSplit: vars.rf_varPerSplit,
   seed: vars.set_seed
-}).train(training_data, vars.class_field, vars.input_bands)
+}).train(training_data, vars.class_field, input_bands)
 // fit the classificaiton model
 
 // print some stats in test mode
