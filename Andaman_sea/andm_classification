@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([-167.97740862095273, 22.098595326301545]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([97.97962262904727, 14.597114535032407]),
     eg_area = 
     /* color: #d63000 */
     /* shown: false */
@@ -23,48 +20,7 @@ var map_centre =
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[179.05757148591871, 27.914978112948095],
-          [-170.00004570158126, 21.90039999217584],
-          [-171.36235038908126, 15.366998213728056],
-          [-169.34086601408126, 14.857894028632877],
-          [-165.25395195158126, 21.573836685364633],
-          [-161.16703788908126, 20.301519209422807],
-          [-155.01469413908126, 16.465753710328844],
-          [-151.10356132658126, 20.136569989413402],
-          [-159.49711601408126, 24.285181932548678],
-          [-178.92094413908126, 30.78729795469936],
-          [179.23335273591871, 29.57169668865391]]]),
-    west = 
-    /* color: #ef3dff */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-170.05421307096222, 16.6451400858547],
-          [-169.26319744596222, 16.276379337331182],
-          [-166.52210857877472, 22.956876785083164],
-          [-161.24867107877472, 21.900749850607188],
-          [-159.88636639127472, 23.118638908420024],
-          [-168.41175701627472, 25.956563835498525],
-          [-172.8005727562403, 27.17740555675168],
-          [-178.03578045377466, 29.409455643699086],
-          [-179.88075843416314, 29.138941969116722],
-          [-179.21131756314966, 27.701525535727267],
-          [-174.21253826627472, 25.084107254287407],
-          [-168.27992107877472, 23.48189007138448]]]),
-    east = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-160.10125396109765, 22.64228527575897],
-          [-161.24383208609765, 21.675686283465996],
-          [-155.13543364859765, 17.913808970579183],
-          [-153.16888091422265, 20.074384925080125],
-          [-159.26629302359765, 23.138220615639327]]]),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic");
+    region_extent = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea + Myanmar
@@ -93,7 +49,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.andm  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -232,7 +188,6 @@ print("Number of training samples:", training_data.size())
 
 //Map.centerObject(map_centre, 14)
 var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
-Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
 
 
