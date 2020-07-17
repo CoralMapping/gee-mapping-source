@@ -144,7 +144,7 @@ var vars = {
   
   geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
   
-  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
   
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
@@ -173,7 +173,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'subreg1',
+  split_region: 'subreg2',
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -189,7 +189,7 @@ var vars = {
   test_mode: true,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
@@ -253,7 +253,7 @@ if (region_idx > -1) {
 
 print("Number of training samples:", training_data.size());
 
-Map.centerObject(map_centre, 6);
+//Map.centerObject(map_centre, 6);
 var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
 Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
