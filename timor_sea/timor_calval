@@ -16,8 +16,8 @@
 // 5. Export data
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
-var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
 // ###########################################
 // SENSOR GENERICS
