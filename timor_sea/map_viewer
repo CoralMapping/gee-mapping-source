@@ -122,7 +122,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-// choogse where to centre (link this dynamically to map app?)
+// choose where to centre (link this dynamically to map app?)
 Map.centerObject(centre_map, 6);
 
 // Load the raw classifications
