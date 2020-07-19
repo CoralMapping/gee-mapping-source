@@ -198,8 +198,8 @@ Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low t
 
 
 // Hawaii classification
-Map.addLayer(geo_map_raw, display_pal, 'Geomorphic map RAW', false);
-Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
+Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic map RAW', false);
+Map.addLayer(benthic_map, map_palettes.benthic, 'Benthic map RAW', false);
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
 //Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
 //Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual (FINAL)", true)
