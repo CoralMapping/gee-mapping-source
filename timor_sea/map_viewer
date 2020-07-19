@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
+var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]),
+    depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
@@ -107,8 +108,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [123.47733453709407, -16.616389316286742],
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
-           [122.79618219334407, -17.20501743540183]]]]),
-    centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]);
+           [122.79618219334407, -17.20501743540183]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
