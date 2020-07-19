@@ -125,6 +125,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 // choogse where to centre (link this dynamically to map app?)
 Map.centerObject(centre_map, 6);
 
+// Load the raw classifications
 // geo
 if (ee.List(region_params.geo_map).length().getInfo() > 1) {
   var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
