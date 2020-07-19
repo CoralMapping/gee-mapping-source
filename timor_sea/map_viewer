@@ -168,7 +168,6 @@ var region_params = param_module.timor          //<------------ THIS IS WHERE YO
 // ###########################################
 
 // choogse where to centre (link this dynamically to map app?)
-
 Map.centerObject(centre_map, 6)
 
 
