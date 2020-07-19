@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
-    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
     benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
@@ -192,10 +190,9 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map = ee.Image(region_params.benthic_map);
 }
 
-
-Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
-//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
-
+// Add low-tide base map
+var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 
 // Hawaii classification
 Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic map RAW', false);
