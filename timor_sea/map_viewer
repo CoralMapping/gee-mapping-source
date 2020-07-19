@@ -2,8 +2,6 @@
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
-    benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
-    benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
     geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     noreefmask = /* color: #43ff06 */ee.Geometry.MultiPolygon(
@@ -110,45 +108,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
            [122.79618219334407, -17.20501743540183]]]]),
-    BondariesWCMCForTS = 
-    /* color: #00ffff */
-    /* shown: false */
-    /* locked: true */
-    ee.Geometry.Polygon(
-        [[[120.81295245249498, -15.710944939289138],
-          [118.17703031620081, -17.018187576419784],
-          [118.17730013080954, -18.357613658838176],
-          [121.82380103134199, -17.814098861229244],
-          [122.35114723251613, -18.690227335302147],
-          [129.60021288473618, -16.174830712916336],
-          [131.5333624511488, -13.968833033509409],
-          [135.35582426069445, -15.79469984559125],
-          [139.26587438905185, -18.523319607439653],
-          [141.4627006376456, -17.730221020335744],
-          [142.47352627284252, -15.456796370700127],
-          [141.85891615108517, -11.5699236235876],
-          [141.1999114932958, -10.923423213139072],
-          [140.45285912159986, -11.741895690831287],
-          [140.7162885597949, -13.542500185968972],
-          [139.5737709997888, -14.990134298188329],
-          [137.68451175925972, -14.777670552308297],
-          [137.55306157938875, -9.582757602026703],
-          [139.72963166577773, -10.390613349151087],
-          [142.03488129730908, -9.929617008366487],
-          [139.17922887016678, -5.138977424296733],
-          [135.97152581433744, -3.166622064583541],
-          [131.18166672289072, -2.0691195516024536],
-          [133.90606860165573, -9.02701564692288],
-          [131.35755272644263, -9.799159317678633],
-          [130.17118554235384, -9.929055200888198],
-          [129.11659494279073, -9.01895206365125],
-          [127.66662815285021, -9.929169282479512],
-          [126.48036178665788, -11.22500182717263],
-          [125.33790187741248, -10.707460042365716],
-          [123.66819734315233, -10.578080993296727],
-          [120.85649657570211, -13.243724247024405]]]),
-    rivermouth = /* color: #c20707 */ee.Geometry.MultiPoint(),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
     centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
