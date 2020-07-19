@@ -444,7 +444,7 @@ var timor = {
   benthic_train_library:"projects/coral_atlas/Timor/training/timor_benthic_training",
   geo_val_library:"projects/coral_atlas/Timor/training/timor_geo_validation",
   benthic_val_library:"projects/coral_atlas/Timor/training/timor_benthic_validation",
-  geo_map: ["projects/coral_atlas/Timor/in_out/timor_geo"],
+  geo_map: ["projects/coral_atlas/Timor/in_out/timor_geo_subreg1","projects/coral_atlas/Timor/in_out/timor_geo_subreg2"],
   benthic_map: ["projects/coral_atlas/Timor/in_out/timor_benthic_subreg1","projects/coral_atlas/Timor/in_out/timor_benthic_subreg2"],
   geo_map_clean1:"projects/coral_atlas/Timor/in_out/timor_geo_clean1",
   geo_map_clean2:"projects/coral_atlas/Timor/in_out/timor_geo_clean2",
