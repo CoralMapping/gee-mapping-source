@@ -191,7 +191,7 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
 }
 
 // Add low-tide base map
-var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
+var low_tide_image = ee.Image(region_params.image);
 Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 
 // Hawaii classification
