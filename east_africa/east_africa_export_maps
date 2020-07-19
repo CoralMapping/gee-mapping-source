@@ -1890,7 +1890,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'ea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716/ea_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716_V2/ea_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
@@ -1903,7 +1903,7 @@ Export.image.toCloudStorage({
 Export.table.toCloudStorage({
   collection: exclude_fc, 
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716/Updated_Mask',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716_V2/Updated_Mask',
   fileFormat: 'SHP'
 });
 
