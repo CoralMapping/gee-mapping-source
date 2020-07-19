@@ -112,6 +112,7 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.9
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
 
 // ###########################################
 // SENSOR GENERICS
@@ -152,47 +153,18 @@ Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic map RAW', false);
 
 
 
-// #############
-// example confidence layers
-
-/*
-// depth and nir combos
-var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
-//Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
-var conf_flag = fiji_high_depth_ocean.eq(-1)
-                        .or(fiji_high_depth_ocean.gt(1000))
-                        .add(depth_nir_flag.eq(1))
-                        .selfMask()
-Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
-
-//straight depth missing/-1
-var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
-//Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
-
-//Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
-*/
-
-
-/*
-
 ////////// UI SET UP //////////
-
 
 //Generate title
 var title = ui.Label({
   value: 'Coral Atlas map classes',
   style: {fontWeight: 'bold', fontSize: '18px'}
-})
+});
 
 // generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
+pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
-
-
-
-
-*/
