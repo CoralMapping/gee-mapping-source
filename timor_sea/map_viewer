@@ -110,9 +110,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [122.79618219334407, -17.20501743540183]]]]),
     centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// little viewing script for looking at reefs and classifications for each region. 
-//From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
-//in the workflow 
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
+// in the workflow 
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -155,69 +155,7 @@ Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, senso
 // Region classification
 Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic map RAW', false);
 Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic map RAW', false);
-//Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
-//Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
-//Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual (FINAL)", true)
-//Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Benthic RAW", false)
-//Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 
-//Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
-//Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
-//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
-//Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
-
-/*
-
-// nth cari
-//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
-Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
-
-// wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
-var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
-
-Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)*/
-
-// add training data / sample point distributions
-// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
-//Map.addLayer(geo_train, {}, "geomorphic training locations", false)
-
-// WCMC
-
-//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
-//Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
-//Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
-//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
-//Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
-/*
-
-// nth cari
-//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
-Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
-Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
-
-// wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
-var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
-
-Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)*/
-// add training data / sample point distributions
-// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
-//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
-//Map.addLayer(geo_train, {}, "geomorphic training locations", false)
-// WCMC
 
 
 // #############
