@@ -169,8 +169,8 @@ var region_params = param_module.timor          //<------------ THIS IS WHERE YO
 
 // choogse where to centre (link this dynamically to map app?)
 
-Map.centerObject(centre_map, 5)
-//splitting North Cari regions
+Map.centerObject(centre_map, 6)
+
 
 // geo
 if (ee.List(region_params.geo_map).length().getInfo() > 1) {
