@@ -1744,6 +1744,7 @@ var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixel
             })]),
     reef_boundary = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
