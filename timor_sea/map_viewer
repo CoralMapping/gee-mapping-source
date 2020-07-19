@@ -140,7 +140,7 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
              .selfMask();
 } else {
-    var benthic_map = ee.Image(region_params.benthic_map);
+    var benthic_map_raw = ee.Image(region_params.benthic_map);
 }
 
 // Add low-tide base map
