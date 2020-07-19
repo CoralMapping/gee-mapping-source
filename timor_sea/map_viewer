@@ -181,12 +181,12 @@ Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low t
 
 // Hawaii classification
 
-Map.addLayer(ee.ImageCollection(region_params.bethic_map).mosaic(), map_palettes.geo, "Benthic RAW", false)
-Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
-Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
-Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual (FINAL)", true)
-Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Benthic RAW", false)
-Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
+Map.addLayer(ee.Image(region_params.bethic_map).mosaic(), map_palettes.geo, "Benthic RAW", false)
+//Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Geo RAW", false)
+//Map.addLayer(geo_clean_p2, map_palettes.geo, "Geo Clean Pass 2", false)
+//Map.addLayer(geo_clean_man, map_palettes.geo, "Geo Clean Manual (FINAL)", true)
+//Map.addLayer(ee.ImageCollection([hawaii_benthic_west, hawaii_benthic_east]).mosaic(), map_palettes.benthic, "Benthic RAW", false)
+//Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
 //Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
@@ -246,9 +246,6 @@ Map.addLayer(kd2, {}, "waves - kd2", false)*/
 //Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 // WCMC
 
-var wcmc=wcmc.filterBounds(BondariesWCMCForTS)
-
-Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 // #############
 // example confidence layers
