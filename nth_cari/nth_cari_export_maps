@@ -103,24 +103,24 @@ var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
 
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
-/*
+
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
   description: 'ncb_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/ncb_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711_V2/ncb_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
-*/
+
 Export.table.toCloudStorage({
   collection: exclude_fc, 
   description: 'Updated_Mask',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711/Updated_Mask',
+  fileNamePrefix: 'coral-gee-export-bucket/ncb_updated20200711_V2/Updated_Mask',
   fileFormat: 'SHP'
 });
