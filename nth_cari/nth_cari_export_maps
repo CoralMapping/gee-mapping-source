@@ -1,26 +1,13 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_boundary = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-178.9902899370743, 28.223543414829674],
-          [-174.31670726951845, 25.35687341614974],
-          [-167.09539623806367, 22.871758319961504],
-          [-170.0817066799553, 16.50934233576371],
-          [-169.0058019722854, 16.066622127171755],
-          [-166.37097585782607, 22.507211300901893],
-          [-159.72242105060639, 20.55728446862732],
-          [-154.4481229628139, 17.58286698869547],
-          [-153.52755471286838, 20.385834406814258],
-          [-159.43420248789334, 22.893106923083444],
-          [-167.4874893752415, 24.965604306992145],
-          [-178.2214120255763, 29.123686786807387]]]),
-    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
+var geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean"),
     pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask"),
-    Final_refinements_RB = /* color: #010000 */ee.Feature(
+    Final_refinements_RB = 
+    /* color: #010000 */
+    /* shown: false */
+    ee.Feature(
         ee.Geometry.MultiPolygon(
             [[[[-75.67606535402598, 18.603710355987985],
                [-75.86832609621348, 18.74811912620401],
@@ -52,7 +39,19 @@ var reef_boundary =
                [-79.96497685495173, 24.15794003007392]]]]),
         {
           "system:index": "0"
-        });
+        }),
+    reef_bounday = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-85.77982387793672, 27.763347213851397],
+          [-85.77982387793672, 16.09023269515454],
+          [-69.95951137793672, 16.09023269515454],
+          [-69.95951137793672, 27.763347213851397]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // NCB (last export 11/07/2020) export to Vulcan bucket
 
