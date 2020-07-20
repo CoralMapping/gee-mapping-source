@@ -103,7 +103,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.9
            [123.47733453709407, -16.616389316286742],
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
-           [122.79618219334407, -17.20501743540183]]]]);
+           [122.79618219334407, -17.20501743540183]]]]),
+    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -126,7 +127,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 Map.centerObject(centre_map, 6);
 
 // Load the raw classifications
-// geo raw
+// geo raw (test if more than one map exists for the region)
 if (ee.List(region_params.geo_map).length().getInfo() > 1) {
   var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
                .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
@@ -135,7 +136,7 @@ if (ee.List(region_params.geo_map).length().getInfo() > 1) {
   var geo_map_raw = ee.Image(region_params.geo_map_raw);
 }
 
-// benthic raw
+// benthic raw (test if more than one map exists for the region)
 if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
              .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
@@ -143,14 +144,17 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
 } else {
     var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
 }
+//
+
 
 // Add low-tide base map
 var low_tide_image = ee.Image(region_params.image);
 Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 
 // Raw region classification
-Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic map RAW', false);
-Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic map RAW', false);
+Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic RAW', false);
+Map.addLayer(benthic_subreg2_no_b4p, map_palettes.benthic, 'Benthic RAW no b4p', false);
 
 
 ////////// UI SET UP //////////
