@@ -40,7 +40,7 @@ var geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
         {
           "system:index": "0"
         }),
-    reef_bounday = 
+    reef_boundary = 
     /* color: #d63000 */
     /* displayProperties: [
       {
