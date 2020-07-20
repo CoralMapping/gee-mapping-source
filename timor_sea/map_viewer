@@ -144,8 +144,6 @@ if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
 } else {
     var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
 }
-//
-
 
 // Add low-tide base map
 var low_tide_image = ee.Image(region_params.image);
@@ -154,7 +152,7 @@ Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, senso
 // Raw region classification
 Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
 Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic RAW', false);
-Map.addLayer(benthic_subreg2_no_b4p, map_palettes.benthic, 'Benthic RAW no b4p', false);
+Map.addLayer(benthic_subreg2_no_b4p, map_palettes.benthic, 'Benthic RAW no b4p outer reefs', false);
 
 
 ////////// UI SET UP //////////
