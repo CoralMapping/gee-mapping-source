@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]),
-    noreefmask = /* color: #43ff06 */ee.Geometry.MultiPolygon(
+    noreefmask = 
+    /* color: #43ff06 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[131.6209457353908, -3.406481422012466],
            [133.1590316728908, -4.809083468243518],
            [133.5105941728908, -5.946613263722921],
