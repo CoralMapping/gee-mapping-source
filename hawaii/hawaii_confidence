@@ -107,8 +107,8 @@ var segments = ee.Image(region_params.dove_segments)
 var geomorph = (vars.use_geo_points) ? ee.FeatureCollection(region_params.geo_pts) : ee.FeatureCollection(region_params.geo_val_library)
 var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_val_library)
 if (vars.assess_clean) {
-  var geo_map = ee.Image(region_params.geo_map_clean_man)
-  var benthic_map = ee.Image(region_params.benthic_map_clean)  
+  var geo_map = ee.Image(region_params.geo_map_clean3)
+  var benthic_map = ee.Image(region_params.benthic_map_clean1)  
 } else {
   var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
   var benthic_map = ee.ImageCollection(region_params.benthic_map).mosaic()
@@ -282,7 +282,8 @@ var scaledCol=ee.ImageCollection(scaledprob.bandNames().map(function (b) {
   return scaledprob.select([b])
 }));//.aside(print,'scaledprob')
 
-
+// var val_map=val_map.select(['constant'],['classification']);
+print('val_map',val_map)
 //for benthic
 var fprob_benthic=val_map.expression(
                   "(b('classification') == 11) ? img11*0.9"+
