@@ -362,7 +362,7 @@ var legend=ui.Panel({
   }
 });
 
-var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+var vis = {min: 'low', max: 'high', palette: '4d004b,8c96c6,f7fcfd'};
 function makeColorBarParams(palette) {
   return {
     bbox: [0, 0, 1, 0.1],
