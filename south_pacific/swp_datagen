@@ -12,11 +12,17 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.
             {
               "mask": 1,
               "system:index": "0"
-            })]);
+            })]),
+    export_geom = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[-168.034, -7.3087],
+          [-168.034, -24.0093],
+          [162.7417, -24.0093],
+          [162.7417, -7.3087]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Coral atlas mapping project - SWP region
+// Coral atlas mapping project - South West Pacific Region
 // Contact: mitchell.lyons@gmail.com
+// Region coordinator: Mitchell Lyons (mitchell.lyons@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script generates the data as an asset (for quick load)
@@ -26,7 +32,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.
 // Need to load the segmentation package
 // https://earthengine.googlesource.com/users/gena/packages/+/master/slic#
 // TODO: need to modify the source code to be able to use 2 bands?
-//var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
+// var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
@@ -34,10 +40,9 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.swpac     //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.swpac       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
-
 
 
 // Table of contents
@@ -59,12 +64,13 @@ var vars = {
   //segment_max: 1499, // must be <reduce_max below (~1500 at this point seems fair)
   reduce_max: 1500, // the max size of object to be able to reduce
   //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
-  segment_all_bands: true, // segemnt on all input bands or those chosen below
-  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B2','B4'], // only handles Landsat/Sentinel-2/Dove
+  segment_all_bands: true, // segement on all input bands or those chosen below
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
   
   // analysis parameters
   //image_data_scale: sensor_params.pixel, // pixel size of the image data
-  depth_limit: 1500, // depth limit for analysis 
+  //depth_limit: 15.00,//RB: make the right depth limit as S2 depth is not *100 as dove?
+  depth_limit: 2500, // depth limit for analysis in cm 
   min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
@@ -78,13 +84,13 @@ var vars = {
   use_brightness: false,
   
   // use global reef mask layer to remove junk + limit size
-  global_mask: true,
+  global_mask: false,
   
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  segments_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'segmentation',
-  pixels_output_name: region_params.sname + '_' + sensor_params.sname + '_' + 'pixels',
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
   asset_output: region_params.asset // asset path
 }
 
@@ -94,35 +100,79 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 
 // 2. Data loads & vis
 
-Map.centerObject(map_centre, 15)
+Map.centerObject(map_centre, 6)
 
 // load input data
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
-var depth = ee.Image(region_params.depth).int16() //(NB depth is *100 in integer values)
+
+/* 
+// import depth data
+Depth data used as follows:
+    - take mean where ls8 and sentinel2 exist
+    - use s2 flags where no ls8, and vica verca
+    - use dove where no s2 or ls8 data exist
+
+NB depth is 16bit s integer in centimeters)
+*/
+var dove_depth = ee.Image(region_params.depth).rename('depth')
+var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
+Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
+Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
+
+// make the depth data for modelling/mapping
+// --> Use S2 where possible, then LS8, then Dove
+// --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+// get back the negative retrievals as very shallow
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
-//var waves = ee.Image(region_params.waves).unmask(0)
-var geomorph = ee.FeatureCollection(region_params.geo_train)
-var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
-var depth = depth.updateMask(depth_mask).rename('depth') // mask out depth below set limit
+// "NOT REEF" CLEAN
+var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone");
+// remove
+depth_mask = depth_mask.where({
+  test: not_reef_img.eq(1),
+  value: ee.Image(0)
+});
+
+// "TURBID WATER" CLEAN
+var tmask = ee.FeatureCollection(region_params.turbid_mask).geometry();
+var tmask_img = ee.Image().byte().paint(ee.Feature(tmask, {zone: 1}), "zone");
+// remove
+depth_mask = depth_mask.where({
+  test: tmask_img.eq(1),
+  value: ee.Image(0)
+});
+
+// clip and load other variables
+var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
+
 //var waves = waves.rename('waves')
+//var waves = ee.Image(region_params.waves).unmask(0)
+//var geomorph = ee.FeatureCollection(region_params.geo_train)
+//var benthic = ee.FeatureCollection(region_params.benthic_train)
 
-var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-//var export_convhull = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: depth.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+// define it if it's a normal shape, otherwise draw it
+//var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+//var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100});
 
-Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Water depth (m)", false) // water depth
+Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
+Map.addLayer(tmask,{}, "turbid mask", false);
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
 if (vars.global_mask) {
-  // manual touch-ups if needed
+  /*// manual touch-ups if needed
   var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
-  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)
+  print(manual_adds)
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)*/
   // mask the depth mask with global mask
+  global_mask = global_mask.clip(export_geom)
   depth_mask = depth_mask.updateMask(global_mask)
   Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
 }
@@ -209,7 +259,8 @@ if (vars.use_brightness) {
 }
 
 // calculate slope
-//var slope = ee.Terrain.slope(depth) // slope in degress (SWP depth is no good for slope, and it's probably too big for slope calcs...)
+var slope = ee.Terrain.slope(depth) // slope in degress
+
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
@@ -266,7 +317,7 @@ var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reduc
 if (vars.pixel_based) {
   // pixel-based data generation
   // combine data to move forward with
-  var all_data = reflec.addBands(depth)//.addBands(waves).addBands(slope)
+  var all_data = reflec.addBands(depth).addBands(slope)//.addBands(waves)
                   .addBands(depth_var).addBands(red_var)
                   .updateMask(depth_mask) // make sure all layers are clipped down
   if (vars.use_glcm) { // add glcm if using
@@ -280,7 +331,8 @@ if (vars.pixel_based) {
     // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
     var segmented_data_mean = run_snic(reflec
                                        .addBands(depth)
-                                       //.addBands(waves).addBands(slope)
+                                       .addBands(slope)//.addBands(waves)
+                                       .updateMask(depth_mask)
                                        )
                                        .regexpRename('_mean', '')
     Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
@@ -295,9 +347,9 @@ if (vars.pixel_based) {
     var segmented_data = run_snic(segment_on)
     Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
     // Calculate object statistics
-    var segmented_data_mean = reflec.addBands(depth)//.addBands(waves).addBands(slope)
+    var segmented_data_mean = reflec.addBands(depth).addBands(slope)//.addBands(waves)
                               //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
-                              .addBands(depth_var).addBands(red_var)
+                              //.addBands(depth_var).addBands(red_var)
                               .addBands(segmented_data.select('clusters'))
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
     segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
@@ -315,7 +367,7 @@ if (vars.pixel_based) {
   // combine data to move forward with
   var all_data = segmented_data_mean
                  //.addBands(segmented_data_sd)
-                 .addBands(depth_var).addBands(red_var)
+                 //.addBands(depth_var).addBands(red_var)
                  .updateMask(depth_mask)
   //Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
 }
@@ -362,7 +414,7 @@ Export.table.toDrive({
 // export if specified in input params
 if (vars.do_export) {
   // add raster flag for either side of dateline
-  var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+  var latlong = ee.Image.pixelLonLat().select('longitude')//.clip(export_geom)
   var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
   var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
   
