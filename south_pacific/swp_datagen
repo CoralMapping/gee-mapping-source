@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
-    manual_mask_additions = /* color: #d63000 */ee.FeatureCollection(
+    manual_mask_additions = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[178.0708356215348, -16.4585267896326],
@@ -13,7 +16,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.
               "mask": 1,
               "system:index": "0"
             })]),
-    export_geom = /* color: #d63000 */ee.Geometry.Polygon(
+    export_geom = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[-168.034, -7.3087],
           [-168.034, -24.0093],
           [162.7417, -24.0093],
@@ -65,7 +71,7 @@ var region_params = param_module.swpac       //<------------ THIS IS WHERE YOU C
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -147,7 +153,7 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
-// "NOT REEF" CLEAN
+/*// "NOT REEF" CLEAN
 var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
@@ -162,7 +168,7 @@ var tmask_img = ee.Image().byte().paint(ee.Feature(tmask, {zone: 1}), "zone");
 depth_mask = depth_mask.where({
   test: tmask_img.eq(1),
   value: ee.Image(0)
-});
+});*/
 
 // clip and load other variables
 var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
@@ -178,7 +184,7 @@ var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out de
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
-Map.addLayer(tmask,{}, "turbid mask", false);
+//Map.addLayer(tmask,{}, "turbid mask", false);
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
