@@ -17,7 +17,15 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.
         [[[-168.034, -7.3087],
           [-168.034, -24.0093],
           [162.7417, -24.0093],
-          [162.7417, -7.3087]]]);
+          [162.7417, -7.3087]]]),
+    dove_east = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_east/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200618T190440Z/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
+    depth_east = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200622T163335Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_depth"),
+    s2_east = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200622T163335Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_sentinel2_depth"),
+    ls8_east = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200622T163335Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_landsat8_depth"),
+    dove_west = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_west/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200618T195633Z/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
+    depth_west = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200619T181024Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_depth"),
+    s2_west = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200619T181024Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_sentinel2_depth"),
+    ls8_west = ee.Image("projects/coral_atlas/workflow/mapping/sw_pacific_west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic/20200619T181024Z/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_landsat8_depth");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - South West Pacific Region
@@ -103,7 +111,9 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 Map.centerObject(map_centre, 6)
 
 // load input data
-var reflec = ee.Image(region_params.image).select(vars.all_bands)
+var reflec = ee.ImageCollection([dove_east, dove_west])
+                                 .mosaic()
+                                 .select(vars.all_bands)
 
 /* 
 // import depth data
@@ -114,9 +124,15 @@ Depth data used as follows:
 
 NB depth is 16bit s integer in centimeters)
 */
-var dove_depth = ee.Image(region_params.depth).rename('depth')
-var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+var dove_depth = ee.ImageCollection([depth_east, depth_west])
+                                     .mosaic()
+                                     .rename('depth')
+var s2_depth = ee.ImageCollection([s2_east, s2_west])
+                                   .mosaic()
+                                   .rename('depth')
+var ls8_depth = ee.ImageCollection([ls8_east, ls8_west])
+                                   .mosaic()
+                                   .rename('depth')
 Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
 Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
 Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
