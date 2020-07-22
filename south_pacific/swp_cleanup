@@ -27,7 +27,8 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
         [[[161.99244048631044, -7.029171821347217],
           [161.99244048631044, -24.50136375705747],
           [192.84204986131044, -24.50136375705747],
-          [192.84204986131044, -7.029171821347217]]], null, false);
+          [192.84204986131044, -7.029171821347217]]], null, false),
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Hawaii
@@ -203,21 +204,9 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
-  var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
-  var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
-  var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-  var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
-  var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
-  var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
-  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
-  var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
-  var notdeeplagoon = ee.Image().byte().paint(ee.Feature(not_deep_lagoon, {zone: 1}), "zone").clip(not_deep_lagoon);
-  var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-  var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
-  var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
-  var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
+  //var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
+  //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
+  
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -236,11 +225,11 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
-  // TRF -> Outer reef flat
+  /*// TRF -> Outer reef flat
   man_geo = man_geo.where({
     test: man_geo.eq(16),
     value: ee.Image(14)
-  });
+  });*/
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
@@ -249,149 +238,6 @@ if (vars.manual_clean && vars.geomorphic) {
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })*/
-  
-  //West Hawaii clean
-  // Deep water -> Reef slope
-  man_geo = man_geo.where({
-    test: notdeepwater.eq(1)
-                     .and(man_geo.eq(2)),
-    value: ee.Image(22)
-  });
-  
-  // Reef crest -> Inner reef flat
-  man_geo = man_geo.where({
-    test: notreefcrest.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(13)
-  });
-  
- // Deep water/shelter slope -> Back reef slope
-  man_geo = man_geo.where({
-    test: backreefslope.eq(1)
-                     .and(man_geo.eq(2)).or(man_geo.eq(21)),
-    value: ee.Image(24)
-  });
-  
-  // Shallow/deep lagoon -> Inner reef flat (French Frigate Shoals)
-  man_geo = man_geo.where({
-    test: reefflat.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)),
-    value: ee.Image(13)
-  });
-  
-  // Deep water -> Deep lagoon
-  man_geo = man_geo.where({
-    test: west_extent.eq(1)
-                     .and(man_geo.eq(2)),
-    value: ee.Image(12)
-  });
-  
-  // Sheltered slope -> Reef slope
-  man_geo = man_geo.where({
-    test: west_extent.eq(1)
-                     .and(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
-  
-  // Deep lagoon -> Reef slope (around the reef edge)
-  man_geo = man_geo.where({
-    test: notdeeplagoon.eq(1)
-                     .and(man_geo.eq(12)),
-    value: ee.Image(22)
-  });
-  
-  // Reef slope -> Inner reef flat (insided the reef)
-  man_geo = man_geo.where({
-    test: notreefslope.eq(1)
-                     .and(man_geo.eq(22)),
-    value: ee.Image(13)
-  });
-  
-  // Deep lagoon -> Outer reef flat (insided the reef)
-  man_geo = man_geo.where({
-    test: notDLouterreef.eq(1)
-                     .and(man_geo.eq(12)),
-    value: ee.Image(14)
-  });
-  
-  // Deep lagoon -> Shallow lagoon (insided the reef)
-  man_geo = man_geo.where({
-    test: notDLshallowlagoon.eq(1)
-                     .and(man_geo.eq(12)),
-    value: ee.Image(11)
-  });
-  
-  // Reef slope -> Plateau (Corona reef)
-  man_geo = man_geo.where({
-    test: notRSplateau.eq(1)
-                     .and(man_geo.eq(22)),
-    value: ee.Image(23)
-  });
-  
-
-  //East Hawaii clean
-  
-  // Inner reef flat -> Outer reef flat
-  man_geo = man_geo.where({
-    test: east_extent.eq(1)
-                     .and(man_geo.eq(13)),
-    value: ee.Image(14)
-  });
-  
-  // Reef crest -> Outer reef flat
-  man_geo = man_geo.where({
-    test: east_extent.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(14)
-  });
-  
-  // Sheltered reef slope -> Reef slope
-  man_geo = man_geo.where({
-    test: east_extent.eq(1)
-                     .and(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
-  
-  // Deep lagoon -> Reef slope
-  man_geo = man_geo.where({
-    test: east_extent.eq(1)
-                     .and(man_geo.eq(12)),
-    value: ee.Image(22)
-  });
-  
-  // Shallow lagoon -> Outer reef flat
-  man_geo = man_geo.where({
-    test: east_extent.eq(1)
-                     .and(man_geo.eq(11)),
-    value: ee.Image(14)
-  });
-  
-  // Kaneohe Bay -> Deep lagoon
-  man_geo = man_geo.where({
-    test: kaneohebay.eq(1),
-    value: ee.Image(12)
-  });
-  
-  // Kaneohe Bay Reefs -> Outer reef flat
-  man_geo = man_geo.where({
-    test: kaneohebayreef.eq(1),
-    value: ee.Image(14)
-  });
-  
-  
-    /*// LAND mask clean ############# ---> to be moved to first stage clean up
-  var land_mask = mod_land.select('water_mask').mean().eq(0)
-
-  var land_mask_buff = ee.Image(1)
-    .cumulativeCost({
-      source: land_mask, 
-      maxDistance: 2000,
-      geodeticDistance: false,
-    }).lt(2000).unmask(0)
-  
-  Map.addLayer(land_mask_buff, {}, "Land mask", false)
-  
-  */
   
   
   // Add the manual layer to the map
@@ -449,47 +295,6 @@ if (vars.manual_clean && !vars.geomorphic) {
     });
     
     
-    // manual polygon guided rules
-    // West Hawaii
-    
-    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-    var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
-    
-    // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
-    man_benthic = man_benthic.where({
-     test: steepslope.eq(1)
-                      .and(geo_map.eq(22))
-                      .and(man_benthic.eq(11).or(man_benthic.eq(18))),
-     value: ee.Image(15)
-     });
-    
-    // BMA on Reef Crest == coral/algae
-    man_benthic = man_benthic.where({
-      test: west_extent.eq(1)
-                       .and(geo_map.eq(15))
-                       .and(man_benthic.eq(18)),
-      value: ee.Image(15)
-    });
-    
-    // East and West Hawaii
-    // BMA on DW/DL/SRS/RS/plateau/BRS == sand
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(18)
-                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
-      value: ee.Image(11)
-    });
-    
-    // East Hawaii
-    // Sand on RS and plateau == rock
-    man_benthic = man_benthic.where({
-      test: east_extent.eq(1)
-                       .and(man_benthic.eq(11))
-                       .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
-      value: ee.Image(13)
-    });
-  
   
   // Add the manual layer to the map
   //var image = ee.Image(region_params.image);
@@ -709,6 +514,17 @@ if (!vars.geomorphic && vars.cleanup_stage == 1) {
     value: smooth_map
   //}).updateMask(smooth_map.neq(99)).updateMask(class_extent_mask)
   }).updateMask(class_extent_mask);
+  
+  
+  // special case for SWP, remap separate coral (16) & algae (17) classes back to coral/algae (15)
+  clean_map = clean_map.where({
+    test: clean_map.eq(16), 
+    value: ee.Image(15)
+  });
+  clean_map = clean_map.where({
+    test: clean_map.eq(17), 
+    value: ee.Image(15)
+  });
   
   
   /*// CLEAN UP ALL TEMPORAL AREAS
