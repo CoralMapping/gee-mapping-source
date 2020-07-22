@@ -154,9 +154,9 @@ if (vars.raw) {
 
   // benthic raw (test if more than one map exists for the region)
   if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
-      var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
-                       .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
-                       .selfMask();
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
   }
