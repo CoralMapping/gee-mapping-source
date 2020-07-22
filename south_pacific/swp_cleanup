@@ -114,6 +114,7 @@ var vars = {
   
   // export options
   do_export: true, // export the results?
+  local_epsg: region_params.local_epsg,
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -411,7 +412,7 @@ if (vars.manual_clean && vars.geomorphic) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
-    crs: 'EPSG:4326',
+    crs: vars.local_epsg,
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   });
@@ -507,7 +508,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     region: reef_boundary,
     scale: vars.image_data_scale,
-    crs: 'EPSG:4326',
+    crs: vars.local_epsg,
     maxPixels: 1e13,
     pyramidingPolicy: {'.default': 'mode'}
   });
