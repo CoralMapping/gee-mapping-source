@@ -358,6 +358,7 @@ if (vars.do_export) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
     region: export_geom,
+    crs: vars.local_epsg,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mode'},
   })
