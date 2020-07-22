@@ -137,38 +137,38 @@ var vars = {
 // choose where to centre the map (link this dynamically to map app?)
 Map.centerObject(centre_map, 6);
 
-// Load the raw classifications
-// geo raw (test if more than one map exists for the region)
-if (ee.List(region_params.geo_map).length().getInfo() > 1) {
-  var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
-               .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
-               .selfMask();
-} else {
-  var geo_map_raw = ee.Image(region_params.geo_map_raw);
-}
-
-// benthic raw (test if more than one map exists for the region)
-if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
-    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
-             .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
-             .selfMask();
-} else {
-    var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
-}
-
 // Add low-tide base map
 var low_tide_image = ee.Image(region_params.image);
 Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 
-// Add the raw region classification to the viewer
+// Load the raw classifications
 if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map_raw);
+  }
+
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+      var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+               .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
+               .selfMask();
+  } else {
+      var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
+  }
+
+  // Add the raw region classification to the viewer
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
   Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic RAW', false);
   Map.addLayer(benthic_subreg2_no_b4p, map_palettes.benthic, 'Benthic RAW no b4p outer reefs', false); // test without band b4p
 }
 
 // Geo Training Data
-var geo_train = ee.FeatureCollection(region_params.benthic_train_library);
+var geo_train = ee.FeatureCollection(region_params.geo_train_library);
 
 var geo_buff = function(feature) {
   return feature.buffer(20);   // substitute in your value of Z here
