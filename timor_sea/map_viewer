@@ -128,11 +128,14 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 
 var vars = {
   raw: true,
+  geo_clean1: false,
+  geo_clean2: false,
+  geo_clean3: false,
+  benthic_clean1: false,
 };
 
-
 // choose where to centre the map (link this dynamically to map app?)
-//Map.centerObject(centre_map, 6);
+Map.centerObject(centre_map, 6);
 
 // Load the raw classifications
 // geo raw (test if more than one map exists for the region)
@@ -165,7 +168,7 @@ if (vars.raw) {
 }
 
 // Geo Training Data
-var geo_train = ee.FeatureCollection(region_params.geo_train_library);
+var geo_train = ee.FeatureCollection(region_params.benthic_train_library);
 
 var geo_buff = function(feature) {
   return feature.buffer(20);   // substitute in your value of Z here
