@@ -19,7 +19,19 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([178.14674377441406, -18.
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[161.99244048631044, -7.029171821347217],
+          [161.99244048631044, -24.50136375705747],
+          [192.84204986131044, -24.50136375705747],
+          [192.84204986131044, -7.029171821347217]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - South West Pacific 
