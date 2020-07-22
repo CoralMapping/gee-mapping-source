@@ -126,6 +126,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
+// Choose which layers will be shown in the map viewer
 var vars = {
   raw: true,
   geo_clean1: false,
