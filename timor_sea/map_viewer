@@ -186,7 +186,7 @@ var geo_fill = empty.paint({
   color: 'class_num',
 });
 
-Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data');
+Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 
 ////////// UI SET UP //////////
