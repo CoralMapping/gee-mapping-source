@@ -36,7 +36,7 @@ var eg_area =
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Hawaii
+// Global coral atlas project - South West Pacific
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Paul Tudman (tuddy117@gmail.com)
 // Description:
@@ -200,7 +200,7 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.ImageCollection(region_params.pixels).moasaic().select('depth');
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
@@ -275,7 +275,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.ImageCollection(region_params.pixels).mosaic().select('depth');
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
@@ -363,8 +363,8 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
   var geo_map = geo_map_raw;
 }
 
-var depth = ee.Image(region_params.pixels).select('depth');
-var image = ee.Image(region_params.pixels).select('b3','b2','b1');
+var depth = ee.ImageCollection(region_params.pixels).mosaic().select('depth');
+var image = ee.ImageCollection(region_params.pixels).mosaic().select('b3','b2','b1');
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 //Map.centerObject(eg_area, 11)
