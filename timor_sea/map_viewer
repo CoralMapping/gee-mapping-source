@@ -164,7 +164,7 @@ if (vars.raw) {
 
   // Add the raw region classification to the viewer
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
-  Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
   Map.addLayer(benthic_subreg2_no_b4p, map_palettes.benthic, 'Benthic RAW no b4p outer reefs', false); // test without band b4p
 }
 
