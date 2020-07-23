@@ -1,3 +1,8 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.911111431319622]),
+    pixels_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_east"),
+    pixels_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_west");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
@@ -28,8 +33,8 @@ var vars = {
 Map.centerObject(centre_map, 6);
 
 // Add low-tide base map
-var low_tide_image = ee.Image(region_params.image);
-Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+var pixels = ee.ImageCollection([pixels_east, pixels_west]).mosaic();
+Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 
 // Load the raw classifications
 if (vars.raw) {
@@ -39,7 +44,7 @@ if (vars.raw) {
                  .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
                  .selfMask();
   } else {
-    var geo_map_raw = ee.Image(region_params.geo_map_raw);
+    var geo_map_raw = ee.Image(region_params.geo_map);
   }
 
   // benthic raw (test if more than one map exists for the region)
@@ -48,7 +53,7 @@ if (vars.raw) {
                      .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
                      .selfMask();
   } else {
-      var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
+      var benthic_map_raw = ee.Image(region_params.benthic_map);
   }
 
   // Add the raw region classification to the viewer
