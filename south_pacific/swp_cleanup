@@ -1,11 +1,15 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
+var eg_area = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[178.11792537642418, -19.163235696114032],
           [178.11912700606285, -19.160641289483575],
           [178.1160371012777, -19.1590197646103],
           [178.1149213023275, -19.161452045940777]]]),
     export_small = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -18,6 +22,7 @@ var eg_area = /* color: #d63000 */ee.Geometry.Polygon(
           [180.05640076118686, -16.51030303799518]]], null, false),
     swp_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -55,7 +60,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.hawaii;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.swpac;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -75,7 +80,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 2000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000,
+  geo_depth_cutoff: 1500,
   shallowlag_depth_cutoff: 500,
   benthic_depth_cutoff: 1000,
   
@@ -359,7 +364,7 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
 }
 
 var depth = ee.Image(region_params.pixels).select('depth');
-var image = ee.Image(region_params.image);
+var image = ee.Image(region_params.pixels).select('b3','b2','b1');
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 //Map.centerObject(eg_area, 11)
