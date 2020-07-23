@@ -150,7 +150,7 @@ if (vars.raw) {
                  .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
                  .selfMask();
   } else {
-    var geo_map_raw = ee.Image(region_params.geo_map_raw);
+    var geo_map_raw = ee.Image(region_params.geo_map);
   }
 
   // benthic raw (test if more than one map exists for the region)
@@ -159,7 +159,7 @@ if (vars.raw) {
                      .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
                      .selfMask();
   } else {
-      var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
+      var benthic_map_raw = ee.Image(region_params.benthic_map);
   }
 
   // Add the raw region classification to the viewer
