@@ -1,0 +1,94 @@
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
+// in the workflow 
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove  ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.swpac;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// Choose which layers will be shown in the map viewer
+var vars = {
+  raw: true,
+  geo_clean1: false,
+  geo_clean2: false,
+  geo_clean3: false,
+  benthic_clean1: false,
+};
+
+// choose where to centre the map (link this dynamically to map app?)
+Map.centerObject(centre_map, 6);
+
+// Add low-tide base map
+var low_tide_image = ee.Image(region_params.image);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+
+// Load the raw classifications
+if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map_raw);
+  }
+
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
+  } else {
+      var benthic_map_raw = ee.Image(region_params.benthic_map_raw);
+  }
+
+  // Add the raw region classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(benthic_map_raw, map_palettes.benthic, 'Benthic RAW', false);
+}
+
+// Geo Training Data
+var geo_train = ee.FeatureCollection(region_params.geo_train_library);
+
+var geo_buff = function(feature) {
+  return feature.buffer(20);   // substitute in your value of Z here
+};
+
+var geo_train_buff = geo_train.map(geo_buff)
+
+// Create an empty image into which to paint the features, cast to byte.
+var empty = ee.Image().byte();
+
+// Paint the interior of the polygons with different colors.
+var geo_fill = empty.paint({
+  featureCollection: geo_train_buff,
+  color: 'class_num',
+});
+
+Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data');
+
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+});
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+// generate the legend
+
