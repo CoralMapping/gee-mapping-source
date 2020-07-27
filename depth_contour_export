@@ -27,7 +27,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // load analysis params module
 var region_params = param_module.swpac        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
-var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
+var depth_thresh = 1000 // <--- ######## CHOOSE THE DEPTH HERE
 // choose an appropriate scale
 var export_scale = ee.Number(250)
 // choose "small" object to remove (in m x m, eg, 1000 = 1000m x 1000m patch)
