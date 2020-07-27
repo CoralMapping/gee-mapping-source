@@ -42,7 +42,7 @@ var epsg = region_params.epsg
 // SWP HACK (or another region that has east/west splits)
 if (region_params.sname == "swp") {
   var depth = ee.ImageCollection([ee.Image(region_params.pixels[0]),ee.Image(region_params.pixels[1])]).select('depth').mosaic()
-  var simple_geom = swp_geom
+  var export_geom = swp_geom
 } else {
   // load data dynamically
   var dove_depth = ee.Image(region_params.depth).rename('depth')
