@@ -1,3 +1,19 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var swp_geom = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[163.02720456454335, -21.322159902363804],
+          [166.82847409579335, -23.354391453545336],
+          [-179.03761477139412, -24.103670105631068],
+          [-169.78035527899596, -19.770972232439636],
+          [-168.03036823721808, -14.546123846657588],
+          [-170.84836140128058, -9.107272611054686],
+          [-172.44137897940558, -8.439523072122672],
+          [178.48874351936877, -6.97677197479569],
+          [165.12936851936877, -9.41239158218196],
+          [162.09714195686877, -18.068751086727666]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
 // Contact: mitchell.lyons@gmail.com
@@ -11,7 +27,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // load analysis params module
 var region_params = param_module.swpac        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
-var depth_thresh = 800 // <--- ######## CHOOSE THE DEPTH HERE
+var depth_thresh = 1300 // <--- ######## CHOOSE THE DEPTH HERE
 // choose an appropriate scale
 var export_scale = ee.Number(250)
 // choose "small" object to remove (in m x m, eg, 1000 = 1000m x 1000m patch)
@@ -25,7 +41,8 @@ var epsg = region_params.epsg
 
 // SWP HACK (or another region that has east/west splits)
 if (region_params.sname == "swp") {
-  var depth = ee.ImageCollection([region_params.segments]).select('depth').mosaic()
+  var depth = ee.ImageCollection([ee.Image(region_params.pixels[0]),ee.Image(region_params.pixels[1])]).select('depth').mosaic()
+  var simple_geom = swp_geom
 } else {
   // load data dynamically
   var dove_depth = ee.Image(region_params.depth).rename('depth')
@@ -38,6 +55,9 @@ if (region_params.sname == "swp") {
   var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
   // get back the negative retrievals as very shallow
   depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+  
+  var simple_geom = dove_depth.geometry().bounds()
+  
 }
 
 
@@ -82,13 +102,13 @@ Map.addLayer(depth_edge.reproject({crs: epsg, scale: 100}), {}, 'edge threshold'
 
 // region generation
 var export_geom = depth.gt(0).reduceToVectors({
-  geometry: dove_depth.geometry().bounds(),
+  geometry: simple_geom,
   scale: 1000,
   bestEffort: true,
   eightConnected: false,
   maxPixels: 1e13
 }).geometry().bounds()
-
+  
 Map.addLayer(export_geom, {}, "export_geom", true)
 
 // depth threshold
