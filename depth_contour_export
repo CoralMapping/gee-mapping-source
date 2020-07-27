@@ -56,7 +56,15 @@ if (region_params.sname == "swp") {
   // get back the negative retrievals as very shallow
   depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
   
-  var simple_geom = dove_depth.geometry().bounds()
+  // region generation
+  var export_geom = depth.gt(0).reduceToVectors({
+    geometry: dove_depth.geometry().bounds(),
+    scale: 1000,
+    crs: epsg,
+    bestEffort: true,
+    eightConnected: false,
+    maxPixels: 1e13
+  }).geometry().bounds()
   
 }
 
@@ -100,15 +108,6 @@ Map.addLayer(depth_edge.reproject({crs: epsg, scale: 100}), {}, 'edge threshold'
 
 // exports
 
-// region generation
-var export_geom = depth.gt(0).reduceToVectors({
-  geometry: simple_geom,
-  scale: 1000,
-  bestEffort: true,
-  eightConnected: false,
-  maxPixels: 1e13
-}).geometry().bounds()
-  
 Map.addLayer(export_geom, {}, "export_geom", true)
 
 // depth threshold
