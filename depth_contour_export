@@ -23,20 +23,21 @@ var small_objects = ee.Number(1000)
 
 // SWP HACK (or another region that has east/west splits)
 if (region_params.sname == 'swp') {
-  
+  var depth = ee.ImageCollection([region_params.pixels]).mosaic()
 } else {
   // load data dynamically
   var dove_depth = ee.Image(region_params.depth).rename('depth')
   var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
   var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+  
+  // make the depth data for modelling/mapping
+  // --> Use S2 where possible, then LS8, then Dove
+  // --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
+  var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+  // get back the negative retrievals as very shallow
+  depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 }
 
-// make the depth data for modelling/mapping
-// --> Use S2 where possible, then LS8, then Dove
-// --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
-var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
-// get back the negative retrievals as very shallow
-depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
 var depth_binary = depth.lt(depth_thresh) 
 //var depth_thresh_smooth = depth.focal_mean({radius:5, iterations: 3}).lt(depth_thresh)
