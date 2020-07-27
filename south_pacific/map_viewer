@@ -23,8 +23,8 @@ var region_params = param_module.swpac;       //<------------ THIS IS WHERE YOU 
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true,
-  geo_clean1: false,
-  geo_clean2: false,
+  geo_clean1: true,
+  geo_clean2: true,
   geo_clean3: false,
   benthic_clean1: false,
 };
@@ -60,6 +60,15 @@ if (vars.raw) {
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
+
+// Load the clean classifications
+var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+var geo_clean3 = ee.Image(region_params.geo_map_clean3);
+
+if (vars.geo_clean1) Map.addLayer(geo_map_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
+if (vars.geo_clean2) Map.addLayer(geo_map_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
+if (vars.geo_clean3) Map.addLayer(geo_map_clean3, map_palettes.geo, 'Geomorphic clean - stage 3', false);
 
 // Geo Training Data
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
