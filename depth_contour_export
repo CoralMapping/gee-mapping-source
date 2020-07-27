@@ -21,11 +21,15 @@ var small_objects = ee.Number(1000)
 
 // #############################
 
-
-// load data dynamically
-var dove_depth = ee.Image(region_params.depth).rename('depth')
-var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+// SWP HACK (or another region that has east/west splits)
+if (region_params.sname == 'swp') {
+  
+} else {
+  // load data dynamically
+  var dove_depth = ee.Image(region_params.depth).rename('depth')
+  var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
+  var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+}
 
 // make the depth data for modelling/mapping
 // --> Use S2 where possible, then LS8, then Dove
