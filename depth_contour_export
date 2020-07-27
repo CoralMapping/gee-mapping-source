@@ -9,7 +9,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // #############################
 // load analysis params module
-var region_params = param_module.wio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.swp        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose a depth (in cm) cutoff that oy think looks good, then export it =)
 var depth_thresh = 800 // <--- ######## CHOOSE THE DEPTH HERE
 // choose an appropriate scale
