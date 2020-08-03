@@ -5078,12 +5078,12 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
 }
 
 var depth = ee.Image(region_params.pixels).select('depth');
-var image = ee.Image(region_params.image);
+var low_tide_image = ee.Image(region_params.image);
 
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
 //Map.centerObject(eg_area, 11)
 Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false);
-Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:30000}, sensor_params.sname, false);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min:0, max:3000}, sensor_params.sname, false);
 
 // load for display purposes
 if (vars.geomorphic) {
