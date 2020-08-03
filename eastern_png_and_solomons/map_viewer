@@ -263,7 +263,9 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. In this case png and salomon 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
-//in the workflow 
+//in the workflow.
+
+//RB: I set initially this viewer for CR to draw artifact layers and set the mask 1) noReef_mask, 2) mid_mask and 3) refined_mask
 
 // imports
 /*
@@ -318,12 +320,14 @@ Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 //Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
 //Map.addLayer(geo_train, {}, "geomorphic training locations", false)
 
+*/
+
 // WCMC
 
-//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
-//Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
-//Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
-//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
+Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
+Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
+Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 //Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
 
 // wave data
@@ -333,7 +337,7 @@ var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 Map.addLayer(kd1, {}, "waves - kd1", false)
 Map.addLayer(kd2, {}, "waves - kd2", false)
 
-*/
+
 
 var wcmc=wcmc.filterBounds(BondariesWCMCForHI)
 
