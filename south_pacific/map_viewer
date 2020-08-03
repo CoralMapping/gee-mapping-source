@@ -8067,7 +8067,7 @@ var vars = {
   raw: true,
   geo_clean1: true,
   geo_clean2: true,
-  geo_clean3: false,
+  geo_clean3: true,
   benthic_clean1: false,
 };
 
