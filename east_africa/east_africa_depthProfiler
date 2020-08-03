@@ -39,8 +39,8 @@ var vars = {
     Depth_composite: ee.Image(DepthComp_EA),
 };
 
-print (vars.depth_L8)
-print (vars.s2_depth)
+//print (vars.depth_L8)
+//print (vars.s2_depth)
 
 
 /*
