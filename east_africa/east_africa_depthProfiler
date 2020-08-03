@@ -72,7 +72,7 @@ var depth_S2_renamed = depth_S2.select(
 var Dove_depth_neg=ee.Image(vars.Dove_depth)
 var Dove_depth=Dove_depth_neg.expression(
   '((-1) * B1)/100', {
-  'B1' :Dove_depth_neg.select('b1') //specify that B1 mean b1
+  'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean b1
 })
 
 //renaming band 1 in cc_high_depth from 'b1' to 'b1_b' (both layers have the same band name which makes )  
