@@ -36,7 +36,8 @@ var vars = {
     depth_L8 : ee.Image(region_param.ls8_depth).rename('L8depth'),
     depth_S2 : ee.Image(region_param.s2_depth).rename('S2depth'),
     Dove_depth : ee.Image(region_param.depth).rename('Dovedepth'),
-    Depth_composite: ee.Image(DepthComp_EA),
+    //Depth_composite: ee.Image(DepthComp_EA),
+    Depth_composite: ee.Image(region_param.pixel),
 };
 
 
