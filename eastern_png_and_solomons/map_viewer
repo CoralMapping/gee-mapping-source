@@ -67,7 +67,7 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 */
 // choose where to centre (link this dynamically to map app?)
 
-Map.centerObject(147.86087035000003, -7.199000717379121, 5)
+Map.setCenter(147.86087035000003, -7.199000717379121, 5)
 
 /*
 //4. add turbidity for reference
