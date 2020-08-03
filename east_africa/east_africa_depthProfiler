@@ -5,7 +5,7 @@ var DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/e
     /* shown: false */
     ee.Geometry.Point([41.87294739174308, -17.301928804028122]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 7/07/2020
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 // Description:
 
 //App to display depth profile (or any spatial profile) from a stack of images. 
@@ -27,20 +27,21 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 //bring the stack from datagen
 
-var region_param = param_module.east_africa
+var region_params = param_module.east_africa
 
 //setting variables from stack
 
 var vars = {
-    Dove_low_sr : ee.Image(region_param.low_rrs),
-    depth_L8 : ee.Image(region_param.ls8_depth).rename('L8depth'),
-    depth_S2 : ee.Image(region_param.s2_depth).rename('S2depth'),
-    Dove_depth : ee.Image(region_param.depth).rename('Dovedepth'),
+    Dove_low_sr : ee.Image(region_params.low_rrs),
+    depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
+    depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
+    Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     //Depth_composite: ee.Image(DepthComp_EA),
-    Depth_composite: ee.Image(region_param.pixel),
+    //Depth_composite: ee.Image(region_param.pixel),
+    Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
-print (Depth_composite)
+print (vars.Depth_composite)
 // 0. data preparation (invert sign, change band names)
 //Compute the transformation  to neg using expression (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
