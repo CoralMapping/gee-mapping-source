@@ -175,9 +175,10 @@ if (vars.raw) {
 
 
 // if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic map - stage 1 clean', false);
-if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(timor_geo_clean1_dtl_2000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_2000)', false);
-if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(timor_geo_clean1_dtl_4000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_4000)', false);
-
+if (vars.cleanup_stage == 1) {
+  Map.addLayer(ee.Image(timor_geo_clean1_dtl_2000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_2000)', false);
+  Map.addLayer(ee.Image(timor_geo_clean1_dtl_4000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_4000)', false);
+}
 
 
 
