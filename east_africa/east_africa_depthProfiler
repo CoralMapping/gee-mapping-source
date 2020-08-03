@@ -23,7 +23,7 @@ var DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/e
 
 // initial utils for app and getting libraries needed from reef_params in workflow
 var utils = require('users/gena/packages:utils')
-var param_module= require('users/michest/global_reefs:Modules/reef_params')
+var param_module = require('users/michest/global_reefs:Modules/reef_params')
 
 //bring the stack from datagen
 
