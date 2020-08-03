@@ -43,7 +43,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
           [-173.0130383920856, 26.804933056111935],
           [-175.1224133920856, 28.710324938451418]]]),
     turbidity = ee.Image("projects/coral_atlas/hawaii/hawaii_accturb"),
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/hawaii/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200224T183448Z/hawaii_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"),
     rivermouth = 
     /* color: #d63000 */
     /* shown: false */
@@ -223,10 +222,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     hawaii_geo_west = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_west"),
     pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
     geo_train = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_geo_training"),
-    centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([-157.2904165142968, 20.910911768679238]),
     west = 
     /* color: #ef3dff */
     /* shown: false */
@@ -258,7 +253,13 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo_conf_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_conf_geo_clean"),
     geo_clean_p2 = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean2"),
     geo_clean_man = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_geo_clean3"),
-    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean1");
+    benthic_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean1"),
+    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/eastern_png_and_solomons/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200530T220905Z/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Point([147.86087035000003, -7.199000717379121]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. In this case png and salomon 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -273,11 +274,11 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 Map.centerObject(centre_map, 5)
 
-
+/*
 //4. add turbidity for reference
 Map.addLayer(turbidity.focal_mode(5), {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (smooth)", false)
 Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity", false)
-
+*/
 
 
 // add some background data
