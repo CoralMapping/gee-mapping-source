@@ -213,3 +213,5 @@ legend.add(colorBar)
 legend.add(legendLabels);
 
 Map.add(legend)
+
+*/
