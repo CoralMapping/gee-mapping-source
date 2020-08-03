@@ -39,20 +39,6 @@ var vars = {
     Depth_composite: ee.Image(DepthComp_EA),
 };
 
-//print (vars.depth_L8)
-//print (vars.s2_depth)
-
-
-/*
-var vars = {
-    Dove_low_sr : ee.Image(Dove_EA_low_sr),
-    depth_L8 : ee.Image(L8_EA_depth),
-    depth_S2 : ee.Image(S2_EA_depth),
-    Dove_depth : ee.Image(Dove_EA_depth),
-    Depth_composite: ee.Image(DepthComp_EA),
-};
-
-*/
 
 // 0. data preparation (invert sign, change band names)
 //Compute the transformation  to neg using expression (its server side method as well)
