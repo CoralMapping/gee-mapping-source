@@ -92,7 +92,7 @@ Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 //Map.addLayer(kd1, {}, "waves - kd1", false)
 //Map.addLayer(kd2, {}, "waves - kd2", false)
 
-region_wcmcBound = 
+var region_wcmcBound = 
     ee.Geometry.Polygon(
         [[[133.27621531509237, -3.6964607454528933],
           [134.77035594009237, -4.6606761835234165],
