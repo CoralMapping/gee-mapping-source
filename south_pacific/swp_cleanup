@@ -34,10 +34,7 @@ var eg_area =
           [192.84204986131044, -24.50136375705747],
           [192.84204986131044, -7.029171821347217]]], null, false),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    trf_to_rc = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    trf_to_rc = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[179.36986549251998, -18.071890049428163],
            [179.36729057186568, -18.07352197168958],
            [179.3705521380278, -18.08070224942271],
@@ -8260,10 +8257,10 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
-  var not_reef = ee.Image().byte().paint(ee.Feature(trf_to_rc, {zone: 1}), "zone").clip(trf_to_rc);
+  var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
-  var trf_to_rc_i = ee.Image().byte().paint(ee.Feature(rc_to_trf, {zone: 1}), "zone").clip(rc_to_trf);
-  var rc_to_trf_i = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
+  var trf_to_rc_i = ee.Image().byte().paint(ee.Feature(trf_to_rc, {zone: 1}), "zone").clip(trf_to_rc);
+  var rc_to_trf_i = ee.Image().byte().paint(ee.Feature(rc_to_trf, {zone: 1}), "zone").clip(rc_to_trf);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
