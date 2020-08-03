@@ -4638,7 +4638,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -5878,15 +5878,15 @@ if (vars.do_export) {
   if (!vars.manual_clean) {
     if (vars.show_eg_area) {
       if (vars.reproject_display) {
-        Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', false);
+        Map.addLayer(clean_map.clip(eg_area).reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name, false);
       } else {
-        Map.addLayer(clean_map.clip(eg_area), display_pal, output_name + '_final', false);
+        Map.addLayer(clean_map.clip(eg_area), display_pal, output_name, false);
       }
     } else {
       if (vars.reproject_display) {
-        Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name + '_final', true);
+        Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name, true);
       } else {
-        Map.addLayer(clean_map, display_pal, output_name + '_final', false);
+        Map.addLayer(clean_map, display_pal, output_name, false);
       }
     }
   }
