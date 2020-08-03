@@ -36,12 +36,9 @@ var vars = {
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    //Depth_composite: ee.Image(DepthComp_EA),
-    //Depth_composite: ee.Image(region_param.pixel),
     Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
-print (vars.Depth_composite)
 // 0. data preparation (invert sign, change band names)
 //Compute the transformation  to neg using expression (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
