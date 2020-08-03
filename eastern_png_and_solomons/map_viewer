@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/eastern_png_and_solomons/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200530T220905Z/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     Artifact_layer = 
     /* color: #98ff00 */
