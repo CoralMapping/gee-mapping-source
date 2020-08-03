@@ -34,7 +34,10 @@ var eg_area =
           [192.84204986131044, -24.50136375705747],
           [192.84204986131044, -7.029171821347217]]], null, false),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    trf_to_rc = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    trf_to_rc = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[179.36986549251998, -18.071890049428163],
            [179.36729057186568, -18.07352197168958],
            [179.3705521380278, -18.08070224942271],
@@ -8281,14 +8284,14 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // RC -> TRF
   man_geo = man_geo.where({
-    test: trf_to_rc_i.eq(1)
+    test: rc_to_trf_i.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(16)
   });
   
   // TRF -> RC
   man_geo = man_geo.where({
-    test: rc_to_trf_i.eq(1)
+    test: trf_to_rc_i.eq(1)
                      .and(man_geo.eq(16)),
     value: ee.Image(15)
   });
