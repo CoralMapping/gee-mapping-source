@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_composite_depth"),
-    geometry = 
+var geometry = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([41.87294739174308, -17.301928804028122]);
