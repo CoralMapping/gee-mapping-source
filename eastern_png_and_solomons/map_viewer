@@ -294,7 +294,7 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', true)
 //Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 //Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
 
-
+/*
 // Hawaii classification
 
 
@@ -309,7 +309,7 @@ Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 //var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
 //Map.addLayer(kd1, {}, "waves - kd1", false)
-//Map.addLayer(kd2, {}, "waves - kd2", false)*/
+//Map.addLayer(kd2, {}, "waves - kd2", false)
 
 // add training data / sample point distributions
 // ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
@@ -325,15 +325,15 @@ Map.addLayer(benthic_clean, map_palettes.benthic, "Benthic Clean (FINAL)", true)
 //Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
 //Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
 //Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
-/*
 
 // wave data
 var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
 var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
 
 Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)*/
+Map.addLayer(kd2, {}, "waves - kd2", false)
 
+*/
 
 var wcmc=wcmc.filterBounds(BondariesWCMCForHI)
 
@@ -341,6 +341,9 @@ Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 // #############
 // example confidence layers
+
+
+
 
 /*
 // depth and nir combos
