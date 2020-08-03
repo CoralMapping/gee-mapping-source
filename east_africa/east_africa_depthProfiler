@@ -1,16 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]},
-    imageVisParam5 = {"opacity":1,"bands":["b3","b2","b1"],"min":78.53999999999999,"max":1016.46,"gamma":1},
-    imageVisParam = {"opacity":1,"bands":["constant"],"min":-13.779999732971191,"max":0,"gamma":1},
-    imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-14.91,"max":0.02,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]},
-    imageVisParam3 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]},
-    imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1},
-    imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]},
-    Dove_EA_low_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
-    DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_composite_depth"),
-    Dove_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
-    L8_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_landsat8_depth"),
-    S2_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_sentinel2_depth"),
+var DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_composite_depth"),
     geometry = 
     /* color: #d63000 */
     /* shown: false */
