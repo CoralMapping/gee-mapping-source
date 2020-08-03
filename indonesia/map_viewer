@@ -16,8 +16,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     /* shown: false */
     ee.Geometry.MultiPoint(),
     East_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200625T183603Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic"),
-    West_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia_west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200630T213333Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic"),
-    region_wcmcBound = /* color: #d63000 */ee.Geometry.MultiPoint();
+    West_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia_west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200630T213333Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. In this case Indonesia
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
@@ -96,7 +95,45 @@ Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 //Map.addLayer(kd1, {}, "waves - kd1", false)
 //Map.addLayer(kd2, {}, "waves - kd2", false)
 
-
+region_wcmcBound = ee.Geometry.Polygon(
+        [[[93.58840941250003, 6.791494730886824],
+          [94.90676878750003, 3.64093915989871],
+          [94.64309691250003, 2.4122104035614123],
+          [95.78567503750003, 1.2702411322295468],
+          [96.57669066250003, 0.8308629532376932],
+          [100.97122191250003, -5.838663934851835],
+          [95.87356566250003, -12.172203094937396],
+          [96.75247191250003, -13.3722018319243],
+          [98.07083128750003, -12.258103864691517],
+          [99.03762816250003, -10.36215392808235],
+          [102.20169066250003, -6.363019140272654],
+          [105.18997191250003, -11.39786787970699],
+          [109.58450316250003, -9.062720247941744],
+          [118.10989378750003, -10.275684859830013],
+          [122.50442503750003, -12.429821303512593],
+          [128.65676878750003, -9.409724178735395],
+          [136.21536253750003, -8.541589104180444],
+          [136.56692503750003, -6.45036087059507],
+          [138.85208128750003, -5.9260917530333685],
+          [137.35794066250003, -3.7367685430388002],
+          [134.72122191250003, -2.069048711064028],
+          [135.42434691250003, 2.5878242774370124],
+          [133.49075316250003, 2.4122104035614123],
+          [132.87551878750003, 0.6550965511855799],
+          [129.71145628750003, 3.904039470872765],
+          [128.30520628750003, 3.728648080861526],
+          [127.42630003750003, 5.743125651855894],
+          [124.52590941250003, 5.743125651855894],
+          [123.99856566250003, 2.3243948595085717],
+          [119.95559691250003, 2.1487475868329367],
+          [115.91262816250003, -0.22379485615469957],
+          [114.77005003750003, -2.4203408936801782],
+          [112.13333128750003, -1.893372608897217],
+          [110.19973753750003, 0.30354690480305857],
+          [111.07864378750003, 2.7634138269133945],
+          [103.60794066250003, 2.5878242774370124],
+          [99.65286253750003, 5.393222570992973],
+          [97.27981566250003, 6.966010607214056]]]);
 
 var wcmc=wcmc.filterBounds(region_wcmcBound)
 
