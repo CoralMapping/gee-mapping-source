@@ -21,7 +21,11 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     /* color: #0b4a8b */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    region_wcmcBound = /* color: #ffc82d */ee.Geometry.Polygon(
+    region_wcmcBound = 
+    /* color: #ffc82d */
+    /* shown: false */
+    /* locked: true */
+    ee.Geometry.Polygon(
         [[[133.27621531509237, -3.6964607454528933],
           [134.77035594009237, -4.6606761835234165],
           [138.02230906509237, -2.8189834208112403],
