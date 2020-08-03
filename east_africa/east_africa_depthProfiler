@@ -38,6 +38,9 @@ var utils = require('users/gena/packages:utils')
 //TODO link to reef_params for next regions after SWP, hard to do it for SWP as they come divided in east west so I mosaicked them here
 // -1. variables and constants. Mosaic all data from West-East in the case of SWP (not needed for other regions maybe)
 
+
+
+
 var vars = {
     Dove_low_sr : ee.Image(Dove_EA_low_sr),
     depth_L8 : ee.Image(L8_EA_depth),
