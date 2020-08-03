@@ -107,7 +107,9 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.9
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
            [122.79618219334407, -17.20501743540183]]]]),
-    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p");
+    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p"),
+    timor_geo_clean1_dtl_2000 = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean1_dtl_2000"),
+    timor_geo_clean1_dtl_4000 = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean1_dtl_4000");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -172,9 +174,16 @@ if (vars.raw) {
 }
 
 
-if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(region_params.geo_map_clean1), display_pal, 'Geomorphic map - stage 1 clean', false);
+// if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic map - stage 1 clean', false);
+if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(timor_geo_clean1_dtl_2000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_2000)', false);
+if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(timor_geo_clean1_dtl_4000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_4000)', false);
 
-// Geo Training Data
+
+
+
+
+
+/*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
 
 var geo_buff = function(feature) {
@@ -193,7 +202,7 @@ var geo_fill = empty.paint({
 });
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-
+*/
 
 ////////// UI SET UP //////////
 
