@@ -144,7 +144,7 @@ var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
 
 ////////// UI SET UP //////////
 
-
+/*
 //Generate title
 var title = ui.Label({
   value: 'Coral Atlas map classes',
