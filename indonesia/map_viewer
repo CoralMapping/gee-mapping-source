@@ -16,8 +16,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     /* shown: false */
     ee.Geometry.MultiPoint(),
     East_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200625T183603Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic"),
-    West_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia_west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200630T213333Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic"),
-    geometry = /* color: #98ff00 */ee.Geometry.Point([116.74758910000003, -3.572891812544333]);
+    West_low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/indonesia_west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic/20200630T213333Z/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Viewing script for looking at reefs and classifications for each region. In this case Indonesia
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
