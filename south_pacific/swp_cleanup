@@ -331,7 +331,10 @@ var eg_area =
           [-175.24644879499016, -21.03904458481073],
           [-175.29108075299797, -21.053463483571132],
           [-175.32403973737297, -21.081015715450285]]]),
-    mid_mask = /* color: #00018f */ee.Geometry({
+    mid_mask = 
+    /* color: #00018f */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
