@@ -8242,7 +8242,7 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.ImageCollection(region_params.pixels).moasaic().select('depth');
+  var depth = ee.ImageCollection(region_params.pixels).mosaic().select('depth');
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
