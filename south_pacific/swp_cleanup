@@ -8161,7 +8161,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   local_epsg: region_params.local_epsg,
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
@@ -8253,7 +8253,8 @@ if (vars.manual_clean && vars.geomorphic) {
   
   var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
-  
+  var trf_to_rc_i = ee.Image().byte().paint(ee.Feature(trf_to_rc, {zone: 1}), "zone").clip(trf_to_rc);
+  var rc_to_trf_i = ee.Image().byte().paint(ee.Feature(rc_to_trf, {zone: 1}), "zone").clip(rc_to_trf);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -8272,11 +8273,20 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });*/
   
-  /*// TRF -> Outer reef flat
+  // RC -> TRF
   man_geo = man_geo.where({
-    test: man_geo.eq(16),
-    value: ee.Image(14)
-  });*/
+    test: trf_to_rc_i.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(16)
+  });
+  
+  // TRF -> RC
+  man_geo = man_geo.where({
+    test: rc_to_trf_i.eq(1)
+                     .and(man_geo.eq(16)),
+    value: ee.Image(15)
+  });
+  
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
