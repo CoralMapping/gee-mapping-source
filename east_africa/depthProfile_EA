@@ -1,0 +1,414 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]},
+    imageVisParam5 = {"opacity":1,"bands":["b3","b2","b1"],"min":78.53999999999999,"max":1016.46,"gamma":1},
+    imageVisParam = {"opacity":1,"bands":["constant"],"min":-13.779999732971191,"max":0,"gamma":1},
+    imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-14.91,"max":0.02,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]},
+    imageVisParam3 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]},
+    imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1},
+    imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]},
+    Dove_EA_low_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
+    DepthComp_EA = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_composite_depth"),
+    Dove_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_depth"),
+    L8_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_landsat8_depth"),
+    S2_EA_depth = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20200626T162059Z/east_africa_high_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic_sentinel2_depth"),
+    geometry = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([41.87294739174308, -17.301928804028122]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 7/07/2020
+// Description:
+
+//App to display depth profile (or any spatial profile) from a stack of images. 
+//Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
+//from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack built from datagen for EA
+
+
+// Table of contents:
+// -1. Mosaic all data 
+// 0. data preparation (invert sign, change band names)
+// 1. Get all the depth layers in the map panel to extract the profiles from
+// 2. Create the inspector panel
+// 3. have the depth layers stacked in an image collection
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+
+// initial utils from gennaddi
+var utils = require('users/gena/packages:utils')
+
+//TODO link to reef_params for next regions after SWP, hard to do it for SWP as they come divided in east west so I mosaicked them here
+// -1. variables and constants. Mosaic all data from West-East in the case of SWP (not needed for other regions maybe)
+
+var vars = {
+    Dove_low_sr : ee.Image(Dove_EA_low_sr),
+    depth_L8 : ee.Image(L8_EA_depth),
+    depth_S2 : ee.Image(S2_EA_depth),
+    Dove_depth : ee.Image(Dove_EA_depth),
+    Depth_composite: ee.Image(DepthComp_EA),
+};
+
+// 0. data preparation (invert sign, change band names)
+//Compute the transformation  to neg using expression (its server side method as well)
+var depth_S2_neg=ee.Image(vars.depth_S2)
+var depth_S2=depth_S2_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :depth_S2_neg.select('depth') //specify that B1 mean b1
+})    
+
+//renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
+var depth_S2=ee.Image(depth_S2)
+var depth_S2_renamed = depth_S2.select(
+  ['constant'],
+  ['b1_l']);
+
+//Compute the transformation using expression (its server side method as well)
+var Dove_depth_neg=ee.Image(vars.Dove_depth)
+var Dove_depth=Dove_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :Dove_depth_neg.select('b1') //specify that B1 mean b1
+})
+
+//renaming band 1 in cc_high_depth from 'b1' to 'b1_b' (both layers have the same band name which makes )  
+var Dove_depth=ee.Image(Dove_depth)
+var Dove_depth_renamed = Dove_depth.select(
+  ['constant'],
+  ['b1_b']);  
+  
+//Compute the transformation using expression (its server side method as well)
+var depth_L8_neg = ee.Image(vars.depth_L8);
+var depth_L8=depth_L8_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :depth_L8_neg.select('B2_median') //specify that B1 mean b1
+})
+
+//renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_b' (both layers have the same band name which makes )  
+var depth_L8=ee.Image(depth_L8)
+var depth_L8_renamed = depth_L8.select(
+  ['constant'],
+  ['b1_c']);  
+  
+// depth composite
+var Composite_depth=ee.Image(vars.Depth_composite)
+var Composite_depth=Composite_depth.expression(
+  '((-1)*B1)/100', {
+  'B1' :Composite_depth.select('depth') //specify that B1 mean b1
+})
+
+//renaming band 1 in composite from constant to 'b1_s' (both layers have the same band name which makes )  
+var depthComposite=ee.Image(Composite_depth)
+var DepthCompos_renamed = depthComposite.select(
+  ['constant'],
+  ['b1_s']);  
+  
+
+// 1. Get all the depth layers in the map panel to extract the profiles from 
+
+//var imageVisParam = {"opacity":1,"bands":["b1_l"],"min":-13,"max":-0.7,"palette":["252525","636363","969696","bdbdbd","d9d9d9","f7f7f7"]};
+
+
+var imageVisParam1 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+var high_depthDove=ui.Map.Layer(Dove_depth_renamed, imageVisParam1, 'depth_Dove', false) //,'nc_hightide_doveDepth', false)
+
+var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"max":-0.05565423755239924,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
+var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
+
+
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
+
+var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
+var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
+
+
+var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
+
+//var nc_Dove_low_sr_asu=ui.Map.Layer(vars.Dove_low_sr)
+
+var mapPanel=ui.Map().setCenter(41.87294739174308, -17.301928804028122, 6)
+
+
+//add the layers
+
+var layers = mapPanel.layers();
+layers.add(Dove_low_sr)
+layers.add(high_depthDove)
+layers.add(Depth_S2_asu)//here depth from ASU
+layers.add(Depth_L8_asu)
+layers.add(depthComposite1)
+//print (high_depthDove)
+
+
+// 2. Create the inspector panel
+var inspectorPanel = ui.Panel({style: {width: '70%'}});
+
+
+// Create an intro panel with labels (done working)
+var intro = ui.Panel([
+  ui.Label({
+    value: "Depth Profiles from ASU[Jiwei] L8, S2 and Doves' layers for East Africa(sampling interval 10 m)",
+    style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
+  }),
+]);
+
+inspectorPanel.add(intro);
+
+//Slider for depth
+
+var label = ui.Label('DepthComposite_threshold_slider (m):',
+               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#00FF00', fontSize: 48}
+);
+
+
+var Dove_depth=ee.Image(vars.Depth_composite)
+var Dove_depth=Dove_depth.expression( ///change variable name to compo_depth!!!! I just ported over from another code
+  '(B1)/100', {
+  'B1' :Dove_depth.select('depth') //specify that B1 mean b1
+})
+
+
+ var slider = ui.Slider({
+  min:0,
+  max: 20,
+  step: 0.01,
+  value: false,
+  style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
+  //onChange: updateLayer
+  
+  
+});
+
+slider.setValue(20);
+//var imageVisParam1 = {"opacity":1,"bands":["constant"],"min":0,"max":15,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+//function updateLayer(value){
+  //var dove = slider.getValue();
+   //Map.layers().reset();
+  //D = ee.Image(high_depthDove)
+  //var desired = Dove_depth.updateMask(Dove_depth.gte(dove))
+   //Map.layers().reset([desired]);
+  //Map.addLayer(desired, imageVisParam1);
+  //layers.add(ui.Map.Layer(desired, imageVisParam1, 'DepthDove_threshold'+ String(dove)))
+  
+  //layers.add(desired, imageVisParam1, 'DepthDove_thres ')
+  //return desired;
+  
+
+
+//improved solution from ML
+var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
+var add_thresh = function(thresh_dat) {
+  var threshold_dat = ui.Map.Layer(thresh_dat, imageVisParam7, 'DepthComposite_threshold', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  mapPanel.add(threshold_dat)
+  slider.onChange(function(value) {
+    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
+    threshold_dat.setEeObject(thresholded)
+  })
+  //print("threshold slider", slider)
+}
+
+add_thresh(Dove_depth) 
+
+var panel1 = ui.Panel({
+      widgets: [label,slider],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#00FF00', height: '130px'
+          }
+    });
+    
+
+    // Add the panel to the map.
+
+
+mapPanel.widgets().add(panel1)
+
+Map.setOptions("HYBRID")
+
+
+
+// 3. have the depth layers stacked in an image collection
+
+var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
+//print (collectionfromImages)
+
+//Building an image where each band is a single depth layer
+
+var stackCollection = function(collection) {
+  //create an initial images to stack the others to
+  var firstImage = ee.Image(collection.first().select([]));
+  //print (typeof(firstImage))
+  // a funtion to append a band to images
+  var appendImages = function (img, previous) {
+    return ee.Image(previous).addBands(img);
+  };
+  return ee.Image(collectionfromImages.iterate(appendImages, firstImage));
+};
+var stacked = stackCollection (collectionfromImages);
+
+// Renaming bands names to depict in graph
+var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
+//print (stackedRenamed)
+
+
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+//var DrawTransectTool = require('users/gena/packages:ui').DrawTransectTool /this is the roginal from gennadi
+var DrawTransectTool = require('users/rodbio2008/myJSTraining:RBAutils/ui').DrawTransectTool
+
+Map.setOptions("HYBRID")
+
+var tool = new DrawTransectTool(mapPanel)
+
+// start drawing by default
+tool.startDrawing()
+
+// add checkbox to activate selector when checkbox is clicked
+var buttonDraw = ui.Button({label: 'Press to show depth profile chart after drawing your transect in the  map', 
+style: {color: 'red', fontSize: '45px', textAlign: 'center', position: 'top-center', fontWeight: 'bold'}});
+
+buttonDraw.setDisabled(true) // no profile at the beginning
+
+// subscribe to selection
+tool.onFinished(function(transect) {
+  showChart(transect)
+})
+
+// subscribe to selection
+tool.onDraw(function(points) {
+  print('draw', points)
+  if(points.length >= 2) {
+    buttonDraw.setDisabled(false)
+  }
+})
+
+buttonDraw.onClick(function() {
+  if(buttonDraw.getDisabled()) {
+    alert('Not drawing')
+    return
+  }
+
+  tool.stopDrawing()
+  tool.startDrawing()
+  
+  buttonDraw.setDisabled(true)
+});
+
+function showChart(transect) {
+  var scale = mapPanel.getScale()
+  print(transect.length())
+  print(scale)
+  var profile1 = utils.reduceImageProfile(stackedRenamed, transect, ee.Reducer.mean(),10);
+  
+  // Define chart customization options by creating a dictionary
+    var options= {
+        //title: 'Depth_profiles',
+        hAxis:{'title':'Distance (m)'},
+        vAxis:{'title': 'Depth (m)'},
+        //lineWith: 3,
+        height : 800,
+        width: 1000,
+        pointSize: 2,
+
+      series: {
+            0: { lineWidth: 3 },
+            1: { lineWidth: 3 },
+            2: { lineWidth: 3 },
+            3: { lineWidth: 8 },
+            
+          },
+          colors: ['#bd0026', '#006d2c', '#54278f',
+                   '#ff0ef8']
+        };
+      
+      
+      
+     
+     //this bit is for not using unmask that had to locate a value on it (i.e. if I use it and assign 0 values
+     //I 'll have depth at 0 m wich is a value that is not real
+
+  utils.featureCollectionToDataTable(profile1, 'distance').evaluate(function(dataTable){ 
+     var chartInPanel= ui.Chart(dataTable).setOptions(options)
+     inspectorPanel.widgets().set(2, chartInPanel)
+  }); //basically here I set the inspector panel within the function
+    
+}
+ui.root.setLayout(ui.Panel.Layout.absolute());
+
+inspectorPanel.widgets().add(buttonDraw)
+
+/*
+//Slider for depth
+
+var label = ui.Label('DepthDove_threshold_slider',
+               {color: '#0000ff', fontWeight: 'bold'}
+);
+
+
+var Dove_depth_pos=ee.Image(Dove_depth_renamed)
+var Dove_depth=Dove_depth_pos.expression(
+  '((-1) * B1)', {
+  'B1' :Dove_depth_pos.select('b1_b') //specify that B1 mean b1
+})
+
+print (Dove_depth)
+
+ var slider = ui.Slider({
+  min:-10,
+  max: 15,
+  step: 0.01,
+  style: {stretch: 'horizontal', width:'500px'},
+  //onChange: updateLayer
+  
+});
+
+//var imageVisParam1 = {"opacity":1,"bands":["constant"],"min":0,"max":15,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+//function updateLayer(value){
+  //var dove = slider.getValue();
+   //Map.layers().reset();
+  //D = ee.Image(high_depthDove)
+  //var desired = Dove_depth.updateMask(Dove_depth.gte(dove))
+   //Map.layers().reset([desired]);
+  //Map.addLayer(desired, imageVisParam1);
+  //layers.add(ui.Map.Layer(desired, imageVisParam1, 'DepthDove_threshold'+ String(dove)))
+  
+  //layers.add(desired, imageVisParam1, 'DepthDove_thres ')
+  //return desired;
+  
+
+
+//great solution from ML
+
+var add_thresh = function(thresh_dat) {
+  var threshold_dat = ui.Map.Layer(thresh_dat, {min:0, max:-15}, 'thresholded data', true)
+  mapPanel.add(threshold_dat)
+  slider.onChange(function(value) {
+    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
+    threshold_dat.setEeObject(thresholded)
+  })
+  //print("threshold slider", slider)
+}
+
+
+
+var panel1 = ui.Panel({
+      widgets: [label,slider],
+      layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-right',width: '520px'
+          }
+    });
+    
+
+    // Add the panel to the map.
+
+
+mapPanel.widgets().add(panel1)
+    
+
+add_thresh(Dove_depth)    
+
+
+*/
+
+
+ 
+ui.root.clear();
+ui.root.add(ui.SplitPanel(inspectorPanel, mapPanel));
+
+
