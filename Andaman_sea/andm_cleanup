@@ -1,18 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var export_small = 
-    /* color: #d63000 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[157.9950896058224, 7.112454892191871],
-          [157.9950896058224, 6.733464175742206],
-          [158.4304228577755, 6.733464175742206],
-          [158.4304228577755, 7.112454892191871]]], null, false),
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
+var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     rivermouth = 
     /* color: #d63000 */
     /* shown: false */
@@ -5593,7 +5580,19 @@ var export_small =
         }
       ],
       "coordinates": []
-    });
+    }),
+    export_area = 
+    /* color: #d69d40 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[90.2347830552545, 21.971185910352975],
+          [90.2347830552545, 1.5243019898904366],
+          [103.94572055525448, 1.5243019898904366],
+          [103.94572055525448, 21.971185910352975]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
