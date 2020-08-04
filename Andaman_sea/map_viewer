@@ -5614,7 +5614,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
         }
       ],
       "coordinates": []
-    });
+    }),
+    geo_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -5642,6 +5643,7 @@ Map.addLayer(geo, map_palettes.geo, "Andaman + Myanmar Geo - RAW", false)
 Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 
+Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 
 /*
 // wave data
