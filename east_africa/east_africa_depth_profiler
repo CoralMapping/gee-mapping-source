@@ -5,9 +5,9 @@ var geometry =
     ee.Geometry.Point([41.87294739174308, -17.301928804028122]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
-// Description:
 
-//App to display depth profile (or any spatial profile) from a stack of images. 
+
+// Description: App to display depth profile (or any spatial profile) from a stack of images. 
 //Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
 //from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack built from datagen for EA
 
