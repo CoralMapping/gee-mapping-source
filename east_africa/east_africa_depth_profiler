@@ -119,7 +119,7 @@ var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.332999
 var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
 
 
-
+//center the map to the region
 var mapPanel=ui.Map().centerObject(geometry, 6)
 
 
