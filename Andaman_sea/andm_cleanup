@@ -1809,7 +1809,7 @@ var export_small =
            [101.87095938634482, 3.4983579108027],
            [100.90965567540732, 5.2509800190266365],
            [100.71739493321982, 5.682964976637016]]]]),
-    Revinment_Mask = /* color: #98ff00 */ee.Geometry({
+    mid_mask = /* color: #98ff00 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
