@@ -183,6 +183,7 @@ var add_thresh = function(thresh_dat) {
 
 }
 
+//calling the slider function
 add_thresh(Comp_depth) 
 
 var panel1 = ui.Panel({
