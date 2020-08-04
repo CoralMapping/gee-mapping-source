@@ -206,7 +206,10 @@ var MayotteNotRB =
           [57.602161610703206, -5.647957630653708],
           [57.206653798203206, -4.422260866394937],
           [56.547474110703206, -3.4138941523262103]]]),
-    not_reef = /* color: #01ff14 */ee.Geometry.Polygon(
+    not_reef = 
+    /* color: #01ff14 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[55.2248077855843, -20.980851493012523],
           [55.33741764886555, -21.08595829180467],
           [55.4884796605843, -21.2191575703884],
@@ -233,10 +236,7 @@ var MayotteNotRB =
           [65.42535604177345, -23.630158061970967],
           [65.42535604177345, -2.4006076916703782]]], null, false),
     waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
-    notBRS = 
-    /* color: #6a87ff */
-    /* shown: false */
-    ee.Geometry({
+    notBRS = /* color: #6a87ff */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -8027,7 +8027,7 @@ var vars = {
   
   //CHANGE TO TRUE FOR MANUAL CLEAN
   // apply any manual touch ups
-  manual_clean: false,
+  manual_clean: true,
   
   // results/layers to show
   export_small_area: false,
@@ -8260,6 +8260,9 @@ if (vars.manual_clean) {
                      .and(man_geo.eq(24)), //brs
     value: ee.Image(22) //rs
   });
+  
+  
+  
   
   //SRS to RS
    man_geo = man_geo.where({
