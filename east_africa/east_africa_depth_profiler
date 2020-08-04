@@ -147,17 +147,19 @@ inspectorPanel.add(intro);
 
 // 5. Threshold slider for depth composite
 
+//customising slider
+
 var label = ui.Label('DepthComposite_threshold_slider (m):',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#00FF00', fontSize: 48}
 );
 
-
+//bringing back the depth compiste to neg
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
 
-
+//slider params
  var slider = ui.Slider({
   min:0,
   max: 20,
@@ -165,8 +167,6 @@ var Comp_depth=Comp_depth.expression(
   value: false,
   style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
 
-  
-  
 });
 
 slider.setValue(20);
