@@ -33,19 +33,20 @@ var region_params = param_module.east_africa
 
 var vars = {
     Dove_low_sr : ee.Image(region_params.low_rrs),
-    depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
+    depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
-// 0. data preparation (invert sign, change band names)
+// 0. data preparation (invert sign)
 //Compute the transformation  to neg using expression (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
+
 var depth_S2=depth_S2_neg.expression(
-  '((-1) * B1)/100', {
-  'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean b1
-})    
+ '((-1) * B1)/100', {
+  'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
+//})    
 
 //renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
 var depth_S2=ee.Image(depth_S2)
