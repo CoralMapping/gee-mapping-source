@@ -1349,7 +1349,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    Revinment_Mask = /* color: #98ff00 */ee.Geometry({
+    mid_mask = /* color: #98ff00 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
