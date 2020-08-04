@@ -310,7 +310,7 @@ var nth_cari = {
 
 var east_africa = {
   sname:"east_africa",
-  centre: 
+  centre: ee.Geometry.Point([41.10104768481966, -17.300023542700277]),
   tide: "both",
   asset: "projects/coral_atlas/east_africa/",
   epsg: "EPSG:4326",
