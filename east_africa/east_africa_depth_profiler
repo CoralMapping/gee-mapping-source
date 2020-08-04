@@ -12,6 +12,8 @@ var geometry =
 //from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack plus depth layers
 //built from EA datagen script. 
 
+//This script will be used as a template for depth apps for other regions, so anyone can port over it to toehr regions
+
 
 // Table of contents:
 // 0. Mosaic all data (just in cases where data is split in west/east e.g. Indonesia)
