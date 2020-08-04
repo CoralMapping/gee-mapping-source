@@ -400,6 +400,7 @@ var wio = {
   benthic_map_clean: "projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean",
   prob_geo:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_geo"],
   prob_benthic:["projects/coral_atlas/west_indian_ocean/in_out/wio_prob_benthic"],
+  low_rrs:["projects/coral_atlas/workflow/mapping/west_indian_ocean/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic/20200131T210330Z/west_indian_ocean_islands_low_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic"],
   QAQC: "projects/coral_atlas/west_indian_ocean/QAQC"
 };
 
