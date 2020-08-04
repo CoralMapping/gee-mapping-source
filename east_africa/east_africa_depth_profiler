@@ -83,10 +83,10 @@ var depth_L8_renamed = depth_L8.select(
 var Composite_depth=ee.Image(vars.Depth_composite)
 var Composite_depth=Composite_depth.expression(
   '((-1)*B1)/100', {
-  'B1' :Composite_depth.select('depth') //specify that B1 mean b1
+  'B1' :Composite_depth.select('depth') //specify that B1 mean depth
 })
 
-//renaming band 1 in composite from constant to 'b1_s' (both layers have the same band name which makes )  
+//renaming band 1 in composite from constant to 'b1_s'  
 var depthComposite=ee.Image(Composite_depth)
 var DepthCompos_renamed = depthComposite.select(
   ['constant'],
