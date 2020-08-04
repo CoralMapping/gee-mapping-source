@@ -217,7 +217,7 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 //Generate title
 var title = ui.Label({
   value: 'Coral Atlas map classes',
-  style: {fontWeight: 'bold', fontSize: '18px'}
+  style: {fontWeight: 'bold', fontSize: '14px'}
 });
 
 // generate the legend
