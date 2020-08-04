@@ -39,7 +39,7 @@ var vars = {
     Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
-// 0. data preparation (invert sign)
+// 2. data preparation (invert sign, change band names))
 //Compute the transformation  to neg using expression for S2 (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
 var depth_S2=depth_S2_neg.expression(
