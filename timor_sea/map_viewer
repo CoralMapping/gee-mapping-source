@@ -131,11 +131,8 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: false,
-  geo_clean2: false,
-  geo_clean3: false,
+  cleanup_stage: 0, // set to 1, 2 or 3 - this controls the display of the geo clean stages
   benthic_clean1: false,
-  cleanup_stage: 1, // set to 1, 2 or 3
 };
 
 // choose where to centre the map (link this dynamically to map app?)
@@ -174,15 +171,19 @@ if (vars.raw) {
 }
 
 
-// if (vars.cleanup_stage == 1) Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic map - stage 1 clean', false);
-if (vars.cleanup_stage == 1) {
+// if (vars.cleanup_stage == 1|2) Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic map - stage 1 clean', false);
+if (vars.cleanup_stage == 1|2) {
   Map.addLayer(ee.Image(timor_geo_clean1_dtl_2000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_2000)', false);
   Map.addLayer(ee.Image(timor_geo_clean1_dtl_4000), map_palettes.geo, 'Geomorphic map - stage 1 clean (dtl_4000)', false);
 }
-
-
-
-
+// Add geo clean stage 2 to the viewer
+if (vars.cleanup_stage == 2|3) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic map - stage 2 clean', false);
+}
+// Add geo clean stage 3 to the viewer
+if (vars.cleanup_stage == 3) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean3), map_palettes.geo, 'Geomorphic map - stage 3 clean', false);
+}
 
 /*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
