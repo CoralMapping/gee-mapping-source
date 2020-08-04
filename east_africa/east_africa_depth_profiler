@@ -57,7 +57,7 @@ var depth_S2_renamed = depth_S2.select(
 var Dove_depth_neg=ee.Image(vars.Dove_depth)
 var Dove_depth=Dove_depth_neg.expression(
   '((-1) * B1)/100', {
-  'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean b1
+  'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean Dovedepth
 })
 
 //renaming band 1 in Dove depth from 'b1' to 'b1_b' 
@@ -70,10 +70,10 @@ var Dove_depth_renamed = Dove_depth.select(
 var depth_L8_neg = ee.Image(vars.depth_L8);
 var depth_L8=depth_L8_neg.expression(
   '((-1) * B1)/100', {
-  'B1' :depth_L8_neg.select('L8depth') //specify that B1 mean b1
+  'B1' :depth_L8_neg.select('L8depth') //specify that B1 mean L8depth
 })
 
-//renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_b' (both layers have the same band name which makes )  
+//renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_c' 
 var depth_L8=ee.Image(depth_L8)
 var depth_L8_renamed = depth_L8.select(
   ['constant'],
