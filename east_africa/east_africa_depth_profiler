@@ -12,7 +12,7 @@ var geometry =
 //from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack plus depth layers
 //built from EA datagen script. 
 
-//This script will be used as a template for depth apps for other regions, so anyone can port over it to toehr regions
+//This script will be used as a template for depth apps for other regions, so anyone can port over it to to other regions
 
 
 // Table of contents:
@@ -20,9 +20,11 @@ var geometry =
 // 1. Initial data loads
 // 2. data preparation (invert sign, change band names)
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
-// 2. Create the inspector panel
-// 3. have the depth layers stacked in an image collection
-// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+// 4. Create the inspector panel
+// 5. have the depth layers stacked in an image collection
+// 6. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+
+//next step is to convert this code into a standalone app which I will describe in the ACA handbook
 
 // // 1. Initial data loads > initial utils for app and getting libraries needed from reef_params in workflow
 var utils = require('users/gena/packages:utils')
@@ -115,7 +117,6 @@ var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
 
-//var nc_Dove_low_sr_asu=ui.Map.Layer(vars.Dove_low_sr)
 
 
 var mapPanel=ui.Map().centerObject(geometry, 6)
