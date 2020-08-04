@@ -16,7 +16,7 @@ var geometry =
 // 0. Mosaic all data (just in cases where data is split in west/east e.g. Indonesia)
 // 1. Initial data loads
 // 2. data preparation (invert sign, change band names)
-// 1. Get all the depth layers in the map panel to extract the profiles from
+// 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 // 2. Create the inspector panel
 // 3. have the depth layers stacked in an image collection
 // 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
@@ -93,10 +93,7 @@ var DepthCompos_renamed = depthComposite.select(
   ['b1_s']);  
   
 
-// 1. Get all the depth layers in the map panel to extract the profiles from 
-
-//var imageVisParam = {"opacity":1,"bands":["b1_l"],"min":-13,"max":-0.7,"palette":["252525","636363","969696","bdbdbd","d9d9d9","f7f7f7"]};
-
+// 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 
 var imageVisParam1 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
 var high_depthDove=ui.Map.Layer(Dove_depth_renamed, imageVisParam1, 'depth_Dove', false) //,'nc_hightide_doveDepth', false)
