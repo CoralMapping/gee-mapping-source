@@ -127,7 +127,7 @@ layers.add(high_depthDove)
 layers.add(Depth_S2_asu)//here depth from ASU
 layers.add(Depth_L8_asu)
 layers.add(depthComposite1)
-//print (high_depthDove)
+
 
 
 // 2. Create the inspector panel
