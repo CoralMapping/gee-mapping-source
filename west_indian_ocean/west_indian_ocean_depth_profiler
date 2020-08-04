@@ -201,7 +201,7 @@ mapPanel.widgets().add(panel1)
 
 Map.setOptions("HYBRID")
 
-// 3. have the depth layers stacked in an image collection
+// 6. Put all depth layers stacked into an image collection to build the code to extract profile curves
 
 var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
 //print (collectionfromImages)
