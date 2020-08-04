@@ -107,9 +107,7 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.9
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
            [122.79618219334407, -17.20501743540183]]]]),
-    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p"),
-    timor_geo_clean1_dtl_2000 = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean1_dtl_2000"),
-    timor_geo_clean1_dtl_4000 = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean1_dtl_4000");
+    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
