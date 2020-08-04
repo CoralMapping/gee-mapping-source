@@ -40,35 +40,33 @@ var vars = {
 };
 
 // 0. data preparation (invert sign)
-//Compute the transformation  to neg using expression (its server side method as well)
+//Compute the transformation  to neg using expression for S2 (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
 var depth_S2=depth_S2_neg.expression(
  '((-1) * B1)/100', {
   'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
-}).select(
-  ['constant'],
-  ['b1_l']);   
+});
 
 //renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
-//var depth_S2=ee.Image(depth_S2)
-//var depth_S2_renamed = depth_S2.select(
-  //['constant'],
-  //['b1_l']);
+var depth_S2=ee.Image(depth_S2)
+var depth_S2_renamed = depth_S2.select(
+  ['constant'],
+  ['b1_l']);
 
-//Compute the transformation using expression (its server side method as well)
+//Compute the transformation using neg expression for Dove depth(its server side method as well)
 var Dove_depth_neg=ee.Image(vars.Dove_depth)
 var Dove_depth=Dove_depth_neg.expression(
   '((-1) * B1)/100', {
   'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean b1
 })
 
-//renaming band 1 in cc_high_depth from 'b1' to 'b1_b' (both layers have the same band name which makes )  
+//renaming band 1 in Dove depth from 'b1' to 'b1_b' 
 var Dove_depth=ee.Image(Dove_depth)
 var Dove_depth_renamed = Dove_depth.select(
   ['constant'],
   ['b1_b']);  
   
-//Compute the transformation using expression (its server side method as well)
+//Compute the transformation using neg expression for L8 (its server side method as well)
 var depth_L8_neg = ee.Image(vars.depth_L8);
 var depth_L8=depth_L8_neg.expression(
   '((-1) * B1)/100', {
