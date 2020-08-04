@@ -132,8 +132,6 @@ layers.add(Depth_S2_asu)//here depth from ASU
 layers.add(Depth_L8_asu)
 layers.add(depthComposite1)
 
-
-
 // 4. Create the inspector panel (the one that shows the profile graph)
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
 
@@ -167,28 +165,13 @@ var Dove_depth=Dove_depth.expression( ///change variable name to compo_depth!!!!
   step: 0.01,
   value: false,
   style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
-  //onChange: updateLayer
+
   
   
 });
 
 slider.setValue(20);
-//var imageVisParam1 = {"opacity":1,"bands":["constant"],"min":0,"max":15,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
-//function updateLayer(value){
-  //var dove = slider.getValue();
-   //Map.layers().reset();
-  //D = ee.Image(high_depthDove)
-  //var desired = Dove_depth.updateMask(Dove_depth.gte(dove))
-   //Map.layers().reset([desired]);
-  //Map.addLayer(desired, imageVisParam1);
-  //layers.add(ui.Map.Layer(desired, imageVisParam1, 'DepthDove_threshold'+ String(dove)))
-  
-  //layers.add(desired, imageVisParam1, 'DepthDove_thres ')
-  //return desired;
-  
 
-
-//improved solution from ML
 var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
 var add_thresh = function(thresh_dat) {
   var threshold_dat = ui.Map.Layer(thresh_dat, imageVisParam7, 'DepthComposite_threshold', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
@@ -197,7 +180,7 @@ var add_thresh = function(thresh_dat) {
     var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
     threshold_dat.setEeObject(thresholded)
   })
-  //print("threshold slider", slider)
+
 }
 
 add_thresh(Dove_depth) 
