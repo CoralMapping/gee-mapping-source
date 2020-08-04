@@ -153,9 +153,9 @@ var label = ui.Label('DepthComposite_threshold_slider (m):',
 
 
 var Dove_depth=ee.Image(vars.Depth_composite)
-var Dove_depth=Dove_depth.expression( ///change variable name to compo_depth!!!! I just ported over from another code
+var Dove_depth=Dove_depth.expression( 
   '(B1)/100', {
-  'B1' :Dove_depth.select('depth') //specify that B1 mean b1
+  'B1' :Dove_depth.select('depth') 
 })
 
 
