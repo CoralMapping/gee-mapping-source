@@ -13,22 +13,23 @@ var geometry =
 
 
 // Table of contents:
-// -1. Mosaic all data (just in cases where data is split in west/east e.g. Indonesia)
-// 0. data preparation (invert sign, change band names)
+// 0. Mosaic all data (just in cases where data is split in west/east e.g. Indonesia)
+// 1. Initial data loads
+// 2. data preparation (invert sign, change band names)
 // 1. Get all the depth layers in the map panel to extract the profiles from
 // 2. Create the inspector panel
 // 3. have the depth layers stacked in an image collection
 // 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
 
-// initial utils for app and getting libraries needed from reef_params in workflow
+// // 1. Initial data loads > initial utils for app and getting libraries needed from reef_params in workflow
 var utils = require('users/gena/packages:utils')
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
-//bring the stack from datagen
+//bring the keys from datagen
 
 var region_params = param_module.east_africa
 
-//setting variables from stack
+//setting variables from datagen keys
 
 var vars = {
     Dove_low_sr : ee.Image(region_params.low_rrs),
