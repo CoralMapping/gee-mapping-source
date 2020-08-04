@@ -225,7 +225,7 @@ var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','d
 //print (stackedRenamed)
 
 
-// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+//7. get the functionser  "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
 //var DrawTransectTool = require('users/gena/packages:ui').DrawTransectTool /this is the roginal from gennadi
 var DrawTransectTool = require('users/rodbio2008/myJSTraining:RBAutils/ui').DrawTransectTool
 
@@ -310,81 +310,7 @@ ui.root.setLayout(ui.Panel.Layout.absolute());
 
 inspectorPanel.widgets().add(buttonDraw)
 
-/*
-//Slider for depth
 
-var label = ui.Label('DepthDove_threshold_slider',
-               {color: '#0000ff', fontWeight: 'bold'}
-);
-
-
-var Dove_depth_pos=ee.Image(Dove_depth_renamed)
-var Dove_depth=Dove_depth_pos.expression(
-  '((-1) * B1)', {
-  'B1' :Dove_depth_pos.select('b1_b') //specify that B1 mean b1
-})
-
-print (Dove_depth)
-
- var slider = ui.Slider({
-  min:-10,
-  max: 15,
-  step: 0.01,
-  style: {stretch: 'horizontal', width:'500px'},
-  //onChange: updateLayer
-  
-});
-
-//var imageVisParam1 = {"opacity":1,"bands":["constant"],"min":0,"max":15,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
-//function updateLayer(value){
-  //var dove = slider.getValue();
-   //Map.layers().reset();
-  //D = ee.Image(high_depthDove)
-  //var desired = Dove_depth.updateMask(Dove_depth.gte(dove))
-   //Map.layers().reset([desired]);
-  //Map.addLayer(desired, imageVisParam1);
-  //layers.add(ui.Map.Layer(desired, imageVisParam1, 'DepthDove_threshold'+ String(dove)))
-  
-  //layers.add(desired, imageVisParam1, 'DepthDove_thres ')
-  //return desired;
-  
-
-
-//great solution from ML
-
-var add_thresh = function(thresh_dat) {
-  var threshold_dat = ui.Map.Layer(thresh_dat, {min:0, max:-15}, 'thresholded data', true)
-  mapPanel.add(threshold_dat)
-  slider.onChange(function(value) {
-    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
-    threshold_dat.setEeObject(thresholded)
-  })
-  //print("threshold slider", slider)
-}
-
-
-
-var panel1 = ui.Panel({
-      widgets: [label,slider],
-      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-right',width: '520px'
-          }
-    });
-    
-
-    // Add the panel to the map.
-
-
-mapPanel.widgets().add(panel1)
-    
-
-add_thresh(Dove_depth)    
-
-
-*/
-
-
- 
 ui.root.clear();
 ui.root.add(ui.SplitPanel(inspectorPanel, mapPanel));
 
