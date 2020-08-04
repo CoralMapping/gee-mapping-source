@@ -31,7 +31,6 @@ var region_params = param_module.east_africa
 //setting variables from stack
 
 var vars = {
-    region_name : str(),
     Dove_low_sr : ee.Image(region_params.low_rrs),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
@@ -138,7 +137,7 @@ var inspectorPanel = ui.Panel({style: {width: '70%'}});
 // Create an intro panel with labels (done working)
 var intro = ui.Panel([
   ui.Label({
-    value: "Depth Profiles from ASU[Jiwei] L8, S2 and Doves' layers for" + vars.region_name + "(sampling interval 10 m)",
+    value: "Depth Profiles from ASU[Jiwei] L8, S2 and Doves' layers for" + region_params.sname + "(sampling interval 10 m)",
     style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
   }),
 ]);
