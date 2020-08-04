@@ -5779,7 +5779,8 @@ MANUAL ADDITION
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
+//var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
+
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
 
@@ -6054,9 +6055,9 @@ if (vars.manual_clean && !vars.geomorphic) {
     // West Hawaii
     
     // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-    var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
+    //var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
+    //var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
+    //var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
     
     // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
     man_benthic = man_benthic.where({
