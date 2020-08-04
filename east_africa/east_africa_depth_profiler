@@ -152,11 +152,11 @@ var label = ui.Label('DepthComposite_threshold_slider (m):',
 );
 
 
-var Dove_depth=ee.Image(vars.Depth_composite)
-var Dove_depth=Dove_depth.expression( 
-  '(B1)/100', {
-  'B1' :Dove_depth.select('depth') 
-})
+//var Dove_depth=ee.Image(vars.Depth_composite)
+//var Dove_depth=Dove_depth.expression( 
+//// '(B1)/100', {
+//  'B1' :Dove_depth.select('depth') 
+//})
 
 
  var slider = ui.Slider({
@@ -183,7 +183,7 @@ var add_thresh = function(thresh_dat) {
 
 }
 
-add_thresh(Dove_depth) 
+add_thresh(Composite_depth) 
 
 var panel1 = ui.Panel({
       widgets: [label,slider],
