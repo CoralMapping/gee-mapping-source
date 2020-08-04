@@ -5581,7 +5581,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    export_area = 
+    reef_boundary = 
     /* color: #d69d40 */
     /* displayProperties: [
       {
