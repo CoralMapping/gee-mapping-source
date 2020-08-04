@@ -13,7 +13,7 @@ var geometry =
 
 
 // Table of contents:
-// -1. Mosaic all data 
+// -1. Mosaic all data (just in cases where data is split in west/east e.g. Indonesia)
 // 0. data preparation (invert sign, change band names)
 // 1. Get all the depth layers in the map panel to extract the profiles from
 // 2. Create the inspector panel
