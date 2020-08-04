@@ -20,9 +20,10 @@ var geometry =
 // 1. Initial data loads
 // 2. data preparation (invert sign, change band names)
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
-// 4. Create the inspector panel
-// 5. have the depth layers stacked in an image collection
-// 6. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+// 4. Create the inspector panel (the one that shows the profile graph)
+// 5. Threshold slider for depth composite
+// 6. have the depth layers stacked in an image collection
+// 7. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
 
 //next step is to convert this code into a standalone app which I will describe in the ACA handbook
 
@@ -133,11 +134,10 @@ layers.add(depthComposite1)
 
 
 
-// 2. Create the inspector panel
+// 4. Create the inspector panel (the one that shows the profile graph)
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
 
-
-// Create an intro panel with labels (done working)
+// Create an intro panel with labels 
 var intro = ui.Panel([
   ui.Label({
     value: "Depth Profiles from L8, S2, Doves and Depth Composite for " + region_params.sname + " (sampling interval 10 m)",
@@ -147,7 +147,7 @@ var intro = ui.Panel([
 
 inspectorPanel.add(intro);
 
-//Slider for depth
+// 5. Threshold slider for depth composite
 
 var label = ui.Label('DepthComposite_threshold_slider (m):',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#00FF00', fontSize: 48}
