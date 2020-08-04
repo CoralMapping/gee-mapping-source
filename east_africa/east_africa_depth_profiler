@@ -9,7 +9,8 @@ var geometry =
 
 // Description: App to display depth profile (or any spatial profile) from a stack of images. 
 //Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
-//from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack built from datagen for EA
+//from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack plus depth layers
+//built from EA datagen script. 
 
 
 // Table of contents:
