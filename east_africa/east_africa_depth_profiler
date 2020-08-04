@@ -22,8 +22,8 @@ var geometry =
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 // 4. Create the inspector panel (the one that shows the profile graph)
 // 5. Threshold slider for depth composite
-// 6. have the depth layers stacked in an image collection
-// 7. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+// 6. Put all depth layers stacked into an image collection
+// 7. get the functionser  "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
 
 //next step is to convert this code into a standalone app which I will describe in the ACA handbook
 
