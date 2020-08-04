@@ -31,7 +31,7 @@ var region_params = param_module.east_africa
 //setting variables from stack
 
 var vars = {
-    region_name : 'East Africa',
+    region_name : str(),
     Dove_low_sr : ee.Image(region_params.low_rrs),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
