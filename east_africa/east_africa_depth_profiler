@@ -116,6 +116,7 @@ var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComp
 
 //var nc_Dove_low_sr_asu=ui.Map.Layer(vars.Dove_low_sr)
 
+
 var mapPanel=ui.Map().setCenter(region_params.centreLat, region_params.centreLong, 6)
 
 
