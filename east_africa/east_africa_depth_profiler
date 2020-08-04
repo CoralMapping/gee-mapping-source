@@ -42,11 +42,10 @@ var vars = {
 // 0. data preparation (invert sign)
 //Compute the transformation  to neg using expression (its server side method as well)
 var depth_S2_neg=ee.Image(vars.depth_S2)
-
 var depth_S2=depth_S2_neg.expression(
  '((-1) * B1)/100', {
   'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
-//})    
+})    
 
 //renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
 var depth_S2=ee.Image(depth_S2)
