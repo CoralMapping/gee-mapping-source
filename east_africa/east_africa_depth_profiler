@@ -186,6 +186,7 @@ var add_thresh = function(thresh_dat) {
 //calling the slider function
 add_thresh(Comp_depth) 
 
+//putting slider in the panel
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
@@ -193,15 +194,12 @@ var panel1 = ui.Panel({
           }
     });
     
-
-    // Add the panel to the map.
+// Add the panel to the map.
 
 
 mapPanel.widgets().add(panel1)
 
 Map.setOptions("HYBRID")
-
-
 
 // 3. have the depth layers stacked in an image collection
 
