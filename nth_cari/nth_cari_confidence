@@ -61,8 +61,8 @@ var region_params = param_module.nth_cari  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
