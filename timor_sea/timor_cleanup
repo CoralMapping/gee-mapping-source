@@ -2698,11 +2698,9 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
-  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(west);
-  var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(east);
+  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
-  var kaneohebay = ee.Image().byte().paint(ee.Feature(kaneohe_bay, {zone: 1}), "zone").clip(kaneohe_bay);
-  var kaneohebayreef = ee.Image().byte().paint(ee.Feature(kaneohe_bay_reef, {zone: 1}), "zone").clip(kaneohe_bay_reef);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
   var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
@@ -2719,13 +2717,6 @@ if (vars.manual_clean && vars.geomorphic) {
   // remove
   man_geo = man_geo.where({
     test: not_reef.eq(1),
-    value: ee.Image(0)
-  });
-  
-   // "Rivermouth" CLEAN
-  // remove
-  man_geo = man_geo.where({
-    test: river.eq(1),
     value: ee.Image(0)
   });
   
