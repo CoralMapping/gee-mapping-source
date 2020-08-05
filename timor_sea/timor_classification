@@ -255,7 +255,7 @@ print("Number of training samples:", training_data.size());
 
 //Map.centerObject(map_centre, 6);
 var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
-Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, true); // image data
 Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 
@@ -469,9 +469,9 @@ if (vars.do_export) {
   
 } else {
   if (vars.show_eg_area) {
-    Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_raw', true)
+    Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_raw', false)
   } else {
-    Map.addLayer(raw_classification, display_pal, output_name + '_raw', true)
+    Map.addLayer(raw_classification, display_pal, output_name + '_raw', false)
   }
 }
 
