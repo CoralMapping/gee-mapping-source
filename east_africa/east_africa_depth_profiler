@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var geometry = 
     /* color: #d63000 */
-    /* shown: false */
+    /* locked: true */
     ee.Geometry.Point([41.87294739174308, -17.301928804028122]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
@@ -120,7 +120,7 @@ var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComp
 
 
 //center the map to the region
-var mapPanel=ui.Map().centerObject(geometry, 6)
+var mapPanel=ui.Map().setCenter(41.87294739174308, -17.301928804028122, 6)
 
 
 //add the layers
