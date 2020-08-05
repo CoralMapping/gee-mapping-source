@@ -2863,8 +2863,8 @@ if (vars.manual_clean && vars.geomorphic) {
   
   
   // Add the manual layer to the map
-  //var image = ee.Image(region_params.image);
-  //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
+  var image = ee.Image(region_params.image);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:4000}, sensor_params.sname + ' low tide', true);
   
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
