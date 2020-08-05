@@ -275,7 +275,7 @@ Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
 Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
 Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
 Map.addLayer(geoclean4, map_palettes.geo, "GEO manual July10", false)
-//Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
+Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
