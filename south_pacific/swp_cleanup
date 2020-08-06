@@ -9567,11 +9567,11 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
-// update these values based on inspection of the layer
-  //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
+  // update these values based on inspection of the layer
+  var waves = ee.Image(region_params.waves)
+  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
-  // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
-  
+  // make the image layers for the manual masking
   var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
   var trf_to_rc_i = ee.Image().byte().paint(ee.Feature(trf_to_rc, {zone: 1}), "zone").clip(trf_to_rc);
@@ -9609,13 +9609,13 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   
-  /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
+  // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
+  })
   
   
   // Add the manual layer to the map
