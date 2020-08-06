@@ -5304,11 +5304,18 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   });
   
+  // deep water in depth data == deep (only for inshore reefs of Timor Sea)
+  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  clean_map = clean_map.where({
+    test: depth.gt(400)
+                   .and(inner_extent.eq(1)),
+    value: ee.Image(2)
+  });
   
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
-  // reef crest close to land -> TRF (Only for inner reefs of Timor Sea)
+  // reef crest close to land -> TRF (only for inner reefs of Timor Sea)
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
