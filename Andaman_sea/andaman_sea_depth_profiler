@@ -117,7 +117,7 @@ var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComp
 
 
 //center the map to the region
-var mapPanel=ui.Map().setCenter(41.87294739174308, -17.301928804028122, 6)
+var mapPanel=ui.Map().centerObject(geometry, 6)
 
 
 //add the layers
