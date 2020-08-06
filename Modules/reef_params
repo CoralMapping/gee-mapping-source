@@ -226,7 +226,7 @@ var swpac = {
   ls8_depth: "",
   pixels:["projects/coral_atlas/sw_pacific/in_out/swp_pixels_east","projects/coral_atlas/sw_pacific/in_out/swp_pixels_west"],
   segments:["projects/coral_atlas/sw_pacific/in_out/swp_segmentation_east","projects/coral_atlas/sw_pacific/in_out/swp_segmentation_west"],
-  waves:"",
+  waves:"projects/coral_atlas/sw_pacific/in_out/swp_waves",
   geo_train:"projects/coral_atlas/sw_pacific/training/swp_geo_reference",
   benthic_train:"projects/coral_atlas/sw_pacific/training/swp_benthic_reference",
   benthic_pts:"",
