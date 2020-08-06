@@ -1,3 +1,6 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var geometry = /* color: #98ff00 */ee.Geometry.Point([50.84622069735559, -7.065389567829304]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
 
@@ -114,7 +117,7 @@ var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComp
 
 
 //center the map to the region
-var mapPanel=ui.Map().setCenter(47.25736972651168, -10.275842330008928, 6)
+var mapPanel=ui.Map().centerObject(geometry, 6)
 
 
 //add the layers
