@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    not_reef_crest = /* color: #d63000 */ee.Geometry({
+    not_reef_crest = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4755,7 +4758,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -5305,9 +5308,11 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
-  // reef crest close to land -> TRF
+  // reef crest close to land -> TRF (Only for inner reefs of Timor Sea)
+  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
+                   .and(inner_extent.eq(1))
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
   });
