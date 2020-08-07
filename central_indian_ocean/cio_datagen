@@ -1,9 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([98.33694782763278, 12.424284653543896]),
-    andm_extent = 
+var map_centre = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.Polygon(
+    ee.Geometry.Point([98.33694782763278, 12.424284653543896]),
+    andm_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[91.8769868901328, 21.25716962456279],
           [91.4375337651328, 20.641567688583628],
           [91.7012056401328, 20.023464059064818],
@@ -381,7 +381,15 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([98.33694782763278, 12.42
     sasia_dove = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200526T213437Z/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     sasia_depth = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth"),
     sasia_ls8 = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth"),
-    sasia_s2 = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth");
+    sasia_s2 = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth"),
+    image = ee.Image("projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth"),
+    cio_extent = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[73.17549112441286, 16.863974722717742],
+          [69.30830362441286, 14.919859979635666],
+          [68.86885049941286, -10.944945618907601],
+          [75.63642862441286, -12.579741503328757],
+          [76.07588174941286, 5.5903130674529224],
+          [75.19697549941286, 15.428815353371766]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Andaman Sea region (+ Myanmar)/
@@ -400,6 +408,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([98.33694782763278, 12.42
 // var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+Map.addLayer(image)
 
 // ###########################################
 // SENSOR GENERICS
@@ -422,7 +432,7 @@ var region_params = param_module.cio       //<------------ THIS IS WHERE YOU CHO
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -542,7 +552,7 @@ var benthic = ee.FeatureCollection(region_params.benthic_train)
 
 // define it if it's a normal shape, otherwise draw it
 //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: andm_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: cio_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
