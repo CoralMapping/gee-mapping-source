@@ -1,0 +1,845 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map_centre = /* color: #d63000 */ee.Geometry.Point([98.33694782763278, 12.424284653543896]),
+    andm_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[91.8769868901328, 21.25716962456279],
+          [91.4375337651328, 20.641567688583628],
+          [91.7012056401328, 20.023464059064818],
+          [93.67874470263278, 17.48538444721048],
+          [93.37112751513278, 15.88583652622958],
+          [92.5361665776328, 14.443769455218172],
+          [91.8769868901328, 13.163515317354118],
+          [91.6572603276328, 11.833527878174598],
+          [91.7890962651328, 9.891521811958707],
+          [92.7998384526328, 7.241009660303612],
+          [93.63479939013278, 5.756512531690219],
+          [94.33792439013278, 5.93138016057165],
+          [94.64554157763278, 7.241009660303612],
+          [94.20608845263278, 9.2415128056211],
+          [93.50296345263278, 10.107910286742843],
+          [93.50296345263278, 10.971978542160864],
+          [94.25003376513278, 11.74749164453051],
+          [94.55765095263278, 12.863799219712181],
+          [94.82132282763278, 14.18828572780192],
+          [94.42581501513278, 14.783957690385735],
+          [96.79886189013278, 14.57140170580109],
+          [97.23831501513278, 13.334617725881047],
+          [96.75491657763278, 12.26329944179616],
+          [96.62308064013278, 10.79936037402055],
+          [97.19436970263278, 9.674990738141407],
+          [96.93069782763278, 8.590301746563783],
+          [97.80960407763278, 6.848488459135721],
+          [99.39163532763278, 5.056519986753228],
+          [100.40237751513278, 5.012744223586815],
+          [100.84183064013278, 5.669058434500492],
+          [100.35843220263278, 6.7612169904120805],
+          [99.04007282763278, 8.372978430707466],
+          [98.82034626513278, 9.45832006586511],
+          [98.99612751513278, 11.44615440853937],
+          [99.08401814013278, 12.649496369987812],
+          [98.82034626513278, 14.443769455218172],
+          [97.98538532763278, 15.208443244712866],
+          [94.55765095263278, 15.42036740765048],
+          [94.73343220263278, 16.60307601634951],
+          [94.95315876513278, 18.279998398349704],
+          [94.55765095263278, 19.61003573008932],
+          [93.72269001513278, 20.88811209417265],
+          [92.9316743901328, 21.543577274658826]]]),
+    not_reef = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[94.09109703919786, 15.733448346326067],
+           [94.13263909242052, 15.686187125648821],
+           [94.15598503968614, 15.68023738426514],
+           [94.1813909234752, 15.699077636699126],
+           [94.20027367494005, 15.72188192837816],
+           [94.21503655335802, 15.725847631459953],
+           [94.26275841615099, 15.835204413268006],
+           [94.26584832093614, 15.84214046463901],
+           [94.2631017389049, 15.855681592454987],
+           [94.26756493470567, 15.869882286608888],
+           [94.28404442689317, 15.876486919780298],
+           [94.2857610406627, 15.871533465196691],
+           [94.28644768617052, 15.859974931040837],
+           [94.26413170716661, 15.831901447948411],
+           [94.21743981263536, 15.723534314053536],
+           [94.2143499078502, 15.694119844260944],
+           [94.15046645654691, 15.45894224981689],
+           [94.27131606592191, 15.225856920532353],
+           [94.88105727685941, 14.944752323700595],
+           [95.69953872217191, 14.92882966094028],
+           [97.01240493310941, 14.711102172322283],
+           [97.58369399560941, 14.541017286257746],
+           [97.70610393230112, 14.436741286978643],
+           [97.75760234538706, 14.467992382108076],
+           [97.7768284196058, 14.471316708056587],
+           [97.7884950258869, 14.429634464481294],
+           [97.78780838037909, 14.410681589596535],
+           [97.78695007349432, 14.395551383935008],
+           [97.80153005597514, 14.34993644379455],
+           [97.79672353742045, 14.315342218457458],
+           [97.79191701886576, 14.288727647729356],
+           [97.80290334699076, 14.288062243092005],
+           [97.81114309308451, 14.298043105959746],
+           [97.82281606671732, 14.286731427913253],
+           [97.81938283917826, 14.26410636607746],
+           [97.81114309308451, 14.242810115101893],
+           [97.80221670148295, 14.217518207377598],
+           [97.79741018292826, 14.19355484303154],
+           [97.79989397398157, 14.190651468753622],
+           [97.8045288311593, 14.185242650460248],
+           [97.80907785764856, 14.18682370300518],
+           [97.81903421751184, 14.192981381464485],
+           [97.82341158262415, 14.192814959922588],
+           [97.82590067258997, 14.188487956926991],
+           [97.82555734983606, 14.184909795887657],
+           [97.82281076780481, 14.181081933176012],
+           [97.82015001646204, 14.180499426663074],
+           [97.81877672544641, 14.178169385647923],
+           [97.8177467571847, 14.173925320862123],
+           [97.8155151592843, 14.165686615526958],
+           [97.81457102171106, 14.16169198408123],
+           [97.81328356138391, 14.158612741043955],
+           [97.81130945554895, 14.154534760336812],
+           [97.81473148449508, 14.143850856789035],
+           [97.81764404677544, 14.135330620882536],
+           [97.8236521949688, 14.128339036112129],
+           [97.82227890395318, 14.123011970234284],
+           [97.81798736952935, 14.119016589041069],
+           [97.81163589858208, 14.110526171337073],
+           [97.80150787734185, 14.103533825144469],
+           [97.78039359114425, 14.070900740705866],
+           [97.7941265013005, 14.04825415306905],
+           [97.8270854856755, 13.97896834688147],
+           [97.86828421614425, 13.94565043081375],
+           [97.90124320051925, 13.953647169905832],
+           [97.92184256575362, 13.953647169905832],
+           [97.92057240786679, 13.896178855264285],
+           [97.92022908511288, 13.885680468877123],
+           [97.92263234439022, 13.875181606927278],
+           [97.92812550845272, 13.864848929601594],
+           [97.9293271380914, 13.854015790152655],
+           [97.92881215396054, 13.847348991684113],
+           [97.93293202700741, 13.841515386158168],
+           [97.92915547671444, 13.83151457908892],
+           [97.92812550845272, 13.822180104710235],
+           [97.92555058779843, 13.813178650049416],
+           [97.91765416445858, 13.7941744374813],
+           [97.91748250308163, 13.784505033424445],
+           [97.9216023761285, 13.780170343005373],
+           [97.9216023761285, 13.76866635161251],
+           [97.87752689585007, 13.773050467950945],
+           [97.86379398569382, 13.887729386473401],
+           [97.81160892710007, 13.954377127777196],
+           [97.72371830210007, 13.975700341686306],
+           [97.67977298960007, 14.132897874547607],
+           [97.72921146616257, 14.3245850199133],
+           [97.62209476694382, 14.4629240942178],
+           [97.46279300913132, 14.521426289039512],
+           [97.11672367319382, 14.51344962657249],
+           [97.19088138803757, 13.722360430280009],
+           [97.38863529428757, 13.244274398213838],
+           [97.81160892710007, 13.18812382599196],
+           [98.15218509897507, 13.217537642273655],
+           [98.22908939585007, 13.23892728174591],
+           [98.2534538404951, 13.229559018826176],
+           [98.26718675065135, 13.206497348719815],
+           [98.27508317399119, 13.184436321413514],
+           [98.27748643326854, 13.163041909529328],
+           [98.29362260270213, 13.107207074328466],
+           [98.30220567154979, 13.097844303277313],
+           [98.33447801041697, 13.086140338879149],
+           [98.3361946241865, 13.074770241278094],
+           [98.32692490983104, 13.047680545236473],
+           [98.32314835953807, 13.030622546631585],
+           [98.31490861344432, 12.97040846026203],
+           [98.3083854811201, 12.929588397611177],
+           [98.32095500562252, 12.86827122238279],
+           [98.32747813794674, 12.837142183783047],
+           [98.31649180982174, 12.843502193418585],
+           [98.31305858228268, 12.858899444780612],
+           [98.30722209546627, 12.876973273749554],
+           [98.29177257154049, 12.923156022701077],
+           [98.2485139045483, 12.943902015381486],
+           [98.2155549201733, 12.950259312833673],
+           [98.20353862378659, 12.92984846687055],
+           [98.19804545972409, 12.904081573023861],
+           [98.13250750171925, 12.908428221690327],
+           [98.05560320484425, 12.901735203729237],
+           [97.96084612476612, 12.864250995898296],
+           [97.8935548650005, 12.838812092511178],
+           [97.89630144703175, 12.787926567301593],
+           [97.88531511890675, 12.720956304119994],
+           [97.88119524585987, 12.6579881386003],
+           [97.89492815601612, 12.60840651518299],
+           [97.87570208179737, 12.601705558786287],
+           [97.89218157398487, 12.564176967603174],
+           [97.87982195484425, 12.540048550384842],
+           [97.89492815601612, 12.498488757918915],
+           [97.866089044688, 12.464967927062046],
+           [97.855102716563, 12.43278385026841],
+           [97.88119524585987, 12.41266677745308],
+           [97.92514055835987, 12.40998438355831],
+           [98.05148333179737, 12.463627003572391],
+           [98.162719904063, 12.664687619819802],
+           [98.2231447087505, 12.68612477640401],
+           [98.32888811695362, 12.785248097233724],
+           [98.35910051929737, 12.777212516567156],
+           [98.371460138438, 12.707560127640638],
+           [98.38519304859425, 12.664687619819802],
+           [98.36871355640675, 12.637888639660103],
+           [98.30142229664112, 12.624488095168571],
+           [98.27670305835987, 12.624488095168571],
+           [98.25335711109425, 12.671386925014062],
+           [98.23687761890675, 12.65530829684492],
+           [98.22589129078175, 12.623148002097215],
+           [98.18677525796166, 12.60438596237472],
+           [98.14420323647728, 12.58428225240241],
+           [98.1290970353054, 12.544070110329441],
+           [98.15244298257103, 12.517258525294158],
+           [98.18677525796166, 12.478376780300954],
+           [98.18128209389916, 12.442171284857855],
+           [98.1675491837429, 12.400595787346315],
+           [98.12772374428978, 12.392548149915845],
+           [98.09476475991478, 12.354989226909348],
+           [98.05367277756345, 12.302874620986497],
+           [98.03032683029782, 12.241146733763994],
+           [98.06465910568845, 12.202223905180713],
+           [98.08113859787595, 12.159267941009452],
+           [98.0289535392822, 12.108248721373151],
+           [98.03856657639157, 12.051847717859397],
+           [98.0399398674072, 11.944384479081597],
+           [98.02758024826657, 11.869134810904002],
+           [98.02620695725095, 11.831502177766188],
+           [98.04268644943845, 11.830158059282732],
+           [98.06877897873532, 11.850319142639902],
+           [98.09349821701657, 11.846287044968504],
+           [98.09899138107907, 11.781765400612795],
+           [98.0948715080322, 11.723951886223734],
+           [98.09075163498532, 11.676885432798862],
+           [98.1003646720947, 11.648641722684738],
+           [98.11959074631345, 11.615014516073298],
+           [98.15804289475095, 11.562547976685648],
+           [98.21160124436032, 11.641916606462717],
+           [98.23082731857907, 11.654021698502742],
+           [98.2706527580322, 11.625775664132235],
+           [98.2651595939697, 11.46296909162726],
+           [98.29125212326657, 11.405089540084111],
+           [98.3036117424072, 11.304108634484903],
+           [98.2981185783447, 11.19635644950406],
+           [98.27889250412595, 11.174801185694541],
+           [98.23906706467282, 11.150549599044474],
+           [98.30086516037595, 11.065653138264423],
+           [98.32833098068845, 11.031957236355929],
+           [98.32833098068845, 11.003649692274218],
+           [98.30635832443845, 10.999605535232755],
+           [98.26378630295407, 11.057566474793298],
+           [98.21160124436032, 11.073739578529603],
+           [98.1827621330322, 11.023869644527936],
+           [98.17589567795407, 10.979383918138094],
+           [98.26241301193845, 10.835096358085597],
+           [98.3200912345947, 10.756855273673601],
+           [98.35717009201657, 10.685341353449582],
+           [98.37090300217282, 10.652952143567546],
+           [98.3640365470947, 10.607061535755538],
+           [98.34069059982907, 10.578713895797238],
+           [98.2918228652383, 10.523781354704576],
+           [98.30967564844143, 10.442759273114936],
+           [98.3137955214883, 10.364417848222867],
+           [98.35499425195705, 10.297415181908914],
+           [98.3797134902383, 10.25282337261239],
+           [98.37284703516018, 10.094674729053008],
+           [98.29456944726955, 9.998666201925039],
+           [98.28619695568449, 9.880852518237386],
+           [98.34112859630949, 9.815905931813456],
+           [98.43451238537199, 9.875440791265538],
+           [98.49631048107511, 9.880852518237386],
+           [98.72565008068449, 9.909262623059979],
+           [98.92340398693449, 9.891675705036358],
+           [99.06585265140608, 12.751756662347935],
+           [98.31878233890608, 15.796437009383085],
+           [98.16497374515608, 16.913843182084616],
+           [96.8465310497674, 17.998706208070473],
+           [95.17669249515608, 16.892819817687297],
+           [94.36370421390608, 16.282133563690067]]],
+         [[[98.28875334151691, 9.88263671605484],
+           [98.26540739425128, 9.804835025347186],
+           [98.26472074874347, 9.704003957420044],
+           [98.14661772139972, 9.691144116065262],
+           [98.04871086811562, 9.491390401430104],
+           [97.98965935444375, 9.271893100778485],
+           [97.99103264545937, 9.152602224369545],
+           [98.01712517475625, 9.080737236519171],
+           [98.13934807514687, 9.016995849072925],
+           [98.20251946186562, 8.973591012817511],
+           [98.22174553608437, 8.955956313355287],
+           [98.234105155225, 8.934250893725997],
+           [98.22998528217812, 8.896263300518692],
+           [98.19153313374062, 8.875911181256285],
+           [98.1077623817875, 8.86098557609556],
+           [97.98965935444375, 8.837917539792628],
+           [97.95670037006875, 8.721198358457286],
+           [97.95120720600625, 8.631598403099487],
+           [98.16406731342812, 8.656036873477472],
+           [98.22586540913125, 8.685903959733382],
+           [98.23547844624062, 8.664182677867782],
+           [98.24097161030312, 8.626167416853235],
+           [98.26019768452187, 8.590864104765672],
+           [98.22723870014687, 8.56098950395976],
+           [98.18878655170937, 8.555557506170537],
+           [98.15994744038125, 8.384410165715863],
+           [98.23685173725625, 8.188720986564299],
+           [98.25338683598491, 8.1464127273116],
+           [98.26608977787944, 8.12194217878376],
+           [98.29218230717632, 8.111065900394246],
+           [98.32891784184429, 8.113105225017607],
+           [98.37728658365077, 8.07378287436696],
+           [98.4171120231039, 8.079221553710479],
+           [98.44320455240077, 8.08058121209791],
+           [98.47616353677577, 8.06698442220795],
+           [98.50088277505702, 8.03163063002967],
+           [98.5379616324789, 7.936432079444191],
+           [98.56268087076015, 7.937792214645813],
+           [98.56268087076015, 7.956833634413586],
+           [98.56680074380702, 8.001713477837239],
+           [98.6038796012289, 8.018032197238576],
+           [98.76730123208827, 8.035710071100935],
+           [98.8290993277914, 7.982674146164554],
+           [98.81399312661952, 7.922830479981754],
+           [98.80026021646327, 7.838490562331474],
+           [98.82772603677577, 7.731000438878468],
+           [98.8785378043539, 7.649344054078905],
+           [98.96047772085721, 7.549520484153332],
+           [98.91103924429471, 7.383399608212374],
+           [98.96185101187284, 7.290780457867688],
+           [99.07171429312284, 7.327558015376026],
+           [99.14175213491971, 7.448766167542537],
+           [99.19668377554471, 7.462382976476771],
+           [99.24474896109159, 7.42425484571609],
+           [99.28457440054471, 7.40246585678119],
+           [99.31066692984159, 7.38476151040134],
+           [99.30242718374784, 7.342540595334171],
+           [99.26534832632596, 7.2839694671545026],
+           [99.26946819937284, 7.241739018498298],
+           [99.30105389273221, 7.213129046436801],
+           [99.33675945913846, 7.237651990603825],
+           [99.37246502554471, 7.247188331395104],
+           [99.41091717398221, 7.233564925684745],
+           [99.41091717398221, 7.21585388369498],
+           [99.33126629507596, 7.1545410884665985],
+           [99.38482464468534, 7.125925627645656],
+           [99.43978230210722, 7.141847911639146],
+           [99.46999470445097, 7.080525183083854],
+           [99.4878474876541, 7.043727627883744],
+           [99.49059406968534, 6.990570452050379],
+           [99.50020710679472, 6.9278644745530364],
+           [99.5482722923416, 6.926501208240948],
+           [99.5867244407791, 6.900598400478361],
+           [99.60457722398222, 6.8665136001803075],
+           [99.60732380601347, 6.835153426930449],
+           [99.72268025132597, 6.746515756713307],
+           [99.69933430406034, 6.679685853314214],
+           [99.69933430406034, 6.6292164019034],
+           [99.73229328843534, 6.445027573728057],
+           [99.7954646751541, 6.488693268399135],
+           [99.84902302476347, 6.498244635490301],
+           [99.91219441148222, 6.464131779222771],
+           [99.93416706773222, 6.431381271966836],
+           [99.92455403062284, 6.353590378799301],
+           [99.94240681382597, 6.320832791504552],
+           [99.9437801048416, 6.30035824523497],
+           [99.8833553001541, 6.2457555127976265],
+           [99.8558894798416, 6.158379314459688],
+           [99.88428678411502, 6.071891194625445],
+           [99.98591031927127, 6.052772640574602],
+           [100.0641879071619, 6.1005677526995665],
+           [100.1026400555994, 6.040481784187257],
+           [100.06556119817752, 5.961267374674438],
+           [100.16993131536502, 5.813734318202781],
+           [100.28116788763064, 5.827396426553401],
+           [100.30863370794314, 5.819199201390491],
+           [100.28666105169314, 5.703059082703872],
+           [100.39103116888064, 5.659329625601617],
+           [100.7782992352869, 5.590995736638626],
+           [100.87626103442342, 5.904010631562902],
+           [99.34896432285977, 8.279944124543295],
+           [98.77218209629727, 9.955821478000098]]],
+         [[[100.29991446446982, 5.704829222817308],
+           [100.25596915196982, 5.59003270528241],
+           [99.74510489415732, 5.442404161809887],
+           [99.75059805821982, 4.70921180466154],
+           [99.87694083165732, 4.013604492411981],
+           [100.19005118321982, 3.268047269229756],
+           [100.60203848790732, 2.7030216183687044],
+           [101.38756094884482, 2.615225640178804],
+           [101.87095938634482, 3.4983579108027],
+           [100.90965567540732, 5.2509800190266365],
+           [100.71739493321982, 5.682964976637016]]]]),
+    sasia_dove = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200526T213437Z/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    sasia_depth = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth"),
+    sasia_ls8 = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth"),
+    sasia_s2 = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200527T165228Z/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - Andaman Sea region (+ Myanmar)/
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Eva Kovacs (...)
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script generates the data as an asset (for quick load)
+// - Corresponding '_classification' script performs the machine learning classificaiton
+///////////////////////////////
+
+// Need to load the segmentation package
+// https://earthengine.googlesource.com/users/gena/packages/+/master/slic#
+// TODO: need to modify the source code to be able to use 2 bands?
+// var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
+// load analysis params module
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.andm       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. Segmentation and metrics calculation
+// 4. Export data to asset
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  // OBIA settings
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
+  compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
+  //segment_iters: 3, // number of (SLIC) segmentation iterations
+  //segment_max: 1499, // must be <reduce_max below (~1500 at this point seems fair)
+  reduce_max: 1500, // the max size of object to be able to reduce
+  //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
+  segment_all_bands: true, // segement on all input bands or those chosen below
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
+  
+  // analysis parameters
+  //image_data_scale: sensor_params.pixel, // pixel size of the image data
+  //depth_limit: 15.00,//RB: make the right depth limit as S2 depth is not *100 as dove?
+  depth_limit: 2500, // depth limit for analysis in cm 
+  min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
+  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
+  red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
+  green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
+  blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
+  nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
+  use_glcm: true, // use glcm metrics
+  small_object: 400, // the smallest size a group of image pixels should be to not be considered noise
+  
+  // use relative band brightness as predictor variables (instead of Rrs values)?
+  use_brightness: false,
+  
+  // use global reef mask layer to remove junk + limit size
+  global_mask: false,
+  
+  // export options
+  do_export: true, // export the results?
+  export_scale: sensor_params.pixel, // pixel size to export at
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
+  asset_output: region_params.asset // asset path
+}
+
+var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
+
+
+
+// 2. Data loads & vis
+
+Map.centerObject(map_centre, 6)
+
+// load input data
+/* ############
+NOTE
+###############
+For "Andaman sea" we are including Myanmar - so below each of the 
+image and depth data loads have the south asia region added in.
+The export extent is controlled via andm_extent geometry,
+so you will see the full south asia data sets, but it won't
+be exported in the pixel/segmentation stacks.
+
+If you're using this region as a template, then remove any
+reference to the south asia (sasia_*) products
+  -> you may need to reference another region's *_datagen script
+     to convert the ImageCollection() calls back to just ee.Image() calls
+*/
+
+var reflec = ee.ImageCollection([ee.Image(region_params.image),
+                                 sasia_dove])
+                                 .mosaic()
+                                 .select(vars.all_bands)
+
+/* 
+// import depth data
+Depth data used as follows:
+    - take mean where ls8 and sentinel2 exist
+    - use s2 flags where no ls8, and vica verca
+    - use dove where no s2 or ls8 data exist
+
+NB depth is 16bit s integer in centimeters)
+*/
+var dove_depth = ee.ImageCollection([ee.Image(region_params.depth),
+                                     sasia_depth])
+                                     .mosaic()
+                                     .rename('depth')
+var s2_depth = ee.ImageCollection([ee.Image(region_params.s2_depth),
+                                   sasia_s2])
+                                   .mosaic()
+                                   .rename('depth')
+var ls8_depth = ee.ImageCollection([ee.Image(region_params.ls8_depth),
+                                   sasia_ls8])
+                                   .mosaic()
+                                   .rename('depth')
+Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
+Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
+Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
+
+// make the depth data for modelling/mapping
+// --> Use S2 where possible, then LS8, then Dove
+// --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+// get back the negative retrievals as very shallow
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+
+// define a mask based on min/max depth
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
+
+// "NOT REEF" CLEAN
+//var wcmc_buff = wcmc.filterBounds(not_reef).geometry(100).buffer(2000)
+var not_reef_img = ee.Image().byte().paint(ee.Feature(not_reef, {zone: 1}), "zone")
+// remove
+depth_mask = depth_mask.where({
+  test: not_reef_img.eq(1),
+  value: ee.Image(0)
+})
+
+// clip and load other variables
+var depth = depth.updateMask(depth_mask).int16().rename('depth') // mask out depth below set limit
+
+//var waves = waves.rename('waves')
+//var waves = ee.Image(region_params.waves).unmask(0)
+var geomorph = ee.FeatureCollection(region_params.geo_train)
+var benthic = ee.FeatureCollection(region_params.benthic_train)
+
+// define it if it's a normal shape, otherwise draw it
+//var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: andm_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+
+Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false) // image data
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false) // water depth
+//Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+
+// add in global bathy if using
+if (vars.global_mask) {
+  /*// manual touch-ups if needed
+  var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
+  print(manual_adds)
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)*/
+  // mask the depth mask with global mask
+  global_mask = global_mask.clip(export_geom)
+  depth_mask = depth_mask.updateMask(global_mask)
+  Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
+}
+
+
+/*
+// TESTING DEPTH IMPORVEMENTS // ################################################### //
+
+Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
+Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
+
+// TESTING OUTLINE EXTRACTION // ################################################### //
+
+var rbratio = reflec.select('b3').divide(reflec.select('b1')) // get reef area + land
+var nir_ratio = reflec.select('b4').divide(reflec.select('b1')) // mask out land
+var b_bright = reflec.expression(' B / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var g_bright = reflec.expression(' G / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var r_bright = reflec.expression(' R / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+
+var ratio_bright = reflec.select('b3').divide(reflec.select('b1'))
+                    .multiply(reflec.select('b2').divide(reflec.select('b3')))
+                    .multiply(reflec.select('b2').divide(reflec.select('b1')))
+      
+
+var depth_bbri = depth.multiply(b_bright)
+var depth_rb = depth.multiply(rbratio)
+var bbri_rb = b_bright.multiply(rbratio)
+
+Map.addLayer(rbratio, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "rb ratio", false)
+Map.addLayer(b_bright, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright", false)
+Map.addLayer(bbri_rb, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright + rb", false)
+Map.addLayer(depth_bbri, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "depth + b bright", false)
+Map.addLayer(depth_rb, {palette:['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061']}, "depth + rb ratio", false)
+Map.addLayer(ratio_bright, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "rgb brightness", false)
+
+Map.addLayer(depth.lt(3).selfMask(), {palette:'4eb3d3'}, "3m depth mask", false)
+Map.addLayer(rbratio.gt(0.4).selfMask(), {palette:'feb24c'}, "rb ratio mask", false)
+Map.addLayer(depth_bbri.lt(5).selfMask(), {palette:'bf812d'}, "dix ratio mask", false)
+
+Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", false)
+
+// END TESTING // ################################################### //
+ */
+
+
+// 3. Segmentation and metrics calculation
+
+// replace the band values with relatvie brightness values if set
+if (vars.use_brightness) {
+  reflec = reflec
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' B / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.blue_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' G / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.green_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' R / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.red_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' N / (B + G + R + N)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band),
+      'N': reflec.select(vars.nir_band)}).rename(vars.nir_band).multiply(10000).int16()})
+}
+
+// calculate slope
+var slope = ee.Terrain.slope(depth) // slope in degress
+
+
+if (vars.use_glcm) {
+  // glcm texture (mixed usefulness - will vary with image quality and type)
+  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent').multiply(100).int16() // maximum neighbourhood glcm entropy on depth
+  var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5).int16()
+  var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5).int16()
+}
+
+// local variance in depth and red reflectance (5 pixels)
+var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev').multiply(10).int16()
+var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev').multiply(10).int16()
+
+// segmentation functions
+
+// ***SNIC segmentation***
+  var run_snic = function(bands) {
+    return(
+    ee.Algorithms.Image.Segmentation.SNIC({
+    image: bands,
+    seeds: ee.Algorithms.Image.Segmentation.seedGrid(vars.scale_factor, "hex"),
+    //size: 1000,
+    neighborhoodSize: vars.scale_factor*2,
+    compactness: vars.compactness,
+    connectivity: 4
+    })
+    )
+  }
+  
+  // ***SLIC segmentation***
+  /*
+  segment_on = segment_on.rename(['v1','v2','v3'])
+  var slic = new Slic(segment_on, vars.scale_factor, false)
+  slic.compactness = vars.compactness
+  var segmentation = slic.iterate(vars.segment_iters)
+  var segmented_data = segmentation.image.select('label').rename('clusters').int32()
+  Map.addLayer(segmented_data.randomVisualizer(), {}, "Slic labels", false)
+  */
+  
+  
+  // ***k-means segmentation***
+  /*
+  var segmented_data = ee.Algorithms.Image.Segmentation.KMeans({
+    image: reflec.select(['b2']).addBands(depth), //all_data.select(segment_bands),
+    numClusters: segment_size,
+    numIterations: 10,
+    //neighborhoodSize: 100
+    gridSize: segment_max
+  })
+  Map.addLayer({eeObject: segmented_data, shown: false, name: "Segmentation algorithm segments"})
+  */
+
+
+// calculate pixel or object data
+if (vars.pixel_based) {
+  // pixel-based data generation
+  // combine data to move forward with
+  var all_data = reflec.addBands(depth).addBands(slope)//.addBands(waves)
+                  .addBands(depth_var).addBands(red_var)
+                  .updateMask(depth_mask) // make sure all layers are clipped down
+  if (vars.use_glcm) { // add glcm if using
+    all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
+  }
+  
+} else {
+  //// OBIA data generation
+  
+  if (vars.segment_all_bands) { 
+    // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
+    var segmented_data_mean = run_snic(reflec
+                                       .addBands(depth)
+                                       .addBands(slope)//.addBands(waves)
+                                       .updateMask(depth_mask)
+                                       )
+                                       .regexpRename('_mean', '')
+    Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // remove the cluster band - index starts at 0
+    segmented_data_mean = segmented_data_mean.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    
+  } else {
+    // segment on the bands specified by var segment_on
+    var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
+                         .updateMask(depth_mask)
+    var segmented_data = run_snic(segment_on)
+    Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // Calculate object statistics
+    var segmented_data_mean = reflec.addBands(depth).addBands(slope)//.addBands(waves)
+                              //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
+                              //.addBands(depth_var).addBands(red_var)
+                              .addBands(segmented_data.select('clusters'))
+                              .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    
+  /*
+  // For this analysis anyway, SD has not come up as adding much useful info
+  // Looks like you can also use .combine - and do both mean and SD in one reduction??
+  var segmented_data_sd = reflec.addBands(depth).addBands(waves).addBands(slope)//.addBands(depth_glcm)
+                          .addBands(segmented_data.select('clusters'))
+                          .reduceConnectedComponents(ee.Reducer.stdDev(), "clusters", vars.reduce_max)
+                          //.rename(['b1_sd','b2_sd','b3_sd','b4_sd','b5_sd','depth_mean','waves_sd','slope_sd','depth_corr_sd','depth_var_sd','depth_idm_sd'])
+  */
+  }
+  
+  // combine data to move forward with
+  var all_data = segmented_data_mean
+                 //.addBands(segmented_data_sd)
+                 //.addBands(depth_var).addBands(red_var)
+                 .updateMask(depth_mask)
+  //Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
+}
+
+
+
+
+// Add any extra indices needed
+
+all_data = all_data
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('rb'))
+              .addBands(all_data.select(vars.green_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('gb'))
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).multiply(1000).int16().rename('rg'))
+
+// clean up noise
+all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
+Map.addLayer(all_data, {}, "Model predictor data", false)
+
+
+/*
+####### SOME POSSIBLY FUTURE USEFUL JUNK ######
+
+//all_data.select('b1_1','b2_1','b3_1','b4_1','b5_1').reduce('sum').aside(Map.addLayer, {}, "sd_sum", false)
+//all_data.select('b3','b4','waves','slope','depth').spectralGradient().aside(Map.addLayer, {}, "SAM", false)
+
+// export data to guide threshold development
+var geomorphic_sample = all_data.sampleRegions({
+  collection: geomorph,
+  properties: ['Class_na_1'],
+  scale: vars.image_data_scale
+})
+
+Export.table.toDrive({
+    collection: geomorphic_sample,
+    description: 'geomorphic_object_sample',
+    folder: output_folder,
+    fileFormat: 'CSV'
+  })
+*/
+
+
+// 4. Export data to asset
+
+// export if specified in input params
+if (vars.do_export) {
+  Map.addLayer(export_geom, {}, "export geometry", true)
+  
+  Export.image.toAsset({
+    image: all_data,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    scale: vars.export_scale,
+    region: export_geom,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  /*
+  
+  // add raster flag for either side of dateline
+  var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+  var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
+  var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
+  
+  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
+  var export_geom_west = ee.Geometry.Rectangle(162.7417,-23.0584,179.99998,-7.3087)
+  
+  Map.addLayer(export_geom_east, {}, "export footprint east", true)
+  Map.addLayer(export_geom_west, {}, "export footprint west", true)
+  
+  Export.image.toAsset({
+    image: export_stack_east,
+    description: output_name + '_east',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
+    scale: vars.export_scale,
+    region: export_geom_east,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  Export.image.toAsset({
+    image: export_stack_west,
+    description: output_name + '_west',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_west',
+    scale: vars.export_scale,
+    region: export_geom_west,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  */
+  
+}
