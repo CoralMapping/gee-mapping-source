@@ -2,7 +2,10 @@
 var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.911111431319622]),
     pixels_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_east"),
     pixels_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_west"),
-    mid_mask = /* color: #00018f */ee.Geometry({
+    mid_mask = 
+    /* color: #00018f */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -9365,7 +9368,10 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.
           [-175.24644879499016, -21.03904458481073],
           [-175.29108075299797, -21.053463483571132],
           [-175.32403973737297, -21.081015715450285]]]),
-    refinement_mask = /* color: #efff04 */ee.Geometry({
+    refinement_mask = 
+    /* color: #efff04 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -12375,7 +12381,10 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.
       ],
       "coordinates": []
     }),
-    newcal_lagoon = /* color: #00d678 */ee.Geometry.MultiPolygon(
+    newcal_lagoon = 
+    /* color: #00d678 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[163.8764204672719, -20.067383829300468],
            [163.89530321873676, -20.1005957029803],
            [163.93787524022113, -20.139602594942268],
