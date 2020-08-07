@@ -467,14 +467,14 @@ var timor = {
   QAQC: "projects/coral_atlas/Timor/QAQC"
 };
 
-var timor = {
-  sname:"timor",
+var cio = {
+  sname:"cio",
   tide: "both",
-  asset: "projects/coral_atlas/Timor/",
+  asset: "projects/coral_atlas/central_indian_ocean/",
   epsg: "EPSG:4326",
-  image: "projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020",
-  depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_depth",
-  s2_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_sentinel2_depth",
+  image: "projects/coral_atlas/workflow/mapping/central_indian_ocean/central_indian_ocean_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200609T174749Z/central_indian_ocean_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth",
+  s2_depth: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_landsat8_depth",
   pixels:["projects/coral_atlas/Timor/in_out/timor_pixels"],
   segments:["projects/coral_atlas/Timor/in_out/timor_segmentation"],
