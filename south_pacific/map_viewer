@@ -2,10 +2,7 @@
 var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.911111431319622]),
     pixels_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_east"),
     pixels_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_west"),
-    mid_mask = 
-    /* color: #00018f */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #00018f */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
