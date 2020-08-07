@@ -9,6 +9,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
     reef_boundary = 
     /* color: #d69d40 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -5628,7 +5629,31 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    });
+    }),
+    Inshore = 
+    /* color: #d0d6c4 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[96.32969155762126, 15.318521104695725],
+          [96.32969155762126, 1.7491933014409073],
+          [102.08652749512126, 1.7491933014409073],
+          [102.08652749512126, 15.318521104695725]]], null, false),
+    Offshore = 
+    /* color: #5e6eff */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[90.57285562012126, 21.853751396613237],
+          [90.57285562012126, 5.432712438884859],
+          [96.41758218262126, 5.432712438884859],
+          [96.41758218262126, 21.853751396613237]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
