@@ -519,5 +519,6 @@ exports = {
   hawaii: hawaii,
   wio: wio,
   timor: timor,
-  andm: andm
-}
+  andm: andm,
+  cio: cio,
+};
