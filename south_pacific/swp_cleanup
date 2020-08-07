@@ -9577,7 +9577,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
   var trf_to_rc_i = ee.Image().byte().paint(ee.Feature(trf_to_rc, {zone: 1}), "zone").clip(trf_to_rc);
   var rc_to_trf_i = ee.Image().byte().paint(ee.Feature(rc_to_trf, {zone: 1}), "zone").clip(rc_to_trf);
-
+  
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
@@ -9668,30 +9668,38 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
+  // define any image mask layers
+  var newcal_lagoon_i = ee.Image().byte().paint(ee.Feature(newcal_lagoon, {zone: 1}), "zone").clip(newcal_lagoon);
   
   // Deep (or land or missing) in geo == masked from benthic
       man_benthic = man_benthic.where({
         test: geo_map.unmask(0).lte(2),
         value: ee.Image(0)
-      })
+      });
   
   
   // Generic benthic rules
-    // Coral in benthic && Deep/shallow lagoon in geo == sand
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(15)
-                     .and(geo_map.eq(11).or(geo_map.eq(12))),
-      value: ee.Image(11)
-    });
+  // Coral in benthic && Deep lagoon in geo == sand
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(15)
+                     .and(geo_map.eq(12)),
+    value: ee.Image(11)
+  });
     
-    // BMA in benthic && inner/outer RF in geo == rubble 
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(18)
+  // BMA in benthic && inner/outer RF in geo == rubble 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14))),
-      value: ee.Image(12)
-    });
+    value: ee.Image(12)
+  });
     
-    
+  // within New Caledonia: CA in benthic && BRS/PL/DL == sand
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(15)
+                     .and(newcal_lagoon_i.eq(1))
+                     .and(geo_map.gte(23).or(geo_map.eq(12))),
+    value: ee.Image(11)
+  });
   
   // Add the manual layer to the map
   //var image = ee.Image(region_params.image);
