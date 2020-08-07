@@ -30,7 +30,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 //bring the keys from datagen
 
-var region_params = param_module.wio
+var region_params = param_module.nth_cari
 
 //setting variables from datagen keys
 
