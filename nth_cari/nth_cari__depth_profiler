@@ -35,7 +35,7 @@ var region_params = param_module.nth_cari
 //setting variables from datagen keys
 
 var vars = {
-    Dove_low_sr : ee.Image(region_params.low_rrs),
+    Dove_low_sr : ee.Image(region_params.image),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
