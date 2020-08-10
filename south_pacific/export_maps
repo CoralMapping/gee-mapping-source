@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
+var reef_boundary = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[165.31879265233823, -16.608013670295197],
           [162.02289421483823, -17.76253238630983],
           [162.19867546483823, -18.93043227520492],
