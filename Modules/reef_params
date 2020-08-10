@@ -552,7 +552,7 @@ exports = {
   east_africa: east_africa,
   hawaii: hawaii,
   wio: wio,
-  coral_sea:coral_sea,
+  coral_sea : coral_sea,
   timor: timor,
   andm: andm,
   cio: cio,
