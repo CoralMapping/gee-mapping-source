@@ -673,7 +673,7 @@ var region_params = param_module.timor       //<------------ THIS IS WHERE YOU C
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -703,7 +703,7 @@ var vars = {
   global_mask: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   segments_output_name: region_params.sname + '_'+ 'segmentation',
   pixels_output_name: region_params.sname + '_' + 'pixels',
@@ -755,14 +755,14 @@ depth_mask = depth_mask.where({
   value: ee.Image(0)
 });
 
-// "TURBID WATER" CLEAN
+/*// "TURBID WATER" CLEAN
 var tmask = ee.FeatureCollection(region_params.turbid_mask).geometry();
 var tmask_img = ee.Image().byte().paint(ee.Feature(tmask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
   test: tmask_img.eq(1),
   value: ee.Image(0)
-});
+});*/
 
 // clip and load other variables
 var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
@@ -778,7 +778,7 @@ var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13
 
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
-Map.addLayer(tmask,{}, "turbid mask", false);
+//Map.addLayer(tmask,{}, "turbid mask", false);
 //Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
 
 // add in global bathy if using
