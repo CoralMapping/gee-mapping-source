@@ -501,7 +501,38 @@ var cio = {
   QAQC: ""
 };
 
-
+var coral_sea = {
+  sname:"coral_sea",
+  tide: "both",
+  asset: "projects/coral_atlas/central_indian_ocean/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/workflow/mapping/central_indian_ocean/central_indian_ocean_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200609T174749Z/central_indian_ocean_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth",
+  s2_depth: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth",
+  depth_composite: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_composite_depth",
+  pixels:["projects/coral_atlas/central_indian_ocean/in_out/cio_pixels"],
+  segments:["projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"],
+  turbid_mask:"",
+  waves:"",
+  geo_train:"",
+  benthic_train:"",
+  benthic_pts:"",
+  geo_train_library: "",
+  benthic_train_library:"",
+  geo_val_library:"",
+  benthic_val_library:"",
+  geo_map: [""],
+  benthic_map: [""],
+  geo_map_clean1:"",
+  geo_map_clean2:"",
+  geo_map_clean3:"",
+  benthic_map_clean1: "",
+  benthic_map_clean2: "",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
 
 // export the objects
 exports = {
