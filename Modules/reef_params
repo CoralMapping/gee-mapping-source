@@ -479,7 +479,6 @@ var cio = {
   depth_composite: "projects/coral_atlas/central_indian_ocean/depth/central_indian_ocean_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_composite_depth",
   pixels:["projects/coral_atlas/central_indian_ocean/in_out/cio_pixels"],
   segments:["projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"],
-  
   turbid_mask:"",
   waves:"",
   geo_train:"",
