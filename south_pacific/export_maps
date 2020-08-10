@@ -47,8 +47,8 @@ var benthic = ee.Image(region_params.benthic_map_clean2)
 var depth = ee.ImageCollection(region_params.pixels).mosaic().select('depth') // will need to import depth mosaic from pixels now
 
 // SWP SPECIAL CASE - missing reef manually mapped
-var geo = ee.ImageCollection([geo,missing_geo]).mosaic()
-var benthic = ee.ImageCollection([benthic,missing_ben]).mosaic()
+var geo = ee.ImageCollection([geo,missing_geo.rename('classification')]).mosaic()
+var benthic = ee.ImageCollection([benthic,missing_ben.rename('classification')]).mosaic()
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
@@ -64,7 +64,7 @@ Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
-Map.addLayer(missing_ben, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
+//Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
@@ -115,12 +115,12 @@ var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'hi_stack',
+  description: 'swp_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/hawaii/hawaii_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/v2/swp_stack',
   region: reef_boundary, 
   scale: 5,
-  crs: 'EPSG:4326',
+  crs: 'EPSG:3832',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
