@@ -14,7 +14,9 @@ var reef_boundary =
           [-153.52755471286838, 20.385834406814258],
           [-159.43420248789334, 22.893106923083444],
           [-167.4874893752415, 24.965604306992145],
-          [-178.2214120255763, 29.123686786807387]]]);
+          [-178.2214120255763, 29.123686786807387]]]),
+    missing_ben = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_missing_ben"),
+    missing_geo = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_missing_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS
@@ -33,16 +35,20 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.hawaii;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.swpac;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
 // imports
 var geo = ee.Image(region_params.geo_map_clean3)
-var benthic = ee.Image(region_params.benthic_map_clean1) // - OR -
-//var benthic = ee.Image(region_params.benthic_map_clean2)
-var image = ee.Image(region_params.image)
-var depth = ee.Image(region_params.pixels).select('depth') // will need to import depth mosaic from pixels now
+//var benthic = ee.Image(region_params.benthic_map_clean1) // - OR -
+var benthic = ee.Image(region_params.benthic_map_clean2)
+//var image = ee.Image(region_params.image)
+var depth = ee.ImageCollection(region_params.pixels).mosaic().select('depth') // will need to import depth mosaic from pixels now
+
+// SWP SPECIAL CASE - missing reef manually mapped
+var geo = ee.ImageCollection([geo,missing_geo]).mosaic()
+var benthic = ee.ImageCollection([benthic,missing_ben]).mosaic()
 
 // finalise layers (include 'mapped area' as zeros)
 geo = geo.where(geo.lte(2), 0)
@@ -58,7 +64,7 @@ Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
-Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
+Map.addLayer(missing_ben, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
