@@ -5621,7 +5621,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    geo_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1");
+    geo_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1"),
+    geo_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
