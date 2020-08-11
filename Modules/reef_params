@@ -594,4 +594,5 @@ exports = {
   timor: timor,
   andm: andm,
   cio: cio,
+  indonesia: indonesia,
 };
