@@ -30,7 +30,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 //bring the keys from datagen
 
-var region_params = param_module.wio
+var region_params = param_module.hawaii
 
 //setting variables from datagen keys
 
@@ -39,8 +39,8 @@ var vars = {
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    //Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
-    Depth_composite : ee.Image(region_params.depth_composite).rename('depth')
+    Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+    //Depth_composite : ee.Image(region_params.depth_composite).rename('depth')
 };
 
 // 2. data preparation (invert sign, change band names))
