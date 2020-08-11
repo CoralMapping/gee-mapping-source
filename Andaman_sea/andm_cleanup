@@ -5653,7 +5653,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         [[[90.57285562012126, 21.853751396613237],
           [90.57285562012126, 5.432712438884859],
           [96.41758218262126, 5.432712438884859],
-          [96.41758218262126, 21.853751396613237]]], null, false);
+          [96.41758218262126, 21.853751396613237]]], null, false),
+    geo_raw = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_segmentation");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
