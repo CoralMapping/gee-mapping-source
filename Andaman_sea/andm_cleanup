@@ -5808,6 +5808,7 @@ MANUAL ADDITION
 //var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
 
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
+Map.addLayer(geo_raw, {}, "Geo_RAW", false);
 
 
 
