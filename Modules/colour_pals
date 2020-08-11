@@ -115,7 +115,7 @@ var benthic_gbr_names = ['Sand',    'Rubble', 'Rock',   'Coral/Algae',   'Seagra
 var benthic_gbr_cols = ['ffffcc',   'fcbba1', '993404',   '1c9099',        'a6d96a',          '756bb1']
 
 // coral legend
-var coral_names = ['Low',    'Med',   'High']
+var coral_names = ['Negligible',    'Low to medium',   'High']
 var coral_cols = ['#e0ecf4',  '#9ebcda', '#8856a7']
 
 //depth legend
