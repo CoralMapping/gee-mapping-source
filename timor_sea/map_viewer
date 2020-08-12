@@ -189,7 +189,7 @@ if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
 // Add geo clean stage 3 to the viewer
 if (vars.geo_cleanup_stage == 3) {
   var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
-  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', false);
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
 }
 
 // Add benthic clean stage 1 to the viewer
