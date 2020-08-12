@@ -4579,7 +4579,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
-// update these values based on inspection of the layer
+  // update these values based on inspection of the layer
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
@@ -4614,7 +4614,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(21)
   })*/
   
-  //Deep Water clean
+  // **Deep Water clean**
   
   // Reef crest -> Inner reef flat - TS
   man_geo = man_geo.where({
@@ -4623,7 +4623,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(13)
   });
   
- // Deep water/shelter slope -> Back reef slope
+  // Deep water/shelter slope -> Back reef slope
   man_geo = man_geo.where({
     test: backreefslope.eq(1)
                      .and(man_geo.eq(2)).or(man_geo.eq(21)),
