@@ -4040,27 +4040,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    not_DL_outer_reef = 
-    /* color: #0000ff */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-170.56150072244645, 25.408182796251236],
-          [-170.58244341043473, 25.417485873201567],
-          [-170.6001245322609, 25.411749060572483],
-          [-170.58776491312028, 25.37809793741552],
-          [-170.58561835588844, 25.364913817286464],
-          [-170.57042711404802, 25.356072309944942],
-          [-170.52648180154802, 25.32923284801424],
-          [-170.50691225275955, 25.32442414718507],
-          [-170.48699968484883, 25.32737093042614],
-          [-170.46991870851755, 25.366383280062212],
-          [-170.49438112405778, 25.399344208492433],
-          [-170.50296419290544, 25.435159741810324],
-          [-170.5312883201027, 25.457480922788026],
-          [-170.54364793924333, 25.44151549937528],
-          [-170.53781145242692, 25.428183524346892],
-          [-170.5455362143898, 25.41965648788534],
-          [-170.56235902933122, 25.41841614142272]]]),
     not_DL_shallow_lagoon = 
     /* color: #999900 */
     /* shown: false */
@@ -6866,7 +6845,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    reef_slope = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[118.90674646669093, -17.649937200896062],
            [118.92966326051418, -17.665313132039188],
            [118.96451052003566, -17.639794910610778],
@@ -7428,7 +7410,6 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-  var notDLouterreef = ee.Image().byte().paint(ee.Feature(not_DL_outer_reef, {zone: 1}), "zone").clip(not_DL_outer_reef);
   var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
   var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
 
@@ -7452,14 +7433,14 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // **Deep Water clean**
   
-  // Reef crest -> Inner reef flat - TS
+  // Reef crest -> Inner reef flat (inside the reef)- TS
   man_geo = man_geo.where({
     test: notreefcrest.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(13)
   });
   
-  // Deep water -> Deep lagoon - TS
+  // Deep water -> Deep lagoon (inside the reef) - TS
   man_geo = man_geo.where({
     test: notdeepwater.eq(1)
                      .and(man_geo.eq(2)),
@@ -7480,12 +7461,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  // Deep lagoon -> Outer reef flat (insided the reef)
-  man_geo = man_geo.where({
-    test: notDLouterreef.eq(1)
-                     .and(man_geo.eq(12)),
-    value: ee.Image(14)
-  });
+  
   
   // Deep lagoon -> Shallow lagoon (insided the reef)
   man_geo = man_geo.where({
