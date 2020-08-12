@@ -1364,7 +1364,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #98ff00 */ee.Geometry({
+    mid_mask = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5630,20 +5633,9 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    Inshore = 
-    /* color: #d0d6c4 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[96.32969155762126, 15.318521104695725],
-          [96.32969155762126, 1.7491933014409073],
-          [102.08652749512126, 1.7491933014409073],
-          [102.08652749512126, 15.318521104695725]]], null, false),
     Offshore = 
     /* color: #5e6eff */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -5653,8 +5645,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         [[[90.57285562012126, 21.853751396613237],
           [90.57285562012126, 5.432712438884859],
           [96.41758218262126, 5.432712438884859],
-          [96.41758218262126, 21.853751396613237]]], null, false),
-    geo_raw = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_segmentation");
+          [96.41758218262126, 21.853751396613237]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
@@ -5808,8 +5799,6 @@ MANUAL ADDITION
 //var reef_boundary = ee.FeatureCollection([ee.Feature(east),ee.Feature(west)]).geometry();
 
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
-Map.addLayer(geo_raw, {}, "Geo_RAW", false);
-
 
 
 // ############################
@@ -5832,7 +5821,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
   var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
-  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore)
+  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore_rec, {zone: 1}), "zone").clip(Inshore_rec)
   var outer_extent_reef = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
   //var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
@@ -6289,7 +6278,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   });
   
     // deep water in depth data == deep (only for inshore reefs of Andaman Sea)
-  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
+  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore_rec, {zone: 1}), "zone").clip(Inshore_rec);
   clean_map = clean_map.where({
     test: depth.gt(400)
                    .and(inner_extent.eq(1)),
