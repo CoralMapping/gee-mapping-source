@@ -120,8 +120,7 @@ var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC00
            [-80.09535323308353, 27.88219146078193],
            [-79.67237960027103, 27.249150306505225],
            [-79.49659835027103, 30.18729080745607]]]]),
-    srtm = ee.Image("CGIAR/SRTM90_V4"),
-    swp_geo_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_east");
+    srtm = ee.Image("CGIAR/SRTM90_V4");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ////////////////////////////////////
 // Global Reef Outline Classification
@@ -182,7 +181,7 @@ var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
 Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', false);
 
 // e.g. mappign region data
-Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
+//Map.addLayer(swp_geo_east, map_palettes.geo, "SWP Geo - east RAW", false)
 //Map.addLayer(swp_geo_west, map_palettes.geo, "SWP Geo - west RAW", true)
 
 
