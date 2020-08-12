@@ -6865,7 +6865,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    });
+    }),
+    reef_slope = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
