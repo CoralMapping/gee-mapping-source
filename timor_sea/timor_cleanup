@@ -4387,7 +4387,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [138.46806890412947, -16.85458273026955],
           [138.75920659944197, -16.975459552472827],
           [139.26183111116072, -15.59932172361471]]]),
-    not_deep_water = /* color: #d63000 */ee.Geometry({
+    not_deep_water = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -7083,13 +7086,6 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  // Sheltered slope -> Reef slope
-  man_geo = man_geo.where({
-    test: outer_extent.eq(1)
-                     .and(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
-  
   // Deep lagoon -> Reef slope (around the reef edge)
   man_geo = man_geo.where({
     test: notdeeplagoon.eq(1)
@@ -7097,11 +7093,11 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
-  // Reef slope -> Inner reef flat (insided the reef)
+  // Reef slope -> Deep lagoon (insided the reef) - TS
   man_geo = man_geo.where({
     test: notreefslope.eq(1)
                      .and(man_geo.eq(22)),
-    value: ee.Image(13)
+    value: ee.Image(12)
   });
   
   // Deep lagoon -> Outer reef flat (insided the reef)
