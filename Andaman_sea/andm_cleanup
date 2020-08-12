@@ -5915,7 +5915,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
   var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
-  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore_rec, {zone: 1}), "zone").clip(Inshore_rec)
+  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore)
   var outer_extent_reef = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
   //var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
@@ -6372,7 +6372,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   });
   
     // deep water in depth data == deep (only for inshore reefs of Andaman Sea)
-  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore_rec, {zone: 1}), "zone").clip(Inshore_rec);
+  var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
   clean_map = clean_map.where({
     test: depth.gt(400)
                    .and(inner_extent.eq(1)),
