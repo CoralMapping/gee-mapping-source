@@ -20,7 +20,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [90.2347830552545, 1.5243019898904366],
           [103.94572055525448, 1.5243019898904366],
           [103.94572055525448, 21.971185910352975]]], null, false),
-    not_reef = /* color: #d63000 */ee.Geometry({
+    noreefmask = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
