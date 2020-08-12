@@ -4278,14 +4278,73 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [126.45796905918615, -13.092905792744665],
           [125.55709015293615, -13.285443251877613],
           [122.94234405918615, -15.223290002478876]]]),
-    mid_mask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[138.95421392366072, -15.517297537859836],
-          [138.46806890412947, -16.85458273026955],
-          [138.75920659944197, -16.975459552472827],
-          [139.26183111116072, -15.59932172361471]]]),
+    mid_mask = /* color: #d63000 */ee.Geometry({
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.95421392366072,
+                -15.517297537859836
+              ],
+              [
+                138.46806890412947,
+                -16.85458273026955
+              ],
+              [
+                138.75920659944197,
+                -16.975459552472827
+              ],
+              [
+                139.26183111116072,
+                -15.59932172361471
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                122.89314767388754,
+                -12.225521784659392
+              ],
+              [
+                122.91786691216879,
+                -12.276686184128721
+              ],
+              [
+                122.9431011345809,
+                -12.26578312789007
+              ],
+              [
+                122.92215844659262,
+                -12.24179481682996
+              ],
+              [
+                122.9262783196395,
+                -12.234748884681588
+              ],
+              [
+                122.97365685967856,
+                -12.219985370080801
+              ],
+              [
+                122.96850701836996,
+                -12.20706661890133
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        }
+      ],
+      "coordinates": []
+    }),
     not_deep_water = 
     /* color: #d63000 */
     /* shown: false */
@@ -6765,10 +6824,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    reef_slope = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    reef_slope = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[118.90674646669093, -17.649937200896062],
            [118.92966326051418, -17.665313132039188],
            [118.96451052003566, -17.639794910610778],
@@ -7090,9 +7146,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [123.09451140459804, -12.174269768137266],
            [123.06292571123866, -12.161852216360899],
            [123.0265334993246, -12.185344392084117],
-           [122.96164549883632, -12.207156693079918],
-           [122.90396727618007, -12.224269702545945],
-           [122.90348003529803, -12.2770703320228],
+           [122.96250380572108, -12.221753152917278],
+           [122.92654205537686, -12.234503558609186],
+           [122.92199172076015, -12.242052637121983],
+           [122.93712566518084, -12.258115526156697],
            [122.96513988009899, -12.273169890222091],
            [122.9877991818568, -12.282227591538236],
            [123.0178399228236, -12.302438560032673],
@@ -7322,6 +7379,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
+  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
@@ -7330,19 +7388,18 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-  var notDLshallowlagoon = ee.Image().byte().paint(ee.Feature(not_DL_shallow_lagoon, {zone: 1}), "zone").clip(not_DL_shallow_lagoon);
   var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
 
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo_mask = ee.Image(region_params.geo_map_clean2);
-  var man_geo = man_geo_mask.unmask(999)
+  var man_geo = ee.Image(region_params.geo_map_clean2);
+  // var man_geo = man_geo_mask.unmask(999)
   
   // "NOT REEF" CLEAN
-  /*// remove
+  // remove
   man_geo = man_geo.where({
-    test: not_reef.eq(1),
+    test: midmask.eq(1),
     value: ee.Image(0)
-  });*/
+  });
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
