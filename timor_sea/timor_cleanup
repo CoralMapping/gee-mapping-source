@@ -7093,10 +7093,10 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
-  // Reef slope -> Deep lagoon (insided the reef) - TS
+  // Reef slope/Sheletered reef slope -> Deep lagoon (insided the reef) - TS
   man_geo = man_geo.where({
     test: notdeepwater.eq(1)
-                     .and(man_geo.eq(22)),
+                     .and(man_geo.eq(22)).or(man_geo.eq(21)),
     value: ee.Image(12)
   });
   
