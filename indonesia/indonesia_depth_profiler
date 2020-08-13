@@ -36,7 +36,7 @@ var region_params = param_module.indonesia
 
 var vars = {
     //Dove_low_sr : ee.Image(region_params.image),
-    Dove_low_sr : ee.ImageCollection([region_params.image_east, region_params.image_west]).mosaic(),
+    Dove_low_sr : ee.ImageCollection([region_params.image[0], region_params.image[1]]).mosaic(),
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_S2 : ee.ImageCollection([region_params.s2_depth_east, region_params.s2_depth_west]).mosaic().rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
