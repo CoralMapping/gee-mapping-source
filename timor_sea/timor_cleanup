@@ -4278,7 +4278,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [126.45796905918615, -13.092905792744665],
           [125.55709015293615, -13.285443251877613],
           [122.94234405918615, -15.223290002478876]]]),
-    mid_mask = /* color: #d63000 */ee.Geometry({
+    mid_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -6938,7 +6941,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    reef_slope = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[118.90674646669093, -17.649937200896062],
            [118.92966326051418, -17.665313132039188],
            [118.96451052003566, -17.639794910610778],
@@ -7319,10 +7325,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [123.32301503462966, -11.976321899143292],
            [123.32576161666091, -11.975944067856027],
            [123.33653336806472, -11.973341215739108]]]]),
-    trs_inshore = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    trf_inshore = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[128.86184913209598, -14.333007298135609],
           [129.54300147584598, -14.636165024799759],
           [130.66910010865848, -13.308871407063991],
@@ -7514,7 +7517,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-  var trsinshore = ee.Image().byte().paint(ee.Feature(trs_inshore, {zone: 1}), "zone").clip(trs_inshore);
+  var trfinshore = ee.Image().byte().paint(ee.Feature(trf_inshore, {zone: 1}), "zone").clip(trf_inshore);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -7570,11 +7573,12 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Inner reef flat/Outer reef flat -> TRS
   man_geo = man_geo.where({
-    test: inner_extent.eq(1)
+    test: trfinshore.eq(1)
                      .and(man_geo.eq(13)).or(man_geo.eq(14)),
     value: ee.Image(16)
   });
   
+ 
   /*// Reef crest -> Outer reef flat
   man_geo = man_geo.where({
     test: inner_extent.eq(1)
