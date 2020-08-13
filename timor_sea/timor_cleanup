@@ -4341,6 +4341,59 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                122.38795513652765,
+                -16.882147565441134
+              ],
+              [
+                122.11879009746515,
+                -17.11197581332371
+              ],
+              [
+                122.0611118748089,
+                -17.507925104918197
+              ],
+              [
+                122.17921490215265,
+                -17.514473355798813
+              ],
+              [
+                122.65643353008234,
+                -17.028613584839665
+              ],
+              [
+                122.92092114890643,
+                -16.83549097865235
+              ],
+              [
+                122.83989697898456,
+                -16.609274212648568
+              ],
+              [
+                122.78410223586455,
+                -16.578883752237832
+              ],
+              [
+                122.7793811000615,
+                -16.582111958662487
+              ],
+              [
+                122.77568975540831,
+                -16.586985299863162
+              ],
+              [
+                122.75818616355487,
+                -16.55399459332653
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -7500,7 +7553,7 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
