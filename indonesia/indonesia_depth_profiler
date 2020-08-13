@@ -44,7 +44,7 @@ var vars = {
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     Dove_depth : ee.ImageCollection([region_params.depth[0], region_params.depth[1]]).mosaic().rename('Dovedepth'),
     //Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
-    Depth_composite : ee.ImageCollection([region_params.depth_composite_east, region_params.depth_composite_west]).mosaic().rename('depth'),
+    Depth_composite : ee.ImageCollection([region_params.depth_composite[0], region_params.depth_composite[1]]).mosaic().rename('depth'),
 };
 
 Map.addLayer(vars.Depth_composite)
