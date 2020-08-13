@@ -7318,7 +7318,19 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [123.3219421510237, -11.979974241002886],
            [123.32301503462966, -11.976321899143292],
            [123.32576161666091, -11.975944067856027],
-           [123.33653336806472, -11.973341215739108]]]]);
+           [123.33653336806472, -11.973341215739108]]]]),
+    trs_inshore = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[128.86184913209598, -14.333007298135609],
+          [129.54300147584598, -14.636165024799759],
+          [130.66910010865848, -13.308871407063991],
+          [131.66336280397098, -12.135425416571353],
+          [131.25137549928348, -11.86677051686856],
+          [130.75424415162723, -12.13811060842463],
+          [130.14724952272098, -12.59955616551813],
+          [129.83139258912723, -13.185890674650622]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -7502,7 +7514,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
-  var notRSplateau = ee.Image().byte().paint(ee.Feature(not_RS_plateau, {zone: 1}), "zone").clip(not_RS_plateau);
+  var trsinshore = ee.Image().byte().paint(ee.Feature(trs_inshore, {zone: 1}), "zone").clip(trs_inshore);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -7556,14 +7568,14 @@ if (vars.manual_clean && vars.geomorphic) {
 
   // **Shallow Water clean**
   
-  // Inner reef flat -> Outer reef flat
+  // Inner reef flat/Outer reef flat -> TRS
   man_geo = man_geo.where({
     test: inner_extent.eq(1)
-                     .and(man_geo.eq(13)),
-    value: ee.Image(14)
+                     .and(man_geo.eq(13)).or(man_geo.eq(14)),
+    value: ee.Image(16)
   });
   
-  // Reef crest -> Outer reef flat
+  /*// Reef crest -> Outer reef flat
   man_geo = man_geo.where({
     test: inner_extent.eq(1)
                      .and(man_geo.eq(15)),
@@ -7590,6 +7602,8 @@ if (vars.manual_clean && vars.geomorphic) {
                      .and(man_geo.eq(11)),
     value: ee.Image(14)
   });
+  */
+  
   
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
