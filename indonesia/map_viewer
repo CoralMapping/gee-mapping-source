@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]),
+var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     noreefmask = 
     /* color: #43ff06 */
     /* shown: false */
@@ -106,8 +106,7 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.9
            [123.47733453709407, -16.616389316286742],
            [123.18619684178157, -16.690067991188318],
            [122.99393609959407, -16.784755975366085],
-           [122.79618219334407, -17.20501743540183]]]]),
-    benthic_subreg2_no_b4p = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_subreg2_no_b4p");
+           [122.79618219334407, -17.20501743540183]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
