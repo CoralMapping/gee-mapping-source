@@ -510,7 +510,7 @@ var indonesia = {
   tide: "both",
   asset: "projects/coral_atlas/Indonesia/",
   epsg: "EPSG:4326",
-  image_east: "projects/coral_atlas/Indonesia/image/east/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic",
+  image: ["projects/coral_atlas/Indonesia/image/east/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic","projects/coral_atlas/Indonesia/image/west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic"],
   image_west: "projects/coral_atlas/Indonesia/image/west/indonesia_low_tide_normalized_sr_june2018_june2020_v2_shift_mosaic",
   depth_east: "projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_depth",
   depth_west: "projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_depth",
