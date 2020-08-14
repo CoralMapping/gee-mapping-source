@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/eastern_png_and_solomons/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200530T220905Z/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
-    Artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    Artifact_layer = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[133.87823474549796, -0.4089792032861279],
            [133.63653552674796, -1.2987640172814356],
            [134.26275622987296, -2.901638046434227],
@@ -311,7 +314,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [153.23121785831103, -4.469383755626047],
            [153.26143026065478, -4.335198328122119]]]]),
     image = ee.Image("projects/coral_atlas/workflow/mapping/eastern_png_and_solomons/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200531T191050Z/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth"),
-    noReef_mask = /* color: #ff0000 */ee.Geometry.MultiPolygon(
+    noReef_mask = 
+    /* color: #ff0000 */
+    /* locked: true */
+    ee.Geometry.MultiPolygon(
         [[[[136.23460438801584, -2.629275602393311],
            [136.54427215599102, -2.6962787263763],
            [137.36482013102457, -2.6642552504268946],
