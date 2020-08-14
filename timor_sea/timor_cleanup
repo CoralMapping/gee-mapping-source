@@ -7574,14 +7574,24 @@ if (vars.manual_clean && vars.geomorphic) {
 
   // **Shallow Water clean**
   
-  // Inner reef flat/Outer reef flat -> TRS
+  // Inner reef flat/Outer reef flat -> TRF - TS
   man_geo = man_geo.where({
     test: trfinshore.eq(1)
                      .and(man_geo.eq(13)).or(man_geo.eq(14)),
     value: ee.Image(16)
   });
   
- 
+  // Non TRF -> Mask
+  man_geo = man_geo.where({
+    test: trfinshore.eq(1)
+                     .and(man_geo.eq(13)).or(man_geo.eq(14)),
+    value: ee.Image(16)
+  });
+  
+  /*var man_geo_mask = man_geo.clip(trf_inshore)
+  man_geo = man_geo.updateMask(man_geo_mask.neq(11))
+  */
+  
   /*// Reef crest -> Outer reef flat
   man_geo = man_geo.where({
     test: inner_extent.eq(1)
