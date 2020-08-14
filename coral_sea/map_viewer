@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPoint(),
     artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPoint(),
-    center_map = /* color: #d63000 */ee.Geometry.Point([73.36350406430057, 3.4513743887798998]);
+    center_map = /* color: #d63000 */ee.Geometry.Point([154.40372425555162, -18.756824421704685]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
