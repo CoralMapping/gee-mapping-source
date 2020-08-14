@@ -7,7 +7,7 @@ var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPoint(),
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
 
-//Viewer for coral sea
+//Viewer for cio
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
