@@ -7336,7 +7336,46 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [131.25137549928348, -11.86677051686856],
           [130.75424415162723, -12.13811060842463],
           [130.14724952272098, -12.59955616551813],
-          [129.83139258912723, -13.185890674650622]]]);
+          [129.83139258912723, -13.185890674650622]]]),
+    arnhem_coast = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[131.76243413629288, -11.590157041709542],
+          [134.10252202691788, -12.363946476027461],
+          [135.80540288629288, -12.696410248007176],
+          [135.44285405816788, -14.245548182415062],
+          [135.90427983941788, -14.724216692772242],
+          [136.2801089817156, -13.921466954403057],
+          [136.3570132785906, -13.602005924669415],
+          [136.74496799050468, -13.043421418375168],
+          [136.8562045627703, -12.57607273581098],
+          [137.08966403542655, -12.352138503753553],
+          [136.82599216042655, -12.169631032785537],
+          [136.59390597878593, -11.974907720269986],
+          [136.78754001198905, -11.821716172746568],
+          [136.71063571511405, -11.636159105817223],
+          [135.9443393283953, -12.031324880567055],
+          [136.50694795440484, -11.57761744471767],
+          [136.8626303274517, -11.032227967145767],
+          [136.7294210989361, -10.913587838071367],
+          [136.20482393096734, -11.533217386402375],
+          [136.09970057270954, -11.470229885665514],
+          [135.69638661368822, -11.859251233213032],
+          [135.22397450431322, -12.037941566270398],
+          [135.07291249259447, -11.980182415070782],
+          [134.65543202384447, -11.87269068863828],
+          [134.28189686759447, -11.878066285288552],
+          [133.94544056876634, -11.693892000711369],
+          [133.79163197501634, -11.664305094486227],
+          [133.60349110587572, -11.724820385375798],
+          [133.52946203268073, -11.595363352295351],
+          [133.45255773580573, -11.53952931422112],
+          [133.221429809553, -11.646930411174234],
+          [133.07036779783425, -11.377798143463803],
+          [132.8469954959894, -11.234135167984522],
+          [132.63070216102847, -10.84999383277342],
+          [131.68038477821597, -11.162736531269152]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -7516,7 +7555,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  var backreefslope = ee.Image().byte().paint(ee.Feature(back_reef_slope, {zone: 1}), "zone").clip(back_reef_slope);
+  var arnhemcoast = ee.Image().byte().paint(ee.Feature(arnhem_coast, {zone: 1}), "zone").clip(arnhem_coast);
   var reefflat = ee.Image().byte().paint(ee.Feature(reef_flat, {zone: 1}), "zone").clip(reef_flat);
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var notreefslope = ee.Image().byte().paint(ee.Feature(not_reef_slope, {zone: 1}), "zone").clip(not_reef_slope);
@@ -7584,13 +7623,16 @@ if (vars.manual_clean && vars.geomorphic) {
   // Non TRF -> Mask
   man_geo = man_geo.where({
     test: trfinshore.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(14)),
-    value: ee.Image(16)
+                     .neq(man_geo.eq(16)),
+    value: ee.Image(0)
   });
   
-  /*var man_geo_mask = man_geo.clip(trf_inshore)
-  man_geo = man_geo.updateMask(man_geo_mask.neq(11))
-  */
+  // Shallow lagoon -> TRF
+  man_geo = man_geo.where({
+    test: arnhemcoast.eq(1)
+                     .and(man_geo.eq(11)),
+    value: ee.Image(16)
+  });
   
   /*// Reef crest -> Outer reef flat
   man_geo = man_geo.where({
@@ -7613,12 +7655,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
-  // Shallow lagoon -> Outer reef flat
-  man_geo = man_geo.where({
-    test: inner_extent.eq(1)
-                     .and(man_geo.eq(11)),
-    value: ee.Image(14)
-  });
+  
   */
   
   
