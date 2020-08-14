@@ -18,7 +18,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
 // SENSOR GENERICS
 var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.cio;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.coral_sea;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
