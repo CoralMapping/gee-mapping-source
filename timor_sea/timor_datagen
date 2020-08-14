@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -54,7 +57,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([132.48245564013274, -11.
           [122.57334723982913, -11.67346361842483],
           [120.32126106652476, -14.640398254879093],
           [117.61395427327072, -17.668010786076376]]]),
-    noreefmask = /* color: #43ff06 */ee.Geometry({
+    noreefmask = 
+    /* color: #43ff06 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1001,6 +1007,8 @@ all_data = all_data
 // clean up noise
 all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
 Map.addLayer(all_data, {}, "Model predictor data", false)
+// add noreefmask to viewer - check for slivers between polys
+Map.addLayer(not_reef_img, {}, "noreefmask", false);
 
 
 /*
@@ -1029,7 +1037,7 @@ Export.table.toDrive({
 
 // export if specified in input params
 if (vars.do_export) {
-  Map.addLayer(export_geom, {}, "export geometry", true)
+  Map.addLayer(export_geom, {}, "export geometry", false);
   
   Export.image.toAsset({
     image: all_data,
@@ -1039,7 +1047,7 @@ if (vars.do_export) {
     region: export_geom,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mean'},
-  })
+  });
   
   /*
   
