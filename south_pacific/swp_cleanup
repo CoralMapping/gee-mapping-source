@@ -12920,10 +12920,10 @@ if (vars.manual_clean && !vars.geomorphic) {
   var newcal_lagoon_i = ee.Image().byte().paint(ee.Feature(newcal_lagoon, {zone: 1}), "zone").clip(newcal_lagoon);
   
   // Deep (or land or missing) in geo == masked from benthic
-      man_benthic = man_benthic.where({
-        test: geo_map.unmask(0).lte(2),
-        value: ee.Image(0)
-      });
+  man_benthic = man_benthic.where({
+    test: geo_map.unmask(0).lte(2),
+    value: ee.Image(0)
+  });
   
   
   // Generic benthic rules
@@ -12939,6 +12939,13 @@ if (vars.manual_clean && !vars.geomorphic) {
     test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14))),
     value: ee.Image(12)
+  });
+  
+  // Sand in benthic and reef crest in geo == coral/aglae
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(15)),
+    value: ee.Image(15)
   });
     
   // within New Caledonia: CA in benthic && BRS/PL/DL == sand
