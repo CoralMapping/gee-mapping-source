@@ -6488,10 +6488,10 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(24)
   });
   
-  // IRF -> TRF 
+  // IRF, SRS -> TRF 
   man_geo = man_geo.where({
     test: welleslytiwi.eq(1)
-                     .and(man_geo.eq(13)),
+                     .and(man_geo.eq(13)).or(man_geo.eq(21)),
     value: ee.Image(16)
   });
   
