@@ -6122,7 +6122,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [124.36807229444764, -15.837104377943996],
            [124.39279153272889, -15.946731070416222],
            [124.43261697218202, -15.958614708835887]]]]),
-    not_SL = 
+    wellesly_tiwi = 
     /* color: #ffc82d */
     /* shown: false */
     ee.Geometry.MultiPolygon(
@@ -6153,7 +6153,28 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [130.7670142031177, -11.26392283789858],
            [130.5417944765552, -11.156155643572497],
            [130.3330542421802, -10.989037596967304],
-           [130.2231909609302, -11.08069479224581]]]]);
+           [130.2231909609302, -11.08069479224581]]]]),
+    tiwi_is = /* color: #00ffff */ee.Geometry.Polygon(
+        [[[130.33137701331134, -11.506123896516506],
+          [130.4330005484676, -11.579454564734158],
+          [130.43574713049884, -11.663525695462907],
+          [130.49548528967853, -11.711266772587065],
+          [130.62182806311603, -11.762360760487137],
+          [130.6074093726015, -11.823863106947039],
+          [130.6175390784403, -11.82814642662627],
+          [130.62217606920152, -11.840494285940448],
+          [130.62217669331, -11.853975618718218],
+          [130.63556682998765, -11.847275584958663],
+          [130.64329134588408, -11.83787727137564],
+          [130.64792560593077, -11.826463392271432],
+          [130.65770923633355, -11.802477208974608],
+          [130.6761611296171, -11.81064790713308],
+          [130.69482816257565, -11.813221412100951],
+          [130.70438747703056, -11.802605730420872],
+          [130.70158650575948, -11.759054723453847],
+          [130.66234014807696, -11.738831810454114],
+          [130.4281940299129, -11.368829916464078],
+          [130.34922979651446, -11.389024376442373]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -6339,7 +6360,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
   var litchfield = ee.Image().byte().paint(ee.Feature(litchfield_coast, {zone: 1}), "zone").clip(litchfield_coast);
   var dampier = ee.Image().byte().paint(ee.Feature(dampier_coast, {zone: 1}), "zone").clip(dampier_coast);
-  var notSL = ee.Image().byte().paint(ee.Feature(not_SL, {zone: 1}), "zone").clip(not_SL);
+  var welleslytiwi = ee.Image().byte().paint(ee.Feature(wellesly_tiwi, {zone: 1}), "zone").clip(wellesly_tiwi);
+  var tiwi = ee.Image().byte().paint(ee.Feature(tiwi_is, {zone: 1}), "zone").clip(tiwi_is);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -6461,10 +6483,25 @@ if (vars.manual_clean && vars.geomorphic) {
   // **Wellesley Island & Tiwi Islands**
   // Shallow lagoon -> BRS 
   man_geo = man_geo.where({
-    test: notSL.eq(1)
+    test: welleslytiwi.eq(1)
                      .and(man_geo.eq(11)),
     value: ee.Image(24)
   });
+  
+  // IRF -> TRF 
+  man_geo = man_geo.where({
+    test: welleslytiwi.eq(1)
+                     .and(man_geo.eq(13)),
+    value: ee.Image(16)
+  });
+  
+  // BRS -> TRF
+  man_geo = man_geo.where({
+    test: tiwi.eq(1)
+                     .and(man_geo.eq(24)),
+    value: ee.Image(16)
+  });
+  
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
 
