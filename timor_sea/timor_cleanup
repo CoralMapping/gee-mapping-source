@@ -7376,7 +7376,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [132.8469954959894, -11.234135167984522],
           [132.63070216102847, -10.84999383277342],
           [131.68038477821597, -11.162736531269152]]]),
-    land_mask = /* color: #98ff00 */ee.Geometry.Polygon(
+    land_mask = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[129.56538839968616, -14.383474750416514],
           [131.3314407168053, -12.657800128759641],
           [131.30397489418297, -12.201826875507065],
@@ -7673,6 +7676,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
+  var landmask = ee.Image().byte().paint(ee.Feature(timor_land_mask, {zone: 1}), "zone").clip(timor_land_mask);
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
@@ -7822,7 +7826,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
-  Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:4000}, sensor_params.sname + ' low tide', true);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
   
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
