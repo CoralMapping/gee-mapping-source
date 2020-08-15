@@ -452,6 +452,7 @@ var timor = {
   pixels:["projects/coral_atlas/Timor/in_out/timor_pixels"],
   segments:["projects/coral_atlas/Timor/in_out/timor_segmentation"],
   turbid_mask:"projects/coral_atlas/Timor/mask/timor_mask_out",
+  land_mask:"projects/coral_atlas/Timor/mask/timor_land_mask",
   waves:"",
   geo_train:"projects/coral_atlas/Timor/training/timor_geo_reference",
   benthic_train:"projects/coral_atlas/Timor/training/timor_benthic_reference",
