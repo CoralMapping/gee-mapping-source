@@ -7552,7 +7552,8 @@ if (vars.manual_clean && vars.geomorphic) {
   // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
-  var landmask = ee.Image().byte().paint(ee.Feature(timor_land_mask, {zone: 1}), "zone").clip(timor_land_mask);
+  var landmaskfc = ee.FeatureCollection(region_params.land_mask).geometry();
+  var landmask = ee.Image().byte().paint(ee.Feature(landmaskfc, {zone: 1}), "zone").clip(landmaskfc);
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
@@ -7567,7 +7568,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var man_geo = ee.Image(region_params.geo_map_clean2);
   // var man_geo = man_geo_mask.unmask(999)
   
-  // Land Mask
+  // "LAND MASK" CLEAN
   // remove
   man_geo = man_geo.where({
     test: landmask.eq(1),
