@@ -2399,7 +2399,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [126.45796905918615, -13.092905792744665],
           [125.55709015293615, -13.285443251877613],
           [122.94234405918615, -15.223290002478876]]]),
-    mid_mask = /* color: #d63000 */ee.Geometry({
+    mid_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3082,7 +3085,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    not_deep_water = /* color: #d63000 */ee.Geometry({
+    not_deep_water = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5558,7 +5564,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    reef_slope = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    reef_slope = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[118.90674646669093, -17.649937200896062],
            [118.92966326051418, -17.665313132039188],
            [118.96451052003566, -17.639794910610778],
@@ -5939,7 +5948,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [123.32301503462966, -11.976321899143292],
            [123.32576161666091, -11.975944067856027],
            [123.33653336806472, -11.973341215739108]]]]),
-    litchfield_coast = /* color: #98ff00 */ee.Geometry.Polygon(
+    litchfield_coast = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[128.86184913209598, -14.333007298135609],
           [129.54300147584598, -14.636165024799759],
           [130.66910010865848, -13.308871407063991],
@@ -5948,7 +5960,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [130.75424415162723, -12.13811060842463],
           [130.14724952272098, -12.59955616551813],
           [129.83139258912723, -13.185890674650622]]]),
-    arnhem_coast = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    arnhem_coast = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[131.76243413629288, -11.590157041709542],
            [134.10252202691788, -12.363946476027461],
            [135.80540288629288, -12.696410248007176],
@@ -5995,7 +6010,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [138.80486336276897, -16.762640897889398],
            [138.7897571615971, -16.955838063891942]]]]),
     timor_land_mask = ee.FeatureCollection("projects/coral_atlas/Timor/mask/timor_land_mask"),
-    dampier_coast = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
+    dampier_coast = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[122.99560590052536, -16.74707894101794],
            [123.29234200754183, -16.729156413204443],
            [123.63429147043246, -16.655492793916657],
@@ -6119,7 +6137,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [124.36807229444764, -15.837104377943996],
            [124.39279153272889, -15.946731070416222],
            [124.43261697218202, -15.958614708835887]]]]),
-    wellesly_tiwi = /* color: #ffc82d */ee.Geometry.MultiPolygon(
+    wellesly_tiwi = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[139.13101450686634, -16.591553249410353],
            [139.10972849612415, -16.719173796622922],
            [139.1234614062804, -16.769146244997064],
@@ -6148,7 +6169,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [130.5417944765552, -11.156155643572497],
            [130.3330542421802, -10.989037596967304],
            [130.2231909609302, -11.08069479224581]]]]),
-    tiwi_is = /* color: #00ffff */ee.Geometry.Polygon(
+    tiwi_is = 
+    /* color: #00ffff */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[130.33137701331134, -11.506123896516506],
           [130.4330005484676, -11.579454564734158],
           [130.43574713049884, -11.663525695462907],
@@ -6206,7 +6230,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -6221,7 +6245,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -6254,7 +6278,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -6475,6 +6499,7 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   // **Wellesley Island & Tiwi Islands**
+  
   // Shallow lagoon -> BRS 
   man_geo = man_geo.where({
     test: welleslytiwi.eq(1)
@@ -6686,7 +6711,7 @@ if (vars.geomorphic) {
 if (!vars.geomorphic) {
   // Use the manually cleaned geomorphic map as input for the benthic clean
   var geo_map = ee.Image(region_params.geo_map_clean3);
-  if (!vars.manual_clean) Map.addLayer(geo_map, map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
+  if (!vars.manual_clean) Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
   Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
 }
 
