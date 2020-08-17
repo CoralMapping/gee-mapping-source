@@ -2399,10 +2399,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [126.45796905918615, -13.092905792744665],
           [125.55709015293615, -13.285443251877613],
           [122.94234405918615, -15.223290002478876]]]),
-    mid_mask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3076,6 +3073,47 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
               [
                 129.0782061493946,
                 -14.25759955242258
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                130.45686333761068,
+                -11.365832373370504
+              ],
+              [
+                130.3877500240231,
+                -11.3456362698991
+              ],
+              [
+                130.34586464804653,
+                -11.354724693381426
+              ],
+              [
+                130.19826534134927,
+                -11.63888644295029
+              ],
+              [
+                130.20169856888833,
+                -11.654690380225233
+              ],
+              [
+                130.19345882279458,
+                -11.72698717757588
+              ],
+              [
+                130.62535884720864,
+                -11.768667450185927
+              ],
+              [
+                130.6555712495524,
+                -11.737071692554487
               ]
             ]
           ],
@@ -6230,7 +6268,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -6241,11 +6279,11 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000,
   shallowlag_depth_cutoff: 400,
-  benthic_depth_cutoff: 1000,
+  benthic_depth_cutoff: 750,
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -6278,7 +6316,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -7388,11 +7426,11 @@ if (vars.obia_clean) {
         value: ee.Image(0)
       });
       
-      // Deep lagoon in geo == masked from benthic
+      /*// Deep lagoon in geo == masked from benthic
       clean_map = clean_map.where({
         test: geo_map.eq(12),
         value: ee.Image(0)
-      })
+      })*/
       
       
       /*// turbid in geo == turbid (temporal - class num 2)
