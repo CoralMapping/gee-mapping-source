@@ -5786,13 +5786,13 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 500, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 500,
+  geo_depth_cutoff: 1500,
   shallowlag_depth_cutoff: 500,
   benthic_depth_cutoff: 1000,
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
