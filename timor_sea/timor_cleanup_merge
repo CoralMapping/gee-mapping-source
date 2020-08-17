@@ -62,8 +62,10 @@ var vars = {
 
 geo_clean2 = geo_clean2.where(mid_shelf.gt(0), mid_shelf)
 
-Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-Map.addLayer(mid_shelf, map_palettes.geo, 'mid shelf', false);
+var low_tide_image_dove = ee.Image(region_params.image);
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', true); // image data
+Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+Map.addLayer(mid_shelf.updateMask(mid_shelf.gt(2)), map_palettes.geo, 'mid shelf', true);
 
 Export.image.toAsset({
     image: geo_clean2,
