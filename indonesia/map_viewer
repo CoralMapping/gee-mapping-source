@@ -2,7 +2,30 @@
 var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     notReef_mask = /* color: #d63000 */ee.Geometry.MultiPoint(),
     artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPoint(),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    region_wcmcBound = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[125.61292878907614, 5.37738287551761],
+          [118.58167878907614, 0.6391876452835566],
+          [113.13246003907614, -1.865352297869458],
+          [110.18812410157614, 2.264587617955663],
+          [104.56312410157614, 2.1767630075246363],
+          [97.97132722657614, 6.644763383602538],
+          [93.88441316407614, 7.037454508127354],
+          [94.58753816407614, 1.6936417075197112],
+          [96.74085847657614, 0.24369235678350853],
+          [100.60804597657614, -5.1983790124187905],
+          [102.54163972657614, -7.643688572040937],
+          [94.93910066407614, -12.44535783729859],
+          [103.85999910157614, -13.772129866763253],
+          [113.00062410157614, -11.154889077713621],
+          [124.16273347657614, -12.273650598071253],
+          [135.67640535157614, -8.339980293243885],
+          [140.59828035157614, -5.329658903890787],
+          [134.66566316407614, 2.220675965269313],
+          [127.41468660157614, 5.289872798079709]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -43,6 +66,14 @@ Map.centerObject(centre_map, 6);
 //print (region_params.image[0])
 var low_tide_image_dove = ee.ImageCollection([region_params.image[0], region_params.image[1]]).mosaic();
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+
+
+var wcmc=wcmc.filterBounds(region_wcmcBound)
+
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
+
+
+
 
 /*
 
