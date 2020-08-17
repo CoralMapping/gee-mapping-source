@@ -6737,7 +6737,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -7313,7 +7313,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // deep water in depth data == deep (only for inshore reefs of Timor Sea)
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
-    test: depth.gt(400)
+    test: depth.gt(700)
                    .and(inner_extent.eq(1)),
     value: ee.Image(2)
   });
