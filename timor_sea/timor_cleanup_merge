@@ -1,0 +1,77 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var mid_shelf = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean2_mid_shelf"),
+    geo_clean2 = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean2"),
+    export_convhull = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[123.01117124710049, -18.361673155604365],
+          [123.85711851272549, -17.724467235357903],
+          [124.65912046585049, -16.4327709211033],
+          [125.36224546585049, -15.693759858228288],
+          [127.02118101272549, -14.324911709548115],
+          [128.4713763252255, -15.59854674077061],
+          [130.0863665596005, -15.736062550530761],
+          [130.3390521064755, -14.133224841449186],
+          [131.3937396064755, -12.958368436304514],
+          [133.1405657783505, -11.99295841574652],
+          [135.6454485908505, -12.819144617636104],
+          [134.5797747627255, -14.739669274668275],
+          [134.8324603096005, -15.270253696567021],
+          [139.3258685127255, -17.89182601630351],
+          [140.6881732002255, -16.46438103410579],
+          [139.0402239814755, -15.06878696043823],
+          [138.2931536689755, -16.380075971889895],
+          [137.3922747627255, -15.238455945710458],
+          [137.3263567939755, -10.397978890143591],
+          [133.9425677314755, -10.354752266925853],
+          [130.1852435127255, -9.987087752949755],
+          [128.5812396064755, -14.197138520709155],
+          [122.95623960647549, -10.765161210411865],
+          [120.60516538772549, -15.302046630334669],
+          [118.16620054397549, -17.11649014822754],
+          [118.27606382522549, -17.95454497894992]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  
+  // analysis type
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+
+  // analysis parameters
+  image_data_scale: sensor_params.pixel,
+  asset_output: region_params.asset // asset path
+  
+};
+
+geo_clean2 = geo_clean2.where(mid_shelf.gt(0), mid_shelf)
+
+Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
+Map.addLayer(mid_shelf, map_palettes.geo, 'mid shelf', false);
+
+Export.image.toAsset({
+    image: geo_clean2,
+    description: "timor_geo_clean2_v2",
+    assetId: vars.asset_output + 'in_out/' + "timor_geo_clean2_v2",
+    region: export_convhull,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  });
