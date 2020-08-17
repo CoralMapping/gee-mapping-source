@@ -6576,14 +6576,15 @@ if (vars.manual_clean && !vars.geomorphic) {
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
   // Generic benthic rules
-    // Coral in benthic && Deep/shallow lagoon in geo == sand
+  
+    // Coral in Deep/shallow lagoon -> sand
     man_benthic = man_benthic.where({
       test: man_benthic.eq(15)
                      .and(geo_map.eq(11).or(geo_map.eq(12))),
       value: ee.Image(11)
     });
     
-    // BMA in benthic && inner/outer RF in geo == rubble 
+    // BMA on inner/outer RF -> rubble 
     man_benthic = man_benthic.where({
       test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14))),
