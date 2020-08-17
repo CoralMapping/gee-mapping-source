@@ -6644,7 +6644,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [123.24748911667155, -16.014077232207345],
           [123.0414954643278, -16.167138226904072],
           [122.74211802292155, -16.579545207951988]]]),
-    mid_shelf = /* color: #98ff00 */ee.Geometry.Polygon(
+    mid_shelf = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[124.40507182951444, -15.488687764753257],
           [124.45622691984647, -15.459570531492988],
           [124.48025951261991, -15.470489973980195],
@@ -7040,7 +7043,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // Shallow lagoon, Deep lagoon -> BRS 
   man_geo = man_geo.where({
     test: midshelf.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)),
+                     .and(man_geo.eq(11)).or(man_geo.eq(12)).or(man_geo.eq(21)),
     value: ee.Image(24)
   });
   
