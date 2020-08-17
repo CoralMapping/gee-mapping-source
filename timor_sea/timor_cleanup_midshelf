@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    not_reef_crest = /* color: #d63000 */ee.Geometry({
+    not_reef_crest = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -6695,7 +6698,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [124.75146641038698, -14.355212527447692],
           [124.21039293747857, -15.02206597102074],
           [124.03873263726321, -15.246101400941704],
-          [124.02637311475205, -15.311013942241718]]]);
+          [124.02637311475205, -15.311013942241718]]]),
+    timor_geo_clean1_mid_shelf = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean1_mid_shelf");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea - Mid-shelf
@@ -6748,7 +6752,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -6781,7 +6785,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -7214,7 +7218,7 @@ if (vars.geomorphic && vars.obia_2nd_pass) {
   // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
   var geo_map = ee.Image(region_params.geo_map_clean1);
 } else if (vars.geomorphic) {
-  var geo_map = geo_map_raw;
+  var geo_map = geo_map_raw.clip(mid_shelf);
 }
 
 var depth = ee.Image(region_params.pixels).select('depth');
@@ -7409,7 +7413,7 @@ if (!vars.geomorphic && vars.cleanup_stage == 1) {
 
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
-  var clean_map = geo_map;
+  var clean_map = timor_geo_clean1_mid_shelf;
 }
 
 if (vars.obia_clean) {
@@ -8000,13 +8004,13 @@ if (vars.do_export) {
     //var export_convhull = clean_map.gt(2).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
     var export_convhull = reef_boundary;
   }
-  Map.addLayer(export_convhull, {}, "Export footprint", false);
+  Map.addLayer(mid_shelf, {}, "Export footprint", false);
   
   Export.image.toAsset({
     image: clean_map.set(vars),
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: export_convhull,
+    region: mid_shelf,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
