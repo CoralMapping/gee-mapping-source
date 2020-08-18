@@ -5853,7 +5853,14 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [92.62621445387742, 12.002726651094765],
            [92.58810562819383, 11.961418006562099],
            [92.58501575412791, 11.978882713256255],
-           [92.5808958503618, 11.97065422756278]]]]);
+           [92.5808958503618, 11.97065422756278]]],
+         [[[92.21306554002628, 11.59416946759473],
+           [92.20671406907901, 11.592151555330469],
+           [92.20293751878604, 11.570289905203957],
+           [92.2008775822626, 11.555490280195263],
+           [92.20413914842472, 11.537326035837275],
+           [92.22782841844425, 11.545230990461903],
+           [92.2225069157587, 11.579034770371758]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
