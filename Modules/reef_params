@@ -544,7 +544,7 @@ var png_solomons = {
   tide: "both",
   asset: "projects/coral_atlas/png_solomons/",
   epsg: "EPSG:4326",
-  image: "projects/coral_atlas/image/png_solomons/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic",
+  image: "projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic",
   depth: "projects/coral_atlas/png_solomons/depth/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth",
   s2_depth: "projects/coral_atlas/png_solomons/depth/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/png_solomons/depth/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth",
