@@ -6281,12 +6281,14 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
+  /*
    // "Rivermouth" CLEAN
   // remove
   man_geo = man_geo.where({
     test: river.eq(1),
     value: ee.Image(0)
   });
+  */
   
   // TRF -> Outer reef flat
   man_geo = man_geo.where({
