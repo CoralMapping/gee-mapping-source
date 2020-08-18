@@ -540,7 +540,7 @@ var south_asia = {
 };
 
 var png_solomons = {
-  sname:"png_solomons",
+  sname:"pns",
   tide: "both",
   asset: "projects/coral_atlas/png_solomons/",
   epsg: "EPSG:4326",
