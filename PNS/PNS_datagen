@@ -1,9 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
+var map_centre = /* color: #d63000 */ee.Geometry.Point([149.22561970263274, -5.792489261066369]),
+    region_extent = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    ee.Geometry.Polygon(
         [[[133.93506336268342, -0.27082436810697647],
           [133.69336414393342, -1.3034277804031318],
           [133.78125476893342, -2.072131335894604],
