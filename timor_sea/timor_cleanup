@@ -7206,7 +7206,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    geometry = /* color: #d63000 */ee.Geometry.Polygon(
+    inshore_reef_outer = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[124.29445397358779, -15.869672543644228],
           [124.3028653810585, -15.872479542115238],
           [124.30921685200576, -15.876277183690434],
@@ -7308,7 +7311,20 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [124.35578387995952, -15.910584226767732],
           [124.33724445124858, -15.84916318114094],
           [124.30497211238139, -15.838594232520474],
-          [124.29163025103395, -15.84288219166505]]]);
+          [124.29163025103395, -15.84288219166505]]]),
+    inshore_reef_inner = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[123.99816689804885, -15.815669970808523],
+          [124.03524575547073, -16.030927232917804],
+          [124.16502175644729, -16.062931935333683],
+          [124.308873990334, -16.063591771983845],
+          [124.374791959084, -15.899885470774615],
+          [124.3469828160176, -15.838130874252187],
+          [124.31196389511916, -15.821285430648732],
+          [124.1159266026387, -15.875119857300465],
+          [124.07438454941604, -15.801135115626094]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -7346,7 +7362,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -7361,7 +7377,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -7498,6 +7514,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var welleslytiwi = ee.Image().byte().paint(ee.Feature(wellesly_tiwi, {zone: 1}), "zone").clip(wellesly_tiwi);
   var tiwi = ee.Image().byte().paint(ee.Feature(tiwi_is, {zone: 1}), "zone").clip(tiwi_is);
   var midshelf = ee.Image().byte().paint(ee.Feature(mid_shelf, {zone: 1}), "zone").clip(mid_shelf);
+  var inshorereefouter = ee.Image().byte().paint(ee.Feature(inshore_reef_outer, {zone: 1}), "zone").clip(inshore_reef_outer);
+  var inshorereefinner = ee.Image().byte().paint(ee.Feature(inshore_reef_inner, {zone: 1}), "zone").clip(inshore_reef_inner);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -7663,6 +7681,23 @@ if (vars.manual_clean && vars.geomorphic) {
                      .and(man_geo.eq(15)),
     value: ee.Image(14)
   });
+  
+  // **Inshore reef**
+  
+  // Inner reef flat, TRF -> Outer reef flat
+  man_geo = man_geo.where({
+    test: inshorereefouter.eq(1)
+                     .and(man_geo.eq(13)).or(man_geo.eq(16)),
+    value: ee.Image(14)
+  });
+  
+  // TRF, SRS -> Inner reef flat
+  man_geo = man_geo.where({
+    test: inshorereefinner.eq(1)
+                     .and(man_geo.eq(16)).or(man_geo.eq(21)),
+    value: ee.Image(13)
+  });
+  
   
   /*// LAND mask clean ############# ---> to be moved to first stage clean up
   var land_mask = mod_land.select('water_mask').mean().eq(0)
