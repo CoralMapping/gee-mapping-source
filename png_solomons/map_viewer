@@ -1495,11 +1495,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       "coordinates": []
     });
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-var     noReef_mask = /* color: #ff0000 */geometry;
-
-
-
-
 //Viewing script for looking at reefs and classifications for each region. In this case png and salomon 
 //From this region Hawaii onwards the map_viewer script is going to be used from the very beginning
 //in the workflow.
