@@ -38,10 +38,10 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
-  assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
+  assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -55,8 +55,8 @@ var vars = {
   // class information for classification, sampling and reporting
   class_field: 'class_num', // the field in the training data that stores the class integer
   // TODO: consider dynamically generating these
-  classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23], // classes to map
-  classes_mapped_names_geo: ['Shallow_Lagoon','Deep_Lagoon', 'Inner_Reef_Flat','Outer_Reef_Flat','Reef_Rim', 'Terrestial_Reef_Flat','Slope_Sheltered','Slope_Exposed', 'Plateau'],
+  classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23, 24], // classes to map
+  classes_mapped_names_geo: ['Shallow_Lagoon','Deep_Lagoon', 'Inner_Reef_Flat','Outer_Reef_Flat','Reef_Rim', 'Terrestial_Reef_Flat','Slope_Sheltered','Slope_Exposed', 'Plateau', 'BRS'],
   // TODO: consider dynamically generating these
   classes_mapped_benthic:       [11,    12,   13,  14,    15], // classes to map
   classes_mapped_names_benthic: ['Sand', 'Rubble', 'Rock', 'Seagrass', 'Coral/Algae'],
@@ -77,13 +77,13 @@ var vars = {
 // 2. Data loads & vis
 
 // load input data
-var pixels = ee.Image(region_params.dove_pixels)
-var segments = ee.Image(region_params.dove_segments)
+//var pixels = ee.Image(region_params.dove_pixels)
+//var segments = ee.Image(region_params.dove_segments)
 var geomorph = (vars.use_geo_points) ? ee.FeatureCollection(region_params.geo_pts) : ee.FeatureCollection(region_params.geo_val_library)
 var benthic = (vars.use_benthic_points) ? ee.FeatureCollection(region_params.benthic_pts) : ee.FeatureCollection(region_params.benthic_val_library)
 if (vars.assess_clean) {
-  var geo_map = ee.Image(region_params.geo_map_clean)
-  var benthic_map = ee.Image(region_params.benthic_map_clean)  
+  var geo_map = ee.Image(region_params.geo_map_clean3)
+  var benthic_map = ee.Image(region_params.benthic_map_clean2)  
 } else {
   var geo_map = ee.ImageCollection(region_params.geo_map).mosaic()
   var benthic_map = ee.ImageCollection(region_params.benthic_map).mosaic()
