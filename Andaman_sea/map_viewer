@@ -5957,7 +5957,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [98.19903605554235, 12.46884898829746],
            [97.98895122053214, 12.486862965942443],
            [97.93922219591835, 12.292626798566813],
-           [97.92557985578327, 12.229382204749076]]]]);
+           [97.92557985578327, 12.229382204749076]]]]),
+    geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -5987,7 +5988,7 @@ Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Mya
 
 Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
-
+Map.addLayer(geo_clean2, map_palettes.geo, "geo_manual", false)
 /*
 // wave data
 var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
