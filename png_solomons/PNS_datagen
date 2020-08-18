@@ -24,7 +24,10 @@ var map_centre =
           [144.61377430018342, 0.4103234597361438],
           [138.37353992518342, 0.4982113137085982],
           [134.48437976893342, 0.14665493202083]]]),
-    noReef_mask = /* color: #ff0000 */ee.Geometry({
+    noReef_mask = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1242,7 +1245,7 @@ var region_params = param_module.png_solomons       //<------------ THIS IS WHER
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
@@ -1272,7 +1275,7 @@ var vars = {
   global_mask: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   segments_output_name: region_params.sname + '_'+ 'segmentation',
   pixels_output_name: region_params.sname + '_' + 'pixels',
