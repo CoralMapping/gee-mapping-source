@@ -1,6 +1,12 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([134.3895004228908, -10.96544281366157]),
-    noreefmask = /* color: #43ff06 */ee.Geometry.MultiPolygon(
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([134.3895004228908, -10.96544281366157]),
+    noreefmask = 
+    /* color: #43ff06 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[131.6209457353908, -3.406481422012466],
            [133.1590316728908, -4.809083468243518],
            [133.5105941728908, -5.946613263722921],
@@ -127,7 +133,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
   geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
-  benthic_cleanup_stage: 0, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 1, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
 // choose where to centre the map (link this dynamically to map app?)
