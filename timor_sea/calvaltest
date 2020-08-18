@@ -1,0 +1,12 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var bent = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_benthic_training"),
+    benv = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_benthic_validation"),
+    geot = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_geo_training"),
+    geov = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_geo_validation"),
+    benref = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_benthic_reference");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+Map.addLayer(benref,{},"ben ref", true)
+Map.addLayer(bent, {color: "#d63000"}, "ben train", true)
+Map.addLayer(benv,{color: "#fff20e"},"ben val", false)
+Map.addLayer(geot,{},"geo train", false)
+Map.addLayer(geov,{},"geo val", false)
