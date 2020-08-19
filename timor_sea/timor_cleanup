@@ -7775,7 +7775,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     
   // **Manual polygon guided rules**
     
-  // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
+  // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
   var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var ashmore = ee.Image().byte().paint(ee.Feature(ashmore_reef, {zone: 1}), "zone").clip(ashmore_reef);
@@ -7789,23 +7789,6 @@ if (vars.manual_clean && !vars.geomorphic) {
                       .and(man_benthic.eq(13)),
     value: ee.Image(15)
   });
-    /*
-    // BMA on Reef Crest == coral/algae
-    man_benthic = man_benthic.where({
-      test: west_extent.eq(1)
-                       .and(geo_map.eq(15))
-                       .and(man_benthic.eq(18)),
-      value: ee.Image(15)
-    });
-    
-    // **East and West Hawaii**
-    // BMA on DW/DL/SRS/RS/plateau/BRS == sand
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(18)
-                     .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
-      value: ee.Image(11)
-    });
-    */
     
   // **Offshore**
     
