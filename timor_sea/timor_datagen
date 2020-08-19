@@ -57,7 +57,7 @@ var map_centre =
           [122.57334723982913, -11.67346361842483],
           [120.32126106652476, -14.640398254879093],
           [117.61395427327072, -17.668010786076376]]]),
-    noreefmask = 
+    noReef_mask = 
     /* color: #43ff06 */
     /* shown: false */
     ee.Geometry({
@@ -754,7 +754,7 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var not_reef_img = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone");
+var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
   test: not_reef_img.eq(1),
@@ -1008,7 +1008,7 @@ all_data = all_data
 all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
 Map.addLayer(all_data, {}, "Model predictor data", false)
 // add noreefmask to viewer - check for slivers between polys
-Map.addLayer(not_reef_img, {}, "noreefmask", false);
+Map.addLayer(not_reef_img, {}, "noReef_mask", false);
 
 
 /*
