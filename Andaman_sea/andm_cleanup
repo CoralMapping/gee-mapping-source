@@ -5,7 +5,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic"),
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
-    southasia_dove = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200526T213437Z/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
     reef_boundary = 
     /* color: #d69d40 */
@@ -6077,7 +6076,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [98.19903605554235, 12.46884898829746],
            [97.98895122053214, 12.486862965942443],
            [97.93922219591835, 12.292626798566813],
-           [97.92557985578327, 12.229382204749076]]]]);
+           [97.92557985578327, 12.229382204749076]]]]),
+    image = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
@@ -6288,14 +6288,14 @@ if (vars.manual_clean && vars.geomorphic) {
     test: river.eq(1),
     value: ee.Image(0)
   });
-  */
+  
   
   // TRF -> Outer reef flat
   man_geo = man_geo.where({
     test: man_geo.eq(16),
     value: ee.Image(14)
   });
-  
+  */
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
