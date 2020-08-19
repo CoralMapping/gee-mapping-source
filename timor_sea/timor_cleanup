@@ -7378,6 +7378,7 @@ var vars = {
   //############
   // Clean-up stage selection
   cleanup_stage: 2, // set to 1, 2 or 3
+  geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -7699,20 +7700,15 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   
-  /*// LAND mask clean ############# ---> to be moved to first stage clean up
-  var land_mask = mod_land.select('water_mask').mean().eq(0)
-
-  var land_mask_buff = ee.Image(1)
-    .cumulativeCost({
-      source: land_mask, 
-      maxDistance: 2000,
-      geodeticDistance: false,
-    }).lt(2000).unmask(0)
-  
-  Map.addLayer(land_mask_buff, {}, "Land mask", false)
-  
-  */
-  
+  if (vars.geo_refinement) {
+    // make the mask image layer
+    var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
+    // apply
+    man_geo = man_geo.where({
+      test: refine.eq(1),
+      value: ee.Image(0)
+    });
+  }
   
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
