@@ -6309,8 +6309,8 @@ if (vars.manual_clean && vars.geomorphic) {
   // Reef crest -> Inner reef flat
   man_geo = man_geo.where({
     test: notreefcrest.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(13)
+                     .and(man_geo.eq(15)), //Reef Crest
+    value: ee.Image(13) // Inner Reef Flat
   });
  
  /*
