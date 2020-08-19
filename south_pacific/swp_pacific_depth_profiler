@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var dove_sr_east = ee.Image("projects/coral_atlas/sw_pacific/image/east/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
-    dove_sr_west = ee.Image("projects/coral_atlas/sw_pacific/image/west/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic");
+var low_sr_east = ee.Image("projects/coral_atlas/sw_pacific/image/east/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
+    low_sr_west = ee.Image("projects/coral_atlas/sw_pacific/image/west/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
@@ -37,15 +37,15 @@ var region_params = param_module.swpac
 
 var vars = {
     //Dove_low_sr : ee.Image(region_params.image),
-    Dove_low_sr : ee.ImageCollection([dove_sr_east, dove_sr_west]).mosaic(),
+    Dove_low_sr : ee.ImageCollection([low_sr_west, low_sr_east]).mosaic(),
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
-    depth_S2 : ee.ImageCollection([region_params.s2_depth[0], region_params.s2_depth[1]]).mosaic().rename('S2depth'),
+    depth_S2 : ee.ImageCollection([sentinel2_west, sentinel2_east]).mosaic().rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
-    depth_L8 : ee.ImageCollection([region_params.ls8_depth[0], region_params.ls8_depth[1]]).mosaic().rename('L8depth'),
+    depth_L8 : ee.ImageCollection([landsat8_west, landsat8_east]).mosaic().rename('L8depth'),
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    Dove_depth : ee.ImageCollection([region_params.depth[0], region_params.depth[1]]).mosaic().rename('Dovedepth'),
+    Dove_depth : ee.ImageCollection([high_sr_east, high_sr_west]).mosaic().rename('Dovedepth'),
     //Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
-    Depth_composite : ee.ImageCollection([region_params.depth_composite[0], region_params.depth_composite[1]]).mosaic().rename('depth'),
+    Depth_composite : ee.ImageCollection([region_params.pixels[0], region_params.pixels[1]]).mosaic().rename('depth'),
 };
 
 Map.addLayer(vars.Depth_composite)
