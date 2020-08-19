@@ -3,7 +3,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic"),
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
-    southasia_dove = ee.Image("projects/coral_atlas/workflow/mapping/south_asia/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200526T213437Z/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
     not_reef = 
     /* color: #d63000 */
@@ -5961,7 +5960,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [97.98895122053214, 12.486862965942443],
            [97.93922219591835, 12.292626798566813],
            [97.92557985578327, 12.229382204749076]]]]),
-    geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3");
+    geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
+    southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
