@@ -1,6 +1,12 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var low_sr_east = ee.Image("projects/coral_atlas/sw_pacific/image/east/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
-    low_sr_west = ee.Image("projects/coral_atlas/sw_pacific/image/west/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic");
+    low_sr_west = ee.Image("projects/coral_atlas/sw_pacific/image/west/southwest_pacific_low_tide_normalized_sr_June2018_June2020_v2_shift_mosaic"),
+    high_sr_east = ee.Image("projects/coral_atlas/sw_pacific/depth/east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_depth"),
+    high_sr_west = ee.Image("projects/coral_atlas/sw_pacific/depth/west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_depth"),
+    landsat8_east = ee.Image("projects/coral_atlas/sw_pacific/depth/east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_landsat8_depth"),
+    landsat8_west = ee.Image("projects/coral_atlas/sw_pacific/depth/west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_landsat8_depth"),
+    sentinel2_east = ee.Image("projects/coral_atlas/sw_pacific/depth/east/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_sentinel2_depth"),
+    sentinel2_west = ee.Image("projects/coral_atlas/sw_pacific/depth/west/southwest_pacific_high_tide_normalized_sr_June2018_June2020_v2_shift_mosaic_sentinel2_depth");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
