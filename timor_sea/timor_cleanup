@@ -7327,7 +7327,20 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [124.3469828160176, -15.838130874252187],
           [124.31196389511916, -15.821285430648732],
           [124.1159266026387, -15.875119857300465],
-          [124.07438454941604, -15.801135115626094]]]);
+          [124.07438454941604, -15.801135115626094]]]),
+    ashmore_reef = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[122.99289687254242, -12.18346211708723],
+          [122.89539321043304, -12.232453734758252],
+          [122.92011244871429, -12.266004399713855],
+          [123.00937636472992, -12.31833490498438],
+          [123.1515119848471, -12.332422105990412],
+          [123.19202406980804, -12.244532465450739],
+          [123.1570051489096, -12.177421427552384],
+          [123.1130598364096, -12.157284803532326],
+          [123.05469496824554, -12.147215919611384]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor Sea
@@ -7753,10 +7766,10 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // **Generic benthic rules**
   
-  // BMA on inner/outer RF -> rubble 
+  // BMA on inner RF, outer RF,reef crest, reef slope -> rubble 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(18)
-                     .and(geo_map.eq(13).or(geo_map.eq(14))),
+                     .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
     value: ee.Image(12)
   });
     
@@ -7765,6 +7778,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
   var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
+  var ashmore = ee.Image().byte().paint(ee.Feature(ashmore_reef, {zone: 1}), "zone").clip(ashmore_reef);
    
   // **Inshore**
     
@@ -7795,11 +7809,25 @@ if (vars.manual_clean && !vars.geomorphic) {
     
   // **Offshore**
     
-  // Rock on TRF -> coral/algae
+  // Seagrass -> Coral/algae (Ashmore Reef)
   man_benthic = man_benthic.where({
-    test: subreg_1.eq(1)
-                      .and(geo_map.eq(16))
-                      .and(man_benthic.eq(13)),
+    test: ashmore.eq(1)
+                      .and(man_benthic.eq(14)),
+    value: ee.Image(15)
+  });
+  
+  // Seagrass -> Sand
+  man_benthic = man_benthic.where({
+    test: subreg_2.eq(1)
+                      .and(man_benthic.eq(14)),
+    value: ee.Image(11)
+  });
+  
+  // Sand on RC, RS -> Coral/algae
+  man_benthic = man_benthic.where({
+    test: subreg_2.eq(1)
+                      .and(man_benthic.eq(11))
+                      .and(geo_map.eq(15)).or(geo_map.eq(22)),
     value: ee.Image(15)
   });
      
