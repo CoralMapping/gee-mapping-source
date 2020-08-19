@@ -7760,21 +7760,21 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(12)
   });
     
-    // **Manual polygon guided rules**
+  // **Manual polygon guided rules**
     
-    // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-    var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
+  // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
+  var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
    
-    // **Inshore**
+  // **Inshore**
     
-    // Rock on TRF -> coral/algae
-    man_benthic = man_benthic.where({
-     test: subreg_1.eq(1)
+  // Rock on TRF -> coral/algae
+  man_benthic = man_benthic.where({
+    test: subreg_1.eq(1)
                       .and(geo_map.eq(16))
                       .and(man_benthic.eq(13)),
-     value: ee.Image(15)
-     });
+    value: ee.Image(15)
+  });
     /*
     // BMA on Reef Crest == coral/algae
     man_benthic = man_benthic.where({
@@ -7791,18 +7791,18 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(2).or(geo_map.eq(12)).or(geo_map.eq(21)).or(geo_map.eq(22)).or(geo_map.eq(23)).or(geo_map.eq(24))),
       value: ee.Image(11)
     });
+    */
     
-    // **Offshore**
+  // **Offshore**
     
-    // Sand on RS and plateau == rock
-    man_benthic = man_benthic.where({
-      test: east_extent.eq(1)
-                       .and(man_benthic.eq(11))
-                       .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
-      value: ee.Image(13)
-    });
-  */
-  
+  // Rock on TRF -> coral/algae
+  man_benthic = man_benthic.where({
+    test: subreg_1.eq(1)
+                      .and(geo_map.eq(16))
+                      .and(man_benthic.eq(13)),
+    value: ee.Image(15)
+  });
+     
   // Add the manual layer to the map
 
   var low_tide_image_dove = ee.Image(region_params.image);
