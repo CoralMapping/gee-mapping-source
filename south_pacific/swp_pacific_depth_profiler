@@ -37,7 +37,7 @@ var region_params = param_module.swpac
 
 var vars = {
     //Dove_low_sr : ee.Image(region_params.image),
-    Dove_low_sr : ee.ImageCollection([region_params.image[0], region_params.image[1]]).mosaic(),
+    Dove_low_sr : ee.ImageCollection([dove_sr_east, dove_sr_west]).mosaic(),
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_S2 : ee.ImageCollection([region_params.s2_depth[0], region_params.s2_depth[1]]).mosaic().rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
