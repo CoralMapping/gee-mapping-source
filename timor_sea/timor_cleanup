@@ -7699,7 +7699,6 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(13)
   });
   
-  
   if (vars.geo_refinement) {
     // make the mask image layer
     var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
