@@ -7751,15 +7751,14 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
-  // Generic benthic rules
+  // **Generic benthic rules**
   
-    // BMA on inner/outer RF -> rubble 
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(18)
+  // BMA on inner/outer RF -> rubble 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14))),
-      value: ee.Image(12)
-    });
-    
+    value: ee.Image(12)
+  });
     
     // **Manual polygon guided rules**
     
@@ -7769,12 +7768,11 @@ if (vars.manual_clean && !vars.geomorphic) {
    
     // **Inshore**
     
-    
-    // Sand or BMA on Reef slope -> coral/algae
+    // Rock on TRF -> coral/algae
     man_benthic = man_benthic.where({
      test: subreg_1.eq(1)
-                      .and(geo_map.eq(22))
-                      .and(man_benthic.eq(11).or(man_benthic.eq(18))),
+                      .and(geo_map.eq(16))
+                      .and(man_benthic.eq(13)),
      value: ee.Image(15)
      });
     /*
@@ -7794,7 +7792,8 @@ if (vars.manual_clean && !vars.geomorphic) {
       value: ee.Image(11)
     });
     
-    // East Hawaii
+    // **Offshore**
+    
     // Sand on RS and plateau == rock
     man_benthic = man_benthic.where({
       test: east_extent.eq(1)
