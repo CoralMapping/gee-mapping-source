@@ -595,6 +595,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
                 -2.387859721554285
               ],
               [
+                140.8754824804241,
+                -2.570322586335402
+              ],
+              [
                 140.81778770718432,
                 -2.8103972628843534
               ],
@@ -756,6 +760,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         },
         {
