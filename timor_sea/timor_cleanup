@@ -6738,7 +6738,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [130.75424415162723, -12.13811060842463],
           [130.14724952272098, -12.59955616551813],
           [129.83139258912723, -13.185890674650622]]]),
-    arnhem_coast = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    arnhem_coast = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[131.76243413629288, -11.590157041709542],
            [134.10252202691788, -12.363946476027461],
            [135.80540288629288, -12.696410248007176],
@@ -7411,7 +7414,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -7750,13 +7753,6 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // Generic benthic rules
   
-    // Coral in Deep/shallow lagoon -> sand
-    man_benthic = man_benthic.where({
-      test: man_benthic.eq(15)
-                     .and(geo_map.eq(11).or(geo_map.eq(12))),
-      value: ee.Image(11)
-    });
-    
     // BMA on inner/outer RF -> rubble 
     man_benthic = man_benthic.where({
       test: man_benthic.eq(18)
@@ -7765,22 +7761,23 @@ if (vars.manual_clean && !vars.geomorphic) {
     });
     
     
-    // manual polygon guided rules
-    // West Hawaii
+    // **Manual polygon guided rules**
     
-    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-    var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
+    // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
+    var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+    var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
    
+    // **Inshore**
     
-    // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
+    
+    // Sand or BMA on Reef slope -> coral/algae
     man_benthic = man_benthic.where({
-     test: steepslope.eq(1)
+     test: subreg_1.eq(1)
                       .and(geo_map.eq(22))
                       .and(man_benthic.eq(11).or(man_benthic.eq(18))),
      value: ee.Image(15)
      });
-    
+    /*
     // BMA on Reef Crest == coral/algae
     man_benthic = man_benthic.where({
       test: west_extent.eq(1)
@@ -7789,7 +7786,7 @@ if (vars.manual_clean && !vars.geomorphic) {
       value: ee.Image(15)
     });
     
-    // East and West Hawaii
+    // **East and West Hawaii**
     // BMA on DW/DL/SRS/RS/plateau/BRS == sand
     man_benthic = man_benthic.where({
       test: man_benthic.eq(18)
@@ -7805,11 +7802,12 @@ if (vars.manual_clean && !vars.geomorphic) {
                        .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(13)
     });
-  
+  */
   
   // Add the manual layer to the map
-  //var image = ee.Image(region_params.image);
-  //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
+
+  var low_tide_image_dove = ee.Image(region_params.image);
+  Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
   
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
   Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
