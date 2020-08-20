@@ -133,7 +133,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
   geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
-  benthic_cleanup_stage: 1, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
 // choose where to centre the map (link this dynamically to map app?)
@@ -197,12 +197,12 @@ if (vars.geo_cleanup_stage == 3) {
 
 // Add benthic clean stage 1 to the viewer
 if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
-  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', true);
+  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
   }
 
-// Add geo clean stage 2 to the viewer
+// Add benthic clean stage 2 to the viewer
 if (vars.benthic_cleanup_stage == 2) {
-  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
+  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', true);
 }
 
 /*// Geo Training Data - Needs more work + add flag to show
