@@ -146,7 +146,7 @@ var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(re
 
 // "NOT REEF" CLEAN
 //var noReef_mask = noReef_mask.geometry()
-var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask.geometry(), {zone: 1}), "zone");
+var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask.geometry(), {zone: 1}), "zone");//RB had to convert FeatColl into geometry as noReef_mask comes from arcpro as a FeaColletcion
 // remove
 depth_mask = depth_mask.where({
   test: not_reef_img.eq(1),
