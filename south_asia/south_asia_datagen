@@ -398,7 +398,7 @@ all_data = all_data
 all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
 Map.addLayer(all_data, {}, "Model predictor data", false)
 // add noreefmask to viewer - check for slivers between polys
-Map.addLayer(not_reef_img, {}, "noreefmask", false);
+Map.addLayer(not_reef_img, {}, "noReef_mask", false);
 
 
 /*
