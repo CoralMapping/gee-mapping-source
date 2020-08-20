@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([77.63870564013276, 8.405584741745267]),
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
@@ -662,7 +659,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.south_asia       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
