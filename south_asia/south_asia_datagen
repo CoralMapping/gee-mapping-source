@@ -586,7 +586,6 @@ var map_centre =
       ],
       "coordinates": []
     }),
-    image = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     region_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[68.23440876513276, 24.96468909857584],
           [66.56448689013276, 23.401295952634484],
@@ -638,7 +637,6 @@ var region_params = param_module.south_asia       //<------------ THIS IS WHERE 
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-Map.addLayer(image)
 
 
 // Table of contents
