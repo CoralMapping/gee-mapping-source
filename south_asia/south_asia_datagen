@@ -124,6 +124,7 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
+
 // "NOT REEF" CLEAN
 var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask, {zone: 1}), "zone");
 // remove
