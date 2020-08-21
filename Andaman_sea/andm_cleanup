@@ -6313,6 +6313,12 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(13) // Inner Reef Flat
   });
  
+   //Deep lagoon -> Deep water (inshore)
+  man_geo = man_geo.where({
+    test: inner_extent.eq(1)
+                     .and(man_geo.eq(12)), // Deep Lagoon
+    value: ee.Image(2) //Deep water
+  });
  /*
  // Deep water/shelter slope -> Back reef slope
   man_geo = man_geo.where({
@@ -6342,7 +6348,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
-  // Deep lagoon -> Reef slope (around the reef edge)
+  //Deep lagoon -> Reef slope (around the reef edge)
   man_geo = man_geo.where({
     test: notdeeplagoon.eq(1)
                      .and(man_geo.eq(12)),
