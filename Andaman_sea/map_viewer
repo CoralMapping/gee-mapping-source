@@ -6036,10 +6036,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     }),
     geo_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1"),
     geo_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean2"),
-    notRC = 
-    /* color: #0572d6 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    notRC = /* color: #0572d6 */ee.Geometry.MultiPolygon(
         [[[[92.5269806272745, 10.91309055604887],
            [92.57435916731356, 10.864542190968793],
            [92.57015589842717, 10.838154489663507],
