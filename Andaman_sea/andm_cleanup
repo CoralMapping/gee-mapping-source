@@ -6255,7 +6255,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //var not_reef = ee.Image().byte().paint(ee.Feature(noreefmask, {zone: 1}), "zone").clip(noreefmask);
   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore)
   var outer_extent_reef = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
-  var not_reef = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
+  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   //var river = ee.Image().byte().paint(ee.Feature(rivermouth, {zone: 1}), "zone").clip(rivermouth);
   //var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
   //var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
@@ -6277,7 +6277,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // "NOT REEF" CLEAN
   // remove
   man_geo = man_geo.where({
-    test: not_reef.eq(1),
+    test: midmask.eq(1),
     value: ee.Image(0)
   });
   
