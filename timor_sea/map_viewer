@@ -173,11 +173,16 @@ if (vars.raw) {
   // Map.addLayer(benthic_subreg2_no_b4p.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW (no band4 outer reefs)', false); // test without band b4p
 }
 
-// Add geo clean stage 1 to the viewer
+// Load the clean classifications
+var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
+var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
+var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
+
 if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 if (vars.geo_clean3) Map.addLayer(geo_clean3, map_palettes.geo, 'Geomorphic clean - stage 3', false);
-
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
