@@ -204,7 +204,7 @@ print (dataTable)
 
 // 4. Export
 Export.table.toDrive({
-  collection: classification_errormatrix_array,
+  collection: accuracy_oa,
   description: "AA_csv",
 })
 
