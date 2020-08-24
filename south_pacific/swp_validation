@@ -204,7 +204,8 @@ print (dataTable)
 
 // 4. Export
 Export.table.toDrive({
-  collection: dataTable,
+  collection: ee.FeatureCollection(dataTable),
+  description: "AA_csv"
 })
 
 
