@@ -322,7 +322,7 @@ if (vars.run_probabilities) {
   
   Export.image.toAsset({image:probabilities,
                         description:'prob_geo',
-                        assetId:'projects/coral_atlas/nth_cari/in_out/nth_cari_prob_geo',
+                        assetId:'projects/coral_atlas/west_indian_ocean/in_out/WIO_prob_geo',
                         region:export_geom,
                         scale:vars.export_scale,
                         maxPixels:1e13
