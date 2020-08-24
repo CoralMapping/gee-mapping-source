@@ -204,8 +204,8 @@ print (dataTable)
 
 // 4. Export
 Export.table.toDrive({
-  collection: ee.FeatureCollection(dataTable),
-  description: "AA_csv"
+  collection: classification_errormatrix_array,
+  description: "AA_csv",
 })
 
 
