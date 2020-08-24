@@ -4,10 +4,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
-    not_reef = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    not_reef = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1351,10 +1348,7 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    mid_mask = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #98ff00 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3025,12 +3019,20 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
                 11.636733358373753
               ],
               [
-                92.32211319986311,
-                11.603104713702324
+                92.29911749242657,
+                11.593008476069816
               ],
               [
-                92.45497498753332,
-                11.577558404394352
+                92.31387345376936,
+                11.500848790580367
+              ],
+              [
+                92.52363953831457,
+                11.518356752461107
+              ],
+              [
+                92.48398570748311,
+                11.60376944020478
               ],
               [
                 92.52123543761729,
@@ -6382,7 +6384,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [97.92557985578327, 12.229382204749076]]]]),
     southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
-    notRubble = /* color: #d6c20b */ee.Geometry.MultiPolygon(
+    notRubble = 
+    /* color: #d6c20b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[92.97859969726836, 13.575948262950662],
            [92.9748231523074, 13.565936160272688],
            [92.94727154008596, 13.545076257399085],
