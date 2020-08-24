@@ -7257,6 +7257,7 @@ if (vars.manual_clean && !vars.geomorphic) {
       value: ee.Image(11) //Sand
     });
     
+    
    /*
     // East and West Hawaii
     // BMA on DW/DL/SRS/RS/plateau/BRS == sand
