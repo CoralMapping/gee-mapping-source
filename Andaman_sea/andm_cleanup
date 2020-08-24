@@ -19,7 +19,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [90.2347830552545, 1.5243019898904366],
           [103.94572055525448, 1.5243019898904366],
           [103.94572055525448, 21.971185910352975]]], null, false),
-    noreefmask = /* color: #d63000 */ee.Geometry({
+    noreefmask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -7117,7 +7120,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     // Inshore versus Offshore
     
    var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore)
-   var outer_extent_reef = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
+   var outer_extent = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
    var NotRB = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
     
     // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
