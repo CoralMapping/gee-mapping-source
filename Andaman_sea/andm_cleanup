@@ -6837,7 +6837,7 @@ var region_params = param_module.andm;         //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -7228,12 +7228,11 @@ if (vars.manual_clean && !vars.geomorphic) {
     
     
     // manual polygon guided rules
-    // West Hawaii
+    // Inshore versus Offshore
     
-    // East and West copied here to run in benthic clean, originally defined under manual cleanup for geo - sort out later PT
-    //var west_extent = ee.Image().byte().paint(ee.Feature(west, {zone: 1}), "zone").clip(west);
-    //var east_extent = ee.Image().byte().paint(ee.Feature(east, {zone: 1}), "zone").clip(east);
-    //var steepslope = ee.Image().byte().paint(ee.Feature(steep_slope, {zone: 1}), "zone").clip(steep_slope);
+   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore)
+   var outer_extent_reef = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore)
+   var NotRB = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
     
     // Sand or BMA on Reef slope == coral/algae (on the steeper reef slope areas)
     man_benthic = man_benthic.where({
@@ -7251,6 +7250,7 @@ if (vars.manual_clean && !vars.geomorphic) {
       value: ee.Image(15)
     });
     
+   /*
     // East and West Hawaii
     // BMA on DW/DL/SRS/RS/plateau/BRS == sand
     man_benthic = man_benthic.where({
@@ -7267,7 +7267,7 @@ if (vars.manual_clean && !vars.geomorphic) {
                        .and(geo_map.eq(14).or(geo_map.eq(22)).or(geo_map.eq(23))),
       value: ee.Image(13)
     });
-  
+  */
   
   // Add the manual layer to the map
   //var image = ee.Image(region_params.image);
