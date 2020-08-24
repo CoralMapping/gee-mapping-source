@@ -321,8 +321,8 @@ if (vars.run_probabilities) {
   Map.addLayer(probabilities,{},'probabilities')
   
   Export.image.toAsset({image:probabilities,
-                        description:'prob_geo',
-                        assetId:'projects/coral_atlas/west_indian_ocean/in_out/WIO_prob_geo',
+                        description:'prob_benthic',
+                        assetId:'projects/coral_atlas/west_indian_ocean/in_out/WIO_prob_benthic',
                         region:export_geom,
                         scale:vars.export_scale,
                         maxPixels:1e13
