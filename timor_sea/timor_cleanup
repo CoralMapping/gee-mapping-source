@@ -7378,7 +7378,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -7514,7 +7514,6 @@ if (vars.manual_clean && vars.geomorphic) {
   // update these values based on inspection of the layer
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
-  // merged "Rivermouth" and "not reef" extents. Eventually to be moved over to _datagen script, although CR happy to rerun clean up script/assess result and iterate
   
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   var landmaskfc = ee.FeatureCollection(region_params.land_mask).geometry();
@@ -7820,7 +7819,11 @@ if (vars.manual_clean && !vars.geomorphic) {
   Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
   
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
-  Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
+  var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+  var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
+  Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+  Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
   Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
