@@ -586,7 +586,9 @@ var map_centre =
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
-    ee.Geometry.MultiPoint();
+    ee.Geometry.MultiPoint(),
+    table = ee.FeatureCollection("projects/coral_atlas/south_asia/mask/noReef_mask"),
+    image = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Timor Sea region 
@@ -665,7 +667,7 @@ var vars = {
 
 var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
 
-
+Map.addLayer(table2)
 
 // 2. Data loads & vis
 
