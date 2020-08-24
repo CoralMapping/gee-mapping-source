@@ -4,10 +4,7 @@ var map_centre =
     /* shown: false */
     ee.Geometry.Point([76.75979939013276, 9.100516271403574]),
     noReef_mask = ee.FeatureCollection("projects/coral_atlas/south_asia/mask/noReef_mask"),
-    region_extent = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    region_extent = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[67.88284626513276, 19.31761640010806],
           [69.83562441824873, 17.267352740179863],
           [70.9154898248796, 14.774502743907542],
