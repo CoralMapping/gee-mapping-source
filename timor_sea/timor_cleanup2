@@ -7482,20 +7482,17 @@ if (!vars.geomorphic) {
 }
 // -----------------------------------------<
 
-/*
-############################
-MANUAL ADDITION
-- review everything in there
-- first review the reef_boundary object - as it is required for all cleanup stages
-############################
-*/
+// ############################
+// START OF CLEAN 3 - Manual Cleanup
+
+// review everything in this section
+// first review the reef_boundary object - as it is required for all cleanup stages
+// ############################
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
 var reef_boundary = ee.FeatureCollection([ee.Feature(inner),ee.Feature(outer)]).geometry();
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
-
-
 
 // ############################
 // This is the section to add/remove manual cleanups
