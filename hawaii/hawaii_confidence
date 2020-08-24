@@ -354,7 +354,7 @@ var confidenceEXP=confidence.expression(
 
 var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
 Map.addLayer(confidenceEXP,conf_str,'confidence',true);
-Map.addLayer(hawai_conf_geo_clean,conf_str,'confidence',true);
+Map.addLayer(hawai_conf_geo_clean,conf_str,'geo_confidence_exported',false);
 //7.6 confidence legend
 
 var legend=ui.Panel({
