@@ -1,0 +1,1087 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([132.48245564013274, -11.179972121799565]),
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[118.17268873731341, -18.583750476087303],
+          [121.8230379413665, -18.126541083209318],
+          [123.67017028232064, -17.876378095730946],
+          [125.3415593722527, -17.080015027396435],
+          [126.00163509349626, -15.688050472336881],
+          [127.14512978361226, -14.924953523208325],
+          [127.2326965361166, -16.322412346631495],
+          [129.03564868652072, -16.196153938387248],
+          [130.09104203329613, -16.02733630912503],
+          [130.61884084939368, -15.095481653622306],
+          [130.92675309063208, -14.116885857727324],
+          [131.8501934670537, -13.134154851958144],
+          [135.1917655038659, -13.048519702286164],
+          [134.66424045914056, -15.180530945292361],
+          [139.58998767177593, -18.754351690671502],
+          [140.9092722663697, -18.545668388997186],
+          [141.700497256049, -17.458027549103278],
+          [142.31541627565417, -15.433558572163854],
+          [142.40277241693445, -13.816848428130939],
+          [142.57805334003572, -12.188919484172388],
+          [141.52168648840777, -8.470426976943587],
+          [140.29048128852313, -7.207914658869887],
+          [139.2791270921646, -5.723191368273234],
+          [137.9603057619979, -4.716707677091409],
+          [136.2460555899928, -4.015741482813838],
+          [134.66374668518998, -3.1824317104640465],
+          [133.74078028787739, -2.5679275622618842],
+          [132.6859896735014, -2.567910012802651],
+          [131.49935394813167, -2.523932202697305],
+          [131.32346436661447, -3.5333510130116035],
+          [133.78474509317195, -5.242523612368697],
+          [133.2572568458723, -7.7317915631289615],
+          [135.059593914288, -8.384627417396922],
+          [136.24624843708372, -5.8985958782287975],
+          [137.5650574255915, -6.859464874546258],
+          [136.90600773685327, -9.209872646010732],
+          [140.29120639064493, -9.946144487670734],
+          [141.52263056146762, -11.457712528274222],
+          [140.64358870263388, -12.361363703100812],
+          [140.29272401584507, -15.51891685996388],
+          [138.0940034085582, -14.967872118763479],
+          [137.56556072344455, -10.076585072916542],
+          [135.23558246295178, -10.725444492806618],
+          [132.72969912228797, -9.253456262134835],
+          [130.04751576098448, -9.470385600858283],
+          [128.9480378595712, -9.03796107597942],
+          [125.60805261130045, -9.903474855142777],
+          [122.57334723982913, -11.67346361842483],
+          [120.32126106652476, -14.640398254879093],
+          [117.61395427327072, -17.668010786076376]]]),
+    noReef_mask = 
+    /* color: #43ff06 */
+    /* shown: false */
+    ee.Geometry({
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                131.6209457353908,
+                -3.406481422012466
+              ],
+              [
+                133.1590316728908,
+                -4.809083468243518
+              ],
+              [
+                133.5105941728908,
+                -5.946613263722921
+              ],
+              [
+                133.3348129228908,
+                -7.561251250106858
+              ],
+              [
+                135.0486801103908,
+                -8.083685947505646
+              ],
+              [
+                137.4656722978908,
+                -9.126485887114153
+              ],
+              [
+                139.3553207353908,
+                -9.348784599611022
+              ],
+              [
+                140.6297347978908,
+                -10.122987529626664
+              ],
+              [
+                141.19067648814612,
+                -10.052695201302502
+              ],
+              [
+                141.5745590166408,
+                -9.213253279316948
+              ],
+              [
+                138.8719222978908,
+                -5.028000774800192
+              ],
+              [
+                136.7625472978908,
+                -3.669650510301542
+              ],
+              [
+                134.3895004228908,
+                -2.748255943166204
+              ],
+              [
+                132.6756332353908,
+                -2.2214099000035943
+              ],
+              [
+                131.4451644853908,
+                -2.7921499004007084
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                141.87033616291993,
+                -12.322342158508562
+              ],
+              [
+                141.70221321539887,
+                -11.580821376998495
+              ],
+              [
+                140.9969230769824,
+                -11.602247983840224
+              ],
+              [
+                140.98044358479493,
+                -12.408193911600465
+              ],
+              [
+                138.87387717771162,
+                -15.88017719139052
+              ],
+              [
+                138.5985150719772,
+                -16.918269989357043
+              ],
+              [
+                138.8008530503304,
+                -16.972321217505062
+              ],
+              [
+                138.89266526602535,
+                -16.743442999852412
+              ],
+              [
+                138.95554824997078,
+                -16.60067462819174
+              ],
+              [
+                139.07597183043708,
+                -16.467384383984008
+              ],
+              [
+                139.15752843719454,
+                -16.316303403555054
+              ],
+              [
+                139.2217308012355,
+                -16.198347459857356
+              ],
+              [
+                139.36946316056253,
+                -16.1970011834943
+              ],
+              [
+                139.58337431695588,
+                -16.2112817699809
+              ],
+              [
+                139.8001766997124,
+                -16.328154698826495
+              ],
+              [
+                139.92850266682615,
+                -16.529367214697114
+              ],
+              [
+                139.96698234688975,
+                -16.69250333382162
+              ],
+              [
+                139.94772874104493,
+                -16.82930338054062
+              ],
+              [
+                139.7829338191699,
+                -17.13401481449065
+              ],
+              [
+                139.55222092854493,
+                -17.270448151091728
+              ],
+              [
+                139.23361741291993,
+                -17.804705429557373
+              ],
+              [
+                140.05759202229493,
+                -18.2643530633977
+              ],
+              [
+                141.79343186604493,
+                -17.783783943240014
+              ],
+              [
+                142.19992600666993,
+                -16.228964356283022
+              ],
+              [
+                142.37570725666993,
+                -14.61924807543451
+              ],
+              [
+                142.19992600666993,
+                -13.639096476172245
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.71135482380458,
+                -16.83845691188403
+              ],
+              [
+                138.75255355427333,
+                -16.655665825749768
+              ],
+              [
+                138.80748519489833,
+                -16.450311104026607
+              ],
+              [
+                139.27169338115556,
+                -15.385947563950195
+              ],
+              [
+                137.43101240779455,
+                -12.698829847966296
+              ],
+              [
+                137.03462451017396,
+                -13.269816208610061
+              ],
+              [
+                136.3713255753352,
+                -13.37247377835416
+              ],
+              [
+                136.37233640276136,
+                -13.533482760146997
+              ],
+              [
+                137.0091842850381,
+                -13.583449844660231
+              ],
+              [
+                137.05520168193678,
+                -14.324050883993504
+              ],
+              [
+                136.92576900371412,
+                -14.38458491928528
+              ],
+              [
+                136.73076167949537,
+                -14.366958565577841
+              ],
+              [
+                136.54159084209306,
+                -14.355982964306866
+              ],
+              [
+                136.27791896709306,
+                -14.286791046766936
+              ],
+              [
+                135.78902736553056,
+                -13.956507637569947
+              ],
+              [
+                135.61324611553056,
+                -13.945845389409525
+              ],
+              [
+                135.97030177959306,
+                -14.340017492835333
+              ],
+              [
+                135.97030177959306,
+                -14.46239028916728
+              ],
+              [
+                135.83297267803056,
+                -14.515574868991727
+              ],
+              [
+                135.82198634990556,
+                -14.435793220576134
+              ],
+              [
+                135.86593166240556,
+                -14.340017492835333
+              ],
+              [
+                135.86043849834306,
+                -14.260173098109222
+              ],
+              [
+                135.62423244365556,
+                -14.0471168037852
+              ],
+              [
+                134.93758693584306,
+                -14.488984173754968
+              ],
+              [
+                134.93758693584306,
+                -14.929972707558079
+              ],
+              [
+                135.23421779521806,
+                -15.301189678534303
+              ],
+              [
+                136.14608302959306,
+                -15.967715349068722
+              ],
+              [
+                137.25570217021806,
+                -16.521467753479172
+              ],
+              [
+                138.20052638896806,
+                -17.173380832935678
+              ],
+              [
+                138.59603420146806,
+                -17.01586651052815
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                131.80896871058246,
+                -11.409242183294396
+              ],
+              [
+                131.72107808558246,
+                -11.360776516346826
+              ],
+              [
+                131.60572164026996,
+                -11.398472748759268
+              ],
+              [
+                131.61121480433246,
+                -11.554589420428641
+              ],
+              [
+                131.42994039026996,
+                -11.678344341697118
+              ],
+              [
+                131.30909078089496,
+                -11.780535038034875
+              ],
+              [
+                131.40796773401996,
+                -11.909563670867934
+              ],
+              [
+                131.40247456995746,
+                -12.108362583283638
+              ],
+              [
+                131.28162496058246,
+                -12.21039119219242
+              ],
+              [
+                131.37500874964496,
+                -12.92882778460479
+              ],
+              [
+                133.27564351526996,
+                -12.408965417287066
+              ],
+              [
+                132.90760152308246,
+                -11.812797904627478
+              ],
+              [
+                132.63294331995746,
+                -11.511531386698817
+              ],
+              [
+                132.50660054651996,
+                -11.403857517064493
+              ],
+              [
+                132.32532613245746,
+                -11.398472748759268
+              ],
+              [
+                132.28138081995746,
+                -11.479233534676084
+              ],
+              [
+                132.14954488245746,
+                -11.554589420428641
+              ],
+              [
+                131.96277730433246,
+                -11.586878606255771
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                127.45376052791276,
+                -14.799816052354238
+              ],
+              [
+                127.77236404353776,
+                -15.917459688032123
+              ],
+              [
+                129.40932693416275,
+                -15.780066718630698
+              ],
+              [
+                130.30471267635025,
+                -15.430883201431055
+              ],
+              [
+                130.41457595760025,
+                -14.220161873827406
+              ],
+              [
+                129.50271072322525,
+                -14.374529553077549
+              ],
+              [
+                129.35988845760025,
+                -14.486246612475183
+              ],
+              [
+                129.19509353572525,
+                -14.156254682747303
+              ],
+              [
+                130.08498611385025,
+                -12.552925467992537
+              ],
+              [
+                128.61494727338393,
+                -12.450147418474216
+              ],
+              [
+                127.90969314510026,
+                -13.521546942734147
+              ],
+              [
+                127.54714431697526,
+                -13.975086891512651
+              ],
+              [
+                127.26149978572526,
+                -14.278727603505995
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                122.88407281834407,
+                -17.27846585302748
+              ],
+              [
+                122.99393609959407,
+                -17.435756599174923
+              ],
+              [
+                123.53775934178157,
+                -17.917265418877427
+              ],
+              [
+                124.27384332615657,
+                -17.666204294146702
+              ],
+              [
+                125.25162652928157,
+                -16.889909506548676
+              ],
+              [
+                125.68558649021907,
+                -15.819937549585868
+              ],
+              [
+                125.42191461521907,
+                -15.338426665970553
+              ],
+              [
+                125.18570856053157,
+                -15.221849254283823
+              ],
+              [
+                124.97147516209407,
+                -15.285444967401968
+              ],
+              [
+                124.87259820896907,
+                -15.401986966723438
+              ],
+              [
+                124.70231012303157,
+                -15.656033265226334
+              ],
+              [
+                124.49356988865657,
+                -15.804081626600253
+              ],
+              [
+                124.41597894627375,
+                -15.937496767651067
+              ],
+              [
+                124.33152154881282,
+                -16.096554239321133
+              ],
+              [
+                124.26221594586022,
+                -16.385937232856374
+              ],
+              [
+                124.12552789646907,
+                -16.310849007831646
+              ],
+              [
+                124.05960992771907,
+                -16.374103686184345
+              ],
+              [
+                123.60367731053157,
+                -16.674282090438965
+              ],
+              [
+                123.47733453709407,
+                -16.616389316286742
+              ],
+              [
+                123.18619684178157,
+                -16.690067991188318
+              ],
+              [
+                122.99393609959407,
+                -16.784755975366085
+              ],
+              [
+                122.79618219334407,
+                -17.20501743540183
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                128.51089808291792,
+                -9.460117285814823
+              ],
+              [
+                128.49441859073042,
+                -10.280006640596735
+              ],
+              [
+                129.49142786807417,
+                -10.301625837638918
+              ],
+              [
+                129.43100306338667,
+                -9.427605000188969
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        }
+      ],
+      "coordinates": []
+    });
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - Timor Sea region 
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Jeremy Wolff (tuddy117@gmail.com)
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script generates the data as an asset (for quick load)
+// - Corresponding '_classification' script performs the machine learning classificaiton
+///////////////////////////////
+
+// Need to load the segmentation package
+// https://earthengine.googlesource.com/users/gena/packages/+/master/slic#
+// TODO: need to modify the source code to be able to use 2 bands?
+// var Slic = require('users/mitchest/global_reefs:Modules/slic').Slic
+// load analysis params module
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.timor       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. Segmentation and metrics calculation
+// 4. Export data to asset
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+var vars = {
+  // OBIA settings
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
+  compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
+  //segment_iters: 3, // number of (SLIC) segmentation iterations
+  //segment_max: 1499, // must be <reduce_max below (~1500 at this point seems fair)
+  reduce_max: 1500, // the max size of object to be able to reduce
+  //segment_compactness: 0.7, // higher the number, the more compact (square) objects are
+  segment_all_bands: true, // segement on all input bands or those chosen below
+  segment_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3'] : ['B2','B3','B4'], // only handles Landsat/Sentinel-2/Dove
+  
+  // analysis parameters
+  //image_data_scale: sensor_params.pixel, // pixel size of the image data
+  //depth_limit: 15.00,//RB: make the right depth limit as S2 depth is not *100 as dove?
+  depth_limit: 2500, // depth limit for analysis in cm 
+  min_depth: 0, // the minimum valid depth (also allows use of bathy/topo layers)
+  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
+  red_band: (sensor_params.sname == 'dove') ? 'b3' : 'B4', // only handles Landsat/Sentinel-2/Dove
+  green_band: (sensor_params.sname == 'dove') ? 'b2' : 'B3', // only handles Landsat/Sentinel-2/Dove
+  blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
+  nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
+  use_glcm: true, // use glcm metrics
+  small_object: 400, // the smallest size a group of image pixels should be to not be considered noise
+  
+  // use relative band brightness as predictor variables (instead of Rrs values)?
+  use_brightness: false,
+  
+  // use global reef mask layer to remove junk + limit size
+  global_mask: false,
+  
+  // export options
+  do_export: true, // export the results?
+  export_scale: sensor_params.pixel, // pixel size to export at
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
+  asset_output: region_params.asset // asset path
+}
+
+var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
+
+
+
+// 2. Data loads & vis
+
+Map.centerObject(map_centre, 6)
+
+// load input data
+var reflec = ee.Image(region_params.image).select(vars.all_bands)
+
+/* 
+// import depth data
+Depth data used as follows:
+    - take mean where ls8 and sentinel2 exist
+    - use s2 flags where no ls8, and vica verca
+    - use dove where no s2 or ls8 data exist
+
+NB depth is 16bit s integer in centimeters)
+*/
+var dove_depth = ee.Image(region_params.depth).rename('depth')
+var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
+Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
+Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
+
+// make the depth data for modelling/mapping
+// --> Use S2 where possible, then LS8, then Dove
+// --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+// get back the negative retrievals as very shallow
+depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+
+// define a mask based on min/max depth
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
+
+// "NOT REEF" CLEAN
+var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask, {zone: 1}), "zone");
+// remove
+depth_mask = depth_mask.where({
+  test: not_reef_img.eq(1),
+  value: ee.Image(0)
+});
+
+/*// "TURBID WATER" CLEAN
+var tmask = ee.FeatureCollection(region_params.turbid_mask).geometry();
+var tmask_img = ee.Image().byte().paint(ee.Feature(tmask, {zone: 1}), "zone");
+// remove
+depth_mask = depth_mask.where({
+  test: tmask_img.eq(1),
+  value: ee.Image(0)
+});*/
+
+// clip and load other variables
+var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
+
+//var waves = waves.rename('waves')
+//var waves = ee.Image(region_params.waves).unmask(0)
+//var geomorph = ee.FeatureCollection(region_params.geo_train)
+//var benthic = ee.FeatureCollection(region_params.benthic_train)
+
+// define it if it's a normal shape, otherwise draw it
+//var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
+var export_geom = depth_mask.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100});
+
+Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
+//Map.addLayer(tmask,{}, "turbid mask", false);
+//Map.addLayer(waves, {min:0, max:2, palette:['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']}, "Sig. wave height (modelled)", false) // significant wave height (modelled)
+
+// add in global bathy if using
+if (vars.global_mask) {
+  /*// manual touch-ups if needed
+  var manual_adds = manual_mask_additions.reduceToImage(['mask'],ee.Reducer.first()).unmask(0)
+  print(manual_adds)
+  global_mask = global_mask.unmask(0).add(manual_adds).selfMask().clip(export_geom)*/
+  // mask the depth mask with global mask
+  global_mask = global_mask.clip(export_geom)
+  depth_mask = depth_mask.updateMask(global_mask)
+  Map.addLayer(global_mask, {min:0, max:1}, 'global reef mask', false)
+}
+
+
+/*
+// TESTING DEPTH IMPORVEMENTS // ################################################### //
+
+Map.addLayer(depth, {min:0,max:5}, "raw depth", false)
+Map.addLayer(depth.focal_min({radius: 5, kernelType: 'octagon'}).updateMask(depth.gt(0)), {min:0,max:5}, "smooth depth", false)
+
+// TESTING OUTLINE EXTRACTION // ################################################### //
+
+var rbratio = reflec.select('b3').divide(reflec.select('b1')) // get reef area + land
+var nir_ratio = reflec.select('b4').divide(reflec.select('b1')) // mask out land
+var b_bright = reflec.expression(' B / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var g_bright = reflec.expression(' G / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+var r_bright = reflec.expression(' R / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+
+var ratio_bright = reflec.select('b3').divide(reflec.select('b1'))
+                    .multiply(reflec.select('b2').divide(reflec.select('b3')))
+                    .multiply(reflec.select('b2').divide(reflec.select('b1')))
+      
+
+var depth_bbri = depth.multiply(b_bright)
+var depth_rb = depth.multiply(rbratio)
+var bbri_rb = b_bright.multiply(rbratio)
+
+Map.addLayer(rbratio, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "rb ratio", false)
+Map.addLayer(b_bright, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright", false)
+Map.addLayer(bbri_rb, {palette:['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "b bright + rb", false)
+Map.addLayer(depth_bbri, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "depth + b bright", false)
+Map.addLayer(depth_rb, {palette:['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061']}, "depth + rb ratio", false)
+Map.addLayer(ratio_bright, {palette:['#8e0152','#c51b7d','#de77ae','#f1b6da','#fde0ef','#f7f7f7','#e6f5d0','#b8e186','#7fbc41','#4d9221','#276419']}, "rgb brightness", false)
+
+Map.addLayer(depth.lt(3).selfMask(), {palette:'4eb3d3'}, "3m depth mask", false)
+Map.addLayer(rbratio.gt(0.4).selfMask(), {palette:'feb24c'}, "rb ratio mask", false)
+Map.addLayer(depth_bbri.lt(5).selfMask(), {palette:'bf812d'}, "dix ratio mask", false)
+
+Map.addLayer(nir_ratio.gt(1).selfMask(), {palette:'e5f5e0'}, "nir ratio mask", false)
+
+// END TESTING // ################################################### //
+ */
+
+
+// 3. Segmentation and metrics calculation
+
+// replace the band values with relatvie brightness values if set
+if (vars.use_brightness) {
+  reflec = reflec
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' B / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.blue_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' G / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.green_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' R / (B + G + R)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band) }).rename(vars.red_band).multiply(10000).int16()})
+    .addBands({overwrite: true, srcImg:
+    reflec.expression(' N / (B + G + R + N)', {
+      'B': reflec.select(vars.blue_band),
+      'G': reflec.select(vars.green_band),
+      'R': reflec.select(vars.red_band),
+      'N': reflec.select(vars.nir_band)}).rename(vars.nir_band).multiply(10000).int16()})
+}
+
+// calculate slope
+var slope = ee.Terrain.slope(depth) // slope in degress
+
+
+if (vars.use_glcm) {
+  // glcm texture (mixed usefulness - will vary with image quality and type)
+  var depth_glcm = depth.int16().glcmTexture().select(['depth_ent']).focal_max(5).rename('depth_maxent').multiply(100).int16() // maximum neighbourhood glcm entropy on depth
+  var blue_glcm = reflec.select(vars.blue_band).int16().glcmTexture().select([vars.blue_band+'_savg']).focal_median(5).int16()
+  var green_glcm = reflec.select(vars.green_band).int16().glcmTexture().select([vars.green_band+'_savg']).focal_median(5).int16()
+}
+
+// local variance in depth and red reflectance (5 pixels)
+var depth_var = depth.reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('depth_stdDev').multiply(10).int16()
+var red_var = reflec.select(vars.red_band).reduceNeighborhood({reducer: ee.Reducer.stdDev(), kernel: ee.Kernel.circle(5)}).rename('red_stdDev').multiply(10).int16()
+
+// segmentation functions
+
+// ***SNIC segmentation***
+  var run_snic = function(bands) {
+    return(
+    ee.Algorithms.Image.Segmentation.SNIC({
+    image: bands,
+    seeds: ee.Algorithms.Image.Segmentation.seedGrid(vars.scale_factor, "hex"),
+    //size: 1000,
+    neighborhoodSize: vars.scale_factor*2,
+    compactness: vars.compactness,
+    connectivity: 4
+    })
+    )
+  }
+  
+  // ***SLIC segmentation***
+  /*
+  segment_on = segment_on.rename(['v1','v2','v3'])
+  var slic = new Slic(segment_on, vars.scale_factor, false)
+  slic.compactness = vars.compactness
+  var segmentation = slic.iterate(vars.segment_iters)
+  var segmented_data = segmentation.image.select('label').rename('clusters').int32()
+  Map.addLayer(segmented_data.randomVisualizer(), {}, "Slic labels", false)
+  */
+  
+  
+  // ***k-means segmentation***
+  /*
+  var segmented_data = ee.Algorithms.Image.Segmentation.KMeans({
+    image: reflec.select(['b2']).addBands(depth), //all_data.select(segment_bands),
+    numClusters: segment_size,
+    numIterations: 10,
+    //neighborhoodSize: 100
+    gridSize: segment_max
+  })
+  Map.addLayer({eeObject: segmented_data, shown: false, name: "Segmentation algorithm segments"})
+  */
+
+
+// calculate pixel or object data
+if (vars.pixel_based) {
+  // pixel-based data generation
+  // combine data to move forward with
+  var all_data = reflec.addBands(depth).addBands(slope)//.addBands(waves)
+                  .addBands(depth_var).addBands(red_var)
+                  .updateMask(depth_mask) // make sure all layers are clipped down
+  if (vars.use_glcm) { // add glcm if using
+    all_data = all_data.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm).updateMask(depth_mask)
+  }
+  
+} else {
+  //// OBIA data generation
+  
+  if (vars.segment_all_bands) { 
+    // do the segmentation on all input bands (internal GEE mean calcs seem to be faster)
+    var segmented_data_mean = run_snic(reflec
+                                       .addBands(depth)
+                                       .addBands(slope)//.addBands(waves)
+                                       .updateMask(depth_mask)
+                                       )
+                                       .regexpRename('_mean', '')
+    Map.addLayer(segmented_data_mean.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // remove the cluster band - index starts at 0
+    segmented_data_mean = segmented_data_mean.select(ee.List.sequence(1, segmented_data_mean.bandNames().length().subtract(1)))
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    
+  } else {
+    // segment on the bands specified by var segment_on
+    var segment_on = reflec.select(vars.segment_bands)//.addBands(depth.multiply(100)) // which data to segment on (transform depth so it's on a similar scale - may help numerically)
+                         .updateMask(depth_mask)
+    var segmented_data = run_snic(segment_on)
+    Map.addLayer(segmented_data.randomVisualizer().reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {}, "SNIC clusters", false)
+    // Calculate object statistics
+    var segmented_data_mean = reflec.addBands(depth).addBands(slope)//.addBands(waves)
+                              //.addBands(depth_glcm).addBands(blue_glcm).addBands(green_glcm)
+                              //.addBands(depth_var).addBands(red_var)
+                              .addBands(segmented_data.select('clusters'))
+                              .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
+    segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
+    
+  /*
+  // For this analysis anyway, SD has not come up as adding much useful info
+  // Looks like you can also use .combine - and do both mean and SD in one reduction??
+  var segmented_data_sd = reflec.addBands(depth).addBands(waves).addBands(slope)//.addBands(depth_glcm)
+                          .addBands(segmented_data.select('clusters'))
+                          .reduceConnectedComponents(ee.Reducer.stdDev(), "clusters", vars.reduce_max)
+                          //.rename(['b1_sd','b2_sd','b3_sd','b4_sd','b5_sd','depth_mean','waves_sd','slope_sd','depth_corr_sd','depth_var_sd','depth_idm_sd'])
+  */
+  }
+  
+  // combine data to move forward with
+  var all_data = segmented_data_mean
+                 //.addBands(segmented_data_sd)
+                 //.addBands(depth_var).addBands(red_var)
+                 .updateMask(depth_mask)
+  //Map.addLayer(all_data.reproject(ee.Projection('EPSG:4326').atScale(sensor_params.pixel)), {bands: ['b3','b2','b1'], min: 95, max: 3000}, "Segmented image/predictor data (OBIA)", false) 
+}
+
+
+
+
+// Add any extra indices needed
+
+all_data = all_data
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('rb'))
+              .addBands(all_data.select(vars.green_band).divide(all_data.select(vars.blue_band)).multiply(1000).int16().rename('gb'))
+              .addBands(all_data.select(vars.red_band).divide(all_data.select(vars.green_band)).multiply(1000).int16().rename('rg'))
+
+// clean up noise
+all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
+Map.addLayer(all_data, {}, "Model predictor data", false)
+// add noreefmask to viewer - check for slivers between polys
+Map.addLayer(not_reef_img, {}, "noReef_mask", false);
+
+
+/*
+####### SOME POSSIBLY FUTURE USEFUL JUNK ######
+
+//all_data.select('b1_1','b2_1','b3_1','b4_1','b5_1').reduce('sum').aside(Map.addLayer, {}, "sd_sum", false)
+//all_data.select('b3','b4','waves','slope','depth').spectralGradient().aside(Map.addLayer, {}, "SAM", false)
+
+// export data to guide threshold development
+var geomorphic_sample = all_data.sampleRegions({
+  collection: geomorph,
+  properties: ['Class_na_1'],
+  scale: vars.image_data_scale
+})
+
+Export.table.toDrive({
+    collection: geomorphic_sample,
+    description: 'geomorphic_object_sample',
+    folder: output_folder,
+    fileFormat: 'CSV'
+  })
+*/
+
+
+// 4. Export data to asset
+
+// export if specified in input params
+if (vars.do_export) {
+  Map.addLayer(export_geom, {}, "export geometry", false);
+  
+  Export.image.toAsset({
+    image: all_data,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    scale: vars.export_scale,
+    region: export_geom,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  });
+  
+  /*
+  
+  // add raster flag for either side of dateline
+  var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
+  var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
+  var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
+  
+  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
+  var export_geom_west = ee.Geometry.Rectangle(162.7417,-23.0584,179.99998,-7.3087)
+  
+  Map.addLayer(export_geom_east, {}, "export footprint east", true)
+  Map.addLayer(export_geom_west, {}, "export footprint west", true)
+  
+  Export.image.toAsset({
+    image: export_stack_east,
+    description: output_name + '_east',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
+    scale: vars.export_scale,
+    region: export_geom_east,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  Export.image.toAsset({
+    image: export_stack_west,
+    description: output_name + '_west',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_west',
+    scale: vars.export_scale,
+    region: export_geom_west,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  */
+  
+}
