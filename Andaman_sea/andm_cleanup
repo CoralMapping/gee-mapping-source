@@ -7425,7 +7425,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     
     // Decrease Rubble on Offshore reef areas -> more Sand
     man_benthic = man_benthic.where({
-      test: offshore.eq(1)
+      test: NotRB.eq(1)
                      .and(geo_map.eq(12)), //Rubble
       value: ee.Image(11) //Sand
     });
