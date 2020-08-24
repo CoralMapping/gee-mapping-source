@@ -200,9 +200,13 @@ if (vars.assess_accuracy) {
   }
 } 
 
-
+print (dataTable)
 
 // 4. Export
+Export.table.toDrive({
+  collection: dataTable,
+})
+
 
 // export to .csv?
 // or join to the input classification assset and re-write with accuracy in metadata?
