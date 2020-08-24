@@ -18,7 +18,8 @@ var imageVisParam = {"opacity":1,"bands":["constant"],"min":0,"max":10,"palette"
         [[[-179.6065270047154, 31.190284688786466],
           [-179.6065270047154, 15.692896745194234],
           [-151.8330895047154, 15.692896745194234],
-          [-151.8330895047154, 31.190284688786466]]], null, false);
+          [-151.8330895047154, 31.190284688786466]]], null, false),
+    hawai_conf_geo_clean = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_conf_geo_clean");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 
@@ -61,8 +62,8 @@ var region_params = param_module.hawaii  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -353,6 +354,7 @@ var confidenceEXP=confidence.expression(
 
 var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
 Map.addLayer(confidenceEXP,conf_str,'confidence',true);
+Map.addLayer(hawai_conf_geo_clean,conf_str,'confidence',true);
 //7.6 confidence legend
 
 var legend=ui.Panel({
