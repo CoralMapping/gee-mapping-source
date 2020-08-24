@@ -7376,7 +7376,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
   var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(900);
+  var depth_cont = depth.lt(1000);
+  var inshore_depth_contour = depth.lte(500);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
@@ -8171,12 +8172,21 @@ if (vars.obia_clean) {
         value: smooth_map
       }).selfMask();
       
-      // cut benthic off to < 10 - 15 m
+      // cut benthic off to 10m offshore
       clean_map = clean_map.where({
-        test: depth.gt(vars.benthic_depth_cutoff),
+        test: depth.gt(vars.benthic_depth_cutoff)
+                .and(outer_extent.eq(1)),
         value: ee.Image(0)
       })
       
+     // cut benthic off to 5m inshore
+      clean_map = clean_map.where({
+        test: depth.gt(vars.shallowlag_depth_cutoff)
+                .and(inner_extent.eq(1)),
+        value: ee.Image(0)
+      })
+      
+      shallowlag_depth_cutoff
       // Deep (or land or missing) in geo == masked from benthic
       clean_map = clean_map.where({
         test: geo_map.unmask(0).lte(2),
