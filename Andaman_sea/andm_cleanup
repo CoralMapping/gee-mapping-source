@@ -1812,7 +1812,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [97.93922219591835, 12.292626798566813],
            [97.92557985578327, 12.229382204749076]]]]),
     southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
-    notRubble = /* color: #d6c20b */ee.Geometry.MultiPolygon(
+    notRubble = 
+    /* color: #d6c20b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[92.97859969726836, 13.575948262950662],
            [92.9748231523074, 13.565936160272688],
            [92.94727154008596, 13.545076257399085],
@@ -6802,7 +6805,17 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    });
+    }),
+    DLtoRS = /* color: #2ec3d6 */ee.Geometry.MultiPoint(),
+    RCtoPlateau = /* color: #91fff7 */ee.Geometry.Polygon(
+        [[[93.0375532704727, 13.686119450891944],
+          [93.03137346090239, 13.657096671344087],
+          [93.03583665670317, 13.651425136034005],
+          [93.04424806417387, 13.65259281621688],
+          [93.0514578420059, 13.659431969767933],
+          [93.06690736593168, 13.657263479141397],
+          [93.07034059347075, 13.660099193640514],
+          [93.04699464620512, 13.686953385934956]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea
