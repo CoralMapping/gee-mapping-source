@@ -66,7 +66,7 @@ var vars = {
   show_accuracy: true, // print error stats to console? 
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + sensor_params.sname + '_geo-val',
   benthic_output_name: region_params.sname + '_' + sensor_params.sname + '_benthic-val',
