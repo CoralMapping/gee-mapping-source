@@ -1411,7 +1411,21 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    });
+    }),
+    reef_boundary = /* color: #051ad6 */ee.Geometry.Polygon(
+        [[[133.65904403361668, 1.5423670875241082],
+          [133.70298934611668, -3.3334940665077855],
+          [140.07505965861668, -9.227839178840291],
+          [151.80845809611668, -13.662997256508245],
+          [159.85045028361668, -14.430353736128849],
+          [164.99205184611668, -13.0216133807959],
+          [165.47545028361668, -9.791275221974912],
+          [164.72837997111668, -5.1302650823301885],
+          [160.11412215861668, 2.1133630909724754],
+          [152.59947372111668, 3.0352733285728117],
+          [146.66685653361668, 2.991388778986984],
+          [139.89927840861668, 2.7719401962986745],
+          [134.58189559611668, 1.981611352071806]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - PNG - Solomons
@@ -1458,7 +1472,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1500, //depth in centimetres
+  geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
   
@@ -1566,7 +1580,6 @@ if (!vars.geomorphic) {
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(inner),ee.Feature(outer)]).geometry();
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
 // ############################
@@ -2074,7 +2087,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
   // reef crest close to terrestrial main land not including coral cays -> TRF 
-  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
   //                 .and(inner_extent.eq(1))
