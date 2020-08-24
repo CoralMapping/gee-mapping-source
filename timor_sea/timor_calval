@@ -1,7 +1,7 @@
 ///////////////////////////////
 // Global coral atlas project - Timor
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Paul Tudman (tuddy117@gmail.com)
+// Region coordinator: Jeremy W (guiding RB) (tuddy117@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and training data and exports the training sampled
