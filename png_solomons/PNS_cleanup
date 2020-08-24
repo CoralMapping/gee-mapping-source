@@ -1438,7 +1438,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -1458,13 +1458,13 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
-  shallowlag_depth_cutoff: 400, //depth in centimetres
-  benthic_depth_cutoff: 750, //depth in centimetres
+  geo_depth_cutoff: 1500, //depth in centimetres
+  shallowlag_depth_cutoff: 500, //depth in centimetres
+  benthic_depth_cutoff: 1000, //depth in centimetres
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -1480,7 +1480,7 @@ var vars = {
                         - please put region specific stuff in here ONLY
   */
   
-  // DON'T TOUCH --->
+  // DON'T TOUCH ---> DO WE NEED TO KEEP IT LINE 68-91
   obia_2nd_pass: null,
   obia_clean: null, // run object-based relationship rules + small object clean up
   fast_clean: null, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
@@ -1508,6 +1508,8 @@ var vars = {
 
 // Clean up stage auto-parameterisation (DON'T TOUCH) --->
 
+// Geomorphic
+
 if (vars.geomorphic) {
   var temp_outname = vars.geomorph_output_name;
   if (vars.cleanup_stage == 1) {
@@ -1533,6 +1535,8 @@ if (vars.geomorphic) {
   }
 }
 
+// Benthic
+
 if (!vars.geomorphic) {
   var temp_outname = vars.benthic_output_name;
   if (vars.cleanup_stage == 1) {
@@ -1551,7 +1555,7 @@ if (!vars.geomorphic) {
     vars.benthic_output_name = temp_outname + '2';
   }
 }
-// -----------------------------------------<
+// END OF INITIAL SETTINGS -----------------------------------------<
 
 // ############################
 // START OF CLEAN 3 - Manual Cleanup
@@ -2019,6 +2023,8 @@ Initial small object clean
 // START OF CLEAN 1
 // ############################
 
+// Geomorphic Clean
+
 if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // make a smooth map with masked area as a value
@@ -2057,21 +2063,21 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   });
   
   // deep water in depth data == deep (only for inshore reefs of Timor Sea)
-  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-  clean_map = clean_map.where({
-    test: depth.gt(700)
-                   .and(inner_extent.eq(1)),
-    value: ee.Image(2)
-  });
+  //  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+   // clean_map = clean_map.where({
+   //   test: depth.gt(700)
+   //                  .and(inner_extent.eq(1)),
+   //   value: ee.Image(2)
+  //  });
   
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
-  // reef crest close to land -> TRF (only for inner reefs of Timor Sea)
+  // reef crest close to terrestrial main land not including coral cays -> TRF 
   var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
-                   .and(inner_extent.eq(1))
+  //                 .and(inner_extent.eq(1))
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
   });
