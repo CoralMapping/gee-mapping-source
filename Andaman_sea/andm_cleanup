@@ -7469,9 +7469,10 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(16) //TRF
   });
   
-  // TRF far from land -> ORF
+  // Offshore TRF far from land -> ORF
   clean_map = clean_map.where({
     test: land_dist.gt(vars.dist_to_land)
+                   .and(outer_extent.eq(1))
                    .and(clean_map.eq(16)),
     value: ee.Image(14)
   });
