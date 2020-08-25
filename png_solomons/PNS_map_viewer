@@ -1070,7 +1070,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    centre_map = /* color: #d63000 */ee.Geometry.Point([4.89595006794477, 52.36142909779427]),
+    centre_map = /* color: #d63000 */ee.Geometry.Point([149.9759061226323, -8.440993122283631]),
     region_wcmcBound = 
     /* color: #98ff00 */
     /* shown: false */
@@ -1116,7 +1116,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.png_solomons;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
