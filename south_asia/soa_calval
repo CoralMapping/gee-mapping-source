@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var table = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_geo_reference");
+var table = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_geo_reference"),
+    table2 = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_benthic_reference");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Timor
@@ -30,7 +31,7 @@ var region_params = param_module.south_asia          //<------------ THIS IS WHE
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-print(table)
+//print(table2)
 
 // 1. Setting constants
 
@@ -69,8 +70,8 @@ var vars = {
   nosamp_class_benthic:  [0, 1, 2, 3, 4], // classes not to use/use more
   nosamp_numpix_benthic: [0, 0, 0, 0, 0], // set number of pixels to sample from above classes
   // TODO: consider dynamically generating these
-  classes_mapped_benthic:          [11,   12,   13,   14,   15,   18], // classes to map
-  //classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CA', 'BMA'],
+  classes_mapped_benthic:          [11,   12,   13,   14,   15], // classes to map
+  //classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CA'],
 
 }
 
