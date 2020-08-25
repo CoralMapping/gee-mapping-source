@@ -3745,7 +3745,7 @@ var region_params = param_module.andm;         //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
