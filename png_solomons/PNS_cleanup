@@ -1474,7 +1474,7 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
-  benthic_depth_cutoff: 1000, //depth in centimetres
+  benthic_depth_cutoff: 800, //depth in centimetres
   
   //############
   // Clean-up stage selection
@@ -1512,7 +1512,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
