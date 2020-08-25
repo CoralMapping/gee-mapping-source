@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    artifact_layer = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[133.87823474549796, -0.4089792032861279],
            [133.63653552674796, -1.2987640172814356],
            [134.26275622987296, -2.901638046434227],
@@ -309,7 +312,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [153.09938192081103, -4.507717970290143],
            [153.23121785831103, -4.469383755626047],
            [153.26143026065478, -4.335198328122119]]]]),
-    noReef_mask = /* color: #ff0000 */ee.Geometry({
+    noReef_mask = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1065,7 +1071,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       "coordinates": []
     }),
     centre_map = /* color: #d63000 */ee.Geometry.Point([4.89595006794477, 52.36142909779427]),
-    region_wcmcBound = /* color: #98ff00 */ee.Geometry.Polygon(
+    region_wcmcBound = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[133.27621531509237, -3.6964607454528933],
           [134.77035594009237, -4.6606761835234165],
           [138.02230906509237, -2.8189834208112403],
