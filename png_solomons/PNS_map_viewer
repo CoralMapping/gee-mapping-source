@@ -312,9 +312,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
            [153.09938192081103, -4.507717970290143],
            [153.23121785831103, -4.469383755626047],
            [153.26143026065478, -4.335198328122119]]]]),
-    image = ee.Image("projects/coral_atlas/workflow/mapping/eastern_png_and_solomons/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic/20200531T191050Z/eastern_png_and_solomons_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth"),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":26.14,"max":1280.86,"gamma":0.43900000000000006},
-    low_rrs = ee.Image("projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     noReef_mask = /* color: #ff0000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
@@ -1069,7 +1066,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
         }
       ],
       "coordinates": []
-    });
+    }),
+    centre_map = /* color: #d63000 */ee.Geometry.Point([4.89595006794477, 52.36142909779427]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
