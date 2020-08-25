@@ -1,9 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    Artifact_layer = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPolygon(
         [[[[133.87823474549796, -0.4089792032861279],
            [133.63653552674796, -1.2987640172814356],
            [134.26275622987296, -2.901638046434227],
@@ -1067,7 +1064,35 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    centre_map = /* color: #d63000 */ee.Geometry.Point([4.89595006794477, 52.36142909779427]);
+    centre_map = /* color: #d63000 */ee.Geometry.Point([4.89595006794477, 52.36142909779427]),
+    region_wcmcBound = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[133.27621531509237, -3.6964607454528933],
+          [134.77035594009237, -4.6606761835234165],
+          [138.02230906509237, -2.8189834208112403],
+          [143.29574656509237, -4.485454607626794],
+          [146.81137156509237, -8.32775342522801],
+          [145.58090281509237, -9.369872642992746],
+          [146.72348094009237, -10.408873647930577],
+          [149.36019969009237, -11.960805457501285],
+          [153.31527781509237, -12.5620026138334],
+          [155.77621531509237, -12.132715510948076],
+          [157.79769969009237, -10.235937480088639],
+          [157.88559031509237, -11.616658821605727],
+          [161.04965281509237, -14.101349060999887],
+          [161.40121531509237, -13.24736423000143],
+          [161.40121531509237, -12.390372354418293],
+          [162.36801219009237, -11.874809336893126],
+          [163.77426219009237, -9.369872642992746],
+          [163.33480906509237, -7.544319839235769],
+          [161.04965281509237, -4.6606761835234165],
+          [149.88754344009237, -0.2712922865886533],
+          [148.56918406509237, -1.2379938346478028],
+          [147.07504344009237, -1.2379938346478028],
+          [146.10824656509237, -0.09551200607302315],
+          [142.76840281509237, -0.7107281976529471],
+          [142.15316844009237, -2.467795559859385],
+          [135.12191844009237, 0.6954864947804655],
+          [133.45199656509237, -0.44707001364412374]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -1143,6 +1168,9 @@ if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_p
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
+var wcmc=wcmc.filterBounds(region_wcmcBound);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+Map.addLayer(artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false);
 
 
 /*// Geo Training Data - Needs more work + add flag to show
