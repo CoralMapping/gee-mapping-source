@@ -3718,16 +3718,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-///////////////////////////////
-// Global coral atlas project - Andaman Sea
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
-// Description:
-// - Developing a process to combine OBIA and supervised classification
-// - This script loads the raw classification data (from *_classification script)
-// - Then applied some cleanup and object-based relational rules
-///////////////////////////////
-var depth_pal = depth_pal2, benthic = benthic2, geo = geo2, pixels = pixels2, wcmc = wcmc2, notRC = notRC2, southasia_dove = southasia_dove2, notRubble = notRubble2;
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
