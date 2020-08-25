@@ -3887,6 +3887,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var DLtoShelteredReefSlope = ee.Image().byte().paint(ee.Feature(DLtoSRS, {zone: 1}), "zone").clip(DLtoSRS);
   var DLtoBackReefSlope = ee.Image().byte().paint(ee.Feature(DLtoBRS, {zone: 1}), "zone").clip(DLtoBRS);
   var RCtoPl = ee.Image().byte().paint(ee.Feature(RCtoPlateau, {zone: 1}), "zone").clip(RCtoPlateau);
+  var NotRB = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
