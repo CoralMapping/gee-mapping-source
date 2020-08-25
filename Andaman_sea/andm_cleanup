@@ -3930,14 +3930,14 @@ if (vars.manual_clean && vars.geomorphic) {
  
   // Deep Lagoon -> SRS
    man_geo = man_geo.where({
-    test: DLtoReefSlope.eq(1)
+    test: DLtoShelteredReefSlope.eq(1)
                      .and(man_geo.eq(12)), // Deep Lagoon
     value: ee.Image(21) //SRS
   });
  
    // Deep Lagoon -> BRS
    man_geo = man_geo.where({
-    test: DLtoReefSlope.eq(1)
+    test: DLtoBackReefSlope.eq(1)
                      .and(man_geo.eq(12)), // Deep Lagoon
     value: ee.Image(24) //BRS
   });
