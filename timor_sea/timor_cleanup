@@ -7378,7 +7378,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -7768,6 +7768,20 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
     value: ee.Image(12)
   });
+  
+  // Rubble on Outer reef flat and Reef crest -> rock 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(12)
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+    value: ee.Image(13)
+  });
+    
+  // Seagrass on Back reef slope -> Sand 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(14)
+                     .and(geo_map.eq(24)),
+    value: ee.Image(11)
+  });  
     
   // **Manual polygon guided rules**
     
@@ -7806,7 +7820,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   man_benthic = man_benthic.where({
     test: subreg_2.eq(1)
                       .and(man_benthic.eq(11))
-                      .and(geo_map.eq(15)).or(geo_map.eq(22)),
+                      .and(geo_map.eq(15).or(geo_map.eq(22))),
     value: ee.Image(15)
   });
      
