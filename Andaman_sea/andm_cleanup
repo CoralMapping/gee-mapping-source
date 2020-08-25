@@ -3944,7 +3944,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
      // Reef Crest -> Plateau
    man_geo = man_geo.where({
-    test: DLtoReefSlope.eq(1)
+    test: RCtoPl.eq(1)
                      .and(man_geo.eq(15)), // RC
     value: ee.Image(23) //Plateau
   });
