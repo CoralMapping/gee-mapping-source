@@ -1102,7 +1102,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [142.15316844009237, -2.467795559859385],
           [135.12191844009237, 0.6954864947804655],
           [133.45199656509237, -0.44707001364412374]]]),
-    image = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean1_10m"),
     image2 = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean1_15m");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
@@ -1115,7 +1114,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
 
 // Temp CHRIS CLEAN, DELETED WHEN DECIDED
-Map.addLayer(image, map_palettes.geo, 'Geo Clean 1 10 m', false); // TEMP CHRIS adding clean 1_10
+
 Map.addLayer(image2, map_palettes.geo, 'Geo Clean 1 15 m', false); // TEMP CHRIS adding clean 1_15
 
 
@@ -1132,7 +1131,7 @@ var region_params = param_module.png_solomons;       //<------------ THIS IS WHE
 
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: false, // set to true if you want to view geo clean 1
+  geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: false, // set to true if you want to view geo clean 2
   geo_clean3: false, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
