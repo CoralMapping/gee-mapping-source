@@ -1,0 +1,192 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var gbr_mp_zones = ee.FeatureCollection("users/mitchest/gbr_reefs/gbr_mp_zoning"),
+    gbr_eomap_geo3 = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean3-man"),
+    gbr_eomap_geon = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-n"),
+    centre_point = /* color: #d63000 */ee.Geometry.Point([148.77925093706622, -20.081043361353707]),
+    gbr_benthic = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic"),
+    gbr_benthicn = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-n"),
+    gbr_reefcloud = ee.FeatureCollection("projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_benthic"),
+    totalcoral = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-tot"),
+    branching = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-branching"),
+    massive = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-massive"),
+    plate = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-plate"),
+    soft = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-soft"),
+    algae = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-algae"),
+    rock = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-rock"),
+    rubble = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-rubble"),
+    sand = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-sand"),
+    inverts = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-inverts"),
+    pabranch = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-pabranch"),
+    pamassive = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-pamassive"),
+    paplate = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-paplate"),
+    pasoft = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-pasoft"),
+    dominantcoral = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-dom"),
+    whit_eomap_depth = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_depth"),
+    whit_eomap_pretty = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
+    whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// in house map viewer
+ 
+// imports
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+
+// choose where to centre (link this dynamically to map app?)
+var centre_map = centre_point
+Map.centerObject(centre_map, 8)
+
+
+// add some background data
+Map.addLayer(whit_eomap_rrs, {bands: ['b4','b3','b2'], min: 500, max: 3500}, "Sentinel-2 surface reflectance (EOMAP, 10m)", false)
+Map.addLayer(whit_eomap_pretty, {bands: ['b1','b2','b3'], min: 50, max: 3200}, "Sentinel-2 pretty picture RGB mosaic (EOMAP, 10m)", true)
+Map.addLayer(whit_eomap_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth (Sentinel-2, EOMAP)", false)
+// wave + slope data
+//Map.addLayer(gbr_hs95, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
+//Map.addLayer(gbr_eomap_pixels.select('slope'), {min:0, max:15}, "Slope (derived from depth)", false)
+
+
+// gbr geomorphic
+Map.addLayer(gbr_eomap_geo3.updateMask(gbr_eomap_geo3.gt(2)), map_palettes.geo, "Draft geomorphic map (UQ v0.9)", false)
+Map.addLayer(gbr_eomap_geon.updateMask(gbr_eomap_geon.gt(2)), map_palettes.geo, "Geomorphic map + extra waves", false)
+
+// gbr benthic
+Map.addLayer(gbr_benthic.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), map_palettes.benthic, "Draft benthic map (UQ v0.1)", false)
+Map.addLayer(gbr_benthicn.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), map_palettes.benthic, "Benthic map (reefcloud fix)", false)
+
+// gbr coral percentage
+Map.addLayer(totalcoral.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), {min:15, max:75, palette: map_palettes.coral_cols},
+             "Total coral (%)", false)
+Map.addLayer(branching.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), {min:1, max:50, palette: map_palettes.coral_cols},
+             "Branching coral (%)", false)
+Map.addLayer(massive.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), {min:1, max:35, palette: map_palettes.coral_cols},
+             "Massive coral (%)", false)
+Map.addLayer(plate.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), {min:1, max:30, palette: map_palettes.coral_cols},
+             "Plate coral (%)", false)
+Map.addLayer(soft.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             .and(whit_eomap_depth.lt(1000))
+             ), {min:1, max:20, palette: map_palettes.coral_cols},
+             "Soft coral (%)", false)             
+
+// other benthic percentage
+Map.addLayer(sand.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:70, palette: ['ffffff','#ffffe5','#fcff4e']},
+             "Sand component", false)
+Map.addLayer(rubble.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:20, palette: ['ffffff','#fde0dd','#fcc5c0']},
+             "Rubble component", false)
+Map.addLayer(rock.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:50, palette: ['ffffff','#cc4c02','#993404']},
+             "Rock component", false)
+Map.addLayer(algae.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:26, palette: ['ffffff','#02818a','#016c59']},
+             "Algae component", false)
+Map.addLayer(inverts.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:5, palette: ['ffffff','#ce1256','#980043']},
+             "Invertebrate density", false)
+             
+// niche models
+Map.addLayer(pabranch.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:1, palette: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704']},
+             "Branching presence probability (%)", false)
+Map.addLayer(pamassive.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:1, palette: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704']},
+             "Massive presence probability (%)", false)
+Map.addLayer(paplate.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:1, palette: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704']},
+             "Plate presence probability (%)", false)
+Map.addLayer(pasoft.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:0, max:1, palette: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704']},
+             "Soft coral presence probability (%)", false)
+             
+// Biophyical dominant coral
+Map.addLayer(dominantcoral.updateMask(
+                  gbr_eomap_geo3.gt(2)
+             //.and(gbr_eomap_depth.lt(1000))
+             ), {min:1, max:6, palette: ['#e41a1c','#984ea3','#4daf4a','#ff7f00','#ffffff','#377eb8']},
+             "Dominant coral type (if present)", false)
+
+Map.addLayer(dominantcoral.updateMask(
+                  gbr_eomap_geo3.gt(14)
+             .and(gbr_eomap_geo3.lt(23))
+             ), {min:1, max:6, palette: ['#e41a1c','#984ea3','#4daf4a','#ff7f00','#ffffff','#377eb8']},
+             "Dominant coral type (crest/slope)", false)
+
+
+
+// marine park zones
+Map.addLayer(gbr_mp_zones, {}, "GBR Marine Park Zoning (2004)", false, 0.4)
+
+// benthic points 
+Map.addLayer(gbr_reefcloud, {color: 'yellow'}, "Reef cloud processed benthic points", false)
+
+// add training data / sample point distributions
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+//Map.addLayer(ee.Image().byte().paint(gbr_geo_training, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'GBR 3D - Draft Habitat maps',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})
+
+var uq_link = ui.Label({
+  value: '------------------\nProduced by:\nRemote Sensing Research Centre,\nUniversity of Queensland',
+  style: {fontWeight: 'bold', fontSize: '11px', whiteSpace: 'pre'},
+  targetUrl: 'https://www.rsrc.org.au/',
+})
+
+/*var rsrc_link = ui.Label({
+  value: 'Remote Sensing Research Centre',
+  style: {fontWeight: 'bold', fontSize: '11px'},
+  targetUrl: 'https://www.rsrc.org.au/'
+})*/
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_gbr_names, map_palettes.geo_gbr_cols, "Geomorphic Zone", false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_gbr_names, map_palettes.benthic_gbr_cols, "Benthic class", false)
+var coral_legend = pkg_vis.discrete_legend(map_palettes.coral_names, map_palettes.coral_cols, "Coral cover %", false)
+var ctype_legend = pkg_vis.discrete_legend(map_palettes.type_names, map_palettes.type_cols, "Dominant coral type", false)
+// generate the legend
+pkg_vis.add_lgds([title, geo_legend, benthic_legend, coral_legend, ctype_legend, uq_link])
+
