@@ -7378,7 +7378,7 @@ var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOS
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -7387,7 +7387,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
+  geo_depth_cutoff: 1500, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
   
@@ -7427,7 +7427,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -7491,7 +7491,7 @@ if (!vars.geomorphic) {
 
 // This can be hand drawn or imported from elsewhere, or could just be a big box
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(inner),ee.Feature(outer)]).geometry();
+var reef_boundary = ee.FeatureCollection([ee.Feature(outer),ee.Feature(inner)]).geometry();
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
 // ############################
