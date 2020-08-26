@@ -23,7 +23,8 @@ var gbr_mp_zones = ee.FeatureCollection("users/mitchest/gbr_reefs/gbr_mp_zoning"
     dominantcoral = ee.Image("projects/coral_atlas/gbr_eomap/in_out/gbr_coral-dom"),
     whit_eomap_depth = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_depth"),
     whit_eomap_pretty = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
-    whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR");
+    whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR"),
+    whit_Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // in house map viewer
  
@@ -41,7 +42,7 @@ Map.addLayer(whit_eomap_rrs, {bands: ['b4','b3','b2'], min: 500, max: 3500}, "Se
 Map.addLayer(whit_eomap_pretty, {bands: ['b1','b2','b3'], min: 50, max: 3200}, "Sentinel-2 pretty picture RGB mosaic (EOMAP, 10m)", true)
 Map.addLayer(whit_eomap_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth (Sentinel-2, EOMAP)", false)
 // wave + slope data
-//Map.addLayer(gbr_hs95, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
+Map.addLayer(whit_Hs95, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
 //Map.addLayer(gbr_eomap_pixels.select('slope'), {min:0, max:15}, "Slope (derived from depth)", false)
 
 
