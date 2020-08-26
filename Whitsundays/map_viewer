@@ -45,8 +45,8 @@ Map.addLayer(whit_eomap_pretty, {bands: ['b1','b2','b3'], min: 50, max: 3200}, "
 Map.addLayer(whit_eomap_depth, {min: -20, max: 1.500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth (Sentinel-2, EOMAP)", false)
 // wave + slope data
 Map.addLayer(whit_Hs95, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
-Map.addLayer(whit_pixels, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
-Map.addLayer(whit_segments, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
+Map.addLayer(whit_pixels, {min:400, max:2500}, "pixels", false)
+Map.addLayer(whit_segments, {min:400, max:2500}, "segments", false)
 //Map.addLayer(gbr_eomap_pixels.select('slope'), {min:0, max:15}, "Slope (derived from depth)", false)
 
 
