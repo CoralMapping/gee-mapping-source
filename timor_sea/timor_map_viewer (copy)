@@ -239,3 +239,17 @@ var depthComposite=ee.Image(Composite_depth)
 var DepthCompos_renamed = depthComposite.select(
   ['constant'],
   ['b1_s']);  
+  
+var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
+
+
+//center the map to the region
+var mapPanel=ui.Map().centerObject(geometry, 6)
+
+
+//add the layers
+
+var layers = mapPanel.layers();
+
+layers.add(depthComposite1)
