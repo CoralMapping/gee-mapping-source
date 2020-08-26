@@ -4216,7 +4216,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     // deep water in depth data == deep (only for inshore reefs of Andaman Sea)
   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
   clean_map = clean_map.where({
-    test: depth.gt(500)
+    test: depth.gt(vars.shallowlag_depth_cutoff)
                    .and(inner_extent.eq(1)),
     value: ee.Image(2)
   });
