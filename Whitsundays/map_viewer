@@ -24,7 +24,9 @@ var gbr_mp_zones = ee.FeatureCollection("users/mitchest/gbr_reefs/gbr_mp_zoning"
     whit_eomap_depth = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_depth"),
     whit_eomap_pretty = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
     whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR"),
-    whit_Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95");
+    whit_Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95"),
+    whit_pixels = ee.Image("users/EvaK/Whit_eomap/in_out/whit_s2_pixels"),
+    whit_segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_s2_segmentation");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // in house map viewer
  
@@ -43,6 +45,8 @@ Map.addLayer(whit_eomap_pretty, {bands: ['b1','b2','b3'], min: 50, max: 3200}, "
 Map.addLayer(whit_eomap_depth, {min: -20, max: 1.500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth (Sentinel-2, EOMAP)", false)
 // wave + slope data
 Map.addLayer(whit_Hs95, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
+Map.addLayer(whit_pixels, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
+Map.addLayer(whit_segments, {min:400, max:2500}, "Sig. wave height, Hs95 (UQ)", false)
 //Map.addLayer(gbr_eomap_pixels.select('slope'), {min:0, max:15}, "Slope (derived from depth)", false)
 
 
