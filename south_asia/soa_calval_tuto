@@ -33,7 +33,7 @@ var region_params = param_module.south_asia          //<------------ THIS IS WHE
 
 // 1. Setting constants
 
-print(table2)
+print(table)
 
 // These will get written to the asset metadata 
 
