@@ -115,8 +115,8 @@ var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
 
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
-
-var geo_clean= ui.Map.Layer(vars.geo_clean, {}, 'geo_clean');
+var imageParamGeo = {"opacity":1,"bands":["classification"],"max":22,"gamma":1};
+var geo_clean= ui.Map.Layer(vars.geo_clean, imageParamGeo, 'geo_clean');
 
 //center the map to the region
 var mapPanel=ui.Map().centerObject(geometry, 6)
