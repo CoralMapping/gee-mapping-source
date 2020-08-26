@@ -70,7 +70,7 @@ var vars = {
   nosamp_class_benthic:  [0, 1, 2, 3, 4, 13, 16, 17, 18], // classes not to use/use more
   nosamp_numpix_benthic: [0, 0, 0, 0, 0], // set number of pixels to sample from above classes
   // TODO: consider dynamically generating these
-  classes_mapped_benthic:          [11,   12,  14,   15], // classes to map
+  classes_mapped_benthic:          [11,   12,  13,  14,   15], // classes to map
   //classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL', 'BMA'],
 
 }
