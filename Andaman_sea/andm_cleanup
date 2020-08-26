@@ -4453,6 +4453,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
   var outer_extent = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
+  var refmask = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(notRC, {zone: 1}), "zone").clip(notRC);
   var DLtoReefSlope = ee.Image().byte().paint(ee.Feature(DLtoRS, {zone: 1}), "zone").clip(DLtoRS);
   var DLtoShelteredReefSlope = ee.Image().byte().paint(ee.Feature(DLtoSRS, {zone: 1}), "zone").clip(DLtoSRS);
@@ -4468,6 +4469,12 @@ if (vars.manual_clean && vars.geomorphic) {
   // remove
   man_geo = man_geo.where({
     test: midmask.eq(1),
+    value: ee.Image(0)
+  });
+  
+  // Remove slivers from midmask overlap
+  man_geo = man_geo.where({
+    test: refmask.eq(1),
     value: ee.Image(0)
   });
   
