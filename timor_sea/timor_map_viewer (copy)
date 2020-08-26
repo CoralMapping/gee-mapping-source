@@ -242,10 +242,10 @@ var DepthCompos_renamed = depthComposite.select(
   
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
-
+print(depthComposite1)
 
 //center the map to the region
-var mapPanel=ui.Map().centerObject(geometry, 6)
+//var mapPanel=ui.Map().centerObject(geometry, 6)
 
 
 //add the layers
