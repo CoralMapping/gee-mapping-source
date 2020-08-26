@@ -185,7 +185,7 @@ var add_thresh = function(thresh_dat) {
 }
 
 //calling the slider function
-add_thresh(Comp_depth) 
+add_thresh(vars.geo_clean.clip(Comp_depth)) 
 
 //putting slider in the panel
 var panel1 = ui.Panel({
