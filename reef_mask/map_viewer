@@ -223,8 +223,18 @@ var RFpCNN_mask = RFpCNN.where(landMask.eq(0), 1)
 Map.addLayer(RFpCNN_mask, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
 
 
-var RFpCNN_mask_smooth = RFpCNN_mask.focal_mode(2)
+var RFpCNN_mask_smooth = RFpCNN_mask.focal_mode(3)
 Map.addLayer(RFpCNN_mask_smooth, {palette: ['Green', 'darkblue', 'Orange'], min:[1], max:[3]}, 'Landsat RF + Planet CNN', false, 0.7)
+
+Export.image.toAsset({
+  image: RFpCNN_mask_smooth, 
+  description: 'global_reef_mask', 
+  assetId: 'projects/coral_atlas/reefMask/global_reef_mask_combined',
+  pyramidingPolicy: {".default": "mode"}, 
+  region: aoi, 
+  scale: 150,
+  maxPixels: 1e13
+})
 
 // Add some other data
 
