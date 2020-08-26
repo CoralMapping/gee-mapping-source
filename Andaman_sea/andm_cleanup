@@ -4316,7 +4316,7 @@ var region_params = param_module.andm;         //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4331,7 +4331,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4459,6 +4459,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var DLtoBackReefSlope = ee.Image().byte().paint(ee.Feature(DLtoBRS, {zone: 1}), "zone").clip(DLtoBRS);
   var RCtoPl = ee.Image().byte().paint(ee.Feature(RCtoPlateau, {zone: 1}), "zone").clip(RCtoPlateau);
   var NotRB = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
+  var TRFtoOuterReefFlat = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF);
 
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -4519,6 +4520,13 @@ if (vars.manual_clean && vars.geomorphic) {
     test: RCtoPl.eq(1)
                      .and(man_geo.eq(15)), // RC
     value: ee.Image(23) //Plateau
+  });
+  
+       // TRF -> ORF
+   man_geo = man_geo.where({
+    test: TRFtoOuterReefFlat.eq(1)
+                     .and(man_geo.eq(16)), // TRF
+    value: ee.Image(14) //ORF
   });
   
     /*
