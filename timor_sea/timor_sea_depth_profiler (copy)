@@ -149,7 +149,7 @@ inspectorPanel.add(intro);
 
 //customising slider
 
-var label = ui.Label('DepthComposite_threshold_slider (m):',
+var label = ui.Label('geo_clean_threshold_slider (m):',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#00FF00', fontSize: 48}
 );
 
