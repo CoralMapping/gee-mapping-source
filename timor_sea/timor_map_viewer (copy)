@@ -131,8 +131,8 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: true, // set to true if you want to view geo clean 2
+  geo_clean1: false, // set to true if you want to view geo clean 1
+  geo_clean2: false, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
@@ -146,7 +146,9 @@ Map.centerObject(centre_map, 6);
 // var low_tide_image = ee.Image(region_params.pixels);
 // Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 var low_tide_image_dove = ee.Image(region_params.image);
-Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+//Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+var imageDove=ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false);
+
 
 // Load the raw classifications
 if (vars.raw) {
@@ -169,8 +171,8 @@ if (vars.raw) {
   }
 
   // Add the raw region classification to the viewer
-  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
-  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+  var geo_raw=ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
 
 // Load the clean classifications
@@ -249,6 +251,7 @@ print(depthComposite1)
 
 
 //add the layers
+var mapPanel=ui.Map()
 
 var layers = mapPanel.layers();
 
