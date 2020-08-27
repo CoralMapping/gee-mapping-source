@@ -24,28 +24,14 @@ var map_centre =
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[119.13366458665041, -17.26571296388731],
-          [122.56139896165041, -19.7243418542321],
-          [127.17565677415041, -15.45265589282407],
-          [130.7791723991504, -16.255847069189198],
-          [134.9100317741504, -12.553526185965028],
-          [134.6903052116504, -15.283159949346478],
-          [136.0965552116504, -16.719367230389985],
-          [140.7987036491504, -18.728495522496136],
-          [142.0291723991504, -14.943758068902518],
-          [141.9852270866504, -11.780284930562397],
-          [136.6238989616504, -10.357105967284534],
-          [129.5926489616504, -9.967803900759515],
-          [125.54968021165041, -11.651195552343987],
-          [121.94616458665041, -14.305939704467455]]]),
-    outer = 
-    /* color: #ef3dff */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[80.87071573368416, 10.90421426862861],
+          [77.26720010868416, 8.826150081531576],
+          [78.54161417118416, 7.869608187755607],
+          [79.72813760868416, 4.987766809044084],
+          [82.23302042118416, 5.075318744643994],
+          [83.28770792118416, 7.390491186762495]]]),
+    outer = /* color: #ef3dff */ee.Geometry.Polygon(
         [[[118.17062403776815, -17.45084971526682],
           [119.02755763151815, -18.14124675533064],
           [122.71896388151815, -13.726673468011827],
@@ -57,10 +43,7 @@ var map_centre =
           [129.59585259552577, -9.368874063395277],
           [123.61984278776815, -10.936433881827663],
           [121.48849513151815, -13.27800259234443]]]),
-    inner = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    inner = /* color: #d63000 */ee.Geometry.Polygon(
         [[[120.98677765293615, -16.891338232004127],
           [122.23921905918615, -17.918686136314374],
           [124.61226593418615, -16.386076635784576],
@@ -142,7 +125,7 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s','depth_stdDev_p'],//, 'depth_stdDev_p'], //input bands for geomorphic
+  geo_input_bands: ['b1_s', 'b2_s', 'b4_s','depth_s','rb_s', 'gb_s','depth_stdDev_p'],//, 'depth_stdDev_p'], //input bands for geomorphic
   
   benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
   
@@ -173,7 +156,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  //split_region: 'subreg2',
+  //split_region: 'subreg2', "case of Timor'
   split_region: 'none',
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
