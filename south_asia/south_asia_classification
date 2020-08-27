@@ -113,7 +113,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.south_asia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -173,8 +173,8 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'subreg2',
-  
+  //split_region: 'subreg2',
+  split_region: none,
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
@@ -186,7 +186,7 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: false,
+  test_mode: true,
   
   // export options
   do_export: false, // export the results?
