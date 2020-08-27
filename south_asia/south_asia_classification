@@ -174,7 +174,7 @@ var vars = {
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
   //split_region: 'subreg2',
-  split_region: none,
+  split_region: 'none',
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
