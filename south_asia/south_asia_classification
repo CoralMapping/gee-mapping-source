@@ -144,7 +144,7 @@ var vars = {
   
   geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s'],//, 'depth_stdDev_p'], //input bands for geomorphic
   
-  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
   
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
