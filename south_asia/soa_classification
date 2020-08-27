@@ -5,7 +5,6 @@ var map_centre =
     ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
     eg_area = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -142,7 +141,7 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s'],//, 'depth_stdDev_p'], //input bands for geomorphic
+  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s','depth_stdDev_p'],//, 'depth_stdDev_p'], //input bands for geomorphic
   
   benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
   
