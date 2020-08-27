@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([77.10559919154727, 11.73047868914062]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([77.10559919154727, 11.73047868914062]),
     eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
@@ -20,7 +23,10 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([77.10559919154727, 11.73
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[84.73629289537547, 20.162398315213373],
           [78.58394914537547, 15.901323348846807],
           [75.24410539537547, 17.081150007511656],
@@ -138,7 +144,7 @@ var vars = {
   
   geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s','depth_stdDev_p'],//, 'depth_stdDev_p'], //input bands for geomorphic
   
-  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p','depth_stdDev_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
   
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
@@ -180,10 +186,10 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: false,
+  test_mode: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
