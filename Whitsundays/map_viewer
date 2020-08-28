@@ -25,8 +25,8 @@ var gbr_mp_zones = ee.FeatureCollection("users/mitchest/gbr_reefs/gbr_mp_zoning"
     whit_eomap_pretty = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
     whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR"),
     whit_Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95"),
-    whit_pixels = ee.Image("users/EvaK/Whit_eomap/in_out/whit_s2_pixels"),
-    whit_segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_s2_segmentation");
+    whit_pixels = ee.Image("users/EvaK/Whit_eomap/in_out/whit_pixels"),
+    whit_segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // in house map viewer
  
