@@ -1,11 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([79.78626325404727, 10.263818519302081]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([79.78626325404727, 10.263818519302081]),
     eg_area = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -23,10 +19,7 @@ var map_centre =
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
-    region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[83.2275099801605, 13.830101397745548],
           [72.2411818551605, 12.20314908706906],
           [79.3603224801605, -1.3264577613742117],
@@ -130,10 +123,10 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
