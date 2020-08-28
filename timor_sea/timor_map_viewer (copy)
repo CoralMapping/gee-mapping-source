@@ -250,8 +250,8 @@ layers.add(benthic_raw)
 
 
 //slider params
-var label = ui.Label('DepthComposite_threshold_slider (m):',
-               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#00FF00', fontSize: 48}
+var label = ui.Label('DepthComposite_threshold_slider for geo maps:',
+               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
 
  var slider = ui.Slider({
@@ -269,7 +269,7 @@ slider.setValue(20);
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#000000', height: '130px'
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '130px'
           }
     });
     
