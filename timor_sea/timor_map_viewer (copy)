@@ -220,7 +220,7 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 //Generate legend panel
  
-
+var legendPanel=ui.Panel({style: {width: '305'}});
 
 var title = ui.Panel([ui.Label({
   value: 'Coral Atlas map classes',
@@ -233,6 +233,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
 pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
+
 
 //Add all layers to ui
 
