@@ -238,7 +238,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 var leg = pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
-legendPanel.widgets().add(leg);
+//legendPanel.widgets().add(leg);
 
 //Add all layers to ui
 
@@ -246,7 +246,7 @@ var layers = mapPanel.layers();
 layers.add(sr_Dove)
 layers.add(geo_raw)
 layers.add(benthic_raw)
-layers.add(leg)
+//layers.add(leg)
 
 
 //slider params
