@@ -224,7 +224,7 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 //Generate legend panel
  
-var legendPanel=ui.Panel({style: {width: '30%'}});
+var legendPanel=ui.Panel({style: {width: '20%'}});
 
 var title = ui.Panel([ui.Label({
   value: 'Coral Atlas map classes',
@@ -265,7 +265,7 @@ slider.setValue(20);
 var panel1 = ui.Panel({
       widgets: [slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#00FF00', height: '130px'
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#000000', height: '130px'
           }
     });
     
