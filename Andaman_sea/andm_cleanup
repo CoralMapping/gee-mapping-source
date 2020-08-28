@@ -4356,7 +4356,7 @@ var vars = {
                         - please put region specific stuff in here ONLY
 
   - BENTHIC 1: This is the main benthic stge - it does noise removal, no data reclaim and OBIA rules - review those if needed
-            2: The second mas is the MANUAL stage - it's optional, but shuold include ALL region specific stuff
+            2: The second pass is the MANUAL stage - it's optional, but should include ALL region specific stuff
                         - see below where it starts/ends (only that section is run)
                         - please put region specific stuff in here ONLY
   */
