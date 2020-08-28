@@ -269,11 +269,10 @@ slider.setValue(20);
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '130px'
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '80px'
           }
     });
     
-
 mapPanel.widgets().add(panel1)
 
 
