@@ -218,12 +218,15 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 ////////// UI SET UP //////////
 
-//Generate title
-var title = ui.Label({
+//Generate legend panel
+ 
+
+
+var title = ui.Panel([ui.Label({
   value: 'Coral Atlas map classes',
   style: {fontWeight: 'bold', fontSize: '14px'}
-});
-
+}),
+]);
 // generate the legend
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
@@ -262,8 +265,9 @@ var panel1 = ui.Panel({
 
 mapPanel.widgets().add(panel1)
 
+
 ui.root.clear();
-ui.root.add(title, mapPanel);
+ui.root.add(mapPanel);
 
 
 
