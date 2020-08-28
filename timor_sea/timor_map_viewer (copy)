@@ -218,9 +218,18 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 ////////// UI SET UP //////////
 
+
+//Add all layers to ui
+
+var layers = mapPanel.layers();
+layers.add(sr_Dove)
+layers.add(geo_raw)
+layers.add(benthic_raw)
+
+
 //Generate legend panel
  
-var legendPanel=ui.Panel({style: {width: '305'}});
+var legendPanel=ui.Panel({style: {width: '30%'}});
 
 var title = ui.Panel([ui.Label({
   value: 'Coral Atlas map classes',
@@ -234,13 +243,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
-legendPanel.add(title)
-//Add all layers to ui
-
-var layers = mapPanel.layers();
-layers.add(sr_Dove)
-layers.add(geo_raw)
-layers.add(benthic_raw)
+legendPanel.add(title);
 
 
 //slider params
@@ -268,7 +271,7 @@ mapPanel.widgets().add(panel1)
 
 
 ui.root.clear();
-ui.root.add(mapPanel);
+ui.root.add(ui.SplitPanel(legendPanel, mapPanel));
 
 
 
