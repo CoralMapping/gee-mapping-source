@@ -4476,7 +4476,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var RCtoPl = ee.Image().byte().paint(ee.Feature(RCtoPlateau, {zone: 1}), "zone").clip(RCtoPlateau);
   var NotRB = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
   var TRFtoOuterReefFlat = ee.Image().byte().paint(ee.Feature(TRFtoORF, {zone: 1}), "zone").clip(TRFtoORF);
-
+  var Clouds = ee.Image().byte().paint(ee.Feature(cloud, {zone: 1}), "zone").clip(cloud);
+  
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
