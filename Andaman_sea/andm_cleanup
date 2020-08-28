@@ -4342,7 +4342,7 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1500,
   shallowlag_depth_cutoff: 500,
-  benthic_depth_cutoff: 1000,
+  benthic_depth_cutoff: 700,
   
   //############
   // Clean-up stage selection
@@ -4596,7 +4596,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
   var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(1000);
+  var depth_cont = depth.lt(700);
   var inshore_depth_contour = depth.lte(500);
   Map.addLayer(depth_cont, {}, "depth contour", false);
   
@@ -5390,13 +5390,14 @@ if (vars.obia_clean) {
                           
       var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
       var outer_extent = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore);
+      var Clouds = ee.Image().byte().paint(ee.Feature(cloud, {zone: 1}), "zone").clip(cloud);
    
       var clean_map = clean_map.unmask(0).where({
         test: geo_map.gt(2).and(clean_map.eq(0)), 
         value: smooth_map
       }).selfMask();
       
-      // cut benthic off to 10m offshore
+      // cut benthic off to 7m offshore
       clean_map = clean_map.where({
         test: depth.gt(vars.benthic_depth_cutoff)
                 .and(outer_extent.eq(1)),
@@ -5409,6 +5410,12 @@ if (vars.obia_clean) {
                 .and(inner_extent.eq(1)),
         value: ee.Image(0)
       });
+      
+      // mask out clouds that were missed with the mid_mask
+       clean_map = clean_map.where({
+        test: Clouds.eq(1),
+        value: ee.Image(0)
+      });     
       
       // Deep (or land or missing) in geo == masked from benthic
       clean_map = clean_map.where({
