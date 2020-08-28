@@ -26,7 +26,8 @@ var gbr_mp_zones = ee.FeatureCollection("users/mitchest/gbr_reefs/gbr_mp_zoning"
     whit_eomap_rrs = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_SSR"),
     whit_Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95"),
     whit_pixels = ee.Image("users/EvaK/Whit_eomap/in_out/whit_pixels"),
-    whit_segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation");
+    whit_segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation"),
+    whit_geo_RAW = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // in house map viewer
  
@@ -51,6 +52,7 @@ Map.addLayer(whit_segments, {min:400, max:2500}, "segments", false)
 
 
 // gbr geomorphic
+Map.addLayer(whit_geo_RAW, map_palettes.geo, "Geo - RAW", false)
 Map.addLayer(gbr_eomap_geo3.updateMask(gbr_eomap_geo3.gt(2)), map_palettes.geo, "Draft geomorphic map (UQ v0.9)", false)
 Map.addLayer(gbr_eomap_geon.updateMask(gbr_eomap_geon.gt(2)), map_palettes.geo, "Geomorphic map + extra waves", false)
 
