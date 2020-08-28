@@ -187,7 +187,8 @@ var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
 var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
 var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 
-if (vars.geo_clean1) ui.Map.Layer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
+if (vars.geo_clean1) 
+var geo1= ui.Map.Layer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
@@ -246,8 +247,7 @@ var layers = mapPanel.layers();
 layers.add(sr_Dove)
 //layers.add(geo_raw)
 //layers.add(benthic_raw)
-layers.add(geo_clean1)
-//layers.add(leg)
+layers.add(geo1)
 
 
 //slider params
