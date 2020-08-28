@@ -263,7 +263,7 @@ var panel1 = ui.Panel({
 mapPanel.widgets().add(panel1)
 
 ui.root.clear();
-ui.root.add(mapPanel);
+ui.root.add(title, mapPanel);
 
 
 
