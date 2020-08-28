@@ -3857,7 +3857,7 @@ Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Mya
 Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
 Map.addLayer(geo_clean3, map_palettes.geo, "geo_manual", false)
-Map.addLayer(ben_clean1, map_palettes.geo, "ben_clean_1", false)
+//Map.addLayer(ben_clean1, map_palettes.geo, "ben_clean_1", false)
 /*
 // wave data
 var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
