@@ -181,7 +181,7 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 }
 
 // Load the clean classifications
-var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+var geo_clean1 = ui.Map.Layer(region_params.geo_map_clean1);
 var geo_clean2 = ee.Image(region_params.geo_map_clean2);
 var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
 var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
@@ -244,8 +244,9 @@ var leg = pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend]
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
-layers.add(geo_raw)
-layers.add(benthic_raw)
+//layers.add(geo_raw)
+//layers.add(benthic_raw)
+layers.add(geo_clean1)
 //layers.add(leg)
 
 
