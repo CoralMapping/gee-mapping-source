@@ -169,7 +169,7 @@ if (vars.raw) {
   // benthic raw (test if more than one map exists for the region)
   if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
-                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                  .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
                      .selfMask();
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
@@ -235,10 +235,10 @@ var title = ui.Panel([ui.Label({
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+var leg = pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
-//legendPanel.widgets().add(title);
+legendPanel.widgets().add(leg);
 
 //Add all layers to ui
 
@@ -246,7 +246,7 @@ var layers = mapPanel.layers();
 layers.add(sr_Dove)
 layers.add(geo_raw)
 layers.add(benthic_raw)
-
+layers.add(leg)
 
 
 //slider params
@@ -269,7 +269,7 @@ slider.setValue(20);
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '80px'
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
           }
     });
     
