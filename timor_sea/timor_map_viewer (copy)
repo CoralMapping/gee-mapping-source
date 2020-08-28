@@ -247,7 +247,7 @@ var legendPanel = ui.Panel({
 
 
 
-legendPanel.widgets().add(title);
+//legendPanel.widgets().add(title);
 
 //Add all layers to ui
 
@@ -286,8 +286,8 @@ mapPanel.widgets().add(panel1)
 
 
 ui.root.clear();
-ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
-
+//ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
+ui.root.add(mapPanel)
 
 
 
