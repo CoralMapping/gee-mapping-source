@@ -238,6 +238,8 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
 var leg = pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 
+/*
+
 var legendPanel = ui.Panel({
       widgets: [title],
      layout: ui.Panel.Layout.flow('vertical'),
@@ -250,6 +252,9 @@ var legendPanel = ui.Panel({
 //legendPanel.widgets().add(title);
 
 //Add all layers to ui
+
+*/
+
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
@@ -290,4 +295,4 @@ ui.root.clear();
 ui.root.add(mapPanel)
 
 
-
+*/
