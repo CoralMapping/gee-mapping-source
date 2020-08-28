@@ -3826,7 +3826,22 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [98.01410008419431, 12.274476290727405],
            [98.00465870846189, 12.277495544143843]]]]),
     geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
-    ben_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1");
+    ben_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1"),
+    cloud = /* color: #87d6d4 */ee.Geometry.MultiPolygon(
+        [[[[97.63532137902341, 8.915747442301326],
+           [97.80286288292966, 8.875722662699165],
+           [97.8323886397656, 8.989679976645181],
+           [97.72870516808591, 8.991714604225464]]],
+         [[[97.9204432346668, 10.195043975682927],
+           [97.96061199687384, 10.19065121935019],
+           [97.94550579570196, 10.224102221546689]]],
+         [[[97.93245463178123, 11.040927407495147],
+           [98.03682474896873, 11.177030826866057],
+           [97.84731058881248, 11.174336326895794]]],
+         [[[97.97017574788174, 9.9749114774139],
+           [97.93721676350674, 9.84707223950826],
+           [98.06424618245205, 9.86127905647201],
+           [98.09377193928799, 9.988436515824535]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
