@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([79.78626325404727, 10.263818519302081]),
-    eg_area = 
+var eg_area = 
     /* color: #d63000 */
     /* displayProperties: [
       {
@@ -19,11 +18,23 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([79.78626325404727, 10.26
            [178.1896083331153, -19.156203209515112],
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
-        [[[83.2275099801605, 13.830101397745548],
-          [72.2411818551605, 12.20314908706906],
-          [79.3603224801605, -1.3264577613742117],
-          [87.3583693551605, 2.53977907624624]]]);
+    map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([79.27928172523866, 9.141538018305736]),
+    region_extent = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[75.95042430336366, 4.2438244112262655],
+          [79.59788524086366, 2.4891143079798965],
+          [86.40940867836366, 6.378937551500732],
+          [83.72874461586366, 12.44546272285256],
+          [80.78440867836366, 13.60144458207137],
+          [78.45530711586366, 13.558727864363494],
+          [75.11546336586366, 13.259497005193133],
+          [73.66526805336366, 11.887007079797886],
+          [75.37913524086366, 6.0731351281392385]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Andaman Sea + Myanmar
@@ -81,7 +92,7 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
+  input_bands: ['b1_s', 'b2_s', 'b3_s', 'depth_s', 'depth_stdDev_p', 'rg_s'], //input bands for geomorphic
   
   //input_bands: ['b1_p', 'b2_p', 'b3_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
   
@@ -126,7 +137,7 @@ var vars = {
   test_mode: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
