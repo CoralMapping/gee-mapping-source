@@ -5418,7 +5418,13 @@ if (vars.obia_clean) {
         value: ee.Image(0)
       });
       
-      // Deep (or land or missing) in geo == masked from benthic
+     // mask out clouds that were missed with the mid_mask
+    man_benthic = man_benthic.where({
+     test: Clouds.eq(1),
+     value: ee.Image(0)
+    });     
+         
+     // Deep (or land or missing) in geo == masked from benthic
       clean_map = clean_map.where({
         test: geo_map.unmask(0).lte(2),
         value: ee.Image(0)
