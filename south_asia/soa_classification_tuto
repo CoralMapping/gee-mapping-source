@@ -1,7 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([79.78626325404727, 10.263818519302081]),
+var map_centre = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([79.78626325404727, 10.263818519302081]),
     eg_area = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -29,7 +33,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([79.78626325404727, 10.26
           [87.3583693551605, 2.53977907624624]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Andaman Sea + Myanmar
+// Global coral atlas project - South Asia
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Jeremy Wolff 
 // Description:
