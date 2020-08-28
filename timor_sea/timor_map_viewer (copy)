@@ -235,8 +235,8 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
-layer.add(geo_raw)
-layer.add(benthic_raw)
+layers.add(geo_raw)
+layers.add(benthic_raw)
 
 
 //slider params
