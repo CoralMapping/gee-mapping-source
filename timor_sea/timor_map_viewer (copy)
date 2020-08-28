@@ -134,10 +134,10 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
   geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: true, // set to true if you want to view geo clean 2
-  geo_clean3: true, // set to true if you want to view geo clean 3
-  benthic_clean1: true, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  geo_clean2: false, // set to true if you want to view geo clean 2
+  geo_clean3: false, // set to true if you want to view geo clean 3
+  benthic_clean1: false, // set to true if you want to view benthic clean 1
+  benthic_clean2: false, // set to true if you want to view benthic clean 2
 };
 
 //Initiatte the app
@@ -181,7 +181,7 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 }
 
 // Load the clean classifications
-var geo_clean1 = ui.Map.Layer(region_params.geo_map_clean1);
+var geo_clean1 = ee.Image(region_params.geo_map_clean1);
 var geo_clean2 = ee.Image(region_params.geo_map_clean2);
 var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
 var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
