@@ -4652,7 +4652,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     // Rubble -> Sand
     man_benthic = man_benthic.where({
       test: NotRB.eq(1)
-                     .and(geo_map.eq(12)), //Rubble
+                     .and(man_benthic.eq(12)), //Rubble
       value: ee.Image(11) //Sand
     });
    
@@ -5399,7 +5399,7 @@ if (vars.obia_clean) {
       var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
       var outer_extent = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore);
       var Clouds = ee.Image().byte().paint(ee.Feature(cloud, {zone: 1}), "zone").clip(cloud);
-   
+      var notRB  = ee.Image().byte().paint(ee.Feature(notRubble, {zone: 1}), "zone").clip(notRubble);
       var clean_map = clean_map.unmask(0).where({
         test: geo_map.gt(2).and(clean_map.eq(0)), 
         value: smooth_map
@@ -5437,6 +5437,12 @@ if (vars.obia_clean) {
         value: ee.Image(0)
       });
       
+     // RB -> Sand
+      clean_map = clean_map.where({
+        test: notRB.eq(1)
+                .and(clean_map.eq(12)), //Rubble
+        value: ee.Image(11) //Sand
+      });
       
       /*// turbid in geo == turbid (temporal - class num 2)
       // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
