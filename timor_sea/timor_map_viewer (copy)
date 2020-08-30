@@ -224,6 +224,8 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
  
 //var legendPanel=ui.Panel({style: {width: '20%'}});
 
+
+
 var legendPanel=ui.Panel([ui.Label({
   value: 'Coral Atlas map classes',
   style: {fontWeight: 'bold', fontSize: '14px'}
@@ -235,7 +237,7 @@ var legendPanel=ui.Panel([ui.Label({
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-var leg = pkg_vis.add_lgds([legendPanel, geo_legend, benthic_legend]);//, mask_legend])
+pkg_vis.add_lgds([legendPanel, geo_legend, benthic_legend]);//, mask_legend])
 
 //var leg = ui.Label(leg);
 
