@@ -4429,7 +4429,7 @@ if (!vars.geomorphic) {
     vars.fast_clean = false,
     vars.smooth_output = false,
     vars.do_export = false;
-    vars.benthic_output_name = temp_outname + '2';
+    vars.benthic_output_name = temp_outname + '2b';
   }
 }
 // -----------------------------------------<
@@ -4663,7 +4663,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
   Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
-  Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
+  Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2b - MANUAL', true);
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
