@@ -132,7 +132,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 
 // Choose which layers will be shown in the map viewer
 var vars = {
-  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  raw: false, // set to true if you want to view the raw classifications for benthic and geo
   geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: false, // set to true if you want to view geo clean 2
   geo_clean3: false, // set to true if you want to view geo clean 3
