@@ -282,7 +282,6 @@ var panel1 = ui.Panel({
     });
     
 mapPanel.widgets().add(panel1)
-mapPanel.widgets().add(leg)
 
 
 //ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
