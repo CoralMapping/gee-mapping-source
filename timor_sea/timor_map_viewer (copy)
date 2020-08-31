@@ -136,6 +136,7 @@ var vars = {
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+  
 };
 
 //Initiatte the app
@@ -277,14 +278,14 @@ var label = ui.Label('DepthComposite_threshold_slider for geo geomorphic clean-s
 
  var slider = ui.Slider({
   min:0,
-  max: 15,
+  max: 25,
   step: 0.01,
   value: false,
   style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
 
 });
 
-slider.setValue(15);
+slider.setValue(25);
 
 
 //function for the slider to work
