@@ -5,7 +5,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     S2 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
     depth = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_depth"),
     pixels = ee.Image("users/EvaK/Whit_eomap/in_out/whit_pixels"),
-    segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation");
+    segments = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation"),
+    centre = /* color: #d63000 */ee.Geometry.Point([148.75488810629244, -20.15294144497883]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -16,7 +17,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([95.68022366345264, 12.587883996209781])
+var centre_map = ee.Geometry.Point([148.75488810629244, -20.15294144497883])
 Map.centerObject(centre_map, 7)
 
 
@@ -27,10 +28,12 @@ Map.addLayer(S2, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "s2 pretty pictu
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 // Whitsundays
+Map.addLayer(pixels, {color:'#20639b'}, "pixels", false)
+Map.addLayer(segments, {color:'#3caea3'}, "segments", false)
 Map.addLayer(geo_raw, map_palettes.geo, "Whitsundays Geo - RAW", false)
 //Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
-Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
+//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 
 //Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
