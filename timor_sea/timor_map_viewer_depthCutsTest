@@ -288,7 +288,7 @@ add_thresh(geo_map_raw.updateMask(Comp_depth))
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-right',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+      style: {position: 'bottom-right',width: '400px', backgroundColor:  '#c6c6cc', height: '90px'
           }
     });
     
