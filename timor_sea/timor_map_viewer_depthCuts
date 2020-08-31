@@ -207,6 +207,7 @@ var Comp_depth=Comp_depth.expression(
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
 
+//load the ui layers
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
 layers.add(benthic2)
