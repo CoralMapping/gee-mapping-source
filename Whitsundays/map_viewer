@@ -31,7 +31,7 @@ Map.addLayer(S2, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "s2 pretty pictu
 Map.addLayer(pixels, {color:'#20639b'}, "pixels", false)
 Map.addLayer(segments, {color:'#3caea3'}, "segments", false)
 Map.addLayer(geo_raw, map_palettes.geo, "Whitsundays Geo - RAW", false)
-//Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Whitsundays Geo-clean", false)
 
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
 //Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
