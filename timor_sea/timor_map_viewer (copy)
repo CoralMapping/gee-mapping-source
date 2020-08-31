@@ -140,10 +140,10 @@ var vars = {
 
 //Initiatte the app
 
-var mapPanel=ui.Map()
+var mapPanel=ui.Map().centerObject(centre_map, 6)
 
 // choose where to centre the map (link this dynamically to map app?)
-Map.centerObject(centre_map, 6);
+
 
 // Add low-tide base map to viewer
 // var low_tide_image = ee.Image(region_params.pixels);
