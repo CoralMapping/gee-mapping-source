@@ -264,7 +264,7 @@ var panel2 = ui.Panel({
      // widgets: [geo_legend, benthic_legend],
       widgets: [geo_legend],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '550px'
+      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '295px'
           }
     });
 
