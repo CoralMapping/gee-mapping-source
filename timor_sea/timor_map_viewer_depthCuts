@@ -261,7 +261,8 @@ var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palet
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
 var panel2 = ui.Panel({
-      widgets: [geo_legend, benthic_legend],
+     // widgets: [geo_legend, benthic_legend],
+      widgets: [geo_legend],
      layout: ui.Panel.Layout.flow('vertical'),
       style: {position: 'top-left',width: '250px', backgroundColor:  '#c6c6cc', height: '450px'
           }
