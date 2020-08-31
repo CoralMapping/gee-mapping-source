@@ -132,8 +132,8 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 
 // Choose which layers will be shown in the map viewer
 var vars = {
-  raw: false, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: true, // set to true if you want to view geo clean 1
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_clean1: false, // set to true if you want to view geo clean 1
   geo_clean2: false, // set to true if you want to view geo clean 2
   geo_clean3: false, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
@@ -233,9 +233,9 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
-//layers.add(geo_raw)
+layers.add(geo_raw)
 //layers.add(benthic_raw)
-layers.add(geo1)
+//layers.add(geo1)
 
 
 //slider params
@@ -279,7 +279,7 @@ var add_thresh = function(thresh_dat) {
 }
 
 //calling the slider function
-add_thresh(geo_clean1.updateMask(Comp_depth)) 
+add_thresh(geo1.updateMask(Comp_depth)) 
 
 
 
