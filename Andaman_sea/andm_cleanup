@@ -4354,7 +4354,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4679,6 +4679,14 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(man_benthic.eq(12)), //Rubble
       value: ee.Image(13) //Rock
     });  
+    
+    // Seagrass on RC or RS in outer extent -> Rock
+    man_benthic = man_benthic.where({
+      test: outer_extent.eq(1)
+                     .and(geo_map.eq(15).or(geo_map.eq(22))) //Reef crest or Reef slope
+                     .and(man_benthic.eq(14)), //Seagrass
+      value: ee.Image(13) //Rock
+    }); 
     
   //Add the manual layer to the map
   //var image = ee.Image(region_params.image);
