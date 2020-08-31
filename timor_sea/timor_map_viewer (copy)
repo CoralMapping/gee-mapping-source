@@ -307,8 +307,6 @@ var add_thresh = function(thresh_dat) {
 add_thresh(geo_map_raw.updateMask(Comp_depth)) 
 
 
-
-
 //putting slider in the panel
 var panel1 = ui.Panel({
       widgets: [label,slider],
