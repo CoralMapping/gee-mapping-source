@@ -219,17 +219,8 @@ layers.add(geo_raw)
 layers.add(depthComposite1)
 ////////// UI SET UP //////////
 
-
-//Generate legend panel
-
-
-
-//Add all layers to ui
-
 if(vars.geo_raw_depthCutoff) {
-
 //slider params
-
 var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
@@ -256,9 +247,8 @@ var add_thresh = function(thresh_dat) {
 
 }
 
-//calling the slider function
+//calling the slider function and mask with depth composite
 add_thresh(geo_map_raw.updateMask(Comp_depth)) 
-
 
 //putting slider in the panel
 var panel1 = ui.Panel({
