@@ -135,7 +135,7 @@ var vars = {
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
-  geo_raw_depthCutoff: false,
+  geo_raw_depthCutoff: true,
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
@@ -249,7 +249,7 @@ add_thresh(geo_map_raw.updateMask(Comp_depth))
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+      style: {position: 'bottom-left',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
           }
     });
     
