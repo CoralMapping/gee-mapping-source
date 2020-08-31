@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
+    reef_boundary = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[117.0034761846726, -17.565859422023895],
           [120.3872652471726, -21.335799035775768],
           [122.6724214971726, -19.39962108983916],
@@ -33,36 +36,36 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Timor Sea export to Vulcan bucket
 
-
 // so we can visualise maps before export
-var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 
 // will need to import depth mosaic from pixels now
-var depth = pixels.select('depth')//.multiply(100).uint16()
+var depth = pixels.select('depth'); //.multiply(100).uint16()
 
 // finalise layers (include 'mapped area' as zeros)
-geo = geo.where(geo.lte(2), 0)
-benthic = benthic.unmask(0).updateMask(geo.gte(0))
+geo = geo.where(geo.lte(2), 0);
+benthic = benthic.unmask(0).updateMask(geo.gte(0));
 
 // make reef/non-reef layer 
-var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
-var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
-var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
+var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum());
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum());
+var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum());
 
 // check before export
-Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
-Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
-Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
-Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
-Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false)
+Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b3","b2","b1"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false);
+Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false);
+Map.addLayer(geo, map_palettes.geo, "geomorphic map", false);
+Map.addLayer(benthic, map_palettes.benthic, "benthic map", false);
+Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false);
+
 // combine into single stack
 var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
                     .addBands(geo.rename('geomorphic'))
                     .addBands(benthic.rename('benthic'))
-                    .toInt16()
+                    .toInt16();
 
-Map.addLayer(export_stack, {}, "export raster stack", false)
+Map.addLayer(export_stack, {}, "export raster stack", false);
 
 // run the export
 Export.image.toCloudStorage({
