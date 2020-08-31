@@ -171,7 +171,90 @@ if (vars.raw) {
                      .selfMask();
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
-  }
+      
+      
+      
+      
+  //Set the UI slider and legend    
+      
+   var Comp_depth=ee.Image(vars.Depth_composite)
+var Comp_depth=Comp_depth.expression( 
+'(B1)/100', {
+ 'B1' :Comp_depth.select('depth') })
+ 
+ print (Comp_depth)
+ 
+var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam7, 'DepthComposite', false)
+
+var layers = mapPanel.layers();
+layers.add(sr_Dove)
+layers.add(geo_raw)
+layers.add(depthComposite1)
+layers.add(geo1)
+layers.add(geo2)
+layers.add(geo3)
+layers.add(benthic1)
+layers.add(benthic2)
+//slider params
+
+var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
+               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
+);
+
+ var slider = ui.Slider({
+  min:0,
+  max: 25,
+  step: 0.01,
+  value: false,
+  style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
+
+});
+
+slider.setValue(25);
+
+
+//function for the slider to work
+//var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
+var add_thresh = function(thresh_dat) {
+
+  var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo,  'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  mapPanel.add(threshold_dat)
+  slider.onChange(function(value) {
+    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
+    threshold_dat.setEeObject(thresholded)
+  })
+
+}
+
+//calling the slider function
+add_thresh(geo_map_raw.updateMask(Comp_depth)) 
+
+
+//putting slider in the panel
+var panel1 = ui.Panel({
+      widgets: [label,slider],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-left',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+          }
+    });
+    
+mapPanel.widgets().add(panel1)
+
+//Generate legend panel
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+
+var panel2 = ui.Panel({
+      widgets: [geo_legend,benthic_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'top-left',width: '250px', backgroundColor:  '#c6c6cc', height: '100px'
+          }
+    });
+
+mapPanel.widgets().add(panel2)
+   
+  }//end of the if (vars.raw)
   
   
   
