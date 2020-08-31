@@ -1,0 +1,280 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var noReef_mask = 
+    /* color: #43ff06 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[131.6209457353908, -3.406481422012466],
+           [133.1590316728908, -4.809083468243518],
+           [133.5105941728908, -5.946613263722921],
+           [133.3348129228908, -7.561251250106858],
+           [135.0486801103908, -8.083685947505646],
+           [137.4656722978908, -9.126485887114153],
+           [139.4871566728908, -9.126485887114153],
+           [140.6297347978908, -10.122987529626664],
+           [141.4207504228908, -9.256628997070125],
+           [138.8719222978908, -5.028000774800192],
+           [136.7625472978908, -3.669650510301542],
+           [134.3895004228908, -2.748255943166204],
+           [132.6756332353908, -2.2214099000035943],
+           [131.4451644853908, -2.7921499004007084]]],
+         [[[141.87033616291993, -12.322342158508562],
+           [141.38693772541993, -12.31160870913667],
+           [140.98044358479493, -12.408193911600465],
+           [140.02463303791993, -16.555696187106946],
+           [139.94772874104493, -16.82930338054062],
+           [139.81589280354493, -17.165508352277218],
+           [139.55222092854493, -17.270448151091728],
+           [139.23361741291993, -17.804705429557373],
+           [140.05759202229493, -18.2643530633977],
+           [141.79343186604493, -17.783783943240014],
+           [142.19992600666993, -16.228964356283022],
+           [142.37570725666993, -14.61924807543451],
+           [142.19992600666993, -13.639096476172245]]],
+         [[[138.71135482380458, -16.83845691188403],
+           [138.75255355427333, -16.655665825749768],
+           [138.80748519489833, -16.450311104026607],
+           [139.27169338115556, -15.385947563950195],
+           [137.38753810771806, -14.308083138940345],
+           [136.92061916240556, -14.350661266929022],
+           [136.73934474834306, -14.334695416205314],
+           [136.54159084209306, -14.355982964306866],
+           [136.27791896709306, -14.286791046766936],
+           [135.78902736553056, -13.956507637569947],
+           [135.61324611553056, -13.945845389409525],
+           [135.97030177959306, -14.340017492835333],
+           [135.97030177959306, -14.46239028916728],
+           [135.83297267803056, -14.515574868991727],
+           [135.82198634990556, -14.435793220576134],
+           [135.86593166240556, -14.340017492835333],
+           [135.86043849834306, -14.260173098109222],
+           [135.62423244365556, -14.0471168037852],
+           [134.93758693584306, -14.488984173754968],
+           [134.93758693584306, -14.929972707558079],
+           [135.23421779521806, -15.301189678534303],
+           [136.14608302959306, -15.967715349068722],
+           [137.25570217021806, -16.521467753479172],
+           [138.20052638896806, -17.173380832935678],
+           [138.59603420146806, -17.01586651052815]]],
+         [[[131.80896871058246, -11.409242183294396],
+           [131.72107808558246, -11.360776516346826],
+           [131.60572164026996, -11.398472748759268],
+           [131.61121480433246, -11.554589420428641],
+           [131.42994039026996, -11.678344341697118],
+           [131.30909078089496, -11.780535038034875],
+           [131.40796773401996, -11.909563670867934],
+           [131.40247456995746, -12.108362583283638],
+           [131.28162496058246, -12.21039119219242],
+           [131.37500874964496, -12.92882778460479],
+           [133.27564351526996, -12.408965417287066],
+           [132.90760152308246, -11.812797904627478],
+           [132.63294331995746, -11.511531386698817],
+           [132.50660054651996, -11.403857517064493],
+           [132.32532613245746, -11.398472748759268],
+           [132.28138081995746, -11.479233534676084],
+           [132.14954488245746, -11.554589420428641],
+           [131.96277730433246, -11.586878606255771]]],
+         [[[127.45376052791276, -14.799816052354238],
+           [127.77236404353776, -15.917459688032123],
+           [129.40932693416275, -15.780066718630698],
+           [130.30471267635025, -15.430883201431055],
+           [130.41457595760025, -14.220161873827406],
+           [129.50271072322525, -14.374529553077549],
+           [129.35988845760025, -14.486246612475183],
+           [129.19509353572525, -14.156254682747303],
+           [128.58535232478775, -13.60164702238546],
+           [127.90969314510026, -13.521546942734147],
+           [127.54714431697526, -13.975086891512651],
+           [127.26149978572526, -14.278727603505995]]],
+         [[[122.88407281834407, -17.27846585302748],
+           [122.99393609959407, -17.435756599174923],
+           [123.53775934178157, -17.917265418877427],
+           [124.27384332615657, -17.666204294146702],
+           [125.25162652928157, -16.889909506548676],
+           [125.68558649021907, -15.819937549585868],
+           [125.42191461521907, -15.338426665970553],
+           [125.18570856053157, -15.221849254283823],
+           [124.97147516209407, -15.285444967401968],
+           [124.87259820896907, -15.401986966723438],
+           [124.70231012303157, -15.656033265226334],
+           [124.49356988865657, -15.804081626600253],
+           [124.36722711521907, -15.952021787900824],
+           [124.27384332615657, -16.06818398975981],
+           [124.12552789646907, -16.310849007831646],
+           [124.05960992771907, -16.374103686184345],
+           [123.60367731053157, -16.674282090438965],
+           [123.47733453709407, -16.616389316286742],
+           [123.18619684178157, -16.690067991188318],
+           [122.99393609959407, -16.784755975366085],
+           [122.79618219334407, -17.20501743540183]]]]),
+    centre_map = /* color: #d63000 */ee.Geometry.Point([78.55976562499998, 7.607223971677085]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
+// in the workflow 
+
+//Slider added to cut off raw geo map with depth composite for furtehr clean up
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
+var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove  ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.south_asia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// Choose which layers will be shown in the map viewer
+var vars = {
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_clean1: true, // set to true if you want to view geo clean 1
+  geo_clean2: true, // set to true if you want to view geo clean 2
+  geo_clean3: true, // set to true if you want to view geo clean 3
+  benthic_clean1: true, // set to true if you want to view benthic clean 1
+  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  geo_raw_depthCutoff: true,
+  Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+};
+
+
+
+var mapPanel=ui.Map().centerObject(centre_map, 6)
+
+//load image sr
+var low_tide_image_dove = ee.Image(region_params.image);
+var sr_Dove= ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+
+
+
+// Load the raw classifications
+if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map);
+  }
+
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                  .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
+  } else {
+      //var benthic_map_raw = ee.Image(region_params.benthic_map);
+      var benthic_map_raw = ee.Image(region_params.benthic_map_tuto);
+  }
+
+  // Add the raw region classification to the viewer
+var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+
+var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+}
+
+// Load the clean classifications to the ui viewer
+var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
+var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
+var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
+
+if (vars.geo_clean1) 
+var geo1= ui.Map.Layer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
+if (vars.geo_clean2)
+var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
+if (vars.geo_clean3) 
+var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
+if (vars.benthic_clean1) 
+var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
+if (vars.benthic_clean2) Map.addLayer
+var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
+
+//load depth composite used to slice geo raw map
+var Comp_depth=ee.Image(vars.Depth_composite)
+var Comp_depth=Comp_depth.expression( 
+'(B1)/100', {
+ 'B1' :Comp_depth.select('depth') })
+ 
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
+
+//load the ui layers
+var layers = mapPanel.layers();
+layers.add(sr_Dove)
+layers.add(benthic2)
+layers.add(benthic1)
+layers.add(geo3)
+layers.add(geo2)
+layers.add(geo1)
+layers.add(geo_raw)
+layers.add(depthComposite1)
+////////// UI SET UP //////////
+
+if(vars.geo_raw_depthCutoff) {
+//slider params
+var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
+               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
+);
+
+ var slider = ui.Slider({
+  min:0,
+  max: 25,
+  step: 0.01,
+  value: false,
+  style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
+
+});
+
+slider.setValue(25);
+
+var add_thresh = function(thresh_dat) {
+
+  var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo,  'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  mapPanel.add(threshold_dat)
+  slider.onChange(function(value) {
+    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
+    threshold_dat.setEeObject(thresholded)
+  })
+
+}
+
+//calling the slider function and mask with depth composite
+add_thresh(geo_map_raw.updateMask(Comp_depth)) 
+
+//putting slider in the panel
+var panel1 = ui.Panel({
+      widgets: [label,slider],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-left',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+          }
+    });
+    
+mapPanel.widgets().add(panel1)
+
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+
+var panel2 = ui.Panel({
+     // widgets: [geo_legend, benthic_legend],
+      widgets: [geo_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '295px'
+          }
+    });
+
+mapPanel.widgets().add(panel2)
+
+}
+//callig the app
+ui.root.clear();
+ui.root.add(mapPanel)
+
+
+
