@@ -131,12 +131,11 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
   geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: false, // set to true if you want to view geo clean 2
-  geo_clean3: false, // set to true if you want to view geo clean 3
-  benthic_clean1: false, // set to true if you want to view benthic clean 1
-  benthic_clean2: false, // set to true if you want to view benthic clean 2
+  geo_clean2: true, // set to true if you want to view geo clean 2
+  geo_clean3: true, // set to true if you want to view geo clean 3
+  benthic_clean1: true, // set to true if you want to view benthic clean 1
+  benthic_clean2: true, // set to true if you want to view benthic clean 2
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
-  
 };
 
 //Initiatte the app
