@@ -198,13 +198,14 @@ var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean 
 if (vars.benthic_clean2) Map.addLayer
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
+//load depth composite
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
  
-var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
-var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam7, 'DepthComposite', false)
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
