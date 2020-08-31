@@ -4386,7 +4386,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3';
+    vars.geomorph_output_name = temp_outname + '3b';
   }
 }
 
@@ -4469,6 +4469,13 @@ if (vars.manual_clean && vars.geomorphic) {
     test: refmask.eq(1),
     value: ee.Image(0)
   });
+  
+  // pull back missing data
+  man_geo = man_geo.where({
+    test: midmask.eq(1),
+    value: ee.Image(0)
+  });
+  
   
   /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
