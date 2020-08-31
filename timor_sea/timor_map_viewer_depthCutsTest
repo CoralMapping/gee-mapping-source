@@ -260,7 +260,7 @@ var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
   max: 25,
   step: 0.01,
   value: false,
-  style: {stretch: 'vertical', width:'670px', fontWeight:'bold'},
+  style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
 
 });
 
