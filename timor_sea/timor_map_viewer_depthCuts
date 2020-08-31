@@ -171,7 +171,7 @@ if (vars.raw) {
 
   // Add the raw region classification to the viewer
 var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
-print (geo_raw)
+
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
 
