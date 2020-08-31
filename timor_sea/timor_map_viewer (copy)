@@ -238,7 +238,7 @@ layers.add(geo1)
 
 
 //slider params
-var label = ui.Label('DepthComposite_threshold_slider for geo maps:',
+var label = ui.Label('DepthComposite_threshold_slider for geo geomorphic clean-stage 1:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
 
