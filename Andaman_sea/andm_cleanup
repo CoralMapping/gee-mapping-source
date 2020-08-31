@@ -1379,10 +1379,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [90.57285562012126, 5.432712438884859],
           [96.41758218262126, 5.432712438884859],
           [96.41758218262126, 21.853751396613237]]], null, false),
-    Inshore = 
-    /* color: #8b827a */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    Inshore = /* color: #8b827a */ee.Geometry.MultiPolygon(
         [[[[97.16447157738047, 14.409996987805703],
            [97.5875215302919, 12.832284967244261],
            [98.2515140026587, 12.979820906063372],
@@ -4664,6 +4661,7 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(man_benthic.eq(12)), //Rubble
       value: ee.Image(13) //Rock
     });  
+    
   //Add the manual layer to the map
   //var image = ee.Image(region_params.image);
   //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
@@ -4671,7 +4669,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
   Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
-  Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2b - MANUAL', true);
+  Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
@@ -5443,13 +5441,6 @@ if (vars.obia_clean) {
       clean_map = clean_map.where({
         test: geo_map.eq(12),
         value: ee.Image(0)
-      });
-      
-     // RB -> Sand
-      clean_map = clean_map.where({
-        test: notRB.eq(1)
-                .and(clean_map.eq(12)), //Rubble
-        value: ee.Image(11) //Sand
       });
       
       /*// turbid in geo == turbid (temporal - class num 2)
