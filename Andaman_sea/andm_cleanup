@@ -4649,13 +4649,21 @@ if (vars.manual_clean && !vars.geomorphic) {
       value: ee.Image(0)
     });   
     
-    // Rubble -> Sand
+    // Rubble -> Sand on IRF
     man_benthic = man_benthic.where({
       test: NotRB.eq(1)
+                     .and(geo_map.eq(13)) //IRF
                      .and(man_benthic.eq(12)), //Rubble
       value: ee.Image(11) //Sand
     });
-   
+     
+    // Rubble -> Rock on ORF
+    man_benthic = man_benthic.where({
+      test: NotRB.eq(1)
+                     .and(geo_map.eq(14)) //ORF
+                     .and(man_benthic.eq(12)), //Rubble
+      value: ee.Image(13) //Rock
+    });  
   //Add the manual layer to the map
   //var image = ee.Image(region_params.image);
   //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
