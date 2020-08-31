@@ -208,14 +208,13 @@ var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam7, 'DepthComposite', f
 
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
+layers.add(benthic2)
+layers.add(benthic1)
+layers.add(geo3)
+layers.add(geo2)
+layers.add(geo1)
 layers.add(geo_raw)
 layers.add(depthComposite1)
-layers.add(geo1)
-layers.add(geo2)
-layers.add(geo3)
-layers.add(benthic1)
-layers.add(benthic2)
-
 ////////// UI SET UP //////////
 
 
