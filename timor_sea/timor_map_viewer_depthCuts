@@ -276,7 +276,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 var panel2 = ui.Panel({
       widgets: [geo_legend, benthic_legend],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+      style: {position: 'top-left',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
           }
     });
 
