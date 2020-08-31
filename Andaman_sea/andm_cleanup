@@ -4405,7 +4405,7 @@ if (!vars.geomorphic) {
     vars.fast_clean = false,
     vars.smooth_output = false,
     vars.do_export = false;
-    vars.benthic_output_name = temp_outname + '2';
+    vars.benthic_output_name = temp_outname + '2b';
   }
 }
 // -----------------------------------------<
