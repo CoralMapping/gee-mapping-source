@@ -56,7 +56,7 @@ if (vars.raw) {
                      .selfMask();
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
-      var benthic_map_raw_tuto = ee.Image(region_params.benthic_map);
+      var benthic_map_raw_tuto = ee.Image(region_params.benthic_map_tuto);
   }
 
   // Add the raw region classification to the viewer
