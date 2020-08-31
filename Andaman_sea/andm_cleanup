@@ -19,10 +19,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [90.2347830552545, 1.5243019898904366],
           [103.94572055525448, 1.5243019898904366],
           [103.94572055525448, 21.971185910352975]]], null, false),
-    noreefmask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    noreefmask = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1473,10 +1470,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [100.50758541579788, 5.659768229871591],
            [100.17524899001663, 6.102371520297641],
            [99.35951412673538, 6.195218070049458]]]]),
-    notRC = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    notRC = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[92.5269806272745, 10.91309055604887],
            [92.57435916731356, 10.864542190968793],
            [92.57015589842717, 10.838154489663507],
@@ -1812,10 +1806,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [97.93922219591835, 12.292626798566813],
            [97.92557985578327, 12.229382204749076]]]]),
     southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
-    notRubble = 
-    /* color: #d6c20b */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    notRubble = /* color: #d6c20b */ee.Geometry.MultiPolygon(
         [[[[92.97859969726836, 13.575948262950662],
            [92.9748231523074, 13.565936160272688],
            [92.94727154008596, 13.545076257399085],
@@ -2117,10 +2108,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [92.53802670959848, 10.803419807767723],
            [92.55862607483286, 10.768345038218003],
            [92.61973752502817, 10.776439578764856]]]]),
-    DLtoRS = 
-    /* color: #2ec3d6 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    DLtoRS = /* color: #2ec3d6 */ee.Geometry.MultiPolygon(
         [[[[92.97152560997502, 13.702857795746588],
            [92.93092670100958, 13.66224350706539],
            [92.94225635188849, 13.621039268576473],
@@ -2223,10 +2211,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [92.82301587926568, 13.550922536972454],
            [92.777225437126, 13.394859121296163],
            [92.79018897425453, 13.317078783720731]]]]),
-    RCtoPlateau = 
-    /* color: #91fff7 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    RCtoPlateau = /* color: #91fff7 */ee.Geometry.Polygon(
         [[[93.0375532704727, 13.686119450891944],
           [93.03137346090239, 13.657096671344087],
           [93.03583665670317, 13.651425136034005],
@@ -2235,10 +2220,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [93.06690736593168, 13.657263479141397],
           [93.07034059347075, 13.660099193640514],
           [93.04699464620512, 13.686953385934956]]]),
-    DLtoBRS = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    DLtoBRS = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
         [[[[93.07913278285376, 13.663841622012024],
            [93.04737397897806, 13.653499164514535],
            [93.02977800390644, 13.65716947334116],
@@ -2339,10 +2321,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [92.7546190156501, 13.193958835531888],
            [92.7663778199714, 13.202315193999498],
            [92.76028384108956, 13.211172621830956]]]]),
-    DLtoSRS = 
-    /* color: #c8b4ff */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    DLtoSRS = /* color: #c8b4ff */ee.Geometry.MultiPolygon(
         [[[[92.56029461853663, 11.37026969532149],
            [92.57196759216944, 11.33896561266521],
            [92.58741711609522, 11.335599377872972],
@@ -4426,7 +4405,7 @@ if (!vars.geomorphic) {
     vars.fast_clean = false,
     vars.smooth_output = false,
     vars.do_export = false;
-    vars.benthic_output_name = temp_outname + '2b';
+    vars.benthic_output_name = temp_outname + '2';
   }
 }
 // -----------------------------------------<
@@ -4564,8 +4543,8 @@ if (vars.manual_clean && vars.geomorphic) {
   */
   
   // Add the manual layer to the map
-  //var image = ee.Image(region_params.image);
-  //Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
+  var image = ee.Image(region_params.image);
+  Map.addLayer(image, {bands: ['b3','b2','b1'], min:200, max:1200}, 'Dove low tide', false);
   
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
