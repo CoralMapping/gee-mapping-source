@@ -4339,7 +4339,7 @@ var region_params = param_module.andm;         //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4354,7 +4354,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   
   /*
   - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
@@ -4418,7 +4418,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3b';
+    vars.geomorph_output_name = temp_outname + '3';
   }
 }
 
@@ -4437,7 +4437,7 @@ if (!vars.geomorphic) {
     vars.fast_clean = false,
     vars.smooth_output = false,
     vars.do_export = false;
-    vars.benthic_output_name = temp_outname + '2b';
+    vars.benthic_output_name = temp_outname + '2';
   }
 }
 // -----------------------------------------<
