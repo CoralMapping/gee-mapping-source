@@ -4635,7 +4635,7 @@ if (vars.manual_clean && !vars.geomorphic) {
      
     // Rubble -> Rock on ORF
     man_benthic = man_benthic.where({
-      test: NotRB.eq(1)
+      test: outer_extent.eq(1)
                      .and(geo_map.eq(14)) //ORF
                      .and(man_benthic.eq(12)), //Rubble
       value: ee.Image(13) //Rock
