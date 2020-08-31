@@ -112,7 +112,7 @@ var noReef_mask =
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
 
-//Rb This is a test to integrate a slider to cut off geo maps based on depth (to avoid need of running different cut offs)
+//RB> This is a test to integrate a slider to cut off geo maps based on depth (to avoid need of running different cut offs)
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
