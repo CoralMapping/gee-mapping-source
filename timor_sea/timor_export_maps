@@ -72,7 +72,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'timor_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/timor_sea',
+  fileNamePrefix: 'coral-gee-export-bucket/timor_sea/timor_sea',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
