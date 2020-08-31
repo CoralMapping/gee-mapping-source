@@ -138,6 +138,7 @@ var vars = {
   geo_clean3: false, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
+  Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
 //Initiatte the app
@@ -238,6 +239,16 @@ layers.add(geo1)
 
 
 //slider params
+
+//bringing back the depth compiste to neg
+var Comp_depth=ee.Image(vars.Depth_composite)
+var Comp_depth=Comp_depth.expression( 
+'(B1)/100', {
+ 'B1' :Comp_depth.select('depth') })
+
+
+
+
 var label = ui.Label('DepthComposite_threshold_slider for geo geomorphic clean-stage 1:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
@@ -252,6 +263,25 @@ var label = ui.Label('DepthComposite_threshold_slider for geo geomorphic clean-s
 });
 
 slider.setValue(20);
+
+
+//function for the slider to work
+//var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
+var add_thresh = function(thresh_dat) {
+
+  var threshold_dat = ui.Map.Layer(thresh_dat, imageParamGeo, 'geo_clean_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  mapPanel.add(threshold_dat)
+  slider.onChange(function(value) {
+    var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
+    threshold_dat.setEeObject(thresholded)
+  })
+
+}
+
+//calling the slider function
+add_thresh(vars.geo_clean1.updateMask(Comp_depth)) 
+
+
 
 //putting slider in the panel
 var panel1 = ui.Panel({
