@@ -135,6 +135,7 @@ var vars = {
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
+  geo_raw_depthCutoff: true,
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
@@ -206,6 +207,7 @@ var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean
 
 //Add all layers to ui
 
+if(vars.geo_raw_depthCutoff) {
 
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
@@ -226,8 +228,10 @@ layers.add(geo2)
 layers.add(geo3)
 layers.add(benthic1)
 layers.add(benthic2)
+
+
 //slider params
-if (vars.raw){
+
 var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
@@ -280,11 +284,9 @@ var panel2 = ui.Panel({
           }
     });
 
-
-
 mapPanel.widgets().add(panel2)
 
-
+}
 ui.root.clear();
 ui.root.add(mapPanel)
 
