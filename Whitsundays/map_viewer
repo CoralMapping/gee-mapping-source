@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
     geo_raw = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo"),
+    geo_clean = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo-clean"),
     Hs95 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_Hs95"),
     S2 = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_S2"),
     depth = ee.Image("users/EvaK/Whit_eomap/mosaics/whit_depth"),
