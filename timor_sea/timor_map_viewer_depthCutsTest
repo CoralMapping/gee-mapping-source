@@ -223,12 +223,8 @@ Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 ////////// UI SET UP //////////
 
 
-//Generate legend panel
 
-// generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
 
 //Add all layers to ui
@@ -292,16 +288,25 @@ add_thresh(geo_map_raw.updateMask(Comp_depth))
 var panel1 = ui.Panel({
       widgets: [label,slider],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+      style: {position: 'bottom-right',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
           }
     });
     
 mapPanel.widgets().add(panel1)
-mapPanel.widgets().add(geo_legend)
-//mapPanel.widgets().add(benthic_legend, {position: 'top-right', stretch: 'horizontal'});
-    
 
-//ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
+//Generate legend panel
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+
+var panel2 = ui.Panel({
+      widgets: [geo_legend,benthic_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+          }
+    });
+
+mapPanel.widgets().add(panel2)
+
 
 ui.root.clear();
 ui.root.add(mapPanel)
