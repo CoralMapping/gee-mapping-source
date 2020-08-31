@@ -178,6 +178,7 @@ if (vars.raw) {
 
   // Add the raw region classification to the viewer
 var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+print (geo_raw)
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
 
@@ -231,6 +232,29 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 
 //Add all layers to ui
 
+//bringing back the depth compiste to neg
+var Comp_depth=ee.Image(vars.Depth_composite)
+var Comp_depth=Comp_depth.expression( 
+'(B1)/100', {
+ 'B1' :Comp_depth.select('depth') })
+ 
+ // depth composite
+var Composite_depth=ee.Image(vars.Depth_composite)
+var Composite_depth=Composite_depth.expression(
+  '((-1)*B1)/100', {
+  'B1' :Composite_depth.select('depth') //specify that B1 mean depth
+})
+
+//renaming band 1 in composite from constant to 'b1_s'  
+var depthComposite=ee.Image(Composite_depth)
+var DepthCompos_renamed = depthComposite.select(
+  ['constant'],
+  ['b1_s']);  
+  
+ 
+var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
+
 var layers = mapPanel.layers();
 layers.add(sr_Dove)
 layers.add(geo_raw)
@@ -266,10 +290,10 @@ slider.setValue(20);
 
 
 //function for the slider to work
-//var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
+var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
 var add_thresh = function(thresh_dat) {
 
-  var threshold_dat = ui.Map.Layer(thresh_dat, imageParamGeo, 'geo_clean_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var threshold_dat = ui.Map.Layer(thresh_dat, imageVisParam7, 'geo_clean_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(threshold_dat)
   slider.onChange(function(value) {
     var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
