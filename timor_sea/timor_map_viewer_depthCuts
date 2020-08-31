@@ -197,43 +197,16 @@ var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean 
 if (vars.benthic_clean2) Map.addLayer
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
-
-
-/*// Geo Training Data - Needs more work + add flag to show
-var geo_train = ee.FeatureCollection(region_params.geo_train_library);
-
-var geo_buff = function(feature) {
-  return feature.buffer(20);   // substitute in your value of Z here
-};
-
-var geo_train_buff = geo_train.map(geo_buff)
-
-// Create an empty image into which to paint the features, cast to byte.
-var empty = ee.Image().byte();
-
-// Paint the interior of the polygons with different colors.
-var geo_fill = empty.paint({
-  featureCollection: geo_train_buff,
-  color: 'class_num',
-});
-
-Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-*/
-
 ////////// UI SET UP //////////
 
 
 //Generate legend panel
 
-// generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
-
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
 
 //Add all layers to ui
 
-//bringing back the depth compiste to neg
+
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
@@ -254,7 +227,7 @@ layers.add(geo3)
 layers.add(benthic1)
 layers.add(benthic2)
 //slider params
-
+if (vars.raw){
 var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
@@ -270,9 +243,6 @@ var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
 
 slider.setValue(25);
 
-
-//function for the slider to work
-//var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
 var add_thresh = function(thresh_dat) {
 
   var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo,  'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
@@ -297,11 +267,23 @@ var panel1 = ui.Panel({
     });
     
 mapPanel.widgets().add(panel1)
-mapPanel.widgets().add(geo_legend)
-//mapPanel.widgets().add(benthic_legend, {position: 'top-right', stretch: 'horizontal'});
-    
 
-//ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+
+var panel2 = ui.Panel({
+      widgets: [geo_legend, benthic_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-center',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+          }
+    });
+
+
+
+mapPanel.widgets().add(panel2)
+
 
 ui.root.clear();
 ui.root.add(mapPanel)
