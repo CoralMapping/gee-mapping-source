@@ -272,7 +272,7 @@ var Comp_depth=Comp_depth.expression(
 print (Comp_depth)
 
 
-var label = ui.Label('DepthComposite_threshold_slider for geo geomorphic clean-stage 1:',
+var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
 
@@ -292,7 +292,7 @@ slider.setValue(25);
 //var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":0.1,"max":18.03,"gamma":1};
 var add_thresh = function(thresh_dat) {
 
-  var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo,  'geo_clean_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo,  'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(threshold_dat)
   slider.onChange(function(value) {
     var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
