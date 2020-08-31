@@ -130,7 +130,7 @@ var region_params = param_module.timor;       //<------------ THIS IS WHERE YOU 
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: false, // set to true if you want to view geo clean 1
+  geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: false, // set to true if you want to view geo clean 2
   geo_clean3: false, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
@@ -269,7 +269,6 @@ var Comp_depth=Comp_depth.expression(
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
 
-print (Comp_depth)
 
 
 var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
