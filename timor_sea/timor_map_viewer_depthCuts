@@ -198,23 +198,10 @@ var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean 
 if (vars.benthic_clean2) Map.addLayer
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
-////////// UI SET UP //////////
-
-
-//Generate legend panel
-
-
-
-//Add all layers to ui
-
-if(vars.geo_raw_depthCutoff) {
-
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
- 
- print (Comp_depth)
  
 var imageVisParam7 = {"opacity":1,"bands":["depth"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam7, 'DepthComposite', false)
@@ -229,6 +216,16 @@ layers.add(geo3)
 layers.add(benthic1)
 layers.add(benthic2)
 
+////////// UI SET UP //////////
+
+
+//Generate legend panel
+
+
+
+//Add all layers to ui
+
+if(vars.geo_raw_depthCutoff) {
 
 //slider params
 
@@ -287,6 +284,9 @@ var panel2 = ui.Panel({
 mapPanel.widgets().add(panel2)
 
 }
+
+
+
 ui.root.clear();
 ui.root.add(mapPanel)
 
