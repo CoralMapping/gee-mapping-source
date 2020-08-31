@@ -3871,9 +3871,8 @@ Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Mya
 Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
 Map.addLayer(geo_clean3, map_palettes.geo, "geo_manual", false)
-Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
-Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
-Map.addLayer(ben_clean2b, map_palettes.benthic, "ben_FINAL-less rubble", false)
+//Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
+//Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
 
 /*
 // wave data
