@@ -1,25 +1,35 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    reef_boundary = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[-178.9902899370743, 28.223543414829674],
-          [-174.31670726951845, 25.35687341614974],
-          [-167.09539623806367, 22.871758319961504],
-          [-170.0817066799553, 16.50934233576371],
-          [-169.0058019722854, 16.066622127171755],
-          [-166.37097585782607, 22.507211300901893],
-          [-159.72242105060639, 20.55728446862732],
-          [-154.4481229628139, 17.58286698869547],
-          [-153.52755471286838, 20.385834406814258],
-          [-159.43420248789334, 22.893106923083444],
-          [-167.4874893752415, 24.965604306992145],
-          [-178.2214120255763, 29.123686786807387]]]),
-    pixels = ee.Image("projects/coral_atlas/hawaii/in_out/hawaii_pixels"),
+    reef_boundary = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[117.0034761846726, -17.565859422023895],
+          [120.3872652471726, -21.335799035775768],
+          [122.6724214971726, -19.39962108983916],
+          [124.4741793096726, -17.482047708663774],
+          [127.1548433721726, -14.950473013866658],
+          [128.60503868467262, -16.431194505181303],
+          [130.67046837217262, -15.628706596125351],
+          [130.27496055967262, -14.482934551165076],
+          [131.76910118467262, -12.946059901275891],
+          [135.06499962217262, -12.946059901275891],
+          [133.74664024717262, -15.459354651420977],
+          [140.99761680967262, -19.067682312452327],
+          [142.44781212217262, -15.671022773934524],
+          [137.96539024717262, -13.801123658038872],
+          [137.61382774717262, -9.888075443573277],
+          [135.15289024717262, -10.666393639266031],
+          [132.51617149717262, -10.061199606268943],
+          [129.61578087217262, -10.536808143218181],
+          [128.64898399717262, -12.17398069861192],
+          [128.34136680967262, -13.20289632731342],
+          [126.7153902471726, -12.646082905197712],
+          [125.3530855596726, -12.73182696040546],
+          [124.0786714971726, -10.666393639266031],
+          [122.7163668096726, -11.011683475005183],
+          [121.3980074346726, -12.946059901275891]]]),
     benthic = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_clean2"),
     geo = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean3"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020");
+    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
+    pixels = ee.Image("projects/coral_atlas/Timor/in_out/timor_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Timor Sea export to Vulcan bucket
 
@@ -57,9 +67,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false)
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'hi_stack',
+  description: 'timor_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/hawaii',
+  fileNamePrefix: 'coral-gee-export-bucket/timor_sea',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
