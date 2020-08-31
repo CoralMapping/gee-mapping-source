@@ -275,9 +275,7 @@ var panel2 = ui.Panel({
 mapPanel.widgets().add(panel2)
 
 }
-
-
-
+//callig the app
 ui.root.clear();
 ui.root.add(mapPanel)
 
