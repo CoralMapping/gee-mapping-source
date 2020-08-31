@@ -263,7 +263,7 @@ var panel1 = ui.Panel({
     
 mapPanel.widgets().add(panel1)
 mapPanel.widgets().add(geo_legend)
-mapPanel.widgets().add(benthic_legend, {position: 'top-right', stretch: 'horizontal'});
+//mapPanel.widgets().add(benthic_legend, {position: 'top-right', stretch: 'horizontal'});
     
 
 //ui.root.add(ui.SplitPanel(mapPanel, legendPanel));
