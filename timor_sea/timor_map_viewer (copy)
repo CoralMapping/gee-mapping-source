@@ -279,7 +279,7 @@ var add_thresh = function(thresh_dat) {
 }
 
 //calling the slider function
-add_thresh(vars.geo_clean1.updateMask(Comp_depth)) 
+add_thresh(geo1.updateMask(Comp_depth)) 
 
 
 
