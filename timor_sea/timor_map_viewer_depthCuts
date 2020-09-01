@@ -259,6 +259,7 @@ var panel1 = ui.Panel({
     
 mapPanel.widgets().add(panel1)
 
+}
 
 // generate the legend
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone (ENJOY :)))', false);
@@ -266,15 +267,14 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 
 var panel2 = ui.Panel({
      // widgets: [geo_legend, benthic_legend],
-      widgets: [geo_legend],
+      widgets: [geo_legend, benthic_legend],
      layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '295px'
+      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '700px'
           }
     });
 
 mapPanel.widgets().add(panel2)
 
-}
 //callig the app
 ui.root.clear();
 ui.root.add(mapPanel)
