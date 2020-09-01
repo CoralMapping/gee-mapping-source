@@ -170,7 +170,7 @@ if (vars.raw) {
   }
 
   // Add the raw region classification to the viewer
-var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo_slider, 'Geomorphic RAW', false);
+var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
 
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
@@ -236,7 +236,7 @@ slider.setValue(25);
 
 var add_thresh = function(inputDepth, geoCut) {
   
-  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo_slider, 'geo_raw_cutBasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value)))
