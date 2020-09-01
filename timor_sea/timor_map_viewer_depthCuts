@@ -244,7 +244,7 @@ var add_thresh = function(thresh_dat, geoCuts) {
 
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
-add_thresh(Comp_depth)
+add_thresh(Comp_depth, geo_map_raw)
 //geo_map_raw.updateMask(
 
 //putting slider in the panel
