@@ -8,7 +8,9 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     depth = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
     sfr = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_sfr"),
     ssr = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_ssr"),
-    S2 = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
+    S2 = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb"),
+    pixels2 = ee.Image("users/EvaK/Whit_eomap/in_out/whit_pixels2"),
+    segments2 = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -32,9 +34,9 @@ Map.addLayer(depth, {color: 'ffff00'}, 'Hs95', false)
 
 // Whitsundays
 Map.addLayer(pixels, {color:'#20639b'}, "pixels", false)
-//Map.addLayer(pixels2, {color:'#17e8e5'}, "pixels2", false)
+Map.addLayer(pixels2, {color:'#17e8e5'}, "pixels2", false)
 Map.addLayer(segments, {color:'#3caea3'}, "segments", false)
-//Map.addLayer(segments2, {color:'#135c55'}, "segments2", false)
+Map.addLayer(segments2, {color:'#135c55'}, "segments2", false)
 Map.addLayer(geo_raw, map_palettes.geo, "Whitsundays Geo - RAW", false)
 Map.addLayer(geo_clean, map_palettes.geo, "Whitsundays Geo-clean", false)
 
