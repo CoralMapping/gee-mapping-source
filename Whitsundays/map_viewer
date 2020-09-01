@@ -26,6 +26,7 @@ Map.centerObject(centre_map, 7)
 
 // add some background data
 Map.addLayer(S2, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "s2 pretty picture", false)
+Map.addLayer(depth, {color: 'ffff00'}, 'Hs95', false)
 //Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
