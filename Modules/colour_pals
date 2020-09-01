@@ -60,7 +60,7 @@ var geo_slider = {
     'deebf7', // 25 = Patch Reef
     'deebf7', // 26 = Small Reef
   ],
-  min: 0, max: 30
+  min: 0, max: 14
 }
 
 
