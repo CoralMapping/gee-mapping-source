@@ -245,7 +245,12 @@ var add_thresh = function(thresh_dat) {
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
 var cut= add_thresh(Comp_depth)
-geo_map_raw.updateMask(cut)
+
+
+
+tocut(geo_map_raw.updateMask(cut))
+
+
 //putting slider in the panel
 var panel1 = ui.Panel({
       widgets: [label,slider],
