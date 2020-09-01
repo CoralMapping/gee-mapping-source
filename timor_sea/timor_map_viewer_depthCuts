@@ -246,9 +246,9 @@ var add_thresh = function(thresh_dat) {
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
 var cut= add_thresh(Comp_depth)
 
+var geo_raw= ui.Map.Layer(geo_map_raw.updateMask(cut), map_palettes.geo, 'Geomorphic RAW', false);
 
 
-tocut(geo_map_raw.updateMask(cut))
 
 
 //putting slider in the panel
