@@ -262,7 +262,7 @@ mapPanel.widgets().add(panel1)
 }
 
 // generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone (ENJOY :)))', false);
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
 var panel2 = ui.Panel({
