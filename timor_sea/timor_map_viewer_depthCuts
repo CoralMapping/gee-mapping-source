@@ -233,7 +233,7 @@ slider.setValue(25);
 
 var add_thresh = function(thresh_dat) {
 
-  var threshold_dat = ui.Map.Layer(thresh_dat, 'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var threshold_dat = ui.Map.Layer(thresh_dat, map_palettes.geo, 'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(threshold_dat)
   slider.onChange(function(value) {
     var thresholded = thresh_dat.updateMask(thresh_dat.lte(value))
@@ -245,7 +245,7 @@ var add_thresh = function(thresh_dat) {
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
 add_thresh(Comp_depth)
-
+//geo_map_raw.updateMask(
 
 //putting slider in the panel
 var panel1 = ui.Panel({
