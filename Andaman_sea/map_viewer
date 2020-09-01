@@ -3841,7 +3841,8 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [98.06424618245205, 9.86127905647201],
            [98.09377193928799, 9.988436515824535]]]]),
     geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
-    ben_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1");
+    ben_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1"),
+    ben_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -3873,7 +3874,7 @@ Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
 Map.addLayer(geo_clean3, map_palettes.geo, "geo_manual", false)
 Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
-//Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
+Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
 
 /*
 // wave data
