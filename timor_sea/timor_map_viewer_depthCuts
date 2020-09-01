@@ -217,7 +217,7 @@ layers.add(depthComposite1)
 
 if(vars.geo_raw_depthCutoff) {
 //slider params
-var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
+var label = ui.Label('DepthComposite_threshold_slider for geo raw:',
                {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
 );
 
