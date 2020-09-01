@@ -4683,7 +4683,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     // Seagrass on RC or RS in outer extent -> Rock
     man_benthic = man_benthic.where({
       test: outer_extent.eq(1)
-                     .and(geo_map.eq(15).or(geo_map.eq(22)).or(geo_map(14))) //Reef crest or Reef slope or Outer Reef Flat
+                     .and(geo_map.eq(15).or(geo_map.eq(22)).or(geo_map.eq(14))) //Reef crest or Reef slope or Outer Reef Flat
                      .and(man_benthic.eq(14)), //Seagrass
       value: ee.Image(13) //Rock
     }); 
