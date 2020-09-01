@@ -239,7 +239,6 @@ var add_thresh = function(inputDepth, geoCut) {
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value)))
-    //var thresholded1 = geoCut.updateMask(thresholded)
     outputGeoCut.setEeObject(thresholded)
     
   })
@@ -248,7 +247,7 @@ var add_thresh = function(inputDepth, geoCut) {
 
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
-var geocut= add_thresh(Comp_depth, geo_map_raw)
+add_thresh(Comp_depth, geo_map_raw)
 
 
 
