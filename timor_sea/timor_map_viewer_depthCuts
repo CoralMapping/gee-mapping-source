@@ -135,7 +135,7 @@ var vars = {
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
-  geo_raw_depthCutoff: true,
+  geo_raw_depthCutoff: false,
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
@@ -198,8 +198,7 @@ var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
- 
-//var Comp_depth =Comp_depth.eq(1)
+
  
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
@@ -246,12 +245,9 @@ var add_thresh = function(inputDepth, geoCut) {
 }
 
 //calling the slider function and mask with depth composite
-//add_thresh(geo_map_raw.updateMask(Comp_depth)) 
+
 add_thresh(Comp_depth, geo_map_raw)
 
-
-
-//geo_map_raw.updateMask(
 
 //putting slider in the panel
 var panel1 = ui.Panel({
