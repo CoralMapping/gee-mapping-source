@@ -234,7 +234,7 @@ slider.setValue(15);
 
 var add_thresh = function(inputDepth, geoCut) {
   
-  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutbasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value)))
