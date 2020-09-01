@@ -224,14 +224,14 @@ var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
 
  var slider = ui.Slider({
   min:0,
-  max: 25,
+  max: 15,
   step: 0.01,
   value: false,
   style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
 
 });
 
-slider.setValue(25);
+slider.setValue(15);
 
 var add_thresh = function(inputDepth, geoCut) {
   
