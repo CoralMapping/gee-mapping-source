@@ -130,11 +130,11 @@ var region_params = param_module.south_asia;       //<------------ THIS IS WHERE
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: true, // set to true if you want to view geo clean 2
-  geo_clean3: true, // set to true if you want to view geo clean 3
-  benthic_clean1: true, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  geo_clean1: false, // set to true if you want to view geo clean 1
+  geo_clean2: false, // set to true if you want to view geo clean 2
+  geo_clean3: false, // set to true if you want to view geo clean 3
+  benthic_clean1: false, // set to true if you want to view benthic clean 1
+  benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true,
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
@@ -166,7 +166,7 @@ if (vars.raw) {
                   .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
                      .selfMask();
   } else {
-      var benthic_map_raw = ee.Image(region_params.benthic_map);
+      var benthic_map_raw = ee.Image(region_params.benthic_map_tuto);
   }
 
   // Add the raw region classification to the viewer
