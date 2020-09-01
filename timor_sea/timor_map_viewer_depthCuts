@@ -199,6 +199,8 @@ var Comp_depth=Comp_depth.expression(
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
  
+var Comp_depth =Comp_depth.eq(1)
+ 
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
 var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
 
@@ -244,7 +246,7 @@ var add_thresh = function(thresh_dat) {
 
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
-add_thresh(geo_map_raw.where(Comp_depth, geo_map_raw))
+add_thresh(geo_map_raw.where(Comp_depth.eq(1), geo_map_raw))
 //geo_map_raw.updateMask(
 
 //putting slider in the panel
