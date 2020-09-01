@@ -233,12 +233,12 @@ var label = ui.Label('DepthComposite_threshold_slider for geo raw Timor:',
 
 slider.setValue(25);
 
-var add_thresh = function(input) {
+var add_thresh = function(inputDepth, geoCut) {
   
-  var outputGeoCut = ui.Map.Layer(input, map_palettes.geo, 'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutoffs_basedOnDepth', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
-    var thresholded = input.updateMask(input.lte(value))
+    var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value)))
     //var thresholded1 = geoCut.updateMask(thresholded)
     outputGeoCut.setEeObject(thresholded)
     
@@ -248,7 +248,10 @@ var add_thresh = function(input) {
 
 //calling the slider function and mask with depth composite
 //add_thresh(geo_map_raw.updateMask(Comp_depth)) 
-add_thresh(Comp_depth)
+var geocut= add_thresh(Comp_depth)
+
+
+
 //geo_map_raw.updateMask(
 
 //putting slider in the panel
