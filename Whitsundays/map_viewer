@@ -32,9 +32,9 @@ Map.addLayer(S2, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "s2 pretty pictu
 
 // Whitsundays
 Map.addLayer(pixels, {color:'#20639b'}, "pixels", false)
-Map.addLayer(pixels2, {color:'#20639b'}, "pixels", false)
+Map.addLayer(pixels2, {color:'#17e8e5'}, "pixels2", false)
 Map.addLayer(segments, {color:'#3caea3'}, "segments", false)
-Map.addLayer(segments2, {color:'#3caea3'}, "segments", false)
+Map.addLayer(segments2, {color:'#135c55'}, "segments2", false)
 Map.addLayer(geo_raw, map_palettes.geo, "Whitsundays Geo - RAW", false)
 Map.addLayer(geo_clean, map_palettes.geo, "Whitsundays Geo-clean", false)
 
