@@ -4404,13 +4404,13 @@ if (vars.geomorphic) {
     vars.obia_clean = false;
     vars.fast_clean = true;
     vars.manual_clean = false;
-    vars.geomorph_output_name = temp_outname + '1';
+    vars.geomorph_output_name = temp_outname + '1w';
   } else if (vars.cleanup_stage == 2) {
     vars.obia_2nd_pass = true;
     vars.obia_clean = true;
     vars.fast_clean = true;
     vars.manual_clean = false;
-    vars.geomorph_output_name = temp_outname + '2';
+    vars.geomorph_output_name = temp_outname + '2w';
   } else if (vars.cleanup_stage == 3) {
     vars.manual_clean = true;
     vars.obia_2nd_pass = false;
@@ -4418,7 +4418,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3';
+    vars.geomorph_output_name = temp_outname + '3w';
   }
 }
 
@@ -4466,13 +4466,17 @@ if (vars.manual_clean && vars.geomorphic) {
   
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
-  
+
+//ADD DEPTH 
   var depth = ee.Image(region_params.pixels).select('depth');
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
+
+//ADD WAVES
+  var waves = ee.Image(region_params.waves)
+  Map.addLayer(waves.lt(0.4), {}, "0.4m threshold", false);
   
 // update these values based on inspection of the layer
-  //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
   var outer_extent = ee.Image().byte().paint(ee.Feature(Offshore, {zone: 1}), "zone").clip(Offshore);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
@@ -4509,13 +4513,13 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
-  /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
+  // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
   man_geo = man_geo.where({
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
+  })
   
   // ANS clean
   // Reef crest -> Inner reef flat
