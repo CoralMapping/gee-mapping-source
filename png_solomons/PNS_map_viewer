@@ -2316,12 +2316,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [142.15316844009237, -2.467795559859385],
           [135.12191844009237, 0.6954864947804655],
           [133.45199656509237, -0.44707001364412374]]]),
-    image2 = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean1_15m"),
-    image = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean_125GEO_10ben1"),
-    mid_mask = 
-    /* color: #ff0ad5 */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #ff0ad5 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -10708,12 +10703,6 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
-
-// Temp CHRIS CLEAN, DELETED WHEN DECIDED
-Map.addLayer(image, map_palettes.geo, 'Geo Clean 1 12 m', false); // TEMP CHRIS adding clean 1_12.5
-Map.addLayer(image2, map_palettes.geo, 'Geo Clean 1 15 m', false); // TEMP CHRIS adding clean 1_15
-
-
 
 // ###########################################
 // SENSOR GENERICS
