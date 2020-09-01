@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    artifact_layer = /* color: #98ff00 */ee.Geometry({
+    artifact_layer = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2316,7 +2319,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [142.15316844009237, -2.467795559859385],
           [135.12191844009237, 0.6954864947804655],
           [133.45199656509237, -0.44707001364412374]]]),
-    mid_mask = /* color: #ff0ad5 */ee.Geometry({
+    mid_mask = 
+    /* color: #ff0ad5 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
