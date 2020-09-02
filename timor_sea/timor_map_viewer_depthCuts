@@ -224,7 +224,7 @@ var label = ui.Label('DepthComposite_threshold_slider for geo raw:',
  var slider = ui.Slider({
   min:0,
   max: 25,
-  step: 0.01,
+  step: 0.1,
   value: false,
   style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
 
@@ -239,7 +239,7 @@ var add_thresh = function(inputDepth, geoCut) {
   var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
-    var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lt(value)))
+    var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.gt(value)))
     outputGeoCut.setEeObject(thresholded)
     
   })
