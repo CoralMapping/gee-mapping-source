@@ -46,7 +46,8 @@ var benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_cle
           [94.55765095263278, 19.61003573008932],
           [93.72269001513278, 20.88811209417265],
           [92.9316743901328, 21.543577274658826]]]),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic/20200424T195720Z/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic");
+    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic/20200424T195720Z/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic"),
+    sa_lowtide_sr = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Andaman Sea export to Vulcan bucket
 
@@ -67,6 +68,7 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum());
 
 // check before export
 Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b3","b2","b1"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false);
+Map.addLayer(sa_lowtide_sr, {"opacity":1,"bands":["b3","b2","b1"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false);
 Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false);
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false);
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false);
