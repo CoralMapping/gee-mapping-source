@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
+var benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
     reef_boundary = /* color: #d63000 */ee.Geometry.Polygon(
