@@ -29,12 +29,10 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [124.0786714971726, -10.666393639266031],
           [122.7163668096726, -11.011683475005183],
           [121.3980074346726, -12.946059901275891]]]),
-    benthic = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_clean2"),
-    geo = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean3"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
     pixels = ee.Image("projects/coral_atlas/Timor/in_out/timor_pixels"),
-    image = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
-    image2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3");
+    benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
+    geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Timor Sea export to Vulcan bucket
 
