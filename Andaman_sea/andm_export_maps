@@ -34,7 +34,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// Timor Sea export to Vulcan bucket
+// Andaman Sea export to Vulcan bucket
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -70,9 +70,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false);
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'timor_sea_stack',
+  description: 'andaman_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/timor_sea/timor_sea_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/andaman_sea/andaman_sea_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
