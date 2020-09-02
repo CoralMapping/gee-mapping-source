@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
     benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
@@ -47,7 +46,8 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [94.95315876513278, 18.279998398349704],
           [94.55765095263278, 19.61003573008932],
           [93.72269001513278, 20.88811209417265],
-          [92.9316743901328, 21.543577274658826]]]);
+          [92.9316743901328, 21.543577274658826]]]),
+    lowtide_sr = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Andaman Sea export to Vulcan bucket
 
