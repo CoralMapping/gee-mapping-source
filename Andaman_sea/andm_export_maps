@@ -47,7 +47,7 @@ var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30
           [94.55765095263278, 19.61003573008932],
           [93.72269001513278, 20.88811209417265],
           [92.9316743901328, 21.543577274658826]]]),
-    lowtide_sr = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
+    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic/20200424T195720Z/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Andaman Sea export to Vulcan bucket
 
