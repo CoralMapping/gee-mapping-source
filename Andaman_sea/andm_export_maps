@@ -83,7 +83,7 @@ var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false);
 
 // run the export
-Export.image.toCloudStorage({
+/*Export.image.toCloudStorage({
   image: export_stack,
   description: 'andaman_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
@@ -93,6 +93,6 @@ Export.image.toCloudStorage({
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
-});
+});/*
 
 
