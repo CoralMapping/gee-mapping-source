@@ -218,10 +218,8 @@ if (vars.geo_clean2) {
 if (vars.geo_clean1) {
     layers.add(geo1)} 
 if (vars.raw){ 
- layers.add(geo_raw) && layers.add(depthComposite1) && layers.add(benthic_raw)} 
+  layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   
-
-    
 ////////// UI SET UP //////////
 
 if(vars.geo_raw_depthCutoff) {
