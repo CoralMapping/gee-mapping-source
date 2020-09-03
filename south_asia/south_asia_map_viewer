@@ -170,10 +170,6 @@ if (vars.raw) {
 var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 
-//load the ui raw and compiste layers in the app
-
-
-  
 }
 
 // Load the clean classifications to the ui viewer
