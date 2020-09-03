@@ -112,7 +112,7 @@ var noReef_mask =
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
 
-//RB> This is a test to integrate a slider to cut off geo maps based on depth (to avoid need of running different cut offs)
+
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -135,7 +135,7 @@ var vars = {
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
-  geo_raw_depthCutoff: true,
+  geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
