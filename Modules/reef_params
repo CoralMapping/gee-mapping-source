@@ -138,7 +138,7 @@ var gbr_eomap = {
   geo_val_library: "projects/coral_atlas/gbr_eomap/training/gbr_geo_validation",
   benthic_val_library: "projects/coral_atlas/gbr_eomap/training/gbr_benthic_validation",
   geo_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo",
-  benthic_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic",
+  benthic_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-n",
   geo_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean3",
   benthic_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-clean"
 }
