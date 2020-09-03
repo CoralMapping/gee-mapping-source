@@ -174,9 +174,8 @@ var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 
 //load the ui raw and compiste layers in the app
-var layers = mapPanel.layers(); 
-layers.add(geo_raw) 
-layers.add(depthComposite1)
+
+
   
 }
 
@@ -205,8 +204,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"p
 var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false)
 
 //load the ui layers
-
-layers.add(sr_Dove)
+var layers = mapPanel.layers(); 
+   layers.add(sr_Dove)
 if (vars.benthic_clean2) {
     layers.add(benthic2)}
 if (vars.benthic_clean1) {
@@ -217,6 +216,10 @@ if (vars.geo_clean2) {
     layers.add(geo2)}
 if (vars.geo_clean1) {
     layers.add(geo1)} 
+if (vars.raw){ 
+ layers.add(geo_raw) && layers.add(depthComposite1)} 
+  
+
     
 ////////// UI SET UP //////////
 
