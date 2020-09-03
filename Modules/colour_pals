@@ -41,27 +41,6 @@ var geo_pal = {
   min: 0, max: 30
 }
 
-// to fix depth slider in map_viewer (added by RB)
-
-var geo_slider = {
-  palette: [  // the benthic classificaiton palette (NB in raster class value order)
-    '004529', // 1 =  Land
-    '023858', // 2 =  Deep
-    '5ce0ff', // 11 = Shallow Lagoon
-    '3690c0', // 12 = Deep lagoon
-    'ffffbf', // 13 = Inner Reef Flat
-    'ffcc7a', // 14 = Outer Reef Flat
-    'a50f15', // 15 = Reef Crest
-    'addd8e', // 16 = Terrestrial Reef Flat
-    'd9f0a3', // 21 = Sheltered Reef Slope
-    'd4d417', // 22 = Reef Slope
-    'bdbdbd', // 23 = Plateau
-    '02818a', // 24 = Back Reef Slope
-    'deebf7', // 25 = Patch Reef
-    'deebf7', // 26 = Small Reef
-  ],
-  min: 0, max: 14
-}
 
 
 // Define colour palette for BENTHIC classifications
@@ -155,7 +134,6 @@ var UserAcc_cols=['ffffd9','edf8b1','c7e9b4','7fcdbb','41b6c4','1d91c0','225ea8'
 
 exports = {
   geo : geo_pal,
-  geo_slider: geo_slider,
   benthic : benthic_pal,
   UA_pal: UA_pal,
   UserAcc_pal: UserAcc_pal,
