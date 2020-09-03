@@ -171,9 +171,9 @@ if (vars.raw) {
 
   // Add the raw region classification to the viewer
 var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
-
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
-//load the ui raw layers
+
+//load the ui raw and compiste layers in the app
 var layers = mapPanel.layers(); 
 layers.add(geo_raw) 
 layers.add(depthComposite1)
