@@ -10,7 +10,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     pixels2 = ee.Image("users/EvaK/Whit_eomap/in_out/whit_pixels2"),
     segments2 = ee.Image("users/EvaK/Whit_eomap/in_out/whit_segmentation2"),
     geo_rawA = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geoA"),
-    geo_clean_1st = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo-cleanA");
+    geo_OLD = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo-cleanC"),
+    geo_OLD2 = ee.Image("users/EvaK/Whit_eomap/in_out/whit_geo-cleanB");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -38,7 +39,8 @@ Map.addLayer(pixels2, {color:'#17e8e5'}, "pixels2", false)
 //Map.addLayer(segments, {color:'#3caea3'}, "segments", false)
 Map.addLayer(segments2, {color:'#135c55'}, "segments2", false)
 Map.addLayer(geo_rawA, map_palettes.geo, "Whit Geo - RAW OLD", false)
-Map.addLayer(geo_clean_1st, map_palettes.geo, "Whit Geo-clean OLD", false)
+Map.addLayer(geo_OLD, map_palettes.geo, "Whit Geo-clean OLD", false)
+Map.addLayer(geo_OLD2, map_palettes.geo, "Whit Geo-clean OLDb", false)
 //Map.addLayer(geo_clean_2nd, map_palettes.geo, "Whit Geo-clean less RC", false)
 Map.addLayer(geo_clean_NEW, map_palettes.geo, "Whit Geo-clean NEW", false)
 
