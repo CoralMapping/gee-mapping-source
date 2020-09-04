@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -14432,6 +14435,16 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
 
+
+// ### REVIEWERS WISH LIST FOR CLEAN UP #########################
+// This list is created by somebody reviewing the maps and add suggestions for change
+// 1) RC ; to little or no RC on steep walls and narrow RF, should this be solved with bright waves turned into RC
+// 2) Apply waves to split in sheltered and exposed
+// 3) Better land mask smoother
+// 4) Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
+// ############################
+
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
@@ -14473,7 +14486,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -14577,19 +14590,17 @@ if (!vars.geomorphic) {
 // Reef_boundary defines export extent and can be used to clip out unwanted areas
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
-// ############################
+// ################################################################################################################
 // This is the section to add/remove manual cleanups
 // You MUST review it for each region
-// ############################
+// ################################################################################################################
+
+
 
 if (vars.manual_clean && vars.geomorphic) {
   
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
-  
-  var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(900);// WHY DO WE HAVE THIS CHRIS ASK
-  Map.addLayer(depth_cont, {}, "depth contour", false);
   
   // update these values based on inspection of the layer
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
@@ -14655,19 +14666,13 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   
-  /*   // Deep water -> Deep lagoon (inside the reef)
+  /*   // Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
   man_geo = man_geo.where({
     test: notdeepwater.eq(1)
                      .and(man_geo.eq(2)),
     value: ee.Image(12)
   });
   
-  // Shallow lagoon/Deep lagoon/Shelterd reef slope -> Reef slope (around the reef edge)
-  man_geo = man_geo.where({
-    test: reefslope.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)).or(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
   
   // Reef slope/Sheletered reef slope -> Deep lagoon (insided the reef)
   man_geo = man_geo.where({
@@ -14675,127 +14680,9 @@ if (vars.manual_clean && vars.geomorphic) {
                      .and(man_geo.eq(22)).or(man_geo.eq(21)),
     value: ee.Image(12)
   });
-  
+  */
 
-  // **Shallow Water clean**
-  
-  // Create smoothed depth layer to use in where operations
-  var smooth_depth = depth
-                      //.unmask(99)
-                      .focal_mode({
-                        radius: vars.smooth_radius, // relates to smoothness required
-                        kernelType: 'circle', units: 'pixels', iterations: 2
-                      });
-  
-  
-  // **Litchfield Coast**
-  
-  // Inner reef flat/Outer reef flat -> TRF
-  man_geo = man_geo.where({
-    test: litchfield.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(14)),
-    value: ee.Image(16)
-  });
-  
-  // Non TRF -> Mask
-  man_geo = man_geo.where({
-    test: litchfield.eq(1)
-                     .neq(man_geo.eq(16)),
-    value: ee.Image(0)
-  });
-  
-  // **Arnhem Land Coast**
-  
-  // Shallow lagoon, IRF, SRS, BRS, RC -> TRF
-  man_geo = man_geo.where({
-    test: arnhemcoast.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)).or(man_geo.eq(24)).or(man_geo.eq(15))
-                     .and(smooth_depth.lte(300)),
-    value: ee.Image(16)
-  });
-  
-  // Shallow lagoon, IRF, BRS -> Mask
-  man_geo = man_geo.where({
-    test: arnhemcoast.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(24))
-                     .and(smooth_depth.gt(300)),
-    value: ee.Image(0)
-  });
-  
-  // **Northern WA Coast** was 150 and BRS
-  // Shallow lagoon, IRF, BRS -> TRF 
- 
-  
-  // Shallow lagoon, IRF, Sheltered slope -> TRF
-  man_geo = man_geo.where({
-    test: northernwa.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // **Dampier Coast**
-  
-  // Shallow lagoon, IRF, Sheltered slope -> TRF
-  man_geo = man_geo.where({
-    test: dampier.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // **Wellesley Island & Tiwi Islands**
-  
-  // Shallow lagoon -> BRS 
-  man_geo = man_geo.where({
-    test: welleslytiwi.eq(1)
-                     .and(man_geo.eq(11)),
-    value: ee.Image(24)
-  });
-  
-  // IRF, SRS -> TRF 
-  man_geo = man_geo.where({
-    test: welleslytiwi.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // BRS -> TRF
-  man_geo = man_geo.where({
-    test: tiwi.eq(1)
-                     .and(man_geo.eq(24)),
-    value: ee.Image(16)
-  });
-  
-  // **Mid-Shelf**
-  
-  // Shallow lagoon, Deep lagoon, SRS -> BRS 
-  man_geo = man_geo.where({
-    test: midshelf.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)).or(man_geo.eq(21)),
-    value: ee.Image(24)
-  });
-  
-  // Reef crest -> Outer reef flat
-  man_geo = man_geo.where({
-    test: midshelf.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(14)
-  });
-  
-  // **Inshore reef**
-  
-  // Inner reef flat, TRF -> Outer reef flat
-  man_geo = man_geo.where({
-    test: inshorereefouter.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(16)),
-    value: ee.Image(14)
-  });
-  
-  // TRF, SRS -> Inner reef flat
-  man_geo = man_geo.where({
-    test: inshorereefinner.eq(1)
-                     .and(man_geo.eq(16)).or(man_geo.eq(21)),
-    value: ee.Image(13)
-  });*/ 
+//**********************************************************************************************************************
   
   if (vars.geo_refinement) {
     // make the mask image layer
@@ -15030,9 +14917,9 @@ Initial small object clean
 
 */
 
-// ############################
+// ################################################################################################################
 // START OF CLEAN 1
-// ############################
+// ################################################################################################################
 
 // Geomorphic Clean
 
@@ -15084,14 +14971,14 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
-  // reef crest close to terrestrial main land not including coral cays -> TRF 
+  /*// reef crest close to terrestrial main land not including coral cays -> TRF 
   //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
   //                 .and(inner_extent.eq(1))
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
-  });
+  });*/
   
   // TRF far from land -> ORF
   clean_map = clean_map.where({
