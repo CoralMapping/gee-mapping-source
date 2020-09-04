@@ -4830,10 +4830,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    mid_mask = 
-    /* color: #ff0ad5 */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #ff0ad5 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -9450,8 +9447,32 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -10.052470308140414
               ],
               [
-                147.82436920898533,
-                -10.053484463064343
+                147.82969057005525,
+                -10.057372316059709
+              ],
+              [
+                147.8339822460947,
+                -10.058893235568913
+              ],
+              [
+                147.84634346223518,
+                -10.073929352243516
+              ],
+              [
+                147.85080624651587,
+                -10.093952010368977
+              ],
+              [
+                147.86685607073042,
+                -10.097435692960037
+              ],
+              [
+                147.88565278099495,
+                -10.099566439516192
+              ],
+              [
+                147.91749097639303,
+                -10.079050527385398
               ],
               [
                 147.8497750927744,
@@ -14471,7 +14492,7 @@ var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YO
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
