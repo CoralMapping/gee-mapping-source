@@ -18,10 +18,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = 
-    /* color: #29d603 */
-    /* shown: false */
-    ee.Geometry({
+    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4500,7 +4497,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #ff0ad5 */ee.Geometry({
+    mid_mask = 
+    /* color: #ff0ad5 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -13180,7 +13180,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   
-  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
+  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   var TerrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
   
  
@@ -13210,14 +13210,21 @@ if (vars.manual_clean && vars.geomorphic) {
   })*/
   
   // **Terrestrail Reef Flat clean**
-  
-// R
   man_geo = man_geo.where({
-    test: TerrestrialRF.neq(1)
-                     .and(man_geo.eq(16)),
-    value: ee.Image(14)
+    test: man_geo.eq(16),
+    value: ee.Image(33)
   });
   
+  man_geo = man_geo.where({
+    test: terrestrialRF.eq(1)
+                     .and(man_geo.eq(33)),
+    value: ee.Image(16)
+  });  
+  
+   man_geo = man_geo.where({
+    test: man_geo.eq(33),
+    value: ee.Image(14)
+  }); 
   /*   // Deep water -> Deep lagoon (inside the reef)
   man_geo = man_geo.where({
     test: notdeepwater.eq(1)
