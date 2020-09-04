@@ -7808,7 +7808,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     image: man_benthic,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: reef_boundary,
+    region: reef_export,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
