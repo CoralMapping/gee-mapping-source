@@ -7479,8 +7479,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
   var landmaskfc = ee.FeatureCollection(region_params.land_mask).geometry();
   var landmask = ee.Image().byte().paint(ee.Feature(landmaskfc, {zone: 1}), "zone").clip(landmaskfc);
-  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-  var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
+  //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  //var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
   var arnhemcoast = ee.Image().byte().paint(ee.Feature(arnhem_coast, {zone: 1}), "zone").clip(arnhem_coast);
