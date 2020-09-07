@@ -4418,7 +4418,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3w04b';
+    vars.geomorph_output_name = temp_outname + '3waves4b';
   }
 }
 
