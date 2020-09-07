@@ -197,21 +197,25 @@ var accuracy_collection = val_map.unmask()
                             })
   }
 } 
+   
 
 
+print (dataTable)
 
 // 4. Export
 
-var exportAccuracy = ee.Feature(null, {matrix: classification_errormatrix.accuracy()});
+// Get a confusion matrix representing expected accuracy.
+//var testAccuracy = validated.errorMatrix('Level_2', 'classification');
 
-// Export the FeatureCollection.
+// Еxport error matrix
+//var exportAccuracy = (null, {matrix: classification_errormatrix_array});
+var exportAccuracy= ee.Feature(null, {'matrix': classification_errormatrix_array});                            
+
 Export.table.toDrive({
   collection: ee.FeatureCollection(exportAccuracy),
-  description: 'exportAccuracy',
+  description: 'Error_matrix',
   fileFormat: 'CSV'
 });
-
-
 
 // export to .csv?
 // or join to the input classification assset and re-write with accuracy in metadata?
