@@ -14466,9 +14466,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 // 4) Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
 // 5) Check TRF as maybe approach is to coarse and taking out to much area
 // 6) RS in side of lagoon on RF areas see Vonavona
-// 7) Should we close down DL manualy
+// 7) Should we close down DL manualy 
 // 8) RC inside lagoon
-// 6) in Atolls to much IRF, should be more ORF
+// 9) in Atolls to much IRF, should be more ORF
+// 10) what to with geo classes asinged to deep water or sungglint
 // Benthic
 // 1) To much RB in ORF and IRF areas but that maybe rerpesent mixture of sand, coral/algae area
 // 2) CA in IRF areas to mcuh and possible more sand
