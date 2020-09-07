@@ -202,6 +202,17 @@ var accuracy_collection = val_map.unmask()
 
 // 4. Export
 
+var exportAccuracy = ee.Feature(null, {matrix: classification_errormatrix.accuracy()});
+
+// Export the FeatureCollection.
+Export.table.toDrive({
+  collection: ee.FeatureCollection(exportAccuracy),
+  description: 'exportAccuracy',
+  fileFormat: 'CSV'
+});
+
+
+
 // export to .csv?
 // or join to the input classification assset and re-write with accuracy in metadata?
 // or both?
