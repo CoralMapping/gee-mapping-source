@@ -18,10 +18,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = 
-    /* color: #29d603 */
-    /* shown: false */
-    ee.Geometry({
+    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4830,7 +4827,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #ff0ad5 */ee.Geometry({
+    mid_mask = 
+    /* color: #ff0ad5 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -14459,11 +14459,24 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 
 // ### REVIEWERS WISH LIST FOR CLEAN UP #########################
 // This list is created by somebody reviewing the maps and add suggestions for change
+// Geomorphic
 // 1) RC ; to little or no RC on steep walls and narrow RF, should this be solved with bright waves turned into RC
 // 2) Apply waves to split in sheltered and exposed
 // 3) Better land mask smoother
 // 4) Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
-// ############################
+// 5) Check TRF as maybe approach is to coarse and taking out to much area
+// 6) RS in side of lagoon on RF areas see Vonavona
+// 7) Should we close down DL manualy
+// 8) RC inside lagoon
+// 6) in Atolls to much IRF, should be more ORF
+// Benthic
+// 1) To much RB in ORF and IRF areas but that maybe rerpesent mixture of sand, coral/algae area
+// 2) CA in IRF areas to mcuh and possible more sand
+// 3) RC not surrounded by IRF or SL
+// 4) SD assigned to brigh waves in RC or ORF zone IF SD in RC/ORF zone then assign RC
+// 5) no data assinged as no depth, but image visible
+
+// ############################ 
 
 
 // Table of contents
