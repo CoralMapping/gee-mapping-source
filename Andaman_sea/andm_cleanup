@@ -4347,7 +4347,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object size in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 500, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
-  wave_height: 0.5, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.3, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1500,
   shallowlag_depth_cutoff: 500,
   benthic_depth_cutoff: 700,
@@ -4418,7 +4418,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3waves5b';
+    vars.geomorph_output_name = temp_outname + '3waves3b';
   }
 }
 
