@@ -10699,7 +10699,8 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
         }
       ],
       "coordinates": []
-    });
+    }),
+    pns_benthic_v1 = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_benthic_v1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -10761,6 +10762,7 @@ if (vars.raw) {
   // Add the raw region classification to the viewer
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+  Map.addLayer(pns_benthic_v1.updateMask(pns_benthic_v1.gt(2)), map_palettes.benthic, 'Benthic v1 RAW', false);
 }
 
 // Load the clean classifications
