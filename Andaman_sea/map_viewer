@@ -3870,13 +3870,13 @@ Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Mya
 
 //Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
 //Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
-Map.addLayer(geo_clean3, map_palettes.geo, "geo_FINAL", false)
+Map.addLayer(geo_clean3, map_palettes.geo, "geo_EXPORTED", false)
 Map.addLayer(no_waves, map_palettes.geo, "geo_manual + no waves", false)
 Map.addLayer(g03, map_palettes.geo, "geo_manual + waves 0.3", false)
 Map.addLayer(g04, map_palettes.geo, "geo_manual + waves 0.4", false)
 Map.addLayer(g05, map_palettes.geo, "geo_manual + waves 0.5", false)
 //Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
-Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
+Map.addLayer(ben_clean2, map_palettes.benthic, "ben_EXPORTED", false)
 
 // wave data
 Map.addLayer(waves, {color:'#00FFFF'}, "waves", false)
