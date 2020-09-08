@@ -3878,13 +3878,9 @@ Map.addLayer(g05, map_palettes.geo, "geo_manual + waves 0.5", false)
 //Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
 Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
 
-/*
 // wave data
-var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
-var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+Map.addLayer(waves, {color:'#00FFFF'}, "waves", false)
 
-Map.addLayer(kd1, {}, "waves - kd1", false)
-Map.addLayer(kd2, {}, "waves - kd2", false)*/
 
 // add training data / sample point distributions
 
