@@ -4418,7 +4418,7 @@ if (vars.geomorphic) {
     vars.fast_clean = false;
     vars.smooth_output = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3waves3b';
+    vars.geomorph_output_name = temp_outname + '3nowaves';
   }
 }
 
@@ -4471,10 +4471,11 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth = ee.Image(region_params.pixels).select('depth');
   var depth_cont = depth.lt(900);
   Map.addLayer(depth_cont, {}, "depth contour", false);
-
+/*
 //ADD WAVES
   var waves = ee.Image(region_params.waves)
   Map.addLayer(waves.lt(0.4), {}, "0.4m threshold", false);
+  */
   
 // update these values based on inspection of the layer
   var inner_extent = ee.Image().byte().paint(ee.Feature(Inshore, {zone: 1}), "zone").clip(Inshore);
