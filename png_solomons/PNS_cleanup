@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5987,7 +5990,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #ff0ad5 */ee.Geometry({
+    mid_mask = 
+    /* color: #ff0ad5 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -16442,11 +16448,11 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 // ### REVIEWERS WISH LIST FOR CLEAN UP #########################
 // This list is created by somebody reviewing the maps and add suggestions for change
 // Geomorphic
-// 1) RC ; to little or no RC on steep walls and narrow RF, should this be solved with bright waves turned into RC
-// 2) Apply waves to split in sheltered and exposed
-// 3) Better land mask smoother
+// 1) RC ; to little or no RC on steep walls and narrow RF, should this be solved with bright waves turned into RC MITCH
+// 2) Apply waves to split in sheltered and exposed WAIT TILL WE GET WAVES
+// 3) Better land mask smoother PARTNERSHIP
 // 4) Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
-// 5) Check TRF as maybe approach is to coarse and taking out to much area
+// 5) Check TRF as maybe approach is to coarse and changing to much TRF to ORF
 // 6) RS in side of lagoon on RF areas see Vonavona
 // 7) Should we close down DL manualy 
 // 8) RC inside lagoon
@@ -16539,7 +16545,7 @@ var vars = {
   //reproject_res: ee.Number(sensor_params.pixel).pow(2),
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -16990,14 +16996,14 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
-  /*// reef crest close to terrestrial main land not including coral cays -> TRF 
+  // reef crest close to terrestrial main land not including coral cays -> TRF 
   //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
-  //                 .and(inner_extent.eq(1))
+                   .and(low_tide_image_dove.select('b3').lt(2000))
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
-  });*/
+  });
   
   // TRF far from land -> ORF
   clean_map = clean_map.where({
@@ -17064,9 +17070,9 @@ if (!vars.geomorphic && vars.cleanup_stage == 1) {
   
 }
 
-// ############################
+// ################################################################################################################
 // START OF CLEAN 2
-// ############################
+// ################################################################################################################
 
 if (vars.geomorphic && vars.obia_2nd_pass) {
   var clean_map = geo_map;
