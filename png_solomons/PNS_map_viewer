@@ -10762,7 +10762,7 @@ if (vars.raw) {
   // Add the raw region classification to the viewer
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
-  Map.addLayer(pns_benthic_v1.updateMask(pns_benthic_v1.gt(2)), map_palettes.benthic, 'Benthic v1 RAW', false);
+  Map.addLayer(pns_benthic_v1.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic v1 RAW', false);
 }
 
 // Load the clean classifications
