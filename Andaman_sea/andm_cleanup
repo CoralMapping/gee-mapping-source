@@ -4515,12 +4515,12 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
-  // remove
+  /*// remove
   man_geo = man_geo.where({
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })
+  })*/
   
   // ANS clean
   // Reef crest -> Inner reef flat
