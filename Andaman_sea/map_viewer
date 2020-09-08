@@ -2655,8 +2655,6 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [97.9349427162824, 12.003041923252017],
            [97.93348370602509, 11.984950030309959],
            [97.9273036029824, 11.973027452823079]]]]),
-    geo_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1"),
-    geo_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean2"),
     notRC = 
     /* color: #0572d6 */
     /* shown: false */
@@ -3841,11 +3839,12 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [98.06424618245205, 9.86127905647201],
            [98.09377193928799, 9.988436515824535]]]]),
     geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
-    ben_clean1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1"),
     ben_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
-    geo_clean03 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3w03"),
-    geo_clean04 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3w04"),
-    geo_clean05 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3w05");
+    no_waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3nowaves"),
+    g03 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves3b"),
+    g04 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves4b"),
+    g05 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves5b"),
+    waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_waves");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
@@ -3859,8 +3858,6 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 var centre_map = ee.Geometry.Point([95.68022366345264, 12.587883996209781])
 Map.centerObject(centre_map, 7)
 
-
-
 // add some background data
 Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
 Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
@@ -3868,18 +3865,17 @@ Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "sou
 
 // Andaman + Myanmar
 Map.addLayer(geo, map_palettes.geo, "Andaman + Myanmar Geo - RAW", false)
-//Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
 
 Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
-//Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
 
-Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
-Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
-Map.addLayer(geo_clean3, map_palettes.geo, "geo_manual", false)
-Map.addLayer(geo_clean03, map_palettes.geo, "geo_manual + waves 0.3", false)
-Map.addLayer(geo_clean04, map_palettes.geo, "geo_manual + waves 0.4", false)
-Map.addLayer(geo_clean05, map_palettes.geo, "geo_manual + waves 0.5", false)
-Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
+//Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
+//Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
+Map.addLayer(geo_clean3, map_palettes.geo, "geo_FINAL", false)
+Map.addLayer(no_waves, map_palettes.geo, "geo_manual + no waves", false)
+Map.addLayer(g03, map_palettes.geo, "geo_manual + waves 0.3", false)
+Map.addLayer(g04, map_palettes.geo, "geo_manual + waves 0.4", false)
+Map.addLayer(g05, map_palettes.geo, "geo_manual + waves 0.5", false)
+//Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
 Map.addLayer(ben_clean2, map_palettes.benthic, "ben_FINAL", false)
 
 /*
