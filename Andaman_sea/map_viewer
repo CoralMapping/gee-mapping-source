@@ -4,7 +4,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
-    not_reef = /* color: #d63000 */ee.Geometry({
+    not_reef = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1348,7 +1351,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    mid_mask = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[91.72158602227903, 21.135136056599126],
            [91.95716685092655, 20.484186241162092],
            [92.21397437768584, 20.58321229783212],
@@ -3299,7 +3305,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [92.53802670959848, 10.803419807767723],
            [92.55862607483286, 10.768345038218003],
            [92.61973752502817, 10.776439578764856]]]]),
-    refinement_mask = /* color: #d038d6 */ee.Geometry.MultiPolygon(
+    refinement_mask = 
+    /* color: #d038d6 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[92.30753378246236, 11.577260173965653],
            [92.2931142267983, 11.48912580995845],
            [92.39473776195454, 11.479032326324784],
@@ -3823,7 +3832,10 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
            [98.01504422176755, 12.26055373005727],
            [98.01410008419431, 12.274476290727405],
            [98.00465870846189, 12.277495544143843]]]]),
-    cloud = /* color: #87d6d4 */ee.Geometry.MultiPolygon(
+    cloud = 
+    /* color: #87d6d4 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[97.63532137902341, 8.915747442301326],
            [97.80286288292966, 8.875722662699165],
            [97.8323886397656, 8.989679976645181],
