@@ -38,8 +38,8 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -167,8 +167,8 @@ var accuracy_collection = val_map.unmask()
  
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-    print("Overall accuracy", accuracy_oa.format('%.2f'))
-   
+  print("Overall accuracy", accuracy_oa.format('%.2f'))
+   print("Overall accuracy", accuracy_oa.multiply(1000).floor().divide(10).round())
    
    
     //print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
