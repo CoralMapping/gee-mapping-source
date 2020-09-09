@@ -162,17 +162,20 @@ var accuracy_collection = val_map.unmask()
   })
   var accuracy_prod = ee.Dictionary.fromLists({
     keys: classes_mapped_names,
-    values: classification_errormatrix.producersAccuracy().toList().flatten()
+    values: ee.Number(classification_errormatrix.producersAccuracy().toList().flatten())
   })
-  print(accuracy_cons)
+ 
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-    print("Overall accuracy", accuracy_oa)//.format('%.2f'))
-   // var round = .map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
-    
-    //var round= accuracy_cons.map(function (accuracy_cons) {return accuracy_cons.format('%.2f')})
-    print("User's accuracy", accuracy_cons)
-    print("Producer's accuracy", accuracy_prod)
+    print("Overall accuracy", accuracy_oa.format('%.2f'))
+   
+   
+   
+    //print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
+    var mappedAccuracy_cons = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(100).floor().divide(100)})//this is to leave 2 decimal after commas after dict(RB)
+    print("User's accuracy", ee.Number(mappedAccuracy_cons).multiply(100).floor().divide(100))
+    var mappedAccuracy_prod = accuracy_prod.map(function(keys, values){ return ee.Number(values).multiply(100).floor().divide(100)})//this is to leave 2 decimal after commas after dict(RB)
+    print("Producer's accuracy", mappedAccuracy_prod)
     
     var classification_errormatrix_array = classification_errormatrix.array()
     // make a table we can use to interpret mis-classification
