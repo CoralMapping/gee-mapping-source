@@ -38,8 +38,8 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -167,18 +167,15 @@ var accuracy_collection = val_map.unmask()
  
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-  print("Overall accuracy", accuracy_oa.format('%.2f'))
+  //print("Overall accuracy", accuracy_oa.format('%.2f'))
    print("Overall accuracy", accuracy_oa.multiply(1000).floor().divide(10).round())
    
    
     //print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
     var mappedAccuracy_cons = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10).round()})//this is to leave 2 decimal after commas after dict(RB)
     print("User's accuracy", mappedAccuracy_cons)
-    print("User's accuracy", accuracy_cons)
-     var mappedAccuracy_cons1 = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(100).round().divide(100)})/
-    print("User's accuracy", mappedAccuracy_cons1 )
-    
-    var mappedAccuracy_prod = accuracy_prod.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10)})//this is to leave 2 decimal after commas after dict(RB)
+    //print("User's accuracy", accuracy_cons)
+    var mappedAccuracy_prod = accuracy_prod.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10).round()})//this is to leave 2 decimal after commas after dict(RB)
     print("Producer's accuracy", mappedAccuracy_prod)
     
     var classification_errormatrix_array = classification_errormatrix.array()
