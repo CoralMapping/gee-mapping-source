@@ -164,10 +164,14 @@ var accuracy_collection = val_map.unmask()
     keys: classes_mapped_names,
     values: classification_errormatrix.producersAccuracy().toList().flatten()
   })
+  //print(accuracy_cons)
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
-    print("Overall accuracy", accuracy_oa.format('%.2f'))
-    print("User's accuracy", accuracy_cons)//map(function (accuracy_cons) { return accuracy_cons.format('%.2f')}))
+    print("Overall accuracy", accuracy_oa)//.format('%.2f'))
+   // var round = .map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
+    
+    //var round= accuracy_cons.map(function (accuracy_cons) {return accuracy_cons.format('%.2f')})
+    print("User's accuracy", accuracy_cons)
     print("Producer's accuracy", accuracy_prod)
     
     var classification_errormatrix_array = classification_errormatrix.array()
