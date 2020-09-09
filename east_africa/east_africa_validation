@@ -164,7 +164,7 @@ var accuracy_collection = val_map.unmask()
     keys: classes_mapped_names,
     values: classification_errormatrix.producersAccuracy().toList().flatten()
   })
-  //print(accuracy_cons)
+  print(accuracy_cons)
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
     print("Overall accuracy", accuracy_oa)//.format('%.2f'))
