@@ -10728,7 +10728,9 @@ var vars = {
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
+  gamma: 1.7 // adjust the gamma value for the image dispaly
 };
+
 
 // choose where to centre the map (link this dynamically to map app?)
 Map.centerObject(centre_map, 8);
@@ -10737,7 +10739,7 @@ Map.centerObject(centre_map, 8);
 // var low_tide_image = ee.Image(region_params.pixels);
 // Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 var low_tide_image_dove = ee.Image(region_params.image);
-Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', false); // image data
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min:0, max:4000, gamma: vars.gamma}, sensor_params.sname + ' low tide', false); // image data
 
 // Load the raw classifications
 if (vars.raw) {
