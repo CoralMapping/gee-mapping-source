@@ -158,7 +158,7 @@ var accuracy_collection = val_map.unmask()
   var accuracy_oa = classification_errormatrix.accuracy()
   var accuracy_cons = ee.Dictionary.fromLists({
     keys: classes_mapped_names,
-    values: classification_errormatrix.consumersAccuracy().toList().flatten()
+    values: classification_errormatrix.consumersAccuracy().toList().flatten().format('%.2f')
   })
   var accuracy_prod = ee.Dictionary.fromLists({
     keys: classes_mapped_names,
@@ -209,7 +209,7 @@ var accuracy_collection = val_map.unmask()
 
 // Еxport error matrix
 //var exportAccuracy = (null, {matrix: classification_errormatrix_array});
-var exportAccuracy= ee.Feature(null, {'matrix': accuracy_cons.format('%.2f')});                            
+var exportAccuracy= ee.Feature(null, {'matrix': accuracy_cons});                            
 
 Export.table.toDrive({
   collection: ee.FeatureCollection(exportAccuracy),
