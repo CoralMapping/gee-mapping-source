@@ -206,10 +206,10 @@ var accuracy_collection = val_map.unmask()
 
 // Get a confusion matrix representing expected accuracy.
 //var testAccuracy = validated.errorMatrix('Level_2', 'classification');
-/*
+
 // Еxport error matrix
 //var exportAccuracy = (null, {matrix: classification_errormatrix_array});
-var exportAccuracy= ee.Feature(null, {'matrix': classification_errormatrix_array});                            
+var exportAccuracy= ee.Feature(null, {'matrix': accuracy_cons.format('%.2f')});                            
 
 Export.table.toDrive({
   collection: ee.FeatureCollection(exportAccuracy),
@@ -222,4 +222,4 @@ Export.table.toDrive({
 // or both?
 
 //.set("overall_acc", accuracy_oa, "user_acc", accuracy_cons, "producer_acc", accuracy_prod)
-*/
+
