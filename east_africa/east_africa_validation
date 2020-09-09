@@ -169,15 +169,12 @@ var accuracy_collection = val_map.unmask()
   if (vars.show_accuracy) {
   //print("Overall accuracy", accuracy_oa.format('%.2f'))
    print("Overall accuracy", accuracy_oa.multiply(1000).floor().divide(10).round())
-   
-   
     //print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
     var mappedAccuracy_cons = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10).round()})//this is to leave 2 decimal after commas after dict(RB)
     print("User's accuracy", mappedAccuracy_cons)
     //print("User's accuracy", accuracy_cons)
     var mappedAccuracy_prod = accuracy_prod.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10).round()})//this is to leave 2 decimal after commas after dict(RB)
     print("Producer's accuracy", mappedAccuracy_prod)
-    
     var classification_errormatrix_array = classification_errormatrix.array()
     // make a table we can use to interpret mis-classification
     var array_to_datatable = function(array) {
