@@ -172,7 +172,7 @@ var accuracy_collection = val_map.unmask()
    
    
     //print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')})
-    var mappedAccuracy_cons = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10)})//this is to leave 2 decimal after commas after dict(RB)
+    var mappedAccuracy_cons = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(1000).floor().divide(10).round()})//this is to leave 2 decimal after commas after dict(RB)
     print("User's accuracy", mappedAccuracy_cons)
     print("User's accuracy", accuracy_cons)
      var mappedAccuracy_cons1 = accuracy_cons.map(function(keys, values){ return ee.Number(values).multiply(100).round().divide(100)})/
