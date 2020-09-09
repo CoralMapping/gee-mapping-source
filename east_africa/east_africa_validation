@@ -158,7 +158,7 @@ var accuracy_collection = val_map.unmask()
   var accuracy_oa = classification_errormatrix.accuracy()
   var accuracy_cons = ee.Dictionary.fromLists({
     keys: classes_mapped_names,
-    values: classification_errormatrix.consumersAccuracy().toList().flatten().format('%.2f')
+    values: classification_errormatrix.consumersAccuracy().toList().flatten()
   })
   var accuracy_prod = ee.Dictionary.fromLists({
     keys: classes_mapped_names,
@@ -167,7 +167,7 @@ var accuracy_collection = val_map.unmask()
   if (vars.geomorphic) {print ('Assessment of Accuracy for Geomorphic layer')} else {print('Assessment of Accuracy for Benthic layer')}
   if (vars.show_accuracy) {
     print("Overall accuracy", accuracy_oa.format('%.2f'))
-    print("User's accuracy", accuracy_cons)//.map(function (accuracy_cons) { return accuracy_cons.format('%.2f')}))
+    print("User's accuracy", accuracy_cons)//map(function (accuracy_cons) { return accuracy_cons.format('%.2f')}))
     print("Producer's accuracy", accuracy_prod)
     
     var classification_errormatrix_array = classification_errormatrix.array()
