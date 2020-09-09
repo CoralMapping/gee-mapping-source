@@ -38,8 +38,8 @@ var region_params = param_module.east_africa  //<------------ THIS IS WHERE YOU 
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -200,13 +200,13 @@ var accuracy_collection = val_map.unmask()
    
 
 
-print (dataTable)
+
 
 // 4. Export
 
 // Get a confusion matrix representing expected accuracy.
 //var testAccuracy = validated.errorMatrix('Level_2', 'classification');
-
+/*
 // Еxport error matrix
 //var exportAccuracy = (null, {matrix: classification_errormatrix_array});
 var exportAccuracy= ee.Feature(null, {'matrix': classification_errormatrix_array});                            
@@ -222,4 +222,4 @@ Export.table.toDrive({
 // or both?
 
 //.set("overall_acc", accuracy_oa, "user_acc", accuracy_cons, "producer_acc", accuracy_prod)
-
+*/
