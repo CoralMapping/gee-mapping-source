@@ -208,12 +208,12 @@ var accuracy_collection = val_map.unmask()
 
 
 // 4. Export
-
+// I can link to vars.export = true but I am lazy for that :)
 // Get a confusion matrix representing expected accuracy.
 //var testAccuracy = validated.errorMatrix('Level_2', 'classification');
 
-// Еxport error matrix
-//var exportAccuracy = (null, {matrix: classification_errormatrix_array});
+// Еxport error matrix (I can link that to )
+
 var exportAccuracy= ee.Feature(null, {'matrix': accuracy_cons});                            
 
 Export.table.toDrive({
