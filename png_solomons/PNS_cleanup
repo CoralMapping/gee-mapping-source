@@ -16445,28 +16445,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
 ///////////////////////////////
 
 
-// ### REVIEWERS WISH LIST FOR CLEAN UP #########################
-// This list is created by somebody reviewing the maps and add suggestions for change
-// Geomorphic
-// 1) RC ; to little or no RC on steep walls and narrow RF, should this be solved with bright waves turned into RC MITCH
-// 2) Apply waves to split in sheltered and exposed WAIT TILL WE GET WAVES
-// 3) Better land mask smoother PARTNERSHIP
-// 4) Deep water -> Deep lagoon (inside the reef) CHECK IF NEED TO APPLY THIS TO CREATE
-// 5) Check TRF as maybe approach is to coarse and changing to much TRF to ORF
-// 6) RS in side of lagoon on RF areas see Vonavona
-// 7) Should we close down DL manualy 
-// 8) RC inside lagoon
-// 9) in Atolls to much IRF, should be more ORF
-// 10) what to with geo classes asinged to deep water or sungglint
-// 11) get rid of lagoon lake solomons DONE
-// 12) plateau on slopes southern PNG
-// Benthic
-// 1) To much RB in ORF and IRF areas but that maybe rerpesent mixture of sand, coral/algae area
-// 2) CA in IRF areas to mcuh and possible more sand
-// 3) RC not surrounded by IRF or SL
-// 4) SD assigned to brigh waves in RC or ORF zone IF SD in RC/ORF zone then assign RC
-// 5) no data assinged as no depth, but image visible
-
 // ############################ 
 
 
