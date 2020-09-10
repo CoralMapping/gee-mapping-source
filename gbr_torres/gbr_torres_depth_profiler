@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var geometry = /* color: #d63000 */ee.Geometry.MultiPoint(
-        [[119.64011187921918, -3.2307825939033887],
-         [148.05357503910247, -17.598668116284717]]);
+var geometry = /* color: #d63000 */ee.Geometry.Point([147.67951064575664, -18.82273199155438]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
