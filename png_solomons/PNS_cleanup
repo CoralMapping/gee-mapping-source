@@ -17972,6 +17972,12 @@ if (vars.manual_clean && vars.geomorphic) {
     test: man_geo.eq(33),
     value: ee.Image(14)
   }); 
+  // Reef Slope areas on inside of TRF mask are assinged BRS
+  man_geo = man_geo.where({
+    test: RConFlat.eq(1)
+                     .and(man_geo.eq(22)),
+    value: ee.Image(24)
+  });
   
   // Deep Lagoon along deep reef sloping areas with no lagoon -> Deep Water (outside the reef predominantly)
   man_geo = man_geo.where({
