@@ -9541,6 +9541,42 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -2.801850799256195
               ],
               [
+                135.94945916485787,
+                -2.864263514359035
+              ],
+              [
+                135.93036318509297,
+                -2.9912059536680613
+              ],
+              [
+                135.75876668229358,
+                -3.0574215235412274
+              ],
+              [
+                135.73353987717354,
+                -3.07221452290305
+              ],
+              [
+                135.68908674926604,
+                -3.065065203238923
+              ],
+              [
+                135.67708433873227,
+                -3.1001342121497077
+              ],
+              [
+                135.71864076084717,
+                -3.135206264939997
+              ],
+              [
+                135.97169513980788,
+                -3.170261617928298
+              ],
+              [
+                136.2891845051966,
+                -2.8412861768482776
+              ],
+              [
                 136.2320032105313,
                 -2.6166638174108487
               ],
@@ -9614,6 +9650,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -1.1767326362229498
               ],
               [
+                135.70294350032134,
+                -1.1794784784174195
+              ],
+              [
                 135.7221685854165,
                 -1.2879434624648436
               ],
@@ -9626,8 +9666,60 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -1.3620813430946026
               ],
               [
-                136.16848816549464,
-                -1.367572948743733
+                136.1828930640542,
+                -1.618119623035682
+              ],
+              [
+                136.39404280787878,
+                -1.6925904547502466
+              ],
+              [
+                136.4575659242837,
+                -1.6941275126020134
+              ],
+              [
+                136.49061276986086,
+                -1.700992313176828
+              ],
+              [
+                136.50078477169035,
+                -1.6996200407470095
+              ],
+              [
+                136.5094975971755,
+                -1.707341536922072
+              ],
+              [
+                136.5654378416448,
+                -1.7165239052488368
+              ],
+              [
+                136.62515498353656,
+                -1.71884114950741
+              ],
+              [
+                136.78698858845624,
+                -1.6977296593609295
+              ],
+              [
+                136.7905777944891,
+                -1.4314083407951952
+              ],
+              [
+                136.58427392065363,
+                -1.3652711261398898
+              ],
+              [
+                136.43085293694472,
+                -1.2956862319635891
+              ],
+              [
+                136.41960779673943,
+                -1.3504391523483763
+              ],
+              [
+                136.19010160044817,
+                -1.3222854847433356
               ],
               [
                 136.16986145651026,
@@ -9651,6 +9743,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         },
         {
@@ -9658,8 +9751,12 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           "coordinates": [
             [
               [
-                135.75238098776026,
-                -1.569380323367715
+                135.36785950338526,
+                -1.375810333641064
+              ],
+              [
+                135.4190034077178,
+                -1.5275172441581912
               ],
               [
                 135.78945984518214,
@@ -9708,9 +9805,14 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
               [
                 135.7757269350259,
                 -1.5378062412370523
+              ],
+              [
+                135.43823333604595,
+                -1.3565974932590925
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         },
         {
@@ -12628,8 +12730,24 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -0.9999215179558687
               ],
               [
-                136.31335421715863,
-                -1.0287561097816327
+                136.3052861324418,
+                -1.0541577964517412
+              ],
+              [
+                136.32125051568246,
+                -1.0658288943016114
+              ],
+              [
+                136.32863206597378,
+                -1.0709778885024335
+              ],
+              [
+                136.33700060110792,
+                -1.070892074257975
+              ],
+              [
+                136.34365250445046,
+                -1.0635977189036339
               ],
               [
                 136.37446566735395,
@@ -12656,12 +12774,32 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -1.0835925995288591
               ],
               [
-                136.4050215043758,
-                -1.100197872590353
+                136.3569141269156,
+                -1.1163204672811373
               ],
               [
-                136.43626376305707,
-                -1.0538145317856416
+                136.33541394222092,
+                -1.130512143973095
+              ],
+              [
+                136.29056713417296,
+                -1.1552586674300942
+              ],
+              [
+                136.262822031724,
+                -1.1656579853507443
+              ],
+              [
+                136.25464613816487,
+                -1.1846384744307557
+              ],
+              [
+                136.31215330716876,
+                -1.1923447135474392
+              ],
+              [
+                136.5770260921586,
+                -1.1615977144345846
               ],
               [
                 136.50939150963907,
@@ -15987,6 +16125,111 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                135.18740223325477,
+                -3.3150918284261786
+              ],
+              [
+                135.20250843442665,
+                -3.3665027220980255
+              ],
+              [
+                135.20731495298133,
+                -3.396319799772323
+              ],
+              [
+                135.26911304868446,
+                -3.4508106946049355
+              ],
+              [
+                135.36901997007118,
+                -3.495703362907045
+              ],
+              [
+                135.46068714536415,
+                -3.4254505381043208
+              ],
+              [
+                135.46721027768837,
+                -3.376784576538676
+              ],
+              [
+                135.45485065854774,
+                -3.345595950367074
+              ],
+              [
+                135.4414610711454,
+                -3.335999249905331
+              ],
+              [
+                135.41262195981727,
+                -3.3294871497858978
+              ],
+              [
+                135.38858936704383,
+                -3.3620472181140024
+              ],
+              [
+                135.39064930356727,
+                -3.3757563959882235
+              ],
+              [
+                135.39476917661415,
+                -3.3935780378489375
+              ],
+              [
+                135.37313984311805,
+                -3.395634360021201
+              ],
+              [
+                135.35563038266883,
+                -3.395291639963171
+              ],
+              [
+                135.3484206048368,
+                -3.3740427593190825
+              ],
+              [
+                135.34945057309852,
+                -3.3572489602921305
+              ],
+              [
+                135.3539137688993,
+                -3.3322290919313438
+              ],
+              [
+                135.34601734555946,
+                -3.308579590361433
+              ],
+              [
+                135.3267912713407,
+                -3.298297022118513
+              ],
+              [
+                135.28318928159462,
+                -3.29486947572152
+              ],
+              [
+                135.24061726011024,
+                -3.2955549859456554
+              ],
+              [
+                135.1997618523954,
+                -3.307551338332251
+              ],
+              [
+                135.19255207456337,
+                -3.310636091219129
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -16705,7 +16948,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       "coordinates": []
     }),
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"max":3000,"gamma":3.982},
-    RC_onFlat = /* color: #d69f55 */ee.Geometry.MultiPolygon(
+    RC_onFlat = 
+    /* color: #d69f55 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[153.64774191205348, -11.720052287492424],
            [153.63975965802516, -11.71921187350024],
            [153.62868749921168, -11.72080865789888],
@@ -17539,7 +17785,7 @@ var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YO
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -17548,13 +17794,13 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
+  geo_depth_cutoff: 1200, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 800, //depth in centimetres
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -17677,6 +17923,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   var terrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
   var deeplagoonmask = ee.Image().byte().paint(ee.Feature(deep_lagoon_mask, {zone: 1}), "zone").clip(deep_lagoon_mask);
+  var RConFlat = ee.Image().byte().paint(ee.Feature(RC_onFlat, {zone: 1}), "zone").clip(RC_onFlat);
  
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -17731,6 +17978,13 @@ if (vars.manual_clean && vars.geomorphic) {
     test: deeplagoonmask.eq(1)
                      .and(man_geo.eq(12)),
     value: ee.Image(2)
+  });
+  
+    // Reef Crest areas on inside of reef are assinged ORF
+  man_geo = man_geo.where({
+    test: RConFlat.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(14)
   });
   
   
