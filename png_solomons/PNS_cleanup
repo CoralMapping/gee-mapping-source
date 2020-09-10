@@ -17817,7 +17817,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   });   
   // **Manual polygon guided rules**
     
-  // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
+  /*// Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
   var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
   var ashmore = ee.Image().byte().paint(ee.Feature(ashmore_reef, {zone: 1}), "zone").clip(ashmore_reef);
@@ -17854,7 +17854,7 @@ if (vars.manual_clean && !vars.geomorphic) {
                       .and(man_benthic.eq(11))
                       .and(geo_map.eq(15)).or(geo_map.eq(22)),
     value: ee.Image(15)
-  });
+  });*/
      
   // Add the manual layer to the map
 
@@ -17864,10 +17864,10 @@ if (vars.manual_clean && !vars.geomorphic) {
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
-  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
-  Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', true);
+  Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', true);
   Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
-  Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
+  Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', true);
   Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
   // Export
