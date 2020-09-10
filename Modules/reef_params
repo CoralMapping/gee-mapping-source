@@ -697,4 +697,5 @@ exports = {
   indonesia: indonesia,
   png_solomons: png_solomons,
   south_asia: south_asia,
+  gbr_torres: gbr_torres,
 };
