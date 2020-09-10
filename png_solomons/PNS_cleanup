@@ -17979,7 +17979,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(21)
   })*/
   
-  // **Terrestrail Reef Flat clean** to much narrow reef flat outside next to drop off assinged TRF should ORF
+  // ** CR Terrestrail Reef Flat clean** to much narrow reef flat outside next to drop off assinged TRF should ORF
   // step 1: assign all pixels assinged TRF to a temporary class TC
   // Step 2: create TRF_mask for the areas within lagoons, where TRF should stay
   // step 3: label all TC pixels that fall within the TRF_mask to TRF
@@ -18001,21 +18001,21 @@ if (vars.manual_clean && vars.geomorphic) {
     test: man_geo.eq(33),
     value: ee.Image(14)
   }); 
-  // Reef Slope areas on inside of TRF mask are assinged BRS
+  // CR Reef Slope areas on inside of TRF mask are assinged BRS
   man_geo = man_geo.where({
     test: RConFlat.eq(1)
                      .and(man_geo.eq(22)),
     value: ee.Image(24)
   });
   
-  // Deep Lagoon along deep reef sloping areas with no lagoon -> Deep Water (outside the reef predominantly)
+  // CR Deep Lagoon along deep reef sloping areas with no lagoon -> Deep Water (outside the reef predominantly)
   man_geo = man_geo.where({
     test: deeplagoonmask.eq(1)
                      .and(man_geo.eq(12)),
     value: ee.Image(2)
   });
   
-    // Reef Crest areas on inside of reef are assinged ORF
+    // CR Reef Crest areas on inside of reef are assinged ORF
   man_geo = man_geo.where({
     test: RConFlat.eq(1)
                      .and(man_geo.eq(15)),
