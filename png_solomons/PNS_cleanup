@@ -18,10 +18,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = 
-    /* color: #29d603 */
-    /* shown: false */
-    ee.Geometry({
+    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5232,16 +5229,20 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           "coordinates": [
             [
               [
-                160.73861237727098,
-                -8.295037092364899
+                160.7399856682866,
+                -8.307267218342878
               ],
               [
-                160.71423646174364,
-                -8.305228890468676
+                160.7271110315806,
+                -8.311683764524767
               ],
               [
-                160.68088538014857,
-                -8.329440349829696
+                160.71389313898973,
+                -8.316439562712928
+              ],
+              [
+                160.69152838551966,
+                -8.325703618701455
               ],
               [
                 160.90642006978484,
@@ -5364,8 +5365,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -8.303580001031087
               ],
               [
-                160.74637426042185,
-                -8.297125199169411
+                160.74740422868356,
+                -8.304599170572903
               ]
             ]
           ],
@@ -17048,7 +17049,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       "coordinates": []
     }),
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"max":3000,"gamma":3.982},
-    RC_onFlat = /* color: #d69f55 */ee.Geometry.MultiPolygon(
+    RC_onFlat = 
+    /* color: #d69f55 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[153.64774191205348, -11.720052287492424],
            [153.63975965802516, -11.71921187350024],
            [153.62868749921168, -11.72080865789888],
