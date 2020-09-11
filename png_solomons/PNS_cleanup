@@ -18405,7 +18405,6 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
-                   .and(low_tide_image_dove.select('b3').lt(2000))
                    .and(clean_map.eq(15)),
     value: ee.Image(16)
   });
