@@ -17851,7 +17851,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [148.02189689547873, -3.3125729285213144]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - PNG - Solomons
+// Global coral atlas project - PNG - Solomons 2
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Chris Roelfsema (chris.m.roelfsema@gmail.com)
 // Description:
