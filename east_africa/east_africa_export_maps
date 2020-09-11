@@ -2,7 +2,6 @@
 var pixels = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_pixels"),
     east_africa_lt_sr = ee.Image("projects/coral_atlas/workflow/mapping/east_africa/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191220T152846Z/east_africa_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/east_africa/in_out/east-africa_geo-clean4"),
-    FINAL_MASK_TO_GEOBENTHIC = ee.FeatureCollection("users/rodbio2008/FINAL_MASK_TO_GEOPASS_EA"),
     benthic = ee.Image("projects/coral_atlas/east_africa/in_out/east_africa_benthic-cleanFinal");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /* export maps for east africa original (This is to send another go to Eldang 9/07/2020) Chris version
