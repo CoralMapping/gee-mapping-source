@@ -7781,6 +7781,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry()
+  Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   var terrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
   var deeplagoonmask = ee.Image().byte().paint(ee.Feature(deep_lagoon_mask, {zone: 1}), "zone").clip(deep_lagoon_mask);
