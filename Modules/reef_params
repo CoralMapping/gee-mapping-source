@@ -553,7 +553,7 @@ var png_solomons = {
   segments:["projects/coral_atlas/png_solomons/in_out/pns_segmentation"],
   turbid_mask:"projects/coral_atlas/png_solomons/mask/pns_mask_out",
   land_mask:"projects/coral_atlas/png_solomons/mask/pns_land_mask",
-  waves:"",
+  waves:"projects/coral_atlas/png_solomons/in_out/pns_waves",
   geo_train:"projects/coral_atlas/png_solomons/training/png_solomons_geo_reference",
   benthic_train:"projects/coral_atlas/png_solomons/training/png_solomons_benthic_reference",
   benthic_pts:"",
