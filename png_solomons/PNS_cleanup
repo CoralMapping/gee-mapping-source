@@ -10972,20 +10972,21 @@ if (vars.manual_clean && vars.geomorphic) {
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })
+  })     
+
   // CR where SS = RS if > wave height
   man_geo = man_geo.where({
     test: waves.gte(vars.wave_height)
                .and(man_geo.eq(21)),
     value: ee.Image(22)
   })
-  
-      // CR Reef Slope areas on inside of TRF mask are assinged BRS
+    // CR Reef Slope areas on inside of TRF mask are assinged BRS
   man_geo = man_geo.where({
     test: terrestrialRF.eq(1)
                      .and(man_geo.eq(22)),
     value: ee.Image(24)
   });
+
   // ** CR Terrestrail Reef Flat clean** to much narrow reef flat outside next to drop off assinged TRF should ORF
   // step 1: assign all pixels assinged TRF to a temporary class TC
   // Step 2: create TRF_mask for the areas within lagoons, where TRF should stay
