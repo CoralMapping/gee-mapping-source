@@ -568,6 +568,7 @@ var png_solomons = {
   geo_map_clean3:"projects/coral_atlas/png_solomons/in_out/pns_geo_clean3",
   benthic_map_clean1: "projects/coral_atlas/png_solomons/in_out/pns_benthic_clean1",
   benthic_map_clean2: "projects/coral_atlas/png_solomons/in_out/pns_benthic_clean2",
+  mid_mask: "projects/coral_atlas/png_solomons/in_out/pns_midmask",
   prob_geo:["projects/coral_atlas/png_solomons/in_out/pns_prob_geo"],
   prob_benthic:["projects/coral_atlas/png_solomons/in_out/pns_prob_benthic"],
   QAQC: "projects/coral_atlas/png_solomons/QAQC"
