@@ -6809,10 +6809,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       "coordinates": []
     }),
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"max":3000,"gamma":3.982},
-    RC_onFlat = 
-    /* color: #d69f55 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    RC_onFlat = /* color: #d69f55 */ee.Geometry.MultiPolygon(
         [[[[153.64774191205348, -11.720052287492424],
            [153.63975965802516, -11.71921187350024],
            [153.62868749921168, -11.72080865789888],
@@ -7607,7 +7604,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [148.02189689547873, -3.3125729285213144]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - PNG - Solomons 2
+// Global coral atlas project - PNG - Solomons
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Chris Roelfsema (chris.m.roelfsema@gmail.com)
 // Description:
