@@ -749,7 +749,8 @@ if (!vars.manual_clean) {
         - mode OBIA version iterates through objects+buffers but take the mode instead of doing the class percs, to see if that speeds things up
       */
       
-      // Blanket version
+      
+      // ## Blanket version
       
       // make a very smooth map to capture the broader neighbourhood
       var smooth_map = clean_map
@@ -770,11 +771,11 @@ if (!vars.manual_clean) {
       }).selfMask();
       
       
-      // mode OBIA version
+      // ## mode OBIA version
       
       /* A possible faster plan
             - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
-            - BUT, just assign the mode of the neighbours, so save resouces even further?? */
+            - BUT, just assign the mode of the neighbours, so save resouces even further??
       
       // FUNCTION that maps over feature colleciton and assigns neighbour percentages
       var set_neighbour_mode = function(f) {
@@ -839,8 +840,6 @@ if (!vars.manual_clean) {
         value: mode_map
       }).selfMask()
       
-      //############
-      //############
       */
       
     } else {
@@ -872,73 +871,17 @@ if (!vars.manual_clean) {
           value: ee.Image(0)
         });
         
-        /*// Deep lagoon in geo == masked from benthic
-        clean_map = clean_map.where({
-          test: geo_map.eq(12),
-          value: ee.Image(0)
-        })*/
-        
-        
-        /*// turbid in geo == turbid (temporal - class num 2)
-        // ############## ---> need to decide here whether to push geo turbid through regardless of benthic class
-        clean_map = clean_map.where({
-          test: geo_map.eq(3),
-          value: ee.Image(2)
-        })*/
-        
-        /*
-        // Ignore in benthic + ORF in geo == rock
-        clean_map = clean_map.where({
-          test: clean_map.eq(0)
-                         .and(geo_map.eq(14)),
-          value: ee.Image(13)
-        })
-        
-        // Ignore in benthic + IRF in geo == sand
-        clean_map = clean_map.where({
-          test: clean_map.eq(0)
-                         .and(geo_map.eq(13)),
-          value: ee.Image(11)
-        })
-        
-        // Ignore in benthic + TRF in geo == sand
-        clean_map = clean_map.where({
-          test: clean_map.eq(0)
-                         .and(geo_map.eq(16)),
-          value: ee.Image(11)
-        })
-        
-        // Ignore in benthic + RR in geo == rock
-        */
-        
-        /*// seagrass in benthic + ORF/RR/slope in geo == coral/algae
-        clean_map = clean_map.where({
-          test: clean_map.eq(14)
-                         .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
-          value: ee.Image(15)
-        })*/
-        
-        // ####--> CR: "Seagrass neighbouring deep water or no data not shallow a rock or coral algae class"
-        
-        /*// rock in benthic + TRF in geo == sand
-        clean_map = clean_map.where({
-          test: clean_map.eq(13)
-                         .and(geo_map.eq(16)),
-          value: ee.Image(11)
-        })*/
       }
     }
   }
   
-  // final smooth
-  if (!vars.manual_clean) {
-    // just clip to the classified extent and move on
-    if (vars.geomorphic) {
-      clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
-    } else {
-      clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
-    }
+  // Final clip to the classified extent and move on
+  if (vars.geomorphic) {
+    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+  } else {
+    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
   }
+
   
   
   // 4. Export data
