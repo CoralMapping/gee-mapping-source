@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([121.23245564013276, -5.836208490092446]),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[95.07287823076268, 2.914572958865811],
           [96.41321026201268, 1.1579394198646136],
           [105.18030010576268, -10.580643604685124],
@@ -714,7 +717,7 @@ if (vars.do_export) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
     region: region_extent,
-    maxPixels: 1e13,
-    pyramidingPolicy:{'.default': 'mean'},
+    maxPixels: 1e13
+    //pyramidingPolicy:{'.default': 'mean'},
   });
 }
