@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -10833,7 +10836,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    refinement_mask = /* color: #68c7d6 */ee.Geometry.Polygon(
+    refinement_mask = 
+    /* color: #68c7d6 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[149.58660174135585, -5.480624093314245],
           [149.58582926515956, -5.485835807969037],
           [149.587889201683, -5.487629994284728],
@@ -10950,7 +10956,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
-  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.2, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1200, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 800, //depth in centimetres
