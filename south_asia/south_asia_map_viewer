@@ -53,7 +53,7 @@ var mapPanel=ui.Map().centerObject(centre_map, 6)
 var low_tide_image_dove = ee.Image(region_params.image);
 var sr_Dove= ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 //UnEp layer
-var unepClipped= wcmc.clip(geometry)
+var unepClipped= wcmc.filterBounds(geometry)
 var Unep= ui.Map.Layer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
 
 
@@ -110,7 +110,7 @@ var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', fa
 //load the ui layers
 var layers = mapPanel.layers(); 
    layers.add(sr_Dove)
-   layers.add(Unep)
+   
 if (vars.benthic_clean2) {
     layers.add(benthic2)}
 if (vars.benthic_clean1) {
@@ -123,7 +123,7 @@ if (vars.geo_clean1) {
     layers.add(geo1)} 
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
-  
+  layers.add(Unep)
 ////////// UI SET UP //////////
 
 if(vars.geo_raw_depthCutoff) {
