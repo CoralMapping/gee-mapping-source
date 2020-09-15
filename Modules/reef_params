@@ -602,7 +602,7 @@ var png_solomons = {
 };
 
 var indonesia = {
-  sname:"indonesia",
+  sname:"indo",
   tide: "both",
   asset: "projects/coral_atlas/Indonesia/",
   epsg: "EPSG:4326",
