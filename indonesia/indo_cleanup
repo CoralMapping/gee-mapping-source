@@ -133,22 +133,19 @@ if (!vars.geomorphic) {
 }
 // -----------------------------------------<
 
-// ############################
-// START OF CLEAN 3 - Manual Cleanup
-
-// review everything in this section
-// first review the reef_boundary object - as it is required for all cleanup stages
-// ############################
-
-// This can be hand drawn or imported from elsewhere, or could just be a big box
-// Reef_boundary defines export extent and can be used to clip out unwanted areas
-var reef_boundary = ee.FeatureCollection([ee.Feature(outer),ee.Feature(inner)]).geometry();
+/* ############################
+START OF CLEAN 3 - Manual Cleanup
+ - review everything in this section
+ - first review the reef_boundary object - as it is required for all cleanup stages
+    - This can be hand drawn or imported from elsewhere, or could just be a big box
+    - Reef_boundary defines export extent and can be used to clip out unwanted areas */
+var reef_boundary = region_extent;
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
-// ############################
-// This is the section to add/remove manual cleanups
-// You MUST review it for each region
-// ############################
+/* This is the section to add/remove manual cleanups
+ - You MUST review it for each region
+
+############################ */
 
 if (vars.manual_clean && vars.geomorphic) {
   
@@ -156,57 +153,46 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
   var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(900);
-  Map.addLayer(depth_cont, {}, "depth contour", false);
   
-  // update these values based on inspection of the layer
-  //Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
-  
-  
-  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
-  var landmaskfc = ee.FeatureCollection(region_params.land_mask).geometry();
-  var landmask = ee.Image().byte().paint(ee.Feature(landmaskfc, {zone: 1}), "zone").clip(landmaskfc);
-  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-  var outer_extent = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
-  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
-  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  var arnhemcoast = ee.Image().byte().paint(ee.Feature(arnhem_coast, {zone: 1}), "zone").clip(arnhem_coast);
-  var reefslope = ee.Image().byte().paint(ee.Feature(reef_slope, {zone: 1}), "zone").clip(reef_slope);
-  var litchfield = ee.Image().byte().paint(ee.Feature(litchfield_coast, {zone: 1}), "zone").clip(litchfield_coast);
-  var northernwa = ee.Image().byte().paint(ee.Feature(northern_wa, {zone: 1}), "zone").clip(northern_wa);
-  var dampier = ee.Image().byte().paint(ee.Feature(dampier_coast, {zone: 1}), "zone").clip(dampier_coast);
-  var welleslytiwi = ee.Image().byte().paint(ee.Feature(wellesly_tiwi, {zone: 1}), "zone").clip(wellesly_tiwi);
-  var tiwi = ee.Image().byte().paint(ee.Feature(tiwi_is, {zone: 1}), "zone").clip(tiwi_is);
-  var midshelf = ee.Image().byte().paint(ee.Feature(mid_shelf, {zone: 1}), "zone").clip(mid_shelf);
-  var inshorereefouter = ee.Image().byte().paint(ee.Feature(inshore_reef_outer, {zone: 1}), "zone").clip(inshore_reef_outer);
-  var inshorereefinner = ee.Image().byte().paint(ee.Feature(inshore_reef_inner, {zone: 1}), "zone").clip(inshore_reef_inner);
-
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
- 
-  // "LAND MASK" CLEAN
-  // remove
-  man_geo = man_geo.where({
-    test: landmask.eq(1),
-    value: ee.Image(0)
-  });
   
-  // "NOT REEF" CLEAN
-  // remove
+  // import the mid mask from asset
+  var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry()
+  Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
+  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
+  
+  // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
     value: ee.Image(0)
   });
   
-  /*// WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
-  // remove
+  /*
+  // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
+  
+  var waves = ee.Image(region_params.waves)
+  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
+  
   man_geo = man_geo.where({
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
+  })
+  */
   
-  // **Deep Water clean**
+  
+  
+  /*
+  ##############
+  
+  The rest of the manual geometry paintings and rules should go here
+      - make the geom, paint the layer, use it in a rule
+      - consult previous regions *_cleanup script for ideas/hints/existing rules etc.
+  e.g. 
+  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
+  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+  
   
   // Reef crest -> Inner reef flat (inside the reef) + Yawajaba Island (inshore)
   man_geo = man_geo.where({
@@ -222,145 +208,8 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  // Shallow lagoon/Deep lagoon/Shelterd reef slope -> Reef slope (around the reef edge)
-  man_geo = man_geo.where({
-    test: reefslope.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)).or(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
-  
-  // Reef slope/Sheletered reef slope -> Deep lagoon (insided the reef)
-  man_geo = man_geo.where({
-    test: notdeepwater.eq(1)
-                     .and(man_geo.eq(22)).or(man_geo.eq(21)),
-    value: ee.Image(12)
-  });
-  
-
-  // **Shallow Water clean**
-  
-  // Create smoothed depth layer to use in where operations
-  var smooth_depth = depth
-                      //.unmask(99)
-                      .focal_mode({
-                        radius: vars.smooth_radius, // relates to smoothness required
-                        kernelType: 'circle', units: 'pixels', iterations: 2
-                      });
-  
-  
-  // **Litchfield Coast**
-  
-  // Inner reef flat/Outer reef flat -> TRF
-  man_geo = man_geo.where({
-    test: litchfield.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(14)),
-    value: ee.Image(16)
-  });
-  
-  // Non TRF -> Mask
-  man_geo = man_geo.where({
-    test: litchfield.eq(1)
-                     .neq(man_geo.eq(16)),
-    value: ee.Image(0)
-  });
-  
-  // **Arnhem Land Coast**
-  
-  // Shallow lagoon, IRF, SRS, BRS, RC -> TRF
-  man_geo = man_geo.where({
-    test: arnhemcoast.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)).or(man_geo.eq(24)).or(man_geo.eq(15))
-                     .and(smooth_depth.lte(300)),
-    value: ee.Image(16)
-  });
-  
-  // Shallow lagoon, IRF, BRS -> Mask
-  man_geo = man_geo.where({
-    test: arnhemcoast.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(24))
-                     .and(smooth_depth.gt(300)),
-    value: ee.Image(0)
-  });
-  
-  // **Northern WA Coast** was 150 and BRS
-  // Shallow lagoon, IRF, BRS -> TRF 
-  /*man_geo = man_geo.where({
-    test: northernwa.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(16)).or(man_geo.eq(24))
-                     .and(smooth_depth.gt(150)),
-    value: ee.Image(0)
-  });*/
-  
-  // Shallow lagoon, IRF, Sheltered slope -> TRF
-  man_geo = man_geo.where({
-    test: northernwa.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // **Dampier Coast**
-  
-  // Shallow lagoon, IRF, Sheltered slope -> TRF
-  man_geo = man_geo.where({
-    test: dampier.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // **Wellesley Island & Tiwi Islands**
-  
-  // Shallow lagoon -> BRS 
-  man_geo = man_geo.where({
-    test: welleslytiwi.eq(1)
-                     .and(man_geo.eq(11)),
-    value: ee.Image(24)
-  });
-  
-  // IRF, SRS -> TRF 
-  man_geo = man_geo.where({
-    test: welleslytiwi.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(21)),
-    value: ee.Image(16)
-  });
-  
-  // BRS -> TRF
-  man_geo = man_geo.where({
-    test: tiwi.eq(1)
-                     .and(man_geo.eq(24)),
-    value: ee.Image(16)
-  });
-  
-  // **Mid-Shelf**
-  
-  // Shallow lagoon, Deep lagoon, SRS -> BRS 
-  man_geo = man_geo.where({
-    test: midshelf.eq(1)
-                     .and(man_geo.eq(11)).or(man_geo.eq(12)).or(man_geo.eq(21)),
-    value: ee.Image(24)
-  });
-  
-  // Reef crest -> Outer reef flat
-  man_geo = man_geo.where({
-    test: midshelf.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(14)
-  });
-  
-  // **Inshore reef**
-  
-  // Inner reef flat, TRF -> Outer reef flat
-  man_geo = man_geo.where({
-    test: inshorereefouter.eq(1)
-                     .and(man_geo.eq(13)).or(man_geo.eq(16)),
-    value: ee.Image(14)
-  });
-  
-  // TRF, SRS -> Inner reef flat
-  man_geo = man_geo.where({
-    test: inshorereefinner.eq(1)
-                     .and(man_geo.eq(16)).or(man_geo.eq(21)),
-    value: ee.Image(13)
-  });
+  ##############
+  */
   
   if (vars.geo_refinement) {
     // make the mask image layer
@@ -372,10 +221,9 @@ if (vars.manual_clean && vars.geomorphic) {
     });
   }
   
-  // Add the manual layer to the map
-  var image = ee.Image(region_params.image);
-  Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
-  
+  // Add data + the manual layer to the map
+  var dove_image = ee.Image(region_params.image);
+  Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
@@ -403,15 +251,18 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
   var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(900);
-  Map.addLayer(depth_cont, {}, "depth contour", false);
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
   var geo_map = ee.Image(region_params.geo_map_clean3);
   
+  // define the clean benthic map to apply 2nd stage rules to
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
-  // **Generic benthic rules**
+  
+  /*
+  **Generic benthic rules**
+    - should be generally applicable, but still review
+  */
   
   // BMA on inner RF, outer RF,reef crest, reef slope -> rubble 
   man_benthic = man_benthic.where({
@@ -433,52 +284,23 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(24)),
     value: ee.Image(11)
   });  
-    
-  // **Manual polygon guided rules**
-    
-  // Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
-  var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-  var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
-  var ashmore = ee.Image().byte().paint(ee.Feature(ashmore_reef, {zone: 1}), "zone").clip(ashmore_reef);
-   
-  // **Inshore**
-    
-  // Rock on TRF -> coral/algae
-  man_benthic = man_benthic.where({
-    test: subreg_1.eq(1)
-                      .and(geo_map.eq(16))
-                      .and(man_benthic.eq(13)),
-    value: ee.Image(15)
-  });
-    
-  // **Offshore**
-    
-  // Seagrass -> Coral/algae (Ashmore Reef)
-  man_benthic = man_benthic.where({
-    test: ashmore.eq(1)
-                      .and(man_benthic.eq(14)),
-    value: ee.Image(15)
-  });
   
-  // Seagrass -> Sand
-  man_benthic = man_benthic.where({
-    test: subreg_2.eq(1)
-                      .and(man_benthic.eq(14)),
-    value: ee.Image(11)
-  });
+    
+  /*
   
-  // Sand on RC, RS -> Coral/algae
-  man_benthic = man_benthic.where({
-    test: subreg_2.eq(1)
-                      .and(man_benthic.eq(11))
-                      .and(geo_map.eq(15).or(geo_map.eq(22))),
-    value: ee.Image(15)
-  });
+  **Manual polygon guided rules**
+   - same as per geomorphic clean section
+   - add a geometry, paint the layer, create a rule
+  
+  */
+  
+  
+  
      
   // Add the manual layer to the map
 
-  var low_tide_image_dove = ee.Image(region_params.image);
-  Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+  var dove_image = ee.Image(region_params.image);
+  Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
   
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
