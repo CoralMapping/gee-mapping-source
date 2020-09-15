@@ -613,7 +613,7 @@ depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var not_reef_img = ee.Image().byte().paint(ee.Feature(noReef_mask, {zone: 1}), "zone");
+var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
   test: not_reef_img.eq(1),
@@ -704,14 +704,7 @@ if (vars.pixel_based) {
                               .reduceConnectedComponents(ee.Reducer.mean(), 'clusters', vars.reduce_max) // need to be mindful that really big objects may make this fall over
     segmented_data_mean = segmented_data_mean.cast(ee.Dictionary.fromLists(segmented_data_mean.bandNames(), ee.List.repeat('int16', segmented_data_mean.bandNames().length())))
     
-  /*
-  // For this analysis anyway, SD has not come up as adding much useful info
-  // Looks like you can also use .combine - and do both mean and SD in one reduction??
-  var segmented_data_sd = reflec.addBands(depth).addBands(waves).addBands(slope)//.addBands(depth_glcm)
-                          .addBands(segmented_data.select('clusters'))
-                          .reduceConnectedComponents(ee.Reducer.stdDev(), "clusters", vars.reduce_max)
-                          //.rename(['b1_sd','b2_sd','b3_sd','b4_sd','b5_sd','depth_mean','waves_sd','slope_sd','depth_corr_sd','depth_var_sd','depth_idm_sd'])
-  */
+  
   }
   
   // combine data to move forward with
