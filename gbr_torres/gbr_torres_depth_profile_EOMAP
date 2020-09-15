@@ -144,7 +144,7 @@ var inspectorPanel = ui.Panel({style: {width: '70%'}});
 // Create an intro panel with labels 
 var intro = ui.Panel([
   ui.Label({
-    value: "Depth Profiles from L8, S2, Doves and Depth Composite for " + region_params.sname + " (sampling interval 10 m)",
+    value: "Depth Profiles from EOMAP layer for " + region_params.sname + " (sampling interval 10 m)",
     style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
   }),
 ]);
