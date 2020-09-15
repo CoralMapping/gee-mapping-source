@@ -155,7 +155,7 @@ var inshore_eomap = {
   hs95: "projects/coral_atlas/gbr_eomap/mosaics/gbr_2019_hs95",
   pixels: "users/EvaK/Inshore_Reefs/in_out/inshore_pixels",
   segments: "users/EvaK/Inshore_Reefs/in_out/inshore_segmentation",
-  geo_train: "users/EvaK/Whit_eomap//training/whit_geo_referenceD", 
+  geo_train: "users/EvaK/Whit_eomap/training/whit_geo_referenceD", 
   benthic_train: "",
   benthic_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_benthic",
   coral_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_coral",
@@ -164,10 +164,10 @@ var inshore_eomap = {
   coral_train_library: "projects/coral_atlas/gbr_eomap/training/gbr_coral_training",
   geo_val_library: "users/EvaK/Whit_eomap/training/whit_geo_validationD",
   benthic_val_library: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_coral",
-  geo_map: "projects/coral_atlas/gbr_eomap/in_out/inshore_geo",
-  benthic_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic",
-  geo_map_clean: "projects/coral_atlas/gbr_eomap/in_out/inshore_geo-clean3",
-  benthic_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-clean-mix"
+  geo_map: "users/EvaK/Inshore_Reefs/in_out/inshore_geo",
+  benthic_map: "users/EvaK/Inshore_Reefs/in_out/gbr_eomap_benthic",
+  geo_map_clean: "users/EvaK/Inshore_Reefs/in_out/inshore_geo-clean3",
+  benthic_map_clean: "users/EvaK/Inshore_Reefs/in_out/gbr_eomap_benthic-clean-mix"
 }
 
 /*var fiji_ltv2 = {
