@@ -176,5 +176,6 @@ Export.table.toAsset({
 
 
 // last so it sits on top
-Map.addLayer(train_pts.geometry(), {}, "Training/validation point distribution", false) // Training data points
+Map.addLayer(train_pts_cal.geometry(), {}, "Training point distribution", false) // Training data points
+Map.addLayer(train_pts_val.geometry(), {}, "Validation point distribution", false) // Validation data points
 if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training/validation field point distribution", false) // Training data points
