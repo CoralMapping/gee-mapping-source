@@ -3,91 +3,39 @@ var map_centre =
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
-    eg_area = 
-    /* color: #d63000 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      },
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.MultiPolygon(
-        [[[[178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502]]],
-         [[[178.1896083331153, -19.126039427046837],
-           [178.1896083331153, -19.156203209515112],
-           [178.24265169859382, -19.156203209515112],
-           [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Polygon(
-        [[[119.13366458665041, -17.26571296388731],
-          [122.56139896165041, -19.7243418542321],
-          [127.17565677415041, -15.45265589282407],
-          [130.7791723991504, -16.255847069189198],
-          [134.9100317741504, -12.553526185965028],
-          [134.6903052116504, -15.283159949346478],
-          [136.0965552116504, -16.719367230389985],
-          [140.7987036491504, -18.728495522496136],
-          [142.0291723991504, -14.943758068902518],
-          [141.9852270866504, -11.780284930562397],
-          [136.6238989616504, -10.357105967284534],
-          [129.5926489616504, -9.967803900759515],
-          [125.54968021165041, -11.651195552343987],
-          [121.94616458665041, -14.305939704467455]]]),
-    outer = 
-    /* color: #ef3dff */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[118.17062403776815, -17.45084971526682],
-          [119.02755763151815, -18.14124675533064],
-          [122.71896388151815, -13.726673468011827],
-          [123.55392481901815, -14.472542073271828],
-          [124.03732325651815, -14.046629732342849],
-          [123.26828028776815, -13.213838336950676],
-          [124.80636622526815, -11.475275595307592],
-          [129.60423123885968, -10.12830564343977],
-          [129.59585259552577, -9.368874063395277],
-          [123.61984278776815, -10.936433881827663],
-          [121.48849513151815, -13.27800259234443]]]),
-    inner = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[120.98677765293615, -16.891338232004127],
-          [122.23921905918615, -17.918686136314374],
-          [124.61226593418615, -16.386076635784576],
-          [126.15035187168615, -14.841317375944321],
-          [127.16109405918615, -14.288389915330946],
-          [129.90767609043615, -14.862555957219627],
-          [131.24800812168615, -12.643069637710298],
-          [132.98384796543615, -12.385662394017446],
-          [135.88423859043615, -12.793104504917128],
-          [134.82955109043615, -15.286885279551102],
-          [140.32271515293615, -18.357182292973924],
-          [140.91597687168615, -15.625732585548311],
-          [138.93843780918615, -15.01116738037152],
-          [137.46626984043615, -14.458668781396298],
-          [138.27925812168615, -10.62016932130365],
-          [134.87349640293615, -11.267357463993088],
-          [133.62105499668615, -11.008652152384679],
-          [133.00582062168615, -10.4257413762333],
-          [129.97359405918615, -10.90079085372523],
-          [129.68794952793615, -12.149482321501976],
-          [128.54537140293615, -13.926120826322153],
-          [126.45796905918615, -13.092905792744665],
-          [125.55709015293615, -13.285443251877613],
-          [122.94234405918615, -15.223290002478876]]]);
+        [[[95.07287823076268, 2.914572958865811],
+          [96.41321026201268, 1.1579394198646136],
+          [105.18030010576268, -10.580643604685124],
+          [105.61975323076268, -10.753387200258004],
+          [113.19206467354273, -8.804681064100183],
+          [115.65300217354273, -9.23869664771339],
+          [121.23405686104273, -11.077013810880299],
+          [122.77214279854273, -11.271018824085145],
+          [131.20964279854275, -8.60920626244314],
+          [132.08854904854275, -7.869852859005207],
+          [133.20915451729275, -6.190740635001224],
+          [133.42888107979275, -5.272512805945724],
+          [133.02946326747278, -4.440844812838936],
+          [134.17204139247278, -0.841751911066073],
+          [134.50163123622278, 1.091745486875125],
+          [127.25065467372278, 4.974709524404567],
+          [124.8567261295262, 5.062263214294765],
+          [124.4172730045262, 2.3435991781797507],
+          [118.2429565982762, 1.926409440124578],
+          [115.9797730045262, -2.840130093431536],
+          [111.3655151920262, -2.466996131599118],
+          [107.8938355045262, 1.8824884024017308],
+          [103.8508667545262, 1.9483695359460274],
+          [95.3694214420262, 6.28667856942217],
+          [94.6553101139012, 6.232074405406377]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Timor Sea
+// Global coral atlas project - Indonesia Archipelago
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Paul Tudman (tuddy117@gmail.com)
 // Description:
@@ -99,9 +47,8 @@ var map_centre =
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
-// 3. Divide into potential mapping zones (not utilised yet really)
-// 4. Train and fit models
-// 5. Export data
+// 3. Train and fit models
+// 4. Export data
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -113,7 +60,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.timor;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -143,20 +90,9 @@ var vars = {
   */
   
   geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic
-  
   benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_stdDev_p', 'b1_savg_p', 'b2_savg_p'], //input bands for benthic
   
-  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
-  blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
-  blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
-  //small_object_filter: 50, // size in pixels (output scale) for small object removal
-  
-  /*// add relative band brightness to predictor variables?
-  use_brightness: true, <<----- now done in the *_datagen script */
-  
-  // zone thresholds
-  //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
   rf_trees: 15, // number of random forest trees (per class)
@@ -173,12 +109,10 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'subreg2',
+  split_region: 'east',
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
-  show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
-                              // - you can either set this, or have it false and just navigate to the area you want to see (keeping in mind ALL tiles in the zoom area will calcualte)
   /*
   Use test mode?
   This pars down the training computation
@@ -202,7 +136,7 @@ var vars = {
 
 // dictionary to control sub-region geometries (add new ones)
 if (vars.split_region != 'none') {
-  var region_dic = ee.Dictionary({subreg1: inner, subreg2: outer}); // <- include all splits here
+  var region_dic = ee.Dictionary({east: east, west: west}); // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
   var subregion_clip = ee.Geometry(region_dic.get(vars.split_region));
   print('Running classificaiton for region split: ', vars.split_region);
@@ -232,18 +166,12 @@ if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_param
 
 // Load training data samples (from '*_calval' script)
 
-//classes_mapped_geo:       [ 2,  11,  12,  13,   14,   15,  16,  21,  22,  23,  24  ], // classes to map
-//classes_mapped_names_geo: ['D','SL','DL','IRF','ORF','RR','TRF','SS','SE','PL','OCL'],
-//classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
-//classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
-
 var training_data = (vars.geomorphic) ? geomorph : benthic; // Set the training points to either geomorphic or benthic
 // trim the data (randomly) if needed
 if (vars.trim_training_data) {
   training_data = training_data.randomColumn("random");
   training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc));
 }
-
 
 // trim the image and training data to sub-region, if desired
 if (region_idx > -1) {
@@ -254,9 +182,7 @@ if (region_idx > -1) {
 print("Number of training samples:", training_data.size());
 
 //Map.centerObject(map_centre, 6);
-var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
-Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, true); // image data
-Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
+Map.addLayer(pixsegs, {bands: ['b3_p', 'b2_p', 'b1_p'], min: 100, max: 2000}, 'segments + pixels - showing low tide image', false);
 
 
 // ################################################
@@ -291,18 +217,6 @@ if (vars.thresholding) {
 // End of adding threshold slider layers
 // ################################################
 
-
-// 3. Divide into potential mapping zones
-
-/*
-
-var reef_top = pixels.select('depth').gt(vars.reef_top_depth)
-
-if (vars.show_intermediates) {
-  Map.addLayer(reef_top, {}, "reef top", false)
-}
-
-*/
 
 
 // 4. Train and fit models
@@ -342,12 +256,10 @@ if (vars.test_mode) {
 
 var raw_classification = pixsegs.classify(rf_classifier).toUint8();
 
-// Map.addLayer(raw_classification,{},'raw_classification');
-// print('raw_classification',raw_classification);
 
-// Map.addLayer(pixsegs,{},'pixsegs');
-// print('pixsegs',pixsegs);
-
+// ################################
+// This section generates classification probabilities for the confidence maps
+// ################################
 if (vars.run_probabilities) {
   var classesList={
      classes_mapped_geo:       [11,  12, 13, 14, 15, 21, 22, 23],
@@ -395,23 +307,7 @@ Export.image.toAsset({image:probabilities,
 var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name
 var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 
-/*var export_classification = function () {
-  //var export_convhull = pixels.select(vars.blue_band).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: pixels.select(vars.blue_band).geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-  Map.addLayer(export_geom, {}, "Export footprint", true)
-  Export.image.toAsset({
-    image: raw_classification.set(vars),
-    description: output_name,
-    assetId: vars.asset_output + output_name,
-    region: export_geom,
-    scale: vars.export_scale,
-    crs: vars.local_epsg,
-    maxPixels: 1e13,
-    pyramidingPolicy: {'.default': 'mode'}
-  })
-}*/
-
 if (vars.do_export) {
-  //export_classification() // export if wanted
   
   if (region_idx > -1) {
     var export_geom = subregion_clip
@@ -431,48 +327,9 @@ if (vars.do_export) {
     pyramidingPolicy:{'.default': 'mode'},
   })
   
-  
-  /*
-  
-  // add raster flag for either side of dateline
-  var latlong = ee.Image.pixelLonLat().select('longitude').clip(export_geom)
-  var export_stack_east = raw_classification.set(vars).updateMask(latlong.lte(0))
-  var export_stack_west = raw_classification.set(vars).updateMask(latlong.gt(0))
-  
-  var export_geom_east = ee.Geometry.Rectangle(-179.99998,-24.0093,-168.034,-8.081)
-  var export_geom_west = ee.Geometry.Rectangle(162.7417,-23.0584,179.99998,-7.3087)
-  
-  Map.addLayer(export_geom_east, {}, "export footprint east", true)
-  Map.addLayer(export_geom_west, {}, "export footprint west", true)
-  
-  Export.image.toAsset({
-    image: export_stack_east,
-    description: output_name + '_east',
-    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
-    scale: vars.export_scale,
-    region: export_geom_east,
-    maxPixels: 1e13,
-    pyramidingPolicy:{'.default': 'mode'},
-  })
-  
-  Export.image.toAsset({
-    image: export_stack_west,
-    description: output_name + '_west',
-    assetId: vars.asset_output + 'in_out/' + output_name + '_west',
-    scale: vars.export_scale,
-    region: export_geom_west,
-    maxPixels: 1e13,
-    pyramidingPolicy:{'.default': 'mode'},
-  })
-  
-  */
-  
+
 } else {
-  if (vars.show_eg_area) {
-    Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_raw', false)
-  } else {
-    Map.addLayer(raw_classification, display_pal, output_name + '_raw', false)
-  }
+  Map.addLayer(raw_classification, display_pal, output_name + '_raw', false)
 }
 
 // last so it sits on top
