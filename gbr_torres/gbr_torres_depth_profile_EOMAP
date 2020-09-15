@@ -1,5 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var geometry = /* color: #d63000 */ee.Geometry.Point([147.67951064575664, -18.82273199155438]);
+var geometry = /* color: #d63000 */ee.Geometry.Point([147.67951064575664, -18.82273199155438]),
+    image = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
+    image2 = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 15/09/2020
 
@@ -36,15 +38,15 @@ var region_params = param_module.gbr_torres
 
 var vars = {
     //Dove_low_sr : ee.Image(region_params.image),
-    Dove_low_sr : ee.Image(region_params.image),
+    Dove_low_sr : ee.Image(image2),
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
-    depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
+   // depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
-    depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
+   // depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
+   // Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     //Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
-    Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
+    Depth_composite : ee.Image(image).rename('depth'),
 };
 
 Map.addLayer(vars.Depth_composite)
