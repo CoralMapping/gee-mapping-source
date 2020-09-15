@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([79.79023437499998, 8.47747741527087]);
+var centre_map = /* color: #d63000 */ee.Geometry.Point([79.79023437499998, 8.47747741527087]),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 
@@ -36,7 +37,8 @@ var mapPanel=ui.Map().centerObject(centre_map, 6)
 //load image sr
 var low_tide_image_dove = ee.Image(region_params.image);
 var sr_Dove= ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
-
+//UnEp layer
+Map.addLayer(wcmc, {}, 'UNEP_layer', false)
 
 
 // Load the raw classifications
