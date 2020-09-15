@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([128.43372419154727, -13.033750868123796]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([117.00794294154727, -4.704842827661838]),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
     region_extent = 
     /* color: #d63000 */
