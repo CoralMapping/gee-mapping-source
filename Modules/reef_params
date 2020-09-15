@@ -606,6 +606,7 @@ var indonesia = {
   s2_depth: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_sentinel2_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_sentinel2_depth"],
   ls8_depth: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth"],
   depth_composite: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_composite_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_composite_depth"],
+  notreef_mask: "projects/coral_atlas/Indonesia/in_out/indo_notreef",
   pixels:["projects/coral_atlas/Indonesia/in_out/indo_pixels"],
   segments:["projects/coral_atlas/Indonesia/in_out/indo_segmentation"],
   waves:"",
@@ -623,6 +624,7 @@ var indonesia = {
   geo_map_clean3:"",
   benthic_map_clean1: "",
   benthic_map_clean2: "",
+  mid_mask: "projects/coral_atlas/Indonesia/in_out/indo_midmask",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
