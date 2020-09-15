@@ -710,6 +710,7 @@ exports = {
   heron_wv2: heron_wv2,
   cancook_htv2 : cancook_htv2,
   gbr_gees2: gbr_gees2,
+  inshore_eomap: inshore_eomap,
   gbr_eomap: gbr_eomap,
   fiji_htocean: fiji_htocean,
   swpac: swpac,
