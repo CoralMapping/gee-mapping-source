@@ -149,7 +149,7 @@ var inshore_eomap = {
   tide: "anytide",
   asset: "users/EvaK/Inshore_Reefs/",
   epsg: "EPSG:4326",
-  ssr: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_ssr",
+  rrs: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_ssr",
   rrb: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_sfr",
   depth: "projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth",
   hs95: "projects/coral_atlas/gbr_eomap/mosaics/gbr_2019_hs95",
