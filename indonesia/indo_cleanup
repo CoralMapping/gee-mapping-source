@@ -326,9 +326,9 @@ if (vars.manual_clean && !vars.geomorphic) {
   
 }
 
-// ############################
-// END OF MANUAL SECTION
-// ############################
+/* ############################
+    END OF MANUAL SECTION
+############################ */
 
 
 // 2. Data loads & vis
