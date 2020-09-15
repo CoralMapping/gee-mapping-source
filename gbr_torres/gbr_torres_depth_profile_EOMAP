@@ -133,10 +133,10 @@ var mapPanel=ui.Map().centerObject(geometry, 5)
 
 var layers = mapPanel.layers();
 layers.add(Dove_low_sr)
-layers.add(high_depthDove)
-layers.add(Depth_S2_asu)//here depth from ASU
-layers.add(Depth_L8_asu)
-layers.add(depthComposite1)
+//layers.add(high_depthDove)
+//layers.add(Depth_S2_asu)//here depth from ASU
+//layers.add(Depth_L8_asu)
+//layers.add(depthComposite1)
 
 // 4. Create the inspector panel (the one that shows the profile graph)
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
@@ -209,7 +209,8 @@ Map.setOptions("HYBRID")
 
 // 6. Put all depth layers stacked into an image collection to build the code to extract profile curves
 
-var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
+//var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
+var collectionfromImages=ee.ImageCollection([ee.Image(DepthCompos_renamed)]);
 //print (collectionfromImages)
 
 //Building an image where each band is a single depth layer
@@ -227,7 +228,8 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
+//var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
+var stackedRenamed = stacked.select(['b1_s'],['depth_composite']);
 //print (stackedRenamed)
 
 
@@ -288,6 +290,8 @@ function showChart(transect) {
         height : 800,
         width: 1000,
         pointSize: 2,
+        
+        /*
 
       series: {
             0: { lineWidth: 3 },
@@ -299,6 +303,18 @@ function showChart(transect) {
           colors: ['#bd0026', '#006d2c', '#54278f',
                    '#ff0ef8']
         };
+      
+      */
+      series: {
+           // 0: { lineWidth: 3 },
+           // 1: { lineWidth: 3 },
+           // 2: { lineWidth: 3 },
+            0: { lineWidth: 8 },
+            
+          },
+          colors: ['#ff0ef8']
+        };
+      
       
       
 
