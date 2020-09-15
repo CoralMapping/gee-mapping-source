@@ -11247,11 +11247,10 @@ if (vars.manual_clean && !vars.geomorphic) {
   });   
   // **Manual polygon guided rules**
     
-  /*// Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
-  var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-  var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
-  var ashmore = ee.Image().byte().paint(ee.Feature(ashmore_reef, {zone: 1}), "zone").clip(ashmore_reef);
-   
+  /* Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
+  /*var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  /*var subreg_2 = ee.Image().byte().paint(ee.Feature(outer, {zone: 1}), "zone").clip(outer);
+ 
   // **Inshore**
     
   // Rock on TRF -> coral/algae
