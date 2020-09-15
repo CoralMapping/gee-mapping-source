@@ -410,7 +410,7 @@ if (!vars.manual_clean) {
   if (!vars.geomorphic) {
     // Use the manually cleaned geomorphic map as input for the benthic clean
     var geo_map = ee.Image(region_params.geo_map_clean3);
-    if (!vars.manual_clean) Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
+    Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
     Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
   }
   
@@ -934,12 +934,10 @@ if (!vars.manual_clean) {
     });
     
   } else {
-    if (!vars.manual_clean) {
-      if (vars.reproject_display) {
-        Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name, true);
-      } else {
-        Map.addLayer(clean_map, display_pal, output_name, false);
-      }
+    if (vars.reproject_display) {
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name, true);
+    } else {
+      Map.addLayer(clean_map, display_pal, output_name, false);
     }
   }
 
