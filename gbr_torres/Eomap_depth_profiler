@@ -163,7 +163,7 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1'],['EOMAP_Sentinel_depth_10m']);
+var stackedRenamed = stacked.select(['b1_a'],['EOMAP_Sentinel_depth_10m']);
 //print (stackedRenamed)
 
 
