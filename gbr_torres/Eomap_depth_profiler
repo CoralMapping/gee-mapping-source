@@ -119,15 +119,15 @@ var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
 //add the layers
 
 var layers = mapPanel.layers();
-layers.add(Difference_Landsat_Sentinel)
+//layers.add(Difference_Landsat_Sentinel)
 
-layers.add(cc_high_sr)
-layers.add(cc_low_sr)
-layers.add(cc_high_d)
-layers.add(cc_low_d)
+//layers.add(cc_high_sr)
+//layers.add(cc_low_sr)
+//layers.add(cc_high_d)
+//layers.add(cc_low_d)
 
 layers.add(EOMAP_Sentinel_sr)
-layers.add(EOMAP_L8_depth)
+//layers.add(EOMAP_L8_depth)
 layers.add(EOMAP_Sentinel_depth)
 
 
