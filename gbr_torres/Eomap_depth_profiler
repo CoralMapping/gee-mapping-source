@@ -147,9 +147,9 @@ inspectorPanel.add(intro);
 
 // 3. have the depth layers stacked in an image collection
 
-var collectionfromImages=ee.ImageCollection([ee.Image(EOMAP_L8_renamed), ee.Image(cc_eomap_S), 
-                                            ee.Image(cc_low_depth_renamed), ee.Image(cc_high_depth_renamed), ee.Image(difLandsat_Sentinel)
-]);
+var collectionfromImages=ee.ImageCollection([ee.Image(cc_eomap_S)]), 
+                                            
+
 //print (collectionfromImages)
 
 //Building an image where each band is a single depth layer
