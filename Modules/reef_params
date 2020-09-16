@@ -166,7 +166,7 @@ var inshore_eomap = {
   benthic_val_library: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_coral",
   geo_map: "users/EvaK/Inshore_Reefs/in_out/inshore_geo",
   benthic_map: "users/EvaK/Inshore_Reefs/in_out/gbr_eomap_benthic",
-  geo_map_clean: "users/EvaK/Inshore_Reefs/in_out/inshore_geo-clean3",
+  geo_map_clean: "users/EvaK/Inshore_Reefs/in_out/inshore_geo-clean1",
   benthic_map_clean: "users/EvaK/Inshore_Reefs/in_out/gbr_eomap_benthic-clean-mix"
 }
 
