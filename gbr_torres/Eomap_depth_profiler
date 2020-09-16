@@ -217,7 +217,7 @@ function showChart(transect) {
   var scale = mapPanel.getScale()
   print(transect.length())
   print(scale)
-  var profile1 = utils.reduceImageProfile(stackedRenamed, transect, ee.Reducer.mean(),5);
+  var profile1 = utils.reduceImageProfile(stackedRenamed, transect, ee.Reducer.mean(),10);
   
   // Define chart customization options by creating a dictionary
     var options= {
