@@ -40,22 +40,18 @@ var utils = require('users/gena/packages:utils')
 
 
 
-//renaming band 1 in EOMAP_L8 from 'b1' to 'b1_l' (to make band in this layer unique)
-var EOMAP_L8=ee.Image(cc_eomap_L8)
-var EOMAP_L8_renamed = EOMAP_L8.select(
-  ['b1'],
-  ['b1_l']);
+
   
 //Compute the transformation using expression (its server side method as well)
-var cc_low_depth_neg=ee.Image(cc_low_depth_raw)
-var cc_low_depth=cc_low_depth_neg.expression(
-  '((-1) * B1)/100', {
-  'B1' :cc_low_depth_neg.select('b1') //specify that B1 mean b1
+var EOMAP_neg=ee.Image(cc_eomap_s)
+var EOMAP_neg_r=EOMAP_neg.expression(
+  '((-1) * B1)/10', {
+  'B1' :EOMAP_neg.select('b1') //specify that B1 mean b1
 })    
   
 //renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
-var cc_low_de=ee.Image(cc_low_depth)
-var cc_low_depth_renamed = cc_low_de.select(
+var EOMAP_neg_r=ee.Image(EOMAP_neg_r)
+var Eomap_s = EOMAP_neg_r.select(
   ['constant'],
   ['b1_a']);
   
@@ -84,7 +80,7 @@ var imageVisParam = {"opacity":1,"bands":["b1_l"],"min":-13,"max":-0.7,"palette"
 var EOMAP_L8_depth= ui.Map.Layer(EOMAP_L8_renamed, imageVisParam, 'EOMAP_Landsat_depth_15m', false);
 
 var imageVisParam2 = {"opacity":1,"bands":["b1"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
-var EOMAP_Sentinel_depth=ui.Map.Layer(cc_eomap_s,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
+var EOMAP_Sentinel_depth=ui.Map.Layer(Eomap_s,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
 
 var imageVisParam3 = {"opacity":1,"bands":["b1","b2","b3"],"min":4,"max":2461.8125,"gamma":1};
 var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
