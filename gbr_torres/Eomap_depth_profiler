@@ -147,7 +147,7 @@ inspectorPanel.add(intro);
 
 // 3. have the depth layers stacked in an image collection
 
-var collectionfromImages=ee.ImageCollection([ee.Image(cc_eomap_S)]), 
+var collectionfromImages=ee.ImageCollection(ee.Image(cc_eomap_S)); 
                                             
 
 //print (collectionfromImages)
