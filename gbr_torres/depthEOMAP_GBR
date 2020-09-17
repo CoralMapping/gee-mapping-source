@@ -75,7 +75,7 @@ var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
 
 // 1. Get all the depth layers in the map panel to extract the profiles from 
 
-var imageVisParam2 = {"opacity":1,"bands":["b1"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
+var imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
 var EOMAP_Sentinel_depth=ui.Map.Layer(eomap_S_renamed,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
 
 var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":4,"max":2461.8125,"gamma":1};
