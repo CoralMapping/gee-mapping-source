@@ -90,11 +90,9 @@ var layers = mapPanel.layers();
 
 layers.add(cc_low_d)
 layers.add(Dove_sr)
-
-
 layers.add(EOMAP_Sentinel_depth)
 layers.add(EOMAP_Sentinel_sr)
-layers.add(EOMAP_Sentinel_depth)
+
 
 // 2. Create the inspector panel
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
