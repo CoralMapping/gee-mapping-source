@@ -94,13 +94,17 @@ var depth_L8_renamed = depth_L8.select(
 
 
 //S2 depth gbr Torres
+var depth_S2_neg=ee.Image(vars.depth_S2)
+var depth_S2=depth_S2_neg.expression(
+ '((-1) * B1)/100', {
+  'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
+});
 
-
-
-
-
-
-
+//renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
+var depth_S2=ee.Image(depth_S2)
+var depth_S2_renamed = depth_S2.select(
+  ['constant'],
+  ['b1_l']);
 
 
 //dove data
@@ -112,7 +116,11 @@ var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'GBR_Torres_dove
 var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
 var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr_5m', false)
 
+var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, {}, "GBR_Torres_depth_composite", false)
 
+var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, {}, "GBR_Torres_L8_depth", false)
+
+var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, {}, "GBR_Torres_S2_depth")
 
 //print(cc_high_depth_renamed)
 
@@ -134,8 +142,9 @@ layers.add(Dove_sr)
 layers.add(cc_low_d)
 layers.add(EOMAP_Sentinel_sr)
 layers.add(EOMAP_Sentinel_depth)
-
-
+layers.add(gbrTorres_depth_comp)
+layers.add(gbrtorres_L8_depth)
+layers.add(gbrtorres_S2_depth)
 
 // 2. Create the inspector panel
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
