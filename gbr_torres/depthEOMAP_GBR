@@ -136,7 +136,7 @@ var imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-17.2,"max":-1.87,"pale
 var EOMAP_Sentinel_depth=ui.Map.Layer(eomap_S_renamed,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
 
 var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":96.46000000000001,"max":3334.54,"gamma":0.888};
-var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,imageVisParam3, 'EOMAP_Sentinel_RGB_10m', false)
+var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
 
 
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
