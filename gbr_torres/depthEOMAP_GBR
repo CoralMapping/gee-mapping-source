@@ -193,8 +193,8 @@ function showChart(transect) {
         width: 1000,
         pointSize: 2,
       series: {
-      1: {color:'#54278f'},
-      0: {color:'#006d2c'},
+      0: {color:'#54278f'},
+      1: {color:'#006d2c'},
       
      // 2: {color: '54278f'},
      // 3: {color: 'a50f15'},
