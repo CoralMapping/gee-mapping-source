@@ -89,11 +89,11 @@ var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
 //add the layers
 
 var layers = mapPanel.layers();
-
-layers.add(cc_low_d)
 layers.add(Dove_sr)
-layers.add(EOMAP_Sentinel_depth)
+layers.add(cc_low_d)
 layers.add(EOMAP_Sentinel_sr)
+layers.add(EOMAP_Sentinel_depth)
+
 
 
 // 2. Create the inspector panel
