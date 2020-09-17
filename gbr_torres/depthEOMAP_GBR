@@ -127,7 +127,7 @@ var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, imageVisParam8, "GBR_Torr
 
 var imageVisParam9={"opacity":1,"bands":["b1_l"],"min":-22.0794,"max":-0.45060000000000006,"palette":["a50f15","de2d26","fb6a4a","fc9272","fcbba1","fee5d9"]};
 
-var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, imageVisParam9, "GBR_Torres_S2_depth")
+var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, imageVisParam9, "GBR_Torres_S2_depth", false)
 
 //print(cc_high_depth_renamed)
 
