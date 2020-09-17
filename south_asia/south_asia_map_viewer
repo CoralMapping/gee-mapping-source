@@ -43,6 +43,8 @@ var vars = {
   benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+  mid_mask: ee.FeatureCollection(region_params.midMask)
+  
 };
 
 
