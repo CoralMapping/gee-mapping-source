@@ -187,7 +187,7 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1_a','b1_b', 'b1_l','b1_c', 'b1_s' ],['Dove_depth_5m', 'EOMAP_Sentinel_depth_10m','gbrtorres_S2_depth', 'gbrtorres_L8_depth', 'gbrtorres_depth_composite']);
+var stackedRenamed = stacked.select(['b1_a','b1_b', 'b1_l','b1_c', 'b1_s' ],['gbr_torres_dove_depth_5m', 'EOMAP_Sentinel_depth_10m','gbrtorres_S2_depth', 'gbrtorres_L8_depth', 'gbrtorres_depth_composite']);
 //print (stackedRenamed)
 
 
