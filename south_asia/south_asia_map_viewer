@@ -43,7 +43,7 @@ var vars = {
   benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
-  midMask:ee.FeatureCollection(region_params.midMask)
+  mid_mask:region_params.midMask
   
 };
 
@@ -98,7 +98,7 @@ var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2'
 var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
 var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
-var midMask = ui.Map.Layer(midMask, {}, 'midMask', false)
+var mid_Mask = ui.Map.Layer(mid_mask, {}, 'midMask', false)
 //load depth composite used to slice geo raw map
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
@@ -126,7 +126,7 @@ if (vars.geo_clean1) {
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
-  layers.add(midMask)
+  layers.add(mid_Mask)
 ////////// UI SET UP //////////
 
 if(vars.geo_raw_depthCutoff) {
