@@ -129,8 +129,7 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1','b1_a'],['EOMAP_Sentinel_depth_10m',
-                                                                'Planet_low_depth_5m']);
+var stackedRenamed = stacked.select(['b1_a','b1_b'],['Planet_low_depth_5m', 'EOMAP_Sentinel_depth_10m']);
 //print (stackedRenamed)
 
 
