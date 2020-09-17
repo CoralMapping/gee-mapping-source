@@ -5,7 +5,8 @@ var cc_eomap_sr = ee.Image("users/rodbio2008/Cairns_Cook_EOMAP/cancook_eomap_ssr
     cc_eomap_L8 = ee.Image("users/rodbio2008/Cairns_CookV1/cancook_eomap_l8_15m"),
     cc_eomap_S = ee.Image("users/rodbio2008/Cairns_Cook_EOMAP/cancook_eomap_depth"),
     cc_high_depth_raw = ee.Image("users/rodbio2008/Cairns_CookV2/cc_high_depth"),
-    cc_low_depth_raw = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic");
+    cc_low_depth_raw = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
+    image = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
@@ -68,7 +69,7 @@ var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_s
 var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
                     "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
 var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
-
+var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
 
 
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
@@ -76,7 +77,7 @@ var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
 //add the layers
 
 var layers = mapPanel.layers();
-layers.add(cc_high_sr)
+
 layers.add(cc_low_sr)
 layers.add(cc_high_d)
 layers.add(cc_low_d)
