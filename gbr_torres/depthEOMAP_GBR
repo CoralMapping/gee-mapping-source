@@ -120,7 +120,7 @@ var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'GBR_Torres_dove
 var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
 var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr_5m', false)
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
-var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, {imageVisParam7}, "GBR_Torres_depth_composite", false)
+var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, "GBR_Torres_depth_composite", false)
 var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, {}, "GBR_Torres_L8_depth", false)
 
 var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, {}, "GBR_Torres_S2_depth")
