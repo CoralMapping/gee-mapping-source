@@ -43,8 +43,6 @@ var vars = {
   benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
-  
-  
 };
 
 
@@ -84,6 +82,10 @@ var geo_raw= ui.Map.Layer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false
 var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 
 }
+
+//add masks to the viewer
+
+var mid_mask=ui.Map.Layer(region_params.midMask, {},'mid_mask',false)
 
 // Load the clean classifications to the ui viewer
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
@@ -126,7 +128,7 @@ if (vars.geo_clean1) {
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
-  layers.add(region_params.mid_mask)
+  layers.add(mid_mask)
 ////////// UI SET UP //////////
 
 if(vars.geo_raw_depthCutoff) {
