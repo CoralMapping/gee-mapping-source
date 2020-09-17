@@ -1,18 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var swp_geom = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[163.02720456454335, -21.322159902363804],
-          [166.82847409579335, -23.354391453545336],
-          [-179.03761477139412, -24.103670105631068],
-          [-169.78035527899596, -19.770972232439636],
-          [-168.03036823721808, -14.546123846657588],
-          [-170.84836140128058, -9.107272611054686],
-          [-172.44137897940558, -8.439523072122672],
-          [178.48874351936877, -6.97677197479569],
-          [165.12936851936877, -9.41239158218196],
-          [162.09714195686877, -18.068751086727666]]]);
+var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - depth contour export script
@@ -25,126 +12,28 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // #############################
 // load analysis params module
-var region_params = param_module.swpac        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
-// choose a depth (in cm) cutoff that oy think looks good, then export it =)
-var depth_thresh = 1000 // <--- ######## CHOOSE THE DEPTH HERE
+var region_params = param_module.indonesia        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose an appropriate scale
-var export_scale = ee.Number(250)
-// choose "small" object to remove (in m x m, eg, 1000 = 1000m x 1000m patch)
-var small_objects = ee.Number(1000)
-
-var epsg = region_params.epsg
-
-// ** Check the "export_geom" layer covers the full extent =)
-
+var export_scale = ee.Number(100)
 // #############################
 
-// SWP HACK (or another region that has east/west splits)
-if (region_params.sname == "swp") {
-  var depth = ee.ImageCollection([ee.Image(region_params.pixels[0]),ee.Image(region_params.pixels[1])]).select('depth').mosaic()
-  var export_geom = swp_geom
-} else {
-  // load data dynamically
-  var dove_depth = ee.Image(region_params.depth).rename('depth')
-  var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-  var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
-  
-  // make the depth data for modelling/mapping
-  // --> Use S2 where possible, then LS8, then Dove
-  // --> The GEE mosaic algorithm uses the LAST non-masked pixel in the stack 
-  var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
-  // get back the negative retrievals as very shallow
-  depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
-  
-  // region generation
-  var export_geom = depth.gt(0).reduceToVectors({
-    geometry: dove_depth.geometry().bounds(),
-    scale: 1000,
-    crs: epsg,
-    bestEffort: true,
-    eightConnected: false,
-    maxPixels: 1e13
-  }).geometry().bounds()
-  
-}
+var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
 
-
-var depth_binary = depth.lt(depth_thresh) 
-//var depth_thresh_smooth = depth.focal_mean({radius:5, iterations: 3}).lt(depth_thresh)
-
-// depth contour generation
-var lines = ee.List.sequence(500, 1500, 100) // <- contour lines 5m to 15m @ intervals of 1m
-
-var contour_lines = ee.ImageCollection(
-  lines.map(function(line) {
-    var mycontour = depth
-        .convolve(ee.Kernel.gaussian(5, 3))
-        .subtract(ee.Image.constant(line)).zeroCrossing() 
-        .multiply(ee.Image.constant(line)).toFloat();
-    return mycontour.mask(mycontour);
-  })
-).mosaic()
-
-var contour_thresh = contour_lines.eq(depth_thresh).selfMask()
-
-// smooth edge
-var small_object_pixels = small_objects.divide(export_scale).pow(2)
-var depth_edge = depth_binary.where({
-  test: depth_binary.connectedPixelCount(small_object_pixels, false).lt(small_object_pixels),
-  value: ee.Image(0)
-}).selfMask().unmask(-1).zeroCrossing().selfMask()
-
-
-// display it all
-//Map.centerObject(dove_depth, 5)
-Map.addLayer(depth, {bands: ['depth'], min: 0, max: 2500, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth (cm)", true) // water depth
-Map.addLayer(depth_binary.reproject({crs: epsg, scale: 100}), {min: 0, max: 1}, "Depth threshold", true)
-Map.addLayer(contour_lines.reproject({crs: epsg, scale: 100}), {min: 0, max: 1500, palette:['00ff00', 'ff0000']}, 'all contours')
-Map.addLayer(contour_thresh.reproject({crs: epsg, scale: 100}), {min:0, max:1}, 'threshold contour')
-Map.addLayer(depth_edge.reproject({crs: epsg, scale: 100}), {}, 'edge threshold')
-
-//Map.addLayer(depth_thresh_smooth, {min: 0, max: 1}, "Depth contour", true)
-
+// display it
+Map.addLayer(reef_mask, {min:1, max:3}, "Clipped reef outline", true)
 
 // exports
+Map.addLayer(region_extent, {}, "export_geom", true)
 
-Map.addLayer(export_geom, {}, "export_geom", true)
-
-// depth threshold
+// drive export
 Export.image.toDrive({
   image: depth_binary, 
-  description: 'depth_thresh_export',
-  folder: 'folder/',
-  fileNamePrefix: 'output_name',
-  region: export_geom,
-  scale: 100,
-  crs: epsg,
-  maxPixels: 1e13,
-  skipEmptyTiles: true
-})
-
-// depth contour
-Export.image.toDrive({
-  image: contour_thresh, 
-  description: 'contour_thresh_export',
-  folder: 'folder/',
-  fileNamePrefix: 'output_name',
-  region: export_geom,
-  scale: 100,
-  crs: epsg,
-  maxPixels: 1e13,
-  skipEmptyTiles: true
-})
-
-// depth edge
-Export.image.toDrive({
-  image: depth_edge, 
-  description: 'depth_edge_export',
-  folder: 'folder/',
-  fileNamePrefix: 'output_name',
-  region: export_geom,
-  scale: 100,
-  crs: epsg,
+  description: 'reef_mask_export_' + region_params.sname,
+  folder: 'wcmc_rf/',
+  fileNamePrefix: 'reef_mask_' + region_params.sname,
+  region: region_extent,
+  scale: export_scale,
+  crs: 'EPSG:4326',
   maxPixels: 1e13,
   skipEmptyTiles: true
 })
