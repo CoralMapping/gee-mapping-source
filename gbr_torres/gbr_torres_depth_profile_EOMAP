@@ -95,7 +95,7 @@ var depth_L8_renamed = depth_L8.select(
 // depth composite
 var Composite_depth=ee.Image(vars.Depth_composite)
 var Composite_depth=Composite_depth.expression(
-  '((-1)*B1)/10', {
+  '((-1)*B1)/100', {
   'B1' :Composite_depth.select('depth') //specify that B1 mean depth
 })
 
