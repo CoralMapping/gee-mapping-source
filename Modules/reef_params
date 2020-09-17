@@ -561,7 +561,8 @@ var south_asia = {
   benthic_map_clean2: "projects/coral_atlas/south_asia/in_out/soa_benthic_clean2",
   prob_geo:["projects/coral_atlas/south_asia/in_out/soa_prob_geo"],
   prob_benthic:["projects/coral_atlas/south_asia/in_out/soa_prob_benthic"],
-  QAQC: "projects/coral_atlas/south_asia/QAQC"
+  QAQC: "projects/coral_atlas/south_asia/QAQC",
+  midMask: "projects/coral_atlas/south_asia/in_out/mid_mask",
 };
 
 var png_solomons = {
