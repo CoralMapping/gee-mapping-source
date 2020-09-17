@@ -1,0 +1,236 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var cc_eomap_sr = ee.Image("users/rodbio2008/Cairns_Cook_EOMAP/cancook_eomap_ssr"),
+    cc_high_rrs = ee.Image("users/rodbio2008/Cairns_CookV2/cc_high_rrs"),
+    cc_low_rrs = ee.Image("users/rodbio2008/Cairns_CookV2/cc_low_rrs"),
+    cc_eomap_L8 = ee.Image("users/rodbio2008/Cairns_CookV1/cancook_eomap_l8_15m"),
+    cc_eomap_S = ee.Image("users/rodbio2008/Cairns_Cook_EOMAP/cancook_eomap_depth"),
+    cc_low_depth_raw = ee.Image("users/rodbio2008/Cairns_CookV2/cc_low_depth"),
+    cc_high_depth_raw = ee.Image("users/rodbio2008/Cairns_CookV2/cc_high_depth");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
+// Description:
+
+//App to display depth profile (or any spatial profile) from a stack of images. 
+//Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
+//from EOMAP layers (landsat and Sentinel comparison) and with corresponding dove data
+
+//Gennadii Donchyts <Gennadii.Donchyts@deltares.nl> from the Netherlands kindly provided the function "reduceImageProfile" and 
+//"featureCollectionToDataTable" and support the integration of the chart functions with the standalone app. 
+
+//For Gennadii's code here the attribution:
+/*
+Copyright (c) 2018 Gennadii Donchyts. All rights reserved.
+
+This work is licensed under the terms of the MIT license.  
+For a copy, see <https://opensource.org/licenses/MIT>.
+*/
+// table of contents:
+// 0. data preparation (invert sign, change band names)
+// 1. Get all the depth layers in the map panel to extract the profiles from
+// 2. Create the inspector panel
+// 3. have the depth layers stacked in an image collection
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+
+// initial utils from gennaddi
+var utils = require('users/gena/packages:utils')
+
+//renaming band 1 in EOMAP_L8 from 'b1' to 'b1_l' (to make band in this layer unique)
+var EOMAP_L8=ee.Image(cc_eomap_L8)
+var EOMAP_L8_renamed = EOMAP_L8.select(
+  ['b1'],
+  ['b1_l']);
+  
+//Compute the transformation using expression (its server side method as well)
+var cc_low_depth_neg=ee.Image(cc_low_depth_raw)
+var cc_low_depth=cc_low_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :cc_low_depth_neg.select('b1') //specify that B1 mean b1
+})    
+  
+//renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
+var cc_low_de=ee.Image(cc_low_depth)
+var cc_low_depth_renamed = cc_low_de.select(
+  ['constant'],
+  ['b1_a']);
+  
+print (cc_low_depth_renamed)
+
+//Compute the transformation using expression (its server side method as well)
+var cc_high_depth_neg=ee.Image(cc_high_depth_raw)
+var cc_high_depth=cc_high_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :cc_high_depth_neg.select('b1') //specify that B1 mean b1
+})
+
+//renaming band 1 in cc_high_depth from 'b1' to 'b1_b' (both layers have the same band name which makes )  
+var cc_high_de=ee.Image(cc_high_depth)
+var cc_high_depth_renamed = cc_high_de.select(
+  ['constant'],
+  ['b1_b']);  
+
+print (cc_high_depth_renamed)
+//print(cc_high_depth_renamed)
+
+// 1. Get all the depth layers in the map panel to extract the profiles from 
+
+var imageVisParam = {"opacity":1,"bands":["b1_l"],"min":-13,"max":-0.7,"palette":["252525","636363","969696","bdbdbd","d9d9d9","f7f7f7"]};
+var EOMAP_L8_depth= ui.Map.Layer(EOMAP_L8_renamed, imageVisParam, 'EOMAP_Landsat_depth_15m', false);
+
+var imageVisParam2 = {"opacity":1,"bands":["b1"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
+var EOMAP_Sentinel_depth=ui.Map.Layer(cc_eomap_S,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
+
+var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":4,"max":2461.8125,"gamma":1};
+var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
+
+
+//dove data
+
+var imageVisParam4 = {"opacity":1,"bands":["b1_b"],"min":-16.049465812594534,"max":5.771307017249012,
+                      "palette":["a50f15","de2d26","fb6a4a","fc9272","fcbba1","fee5d9"]};
+var cc_high_d=ui.Map.Layer(cc_high_depth_renamed,imageVisParam4, 'Planet_high_depth_5m', false);
+
+var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
+                    "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
+
+
+var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"min":28,"max":1115,"gamma":1};
+var cc_high_sr=ui.Map.Layer(cc_high_rrs, imageVisParam6, 'Planet_high_sr_5m', false)
+var cc_low_sr=ui.Map.Layer(cc_low_rrs, imageVisParam6, 'Planet_low_sr_5m', false)
+
+
+var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
+
+//add the layers
+
+var layers = mapPanel.layers();
+layers.add(cc_high_sr)
+layers.add(cc_low_sr)
+layers.add(cc_high_d)
+layers.add(cc_low_d)
+
+layers.add(EOMAP_Sentinel_sr)
+layers.add(EOMAP_L8_depth)
+layers.add(EOMAP_Sentinel_depth)
+
+// 2. Create the inspector panel
+var inspectorPanel = ui.Panel({style: {width: '70%'}});
+
+// Create an intro panel with labels (done working)
+var intro = ui.Panel([
+  ui.Label({
+    value: "Spatial Profiles from EOMAP and Planet Doves depth layers in Cairns-Cooktown area, GBR (sampling interval to Planet's 5 m)",
+    style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
+  }),
+]);
+
+inspectorPanel.add(intro);
+
+// 3. have the depth layers stacked in an image collection
+
+var collectionfromImages=ee.ImageCollection([ee.Image(EOMAP_L8_renamed), ee.Image(cc_eomap_S), 
+                                            ee.Image(cc_low_depth_renamed), ee.Image(cc_high_depth_renamed)
+]);
+//print (collectionfromImages)
+
+//Building an image where each band is a single depth layer
+
+var stackCollection = function(collection) {
+  //create an initial images to stack the others to
+  var firstImage = ee.Image(collection.first().select([]));
+  //print (typeof(firstImage))
+  // a funtion to append a band to images
+  var appendImages = function (img, previous) {
+    return ee.Image(previous).addBands(img);
+  };
+  return ee.Image(collectionfromImages.iterate(appendImages, firstImage));
+};
+var stacked = stackCollection (collectionfromImages);
+
+// Renaming bands names to depict in graph
+var stackedRenamed = stacked.select(['b1','b1_l','b1_a','b1_b'],['EOMAP_Sentinel_depth_10m','EOMAP_Landsat_depth_15m',
+                                                                'Planet_low_depth_5m','Planet_high_depth_5m']);
+//print (stackedRenamed)
+
+
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+//var DrawTransectTool = require('users/gena/packages:ui').DrawTransectTool /this is the roginal from gennadi
+var DrawTransectTool = require('users/rodbio2008/myJSTraining:RBAutils/ui').DrawTransectTool
+
+Map.setOptions("HYBRID")
+
+var tool = new DrawTransectTool(mapPanel)
+
+// start drawing by default
+tool.startDrawing()
+
+// add checkbox to activate selector when checkbox is clicked
+var buttonDraw = ui.Button({label: 'Press to show depth profile chart after drawing your transect in the  map', 
+style: {color: 'red', fontSize: '45px', textAlign: 'center', position: 'top-center', fontWeight: 'bold'}});
+
+buttonDraw.setDisabled(true) // no profile at the beginning
+
+// subscribe to selection
+tool.onFinished(function(transect) {
+  showChart(transect)
+})
+
+// subscribe to selection
+tool.onDraw(function(points) {
+  print('draw', points)
+  if(points.length >= 2) {
+    buttonDraw.setDisabled(false)
+  }
+})
+
+buttonDraw.onClick(function() {
+  if(buttonDraw.getDisabled()) {
+    alert('Not drawing')
+    return
+  }
+
+  tool.stopDrawing()
+  tool.startDrawing()
+  
+  buttonDraw.setDisabled(true)
+});
+
+function showChart(transect) {
+  var scale = mapPanel.getScale()
+  print(transect.length())
+  print(scale)
+  var profile1 = utils.reduceImageProfile(stackedRenamed, transect, ee.Reducer.mean(),5);
+  
+  // Define chart customization options by creating a dictionary
+    var options= {
+        //title: 'Depth_profiles',
+        hAxis:{'title':'Distance (m)'},
+        vAxis:{'title': 'Depth (m)'},
+        lineWith: 3,
+        height : 800,
+        width: 1000,
+        pointSize: 2,
+      series: {
+      0: {color:'31a354'},
+      1: {color:'252525'},
+      2: {color: '54278f'},
+      3: {color: 'a50f15'},
+      }};
+     
+     //this bit is for not using unmask that had to locate a value on it (i.e. if I use it and assign 0 values
+     //I 'll have depth at 0 m wich is a value that is not real
+     
+  print(profile1)
+     
+  utils.featureCollectionToDataTable(profile1, 'distance').evaluate(function(dataTable){ 
+     var chartInPanel= ui.Chart(dataTable).setOptions(options)
+     inspectorPanel.widgets().set(2, chartInPanel)
+  }); //basiclly here I set the inspector panel within the function
+    
+}
+ui.root.setLayout(ui.Panel.Layout.absolute());
+
+inspectorPanel.widgets().add(buttonDraw)
+ 
+ui.root.clear();
+ui.root.add(ui.SplitPanel(inspectorPanel, mapPanel));
