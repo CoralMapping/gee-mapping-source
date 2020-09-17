@@ -100,7 +100,7 @@ var inspectorPanel = ui.Panel({style: {width: '70%'}});
 // Create an intro panel with labels (done working)
 var intro = ui.Panel([
   ui.Label({
-    value: "Spatial Profiles from EOMAP and Planet Doves depth layers in Cairns-Cooktown area, GBR (sampling interval to Planet's 5 m)",
+    value: "Spatial Profiles from EOMAP and Planet Doves depth layers for GBR/GBR Torrest (sampling interval to Planet's 5 m)",
     style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
   }),
 ]);
@@ -109,8 +109,8 @@ inspectorPanel.add(intro);
 
 // 3. have the depth layers stacked in an image collection
 
-var collectionfromImages=ee.ImageCollection([ee.Image(EOMAP_L8_renamed), ee.Image(cc_eomap_S), 
-                                            ee.Image(cc_low_depth_renamed), ee.Image(cc_high_depth_renamed)
+var collectionfromImages=ee.ImageCollection([ee.Image(cc_low_depth_renamed), ee.Image(eomap_S_renamed), 
+                                         
 ]);
 //print (collectionfromImages)
 
