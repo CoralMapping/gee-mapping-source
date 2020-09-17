@@ -78,8 +78,6 @@ var DepthCompos_renamed = depthComposite.select(
   ['constant'],
   ['b1_s']);  
   
-  
-  
 //L8_depth gbrTorres
 //Compute the transformation using neg expression for L8 (its server side method as well)
 var depth_L8_neg = ee.Image(gbrTorres_L8_depth);
@@ -96,6 +94,14 @@ var depth_L8_renamed = depth_L8.select(
 
 
 //S2 depth gbr Torres
+
+
+
+
+
+
+
+
 
 //dove data
 
