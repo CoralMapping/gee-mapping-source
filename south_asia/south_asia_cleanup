@@ -3948,6 +3948,8 @@ MANUAL ADDITION
 var reef_boundary = soa_extent
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
+var midMask = mid_mask
+Map.addLayer(midMask, {}, "midMask", false);
 
 
 // ############################
@@ -5006,9 +5008,7 @@ var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
 pkg_vis.add_lgds([title, legend]);//, mask_legend])
 // generate the legend
 
-
 Export.table.toAsset({
   collection: mid_mask,
   description: "soa_mid_mask",
-  
 })
