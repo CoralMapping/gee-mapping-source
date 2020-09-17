@@ -2,7 +2,7 @@
 var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
     dove_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth"),
     eomap_S = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
-    cc_eomap_sr = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
+    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
@@ -46,6 +46,21 @@ var cc_low_depth_renamed = cc_low_de.select(
   
 print (cc_low_depth_renamed)
 
+//EOMAP-sentinel
+
+var EOMAP_depth_neg=ee.Image(eomap_S)
+var EO_depth=EOMAP_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :EOMAP_depth_neg.select('b1') //specify that B1 mean b1
+})    
+  
+//renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
+var EO=ee.Image(EO_depth)
+var eomap_S_renamed = EO.select(
+  ['constant'],
+  ['b1_b']);
+  
+
 //dove data
 
 
@@ -61,10 +76,10 @@ var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
 // 1. Get all the depth layers in the map panel to extract the profiles from 
 
 var imageVisParam2 = {"opacity":1,"bands":["b1"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
-var EOMAP_Sentinel_depth=ui.Map.Layer(cc_eomap_S,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
+var EOMAP_Sentinel_depth=ui.Map.Layer(eomap_S_renamed,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
 
 var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":4,"max":2461.8125,"gamma":1};
-var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
+var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
 
 
 
