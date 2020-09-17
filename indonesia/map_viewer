@@ -608,6 +608,7 @@ var geo_fill = empty.paint({
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
+*/
 
 ////////// UI SET UP //////////
 
@@ -624,4 +625,23 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
-*/
+
+
+////////// MASK EXPORTS //////////
+Export.table.toAsset({
+  collection: region_extent,
+  description: "region_extent_export",
+  assetId: region_params.asset + '_' + region_params.sname + '_extent'
+})
+
+Export.table.toAsset({
+  collection: notReef_mask,
+  description: "not_reef_mask_export",
+  assetId: region_params.asset + '_' + region_params.sname + '_notreef'
+})
+
+Export.table.toAsset({
+  collection: mid_mask,
+  description: "mid_mask_export",
+  assetId: region_params.asset + '_' + region_params.sname + '_midmask'
+})
