@@ -2,7 +2,7 @@
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Coral atlas mapping project - depth contour export script
+// Coral atlas mapping project - reef outline export script
 // Contact: mitchell.lyons@gmail.com
 // Description:
 // - Primarily for use in generating exports for wave modelling
