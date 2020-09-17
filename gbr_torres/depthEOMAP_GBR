@@ -161,7 +161,7 @@ inspectorPanel.add(intro);
 
 // 3. have the depth layers stacked in an image collection
 
-var collectionfromImages=ee.ImageCollection([ee.Image(cc_low_depth_renamed), ee.Image(eomap_S_renamed), 
+var collectionfromImages=ee.ImageCollection([ee.Image(cc_low_depth_renamed), ee.Image(eomap_S_renamed), ee.Image(depth_S2_renamed), ee.Image(depth_L8_renamed), ee.Image(DepthCompos_renamed), 
                                          
 ]);
 //print (collectionfromImages)
@@ -181,7 +181,7 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1_a','b1_b'],['Planet_low_depth_5m', 'EOMAP_Sentinel_depth_10m']);
+var stackedRenamed = stacked.select(['b1_a','b1_b', 'b1_l','b1_c', 'b1_s' ],['Dove_depth_5m', 'EOMAP_Sentinel_depth_10m','gbrtorres_S2_depth', 'gbrtorres_L8_depth', 'gbrtorres_depth_composite']);
 //print (stackedRenamed)
 
 
