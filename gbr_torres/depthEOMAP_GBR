@@ -252,8 +252,9 @@ function showChart(transect) {
       series: {
       0: {color:'#54278f'},
       1: {color:'#006d2c'},
-     2: {color: '#a50f15'},
-     3: {color: '#08519c'},
+      2: {color: '#a50f15'},
+       3: {color: '#08519c'},
+       4:{color:'#3b3b3b'},
       }};
      
      //this bit is for not using unmask that had to locate a value on it (i.e. if I use it and assign 0 values
