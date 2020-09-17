@@ -64,18 +64,11 @@ var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_s
 
 //dove data
 
-var imageVisParam4 = {"opacity":1,"bands":["b1_b"],"min":-16.049465812594534,"max":5.771307017249012,
-                      "palette":["a50f15","de2d26","fb6a4a","fc9272","fcbba1","fee5d9"]};
-var cc_high_d=ui.Map.Layer(cc_high_depth_renamed,imageVisParam4, 'Planet_high_depth_5m', false);
 
 var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
                     "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
 var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
 
-
-var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"min":28,"max":1115,"gamma":1};
-var cc_high_sr=ui.Map.Layer(cc_high_rrs, imageVisParam6, 'Planet_high_sr_5m', false)
-var cc_low_sr=ui.Map.Layer(cc_low_rrs, imageVisParam6, 'Planet_low_sr_5m', false)
 
 
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
