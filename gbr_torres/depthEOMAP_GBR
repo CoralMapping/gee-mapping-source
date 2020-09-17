@@ -102,7 +102,7 @@ var inspectorPanel = ui.Panel({style: {width: '70%'}});
 // Create an intro panel with labels (done working)
 var intro = ui.Panel([
   ui.Label({
-    value: "Spatial Profiles from EOMAP and Planet Doves depth layers for GBR/GBR Torrest (sampling interval to Planet's 5 m)",
+    value: "Spatial Profiles from EOMAP and Planet Doves depth layers for GBR/GBR TorresSt (sampling interval to Planet's 5 m)",
     style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
   }),
 ]);
