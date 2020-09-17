@@ -6,7 +6,7 @@ var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_l
     depth_composite = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth"),
     gbrTorres_L8_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth"),
     gbrTorres_S2_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth"),
-    imageVisParam = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
+    imageVisParam = {"opacity":1,"bands":["b1_c"],"min":-29.3536,"max":-0.7264,"palette":["eff3ff","c6dbef","9ecae1","6baed6","3182bd","08519c"]};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
@@ -121,7 +121,9 @@ var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1}
 var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr_5m', false)
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
 var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, "GBR_Torres_depth_composite", false)
-var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, {}, "GBR_Torres_L8_depth", false)
+
+var imageVisParam8 = {"opacity":1,"bands":["b1_c"],"min":-29.3536,"max":-0.7264,"palette":["eff3ff","c6dbef","9ecae1","6baed6","3182bd","08519c"]};
+var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, imageVisParam8, "GBR_Torres_L8_depth", false)
 
 var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, {}, "GBR_Torres_S2_depth")
 
