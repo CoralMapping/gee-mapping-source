@@ -1,7 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var geometry = /* color: #d63000 */ee.Geometry.Point([147.67951064575664, -18.82273199155438]),
     image = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
-    image2 = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
+    image2 = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb"),
+    imageVisParam = {"opacity":1,"bands":["b1","b2","b3"],"min":85.44,"max":2554.56,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 15/09/2020
 
@@ -94,7 +95,7 @@ var depth_L8_renamed = depth_L8.select(
 // depth composite
 var Composite_depth=ee.Image(vars.Depth_composite)
 var Composite_depth=Composite_depth.expression(
-  '((-1)*B1)/100', {
+  '((-1)*B1)/10', {
   'B1' :Composite_depth.select('depth') //specify that B1 mean depth
 })
 
@@ -114,7 +115,7 @@ var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"ma
 var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
 
 
-var imageVisParam3 = {"opacity":1,"bands":["b1","b2","b3"],"min":94.7,"max":852.3,"gamma":1};
+var imageVisParam3 = {"opacity":1,"bands":["b1","b2","b3"],"min":85.44,"max":2554.56,"gamma":1};
 var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'EOMAP_sr_pretyRGB', false )
 
 var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
