@@ -35,19 +35,20 @@ For a copy, see <https://opensource.org/licenses/MIT>.
 var utils = require('users/gena/packages:utils')
 
 //Compute the transformation using expression (its server side method as well)
+
 var cc_low_depth_neg=ee.Image(dove_depth)
 var cc_low_depth=cc_low_depth_neg.expression(
   '((-1) * B1)/100', {
   'B1' :cc_low_depth_neg.select('b1') //specify that B1 mean b1
 })    
-  
+
 //renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
 var cc_low_de=ee.Image(cc_low_depth)
 var cc_low_depth_renamed = cc_low_de.select(
   ['constant'],
   ['b1_a']);
   
-print (cc_low_depth_renamed)
+
 
 //EOMAP-sentinel
 
@@ -80,10 +81,11 @@ var DepthCompos_renamed = depthComposite.select(
   
 //L8_depth gbrTorres
 //Compute the transformation using neg expression for L8 (its server side method as well)
+print (gbrTorres_L8_depth)
 var depth_L8_neg = ee.Image(gbrTorres_L8_depth);
 var depth_L8=depth_L8_neg.expression(
   '((-1) * B1)/100', {
-  'B1' :depth_L8_neg.select('L8depth') //specify that B1 mean L8depth
+  'B1' :depth_L8_neg.select('B2_median') //specify that B1 mean L8depth
 })
 
 //renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_c' 
@@ -94,10 +96,11 @@ var depth_L8_renamed = depth_L8.select(
 
 
 //S2 depth gbr Torres
+
 var depth_S2_neg=ee.Image(gbrTorres_S2_depth)
 var depth_S2=depth_S2_neg.expression(
  '((-1) * B1)/100', {
-  'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
+  'B1' :depth_S2_neg.select('depth') //specify that B1 mean S2depth
 });
 
 //renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
