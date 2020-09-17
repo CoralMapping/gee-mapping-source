@@ -94,7 +94,7 @@ var depth_L8_renamed = depth_L8.select(
 
 
 //S2 depth gbr Torres
-var depth_S2_neg=ee.Image(vars.depth_S2)
+var depth_S2_neg=ee.Image(gbrTorres_S2_depth)
 var depth_S2=depth_S2_neg.expression(
  '((-1) * B1)/100', {
   'B1' :depth_S2_neg.select('S2depth') //specify that B1 mean S2depth
