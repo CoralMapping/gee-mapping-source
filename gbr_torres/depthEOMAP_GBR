@@ -5,8 +5,7 @@ var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_l
     depth_composite = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth"),
     gbrTorres_L8_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth"),
     gbrTorres_S2_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth"),
-    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_ssr"),
-    imageVisParam = {"opacity":1,"bands":["b4","b3","b2"],"min":96.46000000000001,"max":3334.54,"gamma":0.888};
+    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
