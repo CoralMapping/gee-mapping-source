@@ -2,7 +2,8 @@
 var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
     dove_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth"),
     eomap_S = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
-    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
+    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
@@ -67,7 +68,8 @@ var eomap_S_renamed = EO.select(
 var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
                     "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
 var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
-var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
+imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
+var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr', false)
 
 
 
