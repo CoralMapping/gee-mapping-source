@@ -27,7 +27,7 @@ Map.addLayer(region_extent, {}, "export_geom", true)
 
 // drive export
 Export.image.toDrive({
-  image: depth_binary, 
+  image: reef_mask, 
   description: 'reef_mask_export_' + region_params.sname,
   folder: 'wcmc_rf/',
   fileNamePrefix: 'reef_mask_' + region_params.sname,
