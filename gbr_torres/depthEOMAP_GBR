@@ -82,21 +82,18 @@ var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":4,"max":2461.81
 var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
 
 
-
-
-
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
 
 //add the layers
 
 var layers = mapPanel.layers();
 
-layers.add(cc_low_sr)
+layers.add(cc_low_d)
 layers.add(Dove_sr)
-//layers.add(cc_low_d)
 
+
+layers.add(EOMAP_Sentinel_depth)
 layers.add(EOMAP_Sentinel_sr)
-layers.add(EOMAP_L8_depth)
 layers.add(EOMAP_Sentinel_depth)
 
 // 2. Create the inspector panel
