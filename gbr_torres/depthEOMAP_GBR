@@ -134,8 +134,8 @@ var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, imageVisParam9, "GBR_Torre
 var imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
 var EOMAP_Sentinel_depth=ui.Map.Layer(eomap_S_renamed,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
 
-var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":96.46000000000001,"max":3334.54,"gamma":0.888};
-var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,{bands: ['b3','b2','b1'], min: 66, max: 1260}, 'EOMAP_Sentinel_RGB_10m', false)
+//var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":96.46000000000001,"max":3334.54,"gamma":0.888};
+var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,{bands: ['b1','b2','b3'], min: 50, max: 3200}, 'EOMAP_Sentinel_RGB_10m', false)
 
 
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
