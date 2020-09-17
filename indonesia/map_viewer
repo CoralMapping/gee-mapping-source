@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     notReef_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -477,7 +480,10 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
           [140.59828035157614, -5.329658903890787],
           [134.66566316407614, 2.220675965269313],
           [127.41468660157614, 5.289872798079709]]]),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[95.07287823076268, 2.914572958865811],
           [96.41321026201268, 1.1579394198646136],
           [105.18030010576268, -10.580643604685124],
@@ -562,7 +568,6 @@ Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, 
 
 
 var wcmc=wcmc.filterBounds(region_wcmcBound)
-
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 
@@ -593,25 +598,18 @@ if (vars.raw) {
   // Add the raw region classification to the viewer
   Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
-  Map.addLayer(benthic_subreg2_no_b4p.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW (no band4 outer reefs)', false); // test without band b4p
 }
 
 // Add geo clean stage 1 to the viewer
 if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
   Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
-  //Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'timor_geo_clean1_10m_5m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean1_10m_4m), map_palettes.geo, 'timor_geo_clean1_10m_4m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean1_15m), map_palettes.geo, 'timor_geo_clean1_15m_5m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean1_15m_4m), map_palettes.geo, 'timor_geo_clean1_15m_4m', false);
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'timor_geo_clean1_10m_5m', false);
   }
 
 // Add geo clean stage 2 to the viewer
 if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
   Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
-  //Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'timor_geo_clean2_10m_5m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean2_10m_4m), map_palettes.geo, 'timor_geo_clean2_10m_4m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean2_15m), map_palettes.geo, 'timor_geo_clean2_15m_5m', false);
-  //Map.addLayer(ee.Image(timor_geo_clean2_15m_4m), map_palettes.geo, 'timor_geo_clean2_15m_4m', false);
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'timor_geo_clean2_10m_5m', false);
 }
 
 // Add geo clean stage 3 to the viewer
@@ -673,19 +671,19 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 
 
 Export.table.toAsset({
-  collection: region_extent,
+  collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
-  assetId: region_params.asset + '_' + region_params.sname + '_extent'
+  assetId: region_params.asset + region_params.sname + '_extent'
 })
 
 Export.table.toAsset({
-  collection: notReef_mask,
+  collection: ee.FeatureCollection(notReef_mask),
   description: "not_reef_mask_export",
-  assetId: region_params.asset + '_' + region_params.sname + '_notreef'
+  assetId: region_params.asset + region_params.sname + '_notreef'
 })
 
 /*Export.table.toAsset({
-  collection: mid_mask,
+  collection: ee.FeatureCollection(mid_mask),
   description: "mid_mask_export",
-  assetId: region_params.asset + '_' + region_params.sname + '_midmask'
+  assetId: region_params.asset + region_params.sname + '_midmask'
 })*/
