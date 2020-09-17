@@ -1,9 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var cc_high_rrs = ee.Image("users/rodbio2008/Cairns_CookV2/cc_high_rrs"),
-    cc_low_rrs = ee.Image("users/rodbio2008/Cairns_CookV2/cc_low_rrs"),
-    cc_eomap_L8 = ee.Image("users/rodbio2008/Cairns_CookV1/cancook_eomap_l8_15m"),
-    cc_high_depth_raw = ee.Image("users/rodbio2008/Cairns_CookV2/cc_high_depth"),
-    dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
+var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
     dove_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth"),
     eomap_S = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
     cc_eomap_sr = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
@@ -50,6 +46,14 @@ var cc_low_depth_renamed = cc_low_de.select(
   
 print (cc_low_depth_renamed)
 
+//dove data
+
+
+var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
+                    "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
+var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
+
 
 
 //print(cc_high_depth_renamed)
@@ -63,13 +67,7 @@ var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":4,"max":2461.81
 var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_sr,imageVisParam3, 'EOMAP_Sentinel_sr_10m', false)
 
 
-//dove data
 
-
-var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
-                    "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
-var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'Planet_low_depth_5m', false);
-var Dove_sr=ui.Map.Layer(dove_sr, {}, 'GBR_Torres_dove_sr', false)
 
 
 var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
