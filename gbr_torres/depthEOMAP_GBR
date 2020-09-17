@@ -6,7 +6,7 @@ var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_l
     depth_composite = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth"),
     gbrTorres_L8_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth"),
     gbrTorres_S2_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth"),
-    imageVisParam = {"opacity":1,"bands":["b1","b2","b3"],"min":102.3,"max":3428.7,"gamma":0.888};
+    imageVisParam = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
 // Description:
@@ -119,9 +119,8 @@ var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":
 var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'GBR_Torres_dove_depth_5m', false);
 var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
 var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr_5m', false)
-
-var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, {}, "GBR_Torres_depth_composite", false)
-
+var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
+var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, {imageVisParam7}, "GBR_Torres_depth_composite", false)
 var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, {}, "GBR_Torres_L8_depth", false)
 
 var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, {}, "GBR_Torres_S2_depth")
@@ -250,9 +249,8 @@ function showChart(transect) {
       series: {
       0: {color:'#54278f'},
       1: {color:'#006d2c'},
-      
-     // 2: {color: '54278f'},
-     // 3: {color: 'a50f15'},
+     2: {color: '#a50f15'},
+     3: {color: '#08519c'},
       }};
      
      //this bit is for not using unmask that had to locate a value on it (i.e. if I use it and assign 0 values
