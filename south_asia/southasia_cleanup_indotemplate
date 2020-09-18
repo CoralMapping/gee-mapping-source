@@ -3,7 +3,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Indonesia Archipelago
+// Global coral atlas project - SA
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Rodney B (rodbio2008@gmail.com)
 // Description:
@@ -27,7 +27,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.south_asia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -50,7 +50,7 @@ var vars = {
   geo_depth_cutoff: 1500, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
-  
+  midMask: region_params.midMask,
   //############
   // Clean-up stage selection
   cleanup_stage: 1, // set to 1, 2 or 3
