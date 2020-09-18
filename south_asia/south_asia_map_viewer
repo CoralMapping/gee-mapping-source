@@ -46,7 +46,6 @@ var vars = {
 };
 
 
-
 var mapPanel=ui.Map().centerObject(centre_map, 6)
 
 //load image sr
@@ -85,7 +84,7 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 
 //add masks to the viewer
 
-var mid_mask=ui.Map.Layer(region_params.midMask, {},'mid_mask',false)
+var mid_mask=ui.Map.Layer(ee.FeatureCollection(region_params.midMask), {},'mid_mask',false)
 
 // Load the clean classifications to the ui viewer
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
@@ -128,7 +127,7 @@ if (vars.geo_clean1) {
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
-  layers.add(region_params.midMask)
+  layers.add(mid_mask)
 ////////// UI SET UP //////////
 
 if(vars.geo_raw_depthCutoff) {
@@ -152,7 +151,7 @@ slider.setValue(25);
 
 var add_thresh = function(inputDepth, geoCut) {
   
-  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', true) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', false) //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut)
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value))).selfMask()
