@@ -696,6 +696,38 @@ var gbr_torres = {
   QAQC: ""
 };
 
+var west_australia = {
+  sname:"west_australia",
+  tide: "both",
+  asset: "projects/coral_atlas/west_australia/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/west_australia/image/",
+  depth: "projects/coral_atlas/west_australia/depth/",
+  s2_depth: "projects/coral_atlas/central_indian_ocean/depth/",
+  ls8_depth: "projects/coral_atlas/central_indian_ocean/depth/",
+  depth_composite: "projects/coral_atlas/central_indian_ocean/depth/",
+  pixels:["projects/coral_atlas/central_indian_ocean/in_out/"],
+  segments:["projects/coral_atlas/central_indian_ocean/in_out/"],
+  waves:"",
+  geo_train:"",
+  benthic_train:"",
+  benthic_pts:"",
+  geo_train_library: "",
+  benthic_train_library:"",
+  geo_val_library:"",
+  benthic_val_library:"",
+  geo_map: [""],
+  benthic_map: [""],
+  geo_map_clean1:"",
+  geo_map_clean2:"",
+  geo_map_clean3:"",
+  benthic_map_clean1: "",
+  benthic_map_clean2: "",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
+
 
 // export the objects
 exports = {
@@ -723,4 +755,5 @@ exports = {
   png_solomons: png_solomons,
   south_asia: south_asia,
   gbr_torres: gbr_torres,
+  west_australia: west_australia
 };
