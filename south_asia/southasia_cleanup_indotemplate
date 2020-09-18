@@ -1,6 +1,18 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1};
+    imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
+    region_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[75.50260244893565, 10.732564931074679],
+          [75.50260244893565, 4.572761773416827],
+          [85.19254385518565, 4.572761773416827],
+          [85.19254385518565, 10.732564931074679]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
