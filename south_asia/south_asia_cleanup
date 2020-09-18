@@ -3576,7 +3576,10 @@ var eg_area =
       ],
       "coordinates": []
     }),
-    mid_mask = /* color: #ffc82d */ee.FeatureCollection(
+    mid_mask = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[78.99796411338423, 9.393414593413416],
@@ -3949,6 +3952,7 @@ var reef_boundary = soa_extent
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
 var midMask = mid_mask
+print(midMask)
 Map.addLayer(midMask, {}, "midMask", false);
 
 
@@ -5009,6 +5013,6 @@ pkg_vis.add_lgds([title, legend]);//, mask_legend])
 // generate the legend
 
 Export.table.toAsset({
-  collection: mid_mask,
+  collection: ee.FeatureCollection(mid_mask),
   description: "soa_mid_mask",
 })
