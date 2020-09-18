@@ -62,7 +62,7 @@ var vars = {
   geo_depth_cutoff: 1500, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
-  midMask: region_params.midMask,
+
   //############
   // Clean-up stage selection
   cleanup_stage: 1, // set to 1, 2 or 3
