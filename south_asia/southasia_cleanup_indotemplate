@@ -14,7 +14,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [75.50260244893565, 4.572761773416827],
           [85.19254385518565, 4.572761773416827],
           [85.19254385518565, 10.732564931074679]]], null, false),
-    rc_rs = /* color: #e0de1a */ee.Geometry.Polygon(
+    rc_rs = 
+    /* color: #e0de1a */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[79.47066703752216, 9.174058175490137],
           [79.4068090052956, 9.157789107046657],
           [79.47135368302997, 9.092705398542778],
@@ -188,7 +191,7 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
-  var rc__rs = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
+  var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   
 
   // the "MID MASK" CLEAN
@@ -200,7 +203,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   //turning RC to RS
   man_geo = man_geo.where({
-      test: rc__rs.eq(15),
+      test:reefCrestToReefSlope.eq(15),
       value: ee.Image(22)
   });
   /*
