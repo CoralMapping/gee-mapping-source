@@ -3,6 +3,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
     region_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -12,7 +13,22 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         [[[75.50260244893565, 10.732564931074679],
           [75.50260244893565, 4.572761773416827],
           [85.19254385518565, 4.572761773416827],
-          [85.19254385518565, 10.732564931074679]]], null, false);
+          [85.19254385518565, 10.732564931074679]]], null, false),
+    rc_rs = /* color: #e0de1a */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[79.47066703752216, 9.174058175490137],
+                  [79.4068090052956, 9.157789107046657],
+                  [79.47135368302997, 9.092705398542778],
+                  [79.56679740861591, 9.040494284078001],
+                  [79.64164176896747, 9.03303493440246],
+                  [79.67940727189716, 9.037781811157956],
+                  [79.66910758927997, 9.121180981999695],
+                  [79.59975639299091, 9.122536905547538],
+                  [79.49813285783466, 9.161856444027851]]]),
+            {
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -59,7 +75,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1500, //depth in centimetres
+  geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
 
@@ -144,7 +160,7 @@ if (!vars.geomorphic) {
   }
 }
 
-var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
 // -----------------------------------------<
 
 
@@ -177,12 +193,21 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
+  var rc__rs = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
+  
+
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
     value: ee.Image(0)
   });
   
+  
+  //turning RC to RS
+  man_geo = man_geo.where({
+      test: rc__rs.eq(15),
+      value: ee.Image(22)
+  });
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
