@@ -85,6 +85,35 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                79.77621473610702,
+                8.477205188832011
+              ],
+              [
+                79.76145185768905,
+                8.46837622036567
+              ],
+              [
+                79.76316847145858,
+                8.455811569892472
+              ],
+              [
+                79.7803346091539,
+                8.455811569892472
+              ],
+              [
+                79.77896131813827,
+                8.470753270272757
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
