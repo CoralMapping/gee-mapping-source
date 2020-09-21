@@ -1,0 +1,47 @@
+var aca_benthic_train = [
+  "projects/coral_atlas/Micronesia/training/wmic_benthic_training",
+  "projects/coral_atlas/east_africa/training/east_africa_benthic_training",
+  "projects/coral_atlas/hawaii/training/hawaii_benthic_training",
+  "projects/coral_atlas/nth_cari/training/nth_cari_benthic_training",
+  "projects/coral_atlas/sw_pacific/training/swp_benthic_training",
+  "projects/coral_atlas/west_indian_ocean/training/wio_benthic_training",
+  "projects/coral_atlas/Andaman_sea/training/andm_benthic_training",
+  "projects/coral_atlas/Timor/training/timor_benthic_training",
+  "projects/coral_atlas/gbr_eomap/training/gbr_benthic_training",
+  "projects/coral_atlas/png_solomons/training/pns_benthic_training",
+  "projects/coral_atlas/south_asia/training/soa_benthic_training"
+  ];
+  
+  
+var micronesia = ee.FeatureCollection("projects/coral_atlas/Micronesia/training/wmic_benthic_training")
+                      .map(function(f){return(f.set('region','micronesia'))})
+                      
+var east_africa = ee.FeatureCollection("projects/coral_atlas/east_africa/training/east_africa_benthic_training")
+                      .map(function(f){return(f.set('region','east_africa'))})
+                      
+var hawaii = ee.FeatureCollection("projects/coral_atlas/hawaii/training/hawaii_benthic_training")
+                      .map(function(f){return(f.set('region','hawaii'))})
+                      
+var nth_cari = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_benthic_training")
+                      .map(function(f){return(f.set('region','nth_cari'))})
+                      
+var sw_pacific = ee.FeatureCollection("projects/coral_atlas/sw_pacific/training/swp_benthic_training")
+                      .map(function(f){return(f.set('region','sw_pacific'))})
+                      
+var west_indian_ocean = ee.FeatureCollection("projects/coral_atlas/west_indian_ocean/training/wio_benthic_training")
+                      .map(function(f){return(f.set('region','west_indian_ocean'))})
+
+var Andaman_sea = ee.FeatureCollection("projects/coral_atlas/Andaman_sea/training/andm_benthic_training")
+                      .map(function(f){return(f.set('region','Andaman_sea'))})
+                      
+var Timor = ee.FeatureCollection("projects/coral_atlas/Timor/training/timor_benthic_training")
+                      .map(function(f){return(f.set('region','Timor'))})
+                      
+var gbr_eomap = ee.FeatureCollection("projects/coral_atlas/gbr_eomap/training/gbr_benthic_training")
+                      .map(function(f){return(f.set('region','gbr_eomap'))})
+
+var png_solomons = ee.FeatureCollection("projects/coral_atlas/png_solomons/training/pns_benthic_training")
+                      .map(function(f){return(f.set('region','png_solomons'))})
+                      
+var south_asia = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_benthic_training")
+                      .map(function(f){return(f.set('region','south_asia'))})
