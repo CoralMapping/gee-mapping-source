@@ -45,3 +45,32 @@ var png_solomons = ee.FeatureCollection("projects/coral_atlas/png_solomons/train
                       
 var south_asia = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_benthic_training")
                       .map(function(f){return(f.set('region','south_asia'))})
+
+
+// Combine and flatten
+var all_data = ee.FeatureCollection([micronesia, east_africa, hawaii, nth_cari, sw_pacific, west_indian_ocean,
+                                     Andaman_sea, Timor, gbr_eomap, png_solomons, south_asia]).flatten()
+
+
+// Export
+
+Export.table.toDrive({
+  collection: all_data,
+  description: 'training_data_export',
+  folder: 'gee_test',
+  fileNamePrefix: 'aca_training_data',
+  fileFormat: 'CSV'
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
