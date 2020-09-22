@@ -15618,7 +15618,6 @@ if (vars.manual_clean && vars.geomorphic) {
   // update these values based on inspection of the layer
   var waves = ee.Image(region_params.waves)
   Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
-  
   var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry()
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
@@ -15728,7 +15727,6 @@ if (vars.manual_clean && vars.geomorphic) {
   // Add the manual layer to the map
   var image = ee.Image(region_params.image);
   Map.addLayer(image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', false);
-  
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
@@ -15749,7 +15747,9 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
 } 
-// CR************************************Benthic 2**********************************
+// CR************************************BENTHIC 2**********************************
+// CR************************************BENTHIC 2**********************************
+// CR************************************BENTHIC 2**********************************
 if (vars.manual_clean && !vars.geomorphic) {
   
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
@@ -15759,6 +15759,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   var geo_map = ee.Image(region_params.geo_map_clean3);
   
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
+  
+  var image = ee.Image(region_params.image); 
   
   // **Generic benthic rules**
   
@@ -15789,12 +15791,13 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(15)),
     value: ee.Image(15)
   });   
-/*  // CR Rubble on IRF, -> Sand if its light rubble (ADD RULE FOR BRIGHTNESS)
+// CR Rubble on IRF, -> Sand if its light rubble (ADD RULE FOR BRIGHTNESS)
  man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
-                     .and(geo_map.eq(13)),
+                     .and(geo_map.eq(13))
+                     .and(image.select('b1').gt(1500)),
     value: ee.Image(11)
-  }); */   
+  });
   
   // CR Rock on TRF -> coral/algae
   man_benthic = man_benthic.where({
@@ -16056,7 +16059,9 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   }).updateMask(class_extent_mask)*/
 }
 
-// CR************************************Benthic 1**********************************
+// CR************************************BENTHIC 1**********************************
+// CR************************************BENTHIC 1**********************************
+// CR************************************BENTHIC 1**********************************
 if (!vars.geomorphic && vars.cleanup_stage == 1) {
   
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
@@ -16727,6 +16732,5 @@ var title = ui.Label({
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone (0-15 m)', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat (0-10 m)', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
-pkg_vis.add_lgds([title, legend]);//, mask_legend])
+pkg_vis.add_lgds([title, geo_legend,benthic_legend]);// CR both legends)
 // generate the legend
