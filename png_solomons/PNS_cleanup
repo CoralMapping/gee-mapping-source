@@ -18,10 +18,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = 
-    /* color: #29d603 */
-    /* shown: false */
-    ee.Geometry({
+    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5203,8 +5200,28 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -7.5533357149317295
               ],
               [
-                158.6823366098384,
-                -7.517938520794307
+                158.70276044741658,
+                -7.493515720806027
+              ],
+              [
+                158.6738365449096,
+                -7.4959419732185735
+              ],
+              [
+                158.6445711069087,
+                -7.4667095896694144
+              ],
+              [
+                158.6347007847234,
+                -7.463794206772983
+              ],
+              [
+                158.63135348740548,
+                -7.473814355459718
+              ],
+              [
+                158.63598833382852,
+                -7.498960412687734
               ],
               [
                 158.6383912973384,
@@ -5215,36 +5232,128 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 -7.542444578787134
               ],
               [
-                158.5614870004634,
-                -7.547890181148776
+                158.56869677829542,
+                -7.54363581016128
               ],
               [
-                158.5175416879634,
-                -7.530191722982922
+                158.55394358683168,
+                -7.520650710766815
               ],
               [
-                158.4632966928462,
-                -7.5124925421138125
+                158.5470873336973,
+                -7.516896293973269
+              ],
+              [
+                158.53577849177478,
+                -7.516875363168176
+              ],
+              [
+                158.51693850577456,
+                -7.507642978663386
+              ],
+              [
+                158.50260542855722,
+                -7.503473300319534
+              ],
+              [
+                158.49247912692823,
+                -7.504663828176753
+              ],
+              [
+                158.4798391844272,
+                -7.501515762184246
+              ],
+              [
+                158.47406732359931,
+                -7.49768643809716
+              ],
+              [
+                158.4625242166499,
+                -7.494792640200948
+              ],
+              [
+                158.44381315776818,
+                -7.4941126593388
+              ],
+              [
+                158.4369252108525,
+                -7.489304628946051
+              ],
+              [
+                158.43003739978076,
+                -7.485517672759857
               ],
               [
                 158.4083650522212,
                 -7.498196523412443
               ],
               [
-                158.3747194223384,
-                -7.473007158157649
+                158.4075920901234,
+                -7.479730274940092
               ],
               [
-                158.34382037448682,
-                -7.455305653744368
+                158.4076509887271,
+                -7.476969836585234
+              ],
+              [
+                158.40616494396235,
+                -7.474209397083723
+              ],
+              [
+                158.40216294578013,
+                -7.468688502639732
+              ],
+              [
+                158.38952440628813,
+                -7.461220844611699
+              ],
+              [
+                158.38354857984197,
+                -7.458337948165672
+              ],
+              [
+                158.377401160093,
+                -7.45630601395067
+              ],
+              [
+                158.36467723178663,
+                -7.452241859127055
+              ],
+              [
+                158.35600803010726,
+                -7.452539913643373
+              ],
+              [
+                158.34399203586378,
+                -7.447731233610575
+              ],
+              [
+                158.33605255348252,
+                -7.443539855503863
+              ],
+              [
+                158.32965817717135,
+                -7.438327072928232
               ],
               [
                 158.3149812631587,
-                -7.439646033979896
+                -7.431816014437696
               ],
               [
-                158.2930086069087,
-                -7.422624074271923
+                158.30880133870613,
+                -7.422028404726156
+              ],
+              [
+                158.30541102683483,
+                -7.419709115028683
+              ],
+              [
+                158.30202074283926,
+                -7.418411143178431
+              ],
+              [
+                158.29489688205518,
+                -7.418368481341755
               ],
               [
                 158.27996234226026,
@@ -15757,10 +15866,9 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
   var geo_map = ee.Image(region_params.geo_map_clean3);
-  
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
-  
   var image = ee.Image(region_params.image); 
+  var terrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
   
   // **Generic benthic rules**
   
@@ -15778,13 +15886,29 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(11)
   }); 
   
-  // Rubble on ORF, -> rock 
- man_benthic = man_benthic.where({
+  // CR Rubble on ORF if out terrestrial RF, -> rock 
+ //  step 1: assign all pixels assinged Rock to a temporary class TC that occure in Outer Reef Flat
+  // Step 2: create TRF_mask for the areas within Outer Reef Flaat, where Rubble should stay
+  // step 3: label all TC pixels that fall within the TRF_mask to Rubble
+  // Step 4: all the remaining TC pixels can then be assigned Rock
+ 
+   man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
-                     .and(geo_map.eq(14)),
+                      .and(geo_map.eq(14)),
+    value: ee.Image(33)
+  });
+  
+  man_benthic = man_benthic.where({
+    test: terrestrialRF.eq(1)
+                     .and(man_benthic.eq(33)),
+    value: ee.Image(12)
+  });  
+  
+   man_benthic = man_benthic.where({
+    test: man_benthic.eq(33),
     value: ee.Image(13)
-  });   
-   
+  }); 
+  
    // CR sand on Reef Crest -> Coral/Algae (THIS ASSUMES THAT MOST OF THE BREAKING WAVES ARE LABELLED AS SAND AND ACTUALL REPRESENT CORAL/ALGAE)
   man_benthic = man_benthic.where({
     test: man_benthic.eq(11)
