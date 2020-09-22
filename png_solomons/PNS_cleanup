@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -15746,15 +15749,11 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
 } 
-
+// CR************************************Benthic 2**********************************
 if (vars.manual_clean && !vars.geomorphic) {
   
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
-  
-  var depth = ee.Image(region_params.pixels).select('depth');
-  var depth_cont = depth.lt(900);
-  Map.addLayer(depth_cont, {}, "depth contour", false);
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
   var geo_map = ee.Image(region_params.geo_map_clean3);
@@ -15763,19 +15762,42 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // **Generic benthic rules**
   
-  // BMA on inner RF, outer RF,reef crest, reef slope -> rubble 
+  // CR BMA on inner RF, outer RF,reef crest, sheltered slope!!, reef slope -> rubble 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(18)
-                     .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
+                     .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
     value: ee.Image(12)
   });
-   // Rubble on ORF, -> rock
+  
+   // CR BMA on Back Reef Slope -> sand (AS TO MANY LARGE AREAS WOULD GET SAND)
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(18)
+                     .and(geo_map.eq(24)),
+    value: ee.Image(11)
+  }); 
+  
+  // Rubble on ORF, -> rock 
  man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
                      .and(geo_map.eq(14)),
     value: ee.Image(13)
   });   
-  // **Manual polygon guided rules**
+   
+/*  // CR Rubble on IRF, -> Sand if its light rubble (ADD RULE FOR BRIGHTNESS)
+ man_benthic = man_benthic.where({
+    test: man_benthic.eq(12)
+                     .and(geo_map.eq(13)),
+    value: ee.Image(11)
+  }); */   
+  
+  // CR Rock on TRF -> coral/algae
+  man_benthic = man_benthic.where({
+    test: geo_map.eq(16)
+                      .and(man_benthic.eq(13)),
+    value: ee.Image(15)
+  });
+  
+  // **Manual Benthic 2 polygon/mask guided rules**
     
   /* Sub-regions copied here to run in benthic clean, originally defined under manual cleanup for geo
   /*var subreg_1 = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
@@ -15783,13 +15805,7 @@ if (vars.manual_clean && !vars.geomorphic) {
  
   // **Inshore**
     
-  // Rock on TRF -> coral/algae
-  man_benthic = man_benthic.where({
-    test: subreg_1.eq(1)
-                      .and(geo_map.eq(16))
-                      .and(man_benthic.eq(13)),
-    value: ee.Image(15)
-  });
+
     
   // **Offshore**
     
@@ -16034,7 +16050,7 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   }).updateMask(class_extent_mask)*/
 }
 
-// Benthic Clean 1
+// CR************************************Benthic 1**********************************
 if (!vars.geomorphic && vars.cleanup_stage == 1) {
   
   // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
@@ -16054,25 +16070,7 @@ if (!vars.geomorphic && vars.cleanup_stage == 1) {
   }).updateMask(class_extent_mask);
   
   
-  /*// CLEAN UP ALL TEMPORAL AREAS
-  var smooth_notemp = benthic_map
-                          .updateMask(benthic_map.neq(2))
-                          .focal_mode({
-                            radius: vars.smooth_radius.multiply(2),
-                            kernelType: 'circle', units: 'pixels', iterations: 3
-                          })
-  
-  
-  clean_map = clean_map1.where({
-    test: benthic_map.eq(2), 
-    value: smooth_notemp
-  }).updateMask(clean_map1.gte(0))
-  
-  // this catches any left over unmasked temporal, and assigned it back to temporal
-  clean_map = clean_map.where({
-    test: clean_map.unmask(99).eq(99).and(clean_map1.eq(2)),
-    value: ee.Image(2)
-  })*/
+
   
 }
 
