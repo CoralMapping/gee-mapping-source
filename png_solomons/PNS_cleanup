@@ -15762,7 +15762,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // **Generic benthic rules**
   
-  // CR BMA on inner RF, outer RF,reef crest, sheltered slope!!, reef slope -> rubble 
+  // CR BMA on inner RF, outer RF,reef crest, sheltered slope(CR), reef slope -> rubble 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(18)
                      .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
@@ -15783,6 +15783,12 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(13)
   });   
    
+   // CR sand on Reef Crest -> Coral/Algae (THIS ASSUMES THAT MOST OF THE BREAKING WAVES ARE LABELLED AS SAND AND ACTUALL REPRESENT CORAL/ALGAE)
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(15)),
+    value: ee.Image(15)
+  });   
 /*  // CR Rubble on IRF, -> Sand if its light rubble (ADD RULE FOR BRIGHTNESS)
  man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
