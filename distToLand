@@ -8,13 +8,14 @@ var land_mask = ls8_landreef.eq(1)
 var land_mask_buff = land_mask.fastDistanceTransform(100).sqrt()
                               .multiply(ee.Image.pixelArea().sqrt())
                               .uint16()
+                              .selfMask()
 
-Map.addLayer(land_mask_buff, {min:0, max: 10000}, "Land mask", false)
+Map.addLayer(land_mask_buff.updateMask(land_mask_buff.lte(65000)), {min:0, max: 10000}, "Land mask", false)
 
 Map.addLayer(ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 30, -30, -180, -30], null, false), {}, "product bounds", false)
 
 Export.image.toAsset({
-  image: land_mask_buff,
+  image: land_mask_buff.updateMask(land_mask_buff.lte(65000)),
   description: 'global_land_dist',
   assetId: 'projects/coral_atlas/global_datasets/ls8_global_distToLand',
   region: ee.Geometry.Polygon([-180, 31, 0, 31, 180, 60, 180, -31, 10, -60, -180, -31], null, false),
