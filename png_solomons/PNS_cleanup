@@ -15932,6 +15932,15 @@ if (vars.manual_clean && !vars.geomorphic) {
                       .and(man_benthic.eq(13)),
     value: ee.Image(15)
   });
+ 
+   
+  // CR Coral/Algae on DL -> Sand
+  man_benthic = man_benthic.where({
+    test: geo_map.eq(12)
+                      .and(man_benthic.eq(15)),
+    value: ee.Image(11)
+  });
+  
   
   // **Manual Benthic 2 polygon/mask guided rules**
     
@@ -16144,18 +16153,13 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
     value: ee.Image(2)
   });
   
-  // deep water in depth data == deep (only for inshore reefs of Timor Sea)
-  //  var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
-   // clean_map = clean_map.where({
-   //   test: depth.gt(700)
-   //                  .and(inner_extent.eq(1)),
-   //   value: ee.Image(2)
-  //  });
+
   
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
   
   // reef crest close to terrestrial main land not including coral cays -> TRF 
+ 
   //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
   clean_map = clean_map.where({
     test: land_dist.lte(vars.dist_to_land)
