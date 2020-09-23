@@ -231,8 +231,8 @@ Export.image.toAsset({
   description: 'global_reef_mask', 
   assetId: 'projects/coral_atlas/reefMask/global_reef_mask_combined',
   pyramidingPolicy: {".default": "mode"}, 
-  region: aoi, 
-  scale: 150,
+  region: ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 30, -30, -180, -30], null, false), 
+  scale: 30,
   maxPixels: 1e13
 })
 
