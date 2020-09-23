@@ -156,7 +156,7 @@ var inshore_eomap = {
   pixels: "users/EvaK/Inshore_Reefs/in_out/inshore_pixels",
   segments: "users/EvaK/Inshore_Reefs/in_out/inshore_segmentation",
   geo_train: "users/EvaK/Whit_eomap/training/whit_geo_referenceD", 
-  benthic_train: "",
+  benthic_train: "users/EvaK/Whit_eomap/training/whit_benthic_reference",
   benthic_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_benthic",
   coral_pts: "projects/coral_atlas/gbr_eomap/training/gbr_reefcloud_coral",
   geo_train_library: "users/EvaK/Whit_eomap/training/whit_geo_trainingD",
