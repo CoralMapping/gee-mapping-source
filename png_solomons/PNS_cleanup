@@ -12256,6 +12256,99 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                152.3892619130236,
+                -4.2370445907277485
+              ],
+              [
+                152.4057414052111,
+                -4.236017436773124
+              ],
+              [
+                152.40986127825798,
+                -4.239441277982713
+              ],
+              [
+                152.41501111956657,
+                -4.243549867413509
+              ],
+              [
+                152.42119092913688,
+                -4.241837957806144
+              ],
+              [
+                152.42428083392204,
+                -4.237386975076145
+              ],
+              [
+                152.43595380755485,
+                -4.2387565109537135
+              ],
+              [
+                152.44591016741813,
+                -4.236702206227767
+              ],
+              [
+                152.45620985003532,
+                -4.2325935804093
+              ],
+              [
+                152.4599864003283,
+                -4.226088211611685
+              ],
+              [
+                152.4716593739611,
+                -4.210338145499861
+              ],
+              [
+                152.47955579730095,
+                -4.187054855576396
+              ],
+              [
+                152.46444959612907,
+                -4.175412950616799
+              ],
+              [
+                152.44865674944938,
+                -4.191506126439714
+              ],
+              [
+                152.43183393450798,
+                -4.204859786861946
+              ],
+              [
+                152.42531080218376,
+                -4.208283765526877
+              ],
+              [
+                152.41363782855095,
+                -4.209995749214207
+              ],
+              [
+                152.3995615956408,
+                -4.218555611138649
+              ],
+              [
+                152.38170881243767,
+                -4.224718653328344
+              ],
+              [
+                152.38170881243767,
+                -4.227800156063999
+              ],
+              [
+                152.38514203997673,
+                -4.232935966727274
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -17488,52 +17581,52 @@ if (vars.manual_clean && vars.geomorphic) {
 
   // WAVE clean ############# ---> (to be integrated into RF classifier when feasible)
   // remove
-   
-    // CR Reef Slope areas on inside of known low energy zone such as inside lagoon e.g. TRF mask are assinged BRS
-  man_geo = man_geo.where({
-    test: terrestrialRF.eq(1)
-                     .and(man_geo.eq(22).or(man_geo.eq(21))),
-    value: ee.Image(24)
+  // CR ************************************ within and outside reefs in regards to energy************************* 
+  // CR Reef Slope areas on within low energy zone (e.g. inside lagoon) using e.g. TRF mask are assinged Back Reef slope
+  man_geo = man_geo.where({ //CR
+    test: terrestrialRF.eq(1)//CR
+                     .and(man_geo.eq(22).or(man_geo.eq(21))),//CR Reef Slope and Scheltered Slope within low energey zone
+    value: ee.Image(24) //CR assinged back reef slope
   });
   // CR where RS = SS if < wave height
-  man_geo = man_geo.where({
-    test: waves.lt(vars.wave_height)
-               .and(man_geo.eq(22)),
-    value: ee.Image(21)
+  man_geo = man_geo.where({//CR
+    test: waves.lt(vars.wave_height)//CR
+               .and(man_geo.eq(22)),//CR
+    value: ee.Image(21)//CR
   })     
 
   // CR where SS = RS if > wave height
-  man_geo = man_geo.where({
-    test: waves.gte(vars.wave_height)
-               .and(man_geo.eq(21)),
-    value: ee.Image(22)
+  man_geo = man_geo.where({//CR
+    test: waves.gte(vars.wave_height)//CR
+               .and(man_geo.eq(21)),//CR
+    value: ee.Image(22)//CR
   })
  
 
-  // ** CR Terrestrail Reef Flat clean** to much narrow reef flat outside next to drop off assinged TRF should ORF
-  // step 1: assign all pixels assinged TRF to a temporary class TC
-  // Step 2: create TRF_mask for the areas within lagoons, where TRF should stay
-  // step 3: label all TC pixels that fall within the TRF_mask to TRF
-  // Step 4: all the remaining TC pixels can then be assigned ORF
-  // step 4 does not require a mask
+  // ** CR Low energie zone clean up** to much narrow reef flat outside next to drop off assinged TRF should ORF
+  // CR step 1: assign all pixels assinged TRF to a temporary class TC
+  // CR Step 2: create TRF_mask for the areas within lagoons, where TRF should stay
+  // CR step 3: label all TC pixels that fall within the TRF_mask to TRF
+  // CR Step 4: all the remaining TC pixels can then be assigned ORF
+  // CR step 4 does not require a mask
 
-  man_geo = man_geo.where({
-    test: man_geo.eq(16),
-    value: ee.Image(33)
-  });
+  man_geo = man_geo.where({//CR
+    test: man_geo.eq(16),//CR
+    value: ee.Image(33) //CR creating temp variable
+  });//CR
   
   man_geo = man_geo.where({
     test: terrestrialRF.eq(1)
                      .and(man_geo.eq(33)),
-    value: ee.Image(16)
+    value: ee.Image(16)//CR temp variable assigned TRF when falling within low energie zone
   });  
   
    man_geo = man_geo.where({
     test: man_geo.eq(33),
-    value: ee.Image(14)
+    value: ee.Image(14) //CR temp variable assinged ORF when not falling in low energie zone
   }); 
 
-  // CR Reef Crest areas within TRF mask are assinged ORF
+  // CR Reef Crest areas within low energy zone mask are assinged ORF
   man_geo = man_geo.where({
     test: terrestrialRF.eq(1)
                      .and(man_geo.eq(15)),
