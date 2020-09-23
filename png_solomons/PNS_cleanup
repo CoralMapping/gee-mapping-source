@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -15617,22 +15620,23 @@ var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YO
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
   small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
-  dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
-  wave_height: 0.15, //cut off height for waves in metres, Hs95 threshold
+  dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat  WAS 1000
+  dist_to_land_RC: 500, //CR distance to land in meters to disallow reef crest adjacent to land
+  wave_height: 0.15, //cut off height for waves in metres, Hs95 threshold THIS resulted in the cleanest split between waves
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 800, //depth in centimetres
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: true, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -16178,13 +16182,16 @@ if (vars.geomorphic && !vars.obia_2nd_pass) {
   
   // LAND mask cleaning
   Map.addLayer(land_dist.lte(vars.dist_to_land), {}, "Land mask (dist to land)", false);
-  
+   // CR LAND mask cleaning for RC
+  Map.addLayer(land_dist.lte(vars.dist_to_land_RC), {}, "Land mask (dist to land_RC)", false);//CR
   // reef crest close to terrestrial main land not including coral cays -> TRF 
  
   //var inner_extent = ee.Image().byte().paint(ee.Feature(inner, {zone: 1}), "zone").clip(inner);
+  var image = ee.Image(region_params.image); //CR
   clean_map = clean_map.where({
-    test: land_dist.lte(vars.dist_to_land)
-                   .and(clean_map.eq(15)),
+    test: land_dist.lte(vars.dist_to_land_RC)//CR using other distance to land
+                   .and(clean_map.eq(15))
+                   .and(image.select('b1').lte(2500)),//CR if pixel is RC, and less then distance to land but very bright then stay RC
     value: ee.Image(16)
   });
   
