@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_distToLand"),
-    imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1};
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
