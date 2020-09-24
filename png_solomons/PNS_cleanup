@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [146.66685653361668, 2.991388778986984],
           [139.89927840861668, 2.7719401962986745],
           [134.58189559611668, 1.981611352071806]]]),
-    Terrestrial_RF = /* color: #29d603 */ee.Geometry({
+    Terrestrial_RF = 
+    /* color: #29d603 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -17989,7 +17992,103 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    });
+    }),
+    NoSeagras = /* color: #05c8d6 */ee.Geometry.Polygon(
+        [[[146.80531882467514, -9.429042358085448],
+          [146.67348288717514, -9.483227567382999],
+          [147.05800437155014, -9.975913835388031],
+          [147.97536276998764, -10.467856041306263],
+          [149.25526999655014, -10.656859023957614],
+          [149.3294277113939, -10.432067442712837],
+          [149.11244773092514, -10.328054621833436],
+          [149.04034995260483, -10.30846393058301],
+          [148.89684104147202, -10.311166167382122],
+          [148.8576922725547, -10.298615665857685],
+          [148.8192401241172, -10.301993563800963],
+          [148.75263550985937, -10.332393015034828],
+          [148.688090832125, -10.33847255271245],
+          [148.59127381552344, -10.326988882806136],
+          [148.54904153802102, -10.295239651567694],
+          [148.50338319052344, -10.275645000765333],
+          [148.45600465048437, -10.255375380156007],
+          [148.40999940146094, -10.231050122976889],
+          [148.36262086142187, -10.245240083145712],
+          [148.32142213095312, -10.267537308375363],
+          [148.26649049032812, -10.274969367674654],
+          [148.21979859579687, -10.25740240064369],
+          [148.15868714560156, -10.237807326028474],
+          [148.0095134090293, -10.149445568147621],
+          [147.96925932261425, -10.16262709779437],
+          [147.96312213574123, -10.159331388779178],
+          [147.95629838217383, -10.15873906529538],
+          [147.94634204408058, -10.160766861514409],
+          [147.93690064657812, -10.159077005558153],
+          [147.9238525961771, -10.158549346239921],
+          [147.9178435257397, -10.160312990008155],
+          [147.91269267864948, -10.161569672358445],
+          [147.90960230363493, -10.162910530065172],
+          [147.90960181711756, -10.166447976091508],
+          [147.90402243340822, -10.166183422642309],
+          [147.9015764238517, -10.164952833204406],
+          [147.91405977626516, -10.133960432282649],
+          [147.91624252188257, -10.124597365871944],
+          [147.90632369358096, -10.109065451468453],
+          [147.89878966701593, -10.103327067189962],
+          [147.895203707897, -10.10079957616332],
+          [147.89292422560385, -10.098407306500672],
+          [147.88904994489064, -10.098696496061232],
+          [147.8848323043884, -10.101351657933199],
+          [147.8731354214929, -10.097704917651017],
+          [147.8627396951652, -10.098665889052723],
+          [147.85862148370217, -10.102087451779884],
+          [147.85690644491797, -10.108212984374994],
+          [147.84514587201932, -10.125367210985498],
+          [147.8289256404746, -10.133561512043125],
+          [147.73948589987378, -10.101373223445586],
+          [147.70275452841406, -10.107536996245775],
+          [147.6656756709922, -10.085397599818595],
+          [147.64644959677344, -10.040438116292874],
+          [147.57709840048437, -10.003248859750705],
+          [147.51461365927344, -9.989048201292233],
+          [147.4692950557578, -9.834153343612341],
+          [147.4583087276328, -9.810473031874794],
+          [147.44388917196875, -9.788144330564199],
+          [147.43427613485937, -9.759723812584333],
+          [147.4020037959922, -9.723179584207497],
+          [147.36835816610937, -9.673770854375412],
+          [147.32132294882422, -9.605144978594918],
+          [147.26810792196875, -9.559358446495715],
+          [147.23008483324364, -9.550557919993716],
+          [147.2105156868479, -9.550726663273089],
+          [147.1928344081748, -9.55800422219023],
+          [147.18309284219688, -9.560543724280034],
+          [147.17652692289678, -9.561390266885702],
+          [147.16854432333594, -9.55893525197927],
+          [147.16326563533698, -9.555105417315007],
+          [147.1573003502734, -9.556777140701207],
+          [147.14863149512007, -9.553010746369722],
+          [147.14176514853125, -9.548693784229611],
+          [147.1402200559868, -9.5401870522282],
+          [147.13910420976947, -9.535743128353412],
+          [147.1337827626108, -9.52867523731347],
+          [147.12992051352148, -9.522623204731348],
+          [147.11206773031836, -9.530410729363119],
+          [147.1051154728245, -9.532950170787801],
+          [147.0973048519004, -9.532272937192007],
+          [147.09305621664063, -9.531511147125107],
+          [147.08915093649512, -9.529564267899799],
+          [147.07172730673437, -9.524146864830858],
+          [147.0394549678672, -9.517374990146866],
+          [147.0284686397422, -9.483513605722829],
+          [147.00580933798437, -9.459808646712514],
+          [146.98795655478125, -9.428989757393866],
+          [146.9537949820256, -9.432376824686829],
+          [146.93886140097266, -9.417135604850186],
+          [146.92221014258166, -9.419506788489905],
+          [146.908305675875, -9.412393829905247],
+          [146.89010971530064, -9.419506941344068],
+          [146.88101156647875, -9.412224840864146],
+          [146.87122681845312, -9.41781299595851]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - PNG - Solomons
@@ -18031,7 +18130,7 @@ var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YO
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -18047,7 +18146,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: true, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -18172,11 +18271,11 @@ if (vars.manual_clean && vars.geomorphic) {
   var terrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
   var deeplagoonmask = ee.Image().byte().paint(ee.Feature(deep_lagoon_mask, {zone: 1}), "zone").clip(deep_lagoon_mask);
   var RConFlat = ee.Image().byte().paint(ee.Feature(RC_onFlat, {zone: 1}), "zone").clip(RC_onFlat);
- 
+  
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
  
-  /* // "LAND MASK" CLEAN
+  /* // "LAND MASK" CLEAN NoSeagras
   // remove
   man_geo = man_geo.where({
     test: landmask.eq(1),
@@ -18308,7 +18407,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   var image = ee.Image(region_params.image); 
   var terrestrialRF = ee.Image().byte().paint(ee.Feature(Terrestrial_RF, {zone: 1}), "zone").clip(Terrestrial_RF);
-  
+  var No_Seagras = ee.Image().byte().paint(ee.Feature(NoSeagras, {zone: 1}), "zone").clip(NoSeagras);
+ 
   // **Generic benthic rules**
   
   // CR BMA on inner RF, outer RF,reef crest, sheltered slope(CR), reef slope -> rubble 
@@ -18357,10 +18457,11 @@ if (vars.manual_clean && !vars.geomorphic) {
 // CR Rubble on IRF, -> Sand if its light rubble (ADD RULE FOR BRIGHTNESS)
  man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
-                     .and(geo_map.eq(13))
+                     .and(geo_map.eq(14))
                      .and(image.select('b1').gt(1500)),
     value: ee.Image(11)
   });
+
   
   // CR Rock on TRF -> coral/algae (mostly algae)
   man_benthic = man_benthic.where({
@@ -18369,6 +18470,13 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(15)
   });
  
+ // CR Sand bright on ORF, -> Coral/Algae as its bright wave on the RC/ORF area and assinged to sand but should be C/A
+ man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(14))
+                     .and(image.select('b1').gt(3000)),
+    value: ee.Image(15)
+  });
    
   // CR Coral/Algae on DL -> Sand
   man_benthic = man_benthic.where({
@@ -18376,7 +18484,12 @@ if (vars.manual_clean && !vars.geomorphic) {
                       .and(man_benthic.eq(15)),
     value: ee.Image(11)
   });
-  
+   // CR Seagrass in South West PNG (noseagrass mask) should be Rock/Coral/Algae
+  man_benthic = man_benthic.where({
+    test: No_Seagras.eq(1)
+                     .and(man_benthic.eq(14)),
+    value: ee.Image(13)
+  }); 
   
   // **Manual Benthic 2 polygon/mask guided rules**
     
