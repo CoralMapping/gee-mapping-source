@@ -539,6 +539,13 @@ if (vars.manual_clean && vars.geomorphic) {
                            .and (man_geo.eq(14)),
     value: ee.Image(16)
   });
+  
+  
+  man_geo =man_geo.where({
+    test:orfToShallowL.eq(1)
+                           .and (man_geo.eq(14)),
+    value: ee.Image(11)
+  });
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
