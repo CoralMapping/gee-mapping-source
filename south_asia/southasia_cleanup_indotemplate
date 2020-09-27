@@ -343,7 +343,14 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [79.9997515670205, 9.600068210051505],
            [80.02447080530175, 9.604807384187648],
            [80.05622816003807, 9.566892136386095],
-           [80.10000181116112, 9.5806030498164]]]]);
+           [80.10000181116112, 9.5806030498164]]]]),
+    orf_sl = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[79.90004760968628, 8.8817218350675],
+          [79.8787615989441, 8.85017431879969],
+          [79.84648926007691, 8.779267356792031],
+          [79.90348083722535, 8.699862621994077],
+          [79.93094665753785, 8.784356825970075],
+          [79.93094665753785, 8.88070421556767]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -510,7 +517,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   var orfToTerrestrialRF =ee.Image().byte().paint(ee.Feature(orf_trf,{zone:1}), "zone").clip(orf_trf);
-  
+  var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
 
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
