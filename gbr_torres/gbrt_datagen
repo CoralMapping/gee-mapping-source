@@ -35,7 +35,7 @@ var region_params = param_module.gbr_torres       //<------------ THIS IS WHERE 
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   reduce_max: 1500, // the max size of object to be able to reduce
@@ -70,6 +70,8 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 Map.centerObject(map_centre, 6)
 
 // load input data
+var reflec = ee.Image(region_params.image).select(vars.all_bands)
+
 // import depth data (NB depth is 16bit s integer in centimeters)
 // load the composite depth
 var depth = ee.Image(region_params.composite_depth)
