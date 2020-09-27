@@ -69,8 +69,9 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 
 Map.centerObject(map_centre, 6)
 
-/*// load input data
-var reflec = ee.Image(region_params.image).select(vars.all_bands)*/
+// load input data
+/*
+var reflec = ee.Image(region_params.image).select(vars.all_bands)
 // load input data (#### INDO SPECIFIC -> split ingestions)
 var reflec = ee.ImageCollection(region_params.image)
                                  .mosaic()
@@ -78,9 +79,9 @@ var reflec = ee.ImageCollection(region_params.image)
 
 
 // import depth data (NB depth is 16bit s integer in centimeters)
-/*var dove_depth = ee.Image(region_params.depth).rename('depth')
+var dove_depth = ee.Image(region_params.depth).rename('depth')
 var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')*/
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
 
 //(#### INDO SPECIFIC -> split ingestions)
 var dove_depth = ee.ImageCollection(region_params.depth)
@@ -100,6 +101,11 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 // make the depth data for modelling/mapping
 // --> Use S2 where possible, then LS8, then Dove (the GEE mosaic algorithm uses the LAST non-masked pixel in the stack)
 var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+*/
+
+// load the composite depth
+//var depth = ee.Image(region_params.composite_depth)
+var depth = ee.ImageCollection(region_params.composite_depth).mosaic() // indo specific
 // get back the negative retrievals as very shallow
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
 
