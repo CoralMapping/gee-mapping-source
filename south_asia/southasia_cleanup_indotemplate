@@ -350,7 +350,17 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.84648926007691, 8.779267356792031],
           [79.90348083722535, 8.699862621994077],
           [79.93094665753785, 8.784356825970075],
-          [79.93094665753785, 8.88070421556767]]]);
+          [79.93094665753785, 8.88070421556767]]]),
+    sl_rs = /* color: #0b4a8b */ee.Geometry.Polygon(
+        [[[81.01141819534257, 9.005368680370522],
+          [80.96747288284257, 8.95111008178686],
+          [81.16522678909257, 8.603665399891586],
+          [81.15973362503007, 8.440690106036426],
+          [81.29706272659257, 8.375480646509724],
+          [81.43439182815507, 7.877905164064033],
+          [81.68433079299882, 7.622084901312944],
+          [81.75024876174882, 7.760900300466082],
+          [81.38495335159257, 8.587371004181868]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -518,7 +528,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   var orfToTerrestrialRF =ee.Image().byte().paint(ee.Feature(orf_trf,{zone:1}), "zone").clip(orf_trf);
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
-
+  var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
@@ -545,6 +555,12 @@ if (vars.manual_clean && vars.geomorphic) {
     test:orfToShallowL.eq(1)
                            .and (man_geo.eq(14)),
     value: ee.Image(11)
+  });
+  
+  man_geo =man_geo.where({
+    test:slToReefSlope.eq(1)
+                           .and (man_geo.eq(11)),
+    value: ee.Image(22)
   });
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
