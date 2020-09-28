@@ -122,7 +122,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    add_toMidMask = /* color: #0b4a8b */ee.Geometry({
+    add_toMidMask = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
