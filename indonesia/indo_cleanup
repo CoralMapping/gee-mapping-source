@@ -155,7 +155,7 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -253,7 +253,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
   var geo_map = ee.Image(region_params.geo_map_clean3);
@@ -369,7 +369,7 @@ if (!vars.manual_clean) {
     var geo_map = geo_map_raw;
   }
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');
   var low_tide_image = ee.Image(region_params.image);
   
   var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
