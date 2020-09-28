@@ -1123,6 +1123,12 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
+  man_geo =man_geo.where({
+    test:irfToRs.eq(1)
+                           .and (man_geo.eq(13)),
+    value: ee.Image(22)
+  });
+  
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
