@@ -662,7 +662,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [81.47726173695713, 8.188865961833248],
           [81.40859718617588, 8.523108745186791],
           [81.26852150258213, 8.718628299118738]]]),
-    trf_rs = /* color: #98ff00 */ee.Geometry.MultiPoint();
+    srs_rs = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -832,7 +832,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
   var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
   var bReefSlopetoRS = ee.Image().byte().paint(ee.Feature(brs_rs,{zone:1}), "zone").clip(brs_rs);
-  var TRFtoRS = ee.Image().byte().paint(ee.Feature(trf_rs,{zone:1}), "zone").clip(trf_rs);
+  var srstoRS = ee.Image().byte().paint(ee.Feature(srs_rs,{zone:1}), "zone").clip(srs_rs);
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
@@ -875,8 +875,8 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   man_geo =man_geo.where({
-    test:TRFtoRS.eq(1)
-                           .and (man_geo.eq(16)),
+    test:srltoRS.eq(1)
+                           .and (man_geo.eq(21)),
     value: ee.Image(22)
   });
   /*
