@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([121.23245564013276, -5.836208490092446]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([148.21487751513274, -19.76820985087248]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Indonesia Archipelago region 
@@ -35,7 +35,7 @@ var region_params = param_module.gbr_torres       //<------------ THIS IS WHERE 
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   reduce_max: 1500, // the max size of object to be able to reduce
