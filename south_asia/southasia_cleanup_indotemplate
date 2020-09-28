@@ -617,11 +617,43 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                81.3625637101922,
+                8.500674628764516
+              ],
+              [
+                81.34951744554377,
+                8.485734091490992
+              ],
+              [
+                81.37492332933283,
+                8.379775483226153
+              ],
+              [
+                81.39380608079767,
+                8.394380476370468
+              ],
+              [
+                81.36908684251642,
+                8.497279103205116
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
     }),
-    orf_trf = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    orf_trf = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[79.9804830438083, 9.032252995835892],
            [79.95627878965792, 9.021572271431952],
            [79.93430613340792, 9.03649129084192],
@@ -650,7 +682,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [80.02447080530175, 9.604807384187648],
            [80.05622816003807, 9.566892136386095],
            [80.10000181116112, 9.5806030498164]]]]),
-    orf_sl = /* color: #98ff00 */ee.Geometry.Polygon(
+    orf_sl = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[79.90004760968628, 8.8817218350675],
           [79.8787615989441, 8.85017431879969],
           [79.84648926007691, 8.779267356792031],
@@ -835,7 +870,18 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [81.3756750942199, 8.380110747351413],
           [81.39833439597771, 8.382488339722187],
           [81.36125553855584, 8.526814775862322]]]),
-    trf_rs = /* color: #0b4a8b */ee.Geometry.MultiPoint();
+    trf_rs = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[81.27389178376706, 8.476900209958911],
+          [81.29431948762448, 8.48912461043955],
+          [81.29208788972409, 8.505083658456524],
+          [81.32762179475338, 8.50830934276302],
+          [81.32161364656002, 8.540734447756686],
+          [81.30427584748776, 8.5344533595761],
+          [81.27612338166745, 8.520362975174972],
+          [81.27028689485104, 8.49285976630071]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
