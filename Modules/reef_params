@@ -607,7 +607,7 @@ var indonesia = {
 };
 
 var coral_sea = {
-  sname:"coral_sea",
+  sname:"cosea",
   tide: "both",
   asset: "projects/coral_atlas/coral_sea/",
   epsg: "EPSG:4326",
@@ -616,6 +616,8 @@ var coral_sea = {
   s2_depth: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth",
   depth_composite: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_masked_composite_depth",
+  extent_mask: "projects/coral_atlas/coral_sea/in_out/cosea_extent",
+  notreef_mask: "projects/coral_atlas/coral_sea/in_out/cosea_notreef",
   pixels:[""],
   segments:[""],
   waves:"",
@@ -628,6 +630,7 @@ var coral_sea = {
   benthic_val_library:"",
   geo_map: [""],
   benthic_map: [""],
+  mid_mask: "projects/coral_atlas/coral_sea/in_out/cosea_midmask",
   geo_map_clean1:"",
   geo_map_clean2:"",
   geo_map_clean3:"",
@@ -639,7 +642,7 @@ var coral_sea = {
 };
 
 var gbr_torres = {
-  sname:"gbr_torres",
+  sname:"gbrt",
   tide: "both",
   asset: "projects/coral_atlas/gbr_torres/",
   epsg: "EPSG:4326",
@@ -648,6 +651,8 @@ var gbr_torres = {
   s2_depth: ["projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth"],
   ls8_depth: ["projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth"],
   depth_composite: ["projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_masked_composite_depth"],
+  extent_mask: "projects/coral_atlas/gbr_torres/in_out/gbrt_extent",
+  notreef_mask: "projects/coral_atlas/gbr_torres/in_out/gbrt_notreef",
   pixels:[""],
   segments:[""],
   waves:"",
@@ -660,6 +665,7 @@ var gbr_torres = {
   benthic_val_library:"",
   geo_map: [""],
   benthic_map: [""],
+  mid_mask: "projects/coral_atlas/gbr_torres/in_out/gbrt_midmask",
   geo_map_clean1:"",
   geo_map_clean2:"",
   geo_map_clean3:"",
@@ -671,7 +677,7 @@ var gbr_torres = {
 };
 
 var west_australia = {
-  sname:"west_australia",
+  sname:"westaus",
   tide: "both",
   asset: "projects/coral_atlas/west_australia/",
   epsg: "EPSG:4326",
@@ -680,6 +686,8 @@ var west_australia = {
   s2_depth: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth",
   depth_composite: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_masked_composite_depth",
+  extent_mask: "projects/coral_atlas/west_australia/in_out/westaus_extent",
+  notreef_mask: "projects/coral_atlas/west_australia/in_out/westaus_notreef",
   pixels:[""],
   segments:[""],
   waves:"",
@@ -692,6 +700,7 @@ var west_australia = {
   benthic_val_library:"",
   geo_map: [""],
   benthic_map: [""],
+  mid_mask: "projects/coral_atlas/west_australia/in_out/westaus_midmask",
   geo_map_clean1:"",
   geo_map_clean2:"",
   geo_map_clean3:"",
