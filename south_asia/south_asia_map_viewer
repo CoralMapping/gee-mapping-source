@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+var centre_map = /* color: #d63000 */ee.Geometry.Polygon(
         [[[80.06231110927592, 11.643419782412085],
           [76.32695954677592, 8.37652515056032],
           [80.47979157802592, 4.709806006395633],
