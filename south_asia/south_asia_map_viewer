@@ -38,7 +38,7 @@ var vars = {
              // to use the slider to cut geo raw as well. 
   geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: true, // set to true if you want to view geo clean 2
-  geo_clean3: false, // set to true if you want to view geo clean 3
+  geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
@@ -84,9 +84,8 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 
 //add masks to the viewer
 
-//var mid_mask=ui.Map.Layer(ee.FeatureCollection(region_params.midMask), {color:'#800080'},'mid_mask',false)
+var mid_mask=ui.Map.Layer(ee.FeatureCollection(region_params.midMask), {color:'#800080'},'mid_mask',false)
 
-//var mid_maskCR=ui.Map.Layer(ee.FeatureCollection(region_params.midMaskCR), {color:'#008000'},'mid_maskCR',false)
 
 // Load the clean classifications to the ui viewer
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
@@ -129,7 +128,7 @@ if (vars.geo_clean1) {
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
-  //layers.add(mid_mask)
+  layers.add(mid_mask)
  // layers.add(mid_maskCR)
 ////////// UI SET UP //////////
 
