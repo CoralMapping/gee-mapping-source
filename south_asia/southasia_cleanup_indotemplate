@@ -122,10 +122,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    add_toMidMask = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry({
+    add_toMidMask = /* color: #0b4a8b */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -406,40 +403,56 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           "coordinates": [
             [
               [
-                81.37826154123474,
-                8.367457724160555
+                81.39641473184753,
+                8.35871117158317
+              ],
+              [
+                81.39074990640808,
+                8.356503272922218
+              ],
+              [
+                81.38817498575378,
+                8.356545732629732
               ],
               [
                 81.38684461008239,
-                8.34614296619534
+                8.344444529026473
               ],
               [
-                81.39002034555602,
-                8.34614296619534
+                81.4080447901361,
+                8.35888100942395
               ],
               [
-                81.39182279001403,
-                8.350643788967174
+                81.40139291177917,
+                8.367839850622396
               ],
               [
-                81.39276692758727,
-                8.352512039782809
+                81.3906640757196,
+                8.370429808981939
               ],
               [
-                81.39723012338806,
-                8.36117381303388
+                81.38186643015075,
+                8.373147123824836
               ],
               [
-                81.39894673715759,
-                8.364061028026518
+                81.38457009683776,
+                8.3657169210911
               ],
               [
-                81.39328191171813,
-                8.366863304474844
+                81.38714501749206,
+                8.363339226283463
               ],
               [
-                81.38323972116638,
-                8.371703552675946
+                81.39019200693298,
+                8.362362668856264
+              ],
+              [
+                81.39366814981628,
+                8.364740369622226
+              ],
+              [
+                81.39864632974792,
+                8.365122498749358
               ]
             ]
           ],
@@ -648,7 +661,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [81.59261818226963, 8.047474966422858],
           [81.47726173695713, 8.188865961833248],
           [81.40859718617588, 8.523108745186791],
-          [81.26852150258213, 8.718628299118738]]]);
+          [81.26852150258213, 8.718628299118738]]]),
+    trf_rs = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -818,6 +832,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
   var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
   var bReefSlopetoRS = ee.Image().byte().paint(ee.Feature(brs_rs,{zone:1}), "zone").clip(brs_rs);
+  var TRFtoRS = ee.Image().byte().paint(ee.Feature(trf_rs,{zone:1}), "zone").clip(trf_rs);
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
