@@ -698,10 +698,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.90348083722535, 8.699862621994077],
           [79.93094665753785, 8.784356825970075],
           [79.93094665753785, 8.88070421556767]]]),
-    sl_rs = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry({
+    sl_rs = /* color: #0b4a8b */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -813,12 +810,32 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                 7.8705148633551465
               ],
               [
-                79.88603836539926,
-                7.839225525819157
+                79.78029495719613,
+                7.856911093233642
               ],
               [
-                79.87367874625863,
-                8.419725543197346
+                79.77363190402077,
+                7.8801560326813185
+              ],
+              [
+                79.73261072588942,
+                7.978204135088601
+              ],
+              [
+                79.724678401544,
+                8.209641722236645
+              ],
+              [
+                79.82661417573053,
+                8.369027125810094
+              ],
+              [
+                79.8721140924394,
+                8.439202252064579
+              ],
+              [
+                79.88191849235238,
+                8.509375440940005
               ],
               [
                 79.96980911735238,
@@ -896,8 +913,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
          [[[81.42368594324006, 8.158718206547901],
            [81.45733157312287, 8.160757288712922],
            [81.44720355188264, 8.213939665361812],
-           [81.41115466272248, 8.227021779601113]]]]),
-    irf_rs = /* color: #ffc82d */ee.Geometry.MultiPoint();
+           [81.41115466272248, 8.227021779601113]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -1065,11 +1081,11 @@ if (vars.manual_clean && vars.geomorphic) {
   var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   var orfToTerrestrialRF =ee.Image().byte().paint(ee.Feature(orf_trf,{zone:1}), "zone").clip(orf_trf);
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
-  var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
+  //var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
   var bReefSlopetoRS = ee.Image().byte().paint(ee.Feature(brs_rs,{zone:1}), "zone").clip(brs_rs);
   var srstoRS = ee.Image().byte().paint(ee.Feature(srs_rs,{zone:1}), "zone").clip(srs_rs);
   var trfToRs = ee.Image().byte().paint(ee.Feature(trf_rs,{zone:1}), "zone").clip(trf_rs);
-  var irfToRs = ee.Image().byte().paint(ee.Feature(irf_rs,{zone:1}), "zone").clip(irf_rs);
+ // var irfToRs = ee.Image().byte().paint(ee.Feature(irf_rs,{zone:1}), "zone").clip(irf_rs);
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
@@ -1098,11 +1114,11 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(11)
   });
   
-  man_geo =man_geo.where({
-    test:slToReefSlope.eq(1)
-                           .and (man_geo.eq(11)),
-    value: ee.Image(22)
-  });
+  //man_geo =man_geo.where({
+   // test:slToReefSlope.eq(1)
+     //                      .and (man_geo.eq(11)),
+   // value: ee.Image(22)
+  //});
   
   
   man_geo =man_geo.where({
@@ -1123,12 +1139,13 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
+  /*
   man_geo =man_geo.where({
     test:irfToRs.eq(1)
                            .and (man_geo.eq(13)),
     value: ee.Image(22)
   });
-  
+  */
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
