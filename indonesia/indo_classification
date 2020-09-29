@@ -1,6 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([117.00794294154727, -4.704842827661838]),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
+    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
+    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
+    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -91,7 +93,7 @@ var vars = {
   test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
