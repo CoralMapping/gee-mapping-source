@@ -1736,7 +1736,12 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    rs_sl = /* color: #d63000 */ee.Geometry.MultiPoint();
+    rs_sl = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[79.78643017077854, 8.16451346959864],
+          [79.71089916491917, 8.133246694482258],
+          [79.74660473132542, 7.970756361186169],
+          [79.85921459460667, 7.953755713104598],
+          [79.85166149402073, 8.116932625759857]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
