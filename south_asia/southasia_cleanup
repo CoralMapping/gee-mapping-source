@@ -1736,7 +1736,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    rs_sl = /* color: #d63000 */ee.Geometry.Polygon(
+    rs_sl = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[79.78643017077854, 8.16451346959864],
           [79.71089916491917, 8.133246694482258],
           [79.74660473132542, 7.970756361186169],
