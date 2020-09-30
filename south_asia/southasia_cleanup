@@ -2311,13 +2311,13 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
+  geo_depth_cutoff: 300, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
-  benthic_depth_cutoff: 100, //depth in centimetres
+  benthic_depth_cutoff: 300, //depth in centimetres
 
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
