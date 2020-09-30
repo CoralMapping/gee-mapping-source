@@ -108,8 +108,8 @@ var vars = {
 if (vars.split_region != 'none') {
   var region_dic = ee.Dictionary({east: east, west: west}); // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
-  //var subregion_clip = ee.Geometry(region_dic.get(vars.split_region)); // use this line to define clip if subregion is created in GEE
-  var subregion_clip = ee.FeatureCollection(region_dic.get(vars.split_region)).geometry(); // use this line to define clip if subregion is imported as asset from shapefile
+  //var subregion_clip = ee.Geometry(region_dic.get(vars.split_region)); // **use this line to define clip if subregion is created in GEE
+  var subregion_clip = ee.FeatureCollection(region_dic.get(vars.split_region)).geometry(); // **use this line to define clip if subregion is imported as asset from shapefile
   print('Running classificaiton for region split: ', vars.split_region);
 }
 
