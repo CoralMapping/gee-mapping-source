@@ -524,7 +524,8 @@ var centre_map =
           [98.28997339936373, 5.83929885471839],
           [96.51575068906283, 5.610198025224091],
           [95.31177555165708, 6.218637622537728],
-          [94.6553101139012, 6.232074405406377]]]);
+          [94.6553101139012, 6.232074405406377]]]),
+    indo_geo = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -575,8 +576,10 @@ if (vars.geo_raw) {
     var geo_map_raw = ee.Image(region_params.geo_map);
   }
   // Add the raw geomorphic classification to the viewer
-  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW - east/west', false);
 }
+
+Map.addLayer(indo_geo , map_palettes.geo, 'Geomorphic RAW - single', false);
 
 // Load the raw benthic classification
 if (vars.benthic_raw) {
@@ -593,7 +596,6 @@ if (vars.benthic_raw) {
 }
 
 // Load the clean classifications
-
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
 var geo_clean2 = ee.Image(region_params.geo_map_clean2);
 var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
