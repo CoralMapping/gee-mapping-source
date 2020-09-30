@@ -530,7 +530,7 @@ var centre_map =
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
 
-//Viewer for Indonesia
+// Viewer for Indonesia
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
@@ -654,16 +654,16 @@ Export.table.toAsset({
   collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
-})
+});
 
 Export.table.toAsset({
   collection: ee.FeatureCollection(notReef_mask),
   description: "not_reef_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
-})
+});
 
 /*Export.table.toAsset({
   collection: ee.FeatureCollection(mid_mask),
   description: "mid_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
-})*/
+});*/
