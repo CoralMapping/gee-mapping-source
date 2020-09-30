@@ -572,7 +572,7 @@ var png_solomons = {
 };
 
 var indonesia = {
-  visParams: "{bands: ['b3','b2','b1'], min:0, max:4000, gamma: 1.5}",
+  visParams: {bands: ['b3','b2','b1'], min:0, max:4000, gamma: 1.5},
   sname:"indo",
   tide: "both",
   asset: "projects/coral_atlas/Indonesia/",
