@@ -548,13 +548,13 @@ var region_params = param_module.indonesia;     //<------------ THIS IS WHERE YO
 // **Choose which layers will be shown in the map viewer**
 
 var vars = {
-  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_raw: true, // set to true if you want to view the raw classifications for geomorphic (split benthic and geo because CR has OCD)
   geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: true, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
+  benthic_raw: true, // set to true if you want to view the raw classifications for benthic
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
-  gamma: 1.7 // adjust the gamma value for the image dispaly
 };
 
 
