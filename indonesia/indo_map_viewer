@@ -549,12 +549,12 @@ var region_params = param_module.indonesia;     //<------------ THIS IS WHERE YO
 
 var vars = {
   geo_raw: true, // set to true if you want to view the raw classifications for geomorphic (split into benthic and geo because CR has OCD)
-  geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: true, // set to true if you want to view geo clean 2
-  geo_clean3: true, // set to true if you want to view geo clean 3
-  benthic_raw: true, // set to true if you want to view the raw classifications for benthic
-  benthic_clean1: true, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  geo_clean1: false, // set to true if you want to view geo clean 1
+  geo_clean2: false, // set to true if you want to view geo clean 2
+  geo_clean3: false, // set to true if you want to view geo clean 3
+  benthic_raw: false, // set to true if you want to view the raw classifications for benthic
+  benthic_clean1: false, // set to true if you want to view benthic clean 1
+  benthic_clean2: false, // set to true if you want to view benthic clean 2
 };
 
 // choose where to centre the map (link this dynamically to map app?)
