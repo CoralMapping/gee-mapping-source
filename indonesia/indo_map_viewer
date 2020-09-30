@@ -548,7 +548,7 @@ var region_params = param_module.indonesia;     //<------------ THIS IS WHERE YO
 // **Choose which layers will be shown in the map viewer**
 
 var vars = {
-  geo_raw: true, // set to true if you want to view the raw classifications for geomorphic (split benthic and geo because CR has OCD)
+  geo_raw: true, // set to true if you want to view the raw classifications for geomorphic (split into benthic and geo because CR has OCD)
   geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: true, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
@@ -556,7 +556,6 @@ var vars = {
   benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: true, // set to true if you want to view benthic clean 2
 };
-
 
 // choose where to centre the map (link this dynamically to map app?)
 Map.centerObject(centre_map, 8);
@@ -567,8 +566,8 @@ Map.centerObject(centre_map, 8);
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min:0, max:4000, gamma: vars.gamma}, sensor_params.sname + ' low tide', false); // image data
 
-// Load the raw classifications
-if (vars.raw) {
+// Load the raw geomorphic classification
+if (vars.geo_raw) {
 // geo raw (test if more than one map exists for the region)
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
@@ -577,8 +576,13 @@ if (vars.raw) {
   } else {
     var geo_map_raw = ee.Image(region_params.geo_map);
   }
+  // Add the raw geomorphic classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+}
 
-  // benthic raw (test if more than one map exists for the region)
+// Load the raw benthic classification
+if (vars.benthic_raw) {
+// benthic raw (test if more than one map exists for the region)
   if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
                      .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
@@ -586,12 +590,8 @@ if (vars.raw) {
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
   }
-
-  // Add the raw region classification to the viewer
-  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
- // Map.addLayer(pns_benthic_v1.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic v1 RAW', false);
+  // Add the benthic classification to the viewer
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
-  
 }
 
 // Load the clean classifications
