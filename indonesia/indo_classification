@@ -1,8 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([117.00794294154727, -4.704842827661838]),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
-    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
+    east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
+    west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -52,10 +52,10 @@ var vars = {
   /*
   Choose whether pixels, segments or both should be used to train the classifier. Choose from,
   
-  pixel data:
+  full set of available pixel data:
   ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p']
   
-  object data:
+  full set of available object (segment) data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
@@ -79,7 +79,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'none',
+  split_region: 'east',
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -90,10 +90,10 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: false,
+  test_mode: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
@@ -108,7 +108,8 @@ var vars = {
 if (vars.split_region != 'none') {
   var region_dic = ee.Dictionary({east: east, west: west}); // <- include all splits here
   var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
-  var subregion_clip = ee.Geometry(region_dic.get(vars.split_region));
+  //var subregion_clip = ee.Geometry(region_dic.get(vars.split_region)); // use this line to define clip if subregion is created in GEE
+  var subregion_clip = ee.FeatureCollection(region_dic.get(vars.split_region)).geometry(); // use this line to define clip if subregion is imported as asset from shapefile
   print('Running classificaiton for region split: ', vars.split_region);
 }
 
@@ -153,7 +154,7 @@ print("Number of training samples:", training_data.size());
 
 //Map.centerObject(map_centre, 6);
 var pix_lowtide = ee.ImageCollection(region_params.pixels);
-Map.addLayer(pix_lowtide, {bands: ['b3', 'b2', 'b1'], min: 100, max: 2000}, 'segments + pixels - showing low tide image', false);
+Map.addLayer(pix_lowtide, region_params.visParams, sensor_params.sname + ' low tide', false);
 
 
 // ################################################
