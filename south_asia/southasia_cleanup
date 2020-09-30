@@ -2313,7 +2313,7 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 400, //depth in centimetres
-  benthic_depth_cutoff: 750, //depth in centimetres
+  benthic_depth_cutoff: 500, //depth in centimetres
 
   //############
   // Clean-up stage selection
