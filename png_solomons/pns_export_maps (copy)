@@ -1,40 +1,34 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    reef_boundary = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[117.0034761846726, -17.565859422023895],
-          [120.3872652471726, -21.335799035775768],
-          [122.6724214971726, -19.39962108983916],
-          [124.4741793096726, -17.482047708663774],
-          [127.1548433721726, -14.950473013866658],
-          [128.60503868467262, -16.431194505181303],
-          [130.67046837217262, -15.628706596125351],
-          [130.27496055967262, -14.482934551165076],
-          [131.76910118467262, -12.946059901275891],
-          [135.06499962217262, -12.946059901275891],
-          [133.74664024717262, -15.459354651420977],
-          [140.99761680967262, -19.067682312452327],
-          [142.44781212217262, -15.671022773934524],
-          [137.96539024717262, -13.801123658038872],
-          [137.61382774717262, -9.888075443573277],
-          [135.15289024717262, -10.666393639266031],
-          [132.51617149717262, -10.061199606268943],
-          [129.61578087217262, -10.536808143218181],
-          [128.64898399717262, -12.17398069861192],
-          [128.34136680967262, -13.20289632731342],
-          [126.7153902471726, -12.646082905197712],
-          [125.3530855596726, -12.73182696040546],
-          [124.0786714971726, -10.666393639266031],
-          [122.7163668096726, -11.011683475005183],
-          [121.3980074346726, -12.946059901275891]]]),
-    benthic = ee.Image("projects/coral_atlas/Timor/in_out/timor_benthic_clean2"),
-    geo = ee.Image("projects/coral_atlas/Timor/in_out/timor_geo_clean3"),
-    lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/timor_sea/timor_sea_low_tide_normalized_sr_feb2018_feb2020/20200403T212607Z/timor_sea_low_tide_normalized_sr_feb2018_feb2020"),
-    pixels = ee.Image("projects/coral_atlas/Timor/in_out/timor_pixels");
+    pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
+    lowtide_sr = ee.Image("projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    geo = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean3"),
+    benthic = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_benthic_clean2"),
+    reef_boundary = /* color: #051ad6 */ee.Geometry.Polygon(
+        [[[133.65904403361668, 1.5423670875241082],
+          [133.70298934611668, -3.3334940665077855],
+          [140.07505965861668, -9.227839178840291],
+          [151.80845809611668, -13.662997256508245],
+          [159.85045028361668, -14.430353736128849],
+          [164.99205184611668, -13.0216133807959],
+          [165.47545028361668, -9.791275221974912],
+          [164.72837997111668, -5.1302650823301885],
+          [160.11412215861668, 2.1133630909724754],
+          [152.59947372111668, 3.0352733285728117],
+          [146.66685653361668, 2.991388778986984],
+          [139.89927840861668, 2.7719401962986745],
+          [134.58189559611668, 1.981611352071806]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// Timor Sea export to Vulcan bucket
+///////////////////////////////
+// Global coral atlas project - PNG - Solomons
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Chris Roelfsema (chris.m.roelfsema@gmail.com)
+// Description:
+// - export geomorphic and benthic to Vulcan bucket
+///////////////////////////////
+
+
+          
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
