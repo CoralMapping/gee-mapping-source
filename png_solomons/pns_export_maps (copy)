@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var outline1 = ee.Image("projects/coral_atlas/reefMask/maskOut/reefMask_gen3_S30_v7_gridID_a"),
-    pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
+var pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean3"),
     benthic = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_benthic_clean2"),
@@ -64,9 +63,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false);
 // run the export
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'timor_sea_stack',
+  description: 'PNG-Solomons_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/timor_sea/timor_sea_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/timor_sea/PNG_Solomons_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
