@@ -2585,7 +2585,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.71089916491917, 8.133246694482258],
           [79.74660473132542, 7.970756361186169],
           [79.85921459460667, 7.953755713104598],
-          [79.85166149402073, 8.116932625759857]]]);
+          [79.85166149402073, 8.116932625759857]]]),
+    dl_rs = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -2760,6 +2761,7 @@ if (vars.manual_clean && vars.geomorphic) {
  // var irfToRs = ee.Image().byte().paint(ee.Feature(irf_rs,{zone:1}), "zone").clip(irf_rs);
  var irfToSl = ee.Image().byte().paint(ee.Feature(irf_sl,{zone:1}), "zone").clip(irf_sl);
  var rsTosl = ee.Image().byte().paint(ee.Feature(rs_sl,{zone:1}), "zone").clip(rs_sl);
+ var dlTors = ee.Image().byte().paint(ee.Feature(dl_rs,{zone:1}), "zone").clip(dl_rs)
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
