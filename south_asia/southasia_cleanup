@@ -2826,6 +2826,17 @@ if (vars.manual_clean && vars.geomorphic) {
                            .and (man_geo.eq(22)),
     value: ee.Image(11)
   });
+  
+  man_geo =man_geo.where({
+    test:dlTors.eq(1)
+                           .and (man_geo.eq(12)),
+    value: ee.Image(22)
+  });
+  
+  
+  
+  
+  
   /*
   man_geo =man_geo.where({
     test:irfToRs.eq(1)
