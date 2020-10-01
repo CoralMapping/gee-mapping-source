@@ -1448,12 +1448,12 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
                 -4.5592736473402855
               ],
               [
-                133.72433851189285,
-                -4.404182721288892
+                133.69549940056473,
+                -4.442520335499901
               ],
               [
-                133.70236100886316,
-                -4.314837315989636
+                133.6597889873788,
+                -4.329900551833194
               ],
               [
                 133.53757173309293,
@@ -1472,8 +1472,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
                 -4.015897926952649
               ],
               [
-                133.5595352063864,
-                -3.67608927956951
+                133.51970976693326,
+                -3.584263408679565
               ],
               [
                 133.57052153387036,
@@ -1516,8 +1516,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
                 -3.5979542749766042
               ],
               [
-                133.324694543393,
-                -4.020653615575039
+                133.3411740355805,
+                -4.011064181327036
               ],
               [
                 133.53274742987375,
@@ -1532,12 +1532,12 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
                 -4.054263005126153
               ],
               [
-                133.4112154939755,
-                -3.9802841724931994
+                133.4208285310849,
+                -3.9980937018071474
               ],
               [
-                133.29860863424273,
-                -4.004933065653837
+                133.3356874916646,
+                -4.033701246170474
               ],
               [
                 133.64742582346253,
@@ -1864,6 +1864,89 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                132.1998371911517,
+                -3.6533923856830475
+              ],
+              [
+                132.3275532556048,
+                -3.72465554730319
+              ],
+              [
+                132.54865310912044,
+                -3.233925062556868
+              ],
+              [
+                132.4525227380267,
+                -3.1530267207002187
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                133.27552616493375,
+                -3.948980375473852
+              ],
+              [
+                133.27140629188688,
+                -4.042137180614164
+              ],
+              [
+                133.35655033485563,
+                -4.040767304531249
+              ],
+              [
+                133.61610233680875,
+                -4.070904042516078
+              ],
+              [
+                133.56254398719938,
+                -3.644779298286915
+              ],
+              [
+                133.49937260048063,
+                -3.531019573544343
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                133.70536687927807,
+                -4.290049608696199
+              ],
+              [
+                133.62846258240307,
+                -4.355780041585881
+              ],
+              [
+                133.67240789490307,
+                -4.495438035230891
+              ],
+              [
+                133.78639104919995,
+                -4.472163538945238
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -1976,7 +2059,7 @@ var vars = {
 };
 
 // choose where to centre the map (link this dynamically to map app?)
-Map.centerObject(centre_map, 8);
+//Map.centerObject(centre_map, 8);
 
 // Add low-tide base map to viewer
 //var pix_lowtide = ee.ImageCollection(region_params.pixels);
@@ -2078,10 +2161,11 @@ Export.table.toAsset({
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
 });
 
+// check manually created notReef_mask 
 var notReefmask = ee.FeatureCollection(notReef_mask.dissolve())
 Map.addLayer(notReefmask, {}, 'not_reef_mask - check for donuts', true);
 Export.table.toAsset({
-  collection: ee.FeatureCollection(notReef_mask),
+  collection: notReefmask,
   description: "not_reef_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
 });
