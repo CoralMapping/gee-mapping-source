@@ -154,7 +154,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    add_toMidMask = /* color: #0b4a8b */ee.Geometry({
+    add_toMidMask = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1657,14 +1660,52 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                79.32233243741473,
+                9.344456032054486
+              ],
+              [
+                79.04836087979754,
+                9.307189684689924
+              ],
+              [
+                79.14105802335223,
+                9.253315856010925
+              ],
+              [
+                79.29726987637957,
+                9.283811492763808
+              ],
+              [
+                79.36353116788348,
+                9.22044537547947
+              ],
+              [
+                79.40781980313739,
+                9.188927503834652
+              ],
+              [
+                79.42910581387957,
+                9.205872945335123
+              ],
+              [
+                79.35048490323504,
+                9.304479249724503
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
     }),
-    brs_rs = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    brs_rs = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1820,6 +1861,59 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
               [
                 80.17027363669337,
                 6.177406255831116
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                79.48060422696551,
+                9.122154587943317
+              ],
+              [
+                79.47785764493426,
+                9.192655570578294
+              ],
+              [
+                79.32542234219989,
+                9.355296403120652
+              ],
+              [
+                79.08234983243426,
+                9.321419123373962
+              ],
+              [
+                79.02329831876239,
+                9.337680628722905
+              ],
+              [
+                79.01780515469989,
+                9.305156860435522
+              ],
+              [
+                79.11462217130145,
+                9.27398541022138
+              ],
+              [
+                79.15513425626239,
+                9.281439704945873
+              ],
+              [
+                79.20800596036395,
+                9.281439704945873
+              ],
+              [
+                79.29109006680926,
+                9.267208641226144
+              ],
+              [
+                79.42292600430926,
+                9.177065212296478
               ]
             ]
           ],
