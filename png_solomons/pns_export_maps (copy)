@@ -27,7 +27,17 @@ var pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
 ///////////////////////////////
 
 
-          
+
+
+
+
+//// NEED TO CHANGE ADDRESS TO BUCKET BEFORE RUNNING :) :)
+
+
+
+
+
+
 
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
