@@ -59,18 +59,18 @@ var vars = {
   segments_output_name: region_params.sname + '_'+ 'segmentation',
   pixels_output_name: region_params.sname + '_' + 'pixels',
   asset_output: region_params.asset // asset path
-}
+};
 
-var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name // export file path/name
+var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_output_name; // export file path/name
 
 
 
 // 2. Data loads & vis
 
-Map.centerObject(map_centre, 6)
+Map.centerObject(map_centre, 6);
 
 // load input data
-var reflec = ee.Image(region_params.image).select(vars.all_bands)
+var reflec = ee.Image(region_params.image).select(vars.all_bands);
 
 /*// load input data (#### INDO SPECIFIC -> split ingestions)
 var reflec = ee.ImageCollection(region_params.image)
@@ -79,20 +79,20 @@ var reflec = ee.ImageCollection(region_params.image)
 
 
 // import depth data (NB depth is 16bit s integer in centimeters)
-var dove_depth = ee.Image(region_params.depth).rename('depth')
-var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
+var dove_depth = ee.Image(region_params.depth).rename('depth');
+var s2_depth = ee.Image(region_params.s2_depth).rename('depth');
+var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth');
 
 /*//(#### INDO SPECIFIC -> split ingestions)
 var dove_depth = ee.ImageCollection(region_params.depth)
                                      .mosaic()
-                                     .rename('depth')
+                                     .rename('depth');
 var s2_depth = ee.ImageCollection(region_params.s2_depth)
                                    .mosaic()
-                                   .rename('depth')
+                                   .rename('depth');
 var ls8_depth = ee.ImageCollection(region_params.ls8_depth)
                                    .mosaic()
-                                   .rename('depth')*/
+                                   .rename('depth');*/
                                    
 Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
 Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
@@ -100,7 +100,7 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 
 // make the depth data for modelling/mapping
 // --> Use S2 where possible, then LS8, then Dove (the GEE mosaic algorithm uses the LAST non-masked pixel in the stack)
-var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
+var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic();
 
 
 /*// load the composite depth
@@ -108,13 +108,13 @@ var depth = ee.Image(region_params.composite_depth)
 //var depth = ee.ImageCollection(region_params.composite_depth).mosaic() // indo specific*/
 
 // get back the negative retrievals as very shallow
-depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+depth = depth.where(depth.eq(-1), 10); // handle "too shallow" retrievals
 
 // define a mask based on min/max depth
-var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
+var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0));//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
+var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry();
 var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 // remove
 depth_mask = depth_mask.where({
@@ -134,7 +134,7 @@ Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limi
 // 3. Segmentation and metrics calculation
 
 // calculate slope
-var slope = ee.Terrain.slope(depth) // slope in degress
+var slope = ee.Terrain.slope(depth); // slope in degress
 
 if (vars.use_glcm) {
   // glcm texture (mixed usefulness - will vary with image quality and type)
