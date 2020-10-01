@@ -154,10 +154,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    add_toMidMask = 
-    /* color: #0b4a8b */
-    /* shown: false */
-    ee.Geometry({
+    add_toMidMask = /* color: #0b4a8b */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -1351,6 +1348,63 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                79.75801873326566,
+                8.490415565285435
+              ],
+              [
+                79.75527215123441,
+                8.53659296043739
+              ],
+              [
+                79.76900506139066,
+                8.556963566663375
+              ],
+              [
+                79.79784417271878,
+                8.563753526708538
+              ],
+              [
+                79.81844353795316,
+                8.55153151144716
+              ],
+              [
+                79.85002923131253,
+                8.54270425657342
+              ],
+              [
+                79.8754351151016,
+                8.54609937878925
+              ],
+              [
+                79.89466118932035,
+                8.554247548738468
+              ],
+              [
+                79.83972954869535,
+                8.569864387151146
+              ],
+              [
+                79.77381157994535,
+                8.59023321224071
+              ],
+              [
+                79.74085259557035,
+                8.552210522585261
+              ],
+              [
+                79.74428582310941,
+                8.478191205888796
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -1705,7 +1759,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    brs_rs = /* color: #d63000 */ee.Geometry({
+    brs_rs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
