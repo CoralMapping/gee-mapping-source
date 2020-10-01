@@ -14,7 +14,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [75.50260244893565, 4.572761773416827],
           [85.19254385518565, 4.572761773416827],
           [85.19254385518565, 10.732564931074679]]], null, false),
-    rc_rs = /* color: #e0de1a */ee.Geometry({
+    rc_rs = 
+    /* color: #e0de1a */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
