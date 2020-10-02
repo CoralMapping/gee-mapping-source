@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
     center_map = /* color: #d63000 */ee.Geometry.Point([73.36350406430057, 3.4513743887798998]),
-    region_extent2 = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent2 = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[70.16383984620248, 13.135866931352913],
           [70.14682558742047, 12.617194359154508],
           [70.2690563075083, 11.807120477151644],
