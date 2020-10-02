@@ -17,7 +17,19 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     geometry = 
     /* color: #98ff00 */
     /* shown: false */
-    ee.Geometry.MultiPoint();
+    ee.Geometry.MultiPoint(),
+    rbl_sand = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[79.81772226987124, 8.57536388123281],
+          [79.74356455502749, 8.383846668196618],
+          [79.68039316830874, 8.120186860938752],
+          [79.71884531674624, 7.961091444638569],
+          [79.90011973080874, 7.952931029089239],
+          [79.84381479916811, 8.245243339779334],
+          [79.88089365658999, 8.436829047156191],
+          [79.93445200619936, 8.565858193374362]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -396,9 +408,15 @@ if (vars.manual_clean && !vars.geomorphic) {
    - add a geometry, paint the layer, create a rule
   
   */
-  
-  
-  
+ var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
+ 
+ // rbtoSand
+ man_benthic = man_benthic.where({
+    test: rubbleToSand.eq(1)
+                     .and(geo_map.eq(12)),
+    value: ee.Image(11)
+  });  
+
      
   // Add the manual layer to the map
 
