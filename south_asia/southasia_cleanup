@@ -14,38 +14,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [75.50260244893565, 4.572761773416827],
           [85.19254385518565, 4.572761773416827],
           [85.19254385518565, 10.732564931074679]]], null, false),
-    rc_rs = 
-    /* color: #e0de1a */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
-        [[[[79.81385334902939, 8.409954744020855],
-           [79.8064719098204, 8.406898053122971],
-           [79.81024846011337, 8.397897656667284],
-           [79.8174582379454, 8.402482790391238]]],
-         [[[79.77621473610702, 8.477205188832011],
-           [79.76145185768905, 8.46837622036567],
-           [79.76316847145858, 8.455811569892472],
-           [79.7803346091539, 8.455811569892472],
-           [79.77896131813827, 8.470753270272757]]],
-         [[[81.5598323082516, 7.981521935882486],
-           [81.54266617055629, 7.972171912765694],
-           [81.54970428701137, 7.94803086562219],
-           [81.55674236021066, 7.9476058578102],
-           [81.56069061513637, 7.954491285192487]]],
-         [[[81.27443577386602, 8.506664265605927],
-           [81.26962925531132, 8.500807056734851],
-           [81.27658154107792, 8.483829134269465],
-           [81.28301884271366, 8.488328356867687]]],
-         [[[79.3611402053213, 9.300052648145337],
-           [79.26569647973537, 9.241094756672913],
-           [79.6083325881338, 9.001095959659086],
-           [79.76076789086818, 9.01805030473244],
-           [79.7559613723135, 9.171281276604525],
-           [79.38585944360256, 9.261426182351327]]],
-         [[[80.43430699538305, 5.962420508104271],
-           [80.42735470961645, 5.955761891234479],
-           [80.4355944557102, 5.953627702072487],
-           [80.43877019118383, 5.956530197302764]]]]),
     geometry = 
     /* color: #98ff00 */
     /* shown: false */
@@ -2589,7 +2557,7 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
-  var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
+  //var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   var orfToTerrestrialRF =ee.Image().byte().paint(ee.Feature(orf_trf,{zone:1}), "zone").clip(orf_trf);
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
   var slToReefSlope = ee.Image().byte().paint(ee.Feature(sl_rs,{zone:1}), "zone").clip(sl_rs);
@@ -2608,11 +2576,11 @@ if (vars.manual_clean && vars.geomorphic) {
   
   
   //turning RC to RS
-  man_geo = man_geo.where({
-      test:reefCrestToReefSlope.eq(1)
-                                   .and (man_geo.eq(15)),
-      value: ee.Image(22)
-  });
+ // man_geo = man_geo.where({
+    //  test:reefCrestToReefSlope.eq(1)
+                                 //  .and (man_geo.eq(15)),
+     // value: ee.Image(22)
+ // });
   
   
   man_geo =man_geo.where({
