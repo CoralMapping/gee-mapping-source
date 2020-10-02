@@ -686,7 +686,7 @@ var west_australia = {
   depth: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth",
   s2_depth: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth",
-  depth_composite: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_masked_composite_depth",
+  depth_composite: "projects/coral_atlas/west_australia/depth/western_australia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth",
   extent_mask: "projects/coral_atlas/west_australia/in_out/westaus_extent",
   notreef_mask: "projects/coral_atlas/west_australia/in_out/westaus_notreef",
   pixels:[""],
