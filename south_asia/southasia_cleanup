@@ -18,7 +18,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #98ff00 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    rbl_sand = /* color: #d63000 */ee.Geometry.Polygon(
+    rbl_sand = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[79.92260737118959, 8.576721817234404],
           [79.76741830765246, 8.5779475938491],
           [79.70424199477903, 8.257202171134733],
@@ -26,7 +29,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.75798411069154, 7.970951729889293],
           [79.8009852175752, 7.9571815264655115],
           [79.8632125347638, 8.014810115596545]]]),
-    cr_sand = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
+    cr_sand = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[80.0552623148497, 9.63458261388337],
            [80.02779677097801, 9.606149360029333],
            [80.01543727602898, 9.56417209819434],
