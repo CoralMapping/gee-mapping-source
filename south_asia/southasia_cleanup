@@ -178,7 +178,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
   
-  
+  /*
   // import the mid mask from asset
   var mid_mask = ee.FeatureCollection(region_params.midMask).merge(refinement_mask).geometry()
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
@@ -265,19 +265,13 @@ if (vars.manual_clean && vars.geomorphic) {
                            .and (man_geo.eq(12)),
     value: ee.Image(22)
   });
-  
-  
-  
-  
-  
-  /*
   man_geo =man_geo.where({
     test:irfToRs.eq(1)
                            .and (man_geo.eq(13)),
     value: ee.Image(22)
   });
   */
-  /*
+/*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
   var waves = ee.Image(region_params.waves)
