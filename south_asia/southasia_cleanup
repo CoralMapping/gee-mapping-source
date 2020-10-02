@@ -25,7 +25,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.7365264385724, 7.974861777229614],
           [79.75798411069154, 7.970951729889293],
           [79.8009852175752, 7.9571815264655115],
-          [79.8632125347638, 8.014810115596545]]]);
+          [79.8632125347638, 8.014810115596545]]]),
+    cr_sand = /* color: #0b4a8b */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -413,6 +414,14 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(11)
   });  
 
+var coralToSand = ee.Image().byte().paint(ee.Feature(cr_sand,{zone:1}), "zone").clip(cr_sand);
+ 
+ // rbtoSand
+ man_benthic = man_benthic.where({
+    test: coralToSand.eq(1)
+                     .and(man_benthic.eq(15)),
+    value: ee.Image(11)
+  }); 
      
   // Add the manual layer to the map
 
