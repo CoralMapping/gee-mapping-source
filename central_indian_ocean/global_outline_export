@@ -1,0 +1,39 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - reef outline export script
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Primarily for use in generating exports for wave modelling
+///////////////////////////////
+
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// #############################
+// load analysis params module
+var region_params = param_module.cio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+// choose an appropriate scale
+var export_scale = ee.Number(100)
+// #############################
+
+var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
+
+// display it
+Map.addLayer(reef_mask, {min:1, max:3}, "Clipped reef outline", true)
+
+// exports
+Map.addLayer(region_extent, {}, "export_geom", true)
+
+// drive export
+Export.image.toDrive({
+  image: reef_mask, 
+  description: 'reef_mask_export_' + region_params.sname,
+  folder: 'wcmc_rf/',
+  fileNamePrefix: 'reef_mask_' + region_params.sname,
+  region: region_extent,
+  scale: export_scale,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
