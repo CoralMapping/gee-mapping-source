@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    cio_region_extent = ee.FeatureCollection("projects/coral_atlas/central_indian_ocean/in_out/cio");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - reef outline export script
