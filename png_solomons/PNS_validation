@@ -1,7 +1,8 @@
 
 ///////////////////////////////
-// Global coral atlas project - South West Pacific Region
-// Contact: chris Roelfsema// Description:
+// Global coral atlas project - PNG-Solomons
+// Contact: Mitchell Lyons // Description:
+// Region coordinator: Chris Roelfsema c.roelfsema@uq.edu.au
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the cleaned up classification and assesses accuracy
 // - Corresponding '_calval', '_classification' and '_cleanup' script performs the data gathering/segmentation
