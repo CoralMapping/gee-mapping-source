@@ -26,19 +26,6 @@ var pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
 // - export geomorphic and benthic to Vulcan bucket
 ///////////////////////////////
 
-
-
-
-
-
-//// NEED TO CHANGE ADDRESS TO BUCKET BEFORE RUNNING :) :)
-
-
-
-
-
-
-
 // so we can visualise maps before export
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 
@@ -75,7 +62,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'PNG-Solomons_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/timor_sea/PNG_Solomons_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/PNG_Solomons/PNG_Solomons_stack',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
