@@ -12,7 +12,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 // #############################
 // load analysis params module
-var region_params = param_module.cio        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.indonesia        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 // choose an appropriate scale
 var export_scale = ee.Number(100)
 // #############################
