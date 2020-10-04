@@ -21,9 +21,9 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.indonesia;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -34,7 +34,7 @@ var region_params = param_module.indonesia          //<------------ THIS IS WHER
 var vars = {
  
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   
   // analysis parameters
@@ -61,57 +61,57 @@ make the combined pixels and segemnts data
 */
 
 if (ee.List(region_params.pixels).length().getInfo() > 1) {
-  print("Combining pixels/segs from 2 parts")
+  print("Combining pixels/segs from 2 parts");
   var pixels = ee.Image(region_params.pixels[0]).unmask(0, false)
           .add(ee.Image(region_params.pixels[1]).unmask(0,false))
-          .selfMask()
+          .selfMask();
   } else {
-    var pixels = ee.Image(region_params.pixels)
+    var pixels = ee.Image(region_params.pixels);
   }
   
 if (ee.List(region_params.segments).length().getInfo() > 1) {
-  print("Combining pixels/segs from 2 parts")
+  print("Combining pixels/segs from 2 parts");
   var segments = ee.Image(region_params.segments[0]).unmask(0, false)
             .add(ee.Image(region_params.segments[1]).unmask(0,false))
-            .selfMask()
+            .selfMask();
   } else {
-    var segments = ee.Image(region_params.segments)
+    var segments = ee.Image(region_params.segments);
   }
 
 var pixsegs = pixels.regexpRename('(^.*$)','$1_p').addBands(
-              segments.regexpRename('(^.*$)','$1_s'))
+              segments.regexpRename('(^.*$)','$1_s'));
 
 
 // fix dodgy slope calculations
 if (vars.slope_fix) {
   pixsegs = pixsegs.addBands({
     srcImg: ee.Image([pixsegs.select('slope_p').unmask(0),pixsegs.select('slope_s').unmask(0)]).updateMask(pixsegs.select('depth_p')),
-    overwrite: true})
+    overwrite: true});
 }
 
 // training data
-var geomorph = ee.FeatureCollection(region_params.geo_train)
-var benthic = ee.FeatureCollection(region_params.benthic_train)
-if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
+var geomorph = ee.FeatureCollection(region_params.geo_train);
+var benthic = ee.FeatureCollection(region_params.benthic_train);
+if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts);
 
 // Add the raw data
-var all_training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var all_training_data = (vars.geomorphic) ? geomorph : benthic; // Set the training points to either geomorphic or benthic
 // trim the data (randomly) if needed
 if (vars.trim_training_data) {
-  all_training_data = all_training_data.randomColumn("random")
-  all_training_data = all_training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
+  all_training_data = all_training_data.randomColumn("random");
+  all_training_data = all_training_data.filter(ee.Filter.lte("random", vars.trim_training_perc));
 }
 
-Map.centerObject(pixsegs, 6)
-Map.addLayer(pixsegs, {}, 'segments + pixels', false)
-Map.addLayer(all_training_data, {}, "Training polygons", false)
+Map.centerObject(pixsegs, 6);
+Map.addLayer(pixsegs, {}, 'segments + pixels', false);
+Map.addLayer(all_training_data, {}, "Training polygons", false);
 
 
 
 // 4. Create training data
 
 // set the class information
-var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic
+var classes_mapped = (vars.geomorphic) ? vars.classes_mapped_geo : vars.classes_mapped_benthic;
 
 var sample_class_n = function(classn) {
     var target_features = all_training_data.filterMetadata(vars.class_field, 'equals', classn).geometry();
@@ -126,22 +126,22 @@ var sample_class_n = function(classn) {
 if (!vars.geomorphic && vars.use_benthic_points) {
   // draw trainign/validation points from cal/val map + input point data set
   // cal points
-  var samp_seed = 42
+  var samp_seed = 42;
   var map_pts_cal = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
   var train_pts_cal = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   // val_points
-  samp_seed = 666
+  samp_seed = 666;
   var map_pts_val = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
   var train_pts_val = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   
 } else {
   // draw trainign/validation points from cal/val map only
   // cal points
-  var samp_seed = 42
-  var train_pts_cal = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten()
+  var samp_seed = 42;
+  var train_pts_cal = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
   // val_points
-  samp_seed = 666
-  var train_pts_val = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten()
+  samp_seed = 666;
+  var train_pts_val = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
 
 }
 
@@ -152,30 +152,30 @@ var training_data = pixsegs.sampleRegions({
     properties: [vars.class_field],
     scale: vars.image_data_scale,
     geometries: true
-})
+});
 
 
 
 // 7. Export data
-var cal_name = (vars.geomorphic) ? region_params.asset + 'training/' + region_params.sname + '_' + 'geo_training' : region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_training'
-var cal_desc = (vars.geomorphic) ? region_params.sname + '_geo_training' : region_params.sname + '_benthic_training'
-var val_name = (vars.geomorphic) ? region_params.asset + 'training/' + region_params.sname + '_' + 'geo_validation' : region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_validation'
-var val_desc = (vars.geomorphic) ? region_params.sname + '_geo_validation' : region_params.sname + '_benthic_validation'
+var cal_name = (vars.geomorphic) ? region_params.asset + 'training/' + region_params.sname + '_' + 'geo_training' : region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_training';
+var cal_desc = (vars.geomorphic) ? region_params.sname + '_geo_training' : region_params.sname + '_benthic_training';
+var val_name = (vars.geomorphic) ? region_params.asset + 'training/' + region_params.sname + '_' + 'geo_validation' : region_params.asset + 'training/' + region_params.sname + '_' + 'benthic_validation';
+var val_desc = (vars.geomorphic) ? region_params.sname + '_geo_validation' : region_params.sname + '_benthic_validation';
 
 Export.table.toAsset({
   collection: training_data, 
   description:  cal_desc, 
   assetId: cal_name
-  })
+  });
 
 Export.table.toAsset({
   collection: train_pts_val, 
   description:  val_desc, 
   assetId: val_name
-})
+});
 
 
 // last so it sits on top
-Map.addLayer(train_pts_cal.geometry(), {}, "Training point distribution", false) // Training data points
-Map.addLayer(train_pts_val.geometry(), {}, "Validation point distribution", false) // Validation data points
-if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training/validation field point distribution", false) // Training data points
+Map.addLayer(train_pts_cal.geometry(), {}, "Training point distribution", false); // Training data points
+Map.addLayer(train_pts_val.geometry(), {}, "Validation point distribution", false); // Validation data points
+if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training/validation field point distribution", false); // Training data points
