@@ -790,7 +790,9 @@ if (vars.manual_clean && !vars.geomorphic) {
    - add a geometry, paint the layer, create a rule
   
   */
-var midmaskbenthic = ee.Image().byte().paint(ee.Feature(midmask1.dissolve(),{zone: 1}), "zone").clip(midmask1.dissolve()); 
+var mid_maskb = ee.FeatureCollection(midmask1).geometry()  
+
+var midmaskbenthic = ee.Image().byte().paint(ee.Feature(mid_maskb.dissolve(),{zone: 1}), "zone").clip(mid_maskb.dissolve()); 
  var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
  
 //mask_out
