@@ -410,10 +410,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    Undecided = 
-    /* color: #ffc82d */
-    /* shown: false */
-    ee.Geometry.MultiPoint(),
     refinement_maskb = 
     /* color: #d63000 */
     /* shown: false */
@@ -512,7 +508,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [79.93466558912513, 9.029919761300707],
            [79.96487799146888, 9.028563487594226],
            [79.95423498609779, 9.061451685115646],
-           [79.91551953166424, 9.049269073157891]]]]);
+           [79.91551953166424, 9.049269073157891]]]]),
+    cr_sg = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -898,6 +895,8 @@ if (vars.manual_clean && !vars.geomorphic) {
 var midmaskbenthic = ee.Image().byte().paint(ee.Feature(refinement_maskb,{zone: 1}), "zone").clip(refinement_maskb);
   
 var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
+var coralToSand = ee.Image().byte().paint(ee.Feature(cr_sand,{zone:1}), "zone").clip(cr_sand);
+var coralToSeaG = ee.Image().byte().paint(ee.Feature(cr_sg,{zone:1}), "zone").clip(cr_sg);
  
 //mask_out
 
@@ -913,14 +912,22 @@ man_benthic = man_benthic.where({
     value: ee.Image(11)
   });  
 
-var coralToSand = ee.Image().byte().paint(ee.Feature(cr_sand,{zone:1}), "zone").clip(cr_sand);
+
  
- // rbtoSand
+ // crtoSand
  man_benthic = man_benthic.where({
     test: coralToSand.eq(1)
                      .and(man_benthic.eq(15)),
     value: ee.Image(11)
   }); 
+     
+ //cr>sg
+ man_benthic = man_benthic.where({
+    test: coralToSeaG.eq(1)
+                     .and(man_benthic.eq(15)),
+    value: ee.Image(14)
+  }); 
+ 
      
   // Add the manual layer to the map
 
