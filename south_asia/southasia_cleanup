@@ -385,33 +385,51 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #ffc82d */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    midmask1 = /* color: #d63000 */ee.Geometry.MultiPolygon(
-        [[[[78.72810782988012, 9.175697440235215],
-           [78.72398795683324, 9.164512587397313],
-           [78.72398795683324, 9.155022132970455],
-           [78.7270778616184, 9.156377927691329],
-           [78.72879447538793, 9.157055823112639],
-           [78.73308600981176, 9.160614752861237],
-           [78.73737754423558, 9.16027580870657],
-           [78.74673302908077, 9.15942866127189],
-           [78.76226844389379, 9.165020997444191],
-           [78.7658733328098, 9.16874931554561],
-           [78.75557365019262, 9.179425646162588]]],
-         [[[78.70184363920629, 9.15942844690528],
-           [78.70630683500707, 9.15519160759334],
-           [78.70424689848363, 9.151632623549519],
-           [78.70047034819066, 9.150615764423575],
-           [78.6941188772434, 9.144853507809353],
-           [78.72553290922582, 9.139430122245894],
-           [78.72776450712621, 9.146209341289993],
-           [78.71763648588598, 9.148751515142802],
-           [78.72518958647191, 9.159089501618995]]],
-         [[[78.79024924833715, 9.155700030977238],
-           [78.73644070562017, 9.149259947733706],
-           [78.72614102300298, 9.145022987276896],
-           [78.72648434575689, 9.139769086263735],
-           [78.78107266362798, 9.14587038340407],
-           [78.79085736211431, 9.150954717788556]]]]);
+    refinement_maskb = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[78.72810782988012, 9.175697440235215],
+                  [78.72398795683324, 9.164512587397313],
+                  [78.72398795683324, 9.155022132970455],
+                  [78.7270778616184, 9.156377927691329],
+                  [78.72879447538793, 9.157055823112639],
+                  [78.73308600981176, 9.160614752861237],
+                  [78.73737754423558, 9.16027580870657],
+                  [78.74673302908077, 9.15942866127189],
+                  [78.76226844389379, 9.165020997444191],
+                  [78.7658733328098, 9.16874931554561],
+                  [78.75557365019262, 9.179425646162588]]]),
+            {
+              "system:index": "0"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[78.70184363920629, 9.15942844690528],
+                  [78.70630683500707, 9.15519160759334],
+                  [78.70424689848363, 9.151632623549519],
+                  [78.70047034819066, 9.150615764423575],
+                  [78.6941188772434, 9.144853507809353],
+                  [78.72553290922582, 9.139430122245894],
+                  [78.72776450712621, 9.146209341289993],
+                  [78.71763648588598, 9.148751515142802],
+                  [78.72518958647191, 9.159089501618995]]]),
+            {
+              "system:index": "1"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[78.79024924833715, 9.155700030977238],
+                  [78.73644070562017, 9.149259947733706],
+                  [78.72614102300298, 9.145022987276896],
+                  [78.72648434575689, 9.139769086263735],
+                  [78.78107266362798, 9.14587038340407],
+                  [78.79085736211431, 9.150954717788556]]]),
+            {
+              "system:index": "2"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -578,6 +596,33 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
+  
+  /*
+  ##############
+  
+  The rest of the manual geometry paintings and rules should go here
+      - make the geom, paint the layer, use it in a rule
+      - consult previous regions *_cleanup script for ideas/hints/existing rules etc.
+  e.g. 
+  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
+  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+  
+  
+  // Reef crest -> Inner reef flat (inside the reef) + Yawajaba Island (inshore)
+  man_geo = man_geo.where({
+    test: notreefcrest.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(13)
+  });
+  
+  // Deep water -> Deep lagoon (inside the reef)
+  man_geo = man_geo.where({
+    test: notdeepwater.eq(1)
+                     .and(man_geo.eq(2)),
+    value: ee.Image(12)
+  });
+  
+  
   var reefCrestToReefSlope = ee.Image().byte().paint(ee.Feature(rc_rs,{zone:1}), "zone").clip(rc_rs);
   var orfToTerrestrialRF =ee.Image().byte().paint(ee.Feature(orf_trf,{zone:1}), "zone").clip(orf_trf);
   var orfToShallowL =ee.Image().byte().paint(ee.Feature(orf_sl,{zone:1}), "zone").clip(orf_sl);
@@ -664,7 +709,10 @@ if (vars.manual_clean && vars.geomorphic) {
                            .and (man_geo.eq(13)),
     value: ee.Image(22)
   });
-  */
+
+ ##############
+  */  
+  
 /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
@@ -678,35 +726,7 @@ if (vars.manual_clean && vars.geomorphic) {
   })
   */
   
-  
-  
-  /*
-  ##############
-  
-  The rest of the manual geometry paintings and rules should go here
-      - make the geom, paint the layer, use it in a rule
-      - consult previous regions *_cleanup script for ideas/hints/existing rules etc.
-  e.g. 
-  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
-  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  
-  
-  // Reef crest -> Inner reef flat (inside the reef) + Yawajaba Island (inshore)
-  man_geo = man_geo.where({
-    test: notreefcrest.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(13)
-  });
-  
-  // Deep water -> Deep lagoon (inside the reef)
-  man_geo = man_geo.where({
-    test: notdeepwater.eq(1)
-                     .and(man_geo.eq(2)),
-    value: ee.Image(12)
-  });
-  
-  ##############
-  */
+
   
   if (vars.geo_refinement) {
     // make the mask image layer
@@ -790,10 +810,11 @@ if (vars.manual_clean && !vars.geomorphic) {
    - add a geometry, paint the layer, create a rule
   
   */
-var mid_maskb = ee.FeatureCollection(midmask1).geometry()  
-
-var midmaskbenthic = ee.Image().byte().paint(ee.Feature(mid_maskb.dissolve(),{zone: 1}), "zone").clip(mid_maskb.dissolve()); 
- var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
+var mid_maskb = ee.FeatureCollection(region_params.midMask).merge(refinement_maskb).geometry()
+  //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
+var midmaskbenthic = ee.Image().byte().paint(ee.Feature(mid_maskb.dissolve(),{zone: 1}), "zone").clip(mid_maskb.dissolve());
+  
+var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
  
 //mask_out
 
