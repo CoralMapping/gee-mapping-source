@@ -29,7 +29,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.75798411069154, 7.970951729889293],
           [79.8009852175752, 7.9571815264655115],
           [79.8632125347638, 8.014810115596545]]]),
-    cr_sand = /* color: #0b4a8b */ee.Geometry({
+    cr_sand = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -385,10 +388,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
     /* color: #ffc82d */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    refinement_maskb = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection(
+    refinement_maskb = /* color: #d63000 */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[78.72810782988012, 9.175697440235215],
@@ -429,6 +429,17 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
                   [78.79085736211431, 9.150954717788556]]]),
             {
               "system:index": "2"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[78.64986072309318, 9.170661248433186],
+                  [78.64436755903068, 9.163204613237838],
+                  [78.617588384226, 9.154053074291001],
+                  [78.6201633048803, 9.147104526280202],
+                  [78.66273532636467, 9.14795191745071],
+                  [78.67303500898186, 9.169136040338715]]]),
+            {
+              "system:index": "3"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
@@ -810,9 +821,9 @@ if (vars.manual_clean && !vars.geomorphic) {
    - add a geometry, paint the layer, create a rule
   
   */
-var mid_maskb = ee.FeatureCollection(region_params.midMask).merge(refinement_maskb).geometry()
-  //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
-var midmaskbenthic = ee.Image().byte().paint(ee.Feature(mid_maskb.dissolve(),{zone: 1}), "zone").clip(mid_maskb.dissolve());
+
+//Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
+var midmaskbenthic = ee.Image().byte().paint(ee.Feature(refinement_maskb.dissolve(),{zone: 1}), "zone").clip(refinement_maskb.dissolve());
   
 var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
  
