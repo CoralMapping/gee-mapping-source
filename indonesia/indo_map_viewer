@@ -2316,7 +2316,6 @@ var centre_map =
           [96.51575068906283, 5.610198025224091],
           [95.31177555165708, 6.218637622537728],
           [94.6553101139012, 6.232074405406377]]]),
-    indo_geo = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo"),
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
