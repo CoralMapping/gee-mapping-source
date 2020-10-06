@@ -2341,14 +2341,14 @@ var vars = {
   benthic_raw: true, // set to true if you want to view the raw classifications for benthic
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
-  geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
+  geo_raw_depthCutoff: false, //added functionality to apply cut-offs to raw geomorphic map based on a depth composite slider
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
 // choose where to centre the map (link this dynamically to map app?)
 var mapPanel=ui.Map().centerObject(centre_map, 6);
 
-// Add low-tide base map to viewer
+// Add low-tide base map to viewer (choose to view raw image or image from the stack)
 //var pix_lowtide = ee.ImageCollection(region_params.pixels); // low tide image from the stack
 //Map.addLayer(pix_lowtide, region_params.visParams, sensor_params.sname + ' low tide', false); // image data
 var lowtide_image = ee.ImageCollection(region_params.image); // original low tide image
@@ -2478,7 +2478,7 @@ slider.setValue(25);
 
 var add_thresh = function(inputDepth, geoCut) {
   
-  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', false); //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'Geomporhic raw - depth slider', false); //basically here is to create the layer than will be resetetet with the callback slider.onChange
   mapPanel.add(outputGeoCut);
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value))).selfMask();
