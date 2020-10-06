@@ -2316,7 +2316,8 @@ var centre_map =
           [96.51575068906283, 5.610198025224091],
           [95.31177555165708, 6.218637622537728],
           [94.6553101139012, 6.232074405406377]]]),
-    notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef");
+    notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
+    indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -2369,10 +2370,8 @@ if (vars.geo_raw) {
     var geo_map_raw = ee.Image(region_params.geo_map);
   }
   // Add the raw geomorphic classification to the viewer
-  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW - east/west', false);
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
 }
-
-Map.addLayer(indo_geo , map_palettes.geo, 'Geomorphic RAW - single', false);
 
 // Load the raw benthic classification
 if (vars.benthic_raw) {
@@ -2385,8 +2384,10 @@ if (vars.benthic_raw) {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
   }
   // Add the benthic classification to the viewer
-  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW - east/west', false);
 }
+
+Map.addLayer(indo_benthic , map_palettes.geo, 'Benthic RAW - single', false);
 
 // Load the clean classifications
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
