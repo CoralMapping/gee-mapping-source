@@ -717,55 +717,6 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           ],
           "geodesic": true,
           "evenOdd": true
-        },
-        {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                80.04578308739804,
-                6.237839585080448
-              ],
-              [
-                80.04659847893856,
-                6.2360478090740665
-              ],
-              [
-                80.04631952920101,
-                6.234810626829486
-              ],
-              [
-                80.0456328836932,
-                6.23259222377248
-              ],
-              [
-                80.04923777260922,
-                6.233850742042874
-              ],
-              [
-                80.04916510407116,
-                6.2355606112779105
-              ],
-              [
-                80.04899344269421,
-                6.236179201880339
-              ],
-              [
-                80.04796347443249,
-                6.237864324302098
-              ],
-              [
-                80.04762015167859,
-                6.2387815405587865
-              ],
-              [
-                80.04676184479382,
-                6.239869399619531
-              ]
-            ]
-          ],
-          "geodesic": true,
-          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -1310,11 +1261,11 @@ man_benthic = man_benthic.where({
 
  
  // crtoSand
- //man_benthic = man_benthic.where({
- //  test: coralToSand.eq(1)
-  //                   .and(man_benthic.eq(11)),
-   // value: ee.Image(40)
- // }); 
+ man_benthic = man_benthic.where({
+   test: coralToSand.eq(1)
+                     .and(man_benthic.eq(15)),
+    value: ee.Image(11)
+ }); 
   
   
      
