@@ -2341,6 +2341,8 @@ var vars = {
   benthic_raw: true, // set to true if you want to view the raw classifications for benthic
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
+  geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
+  Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
 // choose where to centre the map (link this dynamically to map app?)
@@ -2511,8 +2513,23 @@ var title = ui.Label({
 var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
 var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+//pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
+
+var panel2 = ui.Panel({
+     // widgets: [geo_legend, benthic_legend],
+      widgets: [geo_legend, benthic_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '447px'
+          }
+    });
+
+mapPanel.widgets().add(panel2);
+
+//callig the app
+ui.root.clear();
+ui.root.add(mapPanel);
+
 
 
 ////////// MASK EXPORTS //////////
