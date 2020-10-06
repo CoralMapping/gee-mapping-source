@@ -121,6 +121,7 @@ var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', fa
 var layers = mapPanel.layers(); 
    layers.add(sr_Dove)
    layers.add(geo_nw)
+   layers.add(benthic_nw)
    
 if (vars.benthic_clean2) {
     layers.add(benthic2)}
