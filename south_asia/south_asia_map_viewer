@@ -18,7 +18,8 @@ var centre_map =
           [81.88604157802592, 4.392207430217112],
           [84.21514314052592, 7.1028617733826644],
           [80.21611970302592, 11.2019034008838],
-          [76.26104157802592, 8.778471805151488]]]);
+          [76.26104157802592, 8.778471805151488]]]),
+    soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 
@@ -103,6 +104,7 @@ var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2'
 var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
 var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
+var geo_nw=ui.Map.Layer(soa_geo_missingNW, map_palettes.geo, 'Geomorphic_missing_NW', false)
 
 //load depth composite used to slice geo raw map
 var Comp_depth=ee.Image(vars.Depth_composite)
@@ -132,6 +134,7 @@ if (vars.raw){
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
   layers.add(mid_mask)
+layers.add(geo_nw)
  // layers.add(mid_maskCR)
 ////////// UI SET UP //////////
 
