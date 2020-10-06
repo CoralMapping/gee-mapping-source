@@ -1,8 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
+var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     notReef_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -2351,7 +2348,7 @@ var vars = {
 };
 
 // choose where to centre the map (link this dynamically to map app?)
-//Map.centerObject(centre_map, 8);
+Map.centerObject(centre_map, 6);
 
 // Add low-tide base map to viewer
 //var pix_lowtide = ee.ImageCollection(region_params.pixels); // low tide image from the stack
@@ -2387,7 +2384,7 @@ if (vars.benthic_raw) {
   Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW - east/west', false);
 }
 
-Map.addLayer(indo_benthic , map_palettes.geo, 'Benthic RAW - single', false);
+Map.addLayer(indo_benthic.updateMask(geo_map_raw.gt(2)) , map_palettes.benthic, 'Benthic RAW - single', false);
 
 // Load the clean classifications
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
@@ -2454,7 +2451,7 @@ Export.table.toAsset({
 
 // check manually created notReef_mask 
 var notReefmask = ee.FeatureCollection(notReef_mask.dissolve())
-Map.addLayer(notReefmask, {}, 'not_reef_mask - check for donuts', true);
+Map.addLayer(notReefmask, {}, 'not_reef_mask - check for donuts', false);
 Export.table.toAsset({
   collection: notReefmask,
   description: "not_reef_mask_export",
