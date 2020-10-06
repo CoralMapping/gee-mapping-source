@@ -29,7 +29,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.75798411069154, 7.970951729889293],
           [79.8009852175752, 7.9571815264655115],
           [79.8632125347638, 8.014810115596545]]]),
-    cr_sand = /* color: #0b4a8b */ee.Geometry({
+    cr_sand = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -957,7 +960,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
       ],
       "coordinates": []
     }),
-    refinement_maskb = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    refinement_maskb = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[78.72810782988012, 9.175697440235215],
            [78.72398795683324, 9.164512587397313],
            [78.72398795683324, 9.155022132970455],
@@ -1081,7 +1087,10 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
            [80.52492359674943, 5.932339125445224],
            [80.51531061475708, 5.933790560722375],
            [80.502693448434, 5.935668585726911]]]]),
-    cr_sg = /* color: #98ff00 */ee.Geometry({
+    cr_sg = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
