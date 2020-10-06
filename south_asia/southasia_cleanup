@@ -855,7 +855,8 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
           [79.73963147357233, 8.386243928868836],
           [79.7162855263067, 7.925408142639621],
           [79.88245373919733, 7.932208955984822],
-          [79.87833386615046, 8.44465962638692]]]);
+          [79.87833386615046, 8.44465962638692]]]),
+    sand_cr = /* color: #0b4a8b */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -1243,7 +1244,7 @@ var midmaskbenthic = ee.Image().byte().paint(ee.Feature(refinement_maskb,{zone: 
 var rubbleToSand = ee.Image().byte().paint(ee.Feature(rbl_sand,{zone:1}), "zone").clip(rbl_sand);
 var coralToSand = ee.Image().byte().paint(ee.Feature(cr_sand,{zone:1}), "zone").clip(cr_sand);
 var coralToSeaG = ee.Image().byte().paint(ee.Feature(cr_sg,{zone:1}), "zone").clip(cr_sg);
- 
+var sandToCoral = ee.Image().byte().paint(ee.Feature(sand_cr,{zone:1}), "zone").clip(sand_cr);
 //mask_out
 
 man_benthic = man_benthic.where({
@@ -1272,6 +1273,14 @@ man_benthic = man_benthic.where({
     test: coralToSeaG.eq(1)
                      .and(man_benthic.eq(15)),
     value: ee.Image(14)
+  }); 
+ 
+ 
+ //sand-coral
+ man_benthic = man_benthic.where({
+    test: sandToCoral.eq(1)
+                     .and(man_benthic.eq(15)),
+    value: ee.Image(11)
   }); 
  
      
