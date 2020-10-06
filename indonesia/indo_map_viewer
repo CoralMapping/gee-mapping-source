@@ -2383,6 +2383,7 @@ if (vars.benthic_raw) {
   }
   // Add the benthic classification to the viewer
   var benthicraw = ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW - east/west', false);
+  var benthicrawsingle = ui.Map.Layer(indo_benthic.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW single', false);
 }
 
 //Map.addLayer(indo_benthic.updateMask(geo_map_raw.gt(2)) , map_palettes.benthic, 'Benthic RAW - single', false);
@@ -2439,6 +2440,9 @@ if (vars.geo_raw){
    layers.add(georaw)}
 if (vars.benthic_raw){ 
    layers.add(benthicraw)}
+
+layers.add(benthicrawsingle);
+
 if (vars.benthic_clean2) {
     layers.add(benthic2)}
 if (vars.benthic_clean1) {
@@ -2483,7 +2487,6 @@ var add_thresh = function(inputDepth, geoCut) {
   slider.onChange(function(value) {
     var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value))).selfMask();
     outputGeoCut.setEeObject(thresholded);
-    
   });
 };
 
