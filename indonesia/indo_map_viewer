@@ -2425,6 +2425,77 @@ var geo_fill = empty.paint({
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 */
 
+//load depth composite used to slice geo raw map
+var Comp_depth=ee.Image(vars.Depth_composite);
+var Comp_depth=Comp_depth.expression( 
+'(B1)/100', {
+ 'B1' :Comp_depth.select('depth') });
+
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":0.5704,"max":23.1496,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', false);
+
+//load the ui layers
+var layers = mapPanel.layers(); 
+   layers.add(sr_Dove);
+   
+if (vars.benthic_clean2) {
+    layers.add(benthic2)}
+if (vars.benthic_clean1) {
+    layers.add(benthic1)}
+if (vars.geo_clean1) {
+    layers.add(geo1)}   
+if (vars.geo_clean2) {
+    layers.add(geo2)}    
+if (vars.geo_clean3) {  
+   layers.add(geo3)}
+if (vars.raw){ 
+  layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
+  layers.add(Unep);
+  layers.add(mid_mask);
+ // layers.add(mid_maskCR)
+////////// UI SET UP //////////
+
+if(vars.geo_raw_depthCutoff) {
+//slider params
+var label = ui.Label('DepthComposite_threshold_slider for geo raw:',
+               {color: '#0000ff', fontWeight: 'bold', position: 'top-right', backgroundColor:  '#c6c6cc', fontSize: 48}
+);
+
+ var slider = ui.Slider({
+  min:-2,
+  max: 25,
+  step: 0.01,
+  value: false,
+  style: {stretch: 'horizontal', width:'670px', fontWeight:'bold'},
+});
+
+slider.setValue(25);
+
+var add_thresh = function(inputDepth, geoCut) {
+  
+  var outputGeoCut = ui.Map.Layer(geoCut, map_palettes.geo, 'geo_raw_cutBasedOnDepthComposite', false) //basically here is to create the layer than will be resetetet with the callback slider.onChange
+  mapPanel.add(outputGeoCut);
+  slider.onChange(function(value) {
+    var thresholded = geoCut.updateMask(inputDepth.updateMask(inputDepth.lte(value))).selfMask();
+    outputGeoCut.setEeObject(thresholded);
+    
+  });
+};
+
+//calling the slider function and mask with depth composite
+add_thresh(Comp_depth, geo_map_raw);
+
+//putting slider in the panel
+var panel1 = ui.Panel({
+      widgets: [label,slider],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'bottom-left',width: '700px', backgroundColor:  '#c6c6cc', height: '90px'
+          }
+    });
+    
+mapPanel.widgets().add(panel1);
+}
+
 ////////// UI SET UP //////////
 
 //Generate title
