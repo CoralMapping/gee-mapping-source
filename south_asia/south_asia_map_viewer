@@ -19,8 +19,8 @@ var centre_map =
           [84.21514314052592, 7.1028617733826644],
           [80.21611970302592, 11.2019034008838],
           [76.26104157802592, 8.778471805151488]]]),
-    soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW"),
-    soa_ben_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW");
+    soa_ben_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
+    soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 
