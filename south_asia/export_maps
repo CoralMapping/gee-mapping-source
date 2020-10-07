@@ -132,7 +132,7 @@ Export.table.toCloudStorage({
 });
 
 */
-
+/*
 // run the export
 Export.image.toCloudStorage({
   image: export_stack_east,
