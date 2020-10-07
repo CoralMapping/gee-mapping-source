@@ -18,9 +18,6 @@ var missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_m
 /*
 Script to export maps to GCS. South_asia
  
-TODO: deal with change in dateline (i.e. WGS-84 projection wrapping) in an automated way
-  - Fiji/south pacific might be the only region where this happens? worth it?
-  **A: resonable solution below**
 */
 
 // Load and libraries needed
@@ -72,7 +69,11 @@ var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false)
 
 
-/*
+/* this comes from SWP
+TODO: deal with change in dateline (i.e. WGS-84 projection wrapping) in an automated way
+  - Fiji/south pacific might be the only region where this happens? worth it?
+  **A: resonable solution below**
+
 // add export region
 var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
 var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
