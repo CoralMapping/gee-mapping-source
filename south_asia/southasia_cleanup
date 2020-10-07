@@ -1852,8 +1852,7 @@ var land_dist = ee.Image("projects/coral_atlas/global_datasets/mod44w6_global_di
         }
       ],
       "coordinates": []
-    }),
-    refinement_maskg = /* color: #d63000 */ee.Geometry.MultiPoint();
+    });
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - SA
@@ -2016,9 +2015,9 @@ if (vars.manual_clean && vars.geomorphic) {
   
  
   // import the mid mask from asset
-  var mid_mask = ee.FeatureCollection(region_params.midMask).merge(refinement_maskg).geometry()
-  Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
-  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
+ // var mid_mask = ee.FeatureCollection(region_params.midMask).merge(refinement_maskg).geometry()
+ // Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4)
+  //'var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
   
   /*
