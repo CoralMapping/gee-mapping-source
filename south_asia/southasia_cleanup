@@ -2097,7 +2097,9 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth = ee.Image(region_params.pixels).select('depth');
   
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean3);
+   //var man_geo = ee.Image(region_params.geo_map_clean2); //this is the original
+  var man_geo = ee.Image(region_params.geo_map_clean3); // I just tweak this to hurry up for super fast cleaning of clean 3 already
+  //exported and I just kill all the masks previously as GEE was crashing too many geoms
 
   
  
