@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
-    missing_geo = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
     reef_boundary = 
     /* color: #d63000 */
     /* shown: false */
@@ -13,7 +12,8 @@ var missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_m
         [[[65.90351562500001, 25.030560889967564],
           [65.90351562500001, 3.365041702698651],
           [90.16132812500001, 3.365041702698651],
-          [90.16132812500001, 25.030560889967564]]], null, false);
+          [90.16132812500001, 25.030560889967564]]], null, false),
+    missing_geo = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS. South_asia
