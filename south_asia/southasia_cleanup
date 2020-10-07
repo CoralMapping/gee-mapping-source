@@ -2098,7 +2098,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean3);
-  
+
   
  
   // import the mid mask from asset
@@ -2244,7 +2244,7 @@ var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}),
   
   if (vars.geo_refinement) {
     // make the mask image layer
-    var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
+    var refine = ee.Image().byte().paint(ee.Feature(refinement_maskg, {zone: 1}), "zone").clip(refinement_maskg);
     // apply
     man_geo = man_geo.where({
       test: refine.eq(1),
