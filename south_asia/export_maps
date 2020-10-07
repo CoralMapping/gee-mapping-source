@@ -17,8 +17,8 @@ var reef_boundary =
           [-172.43634748470262, -8.500655994588621],
           [178.7278981207661, -7.161972282408776],
           [165.1927418707661, -9.683098450335507]]]),
-    missing_ben = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_missing_ben"),
-    missing_geo = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_missing_geo");
+    missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
+    missing_geo = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 /*
 Script to export maps to GCS. South_asia
