@@ -2341,7 +2341,7 @@ var vars = {
   benthic_raw: true, // set to true if you want to view the raw classifications for benthic
   benthic_clean1: false, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
-  geo_raw_depthCutoff: true, //added functionality to apply cut-offs to raw geomorphic map based on a depth composite slider
+  geo_raw_depthCutoff: false, //added functionality to apply cut-offs to raw geomorphic map based on a depth composite slider
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
