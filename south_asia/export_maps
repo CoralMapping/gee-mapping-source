@@ -1,8 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_boundary = /* color: #98ff00 */ee.Geometry.MultiPoint(),
-    missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
+var missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
     missing_geo = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
-    geometry = 
+    reef_boundary = 
     /* color: #d63000 */
     /* displayProperties: [
       {
