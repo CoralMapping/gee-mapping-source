@@ -2396,7 +2396,7 @@ if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Ben
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
 var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
-Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reef v4", false);
+Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
 
 /*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
