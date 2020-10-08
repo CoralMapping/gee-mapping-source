@@ -64,6 +64,7 @@ var vars = {
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
   show_accuracy: true, // print error stats to console? 
+  show_class_pts: false, // print number of points per class?
   
   // export options
   do_export: true, // export the results?
@@ -126,13 +127,16 @@ if (vars.assess_accuracy) {
   
   Map.addLayer(validation_pts, {}, "validation points used", false)
   
-   print('Validation points in total',validation_pts.size());
-  var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
-  var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
-  var classN=ee.String(classOfInt.first().get('class_num'));
-  print('class_num' , classN,'Number of samples',classOfInt.size());
-  return classOfInt
-  }));
+  print('Validation points in total',validation_pts.size());
+  
+  if (vars.show_class_pts) {
+    var NumOfValPointsPerClass=ee.ImageCollection(classes_mapped.map(function(num){
+    var classOfInt=(validation_pts.filterMetadata('class_num','equals',ee.Number(num)))//.aside(print,'classOfInt');
+    var classN=ee.String(classOfInt.first().get('class_num'));
+    print('class_num' , classN,'Number of samples',classOfInt.size());
+    return classOfInt
+    }));
+  }
   
   // calculate an error matrix - won't account for unmapped areas though
   var accuracy_collection = val_map.unmask()
