@@ -46,9 +46,10 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land: 1000, //distance to land in meters to disallow reef crest, and convert to terrestrial reef flat
+  dist_to_land_RC: 500, //distance to land in meters to disallow reef crest adjacent to land
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1500, //depth in centimetres
-  shallowlag_depth_cutoff: 400, //depth in centimetres
+  geo_depth_cutoff: 1000, //depth in centimetres
+  shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
   
   //############
@@ -132,7 +133,7 @@ if (!vars.geomorphic) {
   }
 }
 
-//Region extent is created in map viewer and export to GEE asset
+//Region extent is created in map viewer and exported to GEE asset
 var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
 Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
@@ -450,7 +451,7 @@ if (!vars.manual_clean) {
     
     // TRF far from land -> ORF
     clean_map = clean_map.where({
-      test: land_dist.gt(vars.dist_to_land)
+      test: land_dist.gt(vars.dist_to_land_orf)
                      .and(clean_map.eq(16)),
       value: ee.Image(14)
     });
