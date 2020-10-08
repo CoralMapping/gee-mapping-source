@@ -226,7 +226,7 @@ if (vars.assess_accuracy) {
     // subract one confidence level off for areas >100km away
     conf_map = conf_map.subtract(val_pts_dist).selfMask()
     
-    Map.addLayer(conf_map.reproject({crs:"EPSG:4326", scale: 200}), {min:1, max:4}, "Confidence classes")
+    Map.addLayer(conf_map.reproject({crs:"EPSG:4326", scale: 200}), map_palettes.conf_map_pal, "Confidence classes")
   }
 } 
 
