@@ -64,6 +64,7 @@ var vars = {
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
   show_accuracy: true, // print error stats to console? 
+  make_confidence: true, // make the confidence layer
   show_class_pts: false, // print number of points per class?
   
   // export options
@@ -201,6 +202,14 @@ if (vars.assess_accuracy) {
                                 ui.Chart(dataTable, 'Table').setOptions({pageSize: 15}),
                                 'rows: reference, cols: mapped')
                             })
+  }
+  if (make_confidence) {
+    // get the validation map and remap the appropriate user accuracy
+    var error_map = val_map.remap({
+      from: classes_mapped,
+      to: classification_errormatrix.consumersAccuracy().toList().flatten()
+    })
+    Map.addLayer(error_map, {min:0, max: 1}, "Error map", false)
   }
 } 
 
