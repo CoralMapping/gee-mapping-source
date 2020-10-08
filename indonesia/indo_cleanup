@@ -132,19 +132,16 @@ if (!vars.geomorphic) {
   }
 }
 
-var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
+var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
+Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
+
+
 
 
 //################################################################################################
 //START OF CLEAN 3 - Manual Cleanup
-// - review everything in this section
-// - first review the reef_boundary object - as it is required for all cleanup stages
-//    - This can be hand drawn or imported from elsewhere, or could just be a big box
-//    - Reef_boundary defines export extent and can be used to clip out unwanted areas */
-var reef_boundary = region_extent;
-Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
-
+//Review everything in this section
 //This is the section to add/remove manual cleanups
 //You MUST review it for each region
 
@@ -239,7 +236,7 @@ if (vars.manual_clean && vars.geomorphic) {
     image: man_geo,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: reef_boundary,
+    region: region_extent,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
@@ -320,7 +317,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     image: man_benthic,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: reef_boundary,
+    region: region_extent,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
@@ -528,7 +525,7 @@ if (!vars.manual_clean) {
                 bestEffort: true, 
                 maxPixels: 1e13,
                 tileScale: 1,
-                geometry: reef_boundary
+                geometry: region_extent
               });
         // map the function, calculate neighbour properties
         return(map_fc.map(set_neighbour_properties));
@@ -807,7 +804,7 @@ if (!vars.manual_clean) {
                 bestEffort: true, 
                 maxPixels: 1e13,
                 tileScale: 1,
-                geometry: reef_boundary
+                geometry: region_extent
               })
         // map the function, calculate neighbour properties
         return(map_fc.map(set_neighbour_mode))
