@@ -167,5 +167,5 @@ exports = {
   UserAcc_cols:UserAcc_cols,
   conf_map_pal: conf_map_pal,
   conf_labs: conf_labs,
-  conf_pal: conf_cols
+  conf_cols: conf_cols
 }
