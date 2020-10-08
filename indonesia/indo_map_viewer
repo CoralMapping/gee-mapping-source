@@ -2240,10 +2240,6 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
       ],
       "coordinates": []
     }),
-    artifact_layer = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.MultiPoint(),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     region_wcmcBound = 
     /* color: #d63000 */
@@ -2401,8 +2397,6 @@ if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Ben
 
 var wcmc=wcmc.filterBounds(region_wcmcBound);
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
-Map.addLayer(artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false);
-
 
 /*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
@@ -2443,7 +2437,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 
 ////////// MASK EXPORTS //////////
 
-Export.table.toAsset({
+/*Export.table.toAsset({
   collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
@@ -2458,7 +2452,7 @@ Export.table.toAsset({
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
 });
 
-/*Export.table.toAsset({
+Export.table.toAsset({
   collection: ee.FeatureCollection(mid_mask),
   description: "mid_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
