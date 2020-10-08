@@ -136,19 +136,19 @@ var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
 // -----------------------------------------<
 
 
-/* ############################
-START OF CLEAN 3 - Manual Cleanup
- - review everything in this section
- - first review the reef_boundary object - as it is required for all cleanup stages
-    - This can be hand drawn or imported from elsewhere, or could just be a big box
-    - Reef_boundary defines export extent and can be used to clip out unwanted areas */
+//################################################################################################
+//START OF CLEAN 3 - Manual Cleanup
+// - review everything in this section
+// - first review the reef_boundary object - as it is required for all cleanup stages
+//    - This can be hand drawn or imported from elsewhere, or could just be a big box
+//    - Reef_boundary defines export extent and can be used to clip out unwanted areas */
 var reef_boundary = region_extent;
 Map.addLayer(reef_boundary, {}, "Manual reef outline", false);
 
-/* This is the section to add/remove manual cleanups
- - You MUST review it for each region
+//This is the section to add/remove manual cleanups
+//You MUST review it for each region
 
-############################ */
+//###############################################################################################
 
 if (vars.manual_clean && vars.geomorphic) {
   
@@ -411,9 +411,9 @@ if (!vars.manual_clean) {
   
   */
   
-  // ############################
+  // ##############################################################################################
   // START OF CLEAN 1
-  // ############################
+  // ##############################################################################################
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
     
@@ -482,9 +482,9 @@ if (!vars.manual_clean) {
     
   }
   
-  // ############################
+  // ##############################################################################################
   // START OF CLEAN 2
-  // ############################
+  // ##############################################################################################
   
   if (vars.geomorphic && vars.obia_2nd_pass) {
     var clean_map = geo_map;
