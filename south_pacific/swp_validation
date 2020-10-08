@@ -203,6 +203,7 @@ if (vars.assess_accuracy) {
                                 'rows: reference, cols: mapped')
                             })
   }
+  
   if (vars.make_confidence) {
     // get the validation map and remap the appropriate user accuracy
     var error_map = val_map.remap({
@@ -233,12 +234,26 @@ if (vars.assess_accuracy) {
 
 
 // 4. Export
-//if (vars.do_export) {
+if (vars.do_export) {
 
 
 // export to .csv?
 // or join to the input classification assset and re-write with accuracy in metadata?
 // or both?
 
-//.set("overall_acc", accuracy_oa, "user_acc", accuracy_cons, "producer_acc", accuracy_prod)
+  
+}
 
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Confidence map classes',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+});
+
+// generate the legend
+var conf_legend = pkg_vis.discrete_legend(map_palettes.conf_labs, map_palettes.conf_cols, 'Confidence category', false);
+pkg_vis.add_lgds([title, conf_legend]);
+// generate the legend
