@@ -132,12 +132,10 @@ if (!vars.geomorphic) {
   }
 }
 
+//Region extent is created in map viewer and export to GEE asset
 var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
 Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
-
-
-
 
 //################################################################################################
 //START OF CLEAN 3 - Manual Cleanup
