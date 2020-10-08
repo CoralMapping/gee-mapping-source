@@ -203,13 +203,30 @@ if (vars.assess_accuracy) {
                                 'rows: reference, cols: mapped')
                             })
   }
-  if (make_confidence) {
+  if (vars.make_confidence) {
     // get the validation map and remap the appropriate user accuracy
     var error_map = val_map.remap({
       from: classes_mapped,
       to: classification_errormatrix.consumersAccuracy().toList().flatten()
-    })
-    Map.addLayer(error_map, {min:0, max: 1}, "Error map", false)
+    }).multiply(100).uint8()
+    Map.addLayer(error_map, {"min":0,"max":1,"palette":["ebcaff","2b32ff"]}, "Error map", false)
+    // confidence category map
+    var conf_map = ee.Image(0).rename('confidence')
+    conf_map = conf_map.where(error_map.lte(40), ee.Image(2))
+    conf_map = conf_map.where(error_map.gt(40), ee.Image(3))
+    conf_map = conf_map.where(error_map.gt(70), ee.Image(4))
+    
+    // now scale based on distance to reference data
+    // first figure out 100km buffer, then make into a binary map
+    var val_pts_dist = ee.Image(0).byte().paint(validation_pts, "class_num")
+                                            .gt(0)
+                                            .fastDistanceTransform(500) // 100km @ 200m pixels
+                                            .sqrt()
+                                            .gt(500)
+    // subract one confidence level off for areas >100km away
+    conf_map = conf_map.subtract(val_pts_dist).selfMask()
+    
+    Map.addLayer(conf_map.reproject({crs:"EPSG:4326", scale: 200}), {min:1, max:4}, "Confidence classes")
   }
 } 
 
