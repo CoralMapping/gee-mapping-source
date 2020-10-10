@@ -450,7 +450,7 @@ if (!vars.manual_clean) {
       value: ee.Image(16)
     });
     
-    // TRF at specified distance from land -> ORF
+    // TRF within specified distance from land -> ORF
     // (now requires multistep process as ls8_global_distToLand only extends about 8km from coastline)
     // Step 1: assign all TRF pixels to a temporary class (33)
     // Step 2: assign temp class pixel within distance to land as TRF
@@ -474,7 +474,6 @@ if (!vars.manual_clean) {
     
   }
   
-  
   if (!vars.geomorphic && vars.cleanup_stage == 1) {
     
     // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
@@ -489,7 +488,6 @@ if (!vars.manual_clean) {
       test: benthic_map.connectedPixelCount(vars.small_object_benthic, false).lt(vars.small_object_benthic),
       value: smooth_map
     }).updateMask(class_extent_mask);
-    
     
   }
   
