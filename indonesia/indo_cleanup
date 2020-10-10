@@ -413,6 +413,27 @@ if (!vars.manual_clean) {
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
     
+    // Create smoothed depth layer to use in where operations
+    var smooth_depth = depth
+                      //.unmask(99)
+                      .focal_mode({
+                        radius: vars.smooth_radius, // relates to smoothness required
+                        kernelType: 'circle', units: 'pixels', iterations: 2
+                      });
+    
+    // shallow lagoon > 5m == deep lagoon
+    geo_map = geo_map.where({
+      test: geo_map.eq(11)
+                    .and(smooth_depth.gt(vars.shallowlag_depth_cutoff)),
+      value: ee.Image(12)
+    });
+    
+    // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
+    geo_map = geo_map.where({
+      test: smooth_depth.gt(vars.geo_depth_cutoff),
+      value: ee.Image(2)
+    });
+    
     // make a smooth map with masked area as a value
     var smooth_map = geo_map
                         .focal_mode({
@@ -426,18 +447,18 @@ if (!vars.manual_clean) {
       value: smooth_map
     }).updateMask(class_extent_mask);
     
-    // shallow lagoon > 5m == deep lagoon
-    clean_map = clean_map.where({
-      test: clean_map.eq(11)
-                     .and(depth.gt(vars.shallowlag_depth_cutoff)),
-      value: ee.Image(12)
-    });
+    // // shallow lagoon > 5m == deep lagoon
+    // clean_map = clean_map.where({
+    //   test: clean_map.eq(11)
+    //                 .and(depth.gt(vars.shallowlag_depth_cutoff)),
+    //   value: ee.Image(12)
+    // });
     
-    // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
-    clean_map = clean_map.where({
-      test: depth.gt(vars.geo_depth_cutoff),
-      value: ee.Image(2)
-    });
+    // // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
+    // clean_map = clean_map.where({
+    //   test: depth.gt(vars.geo_depth_cutoff),
+    //   value: ee.Image(2)
+    // });
     
     // LAND mask cleaning
     Map.addLayer(land_dist.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
