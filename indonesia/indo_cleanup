@@ -452,11 +452,10 @@ if (!vars.manual_clean) {
     
     // TRF at specified distance from land -> ORF
     // (now requires multistep process as ls8_global_distToLand only extends about 8km from coastline)
-    // Step 1: assign all pixels assinged TRF to a temporary class TC
-    // Step 2: create TRF_mask for the areas within lagoons, where TRF should stay
-    // Step 3: label all TC pixels that fall within the TRF_mask to TRF
-    // Step 4: all the remaining TC pixels can then be assigned ORF
-
+    // Step 1: assign all TRF pixels to a temporary class (33)
+    // Step 2: assign temp class pixel within distance to land as TRF
+    // Step 3: assign remaining temp class pixels to ORF
+    
     clean_map = clean_map.where({
       test: clean_map.eq(16),
       value: ee.Image(33) //creating temp class for TRF
