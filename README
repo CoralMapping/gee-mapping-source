@@ -1,5 +1,3 @@
-/*
-
 # Allen Coral Atlas
 Google Earth Engine code repository
 
@@ -17,5 +15,3 @@ This paper covers the underlying mapping framework that is enabling the geomorph
 + Lyons et al (2020) Mapping the world's coral reefs using a global multiscale earth observation framework. *Remote Sensing in Ecology and Evolution*. [DOI:10.1002/rse2.157](https://doi.org/10.1002/rse2.157)  
 
 **More to come ...**
-
-*/
