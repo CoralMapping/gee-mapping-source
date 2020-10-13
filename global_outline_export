@@ -44,4 +44,7 @@ Export.image.toDrive({
   skipEmptyTiles: true
 })
 
-
+Export.table.toDrive({
+  collection: refined_region_extent,
+  fileFormat: 'SHP'
+})
