@@ -17,13 +17,15 @@ var region_params = param_module.indonesia        //<------------ THIS IS WHERE 
 var export_scale = ee.Number(100)
 // #############################
 
-var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
 
 // display it
-Map.addLayer(reef_mask, {min:1, max:3}, "Clipped reef outline", true)
+Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+
+Map.addLayer(region_params.image, {}, "Dove Indo")
 
 // exports
-Map.addLayer(region_extent, {}, "export_geom", true)
+//Map.addLayer(region_extent, {}, "export_geom", true)
 
 // drive export
 Export.image.toDrive({
