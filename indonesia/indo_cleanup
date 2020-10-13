@@ -464,6 +464,7 @@ if (!vars.manual_clean) {
     // LAND mask cleaning
     Map.addLayer(land_dist.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
     Map.addLayer(land_dist.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+    Map.addLayer(land_dist.unmask(100000, false), {}, 'dist to land' + 'm', true);
     
     // reef crest close to land -> TRF
     clean_map = clean_map.where({
