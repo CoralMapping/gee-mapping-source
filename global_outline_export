@@ -21,8 +21,8 @@ var export_scale = ee.Number(100)
 
 // display it
 Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
-
-Map.addLayer(region_params.image, {}, "Dove Indo")
+var Dove_indo= region_params.image
+Map.addLayer(Dove_indo, {}, "Dove Indo")
 
 // exports
 //Map.addLayer(region_extent, {}, "export_geom", true)
