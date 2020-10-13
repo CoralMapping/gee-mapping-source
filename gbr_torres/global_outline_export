@@ -1,6 +1,25 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":968,"gamma":1};
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":968,"gamma":1},
+    region_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      },
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.MultiPolygon(
+        [[[[139.7047475103634, -6.117160755372569],
+           [139.7047475103634, -25.263161436750398],
+           [157.1510365728634, -25.263161436750398],
+           [157.1510365728634, -6.117160755372569]]],
+         [[[157.8981068853634, -9.577550172936869],
+           [157.8981068853634, -9.750836766224898],
+           [157.8981068853634, -9.750836766224898],
+           [157.8981068853634, -9.577550172936869]]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - reef outline export script for GBR-torres straigh
