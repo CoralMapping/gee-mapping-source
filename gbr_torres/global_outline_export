@@ -1,8 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":968,"gamma":1},
     region_extent = 
     /* color: #d63000 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -19,7 +19,8 @@ var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combine
          [[[157.8981068853634, -9.577550172936869],
            [157.8981068853634, -9.750836766224898],
            [157.8981068853634, -9.750836766224898],
-           [157.8981068853634, -9.577550172936869]]]], null, false);
+           [157.8981068853634, -9.577550172936869]]]], null, false),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":17.26,"max":845.74,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - reef outline export script for GBR-torres straigh
@@ -42,7 +43,7 @@ var export_scale = ee.Number(100)
 // display it
 
 var Dove_sr = ee.Image(region_params.image)
-Map.addLayer(Dove_sr, {}, "Dove GBR torres")
+Map.addLayer(Dove_sr, imageVisParam, "Dove GBR torres")
 Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
 //Map.addLayer
 
