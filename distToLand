@@ -1,16 +1,25 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var mod_land = ee.ImageCollection("MODIS/006/MOD44W"),
-    ls8_landreef = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+    ls8_landreef = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //var land_mask = mod_land.select('water_mask').mean().eq(0)
 var land_mask = ls8_landreef.eq(1)
+var water_mask = ls8_landreef.neq(1)
 
 var land_mask_buff = land_mask.fastDistanceTransform(256).sqrt()
                               .multiply(ee.Image.pixelArea().sqrt())
                               .uint16()
                               .selfMask()
+                              
+var water_mask_buff = water_mask.fastDistanceTransform(256).sqrt()
+                              .multiply(ee.Image.pixelArea().sqrt())
+                              .uint16()
+                              .selfMask()
 
 Map.addLayer(land_mask_buff.updateMask(land_mask_buff.lte(7680)), {min:0, max: 7680}, "Land mask", false)
+Map.addLayer(water_mask_buff.updateMask(water_mask_buff.lte(7680)), {min:0, max: 7680}, "Water mask", false)
+
 
 Map.addLayer(ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 30, -30, -180, -30], null, false), {}, "product bounds", false)
 
@@ -18,6 +27,15 @@ Export.image.toAsset({
   image: land_mask_buff.updateMask(land_mask_buff.lte(7680)),
   description: 'global_land_dist',
   assetId: 'projects/coral_atlas/global_datasets/ls8_global_distToLand',
+  region: ee.Geometry.Polygon([-180, 31, 0, 31, 180, 60, 180, -31, 10, -60, -180, -31], null, false),
+  scale: 30,
+  maxPixels: 1e13
+})
+
+Export.image.toAsset({
+  image: water_mask_buff.updateMask(water_mask_buff.lte(7680)),
+  description: 'global_water_dist',
+  assetId: 'projects/coral_atlas/global_datasets/ls8_global_distToWater',
   region: ee.Geometry.Polygon([-180, 31, 0, 31, 180, 60, 180, -31, 10, -60, -180, -31], null, false),
   scale: 30,
   maxPixels: 1e13
