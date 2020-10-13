@@ -2,7 +2,6 @@
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
     region_extent = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -95,7 +94,7 @@ Export.image.toDrive({
   description: 'reef_mask_export_' + region_params.sname,
   folder: 'wcmc_rf/',
   fileNamePrefix: 'reef_mask_' + region_params.sname,
-  region: refined_mask,
+  region: region_extent,
   scale: export_scale,
   crs: 'EPSG:4326',
   maxPixels: 1e13,
