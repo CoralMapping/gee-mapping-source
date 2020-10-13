@@ -23,8 +23,8 @@ var export_scale = ee.Number(100)
 // display it
 
 var Dove_sr = ee.Image(region_params.image)
-Map.addLayer(Dove_sr, {}, "Dove GBR torres")
-Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+//Map.addLayer(Dove_sr, {}, "Dove GBR torres")
+//Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
 
 
 // exports
