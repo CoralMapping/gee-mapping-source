@@ -30,7 +30,7 @@ Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
 // exports
 //Map.addLayer(region_extent, {}, "export_geom", true)
 
-/*
+
 // drive export
 Export.image.toDrive({
   image: reef_mask, 
@@ -43,4 +43,3 @@ Export.image.toDrive({
   maxPixels: 1e13,
   skipEmptyTiles: true
 })
-*/
