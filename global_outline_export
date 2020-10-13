@@ -20,13 +20,16 @@ var export_scale = ee.Number(100)
 //var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
 
 // display it
-Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
-var Dove_indo= region_params.image
+
+var Dove_indo= ee.Image(region_params.image[1])
 Map.addLayer(Dove_indo, {}, "Dove Indo")
+Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+
 
 // exports
 //Map.addLayer(region_extent, {}, "export_geom", true)
 
+/*
 // drive export
 Export.image.toDrive({
   image: reef_mask, 
@@ -39,3 +42,4 @@ Export.image.toDrive({
   maxPixels: 1e13,
   skipEmptyTiles: true
 })
+*/
