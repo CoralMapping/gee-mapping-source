@@ -115,10 +115,10 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'sa_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/south_asia/sa_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/south_asiaV2/sa_stack',
   region: reef_boundary, 
   scale: 5,
-  crs: 'EPSG:3832',
+  crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
