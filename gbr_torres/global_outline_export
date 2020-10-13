@@ -2,7 +2,6 @@
 var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
     region_extent = 
     /* color: #d63000 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -12,10 +11,10 @@ var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combine
       }
     ] */
     ee.Geometry.MultiPolygon(
-        [[[[140.5836537603634, -7.1211524286236125],
+        [[[[140.5836537603634, -6.553928919336212],
            [140.5836537603634, -24.545707936929052],
            [153.4156850103634, -24.545707936929052],
-           [153.4156850103634, -7.1211524286236125]]],
+           [153.4156850103634, -6.553928919336212]]],
          [[[157.8981068853634, -9.577550172936869],
            [157.8981068853634, -9.750836766224898],
            [157.8981068853634, -9.750836766224898],
@@ -90,7 +89,7 @@ Export.image.toDrive({
   description: 'reef_mask_export_' + region_params.sname,
   folder: 'wcmc_rf/',
   fileNamePrefix: 'reef_mask_' + region_params.sname,
-  region: region_extent,
+  region: refined_mask,
   scale: export_scale,
   crs: 'EPSG:4326',
   maxPixels: 1e13,
