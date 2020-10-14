@@ -1,6 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand");
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
+    global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    global_distToWater = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToWater");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -54,7 +56,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -442,7 +444,9 @@ if (!vars.manual_clean) {
     // display distance to land mask for assessing cut-off distances
     Map.addLayer(land_dist.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
     Map.addLayer(land_dist.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
-    Map.addLayer(land_dist, {}, 'dist land', true);
+    //Map.addLayer(land_dist, {}, 'dist land', true);
+    Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: '4FE132', opacity: 0.4}, 'global_land_mask', true);
+    Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: 'F8FF23', opacity: 0.4}, 'global_reef_mask', true);
 
     // reef crest close to land -> TRF
     clean_map = clean_map.where({
