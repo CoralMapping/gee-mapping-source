@@ -2310,9 +2310,7 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
           [95.31177555165708, 6.218637622537728],
           [94.6553101139012, 6.232074405406377]]]),
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
-    indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic"),
-    geo_clean1_v2 = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean1_v2"),
-    geo_clean1_v3 = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean1_v3");
+    indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -2392,8 +2390,6 @@ var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
 var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 
 if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geomorphic clean 1', false);
-Map.addLayer(geo_clean1_v2, map_palettes.geo, 'Geomorphic clean 1 + depth smooth 4 days', false);
-Map.addLayer(geo_clean1_v3, map_palettes.geo, 'Geomorphic clean 1 lagoon cutoffs first 1/2 day', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geomorphic clean 2', false);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean 3', false);
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean 1', false);
