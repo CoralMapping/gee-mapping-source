@@ -413,27 +413,6 @@ if (!vars.manual_clean) {
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
     
-    // // Create smoothed depth layer to use in where operations - Trial but taking three days to process so far.
-    // var smooth_depth = depth
-    //                   //.unmask(99)
-    //                   .focal_mode({
-    //                     radius: vars.smooth_radius, // relates to smoothness required
-    //                     kernelType: 'circle', units: 'pixels', iterations: 2
-    //                   });
-    
-    // // shallow lagoon > 5m == deep lagoon
-    // geo_map = geo_map.where({
-    //   test: geo_map.eq(11)
-    //                 .and(smooth_depth.gt(vars.shallowlag_depth_cutoff)),
-    //   value: ee.Image(12)
-    // });
-    
-    // // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
-    // geo_map = geo_map.where({
-    //   test: smooth_depth.gt(vars.geo_depth_cutoff),
-    //   value: ee.Image(2)
-    // });
-    
     // shallow lagoon > 5m == deep lagoon
     geo_map = geo_map.where({
       test: geo_map.eq(11)
