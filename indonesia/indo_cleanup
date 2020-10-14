@@ -426,7 +426,6 @@ if (!vars.manual_clean) {
       value: ee.Image(2)
     });
     
-    
     // make a smooth map with masked area as a value
     var smooth_map = geo_map
                         .focal_mode({
@@ -453,33 +452,11 @@ if (!vars.manual_clean) {
     });
     
     // TRF within specified distance from land -> ORF
-    // (now requires multistep process as ls8_global_distToLand only extends about 8km from coastline)
-    // Step 1: assign all TRF pixels to a temporary class (33)
-    // Step 2: assign temp class pixel within distance to land as TRF
-    // Step 3: assign remaining temp class pixels to ORF
-    
-    // clean_map = clean_map.where({
-    //   test: clean_map.eq(16),
-    //   value: ee.Image(33) //creating temp class for TRF
-    // });
-  
-    // clean_map = clean_map.where({
-    //   test: land_dist.lte(vars.dist_to_land_ORF)
-    //                   .and(clean_map.eq(33)),
-    //   value: ee.Image(16) //temp class assigned TRF within distance to land
-    // });
-  
-    // clean_map = clean_map.where({
-    //   test: clean_map.eq(33),
-    //   value: ee.Image(14) //temp class assinged to ORF
-    // }); 
-    
     clean_map = clean_map.where({
       test: land_dist.unmask(100000, false).gt(vars.dist_to_land_ORF)
                        .and(clean_map.eq(16)),
       value: ee.Image(14)
     });
-    
   }
   
   if (!vars.geomorphic && vars.cleanup_stage == 1) {
