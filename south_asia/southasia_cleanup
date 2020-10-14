@@ -2800,10 +2800,10 @@ if (!vars.manual_clean) {
       })
       
       //Paul_fixings for DL in Indo
-      // DL sourrounded by DW --> DW
+      // DL touched by DW --> DW
       clean_map = clean_map.where({
         test: clean_map.eq(12)
-                .and(nb2.gt(75)),
+                .and(nb2.gt(0)),
         value: ee.Image(2)
       })
       
