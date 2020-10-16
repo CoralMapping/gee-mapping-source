@@ -2,7 +2,29 @@
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
     land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
     global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    global_distToWater = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToWater");
+    distToWater = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToWater"),
+    mid_mask = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[122.11666872979401, -4.798826575985103],
+          [122.12284853936433, -4.729030695331076],
+          [122.15031435967683, -4.663334027119793],
+          [122.20524600030183, -4.602422249659449],
+          [122.2658424663663, -4.547323397006972],
+          [122.34738162041901, -4.539451787123598],
+          [122.45724490166901, -4.514809671328373],
+          [122.55268862725495, -4.5134406403152365],
+          [122.64057925225495, -4.524392816053552],
+          [122.67216494561433, -4.505226400037436],
+          [122.67353823662995, -4.471683957660679],
+          [122.66667178155183, -4.436086216960696],
+          [122.61791995049714, -4.373101403956428],
+          [122.53689578057526, -4.37857855551962],
+          [122.4235992717862, -4.396379020967668],
+          [122.33227541924714, -4.425132720133207],
+          [122.10362246514558, -4.47921402779218],
+          [121.99444582940339, -4.545612184778509],
+          [121.97590640069245, -4.674968262325881],
+          [121.99993899346589, -4.807037388828886],
+          [122.0885162639737, -4.813879657284933]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -56,7 +78,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -159,9 +181,24 @@ if (vars.manual_clean && vars.geomorphic) {
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
   // import the mid mask from asset
-  var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
-  Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
+  //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
+  //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
+  
+  // make a very smooth map of DW to capture the broader neighbourhood
+  var smooth_map = man_geo.eq(2)
+                          .focal_max({
+                            radius: vars.smooth_radius.multiply(10), // relates to smoothness required
+                            kernelType: 'circle', units: 'pixels', iterations: 2
+                          });
+      
+      
+  // // replace small objects with smooth underneath
+  // var clean_map = clean_map.unmask(0).where({
+  //       test: segment_id.gt(0), 
+  //       value: smooth_map
+  // }).selfMask();
+  
   
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
@@ -195,7 +232,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
   
   
-  // Reef crest -> Inner reef flat (inside the reef) + Yawajaba Island (inshore)
+  // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
     test: notreefcrest.eq(1)
                      .and(man_geo.eq(15)),
@@ -224,12 +261,14 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Add data + the manual layer to the map
   var dove_image = ee.Image(region_params.image);
-  Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
+  Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', true);
+  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+  Map.addLayer(smooth_map, map_palettes.geo, 'DW Smooth');
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
