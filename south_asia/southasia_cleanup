@@ -2799,7 +2799,7 @@ if (!vars.manual_clean) {
         value: ee.Image(12)
       })
       
-      //Paul_fixings for DL in Indo
+      //to fix Paul DL in DW 
       // DL touched by DW --> DW
       clean_map = clean_map.where({
         test: clean_map.eq(12)
