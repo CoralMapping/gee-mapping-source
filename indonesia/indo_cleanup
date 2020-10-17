@@ -196,12 +196,6 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
-  // display distance to land mask for assessing cut-off distances
-  var distToLand = ee.Image(region_params.distToLand);
-    
-  Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
-  
   // make a very smooth map of DW to capture the broader neighbourhood
   var smooth_map = man_geo.eq(2)
                           .focal_max({
@@ -284,10 +278,23 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', true);
+  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   Map.addLayer(smooth_map, map_palettes.geo, 'DW Smooth', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+  
+  // display distance to land mask for assessing cut-off distances
+  var distToLand = ee.Image(region_params.distToLand);
+    
+  //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+  
+  // display distance to land mask for assessing cut-off distances
+  var distToWater = ee.Image(region_params.distToWater);
+    
+  //Map.addLayer(distToWater.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+  
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
