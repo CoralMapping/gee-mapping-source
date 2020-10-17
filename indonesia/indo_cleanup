@@ -196,6 +196,12 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
+  // display distance to land mask for assessing cut-off distances
+  var distToLand = ee.Image(region_params.distToLand);
+    
+  Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+  
   // make a very smooth map of DW to capture the broader neighbourhood
   var smooth_map = man_geo.eq(2)
                           .focal_max({
@@ -494,7 +500,7 @@ if (!vars.manual_clean) {
     }).updateMask(class_extent_mask);
     
     // display distance to land mask for assessing cut-off distances
-    distToLand = ee.Image(region_params.distToLand)
+    var distToLand = ee.Image(region_params.distToLand);
     
     Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
     Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
