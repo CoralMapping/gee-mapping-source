@@ -1,7 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
-    distToWater = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToWater"),
     mid_mask = /* color: #d63000 */ee.Geometry.Polygon(
         [[[122.11666872979401, -4.798826575985103],
           [122.12284853936433, -4.729030695331076],
@@ -179,7 +177,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
   
-  // import the mid mask from asset
+  // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
   //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
