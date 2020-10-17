@@ -206,14 +206,15 @@ if (vars.manual_clean && vars.geomorphic) {
   // the DW CLEAN
   man_geo = man_geo.where({
     test: smooth_map.eq(1)
-                    .and(man_geo.eq(12)),
+                    .and(man_geo.eq(12))
+                    .and(global_reef_mask.eq(2)),
     value: ee.Image(2)
   });
   
   // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
     test: smooth_map.eq(0)
-                     .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
     value: ee.Image(13)
   });
   
@@ -282,6 +283,9 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   Map.addLayer(smooth_map, map_palettes.geo, 'DW Smooth', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+  Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
+  Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
+
   
   // display distance to land mask for assessing cut-off distances
   var distToLand = ee.Image(region_params.distToLand);
@@ -289,11 +293,11 @@ if (vars.manual_clean && vars.geomorphic) {
   //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
   Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
   
-  // display distance to land mask for assessing cut-off distances
+  // display distance to water mask
   var distToWater = ee.Image(region_params.distToWater);
     
-  //Map.addLayer(distToWater.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+  Map.addLayer(distToWater, {}, 'distToWater', false);
+  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
   
   
   // Export
