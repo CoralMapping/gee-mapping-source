@@ -21,7 +21,19 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [121.99444582940339, -4.545612184778509],
           [121.97590640069245, -4.674968262325881],
           [121.99993899346589, -4.807037388828886],
-          [122.0885162639737, -4.813879657284933]]]);
+          [122.0885162639737, -4.813879657284933]]]),
+    test_area = 
+    /* color: #98ff00 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[123.17127774697322, -1.703250680370998],
+          [123.17127774697322, -2.2906596927685694],
+          [123.76591275673884, -2.2906596927685694],
+          [123.76591275673884, -1.703250680370998]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -175,7 +187,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth = ee.Image(region_params.pixels).select('depth');
   
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean2);
+  var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area);
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
