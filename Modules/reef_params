@@ -587,6 +587,8 @@ var indonesia = {
   ls8_depth: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth"],
   depth_composite: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_masked_composite_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_masked_composite_depth"],
   global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
+  distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
+  distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
   extent_mask: "projects/coral_atlas/Indonesia/in_out/indo_extent",
   notreef_mask: "projects/coral_atlas/Indonesia/in_out/indo_notreef",
   pixels:["projects/coral_atlas/Indonesia/in_out/indo_pixels"],
