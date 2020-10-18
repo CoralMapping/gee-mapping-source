@@ -88,7 +88,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -115,7 +115,7 @@ var vars = {
   reproject_display: true,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -216,7 +216,10 @@ if (vars.manual_clean && vars.geomorphic) {
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           });
       
-  // the DW CLEAN
+  // the "DEEP WATER" CLEAN
+  
+  var global_reef_mask = ee.Image(region_params.global_reef_mask);
+  
   man_geo = man_geo.where({
     test: smooth_deepwater_max.eq(1)
                     .and(man_geo.eq(12))
