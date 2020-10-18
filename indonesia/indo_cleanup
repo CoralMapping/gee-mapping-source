@@ -24,16 +24,17 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [122.0885162639737, -4.813879657284933]]]),
     test_area = 
     /* color: #98ff00 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[123.17127774697322, -1.703250680370998],
-          [123.17127774697322, -2.2906596927685694],
-          [123.76591275673884, -2.2906596927685694],
-          [123.76591275673884, -1.703250680370998]]], null, false);
+        [[[124.48689053994197, 1.9394689742063438],
+          [124.48689053994197, 1.3519454390189967],
+          [125.08152554970759, 1.3519454390189967],
+          [125.08152554970759, 1.9394689742063438]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -87,7 +88,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -194,13 +195,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
-  // the "LAND MASK" CLEAN  ****to be moved to datagen for next region****
-  var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
-  man_geo = man_geo.where({
-    test: global_reef_mask.eq(1),
-    value: ee.Image(0)
-  });
   
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
@@ -209,15 +204,21 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   // make a very smooth map of DW to capture the broader neighbourhood
-  var smooth_map = man_geo.eq(2)
+  var smooth_deepwater_max = man_geo.eq(2)
                           .focal_max({
                             radius: vars.smooth_radius.multiply(5), // relates to smoothness required
+                            kernelType: 'circle', units: 'pixels', iterations: 2
+                          });
+                          
+  var deepwater = man_geo.eq(2)
+                          .focal_min({
+                            radius: vars.smooth_radius.multiply(1), // relates to smoothness required
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           });
       
   // the DW CLEAN
   man_geo = man_geo.where({
-    test: smooth_map.eq(1)
+    test: smooth_deepwater_max.eq(1)
                     .and(man_geo.eq(12))
                     .and(global_reef_mask.eq(2)),
     value: ee.Image(2)
@@ -225,7 +226,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
-    test: smooth_map.eq(0)
+    test: smooth_deepwater_max.eq(0)
                     .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
     value: ee.Image(13)
   });
@@ -285,7 +286,7 @@ if (vars.manual_clean && vars.geomorphic) {
   }
   
   // Add data + the manual layer to the map
-  var lowtide_image = ee.Image(region_params.image);
+  var lowtide_image = ee.ImageCollection(region_params.image);
   Map.addLayer(lowtide_image, region_params.visParams, sensor_params.sname + ' low tide', false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
@@ -293,7 +294,8 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
-  Map.addLayer(smooth_map, map_palettes.geo, 'DW Smooth', false);
+  Map.addLayer(smooth_deepwater_max, map_palettes.geo, 'DW smooth max', false);
+  Map.addLayer(deepwater, map_palettes.geo, 'DW smooth min', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
@@ -458,12 +460,12 @@ if (!vars.manual_clean) {
   // load for display purposes
   if (vars.geomorphic) {
     Map.addLayer(geo_map_raw, display_pal, 'Geomorphic map RAW', false);
-    if (vars.cleanup_stage == 2) Map.addLayer(ee.Image(region_params.geo_map_clean1), display_pal, 'Geomorphic map - stage 1 clean', false);
+    if (vars.cleanup_stage == 2) Map.addLayer(ee.Image(region_params.geo_map_clean1), display_pal, 'Geo clean stage 1', false);
   }
   if (!vars.geomorphic) {
     // Use the manually cleaned geomorphic map as input for the benthic clean
     var geo_map = ee.Image(region_params.geo_map_clean3);
-    Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Final geo map (manual clean - stage 3)', false);
+    Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
     Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
   }
   
@@ -531,11 +533,11 @@ if (!vars.manual_clean) {
     // reef crest close to land -> TRF
     clean_map = clean_map.where({
       test: distToLand.lte(vars.dist_to_land_RC)
-                     .and(clean_map.eq(15)),
+                    .and(clean_map.eq(15)),
       value: ee.Image(16)
     });
     
-    // TRF within specified distance from land -> ORF
+    // TRF outside of specified distance from land -> ORF
     clean_map = clean_map.where({
       test: distToLand.unmask(100000, false).gt(vars.dist_to_land_ORF)
                        .and(clean_map.eq(16)),
@@ -832,6 +834,14 @@ if (!vars.manual_clean) {
       
       
       // ## Blanket version
+      
+      // the "LAND MASK" CLEAN  ****to be moved to datagen for next region****
+      var global_reef_mask = ee.Image(region_params.global_reef_mask);
+  
+      clean_map = clean_map.where({
+        test: global_reef_mask.eq(1),
+        value: ee.Image(0)
+      });
       
       // make a very smooth map to capture the broader neighbourhood
       var smooth_map = clean_map
