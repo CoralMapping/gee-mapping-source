@@ -2396,7 +2396,7 @@ if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_p
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean 2', false);
 
-Map.addLayer(global_reef_mask.updateMask(global_reef_mask.neq(2)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask', false);
+Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
 
 var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
 Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
