@@ -24,17 +24,16 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [122.0885162639737, -4.813879657284933]]]),
     test_area = 
     /* color: #98ff00 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[123.06416104775447, -1.6634424287622644],
-          [123.06416104775447, -2.2508655272902023],
-          [123.65879605752009, -2.2508655272902023],
-          [123.65879605752009, -1.6634424287622644]]], null, false);
+        [[[123.26466153603572, -1.8116896207824575],
+          [123.26466153603572, -2.0065886051316433],
+          [123.46378873330134, -2.0065886051316433],
+          [123.46378873330134, -1.8116896207824575]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -206,7 +205,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // make a very smooth map of DW to capture the broader neighbourhood
   var smooth_deepwater_max = man_geo.eq(2)
                           .focal_max({
-                            radius: vars.smooth_radius.multiply(5), // relates to smoothness required
+                            radius: vars.smooth_radius.multiply(10), // relates to smoothness required
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           });
                           
