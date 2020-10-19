@@ -86,7 +86,7 @@ var vars = {
 
   // TODO: consider dynamically generating these
   classes_mapped_benthic:       [11,    12,   13,  14,    15,   18], // classes to map
-  classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'BMA' ],
+  classes_mapped_names_benthic: ['Sand', 'Rubble', 'Rock', 'Seagrass', 'Coral/Algae', 'Microalgal Mats' ],
   
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
