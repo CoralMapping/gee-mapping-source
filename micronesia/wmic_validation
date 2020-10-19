@@ -63,8 +63,8 @@ var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE 
 var vars = {
   
   // analysis type
-  geomorphic: true, // assess geomorphic accuracy (one or the other)
-  benthic: false, // assess benthic accuracy
+  geomorphic: false, // assess geomorphic accuracy (one or the other)
+  benthic: true, // assess benthic accuracy
   
   assess_clean: false, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
