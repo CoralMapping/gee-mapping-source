@@ -304,8 +304,6 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
-  Map.addLayer(smooth_deepwater_max, map_palettes.geo, 'DW smooth max', false);
-  Map.addLayer(deepwater, map_palettes.geo, 'DW smooth min', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
@@ -320,7 +318,6 @@ if (vars.manual_clean && vars.geomorphic) {
   // display distance to water mask
   var distToWater = ee.Image(region_params.distToWater);
     
-  Map.addLayer(distToWater, {}, 'distToWater', false);
   Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
   
   
