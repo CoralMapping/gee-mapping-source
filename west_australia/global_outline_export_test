@@ -1,0 +1,115 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":17.26,"max":845.74,"gamma":1},
+    refined_mask = /* color: #8bd677 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.39114281907645, -17.356434827757685],
+                  [120.84182641282645, -17.963609033472398],
+                  [120.35842797532645, -18.547874189112914],
+                  [119.78713891282645, -18.651999157657553],
+                  [119.52346703782645, -18.422840394642876],
+                  [118.75442406907645, -18.422840394642876],
+                  [118.66653344407645, -18.839263033630345],
+                  [118.09524438157645, -19.23391073317615],
+                  [117.32620141282645, -19.399796075399625],
+                  [116.88674828782645, -19.130147136678985],
+                  [115.70022485032645, -19.150905083485966],
+                  [114.66751000657645, -19.793094382419792],
+                  [114.44778344407645, -20.802878510992468],
+                  [113.22630076477816, -21.438539669724452],
+                  [113.09446482727816, -22.213639984323894],
+                  [112.96262888977816, -23.227002326751723],
+                  [112.50120310852816, -23.891655544973815],
+                  [112.45725779602816, -25.904485685879255],
+                  [112.58909373352816, -26.436925736943692],
+                  [112.61106638977816, -27.182129481324928],
+                  [112.91868357727816, -27.29934361637134],
+                  [112.98460154602816, -28.522560249282378],
+                  [114.12717967102816, -30.24558329136587],
+                  [114.96214060852816, -30.264563071645238],
+                  [115.22581248352816, -30.15062941752486],
+                  [115.24778513977816, -29.15771806975028],
+                  [115.09397654602816, -28.676893520882775],
+                  [114.34690623352816, -27.025652274099738],
+                  [114.47874217102816, -26.77091162950293],
+                  [114.65452342102816, -26.29911947321455],
+                  [114.56663279602816, -25.66706871682016],
+                  [114.34690623352816, -25.230576222525663],
+                  [114.10520701477816, -24.412932078615043],
+                  [114.22175905301225, -23.418649445322355],
+                  [114.52937624051225, -22.93386510024705],
+                  [114.96882936551225, -22.264448561850106],
+                  [116.13338014676225, -21.530509245566197],
+                  [116.90242311551225, -21.18262464576459],
+                  [117.89119264676225, -21.05964538790486],
+                  [118.50642702176225, -20.73120469502147],
+                  [119.31941530301225, -20.587286777733183],
+                  [120.08845827176225, -20.44323294527657],
+                  [122.21980592801225, -19.140762847047757],
+                  [122.96687624051225, -18.078767968874146],
+                  [122.72517702176225, -17.49294190052165],
+                  [122.13191530301225, -16.947263585021823],
+                  [121.56062624051225, -16.715918949599338]]]),
+            {
+              "system:index": "0"
+            })]),
+    region_extent = 
+    /* color: #ff4c09 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[111.68826078827085, -16.15197607462318],
+          [111.68826078827085, -30.506028850949015],
+          [123.11404203827085, -30.506028850949015],
+          [123.11404203827085, -16.15197607462318]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - reef outline export script for west_australia
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Primarily for use in generating exports for wave modelling
+///////////////////////////////
+
+var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
+
+// #############################
+// load analysis params module
+var region_params = param_module.west_australia        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+// choose an appropriate scale
+var export_scale = ee.Number(100)
+// #############################
+
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
+
+// display it
+
+var Dove_sr = ee.Image(region_params.image)
+Map.addLayer(Dove_sr, imageVisParam, "Dove West Australia")
+Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+Map.addLayer(region_extent)
+
+// exports
+//Map.addLayer(region_extent, {}, "export_geom", true)
+
+
+// drive export
+Export.image.toDrive({
+  image: reef_mask, 
+  description: 'reef_mask_export_' + region_params.sname,
+  folder: 'wcmc_rf/',
+  fileNamePrefix: 'reef_mask_' + region_params.sname,
+  region: region_extent,
+  scale: export_scale,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+
+Export.table.toDrive({
+  collection: refined_mask,
+  fileFormat: 'SHP'
+})
