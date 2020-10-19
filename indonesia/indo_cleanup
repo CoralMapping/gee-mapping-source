@@ -31,10 +31,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[124.48689053994197, 1.9394689742063438],
-          [124.48689053994197, 1.3519454390189967],
-          [125.08152554970759, 1.3519454390189967],
-          [125.08152554970759, 1.9394689742063438]]], null, false);
+        [[[123.06416104775447, -1.6634424287622644],
+          [123.06416104775447, -2.2508655272902023],
+          [123.65879605752009, -2.2508655272902023],
+          [123.65879605752009, -1.6634424287622644]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -210,9 +210,9 @@ if (vars.manual_clean && vars.geomorphic) {
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           });
                           
-  var deepwater = man_geo.eq(2)
-                          .focal_min({
-                            radius: vars.smooth_radius.multiply(1), // relates to smoothness required
+  var deepwater = smooth_deepwater_max.eq(0)
+                          .focal_max({
+                            radius: smooth_radius.multiply(3), // relates to smoothness required
                             kernelType: 'circle', units: 'pixels', iterations: 2
                           });
       
@@ -221,7 +221,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
   man_geo = man_geo.where({
-    test: smooth_deepwater_max.eq(1)
+    test: deepwater.eq(1)
                     .and(man_geo.eq(12))
                     .and(global_reef_mask.eq(2)),
     value: ee.Image(2)
