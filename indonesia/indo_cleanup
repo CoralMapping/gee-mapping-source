@@ -541,10 +541,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       }
     ] */
     ee.Geometry.Polygon(
-        [[[123.32611630898494, -1.851151568628391],
-          [123.32611630898494, -1.935219722288035],
-          [123.4232766483404, -1.935219722288035],
-          [123.4232766483404, -1.851151568628391]]], null, false);
+        [[[120.29526303750056, -4.745741910602106],
+          [120.29526303750056, -5.259104744078933],
+          [120.65060208779353, -5.259104744078933],
+          [120.65060208779353, -4.745741910602106]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -698,15 +698,13 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth = ee.Image(region_params.pixels).select('depth');
   
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean2);
-  // var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area); // use this when testing for a small area
+  // var man_geo = ee.Image(region_params.geo_map_clean2);
+  var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
   //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
-  
-  
   
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
@@ -714,38 +712,50 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
-  // // make a very smooth map of DW to remove noise away from reef areas
-  // var deepwater_max = man_geo.eq(2)
-  //                         .focal_max({
-  //                           radius: vars.smooth_radius.multiply(10), // relates to smoothness required
-  //                           kernelType: 'circle', units: 'pixels', iterations: 2
-  //                         });
-                          
-  // the "DEEP WATER" CLEAN
+  // the "REEF MASK" CLEAN
   
+  // Define a kernel for reef mask Morphological Operations
+  var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
+
+  // Create reef mask to clean deepwater areas - Perform an dilation of deepwater
+  var reef_mask = man_geo.eq(2)
+            .focal_max({kernel: kernel_rm, iterations: 2});
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
-  // man_geo = man_geo.where({
-  //   test: deepwater_max.eq(1)
-  //                   .and(man_geo.eq(12))
-  //                   .and(global_reef_mask.eq(2)),
-  //   value: ee.Image(2)
-  // });
+
+  // Reef crest, slope, sheltered (within reef mask) -> Inner reef flat
+  man_geo = man_geo.where({
+    test: reef_mask.eq(0)
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
+    value: ee.Image(13)
+  });
   
-  // // Non-reef in deepwater -> deepwater
-  // man_geo = man_geo.where({
-  //   test: deepwater_mask.eq(0)
-  //                   .and(man_geo.neq(2)),
-  //   value: ee.Image(2)
-  // });
+  // the "DEEP WATER" CLEAN
   
-  // // Reef crest -> Inner reef flat (inside the reef)
-  // man_geo = man_geo.where({
-  //   test: deepwater_max.eq(0)
-  //                   .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
-  //   value: ee.Image(13)
-  // });
+  // Define a kernel for deep water Morphological Operations
+  var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
+
+  // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
+  var deepwater = man_geo.eq(2)
+            .focal_max({kernel: kernel_dw, iterations: 2})
+            .focal_min({kernel: kernel_dw, iterations: 2});
+    
   
+    // Deep lagoon (outside reef mask and global mask) -> deepwater 
+  man_geo = man_geo.where({
+    test: deepwater.eq(1)
+                    .and(man_geo.eq(12)),
+                    //.and(global_reef_mask.eq(2)),
+    value: ee.Image(2)
+  });
+  
+  
+  // Reef classes in deepwater -> deepwater
+  man_geo = man_geo.where({
+    test: deepwater.eq(1)
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(2)
+  });
   
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
