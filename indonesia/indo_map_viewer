@@ -2311,7 +2311,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
           [94.6553101139012, 6.232074405406377]]]),
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
     indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic"),
-    global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+    global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    deepwater_10_sub2 = ee.Image("users/tuddy117/deepwater_10_sub2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -2400,6 +2401,7 @@ Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8
 
 var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
 Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
+
 
 /*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
