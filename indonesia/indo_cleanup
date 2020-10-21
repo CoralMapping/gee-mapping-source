@@ -590,7 +590,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
-  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF
+  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
@@ -698,8 +698,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var depth = ee.Image(region_params.pixels).select('depth');
   
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean2);
-  //var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area); // use this when testing for a small area
+  //var man_geo = ee.Image(region_params.geo_map_clean2);
+  var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
@@ -717,13 +717,13 @@ if (vars.manual_clean && vars.geomorphic) {
   // Define a kernel for reef mask Morphological Operations
   var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
 
-  // Create reef mask to clean deepwater areas - Perform an dilation of deepwater
+  // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
   var reef_mask = man_geo.eq(2)
             .focal_max({kernel: kernel_rm, iterations: 2});
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
 
-  // Reef crest, slope, sheltered (within reef mask) -> Inner reef flat
+  // Reef crest, slope, sheltered slope (within reef mask) -> Inner reef flat
   man_geo = man_geo.where({
     test: reef_mask.eq(0)
                     .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
@@ -1033,7 +1033,7 @@ if (!vars.manual_clean) {
       value: ee.Image(2)
     });
     
-    // make a smooth map with masked area as a value
+    // make a smooth map with masked area as a value - *** Change to ee.kernal*** see reef mask in clean 3
     var smooth_map = geo_map
                         .focal_mode({
                           radius: vars.smooth_radius, // relates to smoothness required
@@ -1052,12 +1052,12 @@ if (!vars.manual_clean) {
     Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
     Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
 
-    // reef crest close to land -> TRF
-    clean_map = clean_map.where({
-      test: distToLand.lte(vars.dist_to_land_RC)
-                    .and(clean_map.eq(15)),
-      value: ee.Image(16)
-    });
+    // // reef crest close to land -> TRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
+    // clean_map = clean_map.where({
+    //   test: distToLand.lte(vars.dist_to_land_RC)
+    //                 .and(clean_map.eq(15)),
+    //   value: ee.Image(16)
+    // });
     
     // TRF outside of specified distance from land -> ORF
     clean_map = clean_map.where({
@@ -1365,7 +1365,7 @@ if (!vars.manual_clean) {
         value: ee.Image(0)
       });
       
-      // make a very smooth map to capture the broader neighbourhood
+      // make a very smooth map to capture the broader neighbourhood  - *** Change to ee.kernal*** see reef mask in clean 3
       var smooth_map = clean_map
                           .focal_mode({
                             radius: vars.smooth_radius.multiply(3), // relates to smoothness required
