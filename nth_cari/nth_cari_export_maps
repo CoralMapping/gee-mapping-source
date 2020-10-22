@@ -65,7 +65,7 @@ print('Number of geo classes used in AA:', values);
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 
 //get the list of final benthic classes used in geo AA
-var freqHistBen = geo.select('classification')
+var freqHistBen = benthic.select('classification')
         .reduceRegion({reducer: ee.Reducer.frequencyHistogram(), bestEffort:true,  geometry: reef_boundary, scale: 5});
 // rewrite the distionary
 var values = ee.Dictionary(freqHistBen.get('classification')).keys();
