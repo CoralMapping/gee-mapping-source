@@ -53,23 +53,25 @@ var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
 var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
 var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 
-
-// Perform the reduction, print the result.
-
-
-// The result is a Dictionary.  Print it.
 Map.addLayer(geo, map_palettes.benthic, "geo map", false)
 
-var freqHist = geo.select('classification')
+//get the list of final geo classes used in geo AA
+var freqHistgeo = geo.select('classification')
         .reduceRegion({reducer: ee.Reducer.frequencyHistogram(), bestEffort:true,  geometry: reef_boundary, scale: 5});
 // rewrite the distionary
-var values = ee.Dictionary(freqHist.get('classification')).keys();
+var values = ee.Dictionary(freqHistgeo.get('classification')).keys();
 print('Number of geo classes used in AA:', values);
 
-
-
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
-print(benthic)
+
+//get the list of final benthic classes used in geo AA
+var freqHistBen = geo.select('classification')
+        .reduceRegion({reducer: ee.Reducer.frequencyHistogram(), bestEffort:true,  geometry: reef_boundary, scale: 5});
+// rewrite the distionary
+var values = ee.Dictionary(freqHistBen.get('classification')).keys();
+print('Number of benthic classes used in AA:', values);
+
+
 Map.addLayer(exclude_mask, {}, 'nth_cari_finalmask_11-7_2020', false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 //Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false)
