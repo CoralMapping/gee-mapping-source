@@ -59,6 +59,15 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 
 // The result is a Dictionary.  Print it.
 Map.addLayer(geo, map_palettes.benthic, "geo map", false)
+
+var freqHist = geo.select('classification')
+        .reduceRegion({reducer: ee.Reducer.frequencyHistogram(), bestEffort:true,  geometry: reef_boundary, scale: 5});
+// rewrite the distionary
+var values = ee.Dictionary(freqHist.get('classification')).keys();
+print('Number of geo classes used in AA:', values);
+
+
+
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 print(benthic)
 Map.addLayer(exclude_mask, {}, 'nth_cari_finalmask_11-7_2020', false)
