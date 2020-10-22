@@ -29,7 +29,7 @@ var depth = pixels.select('depth')//.multiply(100).uint16()
 //additional masks (this session was created by RB on 11/07/2020 to address an easy way to mask the stack and re-export)
 
 // addiitonal masking 
-var nth_cari_finalmask = nth_cari_finalmask.merge(Final_refinements_RB)
+var nth_cari_finalmask = nth_cari_finalmask//.merge(Final_refinements_RB)
 var add_zone = function(f) {return(f.set('zone', 1))}
 var exclude_fc = nth_cari_finalmask.map(add_zone)
 Map.addLayer(exclude_fc, {}, "vector mask zone", false)
