@@ -56,6 +56,16 @@ var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
 // check before export
 Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
+
+var freqHist = geo.select('classification')
+        .reduceRegion({reducer: ee.Reducer.frequencyHistogram(), bestEffort:true,  geometry: reef_boundary, scale: 5});
+// rewrite the distionary
+var values = ee.Dictionary(freqHist.get('classification')).keys();
+print(values);
+
+
+
+//print(Image.metadata(geo,))
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
 //Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
