@@ -57,17 +57,6 @@ print(reef_layer)
 Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
 Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
 
-// Get the list of values from the mosaic image
-var freqHist = geo.select('classification')
-        .reduceRegions({reducer: ee.Reducer.frequencyHistogram(), collection: reef_boundary, scale: 5});
-// rewrite the distionary
-var classes = ee.List(freqHist.map(function(feat){
-  feat = ee.Feature(feat);
-  var vals = ee.Dictionary(feat.get('histogram')).keys();
-  return ee.Feature(null, {vals: vals});
-}).aggregate_array('vals')).flatten().distinct();
-print(classes);
-
 
 
 Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
