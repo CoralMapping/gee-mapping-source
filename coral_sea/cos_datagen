@@ -3,6 +3,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([152.82913532763274, -19.
     noReef_mask = ee.FeatureCollection("projects/coral_atlas/south_asia/mask/noReef_mask"),
     region_extent = 
     /* color: #98ff00 */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -53,7 +54,7 @@ var region_params = param_module.coral_sea       //<------------ THIS IS WHERE Y
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
