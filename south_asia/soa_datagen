@@ -33,7 +33,7 @@ var map_centre =
 ///////////////////////////////
 // Coral atlas mapping project - South_Asia
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Jeremy W (guiding RB) (rodbio2008@gmail.com)
+// Region coordinator: RB (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script generates the data as an asset (for quick load)
