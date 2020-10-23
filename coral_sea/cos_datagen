@@ -1,12 +1,20 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([147.33597126513274, -17.14231991182845]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([152.82913532763274, -19.271176234954282]),
     noReef_mask = ee.FeatureCollection("projects/coral_atlas/south_asia/mask/noReef_mask"),
     region_extent = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[145.68623046874998, -18.120065189196918],
-          [149.77314453124998, -22.548380632102536],
-          [154.23359374999998, -21.591351333954176],
-          [148.65253906249998, -12.549525399925047],
-          [145.13691406249998, -12.849616721081945]]]);
+        [[[146.96064453124998, -17.49246665943211],
+          [148.78372070406536, -18.94886908359589],
+          [150.15144973591032, -19.718515579057332],
+          [152.05830078124998, -20.62795374840977],
+          [152.83746289081765, -22.216904665925533],
+          [156.12324218749998, -23.780621629140125],
+          [160.79260363623985, -22.56632288180597],
+          [160.26651350946094, -18.23602487769535],
+          [154.5995795833012, -16.1448979482429],
+          [152.34923765626436, -16.230736514417778],
+          [148.91621093749998, -14.727394219147875],
+          [146.8431786411368, -13.069092697655025],
+          [145.79609374999998, -14.08895100222597]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Coral_sea
@@ -47,7 +55,7 @@ var region_params = param_module.coral_sea       //<------------ THIS IS WHERE Y
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
