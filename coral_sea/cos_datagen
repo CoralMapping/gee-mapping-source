@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([178.49075317382812, -18.182713930748214]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([150.10208129882812, -19.513521503205947]),
     global_mask = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
     manual_mask_additions = 
     /* color: #d63000 */
@@ -54,7 +54,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.swpac       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.coral_sea      //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -71,7 +71,7 @@ var region_params = param_module.swpac       //<------------ THIS IS WHERE YOU C
 
 var vars = {
   // OBIA settings
-  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
