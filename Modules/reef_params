@@ -623,7 +623,7 @@ var coral_sea = {
   depth: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_depth",
   s2_depth: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth",
-  depth_composite: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_composite_depth_2",//this is the new non-speckle and land mask product
+  depth_composite: "projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_composite_depth_2",//this is the new non-speckle and land masked product
   extent_mask: "projects/coral_atlas/coral_sea/in_out/cosea_extent",
   notreef_mask: "projects/coral_atlas/coral_sea/in_out/cosea_notreef",
   pixels:["projects/coral_atlas/coral_sea/in_out/cos_pixels"],
