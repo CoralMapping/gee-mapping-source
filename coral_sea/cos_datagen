@@ -13,7 +13,8 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([152.82913532763274, -19.
         [[[145.31448689013274, -12.834786655157188],
           [145.31448689013274, -24.348554892703707],
           [162.67288532763274, -24.348554892703707],
-          [162.67288532763274, -12.834786655157188]]], null, false);
+          [162.67288532763274, -12.834786655157188]]], null, false),
+    image = ee.Image("projects/coral_atlas/coral_sea/depth/coral_sea_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_masked_composite_depth");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - Coral_sea
@@ -40,7 +41,7 @@ var region_params = param_module.coral_sea       //<------------ THIS IS WHERE Y
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-
+Map.addLayer(image, {}, 'masked land')
 
 // Table of contents
 // 1. Setting constants
