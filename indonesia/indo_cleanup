@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    mid_mask = /* color: #d63000 */ee.Geometry({
+    mid_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -544,7 +547,9 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         [[[120.29526303750056, -4.745741910602106],
           [120.29526303750056, -5.259104744078933],
           [120.65060208779353, -5.259104744078933],
-          [120.65060208779353, -4.745741910602106]]], null, false);
+          [120.65060208779353, -4.745741910602106]]], null, false),
+    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
+    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia Archipelago
@@ -699,7 +704,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   //var man_geo = ee.Image(region_params.geo_map_clean2);
-  var man_geo = ee.Image(region_params.geo_map_clean2).clip(test_area); // use this when testing for a small area
+  var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
@@ -823,7 +828,6 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
 
-  
   // display distance to land mask for assessing cut-off distances
   var distToLand = ee.Image(region_params.distToLand);
     
