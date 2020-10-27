@@ -3,7 +3,10 @@ var pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
     geo = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean3"),
     benthic = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_benthic_clean2"),
-    reef_boundary = /* color: #051ad6 */ee.Geometry.Polygon(
+    reef_boundary = 
+    /* color: #051ad6 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[133.65904403361668, 1.5423670875241082],
           [133.70298934611668, -3.3334940665077855],
           [140.07505965861668, -9.227839178840291],
@@ -33,8 +36,8 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 var depth = pixels.select('depth'); //.multiply(100).uint16()
 
 // finalise layers (include 'mapped area' as zeros)
-geo = geo.where(geo.lte(2), 0);
-benthic = benthic.unmask(0).updateMask(geo.gte(0));
+geo = geo.where(geo.lte(2), 0).selfMask();
+benthic = benthic.updateMask(geo.gt(0)).selfMask();
 
 // make reef/non-reef layer 
 var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum());
@@ -49,7 +52,7 @@ Map.addLayer(benthic, map_palettes.benthic, "benthic map", false);
 Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false);
 
 // combine into single stack
-var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
+var export_stack = depth.updateMask(geo.gt(2)).rename('depth')
                     .addBands(reef_layer.rename('reef'))
                     .addBands(geo.rename('geomorphic'))
                     .addBands(benthic.rename('benthic'))
@@ -62,7 +65,7 @@ Export.image.toCloudStorage({
   image: export_stack,
   description: 'PNG-Solomons_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/PNG_Solomons/PNG_Solomons_stack',
+  fileNamePrefix: 'coral-gee-export-bucket/PNG_Solomons/trimmed/pngs_stack_',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
