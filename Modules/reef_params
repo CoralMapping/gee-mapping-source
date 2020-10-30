@@ -633,7 +633,7 @@ var coral_sea = {
   benthic_train:"projects/coral_atlas/coral_sea/training/coral_sea_benthic_reference",
   benthic_pts:"",
   geo_train_library: "projects/coral_atlas/training/coral_sea_geo_training",
-  benthic_train_library:"",
+  benthic_train_library:"projects/coral_atlas/training/coral_sea_benthic_training",
   geo_val_library:"",
   benthic_val_library:"",
   geo_map: [""],
