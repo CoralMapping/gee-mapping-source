@@ -83,7 +83,7 @@ var depth_L8_renamed = depth_L8.select(
   ['b1_c']);  
   
 // depth composite
-var Composite_depth=ee.Image(vars.Depth_composite)
+var Composite_depth=ee.Image(vars.stack)
 var Composite_depth=Composite_depth.expression(
   '((-1)*B1)/100', {
   'B1' :Composite_depth.select('depth') //specify that B1 mean depth
@@ -94,6 +94,10 @@ var depthComposite=ee.Image(Composite_depth)
 var DepthCompos_renamed = depthComposite.select(
   ['constant'],
   ['b1_s']);  
+  
+//getting sr from the stack
+var Dove_sr = ee.Image(vars.stack)
+
   
 
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
@@ -106,7 +110,7 @@ var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false
 
 
 var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
-var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
+var Dove_low_sr=ui.Map.Layer(Dove_low_sr, imageVisParam3,'Dove_sr', false )
 
 var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
 var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
