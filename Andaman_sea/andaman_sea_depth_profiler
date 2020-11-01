@@ -35,7 +35,7 @@ var region_params = param_module.andm
 //setting variables from datagen keys
 
 var vars = {
-    //Dove_low_sr : ee.Image(region_params.image),
+    //Dove_low_sr : ee.Image(region_params.image), Not to get it from the raw data
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
@@ -95,10 +95,6 @@ var DepthCompos_renamed = depthComposite.select(
   ['constant'],
   ['b1_s']);  
   
-
-
-  
-
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 
 var imageVisParam1 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
