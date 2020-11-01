@@ -39,7 +39,7 @@ var vars = {
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
+    stack : ee.Image(region_params.pixels).rename('depth'),
     //Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
@@ -86,7 +86,7 @@ var depth_L8_renamed = depth_L8.select(
   ['b1_c']);  
   
 // depth composite
-var Composite_depth=ee.Image(vars.Depth_composite)
+var Composite_depth=ee.Image(vars.stack)
 var Composite_depth=Composite_depth.expression(
   '((-1)*B1)/100', {
   'B1' :Composite_depth.select('depth') //specify that B1 mean depth
