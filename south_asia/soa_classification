@@ -84,9 +84,9 @@ var map_centre =
           [122.94234405918615, -15.223290002478876]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Timor Sea
+// Global coral atlas project - Coral Sea
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Jeremy W ( guiding RB)
+// Region coordinator: Rodney B (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
