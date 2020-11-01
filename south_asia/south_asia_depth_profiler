@@ -154,7 +154,7 @@ var label = ui.Label('DepthComposite_threshold_slider (m):',
 );
 
 //bringing back the depth compiste to neg
-var Comp_depth=ee.Image(vars.Depth_composite)
+var Comp_depth=ee.Image(vars.stack)
 var Comp_depth=Comp_depth.expression( 
 '(B1)/100', {
  'B1' :Comp_depth.select('depth') })
