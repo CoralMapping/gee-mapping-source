@@ -576,7 +576,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.coral_sea;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -597,7 +597,7 @@ var vars = {
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
+  geo_depth_cutoff: 1200, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 750, //depth in centimetres
   
