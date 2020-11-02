@@ -94,8 +94,8 @@ var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2'
 var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
 var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
-var geo_nw=ui.Map.Layer(soa_geo_missingNW, map_palettes.geo, 'Geomorphic_missing_NW', false)
-var ben_nw=ui.Map.Layer(soa_ben_missingNW, map_palettes.benthic, 'Benthic_missing_NW', false)
+//var geo_nw=ui.Map.Layer(soa_geo_missingNW, map_palettes.geo, 'Geomorphic_missing_NW', false)
+//var ben_nw=ui.Map.Layer(soa_ben_missingNW, map_palettes.benthic, 'Benthic_missing_NW', false)
 //load depth composite used to slice geo raw map
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
