@@ -1,26 +1,13 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[80.06231110927592, 11.643419782412085],
-          [76.32695954677592, 8.37652515056032],
-          [80.47979157802592, 4.709806006395633],
-          [82.43535798427592, 5.278923660456486],
-          [83.16045564052592, 7.462485246017544],
-          [81.22686189052592, 10.781297780961276]]]),
+var centre_map = /* color: #d63000 */ee.Geometry.Point([152.41814369156043, -19.200831837049964]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    geometry = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[78.50225251552592, 4.895917700513378],
-          [81.88604157802592, 4.392207430217112],
-          [84.21514314052592, 7.1028617733826644],
-          [80.21611970302592, 11.2019034008838],
-          [76.26104157802592, 8.778471805151488]]]),
-    soa_ben_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
-    soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
+    geometry = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[142.31072181656043, -13.468312738204446],
+          [144.15642494156043, -19.034745474100994],
+          [152.59392494156043, -27.50207557152852],
+          [160.59197181656043, -24.500787031775154],
+          [158.30681556656043, -16.186866449829804],
+          [144.50798744156043, -10.372894054872898]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 //region: coral sea viewer
