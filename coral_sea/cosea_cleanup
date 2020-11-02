@@ -547,12 +547,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         [[[120.29526303750056, -4.745741910602106],
           [120.29526303750056, -5.259104744078933],
           [120.65060208779353, -5.259104744078933],
-          [120.65060208779353, -4.745741910602106]]], null, false),
-    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
-    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
+          [120.65060208779353, -4.745741910602106]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Indonesia Archipelago
+// Global coral atlas project - Coral Sea
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Rodney Borrego (rodbio2008@gmail.com)
 // Description:
