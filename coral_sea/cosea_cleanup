@@ -1022,12 +1022,14 @@ if (!vars.manual_clean) {
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
     
-    // shallow lagoon > 5m == deep lagoon//this rule is making mini deep laggoons witin BRS
-    geo_map = geo_map.where({
-      test: geo_map.eq(11)
-                    .and(depth.gt(vars.shallowlag_depth_cutoff)),
-      value: ee.Image(12)
-    });
+    // shallow lagoon > 5m == deep lagoon//this rule is making mini deep laggoons witin BRS 
+    //so I will generate another clean up1 with shallow lagoons instead (comenting this up)
+    
+    // = geo_map.where({
+     // test: geo_map.eq(11)
+                    //.and(depth.gt(vars.shallowlag_depth_cutoff)),
+      //value: ee.Image(12)
+    //});
     
     // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
     geo_map = geo_map.where({
