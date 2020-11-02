@@ -492,3 +492,7 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 var legend = (vars.geomorphic) ? geo_legend : benthic_legend
 pkg_vis.add_lgds([title, legend])//, mask_legend])
 // generate the legend
+
+Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent)
+})
