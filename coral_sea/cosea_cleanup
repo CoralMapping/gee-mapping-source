@@ -552,8 +552,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Coral Sea
-// Contact: Mitchell Lyons
+// Global coral atlas project - Indonesia Archipelago
+// Contact: mitchell.lyons@gmail.com
 // Region coordinator: Rodney Borrego (rodbio2008@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
