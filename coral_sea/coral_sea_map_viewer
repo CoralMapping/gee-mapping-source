@@ -132,7 +132,21 @@ if (vars.raw){
 
  // layers.add(mid_maskCR)
 ////////// UI SET UP //////////
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
+var panel2 = ui.Panel({
+     // widgets: [geo_legend, benthic_legend],
+      widgets: [geo_legend, benthic_legend],
+     layout: ui.Panel.Layout.flow('vertical'),
+      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '447px'
+          }
+    });
+
+mapPanel.widgets().add(panel2)
+
+//slider
 if(vars.geo_raw_depthCutoff) {
 //slider params
 var label = ui.Label('DepthComposite_threshold_slider for geo raw:',
@@ -182,19 +196,7 @@ mapPanel.widgets().add(panel1)
 
 }
 
-// generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 
-var panel2 = ui.Panel({
-     // widgets: [geo_legend, benthic_legend],
-      widgets: [geo_legend, benthic_legend],
-     layout: ui.Panel.Layout.flow('vertical'),
-      style: {position: 'top-left',width: '350px', backgroundColor:  '#c6c6cc', height: '447px'
-          }
-    });
-
-mapPanel.widgets().add(panel2)
 
 //callig the app
 ui.root.clear();
