@@ -1022,7 +1022,7 @@ if (!vars.manual_clean) {
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
     
-    // shallow lagoon > 5m == deep lagoon
+    // shallow lagoon > 5m == deep lagoon//this rule is making mini deep laggoons witin BRS
     geo_map = geo_map.where({
       test: geo_map.eq(11)
                     .and(depth.gt(vars.shallowlag_depth_cutoff)),
