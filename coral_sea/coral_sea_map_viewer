@@ -78,7 +78,7 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 
 //add masks to the viewer
 
-var mid_mask=ui.Map.Layer(ee.FeatureCollection(region_params.midMask), {color:'#800080'},'mid_mask',false)
+//var mid_mask=ui.Map.Layer(ee.FeatureCollection(region_params.midMask), {color:'#800080'},'mid_mask',false)
 
 
 // Load the clean classifications to the ui viewer
