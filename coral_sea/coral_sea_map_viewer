@@ -124,7 +124,7 @@ if (vars.geo_clean3) {
 if (vars.raw){ 
   layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
   layers.add(Unep)
-  layers.add(mid_mask)
+ // layers.add(mid_mask)
 
  // layers.add(mid_maskCR)
 ////////// UI SET UP //////////
