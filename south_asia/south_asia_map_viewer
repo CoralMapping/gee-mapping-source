@@ -23,6 +23,8 @@ var centre_map =
     soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
+//region: coral sea
+//region coordinator: Rodney Borrego (rodbio2008@gmail.com)
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
