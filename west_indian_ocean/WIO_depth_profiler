@@ -60,11 +60,11 @@ var depth_S2_renamed = depth_S2.select(
   ['b1_l']);
 
 //Compute the transformation using neg expression for Dove depth(its server side method as well)
-var Dove_depth_neg=ee.Image(vars.Dove_depth)
-var Dove_depth=Dove_depth_neg.expression(
-  '((-1) * B1)/100', {
-  'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean Dovedepth
-})
+//var Dove_depth_neg=ee.Image(vars.Dove_depth)
+//var Dove_depth=Dove_depth_neg.expression(
+//'((-1) * B1)/100', {
+//  'B1' :Dove_depth_neg.select('Dovedepth') //specify that B1 mean Dovedepth
+//})
 
 //renaming band 1 in Dove depth from 'b1' to 'b1_b' 
 var Dove_depth=ee.Image(Dove_depth)
