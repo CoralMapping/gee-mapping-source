@@ -36,7 +36,7 @@ var region_params = param_module.gbr_torres
 
 var vars = {
     //Dove_low_sr : ee.Image(region_params.image),
-    Dove_low_sr : ee.Image(region_params.image),
+    //Dove_low_sr : ee.Image(region_params.image),
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
@@ -44,7 +44,7 @@ var vars = {
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     //Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
-    Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
+    Depth_composite : ee.ImageCollection(region_params.pixels).rename('depth'),
 };
 
 Map.addLayer(vars.Depth_composite)
