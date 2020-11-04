@@ -643,7 +643,7 @@ var coral_sea = {
   benthic_map: ["projects/coral_atlas/coral_sea/in_out/cosea_benthic"],
   mid_mask: "projects/coral_atlas/coral_sea/in_out/cosea_midmask",
   geo_map_clean1:"projects/coral_atlas/coral_sea/in_out/cosea_geo_clean1",
-  geo_map_clean2:"",
+  geo_map_clean2:"projects/coral_atlas/coral_sea/in_out/cosea_geo_clean2",
   geo_map_clean3:"",
   benthic_map_clean1: "",
   benthic_map_clean2: "",
