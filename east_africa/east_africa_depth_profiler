@@ -36,7 +36,7 @@ var vars = {
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
-    Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+    stack : ee.ImageCollection(region_params.pixels).mosaic(),
 };
 
 // 2. data preparation (invert sign, change band names))
@@ -80,7 +80,7 @@ var depth_L8_renamed = depth_L8.select(
   ['b1_c']);  
   
 // depth composite
-var Composite_depth=ee.Image(vars.Depth_composite)
+var Composite_depth=ee.Image(vars.stack)
 var Composite_depth=Composite_depth.expression(
   '((-1)*B1)/100', {
   'B1' :Composite_depth.select('depth') //specify that B1 mean depth
@@ -96,21 +96,21 @@ var DepthCompos_renamed = depthComposite.select(
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 
 var imageVisParam1 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
-var high_depthDove=ui.Map.Layer(Dove_depth_renamed, imageVisParam1, 'depth_Dove', false) //,'nc_hightide_doveDepth', false)
+//var high_depthDove=ui.Map.Layer(Dove_depth_renamed, imageVisParam1, 'depth_Dove', false) //,'nc_hightide_doveDepth', false)
 
 var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"max":-0.05565423755239924,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
-var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
+//var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
 
 
 var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
-var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
+var Dove_low_sr=ui.Map.Layer(vars.Depth_composite, imageVisParam3,'Dove_sr', false )
 
 var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
-var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
+//var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
 
 
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
-var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
+var depthComposite1=ui.Map.Layer(Depth_composite, imageVisParam3, 'DepthComposite', false)
 
 
 //center the map to the region
@@ -121,7 +121,7 @@ var mapPanel=ui.Map().setCenter(41.87294739174308, -17.301928804028122, 6)
 
 var layers = mapPanel.layers();
 layers.add(Dove_low_sr)
-layers.add(high_depthDove)
+//layers.add(high_depthDove)
 //layers.add(Depth_S2_asu)//here depth from ASU
 //layers.add(Depth_L8_asu)
 layers.add(depthComposite1)
