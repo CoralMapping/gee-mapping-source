@@ -110,7 +110,7 @@ var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.61
 
 
 var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
-var depthComposite1=ui.Map.Layer(Depth_composite, imageVisParam3, 'DepthComposite', false)
+var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam3, 'DepthComposite', false)
 
 
 //center the map to the region
