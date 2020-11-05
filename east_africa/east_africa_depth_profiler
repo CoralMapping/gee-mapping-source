@@ -122,8 +122,8 @@ var mapPanel=ui.Map().setCenter(41.87294739174308, -17.301928804028122, 6)
 var layers = mapPanel.layers();
 layers.add(Dove_low_sr)
 layers.add(high_depthDove)
-layers.add(Depth_S2_asu)//here depth from ASU
-layers.add(Depth_L8_asu)
+//layers.add(Depth_S2_asu)//here depth from ASU
+//layers.add(Depth_L8_asu)
 layers.add(depthComposite1)
 
 // 4. Create the inspector panel (the one that shows the profile graph)
