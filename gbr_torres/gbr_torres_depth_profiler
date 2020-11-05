@@ -111,8 +111,8 @@ var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"ma
 var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
 
 
-//var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
-var imageVisParam3 = {"opacity":1,"bands":["depth"],"min":94.7,"max":852.3,"gamma":1};
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+//var imageVisParam3 = {"opacity":1,"bands":["depth"],"min":94.7,"max":852.3,"gamma":1};
 var Dove_low_sr=ui.Map.Layer(vars.Depth_composite, imageVisParam3,'Dove_sr', false )
 
 
