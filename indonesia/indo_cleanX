@@ -75,14 +75,15 @@ Map.addLayer(man_geo, map_palettes.geo, 'Geo bespoke clean', false);
 
 
 // Export
-  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
-  Export.image.toAsset({
-    image: man_benthic,
-    description: output_name,
-    assetId: vars.asset_output + 'in_out/' + output_name,
-    region: region_extent,
-    scale: vars.image_data_scale,
-    crs: 'EPSG:4326',
-    maxPixels: 1e13,
-    pyramidingPolicy: {'.default': 'mode'}
-  });
+var export_geom = region_east.merge(region_west).geometry()
+Map.addLayer(export_geom)
+Export.image.toAsset({
+  image: man_geo,
+  description: "indo_cleanX",
+  assetId: 'projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x',
+  region: export_geom,
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  pyramidingPolicy: {'.default': 'mode'}
+});
