@@ -65,7 +65,7 @@ man_geo = man_geo.where({
 man_geo = man_geo.where({
   test: smooth_deep.eq(1)
                    .and(land_dist.unmask(50000).gt(2000))
-                   .and(gebco.lt(-50))
+                   .and(gebco.lt(-100))
                    .and(man_geo.eq(13).or(man_geo.eq(14))),
   value: ee.Image(2)
 })
