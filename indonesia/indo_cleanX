@@ -66,3 +66,15 @@ man_geo = man_geo.where({
 Map.addLayer(man_geo, map_palettes.geo, 'Geo bespoke clean', false);
 
 
+// Export
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
+  Export.image.toAsset({
+    image: man_benthic,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    region: region_extent,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  });
