@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_east_RC"),
     geo_west = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_west_RC"),
-    image = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+    global_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
+    region_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
+    region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
@@ -36,9 +39,23 @@ man_geo = man_geo.where({
   value: ee.Image(2)
 });*/
 
-// use the global reef mask "deep water" to remove just 
+// use the global reef mask "deep water" to remove just deep lagoon/BRS
+man_geo = man_geo.where({
+  test: global_mask.eq(2)
+                   .and(man_geo.eq(12).or(man_geo.eq(24))),//.or(man_geo.eq(22)).or(man_geo.eq(24))),
+  value: ee.Image(2)
+})
 
+// add in distnace to land for other reef classes
+man_geo = man_geo.where({
+  test: global_mask.eq(2)
+                   .and(land_dist.gt(5000))
+                   .and(man_geo.gte(13)),
+                   //.and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(15)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))),
+  value: ee.Image(2)
+})
 
-Map.addLayer(man_geo.reproject({crs:'EPSG:4326', scale: 5}), map_palettes.geo, 'Geo bespoke clean', false);
+//Map.addLayer(man_geo.reproject({crs:'EPSG:4326', scale: 5}), map_palettes.geo, 'Geo bespoke clean', false);
+Map.addLayer(man_geo, map_palettes.geo, 'Geo bespoke clean', false);
 
 
