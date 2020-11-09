@@ -4,15 +4,20 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
     global_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
     region_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
-    region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east");
+    region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
+    gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
+    image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 
-// Load the clean 3 outputs
+// Load the clean 3 outputs ++
+Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false)
 var man_geo = geo_east.unmask(0, false).add(geo_west.unmask(0, false)).selfMask();
 Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3', false);
+
+Map.addLayer(gebco.lt(-50).selfMask(), {min:0, max:1}, "GEBCO", false)
 
 /*//the "DEEP WATER" CLEAN
 
@@ -49,7 +54,7 @@ man_geo = man_geo.where({
 // add in distnace to land for other reef classes
 man_geo = man_geo.where({
   test: global_mask.eq(2)
-                   .and(land_dist.gt(5000))
+                   .and(land_dist.unmask(50000).gt(2000))
                    .and(man_geo.gte(13)),
                    //.and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(15)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))),
   value: ee.Image(2)
