@@ -53,12 +53,19 @@ man_geo = man_geo.where({
   value: ee.Image(2)
 })
 
-// add in distnace to land for other reef classes
+// add in distance to land for to deal with non reef flat classes
 man_geo = man_geo.where({
   test: smooth_deep.eq(1)
                    .and(land_dist.unmask(50000).gt(2000))
-                   .and(man_geo.gte(13)),
-                   //.and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(15)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))),
+                   .and(man_geo.eq(15).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(23))),
+  value: ee.Image(2)
+})
+
+// add in distance to land + GEBCO to deal with reef flat classes
+man_geo = man_geo.where({
+  test: smooth_deep.eq(1)
+                   .and(land_dist.unmask(50000).gt(2000))
+                   .and(man_geo.eq(13).or(man_geo.eq(14))),
   value: ee.Image(2)
 })
 
