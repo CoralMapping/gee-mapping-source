@@ -17,7 +17,7 @@ Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false
 var man_geo = geo_east.unmask(0, false).add(geo_west.unmask(0, false)).selfMask();
 Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3', false);
 
-Map.addLayer(gebco.lt(-50).selfMask(), {min:0, max:1}, "GEBCO", false)
+//Map.addLayer(gebco.gt(-100).selfMask(), {min:0, max:1}, "GEBCO", false)
 
 /*//the "DEEP WATER" CLEAN
 
@@ -45,15 +45,17 @@ man_geo = man_geo.where({
 });*/
 
 // use the global reef mask "deep water" to remove just deep lagoon/BRS
+var smooth_deep = global_mask.eq(2).focal_max(5)
+
 man_geo = man_geo.where({
-  test: global_mask.eq(2)
+  test: smooth_deep.eq(1)
                    .and(man_geo.eq(12).or(man_geo.eq(24))),//.or(man_geo.eq(22)).or(man_geo.eq(24))),
   value: ee.Image(2)
 })
 
 // add in distnace to land for other reef classes
 man_geo = man_geo.where({
-  test: global_mask.eq(2)
+  test: smooth_deep.eq(1)
                    .and(land_dist.unmask(50000).gt(2000))
                    .and(man_geo.gte(13)),
                    //.and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(15)).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))),
