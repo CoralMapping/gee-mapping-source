@@ -23,7 +23,7 @@ var centre_map =
     soa_geo_missingNW = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
-//region: east africa
+//region: east africa. NB: final maps were the ones in the *export script for this region, so I had to adapt reef_params and this script to work
 //region coordinator: Rodney Borrego (rodbio2008@gmail.com)
 
 // Load and libraries needed
