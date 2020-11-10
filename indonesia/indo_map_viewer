@@ -2311,7 +2311,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
           [94.6553101139012, 6.232074405406377]]]),
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
     indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic"),
-    global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined");
+    global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    geo_clean3x = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -2396,6 +2397,9 @@ var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', true);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geo clean stage  3', true);
+
+Map.addLayer(geo_clean3x.updateMask(geo_clean3x.gt(2)), map_palettes.geo, 'Geo clean stage 3X', true);
+
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean stage 2', false);
 
