@@ -1885,65 +1885,22 @@ var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
 
 
 // run the export
-Export.image.toCloudStorage({
-  image: export_stack,
-  description: 'ea_stack',
-  bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716_V2/ea_stack',
+Export.image.toAsset({
+  image: geo,
+  description: 'geo_final',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
-  skipEmptyTiles: true
 });
 
 
 
-Export.table.toCloudStorage({
-  collection: exclude_fc, 
-  bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200716_V2/Updated_Mask',
-  fileFormat: 'SHP'
+Export.image.toAsset({
+  image: benthic,
+  description: 'benthic_final',
+  region: reef_boundary, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
 });
-
-
-/*
-
-Export.image.toCloudStorage({
-  image: export_stack_east,
-  description: 'swp_stack_east',
-  bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_east',
-  region: export_geom_east, 
-  scale: 5,
-  crs: 'EPSG:4326',
-  maxPixels: 1e13, 
-  skipEmptyTiles: true
-})
-
-// run the export
-Export.image.toCloudStorage({
-  image: export_stack_west,
-  description: 'swp_stack_west',
-  bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_west',
-  region: export_geom_west, 
-  scale: 5,
-  crs: 'EPSG:4326',
-  maxPixels: 1e13, 
-  skipEmptyTiles: true
-})*/
-
-
-// export the convex hull boundary
-
-// export region convex hull, or manual
-/*var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-
-Export.table.toCloudStorage({
-  collection: ee.FeatureCollection(export_geom),
-  description: 'swp_convex_hull',
-  bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/swp/new_geom/swp_convex_hull',
-  fileFormat: "SHP"
-})*/
