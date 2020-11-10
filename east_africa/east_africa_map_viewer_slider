@@ -35,7 +35,7 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
 // SENSOR GENERICS
 var sensor_params = param_module.dove  ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.south_asia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.east_africa;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -47,7 +47,7 @@ var vars = {
   geo_clean2: true, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_clean1: true, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
