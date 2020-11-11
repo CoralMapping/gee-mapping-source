@@ -6,7 +6,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([41.114835431911054, -18.
           [51.01849377611329, -25.406340092817658],
           [53.36943255097439, -8.628916124595824],
           [39.0847665723546, -7.664561351864486],
-          [38.59974220025152, -12.296301758449417]]]);
+          [38.59974220025152, -12.296301758449417]]]),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 //region: east africa. NB: final maps were the ones in the *export script for this region, so I had to adapt reef_params and this script to work
@@ -43,7 +44,7 @@ var mapPanel=ui.Map().centerObject(centre_map, 6)
 
 //load image sr
 var low_tide_image_dove = ee.Image(vars.Depth_composite);
-var sr_Dove= ui.Map.Layer(low_tide_image_dove, {}, sensor_params.sname + ' low tide', false); // image data
+var sr_Dove= ui.Map.Layer(low_tide_image_dove, {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1}, sensor_params.sname + ' low tide', false); // image data
 //UnEp layer
 var unepClipped= wcmc.filterBounds(geometry)
 var Unep= ui.Map.Layer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
