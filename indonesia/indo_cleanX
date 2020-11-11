@@ -129,7 +129,7 @@ var man_geo = geo3
 var recover = ee.Image().byte().paint(ee.Feature(reef_recovery, {zone: 1}), 'zone').clip(reef_recovery);
 man_geo = man_geo.unmask(0).where({
   test: recover.eq(1),
-  value: geo2
+  value: geo2.updateMask(geo2.lte(22))
 }).selfMask()
 
 
