@@ -174,9 +174,9 @@ man_geo = man_geo.where({
 
 
 // retain UNEP in either cleanup here for lost from original
-var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.geometry().filterBounds(export_geom),
+var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(export_geom).geometry(),
                                                    {zone: 1}), 'zone')
-                                 .clip(wcmc.geometry());
+                                 .clip(export_geom);
 
 man_geo = man_geo.where({
   test: wcmc_mask.eq(1),
