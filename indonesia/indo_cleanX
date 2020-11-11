@@ -7,7 +7,10 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
     region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
     gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
     image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
-    coast_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    coast_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[95.68434914282503, 4.6443936703698565],
            [95.60195168188753, 4.49654991375642],
            [96.40944679907503, 3.586962182619043],
@@ -88,7 +91,8 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
            [131.6151388093067, -0.7712565089151043],
            [131.61170558176764, -0.7053440163363908],
            [131.38305262766607, -0.7177026824318511],
-           [131.10221461497076, -0.8522725401817809]]]]);
+           [131.10221461497076, -0.8522725401817809]]]]),
+    geo2 = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
@@ -96,10 +100,14 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 
 // Load the clean 3 outputs ++
 Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false)
-var man_geo = geo_east.unmask(0, false).add(geo_west.unmask(0, false)).selfMask();
+var geo3 = geo_east.unmask(0, false).add(geo_west.unmask(0, false)).selfMask();
 Map.addLayer(man_geo, map_palettes.geo, 'Geo clean stage 3', false);
 
 Map.addLayer(gebco.multiply(-1), {min:0, max:300}, "GEBCO", false)
+
+
+// set the manual clean layer
+var man_geo = geo3
 
 /*//the "DEEP WATER" CLEAN
 
@@ -151,6 +159,17 @@ man_geo = man_geo.where({
                    .and(man_geo.eq(13).or(man_geo.eq(14))),
   value: ee.Image(2)
 })
+
+
+/*// use the coastal mask for further removal
+var coast_mask_i = ee.Image().byte().paint(ee.Feature(coast_mask, {zone: 1}), 'zone').clip(coast_mask);
+
+man_geo = man_geo.where({
+  test: coast_mask_i.eq(1)
+                    .and(man_geo.neq(16)),
+  value: ee.Image(0)
+})*/
+
 
 //Map.addLayer(man_geo.reproject({crs:'EPSG:4326', scale: 5}), map_palettes.geo, 'Geo bespoke clean', false);
 Map.addLayer(man_geo, map_palettes.geo, 'Geo bespoke clean', false);
