@@ -7,10 +7,7 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
     region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
     gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
     image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
-    coast_mask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    coast_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[95.68434914282503, 4.6443936703698565],
            [95.60195168188753, 4.49654991375642],
            [96.40944679907503, 3.586962182619043],
@@ -93,7 +90,16 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
            [131.38305262766607, -0.7177026824318511],
            [131.10221461497076, -0.8522725401817809]]]]),
     geo2 = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean2"),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered");
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
+    unep_recover = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[106.52366408514695, -5.554410797574332],
+          [106.52847060370163, -5.518871808914062],
+          [106.59164199042038, -5.502126738683849],
+          [106.5871787946196, -5.4522304747106025],
+          [106.47491225409226, -5.405064438884441],
+          [106.38118514227585, -5.4816219291551835],
+          [106.41620406317429, -5.494266645100354],
+          [106.51370772528367, -5.556802768043893]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
@@ -165,18 +171,20 @@ man_geo = man_geo.where({
 
 // use the coastal mask for further removal
 var coast_mask_i = ee.Image().byte().paint(ee.Feature(coast_mask, {zone: 1}), 'zone').clip(coast_mask);
-
+var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(coast_mask).geometry(),
+                                                   {zone: 1}), 'zone')
+                                 .clip(coast_mask);
+                                 
 man_geo = man_geo.where({
   test: coast_mask_i.eq(1)
-                    .and(man_geo.neq(16)),
+                    .and(man_geo.neq(16))
+                    .and(wcmc_mask.eq(0)),
   value: ee.Image(0)
 })
 
 
-// retain UNEP in either cleanup here for lost from original
-var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(export_geom).geometry(),
-                                                   {zone: 1}), 'zone')
-                                 .clip(export_geom);
+// retain UNEP in specific locations
+
 
 man_geo = man_geo.where({
   test: wcmc_mask.eq(1),
