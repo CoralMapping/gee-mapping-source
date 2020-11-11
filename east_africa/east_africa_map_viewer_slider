@@ -1,14 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[80.06231110927592, 11.643419782412085],
-          [76.32695954677592, 8.37652515056032],
-          [80.47979157802592, 4.709806006395633],
-          [82.43535798427592, 5.278923660456486],
-          [83.16045564052592, 7.462485246017544],
-          [81.22686189052592, 10.781297780961276]]]),
+var centre_map = /* color: #d63000 */ee.Geometry.Point([41.114835431911054, -18.507545054624224]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     geometry = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[29.22027338564402, -31.432564902987988],
