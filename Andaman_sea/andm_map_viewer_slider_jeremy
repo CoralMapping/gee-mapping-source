@@ -1,13 +1,19 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([41.114835431911054, -18.507545054624224]),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    geometry = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[29.22027338564402, -31.432564902987988],
-          [51.01849377611329, -25.406340092817658],
-          [53.36943255097439, -8.628916124595824],
-          [39.0847665723546, -7.664561351864486],
-          [38.59974220025152, -12.296301758449417]]]),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1};
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1},
+    geometry = 
+    /* color: #00ffff */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[89.69469445946085, 24.341399653700446],
+          [89.69469445946085, 1.64147166666397],
+          [103.66930383446085, 1.64147166666397],
+          [103.66930383446085, 24.341399653700446]]], null, false),
+    centre_map = /* color: #bf04c2 */ee.Geometry.Point([94.61656945946085, 18.702826117215462]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 //region: andaman sea. NB: final maps were the ones in the *export script for this region, so I had to adapt reef_params and this script to work
@@ -27,7 +33,6 @@ var region_params = param_module.andm;       //<------------ THIS IS WHERE YOU C
 // ###########################################
 
 
-
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo, this flag needs to be true 
@@ -42,7 +47,7 @@ var vars = {
 };
 
 
-var mapPanel=ui.Map().centerObject(centre_map, 6)
+var mapPanel=ui.Map().centerObject(geometry, 6)
 
 //load image sr
 var low_tide_image_dove = ee.Image(vars.Depth_composite);
