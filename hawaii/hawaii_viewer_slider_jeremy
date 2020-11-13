@@ -33,8 +33,8 @@ var vars = {
   geo_clean1: true, // set to true if you want to view geo clean 1
   geo_clean2: true, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
-  benthic_clean1: false, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  benthic_clean1: true, // set to true if you want to view benthic clean 1
+  benthic_clean2: false, // set to true if you want to view benthic clean 2
   geo_raw_depthCutoff: true, //added functionality to apply cut-offs  to raw geomorphic map based on a depth composite slider (ask RB if its not working)
   Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
