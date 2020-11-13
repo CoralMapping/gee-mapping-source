@@ -1,13 +1,14 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([41.114835431911054, -18.507545054624224]),
-    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1},
+    centre_map = /* color: #d63000 */ee.Geometry.Point([-157.4803763083144, 21.01266743283922]),
     geometry = /* color: #98ff00 */ee.Geometry.Polygon(
-        [[[29.22027338564402, -31.432564902987988],
-          [51.01849377611329, -25.406340092817658],
-          [53.36943255097439, -8.628916124595824],
-          [39.0847665723546, -7.664561351864486],
-          [38.59974220025152, -12.296301758449417]]]),
-    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1};
+        [[[175.65965982972318, 27.17997323924286],
+          [-155.4206147029556, 13.922690863774838],
+          [-149.0618682123816, 16.310258830945184],
+          [-159.0374541498816, 27.965905338339628],
+          [-167.54797004443452, 33.338845830188944],
+          [179.16567085011837, 33.84361933915258]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 //region: andaman sea. NB: final maps were the ones in the *export script for this region, so I had to adapt reef_params and this script to work
@@ -46,7 +47,7 @@ var mapPanel=ui.Map().centerObject(centre_map, 6)
 var low_tide_image_dove = ee.Image(vars.Depth_composite);
 var sr_Dove= ui.Map.Layer(low_tide_image_dove, {"opacity":1,"bands":["b3","b2","b1"],"min":57,"max":1838,"gamma":1}, sensor_params.sname + ' low tide', false); // image data
 //UnEp layer
-var unepClipped= wcmc.filterBounds(geometry)
+var unepClipped= wcmc.filterBounds(centre_map)
 var Unep= ui.Map.Layer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
 
 
