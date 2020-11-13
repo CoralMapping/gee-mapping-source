@@ -26,11 +26,7 @@ var region_params = param_module.andm;       //<------------ THIS IS WHERE YOU C
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-var vars = {
-    stack : ee.ImageCollection(region_params.pixels).mosaic(),
-};
 
-Map.addLayer(stack, {}, 'mosaic');
 
 // Choose which layers will be shown in the map viewer
 var vars = {
