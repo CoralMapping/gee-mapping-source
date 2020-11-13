@@ -112,7 +112,7 @@ var centre_map =
            [122.79618219334407, -17.20501743540183]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
-// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
+// From this region Timor sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
 
 // Load and libraries needed
