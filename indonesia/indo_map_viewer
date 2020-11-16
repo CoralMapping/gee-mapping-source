@@ -2482,7 +2482,7 @@ if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', true);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geo clean stage  3', true);
 
-Map.addLayer(benthic_clean1.updateMask(geo_clean3.gt(2)), map_palettes.benthic, 'Benthic clean preview', false);
+Map.addLayer(benthic_map_raw.updateMask(geo_clean3.gt(2)), map_palettes.benthic, 'Benthic clean preview', false);
 
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean stage 2', false);
