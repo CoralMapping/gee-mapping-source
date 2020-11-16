@@ -902,8 +902,10 @@ if (vars.manual_clean && !vars.geomorphic) {
   */
   
   
+  // final smooth for missing data due to depth
+  man_benthic = man_benthic.focal_mode(2)
   
-     
+  
   // Add the manual layer to the map
 
   var dove_image = ee.Image(region_params.image);
