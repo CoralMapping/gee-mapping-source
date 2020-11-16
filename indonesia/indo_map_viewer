@@ -2312,7 +2312,6 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
     indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic"),
     global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    geo_clean3x = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x"),
     RefinementMask = /* color: #acd60f */ee.Geometry.MultiPolygon(
         [[[[95.68434914282503, 4.6443936703698565],
            [95.60195168188753, 4.49654991375642],
@@ -2469,10 +2468,7 @@ Map.addLayer(indo_benthic.updateMask(geo_map_raw.gt(2)) , map_palettes.benthic, 
 // Load the clean classifications
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
 var geo_clean2 = ee.Image(region_params.geo_map_clean2);
-//var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
-var geo_clean3 = ee.Image(region_params.geo_map_clean3[0]).unmask(0, false)
-                     .add(ee.Image(region_params.geo_map_clean3[1]).unmask(0, false))
-                     .selfMask();
+var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
 var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
 var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 
@@ -2480,12 +2476,12 @@ if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', true);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geo clean stage  3', true);
 
-Map.addLayer(geo_clean3x.updateMask(geo_clean3x.gt(2)), map_palettes.geo, 'Geo clean stage 3X', true);
+Map.addLayer(benthic_clean1.updateMask(geo_clean3.gt(2)), map_palettes.benthic, 'Benthic clean preview', false);
 
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean stage 2', false);
 
-Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+//Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
 
 var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
 Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
