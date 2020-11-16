@@ -1461,7 +1461,7 @@ if (!vars.manual_clean) {
       if (vars.cleanup_stage == 1) {
         // BENTHIC CLEAN-UP RULES
         
-        // reclaim shallow no data to surrounding class
+        /*// reclaim shallow no data to surrounding class
         var smooth_map = clean_map
                             .focal_mode({
                               radius: vars.smooth_radius.multiply(3), // relates to smoothness required
@@ -1471,7 +1471,7 @@ if (!vars.manual_clean) {
         var clean_map = clean_map.unmask(0).where({
           test: geo_map.gt(2).and(clean_map.eq(0)), 
           value: smooth_map
-        }).selfMask();
+        }).selfMask();*/
         
         // cut benthic off to < 10 - 15 m
         clean_map = clean_map.where({
