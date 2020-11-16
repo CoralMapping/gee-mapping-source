@@ -105,7 +105,19 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
           [106.47491225409226, -5.405064438884441],
           [106.38118514227585, -5.4816219291551835],
           [106.41620406317429, -5.494266645100354],
-          [106.51370772528367, -5.556802768043893]]]);
+          [106.51370772528367, -5.556802768043893]]]),
+    geometry = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[144.44687168623975, -15.76120972060074],
+          [145.36972324873975, -18.198708564324935],
+          [147.39120762373975, -20.10818049401271],
+          [150.33554356123975, -24.25761940799946],
+          [152.46689121748975, -27.49914753510019],
+          [154.62021152998975, -27.616026165192068],
+          [153.80722324873975, -21.62744324957367],
+          [149.91806309248975, -17.676094661958025],
+          [148.88534824873975, -14.23311639868146],
+          [143.89755527998975, -10.30479892516179],
+          [142.53525059248975, -10.73686312791698]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
@@ -113,7 +125,8 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
 
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals');
 
-var export_geom = region_east.merge(region_west).geometry()
+//var export_geom = region_east.merge(region_west).geometry()
+var export_geom = geometry
 
 // Load the clean 3 outputs ++
 Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false)
