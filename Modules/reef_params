@@ -607,7 +607,7 @@ var indonesia = {
   benthic_map: ["projects/coral_atlas/Indonesia/in_out/indo_benthic_east","projects/coral_atlas/Indonesia/in_out/indo_benthic_west"],
   geo_map_clean1:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean1",
   geo_map_clean2:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean2",
-  geo_map_clean3: ["projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_east_RC","projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_west_RC"],
+  geo_map_clean3:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x" ,
   benthic_map_clean1: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean1",
   benthic_map_clean2: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2",
   mid_mask: "projects/coral_atlas/Indonesia/in_out/indo_midmask",
