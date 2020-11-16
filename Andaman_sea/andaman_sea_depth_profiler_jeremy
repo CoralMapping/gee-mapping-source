@@ -289,8 +289,7 @@ function showChart(transect) {
             0: { lineWidth: 8 },
             
           },
-          colors: ['#bd0026', '#006d2c', '#54278f',
-                   '#ff0ef8']
+          colors: [ '#ff0ef8']
         };
       
       
