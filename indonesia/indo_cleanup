@@ -599,11 +599,11 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
-  benthic_depth_cutoff: 750, //depth in centimetres
+  benthic_depth_cutoff: 1000, //depth in centimetres
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -885,11 +885,11 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(13)
   });
     
-  // Seagrass on Back reef slope -> Sand 
+  // Seagrass on RC or ORF -> Coral/Algae
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(24)),
-    value: ee.Image(11)
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+    value: ee.Image(15)
   });  
   
     
