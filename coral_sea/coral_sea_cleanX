@@ -3,10 +3,7 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
     geo_west = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_west_RC"),
     global_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
     land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
-    region_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
-    region_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
     gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
-    image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
     coast_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -92,7 +89,6 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
            [131.61170558176764, -0.7053440163363908],
            [131.38305262766607, -0.7177026824318511],
            [131.10221461497076, -0.8522725401817809]]]]),
-    geo2 = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean2"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
     reef_recovery = 
     /* color: #98ff00 */
@@ -117,7 +113,9 @@ var geo_east = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_e
           [149.91806309248975, -17.676094661958025],
           [148.88534824873975, -14.23311639868146],
           [143.89755527998975, -10.30479892516179],
-          [142.53525059248975, -10.73686312791698]]]);
+          [142.53525059248975, -10.73686312791698]]]),
+    image = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_pixels"),
+    geo2 = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_geo_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // A bespoke cleanup script for the beast that is the Indonesian reef region!
 
@@ -132,7 +130,7 @@ var export_geom = geometry
 Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false)
 Map.addLayer(geo2, map_palettes.geo, 'Geo clean stage 2', false);
 var geo3 = geo_east.unmask(0, false).add(geo_west.unmask(0, false)).selfMask();
-Map.addLayer(geo3, map_palettes.geo, 'Geo clean stage 3', false);
+Map.addLayer(geo3, map_palettes.geo, 'Geo clean stage 3', false); ///it seems this ill come after geo 3?
 
 Map.addLayer(gebco.multiply(-1), {min:0, max:300}, "GEBCO", false)
 
