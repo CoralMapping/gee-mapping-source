@@ -135,7 +135,7 @@ Map.addLayer(geo2_to3, map_palettes.geo, 'Geo clean stage 3', false); ///it seem
 Map.addLayer(gebco.multiply(-1), {min:0, max:300}, "GEBCO", false)
 
 // set the manual clean layer
-var man_geo = geo3
+var man_geo = geo2_to3
 
 
 /*// add back in missing data in specific locations
