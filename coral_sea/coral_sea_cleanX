@@ -104,9 +104,9 @@ man_geo = man_geo.where({
 
 // use the coastal mask for further removal
 //var coast_mask_i = ee.Image().byte().paint(ee.Feature(coast_mask, {zone: 1}), 'zone').clip(coast_mask);
-var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(coast_mask).geometry(),
-                                                   {zone: 1}), 'zone')
-                                 .unmask(0);
+//var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(coast_mask).geometry(),
+                                //                   {zone: 1}), 'zone')
+                                // .unmask(0);
                                  
 //man_geo = man_geo.where({
   //test: coast_mask_i.eq(1)
