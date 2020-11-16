@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     notReef_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -2312,7 +2315,10 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
     notreef = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_notreef"),
     indo_benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic"),
     global_reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    RefinementMask = /* color: #acd60f */ee.Geometry.MultiPolygon(
+    RefinementMask = 
+    /* color: #acd60f */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[95.68434914282503, 4.6443936703698565],
            [95.60195168188753, 4.49654991375642],
            [96.40944679907503, 3.586962182619043],
