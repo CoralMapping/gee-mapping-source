@@ -2428,7 +2428,7 @@ var vars = {
   geo_clean2: true, // set to true if you want to view geo clean 2
   geo_clean3: true, // set to true if you want to view geo clean 3
   benthic_raw: true, // set to true if you want to view the raw classifications for benthic
-  benthic_clean1: false, // set to true if you want to view benthic clean 1
+  benthic_clean1: true, // set to true if you want to view benthic clean 1
   benthic_clean2: false, // set to true if you want to view benthic clean 2
 };
 
@@ -2482,8 +2482,6 @@ if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', true);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geo clean stage  3', true);
 
-Map.addLayer(benthic_map_raw.updateMask(geo_clean3.gt(2)), map_palettes.benthic, 'Benthic clean preview', false);
-
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean stage 2', false);
 
@@ -2492,6 +2490,8 @@ if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Ben
 var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
 Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
 
+
+Map.addLayer(ee.FeatureCollection(region_params.geo_train), {color: 'red'}, "Reference data areas", false)
 
 /*// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
