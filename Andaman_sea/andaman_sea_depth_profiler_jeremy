@@ -222,7 +222,7 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_composite']);
+var stackedRenamed = stacked.select(['b1_s'],['depth_composite']);
 //var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
 //print (stackedRenamed)
 
@@ -286,10 +286,7 @@ function showChart(transect) {
         pointSize: 2,
 
       series: {
-            0: { lineWidth: 3 },
-            1: { lineWidth: 3 },
-            2: { lineWidth: 3 },
-            3: { lineWidth: 8 },
+            0: { lineWidth: 8 },
             
           },
           colors: ['#bd0026', '#006d2c', '#54278f',
