@@ -24,7 +24,7 @@ Map.centerObject(centre_map, 10)
 
 
 // add some background data
-Map.addLayer(rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide mosaic", false)
+Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Low tide mosaic", false)
 Map.addLayer(pixels.select('depth'), {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "S2/LS8/Dive depth mosaic", false)
 
 // west micronesia (dove only)
