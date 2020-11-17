@@ -550,7 +550,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [120.65060208779353, -4.745741910602106]]], null, false),
     indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
     indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
-    sg_on_orf = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    sg_on_orf = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[123.83947602878932, -5.700206722814475],
            [123.60876313816432, -5.514332908680738],
            [123.38079682957057, -5.385827151288308],
@@ -880,7 +883,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
   var geo_map = ee.Image(region_params.geo_map_clean3);
@@ -889,7 +892,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
   // extra depth cutoff refinement
-  clean_map = clean_map.where({
+  man_benthic = man_benthic.where({
           test: depth.gt(vars.benthic_depth_cutoff),
           value: ee.Image(0)
         });
@@ -937,6 +940,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // final smooth for missing data due to depth
   man_benthic = man_benthic.focal_mode(2)
+                           .selfMask()
   
   
   // Add the manual layer to the map
