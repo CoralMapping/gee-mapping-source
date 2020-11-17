@@ -74,10 +74,10 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
 
-  // Reef crest, slope, sheltered slope (within reef mask) -> Inner reef flat
+  // Reef crest, slope, sheltered slope and BRS(within reef mask) -> Inner reef flat
   man_geo = man_geo.where({
     test: reef_mask.eq(0)
-                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
     value: ee.Image(13)
   });
   
