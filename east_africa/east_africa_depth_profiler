@@ -278,14 +278,10 @@ function showChart(transect) {
         pointSize: 2,
 
       series: {
-            0: { lineWidth: 3 },
-            1: { lineWidth: 3 },
-            2: { lineWidth: 3 },
             3: { lineWidth: 8 },
             
           },
-          colors: ['#bd0026', '#006d2c', '#54278f',
-                   '#ff0ef8']
+          colors: ['#ff0ef8']
         };
       
       
