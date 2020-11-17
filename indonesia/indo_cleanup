@@ -622,7 +622,7 @@ var vars = {
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
-  benthic_depth_cutoff: 1000, //depth in centimetres
+  benthic_depth_cutoff: 750, //depth in centimetres
   
   //############
   // Clean-up stage selection
@@ -888,6 +888,11 @@ if (vars.manual_clean && !vars.geomorphic) {
   // define the clean benthic map to apply 2nd stage rules to
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
+  // extra depth cutoff refinement
+  clean_map = clean_map.where({
+          test: depth.gt(vars.benthic_depth_cutoff),
+          value: ee.Image(0)
+        });
   
   /*
   **Generic benthic rules**
@@ -909,9 +914,14 @@ if (vars.manual_clean && !vars.geomorphic) {
   });
     
   // Seagrass on RC or ORF -> Coral/Algae
+  
+  // except for these two areas
+  var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));
+  
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+                     .and(geo_map.eq(14).or(geo_map.eq(15)))
+                     .and(sg_orf.eq(0)),
     value: ee.Image(15)
   });  
   
