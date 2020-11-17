@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var geometry = /* color: #d63000 */ee.Geometry.Point([-157.29856139452542, 21.043465804465548]);
+var geometry = /* color: #d63000 */ee.Geometry.Point([-156.5825706899315, 20.74135304423607]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
@@ -30,7 +30,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 //bring the keys from datagen
 
-var region_params = param_module.hawaii
+var region_params = param_module.indonesia
 
 //setting variables from datagen keys
 
