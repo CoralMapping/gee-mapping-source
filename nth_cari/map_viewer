@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    low_rrs = ee.Image("projects/coral_atlas/workflow/mapping/northern_caribbean/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic/20191218T154814Z/north_caribbean_bahamas_low_tide_normalized_sr_jan2018_nov2019_v2_shift_mosaic"),
     ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
     geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
     benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
@@ -19,8 +18,8 @@ var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis')
 var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 
 // choogse where to centre (link this dynamically to map app?)
-//var centre_map = ncab
-//Map.centerObject(centre_map, 10)
+var centre_map = ncab
+Map.centerObject(centre_map, 6)
 //splitting North Cari regions
 
 
@@ -28,8 +27,8 @@ var map_palettes = require('users/mitchest/global_reefs:Modules/colour_pals')
 //Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
 //Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
 
-Map.addLayer(low_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
-Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
+//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 //Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
 //Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
@@ -118,7 +117,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 //     maxPixels: 1e13
 // })
 
-Export.table.toAsset({
-  collection: Mask_NoReef,
-  description: 'nth_cari_final_mask',
-})
+//Export.table.toAsset({
+//  collection: Mask_NoReef,
+//  description: 'nth_cari_final_mask',
+//})
