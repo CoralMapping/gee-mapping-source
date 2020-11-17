@@ -666,7 +666,7 @@ var gbr_torres = {
   depth_composite: ["projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth_2"],
   extent_mask: "projects/coral_atlas/gbr_torres/in_out/gbrt_extent",
   notreef_mask: "projects/coral_atlas/gbr_torres/in_out/gbrt_notreef",
-  pixels:[""],
+  pixels:["projects/coral_atlas/gbr_torres/in_out/gbrt_pixels"],
   segments:[""],
   waves:"",
   geo_train:"",
