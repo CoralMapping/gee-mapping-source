@@ -88,7 +88,7 @@ Map.centerObject(center_map, 6);
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 
-Map.addLayer(cio_region_outline, {color:'#00FFFF'}, "region outline", false)
+//Map.addLayer(cio_region_outline, {color:'#00FFFF'}, "region outline", false)
 /*
 
 // Load the raw classifications
