@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_extent"),
-    benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2_old"),
     geo = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x"),
     pixels = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
