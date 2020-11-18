@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
     notReef_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -2397,7 +2400,10 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([122.97355459536129, -2.5
            [131.61170558176764, -0.7053440163363908],
            [131.38305262766607, -0.7177026824318511],
            [131.10221461497076, -0.8522725401817809]]]]),
-    AreasWithSeagrassonORF = /* color: #98ff00 */ee.Geometry.MultiPolygon(
+    AreasWithSeagrassonORF = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[123.83947602878932, -5.700206722814475],
            [123.60876313816432, -5.514332908680738],
            [123.38079682957057, -5.385827151288308],
