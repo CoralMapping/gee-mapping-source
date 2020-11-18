@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var imageVisParam = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]};
+var imageVisParam = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]},
+    geometry = /* color: #d63000 */ee.Geometry.Point([78.7279342078017, 8.056269572926762]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
