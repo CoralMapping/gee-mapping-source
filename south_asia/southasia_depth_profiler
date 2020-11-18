@@ -31,7 +31,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
 //bring the keys from datagen
 
-var region_params = param_module.andm
+var region_params = param_module.south_asia
 
 //setting variables from datagen keys
 
