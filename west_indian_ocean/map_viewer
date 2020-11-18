@@ -64,9 +64,9 @@ Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
 
 
 
-var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
+//var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
 
-Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
+//Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 // #############
 // example confidence layers
@@ -105,9 +105,9 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
 
 
 //show confidence layers
-var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
-Map.addLayer(benthic_conf_clean,conf_str,'confidence_benthic',false);
-Map.addLayer(geo_conf_clean,conf_str,'confidence_geo',false);
+//var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
+//Map.addLayer(benthic_conf_clean,conf_str,'confidence_benthic',false);
+//Map.addLayer(geo_conf_clean,conf_str,'confidence_geo',false);
 
 //Confidence legend
 
@@ -118,15 +118,15 @@ var legend=ui.Panel({
   }
 });
 
-//var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
+var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
 var vis = {min: 'low', max: 'high', palette: '4d004b,810f7c,88419d,8c6bb1,8c96c6,9ebcda,bfd3e6,e0ecf4,f7fcfd'};
 
 function makeColorBarParams(palette) {
   return {
     bbox: [0, 0, 1, 0.1],
     dimensions: '100x10',
-    format: 'png',
-    min: 0,
+   format: 'png',
+   min: 0,
     max: 1,
     palette: palette,
   };
@@ -154,8 +154,8 @@ var legendTitle = ui.Label({
   style: {fontWeight: 'bold',position: 'bottom-right'}
 });
 
-legend.add(legendTitle);
-legend.add(colorBar)
-legend.add(legendLabels);
+//legend.add(legendTitle);
+//legend.add(colorBar)
+//legend.add(legendLabels);
 
-Map.add(legend)
+//Map.add(legend)
