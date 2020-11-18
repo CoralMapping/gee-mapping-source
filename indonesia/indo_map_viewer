@@ -3,10 +3,7 @@ var centre_map =
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([122.97355459536129, -2.5240694931651593]),
-    notReef_mask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    notReef_mask = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
