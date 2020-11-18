@@ -1,7 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_extent"),
     geo = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x"),
-    pixels = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels");
+    pixels = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
+    benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Indonesia
@@ -43,6 +44,7 @@ var export_stack = depth.updateMask(geo.gt(2)).rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false);
 
 // run the export
+Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
 Export.image.toCloudStorage({
   image: export_stack,
   description: 'indonesia_stack',
