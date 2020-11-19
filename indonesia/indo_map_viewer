@@ -2461,7 +2461,7 @@ Map.centerObject(centre_map, 6);
 // Add low-tide base map to viewer
 //var pix_lowtide = ee.ImageCollection(region_params.pixels); // low tide image from the stack
 //Map.addLayer(pix_lowtide, region_params.visParams, sensor_params.sname + ' low tide', false); // image data
-var lowtide_image = ee.ImageCollection(region_params.image); // original low tide image
+var lowtide_image = ee.ImageCollection(region_params.pixels).select('b1','b2','b3'); // original low tide image
 Map.addLayer(lowtide_image, region_params.visParams, sensor_params.sname + ' low tide', false); // image data
 
 // Load the raw geomorphic classification
