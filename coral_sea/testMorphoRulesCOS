@@ -93,7 +93,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
   
   
   
-  
+/*
 
 // the "DEEP WATER" CLEAN
   
@@ -123,7 +123,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
   });
    
 
-  
+ */ 
   
   //show the maps
 var map_geo1 = ee.Image(region_params.geo_map_clean1);
