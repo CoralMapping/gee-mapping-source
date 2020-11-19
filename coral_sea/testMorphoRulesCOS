@@ -72,7 +72,8 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
   var reef_mask = man_geo.eq(2)
             .focal_max({kernel: kernel_rm, iterations: 2});
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
-  
+  Map.addLayer(reef_mask, {}, "reef mask")
+  Map.addLayer(global_reef_mask, {}, " global_reef_mask")
 
   // Reef crest, slope, sheltered slope and BRS(within reef mask) -> Inner reef flat
   man_geo = man_geo.where({
