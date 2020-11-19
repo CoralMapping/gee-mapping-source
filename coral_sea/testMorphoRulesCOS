@@ -136,7 +136,7 @@ Map.addLayer(man_geo, map_palettes.geo, 'Geomorphic clean2_MorfologicalCleanUp',
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_morphologic',
+      description: 'geo_map_morphologicNodeepclean2',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
