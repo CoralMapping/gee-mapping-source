@@ -21,7 +21,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [150.34354451365772, -17.743562454844106],
           [150.53000547875627, -17.761259587948224],
           [150.7600126048974, -17.61592863755859],
-          [150.75863931388176, -17.304144663176455]]]);
+          [150.75863931388176, -17.304144663176455]]]),
+    imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":14.26,"max":698.74,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -292,7 +293,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Add data + the manual layer to the map
   var lowtide_image = ee.ImageCollection(region_params.image);
-  Map.addLayer(lowtide_image, region_params.visParams, sensor_params.sname + ' low tide', false);
+  Map.addLayer(lowtide_image, imageVisParam2, sensor_params.sname + ' low tide', false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
