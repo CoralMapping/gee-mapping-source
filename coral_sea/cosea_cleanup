@@ -299,10 +299,10 @@ if (vars.manual_clean && vars.geomorphic) {
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
-  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
-  Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
-  Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
-  Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
+  //Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+ // Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+  //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
+  //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
 
   // display distance to land mask for assessing cut-off distances
   var distToLand = ee.Image(region_params.distToLand);
