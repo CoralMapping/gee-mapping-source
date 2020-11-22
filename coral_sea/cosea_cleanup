@@ -156,8 +156,8 @@ if (!vars.geomorphic) {
 }
 
 //Region extent is created in map viewer and exported to GEE asset
-//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
-//Map.addLayer(region_extent, {}, "Manual reef outline", false);
+var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
+Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
 
 //################################################################################################
@@ -392,8 +392,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
- // Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
-   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
+   Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+  // Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   //Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
