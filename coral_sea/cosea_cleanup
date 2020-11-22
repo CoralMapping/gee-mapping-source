@@ -156,8 +156,8 @@ if (!vars.geomorphic) {
 }
 
 //Region extent is created in map viewer and exported to GEE asset
-var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
-Map.addLayer(region_extent, {}, "Manual reef outline", false);
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
+//Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
 
 //################################################################################################
