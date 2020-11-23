@@ -73,6 +73,7 @@ Map.centerObject(map_centre, 6)
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
 // import depth data (NB depth is 16bit s integer in centimeters)
+/*
 var dove_depth = ee.Image(region_params.depth).rename('depth')
 var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
 var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
@@ -86,6 +87,8 @@ Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_
 var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
 // get back the negative retrievals as very shallow
 depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
+*/
+var depth = ee.Image(region_params.depth_composite).rename('depth')
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
