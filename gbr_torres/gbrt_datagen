@@ -73,21 +73,6 @@ Map.centerObject(map_centre, 6)
 var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
 // import depth data (NB depth is 16bit s integer in centimeters)
-/*
-var dove_depth = ee.Image(region_params.depth).rename('depth')
-var s2_depth = ee.Image(region_params.s2_depth).rename('depth')
-var ls8_depth = ee.Image(region_params.ls8_depth).rename('depth')
-
-Map.addLayer(dove_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Dove depth (cm)", false) // water depth
-Map.addLayer(s2_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Sentinel-2 depth (cm)", false) // water depth
-Map.addLayer(ls8_depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Landsat 8 depth (cm)", false) // water depth
-
-// make the depth data for modelling/mapping
-// --> Use S2 where possible, then LS8, then Dove (the GEE mosaic algorithm uses the LAST non-masked pixel in the stack)
-var depth = ee.ImageCollection([dove_depth, ls8_depth, s2_depth]).mosaic()
-// get back the negative retrievals as very shallow
-depth = depth.where(depth.eq(-1), 10) // handle "too shallow" retrievals
-*/
 var depth = ee.Image(region_params.depth_composite).rename('depth')
 
 // define a mask based on min/max depth
