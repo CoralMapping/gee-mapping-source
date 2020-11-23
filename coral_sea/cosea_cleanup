@@ -612,7 +612,7 @@ if (vars.manual_clean && !vars.geomorphic) {
    Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
   // Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   //Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
-  Map.addLayer(geo_map, map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
   Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
   Map.addLayer(man_benthic, map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
   
