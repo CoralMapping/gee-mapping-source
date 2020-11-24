@@ -1819,9 +1819,9 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   });
   
-  //reef slope > Back reef slope (outside the reef)
+  //reef crest > Back reef slope (outside the reef)
   man_geo = man_geo.where({
-    test:  Rs_Brs.eq(1)
+    test:  Rc_Brs.eq(1)
                      .and(man_geo.eq(15)),
     value: ee.Image(24)
   });
