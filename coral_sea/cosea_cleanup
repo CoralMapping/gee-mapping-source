@@ -1330,11 +1330,11 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [148.29129085059378, -17.504455618744153],
            [148.29146251197074, -17.50150877254031],
            [148.28923091407034, -17.50069019566832]]],
-         [[[148.33287883065543, -17.57607521955373],
-           [148.33021807931266, -17.57681163262426],
-           [148.33330798409781, -17.58744837582107],
-           [148.33691287301383, -17.586548367939123],
-           [148.3359687354406, -17.57942996592552]]]]),
+         [[[148.32678484634903, -17.57783436349069],
+           [148.32412406912624, -17.578570776557928],
+           [148.32721400396164, -17.5892075197582],
+           [148.3308189279613, -17.588307511873836],
+           [148.3298747811907, -17.581189109861544]]]]),
     brs_rs = 
     /* color: #ffc82d */
     /* shown: false */
@@ -1614,6 +1614,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
   var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
   var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
+  var Rc_Brs = ee.Image().byte().paint(ee.Feature(rc_brs, {zone: 1}), "zone").clip(rc_brs)
     
   // Back reef slope -> shallow lagoon (inside the reef)
   man_geo = man_geo.where({
@@ -1641,6 +1642,13 @@ if (vars.manual_clean && vars.geomorphic) {
     test:  Brs_Rs.eq(1)
                      .and(man_geo.eq(24)),
     value: ee.Image(22)
+  });
+  
+  //reef slope > Back reef slope (outside the reef)
+  man_geo = man_geo.where({
+    test:  Rs_Brs.eq(1)
+                     .and(man_geo.eq(15)),
+    value: ee.Image(24)
   });
    
 
