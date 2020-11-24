@@ -247,7 +247,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [151.99468467783288, -17.226086953898747],
            [152.00292442392663, -17.219200452260374],
            [152.0018944556649, -17.21460930864561]]]]),
-    imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1};
+    imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
+    brs_sl = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
