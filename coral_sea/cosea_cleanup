@@ -13,10 +13,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [120.29526303750056, -5.259104744078933],
           [120.65060208779353, -5.259104744078933],
           [120.65060208779353, -4.745741910602106]]], null, false),
-    mid_mask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    mid_mask = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
