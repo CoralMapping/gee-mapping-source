@@ -1317,7 +1317,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [148.17676525042182, -17.395479777243786],
           [148.17773084995554, -17.396278352085726],
           [148.1839535748701, -17.388906774111373]]]),
-    brs_rs = /* color: #ffc82d */ee.Geometry.MultiPolygon(
+    rs_rs = /* color: #ffc82d */ee.Geometry.MultiPolygon(
         [[[[148.20662064207886, -17.39971405455796],
            [148.20516152037476, -17.40030785202905],
            [148.20046229018067, -17.419021721709516],
@@ -1586,7 +1586,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
   var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
    var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs);
-  var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
+  var Rs_Rs = ee.Image().byte().paint(ee.Feature(rs_rs, {zone: 1}), "zone").clip(rs_rs);
     
   // Back reef slope -> shallow lagoon (inside the reef)
   man_geo = man_geo.where({
@@ -1602,9 +1602,9 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(24)
   });
   
-// sheltered reef slope > back reef slope (outside the reef)
+// reef slope > back reef slope (outside the reef)
   man_geo = man_geo.where({
-    test:  Srs_Brs.eq(1)
+    test: Rs_Brs.eq(1)
                      .and(man_geo.eq(22)),
     value: ee.Image(24)
   });
