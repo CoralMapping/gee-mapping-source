@@ -140,7 +140,7 @@ var gbr_eomap = {
   geo_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo",
   benthic_map: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic",
   geo_map_clean2: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean2",
-  geo_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean3",
+  geo_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean",
   benthic_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-clean-mix"
 }
 
