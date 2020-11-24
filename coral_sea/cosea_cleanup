@@ -478,7 +478,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   
   
-  /*
+/*
   ##############
   
   The rest of the manual geometry paintings and rules should go here
@@ -488,6 +488,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
   
+  */
+  var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
   
   // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
@@ -503,8 +505,10 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  ##############
-  */
+
+  
+  
+
   
   if (vars.geo_refinement) {
     // make the mask image layer
