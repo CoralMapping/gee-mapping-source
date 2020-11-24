@@ -1208,7 +1208,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       "coordinates": []
     }),
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
-    brs_sl = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    brs_sl = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[147.10680617969024, -15.482576389053412],
            [147.10191383044707, -15.482410956914025],
            [147.0956482339212, -15.484809738517354],
@@ -1544,7 +1547,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // Back reef slope -> shallow lagoon (inside the reef)
   man_geo = man_geo.where({
     test: Brs_Sl.eq(1)
-                     .and(man_geo.eq(24)),
+                     .and(man_geo.eq(24)).or(man_geo.eq(12)),
     value: ee.Image(11)
   });
   
