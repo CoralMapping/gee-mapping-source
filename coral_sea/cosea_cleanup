@@ -1245,7 +1245,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       "coordinates": []
     }),
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
-    brs_sl = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    brs_sl = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[147.10680617969024, -15.482576389053412],
            [147.10191383044707, -15.482410956914025],
            [147.0956482339212, -15.484809738517354],
