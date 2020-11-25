@@ -13,7 +13,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [120.29526303750056, -5.259104744078933],
           [120.65060208779353, -5.259104744078933],
           [120.65060208779353, -4.745741910602106]]], null, false),
-    mid_mask = /* color: #d63000 */ee.Geometry({
+    mid_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2125,7 +2128,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [151.75031689154474, -17.199824402775587],
            [151.74799946295587, -17.19875850010174],
            [151.73898724066584, -17.198512521689963]]]]),
-    brs_rs = /* color: #ffc82d */ee.Geometry.MultiPolygon(
+    brs_rs = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[148.20662064207886, -17.39971405455796],
            [148.20516152037476, -17.40030785202905],
            [148.20046229018067, -17.419021721709516],
@@ -2424,8 +2430,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [159.55725390561236, -21.426315943849232],
            [159.55622393735064, -21.406259975845572],
            [159.55613810666216, -21.395311931572493]]]]),
-    MINOR_toFIX = /* color: #ff0000 */ee.Geometry.MultiPoint(),
-    srs_orf = /* color: #00ff00 */ee.Geometry.MultiPolygon(
+    srs_orf = 
+    /* color: #00ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[148.53042490579054, -17.86530342950247],
            [148.52604754067823, -17.870368259055248],
            [148.51420290566847, -17.878863778008892],
