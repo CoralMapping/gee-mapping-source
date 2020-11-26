@@ -2455,7 +2455,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [150.8317724908432, -17.662713579315145],
            [150.83473364959565, -17.661650376951194],
            [150.83348910461274, -17.65964663234401]]]]),
-    waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves");
+    waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
+    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -2773,6 +2774,8 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(waves, {}, 'waves', false);
+  Map.addLayer(wavespng, {}, 'wavesIndo', false);
+  
   //Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
  // Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
