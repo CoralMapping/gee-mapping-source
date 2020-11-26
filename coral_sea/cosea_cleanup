@@ -1,18 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    test_area = 
-    /* color: #98ff00 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[120.29526303750056, -4.745741910602106],
-          [120.29526303750056, -5.259104744078933],
-          [120.65060208779353, -5.259104744078933],
-          [120.65060208779353, -4.745741910602106]]], null, false),
     mid_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -2456,7 +2443,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [150.83473364959565, -17.661650376951194],
            [150.83348910461274, -17.65964663234401]]]]),
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
-    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves");
+    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
+    geometry = /* color: #0000ff */ee.Geometry.Point([149.4481434404022, -16.265311901700663]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -2490,6 +2478,8 @@ var region_params = param_module.coral_sea;  //<------------ THIS IS WHERE YOU C
 // 1. Setting constants
 
 // These will get written to the asset metadata 
+
+Map.setCenter(geometry, 4)
 
 var vars = {
   
