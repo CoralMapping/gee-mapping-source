@@ -649,7 +649,7 @@ var coral_sea = {
   //geo_map_clean2:"projects/coral_atlas/coral_sea/in_out/geo_map_morphologicNodeepclean2", //this one after dilate/erosion rules
   geo_map_clean2:"projects/coral_atlas/coral_sea/in_out/cosea_geo_clean2_a", //this is a second geo 2 after manually doing lots and meeting with PT
   geo_map_clean3:"projects/coral_atlas/coral_sea/in_out/cosea_geo_clean3",
-  benthic_map_clean1: "",
+  benthic_map_clean1: "projects/coral_atlas/coral_sea/in_out/cosea_benthic_clean1",
   benthic_map_clean2: "",
   prob_geo:[""],
   prob_benthic:[""],
