@@ -3,7 +3,17 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
     wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
-    geometry = /* color: #0000ff */ee.Geometry.Point([149.4481434404022, -16.265311901700663]);
+    geometry = /* color: #0000ff */ee.Geometry.Point([149.4481434404022, -16.265311901700663]),
+    brs_rs = /* color: #999900 */ee.Geometry.Polygon(
+        [[[142.1807624875671, -14.431469143679623],
+          [142.3016120969421, -14.644160402250593],
+          [142.7081062375671, -14.53784036627201],
+          [142.3455574094421, -14.165319393326932]]]),
+    srs_brs = /* color: #009999 */ee.Geometry.Polygon(
+        [[[142.7630378781921, -15.31277795398149],
+          [142.7740242063171, -15.598681306072624],
+          [143.4991218625671, -15.461073381207898],
+          [143.0926277219421, -15.058313053026106]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -252,7 +262,7 @@ if (vars.manual_clean && vars.geomorphic) {
  // var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
  // var Rc_Brs = ee.Image().byte().paint(ee.Feature(rc_brs, {zone: 1}), "zone").clip(rc_brs)
- // var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
+ var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
   // Back reef slope -> shallow lagoon (inside the reef)
  /*
