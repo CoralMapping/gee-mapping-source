@@ -250,7 +250,7 @@ if (vars.manual_clean && vars.geomorphic) {
   //var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
  // var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
  // var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
- // var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
+var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
  // var Rc_Brs = ee.Image().byte().paint(ee.Feature(rc_brs, {zone: 1}), "zone").clip(rc_brs)
  // var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
@@ -276,7 +276,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(24)
   });
   
-
+*/
  //Back reef slope > reef slope (outside the reef)
   man_geo = man_geo.where({
     test:  Brs_Rs.eq(1)
@@ -285,11 +285,11 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   //reef crest > Back reef slope (outside the reef)
-  man_geo = man_geo.where({
-    test:  Rc_Brs.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(24)
-  });
+ // man_geo = man_geo.where({
+   // test:  Rc_Brs.eq(1)
+   //                  .and(man_geo.eq(15)),
+  //  value: ee.Image(24)
+  //});
    
   //sheltered reef slope > Back reef slope (outside the reef)
   man_geo = man_geo.where({
@@ -299,12 +299,12 @@ if (vars.manual_clean && vars.geomorphic) {
   });
     
   //sheltered reef slope > outer reef falt (inside the reef)
-  man_geo = man_geo.where({
-    test:  Srs_Orf.eq(1)
-                     .and(man_geo.eq(21)),
-    value: ee.Image(14)
-  }); 
-  */
+ // man_geo = man_geo.where({
+   // test:  Srs_Orf.eq(1)
+     //                .and(man_geo.eq(21)),
+   // value: ee.Image(14)
+  //}); 
+
   
   if (vars.geo_refinement) {
     // make the mask image layer
