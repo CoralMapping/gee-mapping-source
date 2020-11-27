@@ -488,7 +488,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
   man_geo = man_geo.where({
     test: All_Brs.eq(1)
             .and(man_geo.eq(11)).or(man_geo.eq(12))
-            .or(man_geo.eq(13)).or(man_geo.eq(14)).or(man_geo.eq(15))
+            .or(man_geo.eq(13)).or(man_geo.eq(15))
             .or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))
             .or(man_geo.eq(23)),
     
