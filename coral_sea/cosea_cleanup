@@ -410,7 +410,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
             .and(man_geo.eq(11)).or(man_geo.eq(12))
             .or(man_geo.eq(13)).or(man_geo.eq(14)).or(man_geo.eq(15))
             .or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22))
-            .or(man_geo.eq(23)).or(man_geo.eq(24))),
+            .or(man_geo.eq(23)).or(man_geo.eq(24)),
     
     value: ee.Image(24)
   });
