@@ -7,7 +7,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #0000ff */
     /* shown: false */
     ee.Geometry.Point([149.4481434404022, -16.265311901700663]),
-    brs_rs = /* color: #999900 */ee.Geometry({
+    brs_rs = 
+    /* color: #999900 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -532,6 +535,47 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                149.96392290430285,
+                -16.120298217470246
+              ],
+              [
+                150.02108614282824,
+                -16.15591596335479
+              ],
+              [
+                150.03396074609972,
+                -16.146847237995768
+              ],
+              [
+                150.03241579370714,
+                -16.135469522102806
+              ],
+              [
+                150.02211611108996,
+                -16.11897891870105
+              ],
+              [
+                150.0102714760802,
+                -16.11469113707309
+              ],
+              [
+                149.99362032251574,
+                -16.114856053465513
+              ],
+              [
+                149.96615450220324,
+                -16.115350801819908
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -559,7 +603,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #99ff99 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    all_brs = /* color: #9999ff */ee.Geometry({
+    all_brs = 
+    /* color: #9999ff */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
