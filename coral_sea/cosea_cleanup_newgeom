@@ -60,8 +60,8 @@ var vars = {
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1500, //depth in centimetres
-  shallowlag_depth_cutoff: 500, //depth in centimetres
+  geo_depth_cutoff: 1200, //depth in centimetres
+  //shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1200, //depth in centimetres
   
   //############
