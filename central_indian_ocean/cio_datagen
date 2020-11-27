@@ -78,10 +78,11 @@ var depth = ee.Image(region_params.depth_composite).rename('depth')
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
-
+/*
 // "NOT REEF" CLEAN
 var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
 var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
+*/
 // remove
 depth_mask = depth_mask.where({
   test: not_reef_img.eq(1),
