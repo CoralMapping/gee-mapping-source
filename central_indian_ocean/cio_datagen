@@ -75,7 +75,7 @@ var reflec = ee.Image(region_params.image).select(vars.all_bands)
 
 // import depth data (NB depth is 16bit s integer in centimeters)
 var depth = ee.Image(region_params.depth_composite).rename('depth')
-/*
+
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
@@ -90,7 +90,7 @@ depth_mask = depth_mask.where({
 
 // clip and load other variables
 var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
-*/
+
 // add layers to the map
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
