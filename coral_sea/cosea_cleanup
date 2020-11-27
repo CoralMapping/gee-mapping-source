@@ -37,7 +37,15 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [158.3187705853717, -19.238767543726482],
           [158.28375166447327, -19.33403977649796],
           [158.27207869084046, -19.397523750828203]]]),
-    brs_sl = /* color: #ff9999 */ee.Geometry.MultiPoint();
+    brs_sl = /* color: #ff9999 */ee.Geometry.Polygon(
+        [[[158.54939071232656, -19.108304975043136],
+          [158.54209510380605, -19.113981985669234],
+          [158.54166595036367, -19.12574088753631],
+          [158.54913322026113, -19.130768576399753],
+          [158.55891791874745, -19.130768576399753],
+          [158.56578437382558, -19.124281207271938],
+          [158.56338111454824, -19.115360658833588],
+          [158.5569438129125, -19.110900204084583]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -279,8 +287,8 @@ if (vars.manual_clean && vars.geomorphic) {
   e.g. 
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  
-  */
+*/
+
 var Brs_Sl = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
  // var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
