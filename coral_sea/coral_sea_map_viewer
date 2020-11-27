@@ -43,7 +43,7 @@ var vars = {
 };
 
 
-var mapPanel=ui.Map().centerObject(centre_map, 6)
+var mapPanel=ui.Map().centerObject(150.258, -17.303, 6)
 
 //load image sr
 var low_tide_image_dove = ee.Image(region_params.image);
