@@ -7,7 +7,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #0000ff */
     /* shown: false */
     ee.Geometry.Point([149.4481434404022, -16.265311901700663]),
-    rb_sand = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    rb_sand = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[146.5763839530119, -13.84914960866385],
            [146.57561172991683, -13.822813730803151],
            [146.58548201899922, -13.823147432262907],
