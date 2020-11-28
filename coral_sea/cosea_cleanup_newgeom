@@ -455,9 +455,12 @@ if (vars.manual_clean && !vars.geomorphic) {
   //rubble to sand
   
   man_benthic = man_benthic.where({
-    test: Rb_Sand.eq(1),
+    test: Rb_Sand.eq(1)
+                      .and(man_benthic.eq(12)),
     value: ee.Image(11)
   })
+    
+  
     
   /*
   
