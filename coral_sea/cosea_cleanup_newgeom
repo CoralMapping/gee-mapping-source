@@ -66,7 +66,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -254,6 +254,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
 */
 
+//all commented lines were applied in a previos version (lots of polys)
 var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
  // var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
@@ -406,8 +407,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // BMA on inner RF, outer RF,reef crest, reef slope -> rubble 
   man_benthic = man_benthic.where({
-    test: man_benthic.eq(18)
-                     .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
+    test: man_benthic.eq(18),
+                     //.and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
     value: ee.Image(12)
   });
   
@@ -417,11 +418,19 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(14).or(geo_map.eq(15))),
     value: ee.Image(13)
   });
+  
+  //sand in reef crest > coral
+  
+   man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(15)),
+    value: ee.Image(13)
+  });
     
-  // Seagrass on Back reef slope -> Sand 
+  // Seagrass on reef slope -> Sand 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(24)),
+                     .and(geo_map.eq(22)),
     value: ee.Image(11)
   });  
   
