@@ -456,7 +456,6 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   man_benthic = man_benthic.where({
     test: Rb_Sand.eq(1),
-    
     value: ee.Image(11)
   })
     
