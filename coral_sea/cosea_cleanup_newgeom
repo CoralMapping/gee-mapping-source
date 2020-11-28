@@ -7,10 +7,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #0000ff */
     /* shown: false */
     ee.Geometry.Point([149.4481434404022, -16.265311901700663]),
-    geometry2 = 
-    /* color: #99ff99 */
-    /* shown: false */
-    ee.Geometry.MultiPoint();
+    rb_sand = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
@@ -434,6 +431,16 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(11)
   });  
   
+  //extra manual benthic rules
+  var Rb_Sand = ee.Image().byte().paint(ee.Feature(rb_sand, {zone: 1}), "zone").clip(rb_sand);
+  
+  
+  //rubble to sand
+  
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(12),
+    value: ee.Image(11)
+  })
     
   /*
   
