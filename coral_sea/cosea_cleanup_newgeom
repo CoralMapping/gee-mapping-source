@@ -470,6 +470,14 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(11)
   });  
   
+  
+  // Coral/Algae in Plateau -> sand
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(15)
+                     .and(geo_map.eq(23)),
+    value: ee.Image(11)
+  });  
+  
   //extra manual benthic rules
   var Rb_Sand = ee.Image().byte().paint(ee.Feature(rb_sand, {zone: 1}), "zone").clip(rb_sand);
   
