@@ -47,9 +47,9 @@ Map.addLayer(export_stack, {}, "export raster stack", false);
 Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'indonesia_stack',
+  description: 'coral_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/indonesia/indo_stack_',
+  fileNamePrefix: 'coral-gee-export-bucket/coral-sea/cosea_stack_',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
