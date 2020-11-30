@@ -23,7 +23,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([72.97105799921674, -0.50
            [73.21541997425727, 4.343479687246037],
            [73.1289026402729, 4.607716403032213],
            [73.05062505238227, 4.6036098332757875]]]]),
-    region_extent2 = 
+    region_extent = 
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Polygon(
