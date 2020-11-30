@@ -1,8 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_extent"),
-    pixels = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
     geo = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_geo_clean3"),
-    benthic = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_benthic_clean2");
+    benthic = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_benthic_clean2"),
+    pixels = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_pixels");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
