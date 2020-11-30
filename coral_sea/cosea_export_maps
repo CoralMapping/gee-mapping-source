@@ -1,8 +1,21 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_extent"),
-    geo = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_geo_clean3"),
+var geo = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_geo_clean3"),
     benthic = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_benthic_clean2"),
-    pixels = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_pixels");
+    pixels = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_pixels"),
+    reef_boundary = /* color: #d63000 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[146.0242357913046, -13.206663687112801],
+                  [146.3538256350546, -16.034073390087546],
+                  [148.2874193850546, -19.237389208588237],
+                  [154.5056811038046, -23.93493133239956],
+                  [157.9993334475546, -24.61593976570431],
+                  [162.8333178225546, -22.29812413025939],
+                  [158.9002123538046, -16.940039004471217],
+                  [150.9680834475546, -14.252543769057839]]]),
+            {
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Coral Sea
