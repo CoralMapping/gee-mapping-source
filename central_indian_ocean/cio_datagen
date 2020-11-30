@@ -89,7 +89,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([72.97105799921674, -0.50
 // - This script generates the data as an asset (for quick load)
 // - Corresponding '_classification' script performs the machine learning classificaiton
 ///////////////////////////////
-var region_extent = region_extent2;
+var region_extent = region_extent;
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs:Modules/reef_params')
 
@@ -158,7 +158,7 @@ var depth = ee.Image(region_params.depth_composite).rename('depth')
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
 // "NOT REEF" CLEAN
-var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
+// var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
 var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 
 // remove
