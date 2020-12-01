@@ -825,4 +825,5 @@ exports = {
   gbr_torres: gbr_torres,
   west_australia: west_australia,
   south_china_sea: south_china_sea,
+  philippines: philippines,
 };
