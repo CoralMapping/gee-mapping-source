@@ -74,7 +74,9 @@ var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
           [71.49518330115245, 14.31657896080115],
           [70.94844908898446, 14.180519984144992],
           [70.70783078637048, 14.098023158448601],
-          [70.48943631098639, 13.930058399473841]]]);
+          [70.48943631098639, 13.930058399473841]]]),
+    pixels = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_pixels"),
+    segmentation = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -116,7 +118,8 @@ Map.centerObject(center_map, 6);
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 
-//Map.addLayer(cio_region_outline, {color:'#00FFFF'}, "region outline", false)
+Map.addLayer(pixels, {color:'#00FFFF'}, "pixels", false)
+Map.addLayer(segmentation, {color:'#00FF00'}, "segments", false)
 /*
 
 // Load the raw classifications
