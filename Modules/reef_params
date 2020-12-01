@@ -762,6 +762,41 @@ var south_china_sea = {
   QAQC: ""
 };
 
+var philippines = {
+  sname:"philippines",
+  tide: "both",
+  asset: "projects/coral_atlas/philippines/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/philippines/image/philippines_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_dove_depth",
+  s2_depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_landsat8_depth",
+  depth_composite: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_composite_depth",
+  extent_mask: "",
+  notreef_mask: "",
+  pixels:[""],
+  segments:[""],
+  waves:"",
+  geo_train:"",
+  benthic_train:"",
+  benthic_pts:"",
+  geo_train_library: "",
+  benthic_train_library:"",
+  geo_val_library:"",
+  benthic_val_library:"",
+  geo_map: [""],
+  benthic_map: [""],
+  mid_mask: "",
+  geo_map_clean1:"",
+  geo_map_clean2:"",
+  geo_map_clean3:"",
+  benthic_map_clean1: "",
+  benthic_map_clean2: "",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
+
 
 // export the objects
 exports = {
