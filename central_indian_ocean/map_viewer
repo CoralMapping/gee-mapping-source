@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
+var notReef_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[71.60342946217652, 12.65909936158879],
            [71.68308034108277, 12.474125345239695],
            [72.21866383717652, 12.433896045657525],
@@ -22,7 +25,10 @@ var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
            [73.21541997425727, 4.343479687246037],
            [73.1289026402729, 4.607716403032213],
            [73.05062505238227, 4.6036098332757875]]]]),
-    artifact_layer = /* color: #98ff00 */ee.Geometry.MultiPoint(),
+    artifact_layer = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPoint(),
     center_map = 
     /* color: #d63000 */
     /* shown: false */
