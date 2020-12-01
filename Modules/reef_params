@@ -860,4 +860,5 @@ exports = {
   west_australia: west_australia,
   south_china_sea: south_china_sea,
   philippines: philippines,
+  nw_china_sea: nw_china_sea,
 };
