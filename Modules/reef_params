@@ -903,6 +903,42 @@ var mesoamerica = {
 };
 
 
+var red_sea = {
+  sname:"red_sea",
+  tide: "both",
+  asset: "projects/coral_atlas/red_sea/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/red_sea/image/red_sea_low_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/red_sea/depth/red_sea_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_dove_depth",
+  s2_depth: "projects/coral_atlas/red_sea/depth/red_sea_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/red_sea/depth/red_sea_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_landsat8_depth",
+  depth_composite: "projects/coral_atlas/red_sea/depth/red_sea_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_composite_depth_2",
+  extent_mask: "",
+  notreef_mask: "",
+  pixels:[""],
+  segments:[""],
+  waves:"",
+  geo_train:"",
+  benthic_train:"",
+  benthic_pts:"",
+  geo_train_library: "",
+  benthic_train_library:"",
+  geo_val_library:"",
+  benthic_val_library:"",
+  geo_map: [""],
+  benthic_map: [""],
+  mid_mask: "",
+  geo_map_clean1:"",
+  geo_map_clean2:"",
+  geo_map_clean3:"",
+  benthic_map_clean1: "",
+  benthic_map_clean2: "",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
+
+
 // export the objects
 exports = {
   sentinel : sentinel,
@@ -934,6 +970,7 @@ exports = {
   nw_china_sea: nw_china_sea,
   se_caribbean: se_caribbean,
   mesoamerica: mesoamerica,
+  red_sea: red_sea,
 };
 
 
