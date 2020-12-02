@@ -839,7 +839,7 @@ var se_caribbean = {
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/se_caribbean/image/southeastern_carribbean_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic",
   depth: "projects/coral_atlas/se_caribbean/depth/southeastern_carribbean_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth",
-  s2_depth: "projects/coral_atlas/se_caribbean/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
+  s2_depth: "projects/coral_atlas/se_caribbean/depth/southeastern_carribbean_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/se_caribbean/depth/southeastern_carribbean_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth",
   depth_composite: "projects/coral_atlas/se_caribbean/depth/southeastern_carribbean_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth2",
   extent_mask: "",
