@@ -938,7 +938,7 @@ var red_sea = {
   QAQC: ""
 };
 
-var red_sea = {
+var gulf_of_aden = {
   sname:"gulf_of_aden",
   tide: "both",
   asset: "projects/coral_atlas/gulf_of_aden/",
