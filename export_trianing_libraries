@@ -31,11 +31,14 @@ var png_solomonsb = ee.FeatureCollection("projects/coral_atlas/png_solomons/trai
                       
 var south_asiab = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_benthic_training")
                       .map(function(f){return(f.set('region','south_asia'))})
+                      
+var Indonesiab = ee.FeatureCollection("projects/coral_atlas/Indonesia/training/indo_benthic_training")
+                      .map(function(f){return(f.set('region','Indonesia'))})
 
 
 // Combine and flatten
 var all_datab = ee.FeatureCollection([micronesiab, east_africab, hawaiib, nth_carib, sw_pacificb, west_indian_oceanb,
-                                     Andaman_seab, Timorb, gbr_eomapb, png_solomonsb, south_asiab]).flatten()
+                                     Andaman_seab, Timorb, gbr_eomapb, png_solomonsb, south_asiab, Indonesiab]).flatten()
 
 
 // Export
@@ -84,10 +87,13 @@ var png_solomonsg = ee.FeatureCollection("projects/coral_atlas/png_solomons/trai
 var south_asiag = ee.FeatureCollection("projects/coral_atlas/south_asia/training/soa_geo_training")
                       .map(function(f){return(f.set('region','south_asia'))})
 
+var Indonesiag = ee.FeatureCollection("projects/coral_atlas/Indonesia/training/indo_geo_training")
+                      .map(function(f){return(f.set('region','Indonesia'))})
+
 
 // Combine and flatten
 var all_datag = ee.FeatureCollection([micronesiag, east_africag, hawaiig, nth_carig, sw_pacificg, west_indian_oceang,
-                                     Andaman_seag, Timorg, gbr_eomapg, png_solomonsg, south_asiag]).flatten()
+                                     Andaman_seag, Timorg, gbr_eomapg, png_solomonsg, south_asiag, Indonesiag]).flatten()
 
 
 // Export
