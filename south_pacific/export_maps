@@ -143,14 +143,15 @@ Export.image.toCloudStorage({
   image: export_stack_east,
   description: 'swp_stack_east',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/swp/v2_wavefix/swp_stack_east',
+  //fileNamePrefix: 'coral-gee-export-bucket/swp/v2_wavefix/swp_stack_east',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/depthEast/swp_depth_east',
   region: export_geom_east, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 })
-
+/*
 // run the export
 Export.image.toCloudStorage({
   image: export_stack_west,
@@ -164,7 +165,7 @@ Export.image.toCloudStorage({
   skipEmptyTiles: true
 })
 
-
+*/
 // export the convex hull boundary
 
 // export region convex hull, or manual
