@@ -119,7 +119,7 @@ var benthic_atlas_names = ['No benthic class',  'Sand (11)',    'Rubble (12) ', 
 var benthic_atlas_cols = ['ffffff',             'ffff73',        'cdaa66',       'a87000',     '00a9e6',             '73b273',      'c29ed7']
 
 var benthic_gbr_names = ['Sand',    'Rubble', 'Rock',   'Coral/Algae',   'Seagrass (TBA)', 'Microalgal mats']
-var benthic_gbr_cols = ['ffffcc',   'cdaa66', 'a87000',   '00a9e6',        '73b273',          'c29ed7']
+var benthic_gbr_cols = ['ffff73',   'cdaa66', 'a87000',   '00a9e6',        '73b273',          'c29ed7']
 
 // coral legend
 var coral_names = ['Negligible',    'Low to medium',   'High']
