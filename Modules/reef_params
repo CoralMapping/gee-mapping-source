@@ -978,7 +978,7 @@ var eastern_micronesia = {
   tide: "both",
   asset: "projects/coral_atlas/eastern_micronesia/",
   epsg: "EPSG:4326",
-  image: ["projects/coral_atlas/eastern_micronesia/image/east/eastern_micronesia_low_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic","projects/coral_atlas/eastern_micronesia_east/image/west/eastern_micronesia_low_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic"],
+  image: ["projects/coral_atlas/eastern_micronesia/image/east/eastern_micronesia_low_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic","projects/coral_atlas/eastern_micronesia/image/west/eastern_micronesia_low_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic"],
   depth: ["projects/coral_atlas/eastern_micronesia/depth/east/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_dove_depth","projects/coral_atlas/eastern_micronesia/depth/west/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_dove_depth"],
   s2_depth: ["projects/coral_atlas/eastern_micronesia/depth/east/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_sentinel2_depth","projects/coral_atlas/eastern_micronesia/depth/west/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_sentinel2_depth"],
   ls8_depth: ["projects/coral_atlas/eastern_micronesia/depth/east/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_landsat8_depth","projects/coral_atlas/eastern_micronesia/depth/west/eastern_micronesia_high_tide_normalized_sr_august2018_sept2020_v2_shift_mosaic_landsat8_depth"],
