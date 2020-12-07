@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var geometry = /* color: #98ff00 */ee.Geometry.Point([120.73147512364193, -5.545940521160284]);
+var geometry = /* color: #98ff00 */ee.Geometry.Point([120.73147512364193, -5.545940521160284]),
+    imageVisParam_sr = {"opacity":1,"bands":["b3","b2","b1"],"min":59.4,"max":2286.6,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
@@ -106,7 +107,7 @@ var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"ma
 //var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
 
 
-var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":59.4,"max":2286.6,"gamma":1};
 //var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
 var Dove_low_sr=ui.Map.Layer(ee.Image(vars.Depth_composite),imageVisParam3,'Dove_sr', false )
 
