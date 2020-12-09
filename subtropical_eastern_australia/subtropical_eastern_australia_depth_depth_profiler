@@ -1,6 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var geometry = /* color: #d63000 */ee.Geometry.Point([155.37664002404728, -26.616267149235057]),
-    imageVisParam8 = {"opacity":1,"bands":["b3","b2","b1"],"min":48.04,"max":2353.96,"gamma":1};
+    imageVisParam8 = {"opacity":1,"bands":["b3","b2","b1"],"min":107,"max":3823,"gamma":1.455};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
