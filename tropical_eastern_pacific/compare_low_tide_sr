@@ -1,0 +1,34 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var image = ee.Image("projects/coral_atlas/workflow/mapping/tropical_eastern_pacific/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic/20201118T184347Z/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic"),
+    image2 = ee.Image("projects/coral_atlas/workflow/mapping/tropical_eastern_pacific/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic/20201118T195850Z/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic"),
+    image3 = ee.Image("projects/coral_atlas/workflow/mapping/tropical_eastern_pacific/tropical_eastern_pacific_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic/20201116T231635Z/tropical_eastern_pacific_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+
+var vars = {
+    Dove_low_sr : ee.Image(image),
+    Dove_low_sr2 : ee.Image(image2),
+    Dove_low_sr3 : ee.Image(image3),
+
+};
+
+
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
+var Dove_low_sr2=ui.Map.Layer(vars.Dove_low_sr2, imageVisParam3,'Dove_sr', false )
+var Dove_low_sr3=ui.Map.Layer(vars.Dove_low_sr3, imageVisParam3,'Dove_sr', false )
+
+
+var mapPanel=ui.Map().centerObject(geometry, 6)
+
+
+var layers = mapPanel.layers();
+layers.add(Dove_low_sr)
+layers.add(Dove_low_sr2)
+layers.add(Dove_low_sr3)
+
+
+
+
+
+
