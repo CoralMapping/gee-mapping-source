@@ -578,9 +578,9 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [120.99398532616702, -6.406428665856303]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Indonesia Archipelago
+// Global coral atlas project - Great Barrier Reef & Torres Strait
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Paul Tudman (tuddy117@gmail.com)
+// Region coordinator: ditto
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
@@ -602,7 +602,7 @@ var param_module = require('users/mitchest/global_reefs:Modules/reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.gbr_torres;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
