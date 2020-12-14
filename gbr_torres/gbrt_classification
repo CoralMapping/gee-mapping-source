@@ -64,7 +64,7 @@ var vars = {
   
   // classification params
   rf_trees: 15, // number of random forest trees (per class)
-  rf_minLeafPop: 10, // minimum leaf population for random forest
+  rf_minLeafPop: 3, // minimum leaf population for random forest
   rf_varPerSplit: null, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
 
@@ -151,7 +151,7 @@ if (region_idx > -1) {
 print("Number of training samples:", training_data.size());
 
 //Map.centerObject(map_centre, 6);
-var pix_lowtide = ee.ImageCollection(region_params.pixels);
+var pix_lowtide = ee.ImageCollection(region_params.pixels).select(['b3', 'b2', 'b1']);
 Map.addLayer(pix_lowtide, region_params.visParams, sensor_params.sname + ' low tide', false);
 
 
