@@ -77,7 +77,7 @@ var vars = {
   // split into sub-regions
   // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
   // set to 'none' for normal operation without splitting
-  split_region: 'west',
+  split_region: 'none',
   
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
@@ -88,10 +88,10 @@ var vars = {
   whether classification output is working,
   and provides some diagnostics (incl. variable importance)
   */
-  test_mode: false,
+  test_mode: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
@@ -124,9 +124,9 @@ if (vars.test_mode) {
 
 // load input data
 var input_bands = (vars.geomorphic) ? vars.geo_input_bands : vars.benthic_input_bands; // Set the input bands to either geomorphic or benthic
-var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+var pixsegs = ee.Image(region_params.pixels).regexpRename('(^.*$)','$1_p')
                   .addBands(
-              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
+              ee.Image(region_params.segments).regexpRename('(^.*$)','$1_s')  
                            )
                   .select(input_bands);
 var geomorph = ee.FeatureCollection(region_params.geo_train_library);
