@@ -136,11 +136,11 @@ if (!vars.geomorphic && vars.use_benthic_points) {
   // cal points
   var samp_seed = 42;
   var map_pts_cal = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
-  var train_pts_cal = benthic_pts_cal.merge(map_pts); // use benthic field data poitns to train a map
+  var train_pts_cal = benthic_pts_cal.merge(map_pts_cal); // use benthic field data poitns to train a map
   // val_points
   samp_seed = 666;
   var map_pts_val = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
-  var train_pts_val = benthic_pts_val.merge(map_pts); // use benthic field data poitns to train a map
+  var train_pts_val = benthic_pts_val.merge(map_pts_val); // use benthic field data poitns to train a map
   
 } else {
   // draw trainign/validation points from cal/val map only
