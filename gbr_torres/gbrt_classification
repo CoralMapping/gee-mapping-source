@@ -1,13 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var map_centre = /* color: #d63000 */ee.Geometry.Point([117.00794294154727, -4.704842827661838]),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
-    west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west");
+    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Indonesia Archipelago
+// Global coral atlas project - Great Barrier Reef & Torres Strait
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Paul Tudman (tuddy117@gmail.com)
+// Region coordinator: ditto
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
@@ -30,7 +28,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.gbr_torres;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -41,7 +39,7 @@ var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU C
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
