@@ -97,7 +97,7 @@ var region_params = param_module.gbr_torres;       //<------------ THIS IS WHERE
 // ###########################################
 
 
-/*
+
 // Choose which layers will be shown in the map viewer
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
@@ -105,7 +105,6 @@ var vars = {
   benthic_cleanup_stage: 0, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
-*/
 // choose where to centre the map (link this dynamically to map app?)
 Map.centerObject(centre_map, 6);
 
@@ -122,9 +121,6 @@ var wcmc=wcmc.filterBounds(region_wcmcBound)
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 
-
-
-/*
 
 // Load the raw classifications
 if (vars.raw) {
@@ -199,7 +195,7 @@ var geo_fill = empty.paint({
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
-*/
+
 
 ////////// UI SET UP //////////
 
