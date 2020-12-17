@@ -220,7 +220,7 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 ////////// MASK EXPORTS //////////
 
 
-/*Export.table.toAsset({
+Export.table.toAsset({
   collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
@@ -230,7 +230,7 @@ Export.table.toAsset({
   collection: ee.FeatureCollection(notReef_mask),
   description: "not_reef_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
-})*/
+})
 
 /*Export.table.toAsset({
   collection: ee.FeatureCollection(mid_mask),
