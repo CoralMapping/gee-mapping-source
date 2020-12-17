@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([146.5282420953613, -16.27607006393575]),
+var centre_map = /* color: #d63000 */ee.Geometry.Point([114.44816397036129, -21.839276915151252]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     region_wcmcBound = 
     /* color: #d63000 */
