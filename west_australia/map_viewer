@@ -103,7 +103,7 @@ var region_params = param_module.west_australia;       //<------------ THIS IS W
 
 // Choose which layers will be shown in the map viewer
 var vars = {
-  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  raw: false, // set to true if you want to view the raw classifications for benthic and geo
   geo_cleanup_stage: 0, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
   benthic_cleanup_stage: 0, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
