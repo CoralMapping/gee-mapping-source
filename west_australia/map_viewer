@@ -1,7 +1,10 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var centre_map = /* color: #d63000 */ee.Geometry.Point([114.44816397036129, -21.839276915151252]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    region_wcmcBound = /* color: #d63000 */ee.Geometry.Polygon(
+    region_wcmcBound = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[121.89122805200037, -17.425550793813127],
           [121.40782961450037, -18.36646673607003],
           [119.45226320825037, -19.36448125773831],
@@ -61,10 +64,18 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([114.44816397036129, -21.
           [123.01871892156016, -18.411457621903356],
           [123.28239079656016, -17.449820927367163],
           [122.27164860906016, -16.272273332782632]]]),
-    notReef_mask = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.MultiPoint();
+    notReef_mask = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[122.06711171678407, -18.3058646319302],
+          [122.02247975877626, -18.365177059201653],
+          [121.8927037577997, -18.45313046875999],
+          [121.85837148240907, -18.428377758396135],
+          [121.79520009569032, -18.455084478206267],
+          [121.83090566209657, -18.460295061334115],
+          [121.87691091112, -18.490904041429634],
+          [121.95793508104188, -18.446616943350815],
+          [122.07878469041688, -18.346277506090463],
+          [122.14744924119813, -18.301953207759436],
+          [122.13920949510438, -18.287610563619808]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. west_austr
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
