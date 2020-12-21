@@ -30,13 +30,13 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([114.41516950404727, -22.
           [114.36938083707696, -30.932714659743482],
           [115.81957614957696, -30.706277298703878],
           [115.77563083707696, -28.142091718247148],
-          [114.54516208707696, -24.19922303967803],
-          [115.02856052457696, -22.464187106879507],
-          [117.13793552457696, -21.322485210885574],
-          [118.93969333707696, -20.994623828216465],
-          [121.84008396207696, -20.171833834225183],
-          [123.11449802457696, -18.471636848786257],
-          [123.29027927457696, -17.342615232800547]]]),
+          [115.68774021207696, -24.83893771627594],
+          [115.99535739957696, -23.677076499948168],
+          [117.26977146207696, -22.869695992619835],
+          [118.80785739957696, -21.97600692967747],
+          [121.84008396207696, -21.240588011748397],
+          [123.68578708707696, -19.38613921634384],
+          [125.22387302457696, -16.67024109937958]]]),
     outer = 
     /* color: #ef3dff */
     /* shown: false */
@@ -412,7 +412,7 @@ if (vars.do_export) {
     var export_geom = subregion_clip
     output_name = output_name + '_' + vars.split_region
   } else {
-    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_params.extent_mask, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
