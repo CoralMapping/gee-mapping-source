@@ -34,7 +34,7 @@ var region_params = param_module.west_australia;          //<------------ THIS I
 var vars = {
  
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   benthic_points_cal_ratio: 0.7, // the percentage of points to use for trianing
   
