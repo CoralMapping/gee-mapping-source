@@ -578,9 +578,9 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [120.99398532616702, -6.406428665856303]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - South China Sea
+// Global coral atlas project - GBR Torres
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Chris Roelfsema
+// Region coordinator: same
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the raw classification data (from *_classification script)
