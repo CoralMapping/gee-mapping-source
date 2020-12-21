@@ -20,26 +20,6 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([114.41516950404727, -22.
            [178.24265169859382, -19.156203209515112],
            [178.24265169859382, -19.126039427046837]]]], null, false),
     rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[121.40063083707696, -16.586025877677695],
-          [120.52172458707696, -17.719752135741295],
-          [118.01684177457696, -18.596635011429708],
-          [114.32543552457696, -19.67605577830371],
-          [111.82055271207696, -23.837961730460368],
-          [112.52367771207696, -29.0680287256865],
-          [114.36938083707696, -30.932714659743482],
-          [115.81957614957696, -30.706277298703878],
-          [115.77563083707696, -28.142091718247148],
-          [115.68774021207696, -24.83893771627594],
-          [115.99535739957696, -23.677076499948168],
-          [117.26977146207696, -22.869695992619835],
-          [118.80785739957696, -21.97600692967747],
-          [121.84008396207696, -21.240588011748397],
-          [123.68578708707696, -19.38613921634384],
-          [125.22387302457696, -16.67024109937958]]]),
     outer = 
     /* color: #ef3dff */
     /* shown: false */
@@ -418,8 +398,8 @@ if (vars.do_export) {
     var export_geom = subregion_clip
     output_name = output_name + '_' + vars.split_region
   } else {
-    //var extent = region_params.extent_mask
-    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: extent , crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+    var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent , crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
   }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
