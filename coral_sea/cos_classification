@@ -87,7 +87,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([153.61438825404727, -19.
           [122.94234405918615, -15.223290002478876]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - Coral Sea Classification
+// Global coral atlas project - westAustralia Classification
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Rodney B (rodbio2008@gmail.com)
 // Description:
@@ -113,7 +113,7 @@ var slider_module = require('users/mitchest/global_reefs:Modules/threshold_slide
 // SENSOR GENERICS
 var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.coral_sea;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.west_australia;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
