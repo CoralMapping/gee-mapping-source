@@ -710,7 +710,7 @@ var west_australia = {
   benthic_train:"projects/coral_atlas/west_australia/training/westaus_benthic_reference",
   benthic_pts:"",
   geo_train_library: "projects/coral_atlas/west_australia/training/westaus_geo_training",
-  benthic_train_library:"",
+  benthic_train_library:"projects/coral_atlas/west_australia/training/westaus_benthic_training",
   geo_val_library:"",
   benthic_val_library:"",
   geo_map: [""],
