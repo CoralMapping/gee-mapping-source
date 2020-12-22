@@ -266,7 +266,7 @@ Map.addLayer(probabilities,{},'probabilities');
 
 Export.image.toAsset({image:probabilities,
                       description:'prob_benthic',
-                      assetId:'projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic',
+                      assetId:'projects/coral_atlas/cio/in_out/cio_prob_benthic',
                       region:export_geom,
                       scale:vars.export_scale,
                       maxPixels:1e13
