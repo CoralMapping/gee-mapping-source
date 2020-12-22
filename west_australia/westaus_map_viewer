@@ -1,15 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    geometry = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[142.31072181656043, -13.468312738204446],
-          [144.15642494156043, -19.034745474100994],
-          [152.59392494156043, -27.50207557152852],
-          [160.59197181656043, -24.500787031775154],
-          [158.30681556656043, -16.186866449829804],
-          [144.50798744156043, -10.372894054872898]]]),
     centre_map = /* color: #d63000 */ee.Geometry.Point([113.44995381930062, -23.547798026564784]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
@@ -50,7 +40,8 @@ var mapPanel=ui.Map().centerObject(centerMap, 7);
 var low_tide_image_dove = ee.Image(region_params.image);
 var sr_Dove= ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 //UnEp layer
-var unepClipped= wcmc.filterBounds(geometry)
+var extent =ee.FeatureCollection(region_params.extent_mask).geometry()
+var unepClipped= wcmc.filterBounds(extent)
 var Unep= ui.Map.Layer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
 
 
