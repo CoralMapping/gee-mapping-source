@@ -1,26 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[145.7676198808963, -12.820106714000637],
-          [145.7676198808963, -14.01696049103867],
-          [147.8330495683963, -18.070409960840795],
-          [149.1074636308963, -18.945520797482],
-          [150.7334401933963, -19.27770549892732],
-          [153.3701589433963, -22.723246712582423],
-          [155.6553151933963, -24.174572936495597],
-          [156.7539480058963, -23.49121254904719],
-          [155.8750417558963, -21.17442659810466],
-          [160.769416846467, -22.015919395389524],
-          [159.65433863089632, -18.40431226291197],
-          [152.6670339433963, -18.070409960840795],
-          [152.4473073808963, -16.222853198265746],
-          [151.0850026933963, -16.47586277302255],
-          [150.0742605058963, -15.122775649525506],
-          [147.8769948808963, -14.783118309436277],
-          [147.0420339433963, -13.162670007978479]]]),
-    image2 = ee.Image("projects/coral_atlas/west_australia/in_out/westaus_geo_clean2");
+var image2 = ee.Image("projects/coral_atlas/west_australia/in_out/westaus_geo_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //testing morphological rules for WEA intermediate
 
@@ -132,6 +111,8 @@ Map.addLayer(map_geo1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 Map.addLayer(map_geo2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 Map.addLayer(man_geo, map_palettes.geo, 'Geomorphic clean2_MorfologicalCleanUp', false);
 
+
+var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
