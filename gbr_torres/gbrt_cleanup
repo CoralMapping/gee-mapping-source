@@ -580,7 +580,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
-  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
+  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1000, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
@@ -767,10 +767,6 @@ if (vars.manual_clean && vars.geomorphic) {
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
 
-  // display distance to land mask for assessing cut-off distances
-  var distToLand = ee.Image(region_params.distToLand);
-  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'ORF dist to land: ' + vars.dist_to_land_ORF + 'm', false);
-  
   
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
