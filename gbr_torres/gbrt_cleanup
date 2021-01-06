@@ -582,9 +582,9 @@ var vars = {
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1000, //depth in centimetres
+  geo_depth_cutoff: 1500, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
-  benthic_depth_cutoff: 750, //depth in centimetres
+  benthic_depth_cutoff: 1000, //depth in centimetres
   
   //############
   // Clean-up stage selection
@@ -702,14 +702,14 @@ if (vars.manual_clean && vars.geomorphic) {
   });
   
   // the "GLOBAL MASK CLEAN" - land (1) and/or deep (2)" ****to be moved to datagen for next region****?
-      var global_reef_mask = ee.Image(region_params.global_reef_mask);
+  var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
-      clean_map = clean_map.where({
-        //test: global_reef_mask.eq(1), //land
-        test: global_reef_mask.eq(2), //deep
-        //test: global_reef_mask.lt(3), //land + deep
-        value: ee.Image(0)
-      });
+  clean_map = clean_map.where({
+    //test: global_reef_mask.eq(1), //land
+    test: global_reef_mask.eq(2), //deep
+    //test: global_reef_mask.lt(3), //land + deep
+    value: ee.Image(0)
+  });
   
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
