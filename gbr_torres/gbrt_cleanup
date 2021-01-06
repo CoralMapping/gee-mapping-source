@@ -534,51 +534,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         }
       ],
       "coordinates": []
-    }),
-    test_area = 
-    /* color: #98ff00 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[120.29526303750056, -4.745741910602106],
-          [120.29526303750056, -5.259104744078933],
-          [120.65060208779353, -5.259104744078933],
-          [120.65060208779353, -4.745741910602106]]], null, false),
-    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
-    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
-    sg_on_orf = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
-        [[[[123.83947602878932, -5.700206722814475],
-           [123.60876313816432, -5.514332908680738],
-           [123.38079682957057, -5.385827151288308],
-           [123.24346772800807, -5.44051381148037],
-           [123.40826264988307, -5.842305025420264],
-           [123.75707856785182, -6.074503075469306],
-           [123.99877778660182, -5.8313756556505325],
-           [123.95757905613307, -5.801318792070571],
-           [123.90539399753932, -5.7876560512526956],
-           [123.84222261082057, -5.73573463093947]]],
-         [[[120.89678926447554, -6.5350831023623845],
-           [120.90365571955367, -6.71378307027377],
-           [120.93386812189742, -6.8365161368000305],
-           [120.95633576699693, -7.022408234722875],
-           [121.08570018842265, -7.152132342755677],
-           [121.6243259023389, -7.385306475679],
-           [121.84130588280765, -7.254545004889939],
-           [121.4265719960889, -6.67656977733306],
-           [121.38399997460452, -6.45555604818173],
-           [121.2507907460889, -6.384592753271515],
-           [121.09972873437015, -6.368215207549017],
-           [120.99398532616702, -6.406428665856303]]]]);
+    });
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - GBR Torres
+// Global coral atlas project - GBR & Torres Strait
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: same
 // Description:
@@ -730,7 +689,6 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   //var man_geo = ee.Image(region_params.geo_map_clean2);
-  var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
@@ -742,48 +700,6 @@ if (vars.manual_clean && vars.geomorphic) {
     test: midmask.eq(1),
     value: ee.Image(0)
   });
-  
-  // the "REEF MASK" CLEAN
-  
-  // Define a kernel for reef mask Morphological Operations
-  var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
-
-  // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
-  var reef_mask = man_geo.eq(2)
-            .focal_max({kernel: kernel_rm, iterations: 2});
-  
-  // Reef crest, slope, sheltered slope (within reef mask) -> Inner reef flat
-  man_geo = man_geo.where({
-    test: reef_mask.eq(0)
-                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
-    value: ee.Image(13)
-  });
-  
-  // the "DEEP WATER" CLEAN
-  
-  // // Define a kernel for deep water Morphological Operations
-  // var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
-
-  // // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
-  // var deepwater = man_geo.eq(2)
-  //           .focal_max({kernel: kernel_dw, iterations: 2})
-  //           .focal_min({kernel: kernel_dw, iterations: 2});
-    
-  
-  // // Deep lagoon (outside reef mask and global mask) -> deepwater 
-  // man_geo = man_geo.where({
-  //   test: deepwater.eq(1)
-  //                   .and(man_geo.eq(12)),
-  //   value: ee.Image(2)
-  // });
-  
-  
-  // // Reef classes in deepwater -> deepwater
-  // man_geo = man_geo.where({
-  //   test: deepwater.eq(1)
-  //                   .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
-  //   value: ee.Image(2)
-  // });
   
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
@@ -853,14 +769,7 @@ if (vars.manual_clean && vars.geomorphic) {
 
   // display distance to land mask for assessing cut-off distances
   var distToLand = ee.Image(region_params.distToLand);
-    
-  //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
-  
-  // display distance to water mask
-  var distToWater = ee.Image(region_params.distToWater);
-    
-  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
+  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'ORF dist to land: ' + vars.dist_to_land_ORF + 'm', false);
   
   
   // Export
@@ -869,7 +778,7 @@ if (vars.manual_clean && vars.geomorphic) {
     image: man_geo,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: indo_west,
+    region: region_extent,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
@@ -916,8 +825,8 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(13)
   });
     
-  // Seagrass on RC or ORF -> Coral/Algae
   
+  /*// Seagrass on RC or ORF -> Coral/Algae
   // except for these two areas
   var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));
   
@@ -926,7 +835,7 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(14).or(geo_map.eq(15)))
                      .and(sg_orf.eq(0)),
     value: ee.Image(15)
-  });  
+  }); */ 
   
     
   /*
@@ -1088,16 +997,15 @@ if (!vars.manual_clean) {
     
     // display distance to land mask for assessing cut-off distances
     var distToLand = ee.Image(region_params.distToLand);
-    
-    Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-    Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+    Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'Dist to land (RC to TRF): ' + vars.dist_to_land_RC + 'm', false);
+    Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'Dist to land (TRF to ORF): ' + vars.dist_to_land_ORF + 'm', false);
 
-    // // reef crest close to land -> TRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
-    // clean_map = clean_map.where({
-    //   test: distToLand.lte(vars.dist_to_land_RC)
-    //                 .and(clean_map.eq(15)),
-    //   value: ee.Image(16)
-    // });
+    // reef crest close to land -> TRF
+    clean_map = clean_map.where({
+      test: distToLand.lte(vars.dist_to_land_RC)
+                      .and(clean_map.eq(15)),
+      value: ee.Image(16)
+      });
     
     // TRF outside of specified distance from land -> ORF
     clean_map = clean_map.where({
