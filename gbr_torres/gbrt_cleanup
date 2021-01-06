@@ -701,7 +701,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
-  // the "GLOBAL MASK" CLEAN  ****to be moved to datagen for next region****
+  // the "GLOBAL MASK (land)" CLEAN  ****to be moved to datagen for next region****
       var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
       clean_map = clean_map.where({
