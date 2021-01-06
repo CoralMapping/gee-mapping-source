@@ -994,7 +994,7 @@ if (!vars.manual_clean) {
     // display distance to land mask for assessing cut-off distances
     var distToLand = ee.Image(region_params.distToLand);
     Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'Dist to land (RC to TRF): ' + vars.dist_to_land_RC + 'm', false);
-    Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'Dist to land (TRF to ORF): ' + vars.dist_to_land_ORF + 'm', false);
+    Map.addLayer(distToLand.unmask(100000, false).gt(vars.dist_to_land_ORF), {}, 'Dist to land (TRF to ORF): ' + vars.dist_to_land_ORF + 'm', false);
 
     // reef crest close to land -> TRF
     clean_map = clean_map.where({
