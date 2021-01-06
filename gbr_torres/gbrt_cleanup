@@ -701,6 +701,14 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });
   
+  // the "GLOBAL MASK" CLEAN  ****to be moved to datagen for next region****
+      var global_reef_mask = ee.Image(region_params.global_reef_mask);
+  
+      clean_map = clean_map.where({
+        test: global_reef_mask.eq(1),
+        value: ee.Image(0)
+      });
+  
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
@@ -1300,14 +1308,6 @@ if (!vars.manual_clean) {
       
       
       // ## Blanket version
-      
-      // the "LAND MASK" CLEAN  ****to be moved to datagen for next region****
-      var global_reef_mask = ee.Image(region_params.global_reef_mask);
-  
-      clean_map = clean_map.where({
-        test: global_reef_mask.eq(1),
-        value: ee.Image(0)
-      });
       
       // make a very smooth map to capture the broader neighbourhood  - *** Change to ee.kernal*** see reef mask in clean 3
       var smooth_map = clean_map
