@@ -722,7 +722,8 @@ var west_australia = {
   benthic_map: ["projects/coral_atlas/west_australia/in_out/westaus_benthic"],
   mid_mask: "projects/coral_atlas/west_australia/in_out/westaus_midmask",
   geo_map_clean1:"projects/coral_atlas/west_australia/in_out/westaus_geo_clean1",
-  geo_map_clean2:"projects/coral_atlas/west_australia/in_out/westaus_geo_clean2",
+  geo_map_clean2:"projects/coral_atlas/west_australia/in_out/geo_map_morphologicNodeepclean2", //this one after dilate/erosion rules
+  //geo_map_clean2:"projects/coral_atlas/west_australia/in_out/westaus_geo_clean2",
   geo_map_clean3:"",
   benthic_map_clean1: "",
   benthic_map_clean2: "",
