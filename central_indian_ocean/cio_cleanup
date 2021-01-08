@@ -461,14 +461,14 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   // except for these two areas
   var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));
-  
+ /* 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
                      .and(geo_map.eq(14).or(geo_map.eq(15)))
                      .and(sg_orf.eq(0)),
     value: ee.Image(15)
   });  
-  
+  */
     
   /*
   
