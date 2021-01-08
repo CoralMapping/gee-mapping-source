@@ -33,7 +33,6 @@ var notReef_mask =
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([73.36350406430057, 3.4513743887798998]),
-    cio_region_outline = ee.FeatureCollection("projects/coral_atlas/central_indian_ocean/in_out/cio"),
     region_extent = 
     /* color: #d63000 */
     /* shown: false */
