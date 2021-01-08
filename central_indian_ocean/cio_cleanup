@@ -276,7 +276,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
   //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
- var midmask = ee.Image().byte().paint(ee.Feature(notReef_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
+ var midmask = ee.Image().byte().paint(ee.Feature(notReef_mask.dissolve(),{zone: 1}), "zone").clip(notReef_mask.dissolve());
   
   // the "MID MASK" CLEAN
   man_geo = man_geo.where({
