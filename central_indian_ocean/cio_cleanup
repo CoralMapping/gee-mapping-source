@@ -271,7 +271,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   //var man_geo = ee.Image(region_params.geo_map_clean2);
-  var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
+ // var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
@@ -410,7 +410,7 @@ if (vars.manual_clean && vars.geomorphic) {
     image: man_geo,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: indo_west,
+    region: region_extent,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
