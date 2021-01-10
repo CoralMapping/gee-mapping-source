@@ -78,7 +78,7 @@ var benthic_raw=ui.Map.Layer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_
 
 // Load the clean classifications to the ui viewer
 var geo_clean1 = ee.Image(region_params.geo_map_clean1);
-var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+var geo_clean2 = ee.Image(region_params.geo_map_clean2_noRC);
 var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
 var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
 var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
