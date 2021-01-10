@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    mid_mask = /* color: #d63000 */ee.Geometry.MultiPoint();
+    mid_mask = /* color: #d63000 */ee.Geometry.MultiPoint(),
+    gbr30 = ee.Image("users/mitchest/gbr_reefs/gbr_depth30");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - GBR & Torres Strait
@@ -170,12 +171,12 @@ if (vars.manual_clean && vars.geomorphic) {
   // the "GLOBAL MASK CLEAN" - land (1) and/or deep (2)" ****to be moved to datagen for next region****?
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   
-  clean_map = clean_map.where({
+  /*man_geo = man_geo.where({
     //test: global_reef_mask.eq(1), //land
     test: global_reef_mask.eq(2), //deep
     //test: global_reef_mask.lt(3), //land + deep
     value: ee.Image(0)
-  });
+  });*/
   
   /*
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
@@ -220,6 +221,17 @@ if (vars.manual_clean && vars.geomorphic) {
   ##############
   */
   
+  var multi_depth = ee.ImageCollection([
+    global_reef_mask.lt(3),
+    gbr30.lt(-30)
+    ]).mosaic();
+  
+  
+  man_geo = man_geo.where({
+    test: multi_depth.eq(1), //deep
+    value: ee.Image(0)
+  });
+  
   if (vars.geo_refinement) {
     // make the mask image layer
     var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
@@ -237,7 +249,7 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
+  //Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
