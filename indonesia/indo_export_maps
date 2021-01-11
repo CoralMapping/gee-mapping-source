@@ -3,10 +3,7 @@ var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/
     geo = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x"),
     pixels = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels"),
     benthic = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2"),
-    to_seagrass = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.MultiPolygon(
+    to_seagrass = /* color: #d63000 */ee.Geometry.MultiPolygon(
         [[[[123.7293786442893, -5.485634284802848],
            [123.73761839038305, -5.494177983690836],
            [123.7678307927268, -5.515878427517641],
@@ -73,10 +70,7 @@ var reef_boundary = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/
            [131.1427395657822, 0.4126841585941503],
            [131.13844803135837, 0.4104526182674199],
            [131.1317532376572, 0.3941451895034062]]]]),
-    qc_mask = 
-    /* color: #0015d6 */
-    /* shown: false */
-    ee.Geometry({
+    qc_mask = /* color: #0015d6 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
