@@ -221,11 +221,7 @@ if (vars.manual_clean && vars.geomorphic) {
   ##############
   */
   
-  var multi_depth = ee.ImageCollection([
-    global_reef_mask.lt(3),
-    gbr30.lt(-30)
-    ]).mosaic();
-  
+  var multi_depth = gbr30.lt(-30).unmask(global_reef_mask.lt(3), false);
   
   man_geo = man_geo.where({
     test: multi_depth.eq(1), //deep
@@ -251,6 +247,8 @@ if (vars.manual_clean && vars.geomorphic) {
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   //Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+  Map.addLayer(multi_depth, {}, "Multi-depth mask", false)
+  Map.addLayer(global_reef_mask, {}, "Global mask", false)
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
