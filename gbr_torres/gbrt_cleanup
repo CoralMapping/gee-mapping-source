@@ -221,7 +221,7 @@ if (vars.manual_clean && vars.geomorphic) {
   ##############
   */
   
-  var multi_depth = gbr30.lt(-30).unmask(global_reef_mask.lt(3), false);
+  var multi_depth = gbr30.lt(-20).unmask(global_reef_mask.lt(3), false);
   
   man_geo = man_geo.where({
     test: multi_depth.eq(1), //deep
