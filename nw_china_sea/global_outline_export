@@ -3,7 +3,6 @@ var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combine
     imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":17.26,"max":845.74,"gamma":1},
     region_extent = 
     /* color: #ffc82d */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
