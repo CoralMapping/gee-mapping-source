@@ -9,10 +9,10 @@ var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combine
       }
     ] */
     ee.Geometry.Polygon(
-        [[[98.63116381425976, 23.679635845961577],
-          [98.63116381425976, 0.741438795358247],
-          [117.35186693925982, 0.741438795358247],
-          [117.35186693925982, 23.679635845961577]]], null, false),
+        [[[98.63116381425976, 23.920884246652168],
+          [98.63116381425976, 0.4338381563549706],
+          [117.61553881425982, 0.4338381563549706],
+          [117.61553881425982, 23.920884246652168]]], null, false),
     refined_mask = /* color: #00ffff */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
@@ -130,7 +130,7 @@ var export_scale = ee.Number(100)
 // display it
 
 var Dove_sr = ee.Image(region_params.image)
-Map.addLayer(Dove_sr, imageVisParam, "Dove Philippines")
+Map.addLayer(Dove_sr, imageVisParam, "Dove nw china sea")
 Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
 //Map.addLayer
 
