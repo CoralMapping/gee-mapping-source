@@ -244,7 +244,7 @@ if (vars.manual_clean && vars.geomorphic) {
   e.g. 
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-*/
+
 
 var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
@@ -279,7 +279,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
     value: ee.Image(24)
   });
   
-*/
+
  //Back reef slope > reef slope (outside the reef)
   man_geo = man_geo.where({
     test:  Brs_Rs.eq(1)
@@ -317,7 +317,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
     
     value: ee.Image(24)
   });
-
+*/
   
   if (vars.geo_refinement) {
     // make the mask image layer
