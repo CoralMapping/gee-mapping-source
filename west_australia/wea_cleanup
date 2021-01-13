@@ -340,9 +340,10 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
-  var UNEP = ee.FeatureCollection(wcmc).geometry()
-  //var styleForUNEP = {color: "yellow"}
-  Map.addLayer(UNEP, {color: 'yellow'}, 'UNEP')
+  var unepClipped= wcmc.filterBounds(region_extent)
+  Map.addLayer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
+  
+
  // Map.addLayer(waves, {}, 'waves', false);
  // Map.addLayer(wavespng, {}, 'wavespng', false);
   
