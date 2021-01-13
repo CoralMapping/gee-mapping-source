@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([148.21487751513274, -19.76820985087248]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([113.14651814013276, 10.010553311159605]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - South China Sea
