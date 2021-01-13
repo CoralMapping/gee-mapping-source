@@ -351,12 +351,12 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
   var distToLand = ee.Image(region_params.distToLand);
     
   //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+ // Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
   
   // display distance to water mask
   var distToWater = ee.Image(region_params.distToWater);
     
-  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
+  //Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
   
   
   // Export
