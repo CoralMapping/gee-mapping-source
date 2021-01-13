@@ -333,7 +333,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
   var lowtide_image = ee.ImageCollection(region_params.image);
   Map.addLayer(lowtide_image, imageVisParam2, sensor_params.sname + ' low tide', false);
   var notreef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry();
-  Map.addLayer(notreef_mask, {}, "noReefmask/midMask", false);
+  Map.addLayer(notreef_mask, {}, "noReefmask_1", false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
