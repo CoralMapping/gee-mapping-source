@@ -2,7 +2,8 @@
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
     imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
-    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves");
+    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -339,6 +340,7 @@ var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
+  Map.addLayer(wcmc, {}, 'UNEP')
  // Map.addLayer(waves, {}, 'waves', false);
  // Map.addLayer(wavespng, {}, 'wavespng', false);
   
