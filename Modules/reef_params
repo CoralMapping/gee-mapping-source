@@ -763,8 +763,8 @@ var south_china_sea = {
   benthic_map: ["projects/coral_atlas/south_china_sea/in_out/SCS_benthic"],
   mid_mask: "projects/coral_atlas/south_china_sea/in_out/SCS_midmask",
   geo_map_clean1:"projects/coral_atlas/south_china_sea/in_out/SCS_geo_clean1",
-  geo_map_clean2:"projects/coral_atlas/south_china_sea/in_out/SCS_geo_clean2"
-  geo_map_clean3:"projects/coral_atlas/south_china_sea/in_out/SCS_geo_clean3"
+  geo_map_clean2:"projects/coral_atlas/south_china_sea/in_out/SCS_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/south_china_sea/in_out/SCS_geo_clean3",
   benthic_map_clean1: "projects/coral_atlas/south_china_sea/in_out/SCS_benthic_clean1",
   benthic_map_clean2: "projects/coral_atlas/south_china_sea/in_out/SCS_benthic_clean2",
   prob_geo:[""],
