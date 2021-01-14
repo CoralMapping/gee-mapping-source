@@ -491,7 +491,7 @@ var cio = {
   pixels:["projects/coral_atlas/central_indian_ocean/in_out/cio_pixels"],
   segments:["projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"],
   extent_mask: "projects/coral_atlas/central_indian_ocean/in_out/cio_extent",
-  waves:"",
+  waves:"projects/coral_atlas/central_indian_ocean/in_out/cio_waves",
   geo_train:"projects/coral_atlas/central_indian_ocean/training/cio_geo_reference",
   benthic_train:"projects/coral_atlas/central_indian_ocean/training/cio_benthic_reference",
   benthic_pts:"",
