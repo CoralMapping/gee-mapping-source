@@ -1,5 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([113.14651814013276, 10.010553311159605]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([113.14651814013276, 10.010553311159605]),
+    imageVisParam = {"opacity":1,"bands":["depth"],"gamma":1},
+    imageVisParam2 = {"opacity":1,"bands":["gb"],"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Coral atlas mapping project - South China Sea
@@ -41,7 +43,7 @@ var region_params = param_module.south_china_sea       //<------------ THIS IS W
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   //segment_iters: 3, // number of (SLIC) segmentation iterations
