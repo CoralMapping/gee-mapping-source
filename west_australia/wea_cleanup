@@ -2551,7 +2551,7 @@ if (vars.manual_clean && vars.geomorphic) {
 var mid_Mask = ee.Image().byte().paint(ee.Feature(midMask, {zone: 1}), "zone").clip(midMask);
 
 man_geo = man_geo.where({
-  test: man_geo.eq(1),
+  test: mid_Mask.eq(1),
   value: ee.Image (0),
 })
 
