@@ -1992,18 +1992,18 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(0)
   });*/
   
-  /*
+  
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
-  var waves = ee.Image(region_params.waves)
-  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
+  //var waves = ee.Image(region_params.waves) // special case using exsiting wave asset
+  Map.addLayer(gbr30_hs95.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   man_geo = man_geo.where({
-    test: waves.lte(vars.wave_height)
+    test: gbr30_hs95.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
-  */
+  
   
   
   
