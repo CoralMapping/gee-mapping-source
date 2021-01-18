@@ -1995,16 +1995,22 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
-  //var waves = ee.Image(region_params.waves) // special case using exsiting wave asset
-  Map.addLayer(gbr30_hs95.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
+  //var waves = ee.Image(region_params.waves)
+  var waves = gbr30_hs95.unmask(0) // special case using exsiting wave asset
+  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
   
   man_geo = man_geo.where({
-    test: gbr30_hs95.lte(vars.wave_height)
+    test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
   
-  
+  // clean reef crest below wave threshold
+  man_geo = man_geo.where({
+    test: man_geo.eq(15)
+               .and(waves.lte(0.5)),
+    value: ee.Image(14)
+  })
   
   
   /*
