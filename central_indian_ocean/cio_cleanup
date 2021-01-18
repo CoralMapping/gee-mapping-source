@@ -481,11 +481,11 @@ if (vars.manual_clean && vars.geomorphic) {
   
   
   // // Reef classes in deepwater -> deepwater
-  // man_geo = man_geo.where({
-  //   test: deepwater.eq(1)
-  //                   .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
-  //   value: ee.Image(2)
-  // });
+  man_geo = man_geo.where({
+   test: deepwater.eq(1)
+                     .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
+     value: ee.Image(2)
+   });
   
   
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
