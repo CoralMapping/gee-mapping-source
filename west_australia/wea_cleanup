@@ -2482,7 +2482,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [113.21349687631505, -26.15994919469388],
            [113.21452689820654, -26.160334422655758],
            [113.21452689820654, -26.1407649976835]]]]),
-    brs_sl = /* color: #98ff00 */ee.Geometry({
+    brs_sl = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2599,8 +2602,28 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 -22.86575462359223
               ],
               [
-                113.75212608933009,
-                -22.884101319195747
+                113.73767222089626,
+                -22.713817258027696
+              ],
+              [
+                113.69097150306132,
+                -22.556342263724975
+              ],
+              [
+                113.64843299429698,
+                -22.52511030993088
+              ],
+              [
+                113.60861717819725,
+                -22.62448746665634
+              ],
+              [
+                113.68204124320984,
+                -22.817920915811406
+              ],
+              [
+                113.74521099984264,
+                -22.88149645781722
               ],
               [
                 113.75899254440822,
@@ -2658,35 +2681,6 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               [
                 113.7729162400397,
                 -22.34263547787798
-              ]
-            ]
-          ],
-          "geodesic": true,
-          "evenOdd": true
-        },
-        {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                113.68691357640478,
-                -22.700882643764622
-              ],
-              [
-                113.65738781956884,
-                -22.730018360545763
-              ],
-              [
-                113.74390515355321,
-                -22.881930006843383
-              ],
-              [
-                113.8091364767954,
-                -22.857255895424395
-              ],
-              [
-                113.73360547093603,
-                -22.71038410243058
               ]
             ]
           ],
@@ -2760,7 +2754,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [113.75380004151987, -22.341267507024597],
            [113.76753295167612, -22.351746317072593],
            [113.79705870851205, -22.30792059979948],
-           [113.82109130128549, -22.265352027101414]]]]);
+           [113.82109130128549, -22.265352027101414]]]]),
+    rs_sl = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3018,6 +3013,7 @@ var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
 var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 1}), "zone").clip(Dl_SRS_Pr_to_rs);
+var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs_sl)
 //var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
  // var Rc_Brs = ee.Image().byte().paint(ee.Feature(rc_brs, {zone: 1}), "zone").clip(rc_brs)
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
@@ -3057,6 +3053,13 @@ var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 
     value: ee.Image(22)
   });
   
+  //reef slope to shallow lagoon
+  
+  man_geo = man_geo.where({
+   test: Rs_Sl.eq(1)
+                   .and(man_geo.eq(22)),
+  value: ee.Image(11)
+  })
 /*
  //Back reef slope > reef slope (outside the reef)
   man_geo = man_geo.where({
