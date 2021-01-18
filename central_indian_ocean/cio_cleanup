@@ -381,7 +381,7 @@ if (vars.geomorphic) {
     vars.obia_clean = true;
     vars.fast_clean = true;
     vars.manual_clean = false;
-    vars.geomorph_output_name = temp_outname + '2';
+    vars.geomorph_output_name = temp_outname + '2b';
   } else if (vars.cleanup_stage == 3) {
     vars.manual_clean = true;
     vars.obia_2nd_pass = false;
@@ -463,26 +463,26 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // the "DEEP WATER" CLEAN
   
-  // // Define a kernel for deep water Morphological Operations
-  // var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
+  // Define a kernel for deep water Morphological Operations
+   var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
 
-  // // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
-  // var deepwater = man_geo.eq(2)
-  //           .focal_max({kernel: kernel_dw, iterations: 2})
-  //           .focal_min({kernel: kernel_dw, iterations: 2});
+   // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
+   var deepwater = man_geo.eq(2)
+             .focal_max({kernel: kernel_dw, iterations: 2})
+             .focal_min({kernel: kernel_dw, iterations: 2});
     
   
-  // // Deep lagoon (outside reef mask and global mask) -> deepwater 
-  // man_geo = man_geo.where({
-  //   test: deepwater.eq(1)
-  //                   .and(man_geo.eq(12)),
-  //   value: ee.Image(2)
-  // });
+   // Deep lagoon (outside reef mask and global mask) -> deepwater 
+   man_geo = man_geo.where({
+     test: deepwater.eq(1)
+                     .and(man_geo.eq(12)),
+     value: ee.Image(2)
+   });
   
   
-  // // Reef classes in deepwater -> deepwater
-  man_geo = man_geo.where({
-   test: deepwater.eq(1)
+   // Reef classes in deepwater -> deepwater
+   man_geo = man_geo.where({
+     test: deepwater.eq(1)
                      .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
      value: ee.Image(2)
    });
