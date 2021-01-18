@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var mid_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
+var mid_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[144.41219348373704, -10.011386752205201],
            [144.4478990501433, -10.073590268600991],
            [144.5302965110808, -10.04925118675529],
@@ -186,6 +189,7 @@ var mid_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
            [144.0471795341973, -9.853269239526782],
            [144.03138668751762, -9.856651806953819]]]]),
     gbr30 = ee.Image("users/mitchest/gbr_reefs/gbr_depth30"),
+    gbr30_hs95 = ee.Image("users/mitchest/gbr_reefs/gbr_hs95"),
     coast_mask = 
     /* color: #d63000 */
     /* shown: false */
@@ -2073,7 +2077,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Add data + the manual layer to the map
   var lowtide_image = ee.ImageCollection(region_params.image);
-  Map.addLayer(lowtide_image, {}, sensor_params.sname + ' low tide', false);
+  Map.addLayer(lowtide_image, {min:0, max:1500}, sensor_params.sname + ' low tide', false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
