@@ -2837,7 +2837,7 @@ var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 
   // deep laggon, sheltered r s and patch reefs into reef slope
   
   man_geo = man_geo.where({
-    test: Dl_SRS_Pr_to_rs.eq(1)
+    test: Dl_SRS_Pr_toRs.eq(1)
                             .and(man_geo.eq(12)).or(man_geo.eq(25)).or(man_geo.eq(21)),
     value: ee.Image(21)
   });
