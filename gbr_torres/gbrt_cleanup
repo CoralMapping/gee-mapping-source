@@ -1618,7 +1618,15 @@ var mid_mask =
            [143.7222253017431, -9.701424754951944],
            [143.73630153465325, -9.701763167772077],
            [143.72428523826653, -9.683149955520104],
-           [143.71398555564934, -9.679427189191205]]]]);
+           [143.71398555564934, -9.679427189191205]]],
+         [[[143.87473921061633, -9.14020908184673],
+           [143.879545729171, -9.145632455543998],
+           [143.88606886149523, -9.148683066933577],
+           [143.89362196208117, -9.14597141365653],
+           [143.8953385758507, -9.141903895002041],
+           [143.89156202555773, -9.134446656793004],
+           [143.88675550700304, -9.131056951462725],
+           [143.8781724381554, -9.134446656793004]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - GBR & Torres Strait
@@ -1851,10 +1859,13 @@ if (vars.manual_clean && vars.geomorphic) {
   })
   
   // use reef area mask in torres straight to just leave reef areas mapped
-  
-  //#################
-  
-  
+  var reef_clean_i = ee.Image(0).byte().paint(ee.Feature(reef_clean, {zone: 1}), 'zone').clip(reef_clean_boundary);
+  man_geo = man_geo.where({
+    test: reef_clean_i.eq(0)
+                      .and(man_geo.neq(16)),
+                      //.and(wcmc_mask.eq(0)),
+    value: ee.Image(0)
+  })
   
   // update GBR using deep reef mask
   man_geo = man_geo.where({
