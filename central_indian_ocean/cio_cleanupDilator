@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var image2 = ee.Image("projects/coral_atlas/west_australia/in_out/westaus_geo_clean2");
+var clean2 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //testing morphological rules for WEA intermediate
 
@@ -112,7 +112,7 @@ var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_morphologicNodeepclean2',
+      description: 'geo_map_clean2_morph',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
