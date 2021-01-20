@@ -3116,7 +3116,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [113.74428355314797, -28.383725376539036],
            [113.70308482267922, -28.35381823682232],
            [113.6804255209214, -28.34354515363343]]]]),
-    Dl_SRS_Pr_to_rs = /* color: #d63000 */ee.Geometry({
+    Dl_SRS_Pr_to_rs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3272,7 +3275,17 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [113.70125667577952, -22.64924779754722],
           [113.67894069677561, -22.625165424693293],
           [113.6950768662092, -22.592837714388818]]]),
-    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry.MultiPoint();
+    rs_dl_sl_srs_tobrs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[114.21726442734155, -21.784954441501018],
+          [114.17194582382592, -21.80726896871438],
+          [114.12250734726342, -21.926433318386806],
+          [114.08062197128686, -22.120578215058845],
+          [114.10190798202905, -22.172093208170917],
+          [114.19460512558373, -21.920063412153166],
+          [114.20833803573998, -21.83340442138126]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
