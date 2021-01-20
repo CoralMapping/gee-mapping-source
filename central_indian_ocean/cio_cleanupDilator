@@ -68,7 +68,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
     value: ee.Image(14)
   });
   
-
+/*
 // the "DEEP WATER" CLEAN
   
   // Define a kernel for deep water Morphological Operations
@@ -96,7 +96,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
     value: ee.Image(2)
   });
    
-
+*/
 
   
   //show the maps
