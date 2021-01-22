@@ -33,10 +33,7 @@ var notReef_mask =
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([73.36350406430057, 3.4513743887798998]),
-    region_extent = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
         [[[70.16383984620248, 13.135866931352913],
           [70.14682558742047, 12.617194359154508],
           [70.2690563075083, 11.807120477151644],
@@ -249,7 +246,31 @@ var notReef_mask =
            [72.83183354899933, 11.714418409565544],
            [72.75075681027974, 11.79677555536155]]]]),
     twopluswdRC = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3b"),
-    twoRConly = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_morphNoDeep");
+    twoRConly = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_morphNoDeep"),
+    chagos = 
+    /* color: #12d6cd */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[69.78325931094987, -4.155237145551639],
+          [69.78325931094987, -8.260972289180684],
+          [73.91411868594987, -8.260972289180684],
+          [73.91411868594987, -4.155237145551639]]], null, false),
+    maldives = 
+    /* color: #f331ff */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[69.95904056094987, 13.298212886857753],
+          [69.95904056094987, -2.312553106145913],
+          [76.02349368594987, -2.312553106145913],
+          [76.02349368594987, 13.298212886857753]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
