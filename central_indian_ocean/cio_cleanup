@@ -349,14 +349,14 @@ var vars = {
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
-  geo_depth_cutoff: 1500, //depth in centimetres
-  chagos_depth_cutoff: 1000, //depth cut off for southern chagos region only
+  geo_depth_cutoff: 1100, //depth in centimetres
+  chagos_depth_cutoff: 1500, //depth cut off for southern chagos region only
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
