@@ -48,7 +48,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
 
   // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
   var reef_mask = man_geo.eq(2)
-            .focal_max({kernel: kernel_rm, iterations: 2});
+            .focal_max({kernel: kernel_rm, iterations: 1});
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   Map.addLayer(reef_mask, {}, "reef mask")
   Map.addLayer(global_reef_mask, {}, " global_reef_mask")
@@ -105,14 +105,14 @@ var map_geo2 = ee.Image(region_params.geo_map_clean2);
 
 Map.addLayer(map_geo1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 Map.addLayer(map_geo2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
-Map.addLayer(man_geo, map_palettes.geo, 'Geomorphic clean2_MorfologicalCleanUp', false);
+Map.addLayer(man_geo, map_palettes.geo, 'Geomorphic clean2_RC_1xIter', false);
 
 
 var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_clean2_morphNoDeep',
+      description: 'geo_map_clean2_RC_1xIter',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
