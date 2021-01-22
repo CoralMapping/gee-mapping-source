@@ -798,14 +798,14 @@ if (!vars.manual_clean) {
     });
     
     // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
-    //shallower for chagos
+    //deeper for chagos
     geo_map = geo_map.where({
       test: chagos.eq(1)
                     .and(depth.gt(vars.chagos_depth_cutoff)),
       value: ee.Image(2)
     });
     
-    // deeper for maldives and lakedives
+    // shallower for maldives and lakedives
     geo_map = geo_map.where({
       test: maldives.eq(1)
       .and(depth.gt(vars.geo_depth_cutoff)),
