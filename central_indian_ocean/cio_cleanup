@@ -277,7 +277,31 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [72.99937805472067, 11.60246289878074],
            [72.88814148245504, 11.597081926837859],
            [72.83183354899933, 11.714418409565544],
-           [72.75075681027974, 11.79677555536155]]]]);
+           [72.75075681027974, 11.79677555536155]]]]),
+    chagos_extent = 
+    /* color: #12d6cd */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[69.78325931094987, -4.155237145551639],
+          [69.78325931094987, -8.260972289180684],
+          [73.91411868594987, -8.260972289180684],
+          [73.91411868594987, -4.155237145551639]]], null, false),
+    maldives_extent = 
+    /* color: #f331ff */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[69.95904056094987, 13.298212886857753],
+          [69.95904056094987, -2.312553106145913],
+          [76.02349368594987, -2.312553106145913],
+          [76.02349368594987, 13.298212886857753]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Central Indian Ocean
@@ -762,6 +786,9 @@ if (!vars.manual_clean) {
   // ##############################################################################################
   
   if (vars.geomorphic && !vars.obia_2nd_pass) {
+    
+    var chagos = ee.Image().byte().paint(ee.Feature(chagos_extent, {zone: 1}), "zone").clip(chagos_extent);
+    var maldives = ee.Image().byte().paint(ee.Feature(maldives_extent, {zone: 1}), "zone").clip(maldives_extent);
     
     // shallow lagoon > 5m == deep lagoon
     geo_map = geo_map.where({
