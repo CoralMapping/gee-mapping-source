@@ -244,7 +244,9 @@ var notReef_mask =
            [72.99937805472067, 11.60246289878074],
            [72.88814148245504, 11.597081926837859],
            [72.83183354899933, 11.714418409565544],
-           [72.75075681027974, 11.79677555536155]]]]);
+           [72.75075681027974, 11.79677555536155]]]]),
+    twopluswdRC = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3b"),
+    twoRConly = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_morphNoDeep");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -369,6 +371,9 @@ var geo_fill = empty.paint({
 });
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
+Map.addLayer(twopluswdRC, map_palettes.geo, 'Geo 2 + waves/deep/RC', true);
+Map.addLayer(twoRConly), map_palettes.geo, 'Geo 2 + RC', true);
+
 
 
 ////////// UI SET UP //////////
