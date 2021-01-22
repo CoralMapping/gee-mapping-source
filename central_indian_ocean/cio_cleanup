@@ -406,7 +406,7 @@ if (vars.geomorphic) {
     vars.obia_clean = true;
     vars.fast_clean = true;
     vars.manual_clean = false;
-    vars.geomorph_output_name = temp_outname + '2';
+    vars.geomorph_output_name = temp_outname + '2_twodepths';
   } else if (vars.cleanup_stage == 3) {
     vars.manual_clean = true;
     vars.obia_2nd_pass = false;
