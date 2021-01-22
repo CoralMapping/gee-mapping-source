@@ -84,7 +84,10 @@ var notReef_mask =
     segmentation = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"),
     geo = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo"),
     ben = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"),
-    mid_mask = /* color: #25d610 */ee.Geometry.MultiPolygon(
+    mid_mask = 
+    /* color: #25d610 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.4610278099535, -5.562233749561943],
            [72.41845578846913, -5.63808761806013],
            [72.45072812733632, -5.657220366789967],
