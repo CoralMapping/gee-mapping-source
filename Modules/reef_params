@@ -501,7 +501,7 @@ var cio = {
   benthic_val_library:"projects/coral_atlas/central_indian_ocean/training/cio_benthic_validation",
   geo_map: ["projects/coral_atlas/central_indian_ocean/in_out/cio_geo"],
   benthic_map: ["projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"],
-  geo_map_clean1:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean1",
+  geo_map_clean1:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean1_twodepths",
   geo_map_clean2:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2",
   geo_map_clean3:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3",
   benthic_map_clean1: "projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1",
