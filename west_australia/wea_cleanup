@@ -3663,7 +3663,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   */
   
-  /*
+
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
   var waves = ee.Image(region_params.waves)
@@ -3674,7 +3674,7 @@ if (vars.manual_clean && vars.geomorphic) {
                .and(man_geo.eq(22)),
     value: ee.Image(21)
   })
-  */
+ 
   
   
   
