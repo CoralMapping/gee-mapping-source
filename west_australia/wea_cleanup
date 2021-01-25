@@ -3403,7 +3403,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.10671448649298, -22.15142583559976],
           [114.19426168471679, -21.919904403161098],
           [114.20799457988332, -21.833245412431925]]]),
-    orf_irf_rs_brs_sl_totrf = /* color: #98ff00 */ee.Geometry.MultiPoint();
+    orf_irf_rs_brs_totrf = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3663,7 +3663,7 @@ var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip
 var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 1}), "zone").clip(Dl_SRS_Pr_to_rs);
 var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs_sl)
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
-//var Brs_Rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs);
+varvar Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
  // var Rc_Brs = ee.Image().byte().paint(ee.Feature(rc_brs, {zone: 1}), "zone").clip(rc_brs)
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
