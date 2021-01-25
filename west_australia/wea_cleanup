@@ -4064,6 +4064,13 @@ var Brs_srs = ee.Image().byte().paint(ee.Feature(brs_srs, {zone: 1}), "zone").cl
           .and(man_geo.eq(24)),
     value: ee.Image(22)
   })
+  
+  
+  man_geo = man_geo.where({
+    test: Brs_srs.eq(1)
+          .and(man_geo.eq(24)),
+    value: ee.Image(21)
+  })
 
 /*
  //Back reef slope > reef slope (outside the reef)
