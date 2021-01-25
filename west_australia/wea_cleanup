@@ -3720,7 +3720,7 @@ var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totr
   man_geo = man_geo.where({
     test: orf_irf_rs_brs_totrf.eq(1)
                       .and(man_geo.eq(14)).or(man_geo.eq(13)).or(man_geo.eq(22)).or(man_geo.eq(24)),
-    value: ee.Image(24)
+    value: ee.Image(16)
   })
   
 /*
