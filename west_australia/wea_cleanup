@@ -4,10 +4,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
     wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    midMask = 
-    /* color: #15d623 */
-    /* shown: false */
-    ee.Geometry({
+    midMask = /* color: #15d623 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2025,20 +2022,56 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 -21.6509942506527
               ],
               [
-                114.41179819156712,
-                -21.65607263008822
+                114.39875192691869,
+                -21.630543206207978
               ],
               [
-                114.39138326008094,
-                -21.682218208868267
+                114.39253323178801,
+                -21.638357456427478
               ],
               [
-                114.35790766871752,
-                -21.710270990632853
+                114.38597046587793,
+                -21.64744797446069
               ],
               [
-                114.32366324963972,
-                -21.72644722619359
+                114.37872017690654,
+                -21.6520697407156
+              ],
+              [
+                114.37423638995078,
+                -21.65980541095175
+              ],
+              [
+                114.37431262522898,
+                -21.664232076518502
+              ],
+              [
+                114.37164220173133,
+                -21.66833966029713
+              ],
+              [
+                114.36048440024955,
+                -21.677182347199068
+              ],
+              [
+                114.35799455284226,
+                -21.677934999018028
+              ],
+              [
+                114.35434622674074,
+                -21.688998817725427
+              ],
+              [
+                114.34846629298514,
+                -21.70022309775869
+              ],
+              [
+                114.3274828326361,
+                -21.706637248613205
+              ],
+              [
+                114.31353522839949,
+                -21.72580935733133
               ],
               [
                 114.30451894519094,
@@ -3704,7 +3737,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.36025499997618, -21.647217530577848],
           [114.38274264035704, -21.630144181216835],
           [114.39287066159727, -21.623122779145422],
-          [114.38978075681212, -21.620090704617212]]]);
+          [114.38978075681212, -21.620090704617212]]]),
+    brs_srs = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3966,6 +4000,7 @@ var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
 var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs)
+var Brs_srs = ee.Image().byte().paint(ee.Feature(brs_srs, {zone: 1}), "zone").clip(brs_srs)
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
