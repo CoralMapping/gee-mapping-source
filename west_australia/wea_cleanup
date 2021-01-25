@@ -3716,6 +3716,13 @@ var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totr
                       .and(man_geo.eq(22)).or(man_geo.eq(12)).or(man_geo.eq(11)).or(man_geo.eq(21)),
     value: ee.Image(24)
   })
+  
+  man_geo = man_geo.where({
+    test: orf_irf_rs_brs_totrf.eq(1)
+                      .and(man_geo.eq(14)).or(man_geo.eq(13)).or(man_geo.eq(22)).or(man_geo.eq(24)),
+    value: ee.Image(24)
+  })
+  
 /*
  //Back reef slope > reef slope (outside the reef)
   man_geo = man_geo.where({
