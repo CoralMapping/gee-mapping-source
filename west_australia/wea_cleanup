@@ -4159,8 +4159,16 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 -21.591522072764672
               ],
               [
-                114.65640551125863,
-                -21.594395476951814
+                114.65589052712777,
+                -21.59383683075038
+              ],
+              [
+                114.65736583513768,
+                -21.593118580625287
+              ],
+              [
+                114.65844679744319,
+                -21.591841664752682
               ],
               [
                 114.66175933342853,
@@ -4454,7 +4462,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         }
       ],
       "coordinates": []
-    });
+    }),
+    sl_srs = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -4717,6 +4726,7 @@ var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
 var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs)
 var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone").clip(brsdl_srs)
+var Sl_srs = ee.Image().byte().paint(ee.Feature(sl_srs, {zone:1}),"zone").clip(sl_srs) 
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
@@ -4785,6 +4795,13 @@ var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone"
   man_geo = man_geo.where({
     test: BrsDl_srs.eq(1)
           .and(man_geo.eq(24)).or(man_geo.eq(12)),
+    value: ee.Image(21)
+  })
+  
+  
+   man_geo = man_geo.where({
+    test: Sl_srs.eq(1)
+          .and(man_geo.eq(11)),
     value: ee.Image(21)
   })
 
