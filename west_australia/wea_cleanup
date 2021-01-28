@@ -3163,7 +3163,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    sl_brs = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    sl_brs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[113.8309226568797, -28.842971166636694],
            [113.83332591615704, -28.872739362964353],
            [113.83607249818829, -28.88987476036954],
@@ -4362,6 +4365,103 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                114.65534952026343,
+                -21.64379186983343
+              ],
+              [
+                114.65560701232886,
+                -21.644789106178386
+              ],
+              [
+                114.65556409698462,
+                -21.646404614439927
+              ],
+              [
+                114.65513494354224,
+                -21.646803502585914
+              ],
+              [
+                114.655092028198,
+                -21.647202389629786
+              ],
+              [
+                114.65504911285375,
+                -21.647401832738428
+              ],
+              [
+                114.65502765518163,
+                -21.64774088539075
+              ],
+              [
+                114.6551993165586,
+                -21.64786055084262
+              ],
+              [
+                114.65522077423071,
+                -21.648059993041983
+              ],
+              [
+                114.65526368957494,
+                -21.64833921165815
+              ],
+              [
+                114.65575721603369,
+                -21.648099881448776
+              ],
+              [
+                114.65573575836156,
+                -21.648159714038318
+              ],
+              [
+                114.6556499276731,
+                -21.648518709054787
+              ],
+              [
+                114.65547826629614,
+                -21.648578541470748
+              ],
+              [
+                114.65545680862402,
+                -21.649097088036807
+              ],
+              [
+                114.65560701232886,
+                -21.649117032098307
+              ],
+              [
+                114.65646531921362,
+                -21.64957574475216
+              ],
+              [
+                114.65899732452368,
+                -21.6483990441485
+              ],
+              [
+                114.65972688537573,
+                -21.64656416983058
+              ],
+              [
+                114.66004875045752,
+                -21.645447278392975
+              ],
+              [
+                114.65751674514746,
+                -21.644150875711063
+              ],
+              [
+                114.65586450439429,
+                -21.643373028514674
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -4688,7 +4788,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.68881977964247, -21.62757206102208],
           [114.68916310239638, -21.621428243519894],
           [114.68409909177626, -21.610815580073957],
-          [114.66684712339247, -21.593658123860255]]]);
+          [114.66684712339247, -21.593658123860255]]]),
+    sl_rs = /* color: #98ff00 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -4952,6 +5053,7 @@ var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totr
 var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs)
 var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone").clip(brsdl_srs)
 var Sl_srs = ee.Image().byte().paint(ee.Feature(sl_srs, {zone:1}),"zone").clip(sl_srs) 
+var Sl_rs = ee.Image().byte().paint(ee.Feature(sl_rs, {zone:1}),"zone").clip(sl_rs)  
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
@@ -5028,6 +5130,12 @@ var Sl_srs = ee.Image().byte().paint(ee.Feature(sl_srs, {zone:1}),"zone").clip(s
     test: Sl_srs.eq(1)
           .and(man_geo.eq(11)),
     value: ee.Image(21)
+  })
+  
+  man_geo = man_geo.where({
+    test: Sl_rs.eq(1)
+          .and(man_geo.eq(11)),
+    value: ee.Image(22)
   })
 
 /*
