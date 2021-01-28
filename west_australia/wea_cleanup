@@ -4789,7 +4789,12 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.68916310239638, -21.621428243519894],
           [114.68409909177626, -21.610815580073957],
           [114.66684712339247, -21.593658123860255]]]),
-    sl_rs = /* color: #98ff00 */ee.Geometry.MultiPoint();
+    sl_rs = /* color: #98ff00 */ee.Geometry.Polygon(
+        [[[114.65256002288794, -21.64430541271738],
+          [114.65168025833106, -21.645123144120085],
+          [114.65275314193701, -21.645731453500908],
+          [114.65338614326453, -21.64506331027205],
+          [114.65308573585486, -21.64447494277897]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -5007,7 +5012,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   */
   
-/*
+
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
   var waves = ee.Image(region_params.waves)
@@ -5019,7 +5024,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(21)
   })
  
-  */
+ 
   
   
 /*
