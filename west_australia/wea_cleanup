@@ -5013,7 +5013,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.65168025833106, -21.645123144120085],
           [114.65275314193701, -21.645731453500908],
           [114.65338614326453, -21.64506331027205],
-          [114.65308573585486, -21.64447494277897]]]);
+          [114.65308573585486, -21.64447494277897]]]),
+    brs_mask = /* color: #0b4a8b */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -5278,6 +5279,8 @@ var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip
 var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone").clip(brsdl_srs)
 var Sl_srs = ee.Image().byte().paint(ee.Feature(sl_srs, {zone:1}),"zone").clip(sl_srs) 
 var Sl_rs = ee.Image().byte().paint(ee.Feature(sl_rs, {zone:1}),"zone").clip(sl_rs)  
+var Brs_mask = ee.Image().byte().paint(ee.Feature(brs_mask, {zone:1}),"zone").clip(brs_mask)  
+
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
@@ -5361,6 +5364,12 @@ var Sl_rs = ee.Image().byte().paint(ee.Feature(sl_rs, {zone:1}),"zone").clip(sl_
           .and(man_geo.eq(11)),
     value: ee.Image(22)
   })
+  
+  
+  man_geo = man_geo.where({
+    test: Brs_mask.eq(1),
+    value: ee.Image(0)
+  }) 
 
 /*
  //Back reef slope > reef slope (outside the reef)
