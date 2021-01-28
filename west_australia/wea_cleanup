@@ -3996,10 +3996,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [114.38274264035704, -21.630144181216835],
           [114.39287066159727, -21.623122779145422],
           [114.38978075681212, -21.620090704617212]]]),
-    brs_srs = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    brsdl_srs = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[114.3999216957368, -21.619039176458088],
           [114.3892786903657, -21.626060776910858],
           [114.36301449969187, -21.656377406173128],
@@ -4275,7 +4272,7 @@ var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
 var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs)
-var Brs_srs = ee.Image().byte().paint(ee.Feature(brs_srs, {zone: 1}), "zone").clip(brs_srs)
+var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone").clip(brsdl_srs)
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
@@ -4342,8 +4339,8 @@ var Brs_srs = ee.Image().byte().paint(ee.Feature(brs_srs, {zone: 1}), "zone").cl
   
   
   man_geo = man_geo.where({
-    test: Brs_srs.eq(1)
-          .and(man_geo.eq(24)),
+    test: BrsDl_srs.eq(1)
+          .and(man_geo.eq(24)).or(man_geo.eq(12)),
     value: ee.Image(21)
   })
 
