@@ -2192,7 +2192,20 @@ if (vars.manual_clean && vars.geomorphic) {
   // clean reef crest below wave threshold
   man_geo = man_geo.where({
     test: man_geo.eq(15)
-               .and(waves.lte(0.5)),
+                 .and(waves.lte(0.5)),
+    value: ee.Image(14)
+  })
+  
+  // use a distance to deepwater to cut out RC/slope
+  var dist_to_deep = man_geo.eq(2).fastDistanceTransform(256).sqrt()
+                                  .multiply(ee.Image.pixelArea().sqrt())
+                                  .uint16()
+                                  .selfMask()
+  Map.addLayer(dist_to_deep, {}, "distance to deepwater", false)
+  
+  man_geo = man_geo.where({
+    test: man_geo.eq(15)
+                 .and(dist_to_deep.lte(300)),
     value: ee.Image(14)
   })
   
