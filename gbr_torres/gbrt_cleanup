@@ -190,7 +190,10 @@ var mid_mask =
            [144.03138668751762, -9.856651806953819]]]]),
     gbr30 = ee.Image("users/mitchest/gbr_reefs/gbr_depth30"),
     gbr30_hs95 = ee.Image("users/mitchest/gbr_reefs/gbr_hs95"),
-    coast_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    coast_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[152.40788313456125, -23.963473164379604],
            [151.78578230448312, -23.734875952572068],
            [151.61686750956125, -23.659426040601588],
@@ -2177,7 +2180,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
   //var waves = ee.Image(region_params.waves)
-  var waves = gbr30_hs95.unmask(0) // special case using exsiting wave asset
+  var waves = gbr30_hs95//.unmask(0) // special case using exsiting wave asset
   Map.addLayer(waves, {}, "Waves", false)
   
   man_geo = man_geo.where({
@@ -2189,7 +2192,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // clean reef crest below wave threshold
   man_geo = man_geo.where({
     test: man_geo.eq(15)
-               .and(waves.lte(0.3)),
+               .and(waves.lte(0.5)),
     value: ee.Image(14)
   })
   
