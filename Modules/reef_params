@@ -810,16 +810,16 @@ var philippines = {
   QAQC: ""
 };
 
-var nw_china_sea = {
-  sname:"nw_china_sea",
+var southeastern_asia = {
+  sname:"southeastern_asia",
   tide: "both",
-  asset: "projects/coral_atlas/nw_china_sea/",
+  asset: "projects/coral_atlas/southeastern_asia/",
   epsg: "EPSG:4326",
-  image: "projects/coral_atlas/nw_china_sea/image/southeastern_asia_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic",
-  depth: "projects/coral_atlas/nw_china_sea/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth",
-  s2_depth: "projects/coral_atlas/nw_china_sea/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
-  ls8_depth: "projects/coral_atlas/nw_china_sea/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth",
-  depth_composite: "projects/coral_atlas/nw_china_sea/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth_2",
+  image: "projects/coral_atlas/southeastern_asia/image/southeastern_asia_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/southeastern_asia/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth",
+  s2_depth: "projects/coral_atlas/southeastern_asia/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/southeastern_asia/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth",
+  depth_composite: "projects/coral_atlas/southeastern_asia/depth/southeastern_asia_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth_2",
   global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
   distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
   distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
@@ -1304,7 +1304,7 @@ exports = {
   west_australia: west_australia,
   south_china_sea: south_china_sea,
   philippines: philippines,
-  nw_china_sea: nw_china_sea,
+  southeastern_asia: southeastern_asia,
   se_caribbean: se_caribbean,
   mesoamerica: mesoamerica,
   red_sea: red_sea,
