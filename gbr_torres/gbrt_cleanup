@@ -2421,7 +2421,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
-    pyramidingPolicy: {'.default': 'mode'}
+    pyramidingPolicy: {'.defaudlt': 'mode'}
   });
   
 }
