@@ -2205,10 +2205,15 @@ if (vars.manual_clean && vars.geomorphic) {
   
   man_geo = man_geo.where({
     test: man_geo.eq(15)
-                 .and(dist_to_deep.lte(300)),
+                 .and(dist_to_deep.gte(300)),
     value: ee.Image(14)
   })
   
+  man_geo = man_geo.where({
+    test: man_geo.eq(21).or(man_geo.eq(22))
+                 .and(dist_to_deep.gte(1500)),
+    value: ee.Image(24)
+  })
   
   /*
   ##############
