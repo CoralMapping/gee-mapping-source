@@ -778,7 +778,7 @@ var philippines = {
   asset: "projects/coral_atlas/philippines/",
   epsg: "EPSG:4326",
   image: "projects/coral_atlas/philippines/image/philippines_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic",
-  depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_dove_depth",
+  depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_dove_depth_2",
   s2_depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_landsat8_depth",
   depth_composite: "projects/coral_atlas/philippines/depth/philippines_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_composite_depth",
