@@ -248,8 +248,6 @@ var notReef_mask =
            [72.88814148245504, 11.597081926837859],
            [72.83183354899933, 11.714418409565544],
            [72.75075681027974, 11.79677555536155]]]]),
-    twopluswdRC = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3b"),
-    twoRConly = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_morphNoDeep"),
     chagos = 
     /* color: #12d6cd */
     /* shown: false */
@@ -277,7 +275,7 @@ var notReef_mask =
           [76.02349368594987, -2.312553106145913],
           [76.02349368594987, 13.298212886857753]]], null, false),
     TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
-    NoDeep = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_morphNoDeep");
+    DistRC = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_RCdist");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -402,9 +400,7 @@ var geo_fill = empty.paint({
 });
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-Map.addLayer(twopluswdRC, map_palettes.geo, 'Geo 2 + waves/deep/RC', false);
-Map.addLayer(twoRConly, map_palettes.geo, 'Geo 2 + RC', false);
-Map.addLayer(NoDeep, map_palettes.geo, 'Geo 2 morph No Deep', false);
+Map.addLayer(DistRC, map_palettes.geo, 'Geo 2 + RC', false);
 Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2 + two depths', false);
 //Map.addLayer(clean2_morph, map_palettes.geo, 'Geo 2 + RC/deep', false);
 //Map.addLayer(clean1_2depths, map_palettes.geo, 'Geo 1 two depths', false);
