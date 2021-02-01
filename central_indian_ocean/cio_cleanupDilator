@@ -61,7 +61,16 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
   });
   */
   
-  // Reef crest, (within reef mask) -> outer reef flat
+  var distToLand = ee.Image(region_params.distToLand);
+  
+  // reef crest close to land -> IRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
+  man_geo = man_geo.where({
+    test: distToLand.lte(vars.dist_to_land_RC)
+                   .and(clean_map.eq(15)),
+     value: ee.Image(13)
+   });
+    
+    // Reef crest, (within reef mask) -> outer reef flat
   man_geo = man_geo.where({
     test: reef_mask.eq(0)
                     .and(man_geo.eq(15)),
