@@ -1,5 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var clean2 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2");
+var clean2 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //testing morphological rules for WEA intermediate
 
@@ -48,7 +48,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
 
   // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
   var reef_mask = man_geo.eq(2)
-            .focal_max({kernel: kernel_rm, iterations: 1});
+            .focal_max({kernel: kernel_rm, iterations: 0});
   var global_reef_mask = ee.Image(region_params.global_reef_mask);
   Map.addLayer(reef_mask, {}, "reef mask")
   Map.addLayer(global_reef_mask, {}, " global_reef_mask")
@@ -112,7 +112,7 @@ var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_clean2_RC_1xIter',
+      description: 'geo_map_clean2_RC_0xIter',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
