@@ -3271,10 +3271,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_dl_sl_srs_tobrs = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry.Polygon(
         [[[115.46692648498026, -20.661025627540276],
           [115.45594015685526, -20.682868492179278],
           [115.45937338439433, -20.76057787569464],
