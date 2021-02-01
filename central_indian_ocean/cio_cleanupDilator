@@ -123,7 +123,7 @@ var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_clean2_landdist',
+      description: 'geo_map_clean2_RCdist',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
