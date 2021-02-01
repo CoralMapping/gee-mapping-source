@@ -3222,7 +3222,44 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         }
       ],
       "coordinates": []
-    });
+    }),
+    rs_dl_sl_srs_tobrs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[115.46692648498026, -20.661025627540276],
+           [115.45594015685526, -20.682868492179278],
+           [115.45937338439433, -20.76057787569464],
+           [115.44289389220683, -20.793961382854086],
+           [115.38384237853495, -20.887652493355393],
+           [115.41886129943339, -20.913311102912495],
+           [115.46623983947245, -20.904331088722206],
+           [115.48409262267558, -20.861989498043453],
+           [115.49233236876933, -20.792677538299777],
+           [115.50263205138651, -20.736819735039848],
+           [115.50263205138651, -20.69121934518286]]],
+         [[[115.52803793517558, -20.35425547744254],
+           [115.5294112261912, -20.408966341248238],
+           [115.51018515197245, -20.441783535285676],
+           [115.51705216106929, -20.46333516288831],
+           [115.50469162370088, -20.491156123316724],
+           [115.51979818908183, -20.50739690053722],
+           [115.51499167052714, -20.523474324094494],
+           [115.51361931051862, -20.5353702097316],
+           [115.50675288520189, -20.536817205018128],
+           [115.5067526939772, -20.55040011795092],
+           [115.49370565978495, -20.55562410411447],
+           [115.4882126065685, -20.570087574917476],
+           [115.4758520086744, -20.574264541232427],
+           [115.47361945657664, -20.58551390676812],
+           [115.47688060446661, -20.59933440892364],
+           [115.46761313048808, -20.62118867413543],
+           [115.49439230529276, -20.639181857875794],
+           [115.61043539611308, -20.634041165319584],
+           [115.63652792540995, -20.4643010866166],
+           [115.65369406310526, -20.403817911159386],
+           [115.60288229552714, -20.346530028001908],
+           [115.53902426330058, -20.334941129562495]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3475,26 +3512,36 @@ man_geo = man_geo.where({
 
 
 
-
+/*
 var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
 var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 1}), "zone").clip(Dl_SRS_Pr_to_rs);
 var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs_sl)
+*/
+
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
+
+/*
+
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
+
+
 var Brs_rs = ee.Image().byte().paint(ee.Feature(brs_rs, {zone: 1}), "zone").clip(brs_rs)
 var BrsDl_srs = ee.Image().byte().paint(ee.Feature(brsdl_srs, {zone: 1}), "zone").clip(brsdl_srs)
 var Sl_srs = ee.Image().byte().paint(ee.Feature(sl_srs, {zone:1}),"zone").clip(sl_srs) 
 var Sl_rs = ee.Image().byte().paint(ee.Feature(sl_rs, {zone:1}),"zone").clip(sl_rs)  
-var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").clip(brsdl_mask)  
+*/
 
+var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").clip(brsdl_mask)  
+ 
  //var Srs_Brs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs)
  //var All_Brs = ee.Image().byte().paint(ee.Feature(all_brs, {zone:1}), "zone").clip(all_brs)
  // var Srs_Orf = ee.Image().byte().paint(ee.Feature(srs_orf, {zone: 1}), "zone").clip(srs_orf)  
   
   // Back reef slope -> shallow lagoon (inside the reef)
 
+/*
   man_geo = man_geo.where({
    test: Brs_Sl.eq(1)
                    .and(man_geo.eq(24)).or(man_geo.eq(12)),
@@ -3534,13 +3581,15 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
   value: ee.Image(11)
   })
   
-  
+  */
   man_geo = man_geo.where({
     test: Rs_Dl_Sl_SRS_toBrs.eq(1)
                       .and(man_geo.eq(22)).or(man_geo.eq(12)).or(man_geo.eq(11)).or(man_geo.eq(21)),
     value: ee.Image(24)
   })
   
+  
+  /*
   man_geo = man_geo.where({
     test: Orf_irf_rs_brs_totrf.eq(1)
                       .and(man_geo.eq(14)).or(man_geo.eq(13)).or(man_geo.eq(22)).or(man_geo.eq(24)),
@@ -3573,7 +3622,7 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
     value: ee.Image(22)
   })
   
-  
+ */ 
   man_geo = man_geo.where({
     test: Brs_mask.eq(1)
          .and(man_geo.eq(24)).or(man_geo.eq(12)),
