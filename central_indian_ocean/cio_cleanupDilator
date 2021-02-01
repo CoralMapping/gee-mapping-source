@@ -41,7 +41,7 @@ var vars = {
 // the "REEF MASK" CLEAN
 
 var man_geo = ee.Image(region_params.geo_map_clean2);
-
+/*
   
   // Define a kernel for reef mask Morphological Operations
   var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
@@ -60,7 +60,14 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
     value: ee.Image(13)
   });
   
-  /*
+    // Reef crest, (within reef mask) -> outer reef flat
+  man_geo = man_geo.where({
+    test: reef_mask.eq(0)
+                    .and(man_geo.eq(15)),
+    value: ee.Image(14)
+  });
+  
+  */
   var distToLand = ee.Image(region_params.distToLand);
   
   // reef crest close to land -> IRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
@@ -69,17 +76,10 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
                    .and(man_geo.eq(15)),
      value: ee.Image(13)
    });
-   */
-    
-    // Reef crest, (within reef mask) -> outer reef flat
-  man_geo = man_geo.where({
-    test: reef_mask.eq(0)
-                    .and(man_geo.eq(15)),
-    value: ee.Image(14)
-  });
-  
+   
   
 /*
+
 // the "DEEP WATER" CLEAN
   
   // Define a kernel for deep water Morphological Operations
@@ -123,7 +123,7 @@ var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_clean2_reefmask',
+      description: 'geo_map_clean2_landdist',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
