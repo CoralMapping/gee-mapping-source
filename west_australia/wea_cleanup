@@ -3252,7 +3252,9 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [115.52048483458964, -20.42312140750385],
           [115.52803793517558, -20.343308746697392],
           [115.50400534240214, -20.326568598995298],
-          [115.45456686583964, -20.318197845565862]]]);
+          [115.45456686583964, -20.318197845565862]]]),
+    sl_brs = /* color: #0b4a8b */ee.Geometry.MultiPoint(),
+    rs_brs = /* color: #ffc82d */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
