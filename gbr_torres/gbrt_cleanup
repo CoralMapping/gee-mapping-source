@@ -4015,7 +4015,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -4307,11 +4307,11 @@ if (vars.manual_clean && !vars.geomorphic) {
   // define the clean benthic map to apply 2nd stage rules to
   var man_benthic = ee.Image(region_params.benthic_map_clean1);
   
-  // extra depth cutoff refinement
+  /*// extra depth cutoff refinement
   man_benthic = man_benthic.where({
           test: depth.gt(vars.benthic_depth_cutoff),
           value: ee.Image(0)
-        });
+        });*/
   
   /*
   **Generic benthic rules**
@@ -4333,16 +4333,23 @@ if (vars.manual_clean && !vars.geomorphic) {
   });
     
   
-  /*// Seagrass on RC or ORF -> Coral/Algae
-  // except for these two areas
-  var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));
+  // Sand on RC or -> Rock
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(15)),
+    value: ee.Image(13)
+  }); 
+  
+  // Seagrass on RC or ORF -> Coral/Algae
+  /*// except for these two areas
+  var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));*/
   
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15)))
-                     .and(sg_orf.eq(0)),
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+                     //.and(sg_orf.eq(0)),
     value: ee.Image(15)
-  }); */ 
+  }); 
   
     
   /*
