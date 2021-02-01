@@ -3507,12 +3507,12 @@ man_geo = man_geo.where({
 
 /*
 var Brs_Sl = ee.Image().byte().paint(ee.Feature(brs_sl, {zone: 1}), "zone").clip(brs_sl);
-var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
-var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
+
 var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 1}), "zone").clip(Dl_SRS_Pr_to_rs);
 var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs_sl)
 */
-
+var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
+var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
 
 /*
@@ -3542,22 +3542,10 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
   });
   
 
- // Shallow lagoon and deep lagoon > back reef slope (inside the reef)
-  man_geo = man_geo.where({
-    test:  Sl_Brs.eq(1)
-                     .and(man_geo.eq(11).or(man_geo.eq(12))),
-    value: ee.Image(24)
-  });
-  
+
 
   
-// reef slope > back reef slope (outside the reef)
-  man_geo = man_geo.where({
-    test: Rs_Brs.eq(1)
-                     .and(man_geo.eq(22)),
-    value: ee.Image(24)
-  });
-  
+
   // deep laggon, sheltered r s and patch reefs into reef slope
   
   man_geo = man_geo.where({
@@ -3575,6 +3563,22 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
   })
   
   */
+   // Shallow lagoon and deep lagoon > back reef slope (inside the reef)
+  man_geo = man_geo.where({
+    test:  Sl_Brs.eq(1)
+                     .and(man_geo.eq(11).or(man_geo.eq(12))),
+    value: ee.Image(24)
+  });
+  
+  // reef slope > back reef slope (outside the reef)
+  man_geo = man_geo.where({
+    test: Rs_Brs.eq(1)
+                     .and(man_geo.eq(22)),
+    value: ee.Image(24)
+  });
+  
+  
+  
   man_geo = man_geo.where({
     test: Rs_Dl_Sl_SRS_toBrs.eq(1)
                       .and(man_geo.eq(22)).or(man_geo.eq(12)).or(man_geo.eq(11)).or(man_geo.eq(21)),
