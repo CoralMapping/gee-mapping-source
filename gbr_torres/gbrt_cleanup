@@ -4340,6 +4340,13 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(13)
   }); 
   
+  // Sand on reef slope -> coral/algaw
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(11)
+                     .and(geo_map.eq(22)),
+    value: ee.Image(15)
+  }); 
+  
   // Seagrass on RC or ORF -> Coral/Algae
   /*// except for these two areas
   var sg_orf = ee.Image().byte().paint(ee.Feature(sg_on_orf, {zone: 1}), "zone").unmask(geo_map.eq(42));*/
