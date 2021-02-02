@@ -3396,11 +3396,59 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                115.27473238772865,
+                -20.91272086047561
+              ],
+              [
+                115.22598055667396,
+                -20.973642695361708
+              ],
+              [
+                115.23284701175209,
+                -21.014029806551562
+              ],
+              [
+                115.30837801761146,
+                -21.026848826181887
+              ],
+              [
+                115.3159311181974,
+                -20.97813069153147
+              ],
+              [
+                115.32623080081459,
+                -20.963383912385822
+              ],
+              [
+                115.3104379541349,
+                -20.93516863110404
+              ],
+              [
+                115.29670504397865,
+                -20.916569288516733
+              ],
+              [
+                115.27610567874427,
+                -20.906306594245244
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
     }),
-    sl_brs = /* color: #0b4a8b */ee.Geometry.Polygon(
+    sl_brs = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[115.53079009782704, -20.32592123925452],
           [115.53422313016783, -20.365834904159623],
           [115.54520882536968, -20.4591410432757],
@@ -3415,7 +3463,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [115.62073539628445, -20.545318400247606],
           [115.66124512181132, -20.466217140570553],
           [115.60219707958206, -20.33364726921506]]]),
-    rs_brs = /* color: #ffc82d */ee.Geometry.Polygon(
+    rs_brs = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[115.52597799865214, -20.34052908662443],
           [115.5403975543162, -20.40875983182294],
           [115.5458907183787, -20.471170923905355],
@@ -3428,7 +3479,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [115.48032036006657, -20.590772366053262],
           [115.47602798244475, -20.607162514231483],
           [115.46074667540995, -20.631264544428408],
-          [115.50466158876706, -20.898223699884383],
+          [115.43254438542137, -21.039849896322014],
+          [115.5177078534155, -21.139864249865308],
           [115.6035733655206, -20.769745416550645],
           [115.62559618234134, -20.715519055484855],
           [115.5995501109918, -20.613435406332727],
@@ -3696,7 +3748,7 @@ var Rs_Sl = ee.Image().byte().paint(ee.Feature(rs_sl, {zone:1}), "zone").clip(rs
 var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip(sl_brs);
 var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
-
+var Dl_SRS_Pr_toRs = ee.Image().byte().paint(ee.Feature(Dl_SRS_Pr_to_rs, {zone: 1}), "zone").clip(Dl_SRS_Pr_to_rs);
 /*
 
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
@@ -3728,13 +3780,7 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
 
   
 
-  // deep laggon, sheltered r s and patch reefs into reef slope
-  
-  man_geo = man_geo.where({
-    test: Dl_SRS_Pr_toRs.eq(1)
-                            .and(man_geo.eq(12)).or(man_geo.eq(25)).or(man_geo.eq(21)),
-    value: ee.Image(22)
-  });
+
   
   //reef slope to shallow lagoon
   
@@ -3750,6 +3796,14 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
     test:  Sl_Brs.eq(1)
                      .and(man_geo.eq(11).or(man_geo.eq(12))),
     value: ee.Image(24)
+  });
+  
+    // deep laggon, sheltered r s and patch reefs into reef slope
+  
+  man_geo = man_geo.where({
+    test: Dl_SRS_Pr_toRs.eq(1)
+                            .and(man_geo.eq(12)).or(man_geo.eq(25)).or(man_geo.eq(21)),
+    value: ee.Image(22)
   });
   
   // reef slope > back reef slope (outside the reef)
