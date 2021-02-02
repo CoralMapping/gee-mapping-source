@@ -4333,7 +4333,7 @@ if (vars.manual_clean && !vars.geomorphic) {
   });
     
   
-  // Sand on RC or -> Rock
+  // Sand on RC -> Rock
   man_benthic = man_benthic.where({
     test: man_benthic.eq(11)
                      .and(geo_map.eq(15)),
