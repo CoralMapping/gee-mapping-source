@@ -44,7 +44,7 @@ var export_stack = depth.updateMask(geo.gt(2)).rename('depth')
 Map.addLayer(export_stack, {}, "export raster stack", false);
 
 // run the export
-Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
+Map.addLayer(reef_boundary, {}, "Reef Boundary", false);
 Export.image.toCloudStorage({
   image: export_stack,
   description: 'gbrt_stack',
@@ -56,5 +56,3 @@ Export.image.toCloudStorage({
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
-
-
