@@ -402,7 +402,7 @@ var geo_fill = empty.paint({
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2 + two depths', false);
-//Map.addLayer(DistRC, map_palettes.geo, 'Geo 2 + RC', false);
+Map.addLayer(DistRC, map_palettes.geo, 'Geo 2 + disttoRC', false);
 Map.addLayer(ReefMask, map_palettes.geo, 'Geo 2 + RCtoORF reefmask', false);
 //Map.addLayer(clean1_2depths, map_palettes.geo, 'Geo 1 two depths', false);
 //Map.addLayer(clean2_2depths, map_palettes.geo, 'Geo 2 two depths', false);
