@@ -355,7 +355,7 @@ if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
   //Map.addLayer(ee.Image(timor_geo_clean1_15m), map_palettes.geo, 'timor_geo_clean1_15m_5m', false);
   //Map.addLayer(ee.Image(timor_geo_clean1_15m_4m), map_palettes.geo, 'timor_geo_clean1_15m_4m', false);
   }
-
+/*
 // Add geo clean stage 2 to the viewer
 if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
   Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
@@ -364,7 +364,7 @@ if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
   //Map.addLayer(ee.Image(timor_geo_clean2_15m), map_palettes.geo, 'timor_geo_clean2_15m_5m', false);
   //Map.addLayer(ee.Image(timor_geo_clean2_15m_4m), map_palettes.geo, 'timor_geo_clean2_15m_4m', false);
 }
-
+*/
 // Add geo clean stage 3 to the viewer
 if (vars.geo_cleanup_stage == 3) {
   var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
@@ -400,8 +400,9 @@ var geo_fill = empty.paint({
 });
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-Map.addLayer(DistRC, map_palettes.geo, 'Geo 2 + RC', false);
 Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2 + two depths', false);
+Map.addLayer(DistRC, map_palettes.geo, 'Geo 2 + RC', false);
+
 //Map.addLayer(clean2_morph, map_palettes.geo, 'Geo 2 + RC/deep', false);
 //Map.addLayer(clean1_2depths, map_palettes.geo, 'Geo 1 two depths', false);
 //Map.addLayer(clean2_2depths, map_palettes.geo, 'Geo 2 two depths', false);
