@@ -4362,7 +4362,9 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   
   // final smooth for missing data due to depth
+  var ben_mask = man_benthic.gt(0)
   man_benthic = man_benthic.focal_mode(2)
+                           .updateMask(ben_mask)
                            .selfMask()
   
   
