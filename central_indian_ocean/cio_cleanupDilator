@@ -37,11 +37,11 @@ var vars = {
   benthic_depth_cutoff: 750, //depth in centimetres
 };
 
-/*
+
 // the "REEF MASK" CLEAN
 
 var man_geo = ee.Image(region_params.geo_map_clean2);
-
+/*
   
   // Define a kernel for reef mask Morphological Operations
   var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
