@@ -3307,7 +3307,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [115.52803793517558, -20.343308746697392],
           [115.50400534240214, -20.326568598995298],
           [115.45456686583964, -20.318197845565862]]]),
-    sl_brs = /* color: #0b4a8b */ee.Geometry({
+    sl_brs = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
