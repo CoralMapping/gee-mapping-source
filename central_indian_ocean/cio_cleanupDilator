@@ -64,7 +64,7 @@ var man_geo = ee.Image(region_params.geo_map_clean2);
  */
   var distToLand = ee.Image(region_params.distToLand);
   
-  // reef crest close to land -> IRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
+  // reef crest close to land -> ORF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
   man_geo = man_geo.where({
     test: distToLand.lte(vars.dist_to_land_RC)
                    .and(man_geo.eq(15)),
