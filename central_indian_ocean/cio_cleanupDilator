@@ -30,7 +30,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
-  dist_to_land_RC: 250, //distance to land in meters to convert reef crest to TRF - not used for Indo
+  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1200, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
@@ -117,7 +117,7 @@ var region_extent=ee.FeatureCollection(region_params.extent_mask)
 
 Export.image.toAsset({
       image: man_geo,
-      description: 'geo_map_clean2_distRC_250orf_deep',
+      description: 'geo_map_clean2_distRC_5000orf_deep',
       region: region_extent,
       scale: 5,
       crs: 'EPSG:4326',
