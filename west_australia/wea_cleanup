@@ -3427,7 +3427,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry({
+    rs_dl_sl_srs_tobrs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3796,6 +3799,47 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                116.082275601481,
+                -20.795832638283468
+              ],
+              [
+                116.03764364347319,
+                -20.822148716844083
+              ],
+              [
+                116.01704427823881,
+                -20.86065176575854
+              ],
+              [
+                116.04142019376616,
+                -20.89561682537926
+              ],
+              [
+                116.08639547452788,
+                -20.901069357683667
+              ],
+              [
+                116.11283132657866,
+                -20.833379790172657
+              ],
+              [
+                116.10493490323881,
+                -20.798079312100025
+              ],
+              [
+                116.09017202482084,
+                -20.786203657288546
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
@@ -3976,7 +4020,13 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [115.88981629991684, -20.96858630410876],
            [115.89942933702622, -20.96089202265777],
            [115.88123323106919, -20.95736534469322],
-           [115.87265016222153, -20.959609603927692]]]]),
+           [115.87265016222153, -20.959609603927692]]],
+         [[[116.09772512540678, -20.79743740870953],
+           [116.08399221525053, -20.807386604276175],
+           [116.07300588712553, -20.817335143362317],
+           [116.07300588712553, -20.837230251066757],
+           [116.1203844271646, -20.82022330590475],
+           [116.12141439542631, -20.801930675079298]]]]),
     rs_mask = 
     /* color: #98ff00 */
     /* shown: false */
@@ -4044,7 +4094,12 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [116.04073354825834, -20.893692354912197],
            [116.06819936857084, -20.911973827806083],
            [116.0987550936685, -20.842684902076165],
-           [116.07609579191069, -20.82952923080852]]]]),
+           [116.07609579191069, -20.82952923080852]]],
+         [[[116.10287496671538, -20.793585931009147],
+           [116.06854269132475, -20.816372410213535],
+           [116.07025930509428, -20.830812761536777],
+           [116.10115835294584, -20.835946775044096],
+           [116.11901113614897, -20.804498195761656]]]]),
     sl_mask = 
     /* color: #0b4a8b */
     /* shown: false */
@@ -4074,7 +4129,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [115.99970647916655, -20.965682797286558],
            [116.00622961149077, -20.976422278298095],
            [116.06407949552397, -20.95125541477001],
-           [116.05034658536772, -20.89754127116878]]]]);
+           [116.05034658536772, -20.89754127116878]]]]),
+    srs_rs = /* color: #ffc82d */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -4339,6 +4395,7 @@ var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {
 var SRS_toBrs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs);
 var Rs_mask = ee.Image().byte().paint(ee.Feature(rs_mask, {zone: 1}), "zone").clip(rs_mask);
 var Sl_mask = ee.Image().byte().paint(ee.Feature(sl_mask, {zone: 1}), "zone").clip(sl_mask);
+var Srs_rs = ee.Image().byte().paint(ee.Feature(srs_rs, {zone:1}), "zone").clip(srs_rs)
 /*
 
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
