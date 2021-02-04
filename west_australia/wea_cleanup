@@ -3663,11 +3663,43 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           ],
           "geodesic": true,
           "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                115.72296144151841,
+                -21.14896747666507
+              ],
+              [
+                115.72399140978013,
+                -21.155051121877577
+              ],
+              [
+                115.7497406163231,
+                -21.146085662759276
+              ],
+              [
+                115.75283052110825,
+                -21.137439884673892
+              ],
+              [
+                115.73532106065903,
+                -21.1310352793911
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
         }
       ],
       "coordinates": []
     }),
-    srs_brs = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    srs_brs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[115.84827424669419, -21.02980583604055],
            [115.81497193956528, -21.07017773808888],
            [115.7555771031395, -21.112140081902904],
@@ -3689,7 +3721,21 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [115.88981629991684, -20.96858630410876],
            [115.89942933702622, -20.96089202265777],
            [115.88123323106919, -20.95736534469322],
-           [115.87265016222153, -20.959609603927692]]]]);
+           [115.87265016222153, -20.959609603927692]]]]),
+    rs_mask = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[115.84140779161606, -20.979480849517895],
+          [115.82527162218247, -21.013136218471896],
+          [115.80638887071763, -21.06889125291018],
+          [115.7662201085106, -21.100284318735472],
+          [115.7995224156395, -21.11021339716142],
+          [115.82595826769028, -21.082346236019625],
+          [115.84209443712388, -21.046783995306185],
+          [115.86269380235825, -21.031403097141624],
+          [115.86784364366684, -21.008008271355337],
+          [115.85891725206528, -20.982045335069007]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3952,6 +3998,7 @@ var Sl_Brs = ee.Image().byte().paint(ee.Feature(sl_brs, {zone: 1}), "zone").clip
 var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip(rs_brs);
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
 var SRS_toBrs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs);
+var Rs_mask = ee.Image().byte().paint(ee.Feature(rs_mask, {zone: 1}), "zone").clip(rs_mask);
 /*
 
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
@@ -4028,6 +4075,14 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
                      .and(man_geo.eq(21)),
     value: ee.Image(24)
   });
+  
+  //mask out rs
+  man_geo = man_geo.where({
+  test: Rs_mask.eq(1)
+        .and(man_geo.eq(22)),
+  value: ee.Image (0),
+})
+
   /*
   man_geo = man_geo.where({
     test: Orf_irf_rs_brs_totrf.eq(1)
