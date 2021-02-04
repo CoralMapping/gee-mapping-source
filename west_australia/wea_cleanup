@@ -4660,6 +4660,7 @@ var SRS_toBrs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").
 var Rs_mask = ee.Image().byte().paint(ee.Feature(rs_mask, {zone: 1}), "zone").clip(rs_mask);
 var Sl_mask = ee.Image().byte().paint(ee.Feature(sl_mask, {zone: 1}), "zone").clip(sl_mask);
 var Srs_rs = ee.Image().byte().paint(ee.Feature(srs_rs, {zone:1}), "zone").clip(srs_rs)
+var Srs_tomask = ee.Image().byte().paint(ee.Feature(srs_tomask, {zone:1}), "zone").clip(srs_tomask)
 /*
 
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
