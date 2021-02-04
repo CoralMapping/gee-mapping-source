@@ -3735,7 +3735,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [115.84209443712388, -21.046783995306185],
           [115.86269380235825, -21.031403097141624],
           [115.86784364366684, -21.008008271355337],
-          [115.85891725206528, -20.982045335069007]]]);
+          [115.85891725206528, -20.982045335069007]]]),
+    sl_mask = /* color: #0b4a8b */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - WEA
@@ -3999,6 +4000,7 @@ var Rs_Brs = ee.Image().byte().paint(ee.Feature(rs_brs, {zone: 1}), "zone").clip
 var Rs_Dl_Sl_SRS_toBrs= ee.Image().byte().paint(ee.Feature(rs_dl_sl_srs_tobrs, {zone:1}), "zone").clip(rs_dl_sl_srs_tobrs);
 var SRS_toBrs = ee.Image().byte().paint(ee.Feature(srs_brs, {zone: 1}), "zone").clip(srs_brs);
 var Rs_mask = ee.Image().byte().paint(ee.Feature(rs_mask, {zone: 1}), "zone").clip(rs_mask);
+var Sl_mask = ee.Image().byte().paint(ee.Feature(sl_mask, {zone: 1}), "zone").clip(sl_mask);
 /*
 
 var Orf_irf_rs_brs_totrf= ee.Image().byte().paint(ee.Feature(orf_irf_rs_brs_totrf, {zone:1}), "zone").clip(orf_irf_rs_brs_totrf);
@@ -4080,6 +4082,13 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
   man_geo = man_geo.where({
   test: Rs_mask.eq(1)
         .and(man_geo.eq(22)),
+  value: ee.Image (0),
+})
+
+//mask out shallow lagoon
+  man_geo = man_geo.where({
+  test: Rs_mask.eq(1)
+        .and(man_geo.eq(11)),
   value: ee.Image (0),
 })
 
