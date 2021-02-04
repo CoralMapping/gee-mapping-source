@@ -3634,10 +3634,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    brsdl_mask = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry({
+    brsdl_mask = /* color: #98ff00 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4084,6 +4081,39 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               [
                 116.59534275805356,
                 -20.608716781444144
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.16291290485805,
+                -20.56444428959666
+              ],
+              [
+                116.99949127399867,
+                -20.61040406519118
+              ],
+              [
+                116.99743133747523,
+                -20.655064968324314
+              ],
+              [
+                117.08291870319789,
+                -20.666950912454002
+              ],
+              [
+                117.19690185749477,
+                -20.642535534423526
+              ],
+              [
+                117.24599701130336,
+                -20.605262400873077
               ]
             ]
           ],
@@ -4607,7 +4637,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [116.06241395710072, -20.83658737485452],
           [116.10052278278431, -20.797115316122756],
           [116.10258271930775, -20.786844468524123]]]),
-    srs_tomask = /* color: #00ffff */ee.Geometry.MultiPolygon(
+    srs_tomask = 
+    /* color: #00ffff */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[116.61173036335072, -20.510881130310516],
            [116.58975770710072, -20.521813713249756],
            [116.57327821491322, -20.516669065577126],
