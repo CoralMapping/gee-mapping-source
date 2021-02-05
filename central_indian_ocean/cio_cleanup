@@ -2331,6 +2331,13 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(2) //deep
   });  
   
+  // SRS near reef crest -> RS
+  man_geo = man_geo.where({
+    test: RS.eq(1)
+                     .and(man_geo.eq(21)), //SRS
+    value: ee.Image(22) //RS
+  });
+  
   
   /*
   // Reef crest -> Inner reef flat (inside the reef)
