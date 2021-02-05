@@ -5140,7 +5140,7 @@ if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
 if (vars.benthic_cleanup_stage == 2) {
   Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
 }
-
+*/
 // Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
 
@@ -5158,7 +5158,7 @@ var geo_fill = empty.paint({
   featureCollection: geo_train_buff,
   color: 'class_num',
 });
-*/
+
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2', false);
