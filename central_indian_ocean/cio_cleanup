@@ -5269,7 +5269,7 @@ var region_params = param_module.cio;          //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -5286,7 +5286,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -5469,13 +5469,13 @@ if (vars.manual_clean && vars.geomorphic) {
   */
 
   // Define the manual variables
-  var deep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
+  var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
   
   
   // Reef classes in deep water -> deep water
   man_geo = man_geo.where({
-    test: deep.eq(1),
+    test: moredeep.eq(1),
     value: ee.Image(2) //deep
   });  
   
