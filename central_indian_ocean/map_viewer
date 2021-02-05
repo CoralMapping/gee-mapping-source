@@ -4801,7 +4801,6 @@ var notReef_mask =
           [69.95904056094987, -2.312553106145913],
           [76.02349368594987, -2.312553106145913],
           [76.02349368594987, 13.298212886857753]]], null, false),
-    TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
     SRStoRS = 
     /* color: #88d4d6 */
     /* shown: false */
@@ -5032,6 +5031,7 @@ var notReef_mask =
            [73.41666373785546, 0.8723977451678908],
            [73.36894187506249, 0.9168526210422585],
            [73.34250602301171, 0.9161660633804259]]]]),
+    TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
     clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
     clean3 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3"),
     ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1"),
