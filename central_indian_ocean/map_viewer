@@ -1665,11 +1665,6 @@ var notReef_mask =
           [76.02349368594987, -2.312553106145913],
           [76.02349368594987, 13.298212886857753]]], null, false),
     TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
-    RCdist500IRF = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_RCdist2"),
-    RC500IRFdeep = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_RCdist2_deep"),
-    RCdist500ORF = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_distRC_500orfB"),
-    RCdist250ORF = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_distRC_250orf"),
-    RCdist250ORFdeep = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/geo_map_clean2_distRC_250orf_deep"),
     SRStoRS = /* color: #88d4d6 */ee.Geometry.MultiPolygon(
         [[[[72.99809025742242, 6.151675331411386],
            [73.01173704622582, 6.1393014623204],
@@ -1896,7 +1891,9 @@ var notReef_mask =
            [73.44287279075307, 0.8148360405373659],
            [73.41666373785546, 0.8723977451678908],
            [73.36894187506249, 0.9168526210422585],
-           [73.34250602301171, 0.9161660633804259]]]]);
+           [73.34250602301171, 0.9161660633804259]]]]),
+    clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
+    clean3 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -2025,7 +2022,8 @@ Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2', false);
 //Map.addLayer(RCdist500IRF, map_palettes.geo, 'Geo 2+ RC500m_IRF', false);
 //Map.addLayer(RC500IRFdeep, map_palettes.geo, 'Geo 2+ RC500m_IRF + deepwaterclean', false);
 //Map.addLayer(RCdist500ORF, map_palettes.geo, 'Geo 2+ RC500m_ORF', false);
-Map.addLayer(RCdist250ORF, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
+Map.addLayer(clean2RCdist, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
+Map.addLayer(clean3, map_palettes.geo, 'Geo 3 - manual clean', false);
 //Map.addLayer(RCdist250ORFdeep, map_palettes.geo, 'Geo 2+ RC250m_ORF + deepwaterclean', false);
 //Map.addLayer(ReefMask, map_palettes.geo, 'Geo 2 + RCtoORF reefmask', false);
 //Map.addLayer(clean1_2depths, map_palettes.geo, 'Geo 1 two depths', false);
