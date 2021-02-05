@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
+var notReef_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[71.60342946217652, 12.65909936158879],
            [71.68308034108277, 12.474125345239695],
            [72.21866383717652, 12.433896045657525],
@@ -81,7 +84,10 @@ var notReef_mask = /* color: #d63000 */ee.Geometry.MultiPolygon(
     segmentation = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"),
     geo = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo"),
     ben = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"),
-    deepwater = /* color: #25d610 */ee.Geometry({
+    deepwater = 
+    /* color: #25d610 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
