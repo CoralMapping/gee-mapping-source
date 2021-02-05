@@ -5036,7 +5036,8 @@ var notReef_mask =
            [73.36894187506249, 0.9168526210422585],
            [73.34250602301171, 0.9161660633804259]]]]),
     clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
-    clean3 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3");
+    clean3 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3"),
+    ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -5063,7 +5064,7 @@ var region_params = param_module.cio;       //<------------ THIS IS WHERE YOU CH
 var vars = {
   raw: true, // set to true if you want to view the raw classifications for benthic and geo
   geo_cleanup_stage: 2, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
-  benthic_cleanup_stage: 0, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 1, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
 
@@ -5162,15 +5163,10 @@ var geo_fill = empty.paint({
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2', false);
-//Map.addLayer(RCdist500IRF, map_palettes.geo, 'Geo 2+ RC500m_IRF', false);
-//Map.addLayer(RC500IRFdeep, map_palettes.geo, 'Geo 2+ RC500m_IRF + deepwaterclean', false);
-//Map.addLayer(RCdist500ORF, map_palettes.geo, 'Geo 2+ RC500m_ORF', false);
 Map.addLayer(clean2RCdist, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
 Map.addLayer(clean3, map_palettes.geo, 'Geo 3 - manual clean', false);
-//Map.addLayer(RCdist250ORFdeep, map_palettes.geo, 'Geo 2+ RC250m_ORF + deepwaterclean', false);
-//Map.addLayer(ReefMask, map_palettes.geo, 'Geo 2 + RCtoORF reefmask', false);
-//Map.addLayer(clean1_2depths, map_palettes.geo, 'Geo 1 two depths', false);
-//Map.addLayer(clean2_2depths, map_palettes.geo, 'Geo 2 two depths', false);
+Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
+
 
 
 
