@@ -469,7 +469,7 @@ if (vars.manual_clean && vars.geomorphic) {
     test: midmask.eq(1),
     value: ee.Image(0)
   });
-  */
+  
   // the "REEF MASK" CLEAN
   
   // Define a kernel for reef mask Morphological Operations
@@ -524,7 +524,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(21)
   })
   
-  
+  */
   
   
   /*
