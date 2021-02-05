@@ -505,13 +505,14 @@ var cio = {
   benthic_map: ["projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"],
   geo_map_clean1:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean1_twodepths",
   geo_map_clean2:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf",
-  geo_map_clean3:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3",
+  geo_map_clean3:"projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3B",
   benthic_map_clean1: "projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1",
   benthic_map_clean2: "projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean2",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
 };
+
 
 var south_asia = {
   sname:"south_asia",
