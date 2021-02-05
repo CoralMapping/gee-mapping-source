@@ -73,7 +73,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([73.36350406430057, 3.4513743887798998]),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[70.16383984620248, 13.135866931352913],
           [70.14682558742047, 12.617194359154508],
           [70.2690563075083, 11.807120477151644],
@@ -117,7 +120,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [70.94844908898446, 14.180519984144992],
           [70.70783078637048, 14.098023158448601],
           [70.48943631098639, 13.930058399473841]]]),
-    mid_mask = /* color: #25d610 */ee.Geometry.MultiPolygon(
+    mid_mask = 
+    /* color: #25d610 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.4610278099535, -5.562233749561943],
            [72.41845578846913, -5.63808761806013],
            [72.45072812733632, -5.657220366789967],
@@ -280,6 +286,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [72.75075681027974, 11.79677555536155]]]]),
     chagos_extent = 
     /* color: #12d6cd */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -292,6 +299,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [73.91411868594987, -4.155237145551639]]], null, false),
     maldives_extent = 
     /* color: #f331ff */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -302,7 +310,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [69.95904056094987, -2.312553106145913],
           [76.02349368594987, -2.312553106145913],
           [76.02349368594987, 13.298212886857753]]], null, false),
-    SRStoRS = /* color: #88d4d6 */ee.Geometry.MultiPolygon(
+    SRStoRS = 
+    /* color: #88d4d6 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.99809025742242, 6.151675331411386],
            [73.01173704622582, 6.1393014623204],
            [73.01881817062814, 6.1048236106398095],
@@ -529,10 +540,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [73.41666373785546, 0.8723977451678908],
            [73.36894187506249, 0.9168526210422585],
            [73.34250602301171, 0.9161660633804259]]]]),
-    deepwater = 
-    /* color: #25d610 */
-    /* shown: false */
-    ee.Geometry({
+    deepwater = /* color: #25d610 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5261,7 +5269,7 @@ var region_params = param_module.cio;          //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -5278,7 +5286,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -5346,7 +5354,7 @@ if (!vars.geomorphic) {
     vars.obia_clean = true, 
     vars.fast_clean = false, 
     vars.manual_clean = false;
-    vars.benthic_output_name = temp_outname + '1';
+    vars.benthic_output_name = temp_outname + '1B';
   } else if (vars.cleanup_stage == 2) {
     vars.manual_clean = true;
     vars.obia_2nd_pass = false,
