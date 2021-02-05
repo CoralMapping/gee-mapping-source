@@ -2084,6 +2084,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [73.36894187506249, 0.9168526210422585],
            [73.34250602301171, 0.9161660633804259]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 ///////////////////////////////
 // Global coral atlas project - Central Indian Ocean
 // Contact: mitchell.lyons@gmail.com
@@ -2093,16 +2094,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
 // - This script loads the raw classification data (from *_classification script)
 // - Then applied some cleanup and object-based relational rules
 ///////////////////////////////
-///////////////////////////////
-// Global coral atlas project - Central Indian Ocean
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
-// Description:
-// - Developing a process to combine OBIA and supervised classification
-// - This script loads the raw classification data (from *_classification script)
-// - Then applied some cleanup and object-based relational rules
-///////////////////////////////
-var notReef_mask = notReef_mask2, artifact_layer = artifact_layer2, center_map = center_map2, region_extent = region_extent2;
+
 // Table of contents
 // 1. Setting constants
 // 2. Data loads & vis
@@ -2316,9 +2308,9 @@ if (vars.manual_clean && vars.geomorphic) {
   
   */
   
-  
   /*
-  ##############
+  ###################
+  ###################
   
   The rest of the manual geometry paintings and rules should go here
       - make the geom, paint the layer, use it in a rule
@@ -2326,8 +2318,21 @@ if (vars.manual_clean && vars.geomorphic) {
   e.g. 
   var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
   var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+  */
+
+  // Define the manual variables
+  var deep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
+  var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
   
   
+  // Reef classes in deep water -> deep water
+  man_geo = man_geo.where({
+    test: deep.eq(1),
+    value: ee.Image(2) //deep
+  });  
+  
+  
+  /*
   // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
     test: notreefcrest.eq(1)
