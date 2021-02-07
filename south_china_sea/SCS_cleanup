@@ -196,7 +196,6 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
-  // var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
   
   // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
