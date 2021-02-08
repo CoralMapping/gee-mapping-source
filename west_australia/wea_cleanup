@@ -1333,8 +1333,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           "coordinates": [
             [
               [
-                113.75694696526062,
-                -23.41447057299046
+                113.74321405510435,
+                -23.399347232168477
               ],
               [
                 113.76261368467775,
@@ -1557,8 +1557,12 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 -22.649860127980418
               ],
               [
-                113.33396927790538,
-                -23.318659292558216
+                113.33534256892102,
+                -23.290911819562535
+              ],
+              [
+                113.54741991964927,
+                -23.34778905441505
               ]
             ]
           ],
@@ -3479,7 +3483,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry({
+    rs_dl_sl_srs_tobrs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -6223,7 +6230,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [122.21471191281864, -18.022086431568578],
            [122.23531127805302, -17.98845594536802],
            [122.19514251584599, -17.93489514947075]]]]),
-    Dl_SRS_Pr_to_rs = /* color: #d63000 */ee.Geometry.MultiPolygon(
+    Dl_SRS_Pr_to_rs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[113.61757805964874, -23.59838217095967],
            [113.59697869441436, -23.631412275242813],
            [113.58616402766631, -23.665534632521034],
