@@ -5473,11 +5473,11 @@ if (vars.manual_clean && vars.geomorphic) {
   // Define the manual variables
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
-  var deep_water = ee.Image(DeepMask).geometry();
+  var DeepWater = ee.Image(DeepMask);
     
   // Reef in deep water mask
   man_geo = man_geo.where({
-    test: deep_water.eq(1),
+    test: DeepWater.eq(1),
     value: ee.Image(2) // deep
   })
   
