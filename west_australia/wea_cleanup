@@ -4,7 +4,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
     wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    midMask = /* color: #15d623 */ee.Geometry({
+    midMask = 
+    /* color: #15d623 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3634,7 +3637,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    brsdl_mask = /* color: #98ff00 */ee.Geometry({
+    brsdl_mask = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
