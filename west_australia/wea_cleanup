@@ -4,7 +4,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
     wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    midMask = /* color: #15d623 */ee.Geometry({
+    midMask = 
+    /* color: #15d623 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3443,7 +3446,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry({
+    rs_dl_sl_srs_tobrs = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3638,47 +3644,6 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               [
                 116.63713624713978,
                 -20.432722615669856
-              ]
-            ]
-          ],
-          "geodesic": true,
-          "evenOdd": true
-        },
-        {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                113.64289811274932,
-                -23.593033383302416
-              ],
-              [
-                113.6363749804251,
-                -23.595078429121312
-              ],
-              [
-                113.62933686397002,
-                -23.605303179942794
-              ],
-              [
-                113.6276202502005,
-                -23.609392857037957
-              ],
-              [
-                113.62041047236846,
-                -23.61599898897344
-              ],
-              [
-                113.64032319209502,
-                -23.627165740398226
-              ],
-              [
-                113.65371277949737,
-                -23.60608966621523
-              ],
-              [
-                113.6499362292044,
-                -23.59680882760466
               ]
             ]
           ],
@@ -4442,10 +4407,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_brs = 
-    /* color: #ffc82d */
-    /* shown: false */
-    ee.Geometry({
+    rs_brs = /* color: #ffc82d */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4584,6 +4546,35 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               [
                 115.73532106065903,
                 -21.1310352793911
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                113.64058068416045,
+                -23.589493260682247
+              ],
+              [
+                113.61980965754913,
+                -23.592324930505736
+              ],
+              [
+                113.62152627131866,
+                -23.61717807556061
+              ],
+              [
+                113.63920739314483,
+                -23.627715644695858
+              ],
+              [
+                113.65465691707061,
+                -23.5994038376629
               ]
             ]
           ],
