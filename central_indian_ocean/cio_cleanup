@@ -5345,7 +5345,7 @@ if (vars.geomorphic) {
     vars.obia_clean = false;
     vars.fast_clean = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3Ba';
+    vars.geomorph_output_name = temp_outname + '3Bmask';
   }
 }
 
