@@ -5169,7 +5169,7 @@ Map.addLayer(clean3, map_palettes.geo, 'Geo 3', false);
 Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
 Map.addLayer(clean3B, map_palettes.geo, 'Geo 3 B', false);
 Map.addLayer(clean3Ba, map_palettes.geo, 'Geo 3 Ba', false);
-Map.addLayer(clean3Bmask, map_palettes.geo, 'Geo 3 Bmask', false);
+Map.addLayer(clean3mask, map_palettes.geo, 'Geo 3 Bmask', false);
 
 
 
