@@ -3446,10 +3446,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_dl_sl_srs_tobrs = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry({
+    rs_dl_sl_srs_tobrs = /* color: #d63000 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4407,7 +4404,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    rs_brs = /* color: #ffc82d */ee.Geometry({
+    rs_brs = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
