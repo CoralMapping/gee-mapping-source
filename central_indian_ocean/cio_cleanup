@@ -5284,7 +5284,7 @@ var vars = {
   chagos_depth_cutoff: 1500, //depth cut off for southern chagos region only
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
-  deep_mask: DeepWater
+  deep_mask: DeepWater,
   
   //############
   // Clean-up stage selection
