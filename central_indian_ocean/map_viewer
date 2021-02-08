@@ -84,7 +84,10 @@ var notReef_mask =
     segmentation = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"),
     geo = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo"),
     ben = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"),
-    deepwater = /* color: #25d610 */ee.Geometry({
+    deepwater = 
+    /* color: #25d610 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -5034,8 +5037,7 @@ var notReef_mask =
     TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
     clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
     clean3 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3"),
-    ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1"),
-    clean3B = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3B");
+    ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
