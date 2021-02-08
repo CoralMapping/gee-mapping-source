@@ -84,10 +84,7 @@ var notReef_mask =
     segmentation = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_segmentation"),
     geo = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo"),
     ben = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic"),
-    deepwater = 
-    /* color: #25d610 */
-    /* shown: false */
-    ee.Geometry({
+    deepwater = /* color: #25d610 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
