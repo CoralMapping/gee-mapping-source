@@ -5474,21 +5474,21 @@ if (vars.manual_clean && vars.geomorphic) {
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
   var DeepWater = ee.Image(DeepMask);
-    /*
+   
   // Reef in deep water mask
   man_geo = man_geo.where({
     test: DeepWater.eq(1),
     value: ee.Image(2) // deep
   })
   
-  */
- 
+  
+  /*
   // Reef classes in deep water -> deep water
   man_geo = man_geo.where({
     test: moredeep.eq(1),
     value: ee.Image(2) //deep
   });  
-  
+  */
   // SRS near reef crest -> RS
   man_geo = man_geo.where({
     test: RS.eq(1)
