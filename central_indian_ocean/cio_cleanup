@@ -5345,7 +5345,7 @@ if (vars.geomorphic) {
     vars.obia_clean = false;
     vars.fast_clean = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3B';
+    vars.geomorph_output_name = temp_outname + '3Ba';
   }
 }
 
@@ -5474,14 +5474,14 @@ if (vars.manual_clean && vars.geomorphic) {
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
   var DeepWater = ee.Image(DeepMask);
-    
+    /*
   // Reef in deep water mask
   man_geo = man_geo.where({
     test: DeepWater.eq(1),
     value: ee.Image(2) // deep
   })
   
-  /*
+  */
  
   // Reef classes in deep water -> deep water
   man_geo = man_geo.where({
@@ -5495,7 +5495,7 @@ if (vars.manual_clean && vars.geomorphic) {
                      .and(man_geo.eq(21)), //SRS
     value: ee.Image(22) //RS
   });
-  */
+  
 
   
   /*
