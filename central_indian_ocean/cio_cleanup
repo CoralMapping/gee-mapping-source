@@ -5471,8 +5471,9 @@ if (vars.manual_clean && vars.geomorphic) {
 
   // Define the manual variables
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
-  var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
-  var deepmask = DeepWater.eq(1);
+  var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS)
+  var deep_mask = ee.Image(DeepWater).geometry();
+  //var deepmask = DeepWater.eq(1);
   
   /*
   // Reef classes in deep water -> deep water
@@ -5491,7 +5492,7 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // Reef in deep water mask
   man_geo = man_geo.where({
-    test: deepmask.eq(1),
+    test: deep_mask.eq(1),
     value: ee.Image(2)
   })
   
@@ -5531,7 +5532,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
-  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+  //Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
