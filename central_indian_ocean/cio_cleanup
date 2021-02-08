@@ -5472,7 +5472,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // Define the manual variables
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS);
-  var deepmask = ee.Image().byte().paint(ee.Feature(DeepMask, {zone: 1}), "zone").clip(DeepMask);
+  var deepmask = DeepWater.eq(1);
   
   /*
   // Reef classes in deep water -> deep water
