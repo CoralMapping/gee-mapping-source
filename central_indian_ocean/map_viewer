@@ -5164,7 +5164,7 @@ Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2', false);
 Map.addLayer(clean2RCdist, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
 Map.addLayer(clean3, map_palettes.geo, 'Geo 3', false);
 Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
-Map.addLayer(clean3, map_palettes.geo, 'Geo 3 B', false);
+//Map.addLayer(clean3, map_palettes.geo, 'Geo 3 B', false);
 
 
 
