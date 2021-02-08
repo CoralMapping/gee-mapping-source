@@ -5284,7 +5284,7 @@ var vars = {
   chagos_depth_cutoff: 1500, //depth cut off for southern chagos region only
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
-  deep_mask: DeepWater,
+  deep_water: ee.Image(DeepWater).geometry(),
   
   //############
   // Clean-up stage selection
@@ -5473,7 +5473,7 @@ if (vars.manual_clean && vars.geomorphic) {
   // Define the manual variables
   var moredeep = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone").clip(deepwater);
   var RS = ee.Image().byte().paint(ee.Feature(SRStoRS, {zone: 1}), "zone").clip(SRStoRS)
-  //var deep_mask = ee.Image(DeepWater).geometry();
+  var deep_mask = deep_mask.eq(1);
   //var deepmask = DeepWater.eq(1);
   
   /*
