@@ -5036,8 +5036,8 @@ var notReef_mask =
            [73.34250602301171, 0.9161660633804259]]]]),
     TwoDepths = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_twodepths"),
     clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
-    ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1"),
-    clean3Ba = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3Ba");
+    clean3Ba = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3Ba"),
+    ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
@@ -5163,11 +5163,10 @@ var geo_fill = empty.paint({
 
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 2', false);
+Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 1', false);
 Map.addLayer(clean2RCdist, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
-//Map.addLayer(clean3, map_palettes.geo, 'Geo 3', false);
-Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
 Map.addLayer(clean3Ba, map_palettes.geo, 'Geo 3 ', false);
+Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
 
 
 
