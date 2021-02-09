@@ -12,7 +12,7 @@ var sentinel = {
 
 var landsat8 = {
   pixel: 15,
-  sname: 'ls8'c
+  sname: 'ls8'
 }
 
 var dove = {
