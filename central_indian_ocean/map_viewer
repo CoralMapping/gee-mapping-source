@@ -5038,7 +5038,10 @@ var notReef_mask =
     clean2RCdist = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean2_distRC_250orf"),
     clean3Ba = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_geo_clean3Ba"),
     ben1 = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_benthic_clean1"),
-    SGonRC = /* color: #48d607 */ee.Geometry.MultiPolygon(
+    SGonRC = 
+    /* color: #48d607 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.9980902574224, 6.1516753314113855],
            [73.01173704622582, 6.1393014623204],
            [73.01881817062814, 6.1048236106398095],
