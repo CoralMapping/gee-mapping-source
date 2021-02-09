@@ -4727,7 +4727,7 @@ var DeepMask = ee.Image().byte().paint(ee.Feature(deepwater, {zone: 1}), "zone")
     Export.image.toAsset({
       image: DeepMask,
       description: 'ImageToAsset', 
-      assetId: asset_output + 'in_out/DeepMask', // <------------ change asset name
+      assetId: asset_output + 'in_out/cio_DeepMask', // <------------ change asset name
       region: regionn_extent, // <------------ change extent
       scale: image_data_scale,
       crs: 'EPSG:4326',
