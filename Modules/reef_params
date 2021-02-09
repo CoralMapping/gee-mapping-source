@@ -731,7 +731,7 @@ var west_australia = {
   //geo_map_clean2_V2:"projects/coral_atlas/west_australia/in_out/geo_map_morphologicNodeepclean2_v2", //this one after dilate/erosion rules to remove RC and DW
   //geo_map_clean2:"projects/coral_atlas/west_australia/in_out/westaus_geo_clean2",
   geo_map_clean3:"projects/coral_atlas/west_australia/in_out/westaus_geo_clean3_v3",
-  benthic_map_clean1: "",
+  benthic_map_clean1: "projects/coral_atlas/west_australia/in_out/westaus_benthic_clean1",
   benthic_map_clean2: "",
   prob_geo:[""],
   prob_benthic:[""],
