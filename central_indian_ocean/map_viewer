@@ -13350,8 +13350,8 @@ Map.centerObject(center_map, 6);
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 
-Map.addLayer(pixels, {color:'#00FFFF'}, "pixels", false)
-Map.addLayer(segmentation, {color:'#00FF00'}, "segments", false)
+//Map.addLayer(pixels, {color:'#00FFFF'}, "pixels", false)
+//Map.addLayer(segmentation, {color:'#00FF00'}, "segments", false)
 
 
 // Load the raw classifications
