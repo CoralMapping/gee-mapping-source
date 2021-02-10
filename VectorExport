@@ -12271,7 +12271,7 @@ var DeepMask = ee.Image().byte().paint(ee.Feature(deep3, {zone: 1}), "zone").cli
       image: DeepMask,
       description: 'ImageToAsset', 
       assetId: asset_output + 'in_out/cio_extradeep', // <------------ change asset name
-      region: regionn_extent, // <------------ change extent
+      region: DeepMask, // <------------ change extent
       scale: image_data_scale,
       crs: 'EPSG:4326',
       maxPixels: 1e13,
