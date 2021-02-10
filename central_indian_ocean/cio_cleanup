@@ -15081,7 +15081,7 @@ var region_params = param_module.cio;          //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -15098,7 +15098,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 1, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -15166,7 +15166,7 @@ if (!vars.geomorphic) {
     vars.obia_clean = true, 
     vars.fast_clean = false, 
     vars.manual_clean = false;
-    vars.benthic_output_name = temp_outname + '1';
+    vars.benthic_output_name = temp_outname + '1refined';
   } else if (vars.cleanup_stage == 2) {
     vars.manual_clean = true;
     vars.obia_2nd_pass = false,
