@@ -13433,7 +13433,7 @@ var geo_fill = empty.paint({
 });
 
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 1', false);
+//Map.addLayer(TwoDepths, map_palettes.geo, 'Geo 1', false);
 Map.addLayer(clean2RCdist, map_palettes.geo, 'Geo 2+ RC250m_ORF', false);
 Map.addLayer(clean3Ba, map_palettes.geo, 'Geo 3 ', false);
 Map.addLayer(clean4, map_palettes.geo, 'Geo 3 refinement ', false);
