@@ -13244,7 +13244,10 @@ var notReef_mask =
       ],
       "coordinates": []
     }),
-    RStoDL = /* color: #cfd62f */ee.Geometry.MultiPolygon(
+    RStoDL = 
+    /* color: #cfd62f */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[73.4764132976273, 5.859967554883298],
            [73.47014765736851, 5.849977751519491],
            [73.46577029225621, 5.836230807337991],
@@ -13295,6 +13298,7 @@ var notReef_mask =
            [72.43144461432716, -7.2420899169120565]]]]),
     RCtoORF = 
     /* color: #ffcd4d */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
