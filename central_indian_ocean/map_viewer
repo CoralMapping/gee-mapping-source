@@ -13292,7 +13292,19 @@ var notReef_mask =
            [72.47916647712013, -7.2893303588852305],
            [72.47384497443458, -7.286023088658933],
            [72.45324560920021, -7.276998407898332],
-           [72.43144461432716, -7.2420899169120565]]]]);
+           [72.43144461432716, -7.2420899169120565]]]]),
+    RCtoORF = 
+    /* color: #ffcd4d */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[72.32998413102014, -7.205475271406201],
+          [72.32998413102014, -7.464265166478045],
+          [72.5476507569967, -7.464265166478045],
+          [72.5476507569967, -7.205475271406201]]], null, false);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
