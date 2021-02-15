@@ -1,0 +1,120 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    srtm = ee.Image("CGIAR/SRTM90_V4"),
+    ls8new = ee.Image("projects/coral_atlas/reefMask/baseLayers/ls_8_intMn2575_2k16to19_at_30m_ui8"),
+    predictorSet = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    image = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_c"),
+    image2 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_1"),
+    image3 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_2"),
+    image4 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_3"),
+    image5 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_4"),
+    image6 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_5"),
+    image7 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_6"),
+    image8 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_7"),
+    image9 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_8"),
+    image10 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_9"),
+    image11 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_a"),
+    image12 = ee.Image("projects/coral_atlas/reefMask/maskOut/probabilityMask/reefMask_gen5_prob_ui8_S30_v9_gridID_b"),
+    image19 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_c"),
+    image20 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_1"),
+    image30 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_2"),
+    image40 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_3"),
+    image50 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_4"),
+    image60 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_5"),
+    image70 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_6"),
+    image80 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_7"),
+    image90 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_8"),
+    image100 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_9"),
+    image110 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_a"),
+    image120 = ee.Image("projects/coral_atlas/reefMask/maskOut/classificationMask/reefMask_gen5_clas_ui8_S30_v9_gridID_b")
+    
+
+Map.setOptions('SATELLITE')
+Map.setCenter (151.9, -21.5,11)
+
+var aoi = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+var ls8 = ee.Image("projects/remap-app/ls_8_cflte1_2k14to17_at_30m_ui8");
+var lsVis = {min: 0, max: 150, bands: ['Red', 'Green', 'Blue']};
+var lsNewVis = {min: 0, max: 150, bands: ['Red_intMn2575', 'Green_intMn2575', 'Blue_intMn2575']};
+Map.addLayer(ls8, lsVis, 'Landsat 8 At-surface', true) ;
+Map.addLayer(ls8new, lsNewVis, 'Landsat 8 At-surface Interval Mean', true) ;
+
+
+// // Vis
+var viriPlasma =  [
+'440154', 
+'462372', 
+'404284', 
+'355d8c', 
+'2a768e', 
+'21908d', 
+'26a784', 
+'47bd6f', 
+'79d051', 
+'b8de30', 
+'fde725',
+"0d0887", 
+"3d049b", 
+"6903a5",
+"8d0fa1",
+"ae2891",
+"cb4679",
+"df6363",
+"f0844c",
+"faa638", 
+"fbcc27",
+"f0f921"
+];
+var landMask = ee.Image(1).where(srtm.gte(0), 0);
+
+
+var reefVisualiser = function (reefProb, threshold){
+  var reefProbMasked = reefProb.updateMask(ls8.select(['Blue']))
+    .updateMask(reefProb.gt(threshold))
+    .updateMask(landMask);
+  return reefProbMasked;
+};
+
+Map.addLayer(wcmc, {color: 'aqua'}, 'darkcyan', true)
+
+// merge into imageCollection
+var reefProb = ee.ImageCollection([image, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11,image12]).mean().clip(wcmc);
+Map.addLayer(reefVisualiser(reefProb, 81), {palette: viriPlasma, min:0, max:100}, 'prob reef occurrence');
+
+
+// merge into imageCollection
+var reefClas = ee.ImageCollection([image19, image20, image30, image40, image50, image60, image70, image80, image90, image100, image110,image120]).mean().clip(aoi);
+Map.addLayer(reefClas, {palette: ['brown', 'darkblue','aqua' ],min:100, max:255}, 'reef classification', false, 0.7);
+
+
+
+// Add WCMCM data
+//Map.addLayer(wcmc, {color: 'aqua'}, 'wcmc', true)
+
+// Add Training Data
+var trainingSet = predictorSet.filter(ee.Filter.neq('BG', null)) //handle null data points;
+var trainingPoints_1 = trainingSet.filterMetadata('CLASS','equals',3).map(function(feat){return feat.set({'boolCLASS':1})})//reef
+var trainingPoints_0 = trainingSet.filterMetadata('CLASS','not_equals',3).map(function(feat){return feat.set({'boolCLASS':0})}) //other (mudflat, land, water)
+var trainingSet = trainingPoints_1.merge(trainingPoints_0)
+print (trainingSet.size(), 'training set size' )
+Map.addLayer(trainingPoints_1, {color:'aqua'}, 'training set: reef', false)
+Map.addLayer(trainingPoints_0, {color:'orange'}, 'training set: not reef', false)
+
+
+
+// PostProcessing
+
+// function sieve(image,mmu){
+//   var connected = image.connectedPixelCount(mmu+2);
+//   var elim = connected.gte(mmu);//.or(image.eq(0));
+//   var mode = image.focal_mode(mmu/2,'circle','meters');
+//   mode = mode.mask(image.mask());
+//   var filled = image.where(elim.not(),mode);
+//   return filled;
+// }
+
+
+// var pp = sieve(reefProb.gt(0).selfMask(), 1000)
+// Map.addLayer(pp,{min:0,max:1,palette:'aqua'},'pp',false, 0.5);// radius == 3

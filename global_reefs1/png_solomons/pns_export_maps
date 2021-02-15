@@ -1,0 +1,76 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var pixels = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_pixels"),
+    lowtide_sr = ee.Image("projects/coral_atlas/png_solomons/image/eastern_png_and_solomons_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    geo = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_geo_clean3"),
+    benthic = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_benthic_clean2"),
+    reef_boundary = 
+    /* color: #051ad6 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[133.65904403361668, 1.5423670875241082],
+          [133.70298934611668, -3.3334940665077855],
+          [140.07505965861668, -9.227839178840291],
+          [151.80845809611668, -13.662997256508245],
+          [159.85045028361668, -14.430353736128849],
+          [164.99205184611668, -13.0216133807959],
+          [165.47545028361668, -9.791275221974912],
+          [164.72837997111668, -5.1302650823301885],
+          [160.11412215861668, 2.1133630909724754],
+          [152.59947372111668, 3.0352733285728117],
+          [146.66685653361668, 2.991388778986984],
+          [139.89927840861668, 2.7719401962986745],
+          [134.58189559611668, 1.981611352071806]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Global coral atlas project - PNG - Solomons
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Chris Roelfsema (chris.m.roelfsema@gmail.com)
+// Description:
+// - export geomorphic and benthic to Vulcan bucket
+///////////////////////////////
+
+// so we can visualise maps before export
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+
+// will need to import depth mosaic from pixels now
+var depth = pixels.select('depth'); //.multiply(100).uint16()
+
+// finalise layers (include 'mapped area' as zeros)
+geo = geo.where(geo.lte(2), 0).selfMask();
+benthic = benthic.updateMask(geo.gt(0)).selfMask();
+
+// make reef/non-reef layer 
+var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum());
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum());
+var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum());
+
+// check before export 
+Map.addLayer(lowtide_sr, {"opacity":1,"bands":["b3","b2","b1"],"min":1,"max":1514,"gamma":1}, 'lowtide_sr', false);
+Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false);
+Map.addLayer(geo, map_palettes.geo, "geomorphic map", false);
+Map.addLayer(benthic, map_palettes.benthic, "benthic map", false);
+Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false);
+
+// combine into single stack
+var export_stack = depth.updateMask(geo.gt(2)).rename('depth')
+                    .addBands(reef_layer.rename('reef'))
+                    .addBands(geo.rename('geomorphic'))
+                    .addBands(benthic.rename('benthic'))
+                    .toInt16();
+
+Map.addLayer(export_stack, {}, "export raster stack", false);
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack,
+  description: 'PNG-Solomons_stack',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/PNG_Solomons/trimmed/pngs_stack_',
+  region: reef_boundary, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+});
+
+

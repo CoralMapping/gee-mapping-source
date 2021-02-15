@@ -1,0 +1,47 @@
+var table = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_3"),
+    table2 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_1"),
+    table3 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_2"),
+    table4 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_3"),
+    table5 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_4"),
+    table6 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_5"),
+    table7 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_6"),
+    table8 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_7"),
+    table9 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_8"),
+    table10 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_9"),
+    table11 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_a"),
+    table12 = ee.FeatureCollection("projects/coral_atlas/reefMask/covariateData/reefMaskCovariateDataIntMn_v9_grid_b");
+
+
+Map.setOptions('SATELLITE')
+Map.centerObject(table)
+print (table.size())
+print (table)
+
+
+var covariates = table.merge(table2.merge(table3.merge(table4.merge(table5.merge(table6.merge(table7.merge(table8.merge(table9.merge(table10.merge(table11.merge(table12)))))))))))
+print (covariates.size(), 'covariates')
+
+var reefDat = covariates.filterMetadata('CLASS', 'equals', 3)
+var waterDat = covariates.filterMetadata('CLASS', 'equals', 2)
+var landDat = covariates.filterMetadata('CLASS', 'equals', 1)
+
+print (reefDat.size(), 'reef')
+print (waterDat.size(), 'water')
+print (landDat.size(), 'land')
+
+Map.addLayer(reefDat, {color:'yellow'}, 'Reef Points');
+Map.addLayer(waterDat, {color:'blue'}, 'Water Points');
+Map.addLayer(landDat, {color:'green'}, 'Land Points');
+
+var covTest = covariates.limit(5).aside(print)
+
+var notNull = covTest.filter(ee.Filter.neq('BG', null)).aside(print)
+print (notNull.size(), 'null')
+
+Export.table.toAsset({
+  collection:covariates,
+  description: 'exportReefCovariates',
+  assetId: 'projects/coral_atlas/reefMask/covariateData/reefMaskCovariateLibraryIntMn_v9'
+});
+
+

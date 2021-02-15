@@ -8,12 +8,7 @@ See [the organisation repository](https://github.com/CoralMapping/AllenCoralAtla
 
 ## Code  
 This repo contains all the Google Earth Engine source code that generates the mapping outputs on the Coral Atlas, including maps and validation statistics.  
-Several scientific publications cover the methodological and applied background to the mapping code in this repo.  
-
-Due to some particulars of GEE <-> google source git, there are three directories:  
- - `/global_reefs1` (reef regions completed as of March 2021)
- - `/global_reefs2` (reef regions in progress as of March 2021)
- - `/global_reefs_modules)` (various helper functions, asset paths, colour palettes etc.)
+Several scientific publications cover the methodological and applied background to the mapping code in this repo.   
 
 ### Earth Engine source code for mapping algorithms  
 This paper covers the underlying mapping framework that is enabling the geomorphic and benthic mapping component of te Allen Coral Atlas, including image and derived data sources, Google Earth Engine methods and validation approaches.  

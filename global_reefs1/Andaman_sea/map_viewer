@@ -1,0 +1,72 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
+    benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic"),
+    geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
+    pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
+    southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
+    ben_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
+    no_waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3nowaves"),
+    g03 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves3b"),
+    g04 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves4b"),
+    g05 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves5b"),
+    waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_waves"),
+    centre_map = /* color: #98ff00 */ee.Geometry.Point([95.29979922931523, 10.069201603105322]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// little viewing script for looking at reefs and classifications for each region. 
+//From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
+//in the workflow 
+
+// imports
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis')
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals')
+
+// choogse where to centre (link this dynamically to map app?)
+//var centre_map = ee.Geometry.Point([95.68022366345264, 12.587883996209781])
+
+Map.centerObject(centre_map, 7)
+
+// add some background data
+Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
+Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
+//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+
+// Andaman + Myanmar
+Map.addLayer(geo, map_palettes.geo, "Andaman + Myanmar Geo - RAW", false)
+
+Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
+
+//Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
+//Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
+Map.addLayer(geo_clean3, map_palettes.geo, "geo_EXPORTED", false)
+Map.addLayer(no_waves, map_palettes.geo, "geo_manual + no waves", false)
+Map.addLayer(g03, map_palettes.geo, "geo_manual + waves 0.3", false)
+Map.addLayer(g04, map_palettes.geo, "geo_manual + waves 0.4", false)
+Map.addLayer(g05, map_palettes.geo, "geo_manual + waves 0.5", false)
+//Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
+Map.addLayer(ben_clean2, map_palettes.benthic, "ben_EXPORTED", false)
+
+// wave data
+Map.addLayer(waves, {color:'#00FFFF'}, "waves", false)
+
+
+// add training data / sample point distributions
+
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
+
+////////// UI SET UP //////////
+
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
+// generate the legend

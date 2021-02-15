@@ -1,0 +1,83 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var g0 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_0k"),
+    g1 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_1k"),
+    g5 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_5k"),
+    g10 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_gebco_10k"),
+    wcmc = ee.FeatureCollection("users/murrnick/global-reefs/existingData/WCMC008_CoralReefs2010_v3"),
+    e10 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_etopo_10k"),
+    e1 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_etopo_1k"),
+    e5 = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_etopo_5k"),
+    modis = ee.Image("users/murrnick/global-reefs/reefOut/reefMask_etopoModisSRTM"),
+    gebco = ee.Image("users/murrnick/global-reefs/existingData/GEBCO_RN5136");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+Map.setOptions('SATELLITE');
+
+var vis = ['edc951,ed6841,cc2a36,4f372d,00a0b0']; 
+
+var viridis =  [
+'440154', 
+'462372', 
+'404284', 
+'355d8c', 
+'2a768e', 
+'21908d', 
+'26a784', 
+'47bd6f', 
+'79d051', 
+'b8de30', 
+'fde725'
+];
+
+var plasma = [
+"0d0887", 
+"3d049b", 
+"6903a5",
+"8d0fa1",
+"ae2891",
+"cb4679",
+"df6363",
+"f0844c",
+"faa638", 
+"fbcc27",
+"f0f921"
+];
+
+Map.addLayer(g10, {palette: viridis[0]},'gebco-10k', false, 0.9);
+Map.addLayer(g5, {palette: viridis[3]},'gebco-5k', false, 0.9);
+Map.addLayer(g1, {palette: viridis[6]},'gebco-1k', false, 0.9);
+Map.addLayer(g0, {palette: viridis[10]},'gebco-0k', false, 0.9);
+
+
+
+Map.addLayer(e10, {palette: plasma[0]},'etopo-10k', false, 0.9);
+Map.addLayer(e5, {palette: plasma[3]},'etopo-5k', false, 0.9);
+Map.addLayer(e1, {palette: plasma[6]},'etopo-1k', false, 0.9);
+//Map.addLayer(e0, {palette: plasma[10]},'etopo-0k', true, 0.9);
+
+Map.addLayer(modis, {color:'black'}, 'MODIS + SRTM + ETOPO Mask (black)', false, 0.9)
+var g2016 = ee.Image('projects/UQ_intertidal/global_intertidal_v1_0/global_intertidal_201416_v1_1');
+Map.addLayer(g2016, {min: 2, max: 2, palette: 'yellow'},'tidal Flat 2016', true, 0.7); 
+Map.addLayer(wcmc, {color:'aqua'}, 'wcmc reef (aqua)', true);
+
+
+// Export the gebco 1k layer
+var site = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 10, -30, -180, -30], null, false);
+Export.image.toDrive({
+  image: g1,
+  description: 'gebco1k_reefs',
+  folder: 'GBR mapping',
+  region: site,
+  scale: 1000,
+  maxPixels: 1e13
+});
+// Export a version of the mask with more strict elevation threshold (e.g. find land)
+var g1_water = g1.updateMask(gebco.lte(0))
+Export.image.toDrive({
+  image: g1_water,
+  description: 'gebco1k_reefs_landmask',
+  folder: 'GBR mapping',
+  region: site,
+  scale: 1000,
+  maxPixels: 1e13
+});
+

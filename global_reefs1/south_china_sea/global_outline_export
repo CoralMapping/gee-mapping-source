@@ -1,0 +1,83 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":17.26,"max":845.74,"gamma":1},
+    region_extent = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[105.69605474704281, 22.841895530992755],
+          [105.69605474704281, 3.694214691826006],
+          [120.50562505954281, 3.694214691826006],
+          [120.50562505954281, 22.841895530992755]]], null, false),
+    refined_mask = /* color: #98ff00 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[115.71558599704281, 22.4769172967736],
+                  [114.79273443454281, 19.689027010786663],
+                  [112.85914068454281, 19.15024176089206],
+                  [109.73902349704281, 17.98384146904098],
+                  [109.56324224704281, 16.641337694607714],
+                  [111.32105474704281, 12.302315709956346],
+                  [109.73902349704281, 8.673227315215279],
+                  [110.44214849704281, 5.05252058267293],
+                  [112.85914068454281, 3.5187816279702044],
+                  [115.93531255954281, 7.280619758185037],
+                  [118.61597662204281, 9.930856175995274],
+                  [119.49488287204281, 14.226994659545865],
+                  [118.00074224704281, 16.893798777478878],
+                  [118.17652349704281, 21.458067144311045],
+                  [116.77027349704281, 22.110974600407424]]]),
+            {
+              "system:index": "0"
+            })]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Coral atlas mapping project - reef outline export script for west_australia
+// Contact: mitchell.lyons@gmail.com
+// Description:
+// - Primarily for use in generating exports for wave modelling
+///////////////////////////////
+
+var param_module = require('users/mitchest/global_reefs_modules:reef_params')
+
+// #############################
+// load analysis params module
+var region_params = param_module.south_china_sea        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+// choose an appropriate scale
+var export_scale = ee.Number(100)
+// #############################
+
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
+
+// display it
+
+var Dove_sr = ee.Image(region_params.image)
+Map.addLayer(Dove_sr, imageVisParam, "Dove West Australia")
+Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+Map.addLayer(region_extent)
+
+// exports
+//Map.addLayer(region_extent, {}, "export_geom", true)
+
+
+// drive export
+Export.image.toDrive({
+  image: reef_mask, 
+  description: 'reef_mask_export_' + region_params.sname,
+  folder: 'wcmc_rf/',
+  fileNamePrefix: 'reef_mask_' + region_params.sname,
+  region: region_extent,
+  scale: export_scale,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+
+Export.table.toDrive({
+  collection: refined_mask,
+  fileFormat: 'SHP'
+})

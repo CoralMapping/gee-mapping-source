@@ -1,0 +1,275 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var dove_sr = ee.Image("projects/coral_atlas/gbr_torres/image/gbr_torresstrait_low_tide_normalized_sr_august2018_july2020_v2_shift_mosaic"),
+    dove_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_dove_depth"),
+    eomap_S = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_depth"),
+    depth_composite = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_composite_depth"),
+    gbrTorres_L8_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_landsat8_depth"),
+    gbrTorres_S2_depth = ee.Image("projects/coral_atlas/gbr_torres/depth/gbr_torresstrait_high_tide_normalized_sr_august2018_july2020_v2_shift_mosaic_sentinel2_depth"),
+    cc_eomap_rgb = ee.Image("projects/coral_atlas/gbr_eomap/mosaics/gbr_eomap_pretty-rgb");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 16/09/2020
+// Description:
+
+//App to display depth profile (or any spatial profile) from a stack of images. 
+//Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
+//from EOMAP layers (landsat and Sentinel comparison) and with corresponding dove data
+
+//Gennadii Donchyts <Gennadii.Donchyts@deltares.nl> from the Netherlands kindly provided the function "reduceImageProfile" and 
+//"featureCollectionToDataTable" and support the integration of the chart functions with the standalone app. 
+
+//For Gennadii's code here the attribution:
+/*
+Copyright (c) 2018 Gennadii Donchyts. All rights reserved.
+
+This work is licensed under the terms of the MIT license.  
+For a copy, see <https://opensource.org/licenses/MIT>.
+*/
+// table of contents:
+// 0. data preparation (invert sign, change band names)
+// 1. Get all the depth layers in the map panel to extract the profiles from
+// 2. Create the inspector panel
+// 3. have the depth layers stacked in an image collection
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+
+// initial utils from gennaddi
+var utils = require('users/gena/packages:utils')
+
+//Compute the transformation using expression (its server side method as well)
+
+var cc_low_depth_neg=ee.Image(dove_depth)
+var cc_low_depth=cc_low_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :cc_low_depth_neg.select('b1') //specify that B1 mean b1
+})    
+
+//renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
+var cc_low_de=ee.Image(cc_low_depth)
+var cc_low_depth_renamed = cc_low_de.select(
+  ['constant'],
+  ['b1_a']);
+  
+
+
+//EOMAP-sentinel
+
+var EOMAP_depth_neg=ee.Image(eomap_S)
+var EO_depth=EOMAP_depth_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :EOMAP_depth_neg.select('b1') //specify that B1 mean b1
+})    
+  
+//renaming band 1 in cc_low_depth from 'b1' to 'b1_a' (to make band in this layer unique)
+var EO=ee.Image(EO_depth)
+var eomap_S_renamed = EO.select(
+  ['constant'],
+  ['b1_b']);
+  
+  
+//Depth composite gbrTorres
+// depth composite
+var Composite_depth=ee.Image(depth_composite)
+var Composite_depth=Composite_depth.expression(
+  '((-1)*B1)/100', {
+  'B1' :Composite_depth.select('depth') //specify that B1 mean depth
+})
+
+//renaming band 1 in composite from constant to 'b1_s'  
+var depthComposite=ee.Image(Composite_depth)
+var DepthCompos_renamed = depthComposite.select(
+  ['constant'],
+  ['b1_s']);  
+  
+//L8_depth gbrTorres
+//Compute the transformation using neg expression for L8 (its server side method as well)
+print (gbrTorres_L8_depth)
+var depth_L8_neg = ee.Image(gbrTorres_L8_depth);
+var depth_L8=depth_L8_neg.expression(
+  '((-1) * B1)/100', {
+  'B1' :depth_L8_neg.select('B2_median') //specify that B1 mean L8depth
+})
+
+//renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_c' 
+var depth_L8=ee.Image(depth_L8)
+var depth_L8_renamed = depth_L8.select(
+  ['constant'],
+  ['b1_c']);  
+
+
+//S2 depth gbr Torres
+
+var depth_S2_neg=ee.Image(gbrTorres_S2_depth)
+var depth_S2=depth_S2_neg.expression(
+ '((-1) * B1)/100', {
+  'B1' :depth_S2_neg.select('depth') //specify that B1 mean S2depth
+});
+
+//renaming band 1 in ASU depth layer from 'b1' to 'b1_l' (to make band in this layer unique)
+var depth_S2=ee.Image(depth_S2)
+var depth_S2_renamed = depth_S2.select(
+  ['constant'],
+  ['b1_l']);
+
+
+//dove data
+
+
+var imageVisParam5={"opacity":1,"bands":["b1_a"],"min":-4.461849235109971,"max":3.3890410015458157,
+                    "palette":["54278f","756bb1","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
+var cc_low_d=ui.Map.Layer(cc_low_depth_renamed, imageVisParam5, 'GBR_Torres_dove_depth_5m', false);
+var imageVisParam6 = {"opacity":1,"bands":["b3","b2","b1"],"max":1582,"gamma":1};
+var Dove_sr=ui.Map.Layer(dove_sr, imageVisParam6, 'GBR_Torres_dove_sr_5m', false)
+var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-21.4442,"max":-0.5257999999999999,"palette":[]};
+var gbrTorres_depth_comp=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, "GBR_Torres_depth_composite", false)
+var imageVisParam8 = {"opacity":1,"bands":["b1_c"],"min":-29.3536,"max":-0.7264,"palette":["eff3ff","c6dbef","9ecae1","6baed6","3182bd","08519c"]};
+var gbrtorres_L8_depth= ui.Map.Layer(depth_L8_renamed, imageVisParam8, "GBR_Torres_L8_depth", false)
+
+var imageVisParam9={"opacity":1,"bands":["b1_l"],"min":-22.0794,"max":-0.45060000000000006,"palette":["a50f15","de2d26","fb6a4a","fc9272","fcbba1","fee5d9"]};
+
+var gbrtorres_S2_depth=ui.Map.Layer(depth_S2_renamed, imageVisParam9, "GBR_Torres_S2_depth", false)
+
+//print(cc_high_depth_renamed)
+
+// 1. Get all the depth layers in the map panel to extract the profiles from 
+
+var imageVisParam2 = {"opacity":1,"bands":["b1_b"],"min":-17.2,"max":-1.87,"palette":["006d2c","31a354","74c476","a1d99b","c7e9c0","edf8e9"]};
+var EOMAP_Sentinel_depth=ui.Map.Layer(eomap_S_renamed,imageVisParam2, 'EOMAP_Sentinel_depth_10m', false);
+
+//var imageVisParam3 = {"opacity":1,"bands":["b4","b3","b2"],"min":96.46000000000001,"max":3334.54,"gamma":0.888};
+var EOMAP_Sentinel_sr=ui.Map.Layer(cc_eomap_rgb,{bands: ['b1','b2','b3'], min: 50, max: 3200}, 'EOMAP_Sentinel_RGB_10m', false)
+
+
+var mapPanel=ui.Map().setCenter(145.73111956376738, -16.065359995604364, 7)
+
+//add the layers
+
+var layers = mapPanel.layers();
+layers.add(Dove_sr)
+layers.add(cc_low_d)
+layers.add(gbrTorres_depth_comp)
+layers.add(gbrtorres_L8_depth)
+layers.add(gbrtorres_S2_depth)
+layers.add(EOMAP_Sentinel_sr)
+layers.add(EOMAP_Sentinel_depth)
+
+
+// 2. Create the inspector panel
+var inspectorPanel = ui.Panel({style: {width: '70%'}});
+
+// Create an intro panel with labels (done working)
+var intro = ui.Panel([
+  ui.Label({
+    value: "Spatial Profiles from EOMAP and Planet Doves depth layers for GBR/GBR TorresSt (sampling interval to Planet's 5 m)",
+    style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
+  }),
+]);
+
+inspectorPanel.add(intro);
+
+// 3. have the depth layers stacked in an image collection
+
+var collectionfromImages=ee.ImageCollection([ee.Image(cc_low_depth_renamed), ee.Image(eomap_S_renamed), ee.Image(depth_S2_renamed), ee.Image(depth_L8_renamed), ee.Image(DepthCompos_renamed), 
+                                         
+]);
+//print (collectionfromImages)
+
+//Building an image where each band is a single depth layer
+
+var stackCollection = function(collection) {
+  //create an initial images to stack the others to
+  var firstImage = ee.Image(collection.first().select([]));
+  //print (typeof(firstImage))
+  // a funtion to append a band to images
+  var appendImages = function (img, previous) {
+    return ee.Image(previous).addBands(img);
+  };
+  return ee.Image(collectionfromImages.iterate(appendImages, firstImage));
+};
+var stacked = stackCollection (collectionfromImages);
+
+// Renaming bands names to depict in graph
+var stackedRenamed = stacked.select(['b1_a','b1_b', 'b1_l','b1_c', 'b1_s' ],['gbr_torres_dove_depth_5m', 'EOMAP_Sentinel_depth_10m','gbrtorres_S2_depth', 'gbrtorres_L8_depth', 'gbrtorres_depth_composite']);
+//print (stackedRenamed)
+
+
+// 4. get the functions "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
+//var DrawTransectTool = require('users/gena/packages:ui').DrawTransectTool /this is the roginal from gennadi
+var DrawTransectTool = require('users/rodbio2008/myJSTraining:RBAutils/ui').DrawTransectTool
+
+Map.setOptions("HYBRID")
+
+var tool = new DrawTransectTool(mapPanel)
+
+// start drawing by default
+tool.startDrawing()
+
+// add checkbox to activate selector when checkbox is clicked
+var buttonDraw = ui.Button({label: 'Press to show depth profile chart after drawing your transect in the  map', 
+style: {color: 'red', fontSize: '45px', textAlign: 'center', position: 'top-center', fontWeight: 'bold'}});
+
+buttonDraw.setDisabled(true) // no profile at the beginning
+
+// subscribe to selection
+tool.onFinished(function(transect) {
+  showChart(transect)
+})
+
+// subscribe to selection
+tool.onDraw(function(points) {
+  print('draw', points)
+  if(points.length >= 2) {
+    buttonDraw.setDisabled(false)
+  }
+})
+
+buttonDraw.onClick(function() {
+  if(buttonDraw.getDisabled()) {
+    alert('Not drawing')
+    return
+  }
+
+  tool.stopDrawing()
+  tool.startDrawing()
+  
+  buttonDraw.setDisabled(true)
+});
+
+function showChart(transect) {
+  var scale = mapPanel.getScale()
+  print(transect.length())
+  print(scale)
+  var profile1 = utils.reduceImageProfile(stackedRenamed, transect, ee.Reducer.mean(),5);
+  
+  // Define chart customization options by creating a dictionary
+    var options= {
+        //title: 'Depth_profiles',
+        hAxis:{'title':'Distance (m)'},
+        vAxis:{'title': 'Depth (m)'},
+        lineWith: 3,
+        height : 800,
+        width: 1000,
+        pointSize: 2,
+      series: {
+      0: {color:'#54278f'},
+      1: {color:'#006d2c'},
+      2: {color: '#a50f15'},
+       3: {color: '#08519c'},
+       4:{color:'#3b3b3b'},
+      }};
+     
+     //this bit is for not using unmask that had to locate a value on it (i.e. if I use it and assign 0 values
+     //I 'll have depth at 0 m wich is a value that is not real
+     
+  print(profile1)
+     
+  utils.featureCollectionToDataTable(profile1, 'distance').evaluate(function(dataTable){ 
+     var chartInPanel= ui.Chart(dataTable).setOptions(options)
+     inspectorPanel.widgets().set(2, chartInPanel)
+  }); //basiclly here I set the inspector panel within the function
+    
+}
+ui.root.setLayout(ui.Panel.Layout.absolute());
+
+inspectorPanel.widgets().add(buttonDraw)
+ 
+ui.root.clear();
+ui.root.add(ui.SplitPanel(inspectorPanel, mapPanel));

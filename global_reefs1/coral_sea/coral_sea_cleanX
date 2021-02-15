@@ -1,0 +1,140 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var global_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    land_dist = ee.Image("projects/coral_atlas/global_datasets/ls8_global_distToLand"),
+    gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
+    geometry = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[144.44687168623975, -15.76120972060074],
+          [145.36972324873975, -18.198708564324935],
+          [147.39120762373975, -20.10818049401271],
+          [150.33554356123975, -24.25761940799946],
+          [152.46689121748975, -27.49914753510019],
+          [154.62021152998975, -27.616026165192068],
+          [153.80722324873975, -21.62744324957367],
+          [149.91806309248975, -17.676094661958025],
+          [148.88534824873975, -14.23311639868146],
+          [143.89755527998975, -10.30479892516179],
+          [142.53525059248975, -10.73686312791698]]]),
+    image = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_pixels"),
+    geo2 = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_geo_clean2");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// A bespoke cleanup script for the beast that is the Indonesian reef region!
+
+//Here I am adapting that for Coral Sea
+
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+
+//var export_geom = region_east.merge(region_west).geometry()
+var export_geom = geometry
+
+// Load the clean 3 outputs ++
+Map.addLayer(image, {bands:['b3','b2','b1'],min:0,max:2000}, "Dove image", false)
+Map.addLayer(geo2, map_palettes.geo, 'Geo clean stage 2', false);
+var geo2_to3 =geo2.unmask(0, false).selfMask();
+Map.addLayer(geo2_to3, map_palettes.geo, 'Geo clean stage 3', false); ///it seems this ill come after geo 3?
+
+Map.addLayer(gebco.multiply(-1), {min:0, max:300}, "GEBCO", false)
+
+// set the manual clean layer
+var man_geo = geo2_to3
+
+
+/*// add back in missing data in specific locations
+var recover = ee.Image().byte().paint(ee.Feature(reef_recovery, {zone: 1}), 'zone').clip(reef_recovery);
+man_geo = man_geo.unmask(0).where({
+  test: recover.eq(1),
+  value: geo2.updateMask(geo2.lte(22))
+}).selfMask()*/
+
+
+/*//the "DEEP WATER" CLEAN
+
+ - ML: when checking this reprojected to 5m (export), it is probably too intensive to do
+   at 15 pixels (kernel), but also it's quite patchy so i think we'd really need to 
+   dial it up to more than 15 pixels... so getting a bit hectic.
+ 
+// Define a kernel for deep water Morphological Operations
+var kernel_dw = ee.Kernel.circle({radius: 15});
+// Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
+var deepwater = man_geo.eq(2)
+          .focal_max({kernel: kernel_dw, iterations: 2})
+          .focal_min({kernel: kernel_dw, iterations: 2});
+// Deep lagoon (outside reef mask and global mask) -> deepwater 
+man_geo = man_geo.where({
+  test: deepwater.eq(1)
+                  .and(man_geo.eq(12)),
+  value: ee.Image(2)
+});var
+// Reef classes in deepwater -> deepwater
+man_geo = man_geo.where({
+  test: deepwater.eq(1)
+                  .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
+  value: ee.Image(2)
+});*/
+
+// use the global reef mask "deep water" to remove just deep lagoon/BRS
+var smooth_deep = global_mask.eq(2).focal_max(5)
+
+man_geo = man_geo.where({
+  test: smooth_deep.eq(1)
+                   .and(man_geo.eq(12).or(man_geo.eq(24))),//.or(man_geo.eq(22)).or(man_geo.eq(24))),
+  value: ee.Image(0)
+})
+
+// add in distance to land for to deal with non reef flat classes
+man_geo = man_geo.where({
+  test: smooth_deep.eq(1)
+                   .and(land_dist.unmask(50000).gt(2000))
+                   .and(man_geo.eq(15).or(man_geo.eq(16)).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(23))),
+  value: ee.Image(0)
+})
+
+// add in distance to land + GEBCO to deal with reef flat classes
+man_geo = man_geo.where({
+  test: smooth_deep.eq(1)
+                   .and(land_dist.unmask(50000).gt(2000))
+                   .and(gebco.lt(-100))
+                   .and(man_geo.eq(13).or(man_geo.eq(14))),
+  value: ee.Image(0)
+})
+
+
+// use the coastal mask for further removal
+//var coast_mask_i = ee.Image().byte().paint(ee.Feature(coast_mask, {zone: 1}), 'zone').clip(coast_mask);
+//var wcmc_mask = ee.Image().byte().paint(ee.Feature(wcmc.filterBounds(coast_mask).geometry(),
+                                //                   {zone: 1}), 'zone')
+                                // .unmask(0);
+                                 
+//man_geo = man_geo.where({
+  //test: coast_mask_i.eq(1)
+   //                 .and(man_geo.neq(16))
+   //                 .and(wcmc_mask.eq(0)),
+  //value: ee.Image(0)
+//})
+
+// update mask to deep and anything removed to this point
+man_geo = man_geo.updateMask(man_geo.gt(2)).selfMask()
+
+
+
+
+//Map.addLayer(man_geo.reproject({crs:'EPSG:4326', scale: 5}), map_palettes.geo, 'Geo bespoke clean', false);
+Map.addLayer(man_geo, map_palettes.geo, 'Geo bespoke clean', false);
+
+Map.addLayer(wcmc, {}, "UNEP WCMC", false)
+
+// Export
+Map.addLayer(export_geom)
+Export.image.toAsset({
+  image: man_geo,
+  description: "indo_cleanX",
+  assetId: 'projects/coral_atlas/Indonesia/in_out/indo_geo_clean3x',
+  region: export_geom,
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  pyramidingPolicy: {'.default': 'mode'}
+});

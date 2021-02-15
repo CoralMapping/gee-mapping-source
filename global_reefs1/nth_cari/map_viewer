@@ -1,0 +1,123 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
+    ncab = /* color: #0b4a8b */ee.Geometry.Point([-77.64269067777371, 22.111208619903458]),
+    geo = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo"),
+    benthic = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic"),
+    pixels = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_pixels"),
+    geo_train = ee.FeatureCollection("projects/coral_atlas/nth_cari/training/nth_cari_geo_training"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    benthic_baha = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_baha"),
+    benthic_cari = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic_cari"),
+    geo_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_geo-clean3"),
+    benthic_clean = ee.Image("projects/coral_atlas/nth_cari/in_out/nth_cari_benthic-clean");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// little viewing script for looking at reefs and classifications for each region
+
+// imports
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis')
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals')
+
+// choogse where to centre (link this dynamically to map app?)
+var centre_map = ncab
+Map.centerObject(centre_map, 6)
+//splitting North Cari regions
+
+
+// add some background data
+//Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
+//Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
+
+Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
+//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+
+//Map.addLayer(any_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Any tide depth", false)
+//Map.addLayer(high_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "High tide depth", false)
+//Map.addLayer(low_depth, {min: -1, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Low tide depth", false)
+Map.addLayer(pixels.select('depth'), {min: -1, max: 2500, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "Depth covariate (S2/LS8/Dove)", false)
+
+// nth cari
+//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
+Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
+Map.addLayer(benthic_clean, map_palettes.benthic, "Nth. Cari & Baha Benthic - FINAL", false)
+Map.addLayer(geo, map_palettes.geo, "Nth. Cari & Baha Geo - RAW", false)
+Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
+
+// wave data
+/*var kd1 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd1')
+var kd2 = ee.Image('users/danleeharris/reefwave/fiji_v1_kd2')
+
+Map.addLayer(kd1, {}, "waves - kd1", false)
+Map.addLayer(kd2, {}, "waves - kd2", false)*/
+
+// add training data / sample point distributions
+// ----> possibly - points are only intermediate in the mapping script, so will have to pull those out if we want that
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo_oldmaps, 'class_num'), map_palettes.geo, "Training data - geo (old maps) ", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_geo, 'class_num'), map_palettes.geo, "Training data - geo (new maps)", false)
+//Map.addLayer(ee.Image().byte().paint(fiji_training_benthic, 'class_num'), map_palettes.benthic, "Training - benthic (manual curation)", false)
+Map.addLayer(geo_train, {}, "geomorphic training locations", false)
+
+// WCMC
+Map.addLayer(wcmc, {}, "WCMC layer", false)
+
+
+
+
+
+// #############
+// example confidence layers
+
+/*// depth and nir combos
+var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
+//Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
+var conf_flag = fiji_high_depth_ocean.eq(-1)
+                        .or(fiji_high_depth_ocean.gt(1000))
+                        .add(depth_nir_flag.eq(1))
+                        .selfMask()
+Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
+
+//straight depth missing/-1
+var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
+//Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
+
+//Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
+*/
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '18px'}
+})
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
+// generate the legend
+
+
+
+
+///////// LINK TO DATA EXPORT /////////
+// hopefully eventually we can link this to a download link in the app?
+
+// // map to export 
+// var export_map = gbr_geo_map10
+// // extent
+// var export_convhull = export_map.gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: export_map.geometry().bounds()}).geometry().convexHull({maxError: 100})
+// // export
+// Export.image.toDrive({
+//     image: export_map,
+//     description: 'gbr_sent2_geo_map',
+//     folder: 'GBR Mapping',
+//     region: export_convhull,
+//     scale: 10,
+//     maxPixels: 1e13
+// })
+
+//Export.table.toAsset({
+//  collection: Mask_NoReef,
+//  description: 'nth_cari_final_mask',
+//})
