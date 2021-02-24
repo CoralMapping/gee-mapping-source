@@ -46,7 +46,7 @@ var vars = {
   smooth_radius: ee.Number(1), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1250, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF
-  wave_height: 0.6, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1250, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
@@ -80,7 +80,7 @@ var vars = {
   reproject_display: true,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -224,23 +224,6 @@ test: BRStoDL_mask.eq(1)
 
   //************************************* END Import AND APPLY Back Reef Slope to Deep Lagoon mask Chris SCS************************************END 
   
-    //************************************* START Import AND APPLY Outer Reef Flat Between Reef Slope and Crest to Reef Slope mask Chris SCS************************************START
-  // import the BOuter Reef Flat Between Reef Slope and Crest to Reef Slope  mask from asset ****only use ee.FC if  ORF_RC mask created in map viewer****
-  // This was created for lagoons between 5 and 15 m deep which were completely filled in for that depth range with Back Reef Slope, hence the assumtion was made its deep lagoon
-  var ORF_to_RS_mask = ee.FeatureCollection(region_params.ORF_to_RS_mask).geometry();
-  var ORFtoRS_mask = ee.Image().byte().paint(ee.Feature(ORF_to_RS_mask.dissolve(),{zone: 1}), "zone").clip(ORF_to_RS_mask.dissolve());
-
-  
-  // Outer Reef Flat to Reef Slope if located between Crest and Reef Slope for larger areas within mask only
-man_geo = man_geo.where({
-test: ORFtoRS_mask.eq(1)
-             .and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(21))),
-  value: ee.Image(22)
-});
-
-  //************************************* END mport AND APPLY Outer Reef Flat Between Reef Slope and Crest to Reef Slope mask Chris SCS************************************END 
-  
-  
   
   
   
@@ -280,8 +263,8 @@ test: ORFtoRS_mask.eq(1)
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })*/
-  
+  })
+  */
   
   
   
@@ -335,7 +318,6 @@ Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);// CR added
 Map.addLayer(lagoons_mask, {color: 'blue'}, "lagoons mask import", true, 0.4);// CR added
 //   Map.addLayer(reef_mask, {color: 'green'}, "reef mask import", true, 0.4);// CR added
 Map.addLayer(reef_band_mask, {}, "band(buffer) around lagoon");// CR added
-Map.addLayer(ORFtoRS_mask, {}, "ORF_IRF_RCToRS");// CR added
  // Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   // Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
@@ -399,10 +381,10 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  // Rubble on Reef crest -> rock 
+  // Rubble on Outer reef flat and Reef crest -> rock 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
-                     .and(geo_map.eq(15)), //(geo_map.eq(14).or
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
     value: ee.Image(13)
   });
      // Coral/Algae on Deep Lagoon -> Sand
@@ -411,28 +393,18 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(12)),
     value: ee.Image(11)
   });
-  // Seagrass on Reef Crest or Outer Reef Flat or reef slope or sheltered slope change to coral/algae or rock -> coral algae
-  // Seagrass in generaly does not grow on hard substrate areas.
+  // Seagrass on Reef Crest or Outer Reef Flat or reef slope or sheltered slope change to coral/algae or rock -> Coral/Algae
   
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+                     .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
     value: ee.Image(15)
   });  
-   // Seagrass on reef slope or sheltered slope change to rock -> rock
-  // Seagrass in generaly does not grow on hard substrate areas.
-  
-  man_benthic = man_benthic.where({
-    test: man_benthic.eq(14)
-                     .and(geo_map.eq(21).or(geo_map.eq(22))),
-    value: ee.Image(13)
-  }); 
-  // Sand on Reef crest ->  ROCK
-  // Sand in generally cannot stay in high energy zone so has to be hard substrate posisble Rock
+  // Sand on Reef crest -> Coral/Algae CR ADDED
   man_benthic = man_benthic.where({
     test: man_benthic.eq(11)
                      .and(geo_map.eq(15)),
-    value: ee.Image(13)
+    value: ee.Image(15)
   });  
   // Sand on Reef slope or sheltered slope -> Rubble CR ADDED
   man_benthic = man_benthic.where({

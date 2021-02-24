@@ -2,7 +2,6 @@
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
     test_area = 
     /* color: #98ff00 */
-    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -73,7 +72,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
     /* color: #d63000 */
     /* shown: false */
     ee.Geometry.Point([73.36350406430057, 3.4513743887798998]),
-    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
         [[[70.16383984620248, 13.135866931352913],
           [70.14682558742047, 12.617194359154508],
           [70.2690563075083, 11.807120477151644],
@@ -117,7 +119,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [70.94844908898446, 14.180519984144992],
           [70.70783078637048, 14.098023158448601],
           [70.48943631098639, 13.930058399473841]]]),
-    mid_mask = /* color: #25d610 */ee.Geometry.MultiPolygon(
+    mid_mask = 
+    /* color: #25d610 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.4610278099535, -5.562233749561943],
            [72.41845578846913, -5.63808761806013],
            [72.45072812733632, -5.657220366789967],
@@ -280,6 +285,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [72.75075681027974, 11.79677555536155]]]]),
     chagos_extent = 
     /* color: #12d6cd */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -292,6 +298,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [73.91411868594987, -4.155237145551639]]], null, false),
     maldives_extent = 
     /* color: #f331ff */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -965,36 +972,40 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           "coordinates": [
             [
               [
-                72.39398105595568,
-                10.973921429023482
+                72.41801364872912,
+                10.996165543312777
               ],
               [
-                72.29712629950366,
-                10.905829139478357
+                72.3991094123441,
+                10.93750890105407
               ],
               [
-                72.22554241290074,
-                10.912401712234674
+                72.37128401434741,
+                10.826932113823348
               ],
               [
-                72.22812345706197,
-                10.843451949285749
+                72.4102500545023,
+                10.786294164109059
               ],
               [
-                72.18386753056505,
-                10.759483706782845
+                72.41489103518695,
+                10.761840217268722
               ],
               [
-                72.2360525891588,
-                10.68662093802307
+                72.42350681279162,
+                10.742618886795082
               ],
               [
-                72.39398105595568,
-                10.72170520211932
+                72.42625339482287,
+                10.725078474908567
               ],
               [
-                72.4997244641588,
-                10.570544171130882
+                72.39398105595566,
+                10.721705202119322
+              ],
+              [
+                72.49972446415882,
+                10.570544171130884
               ],
               [
                 72.63293369267443,
@@ -1002,11 +1013,11 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               ],
               [
                 72.62881381962755,
-                10.632637234297222
+                10.632637234297224
               ],
               [
-                72.67962558720568,
-                10.704163577688568
+                72.67962558720566,
+                10.704163577688572
               ],
               [
                 72.8348074719713,
@@ -1018,7 +1029,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               ],
               [
                 72.4557791516588,
-                11.026495721714456
+                11.026495721714458
               ]
             ]
           ],
@@ -1034,24 +1045,24 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.996459785849844
               ],
               [
-                72.16991028128317,
-                10.784740207030643
+                72.07652649222067,
+                10.871066007975854
               ],
               [
-                72.14022919895335,
-                10.831118915297832
+                72.08049103977366,
+                10.878998415288528
               ],
               [
-                72.13251650256032,
-                10.853217133466172
+                72.1069389573943,
+                10.888619109068834
               ],
               [
-                72.18159616771788,
-                10.885250679785315
+                72.11224497142882,
+                10.923682781640396
               ],
               [
-                72.23308166800192,
-                10.95467031671939
+                72.1664770537441,
+                10.96545625358737
               ],
               [
                 71.96117004690817,
@@ -1856,7 +1867,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    SRStoRS = /* color: #88d4d6 */ee.Geometry.MultiPolygon(
+    SRStoRS = 
+    /* color: #88d4d6 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.99809025742242, 6.151675331411386],
            [73.01173704622582, 6.1393014623204],
            [73.01881817062814, 6.1048236106398095],
@@ -2083,7 +2097,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [73.41666373785546, 0.8723977451678908],
            [73.36894187506249, 0.9168526210422585],
            [73.34250602301171, 0.9161660633804259]]]]),
-    SGonRC = /* color: #48d607 */ee.Geometry.MultiPolygon(
+    SGonRC = 
+    /* color: #48d607 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[72.9980902574224, 6.1516753314113855],
            [73.01173704622582, 6.1393014623204],
            [73.01881817062814, 6.1048236106398095],
@@ -2749,10 +2766,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [72.37499257439674, -7.2922053810590075],
            [72.37773915642799, -7.256531783149956],
            [72.37499257439674, -7.253381472524225]]]]),
-    deep3 = 
-    /* color: #8877d6 */
-    /* shown: false */
-    ee.Geometry({
+    deep3 = /* color: #8877d6 */ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -4200,8 +4214,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           "coordinates": [
             [
               [
-                72.23506770178501,
-                10.901398255107548
+                72.22957453772251,
+                10.897226276943396
               ],
               [
                 72.22476801916783,
@@ -4397,31 +4411,31 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               ],
               [
                 72.20953581308122,
+                10.877710818281265
+              ],
+              [
+                72.20950630881119,
+                10.877644968372055
+              ],
+              [
+                72.2096397487052,
+                10.877640523644606
+              ],
+              [
+                72.20983756161381,
+                10.87764398089537
+              ],
+              [
+                72.2100990769801,
+                10.877640359124742
+              ],
+              [
+                72.21055304085023,
+                10.877639371107845
+              ],
+              [
+                72.2106301543593,
                 10.877673942060303
-              ],
-              [
-                72.20949557997513,
-                10.877633115298913
-              ],
-              [
-                72.2095136848815,
-                10.87763130458763
-              ],
-              [
-                72.20979062295605,
-                10.877629493805872
-              ],
-              [
-                72.2100816426215,
-                10.877631140067741
-              ],
-              [
-                72.21056242858178,
-                10.877628835042655
-              ],
-              [
-                72.21063551877732,
-                10.877642333867277
               ],
               [
                 72.2111183164,
@@ -4448,8 +4462,8 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.897564857537242
               ],
               [
-                72.22745828400902,
-                10.906288007953103
+                72.22865991364769,
+                10.905403062324469
               ],
               [
                 72.22917489777855,
@@ -4468,28 +4482,28 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.931619144259678
               ],
               [
-                72.19763211976341,
-                10.922348944953997
+                72.21067838441185,
+                10.946619398481996
               ],
               [
-                72.18593421949627,
-                10.902294571385028
+                72.20653358473065,
+                10.960948731184052
               ],
               [
-                72.17649284376385,
-                10.885338136289526
+                72.15795341505292,
+                10.939276504788841
               ],
               [
-                72.14988374317277,
-                10.869362329011722
+                72.1244778593837,
+                10.92330359468424
               ],
               [
-                72.13872575367081,
-                10.860590869600864
+                72.11331986988175,
+                10.872728863197207
               ],
               [
-                72.12811628770984,
-                10.852529250321625
+                72.09653059435047,
+                10.861295865200697
               ],
               [
                 72.09038045454852,
@@ -4512,8 +4526,12 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.691805893115896
               ],
               [
-                72.20046251680091,
-                10.784524187471133
+                72.28158984577341,
+                10.686223814232212
+              ],
+              [
+                72.34122484590247,
+                10.731907200582919
               ],
               [
                 72.22818582917884,
@@ -4528,11 +4546,12 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.886527660148403
               ],
               [
-                72.23505228425697,
-                10.898917445338622
+                72.22990244294837,
+                10.894576864986005
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         },
         {
@@ -4608,20 +4627,56 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
                 10.923692262220717
               ],
               [
+                72.22889433722256,
+                10.921964639229534
+              ],
+              [
                 72.23147808778977,
                 10.9185514138121
               ],
               [
-                72.23010479677414,
-                10.909955042292035
+                72.22911774385666,
+                10.904266130313362
               ],
               [
-                72.2939628290007,
-                10.897481433757964
+                72.22951499965332,
+                10.898146423975616
               ],
               [
-                72.33979641664719,
-                10.924956391636861
+                72.23052885290276,
+                10.893485124572809
+              ],
+              [
+                72.23279932329218,
+                10.887599754787376
+              ],
+              [
+                72.2334195402851,
+                10.886132074199308
+              ],
+              [
+                72.23416848004068,
+                10.881461505466612
+              ],
+              [
+                72.25471711639392,
+                10.829985944087447
+              ],
+              [
+                72.3100989984343,
+                10.811500484138161
+              ],
+              [
+                72.36871547697098,
+                10.816303931127853
+              ],
+              [
+                72.38271176088547,
+                10.910123600986491
+              ],
+              [
+                72.40038968357082,
+                10.970292588125591
               ],
               [
                 72.41670071352219,
@@ -4881,6 +4936,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
               ]
             ]
           ],
+          "geodesic": true,
           "evenOdd": true
         },
         {
@@ -14982,7 +15038,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
       ],
       "coordinates": []
     }),
-    RStoDL = /* color: #cfd62f */ee.Geometry.MultiPolygon(
+    RStoDL = 
+    /* color: #cfd62f */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[73.4764132976273, 5.859967554883298],
            [73.47014765736851, 5.849977751519491],
            [73.46577029225621, 5.836230807337991],
@@ -15033,6 +15092,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [72.43144461432716, -7.2420899169120565]]]]),
     RCtoORF = 
     /* color: #ffcd4d */
+    /* shown: false */
     /* displayProperties: [
       {
         "type": "rectangle"
@@ -15042,8 +15102,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
         [[[72.32998413102014, -7.205475271406201],
           [72.32998413102014, -7.464265166478045],
           [72.5476507569967, -7.464265166478045],
-          [72.5476507569967, -7.205475271406201]]], null, false);
+          [72.5476507569967, -7.205475271406201]]], null, false),
+    DeepMask = ee.Image("projects/coral_atlas/central_indian_ocean/in_out/cio_DeepMask");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 
 ///////////////////////////////
 // Global coral atlas project - Central Indian Ocean
@@ -15081,7 +15143,7 @@ var region_params = param_module.cio;          //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -15089,7 +15151,7 @@ var vars = {
   small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
-  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
+  dist_to_land_RC: 250, //distance to land in meters to convert reef crest to TRF - not used for Indo
   wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1100, //depth in centimetres
   chagos_depth_cutoff: 1500, //depth cut off for southern chagos region only
@@ -15098,7 +15160,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 1, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -15155,7 +15217,7 @@ if (vars.geomorphic) {
     vars.obia_clean = false;
     vars.fast_clean = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '4';
+    vars.geomorph_output_name = temp_outname + '4-redo';
   }
 }
 
@@ -15238,7 +15300,8 @@ if (vars.manual_clean && vars.geomorphic) {
              .focal_max({kernel: kernel_dw, iterations: 2})
              .focal_min({kernel: kernel_dw, iterations: 2});
     
-  
+  */
+  /*
    // Deep lagoon (outside reef mask and global mask) -> deepwater 
    man_geo = man_geo.where({
      test: deepwater.eq(1)
@@ -15286,6 +15349,8 @@ if (vars.manual_clean && vars.geomorphic) {
   var RCtoFlat = ee.Image().byte().paint(ee.Feature(RCtoORF, {zone: 1}), "zone").clip(RCtoORF);
   var StoDL = ee.Image().byte().paint(ee.Feature(RStoDL, {zone: 1}), "zone").clip(RStoDL);
   var eDeep = ee.Image().byte().paint(ee.Feature(deep3, {zone: 1}), "zone").clip(deep3);
+  var Deepmask = ee.Image(DeepMask);
+  //var Deepmask = ee.FeatureCollection("Deep Mask import", true, 0.4);
   
    // Reef crest -> outer reef flat
   man_geo = man_geo.where({
@@ -15301,14 +15366,20 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(12) // DL
   });
   
-  // reef -> Deep 
+    // reef -> Deep 1 - image
+  man_geo = man_geo.where({
+    test: Deepmask.eq(1),
+    value: ee.Image(2) // deep
+  });  
+  
+  // reef -> Deep 2
   man_geo = man_geo.where({
     test: eDeep.eq(1),
     value: ee.Image(2) // deep
   });  
   
-  /*
-  // Reef classes in deep water -> deep water
+  
+  // Reef classes in deep water -> deep water 3
   man_geo = man_geo.where({
     test: deep.eq(1),
     value: ee.Image(2) //deep
@@ -15321,7 +15392,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22) //RS
   });
   
-  */
+  
   /*
   // Reef crest -> Inner reef flat (inside the reef)
   man_geo = man_geo.where({
@@ -15358,7 +15429,7 @@ if (vars.manual_clean && vars.geomorphic) {
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
   Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
-  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+  Map.addLayer(DeepMask, {palette: ['F8FF23'], opacity: 0.4}, 'Deep Mask', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
@@ -15925,13 +15996,6 @@ if (!vars.manual_clean) {
       
       // ## Blanket version
       
-      // the "LAND MASK" CLEAN  ****to be moved to datagen for next region****
-      var global_reef_mask = ee.Image(region_params.global_reef_mask);
-  
-      clean_map = clean_map.where({
-        test: global_reef_mask.eq(1),
-        value: ee.Image(0)
-      });
       
       // make a very smooth map to capture the broader neighbourhood  - *** Change to ee.kernal*** see reef mask in clean 3
       var smooth_map = clean_map

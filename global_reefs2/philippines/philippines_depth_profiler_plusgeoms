@@ -3,7 +3,7 @@ var geometry = /* color: #d63000 */ee.Geometry.Point([123.72692628435419, 11.169
     imageVisParam8 = {"opacity":1,"bands":["b3","b2","b1"],"min":91.88,"max":1814.12,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
-//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020_adding capacity to add geoms
 
 
 // Description: App to display depth profile (or any spatial profile) from a stack of images. 
@@ -135,7 +135,7 @@ var quads=ui.Map.Layer(quads_selection,{palette: '#FFFF33'},'QuadSelected', fals
 
 //center the map to the region
 var mapPanel=ui.Map().centerObject(geometry, 6)
-
+//var startGeom= mapPanel.drawingTools().draw.layers().get(0)
 
   
 

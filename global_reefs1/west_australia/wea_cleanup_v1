@@ -5262,6 +5262,7 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [122.18803089143938, -17.981075510450076],
            [122.1817652511806, -17.978299776516096]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 ///////////////////////////////
 // Global coral atlas project - WEA 
 // Contact: mitchell.lyons@gmail.com
@@ -6355,14 +6356,6 @@ if (!vars.manual_clean) {
       
       
       // ## Blanket version
-      
-      // the "LAND MASK" CLEAN  ****to be moved to datagen for next region****
-      var global_reef_mask = ee.Image(region_params.global_reef_mask);
-  
-      clean_map = clean_map.where({
-        test: global_reef_mask.eq(1),
-        value: ee.Image(0)
-      });
       
       // make a very smooth map to capture the broader neighbourhood  - *** Change to ee.kernal*** see reef mask in clean 3
       var smooth_map = clean_map

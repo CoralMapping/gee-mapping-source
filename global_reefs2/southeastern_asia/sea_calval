@@ -1,7 +1,7 @@
 ///////////////////////////////
-// Global coral atlas project - South China Sea
+// Global coral atlas project - Southeastern Asia
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Chris Roelfsema
+// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and training data and exports the training sampled
@@ -23,7 +23,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.south_china_sea;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.southeastern_asia;           //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -34,9 +34,8 @@ var region_params = param_module.south_china_sea;          //<------------ THIS 
 var vars = {
  
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
-  benthic_points_cal_ratio: 0.7, // the percentage of points to use for trianing
   
   // analysis parameters
   image_data_scale: sensor_params.pixel, // pixel size of the image data
@@ -49,8 +48,8 @@ var vars = {
   // trim input data
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.60,
-  classes_mapped_geo: [2, 11, 12,  13,   14,   15,  21,  22,  23,  24, 25  ], // classes to map (that is, to sample) 2,11,12,13,14,15,21,22,23,24,25
-  classes_mapped_benthic: [11,   12,   13,   14,   15,   18], // classes to map (that is, to sample) 11, 12, 13, 14, 15, 18
+  classes_mapped_geo: [2, 11, 12,  13,   14,   15,  16,  21,  22,  23,  24  ], // classes to map (that is, to sample)
+  classes_mapped_benthic: [11,   12,   13,   14,   15,   18], // classes to map (that is, to sample)
 };
 
 
@@ -125,22 +124,15 @@ var sample_class_n = function(classn) {
   };
 
 if (!vars.geomorphic && vars.use_benthic_points) {
-  // process the point data to ensure consistency
-  // first ensure only relevant classes
-  benthic_pts = benthic_pts.filter(ee.Filter.gt(vars.class_field, 10))
-  // next split data into cal/val
-  benthic_pts = benthic_pts.randomColumn("random")
-  var benthic_pts_cal = benthic_pts.filter(ee.Filter.lte("random", vars.benthic_points_cal_ratio))
-  var benthic_pts_val = benthic_pts.filter(ee.Filter.gte("random", vars.benthic_points_cal_ratio))
   // draw trainign/validation points from cal/val map + input point data set
   // cal points
   var samp_seed = 42;
   var map_pts_cal = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
-  var train_pts_cal = benthic_pts_cal.merge(map_pts_cal); // use benthic field data poitns to train a map
+  var train_pts_cal = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   // val_points
   samp_seed = 666;
   var map_pts_val = ee.FeatureCollection(classes_mapped.map(sample_class_n)).flatten();
-  var train_pts_val = benthic_pts_val.merge(map_pts_val); // use benthic field data poitns to train a map
+  var train_pts_val = benthic_pts.merge(map_pts); // use benthic field data poitns to train a map
   
 } else {
   // draw trainign/validation points from cal/val map only
