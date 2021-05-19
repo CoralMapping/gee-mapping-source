@@ -1,0 +1,205 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var regionextent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[70.16383984620248, 13.135866931352913],
+          [70.14682558742047, 12.617194359154508],
+          [70.2690563075083, 11.807120477151644],
+          [70.75799813787245, 10.497269313191726],
+          [71.1883486767209, 9.918038419941574],
+          [71.47614859713114, 8.090218465993845],
+          [71.59908832513908, 5.52591426513123],
+          [71.49717465104942, 4.724023756667231],
+          [71.63786599252497, 1.9241941877135522],
+          [71.79169706752515, -0.00897274020001368],
+          [71.76991375572192, -1.3710512046844305],
+          [71.49502445725186, -2.765513665803016],
+          [71.35011857751672, -3.4180227969815036],
+          [70.78266724738901, -4.467873920373559],
+          [70.37679876655831, -5.156730459644507],
+          [70.0414366086369, -5.673827050931439],
+          [69.63155494916931, -6.620623477840547],
+          [69.61632242222679, -7.654629654247595],
+          [69.88596916257875, -8.325549044857805],
+          [70.33702213279423, -8.649621844082038],
+          [71.15440380682881, -8.861512281458042],
+          [72.50302938219875, -8.730914493557336],
+          [73.42866829614745, -8.55743897796769],
+          [74.30064119056354, -7.7866094054231425],
+          [74.78510906713221, -6.8540012175349405],
+          [74.87181187774016, -5.590383988857091],
+          [74.71281221914346, -4.718369474096369],
+          [74.42252946027796, -3.890078116525247],
+          [74.39495159818864, -2.819413619339805],
+          [74.80701657465998, 0.26047582105125183],
+          [74.97178689803962, 2.752606230303411],
+          [74.95623341371372, 3.7796590463055497],
+          [73.98795167784473, 8.437740216584354],
+          [73.80616705637192, 9.279013186527788],
+          [73.88180364769623, 9.530197153338912],
+          [74.05559477809774, 9.730752468582905],
+          [74.36104571392184, 9.786128362399857],
+          [72.93930746651232, 14.377460777937939],
+          [72.04231647306855, 14.34492727644073],
+          [71.49518330115245, 14.31657896080115],
+          [70.94844908898446, 14.180519984144992],
+          [70.70783078637048, 14.098023158448601],
+          [70.48943631098639, 13.930058399473841]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+/*
+Script to export maps to GCS
+ 
+TODO: deal with change in dateline (i.e. WGS-84 projection wrapping) in an automated way
+  - Fiji/south pacific might be the only region where this happens? worth it?
+  **A: resonable solution below**
+*/
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+//var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var reef_params = param_module.cio;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// imports
+var geo = ee.Image(reef_params.geo_map_clean3)
+//var benthic = ee.Image(reef_params.benthic_map_clean1) // - OR -
+var benthic = ee.Image(reef_params.benthic_map_clean2)
+var image = ee.Image(reef_params.image)
+var depth = ee.Image(reef_params.pixels).select('depth') // will need to import depth mosaic from pixels now
+var region_extent = ee.Image().byte().paint(ee.Feature(regionextent, {zone: 1}), "zone").clip(regionextent);
+
+// finalise layers (include 'mapped area' as zeros)
+geo = geo.where(geo.lte(2), 0)
+benthic = benthic.unmask(0).updateMask(geo.gte(0))
+
+// make reef/non-reef layer 
+var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
+var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
+
+// check before export
+Map.addLayer(region_extent, {color:'#ffff00'}, "extent", false);
+Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
+Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
+Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
+Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
+Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
+// combine into single stack
+var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
+                    .addBands(reef_layer.rename('reef'))
+                    .addBands(geo.rename('geomorphic'))
+                    .addBands(benthic.rename('benthic'))
+                    .toInt16()
+
+Map.addLayer(export_stack, {}, "export raster stack", false)
+
+
+
+/*// add export region
+var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
+var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
+Map.addLayer(export_geom_west, {}, "export footprint west", true)
+Map.addLayer(export_geom_east, {}, "export footprint east", true)
+
+// add raster flag for either side of dateline
+var latlong = ee.Image.pixelLonLat().select('longitude').clipToCollection(ee.FeatureCollection([export_geom_west,export_geom_east]))
+//Map.addLayer(latlong)
+
+var export_stack_east = export_stack.updateMask(latlong.lte(0))
+var export_stack_west = export_stack.updateMask(latlong.gt(0))
+
+Map.addLayer(export_stack_east, {}, "export raster stack east", false)
+Map.addLayer(export_stack_west, {}, "export raster stack west", false)*/
+
+// make east/west export geometries
+/*var export_geom_east = latlong.lt(0).and(latlong.gt(-179.99998)).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
+                            })
+
+var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
+                            })*/
+
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack,
+  description: 'cio_stack_v2',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/cio/cio_postreview_stack',
+  region: region_extent, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+});
+
+
+/*
+Export.table.toCloudStorage({
+  collection: slithers, 
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200618/Slither_Masks',
+  fileFormat: 'SHP'
+});
+
+*/
+
+/*// run the export
+Export.image.toCloudStorage({
+  image: export_stack_east,
+  description: 'swp_stack_east',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_east',
+  region: export_geom_east, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack_west,
+  description: 'swp_stack_west',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_west',
+  region: export_geom_west, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})*/
+
+
+// export the convex hull boundary
+
+// export region convex hull, or manual
+/*var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+
+Export.table.toCloudStorage({
+  collection: ee.FeatureCollection(export_geom),
+  description: 'swp_convex_hull',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/new_geom/swp_convex_hull',
+  fileFormat: "SHP"
+})*/

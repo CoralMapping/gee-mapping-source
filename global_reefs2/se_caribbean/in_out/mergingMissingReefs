@@ -1,0 +1,35 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var image = ee.Image("projects/coral_atlas/se_caribbean/in_out/se_caribbean_benthic_clean1__missingReef"),
+    image2 = ee.Image("projects/coral_atlas/se_caribbean/in_out/se_caribbean_benthic_clean2_end"),
+    geometry = 
+    /* color: #0000ff */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-73.73637550730729, 20.459379310769595],
+          [-75.82377785105729, 17.80250325760316],
+          [-66.77104347605729, 16.205645100893904],
+          [-64.79350441355729, 15.952288075094044],
+          [-64.85942238230729, 13.61549454885603],
+          [-70.52836769480729, 13.316334559382236],
+          [-77.42778175730729, 10.651366788699134],
+          [-77.42778175730729, 8.61517499805101],
+          [-75.97758644480729, 7.200571246090842],
+          [-69.73735206980729, 8.81064668089453],
+          [-62.244676288557294, 9.11450758267977],
+          [-57.388719257307294, 9.309710849221794],
+          [-56.971238788557294, 14.61701000852034],
+          [-57.784227069807294, 18.408156723920403],
+          [-61.651414569807294, 19.778531828099354],
+          [-67.21049660105729, 20.685664738249578],
+          [-70.94584816355729, 20.82948931357398]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var benthic2_merge=ee.ImageCollection([image2,image]).mosaic()
+Map.addLayer(benthic2_merge)
+
+Export.image.toAsset({
+  image: benthic2_merge,
+  description: "benthic2_mergedMissingReef",
+  scale: 5,
+  region: geometry,
+  maxPixels: 138197194696 
+})

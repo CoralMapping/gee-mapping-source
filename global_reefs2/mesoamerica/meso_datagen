@@ -1,14 +1,14 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([121.91360798388276, 10.831733886693806]);
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-85.79391154736729, 16.086504280421245]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Coral atlas mapping project - Philippines region  
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Mitchell Lyons, Robert Canto
+// Coral atlas mapping project - South East Caribbean
+//Contact: Mitch Lyons
+//Region Coordinator:
 // Description:
 // - Developing a process to combine OBIA and supervised classification
-// - This script generates the data as an asset (for quick load)
+// - This script generates the data as an asset /(for quick load)
 // - Corresponding '_classification' script performs the machine learning classificaiton
 ///////////////////////////////
 
@@ -19,7 +19,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.phi       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.mesoamerica       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -36,7 +36,7 @@ var region_params = param_module.phi       //<------------ THIS IS WHERE YOU CHO
 
 var vars = {
   // OBIA settings
-  pixel_based: true, // if true the metrics and output will simply be pixels (i.e. no segmentation)
+  pixel_based: false, // if true the metrics and output will simply be pixels (i.e. no segmentation)
   scale_factor: 20, // segment size (0 - Inf) - need to play around [~8-15 for SLIC; ~ 20 for SNIC]
   compactness: 10, // trades off color-similarity and proximity - small = more sensitive to 'colour' (a bit black box) [~800-1000 for SLIC; ~10 for SNIC]
   reduce_max: 1500, // the max size of object to be able to reduce
@@ -79,7 +79,9 @@ var depth = ee.Image(region_params.depth_composite).rename('depth')
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
 
-// "NOT REEF" CLEAN
+
+
+//"NOT REEF" CLEAN
 var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
 var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 // remove
@@ -88,13 +90,16 @@ depth_mask = depth_mask.where({
   value: ee.Image(0)
 });
 
+/*
 // clip and load other variables
 var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
+*/
+
 
 // add layers to the map
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
 Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
-
+Map.addLayer(not_reef_img, {min:0, max:1}, "Not reef mask", false)
 
 
 // 3. Segmentation and metrics calculation
@@ -197,7 +202,7 @@ all_data = all_data
 all_data = all_data.updateMask(depth_mask.selfMask().connectedPixelCount(vars.small_object, false).gte(vars.small_object))
 Map.addLayer(all_data, {}, "Model predictor data", false)
 // add noreefmask to viewer - check for slivers between polys
-Map.addLayer(not_reef_img, {}, "noReef_mask", false);
+//Map.addLayer(not_reef_img, {}, "noReef_mask", false);
 
 
 

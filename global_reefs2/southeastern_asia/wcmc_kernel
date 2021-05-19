@@ -1,0 +1,237 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    one = ee.Image("projects/coral_atlas/southeastern_asia/in_out/southeastern_asia_geo_clean1_1km"),
+    notReef_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[71.60342946217652, 12.65909936158879],
+           [71.68308034108277, 12.474125345239695],
+           [72.21866383717652, 12.433896045657525],
+           [72.04562916920777, 12.675177750692391],
+           [71.88907399342652, 12.675177750692391]]],
+         [[[72.71755096164087, 7.914742843027254],
+           [72.47310516085962, 7.264063722961609],
+           [73.53654615747737, 7.143550264651811],
+           [73.13365813937524, 7.720187402744904],
+           [73.11443206515649, 7.948746666513787]]],
+         [[[72.61774093367676, 4.713846678989372],
+           [72.70425826766113, 4.445541267884463],
+           [72.86905318953613, 4.50167465686995],
+           [72.7797892735205, 4.745324820875827]]],
+         [[[72.88046310200002, 2.000226206221777],
+           [73.06860397114065, 2.089433271265267],
+           [72.84887740864065, 2.1649122234602767]]],
+         [[[72.96822759144477, 4.536532520872901],
+           [73.05886479847602, 4.294181595870132],
+           [73.21541997425727, 4.343479687246037],
+           [73.1289026402729, 4.607716403032213],
+           [73.05062505238227, 4.6036098332757875]]]]),
+    center_map = /* color: #d63000 */ee.Geometry.Point([110.54123843930057, 11.203641832350737]),
+    region_extent = 
+    /* color: #d6ce3f */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[116.38606558463863, 24.209573647975855],
+          [105.04817495963863, 22.59644299595178],
+          [95.99544058463863, 7.365385406360969],
+          [105.31184683463863, -0.5243936157772531],
+          [114.10090933463863, 0.6181651949272102],
+          [118.84700308463863, 7.365385406360969],
+          [115.33137808463863, 9.191775121314864],
+          [110.32161245963863, 4.83119211083598],
+          [105.75129995963863, 6.230859367180478],
+          [110.84895620963863, 10.749860501427356],
+          [111.28840933463863, 16.47051682571067],
+          [117.61653433463863, 22.352797521719562]]]),
+    geo1km = ee.Image("projects/coral_atlas/southeastern_asia/in_out/southeastern_asia_geo_clean1_1km"),
+    mod_land = ee.ImageCollection("MODIS/006/MOD44W"),
+    ls8_landreef = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
+    dist500Land = ee.Image("projects/coral_atlas/southeastern_asia/in_out/sea_distFromLand500"),
+    dtl500 = ee.Image("projects/coral_atlas/southeastern_asia/in_out/sea_distFromLand500"),
+    wcmc500 = ee.Image("projects/coral_atlas/southeastern_asia/in_out/sea_wcmc500");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+///////////////////////////////
+// Global coral atlas project - Southeastern Asia
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the raw classification data (from *_classification script)
+// - Then applied some cleanup and object-based relational rules
+///////////////////////////////
+
+// Script to creae a buffer around wcmc in sea
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.southeastern_asia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+var image_data_scale = sensor_params.pixel;
+var asset_output = region_params.asset; // asset path
+
+var vars = {
+  
+  // analysis parameters
+  image_data_scale: sensor_params.pixel,
+  small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
+  small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
+  smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
+  dist_to_land_ORF: 500, //distance to land in meters to convert terrestrial reef flat to ORF
+  dist_to_land_RC: 250, //distance to land in meters to convert reef crest to TRF - not used for Indo
+  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
+  geo_depth_cutoff: 1100, //depth in centimetres
+  chagos_depth_cutoff: 1500, //depth cut off for southern chagos region only
+  shallowlag_depth_cutoff: 500, //depth in centimetres
+  benthic_depth_cutoff: 1000, //depth in centimetres
+  //wcmc: region_params.wcmc,
+  dist_to_WCMC: 500,
+  reproject_display: true,
+  
+  // export options
+  do_export: true, // export the results?
+ // geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
+// benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
+  asset_output: region_params.asset // asset path
+};
+
+var clean_map = ee.Image(region_params.geo_map_clean1).clip(region_extent);
+var geo_map = ee.Image(region_params.geo_map_clean1);
+var distToLand = ee.Image(region_params.distToLand).clip(region_extent);
+var distFromLand = distToLand.unmask(30000, false).clip(region_extent);
+var extent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent);
+//var WCMCmask = ee.Image().byte().paint(ee.FeatureCollection(wcmc, {zone: 1}), "zone").clip(region_extent);
+//var w500 = ee.Image(wcmc500).reduceToVectors();
+
+// the "WCMC" CLEAN
+
+// Clip wcmc to region
+var WCMC = ee.FeatureCollection(wcmc);
+
+// Create a buffer around the wcmc layer
+// Define function
+var bufferWCMC = function (feature) {
+  var wcmcbuffer = feature.buffer(500);
+  return ee.Feature(wcmcbuffer).copyProperties(feature);
+};
+
+// map the funstion over the feature collection
+var WCMCmask = WCMC.map(bufferWCMC); //// AND HERE IS THE MASK!!
+
+var WCMCbuffered = ee.Image().byte().paint(ee.FeatureCollection(WCMCmask, {zone: 1}), "zone").clip(region_extent);
+
+// Try uodating with a feature colection painted to an image
+//var reef = clean_map.updateMask(WCMCbuffered);
+//var reef = clean_map.mask(WCMCbuffered);
+  
+// Try uodating with an image
+var Five100 = ee.Image(wcmc500)
+var reef = clean_map.updateMask(wcmc500);
+//var reef = clean_map.mask(Five100);
+
+
+/* Following Didn't work
+// Reef classes in deep/turbid water - distance to land cutoffs and wcmc buffer
+   clean_map = clean_map.where({
+    test: WCMCbuffered.neq(1)
+            .and(distFromLand.gt(vars.dist_to_land_ORF)),
+    value: ee.Image(2)
+  });
+  */
+//var Land500 = distToLand.lte(vars.dist_to_land_ORF)
+
+//var Land500deep = Land500.unmask(30000, false).clip(region_extent);
+/*
+  // Reef classes in deep/turbid water - distance to land cutoffs and wcmc buffer //DIDNT WORK
+   clean_map = clean_map.where({
+    test: WCMCbuffered.eq(1)
+  //      Land500deep.eq(1),
+      .or(distFromLand.lte(vars.dist_to_land_ORF)),
+    value: geo_map
+  });
+ 
+  
+      // deep outside of specified distance from land - THIS HAS ESSENTIALLY WORKED
+    clean_map = clean_map.where({
+      test: distToLand.unmask(100000, false).gt(vars.dist_to_land_ORF)
+          .and(clean_map.eq(16).or(clean_map.eq(15).or(clean_map.eq(14).or(clean_map.eq(13).or(clean_map.eq(12).or(clean_map.eq(11).or(clean_map.eq(21).or(clean_map.eq(22).or(clean_map.eq(23).or(clean_map.eq(24).or(clean_map.eq(25).or(clean_map.eq(26))))))))))))),
+      value: ee.Image(2)
+    });
+  
+   */
+
+  
+  //var reefs = clean_map.clipToCollection(WCMCmask); 
+    /*
+        // deep outside of specified distance from wcmc 
+    clean_map = clean_map.where({
+      test: aoi.lt(1)
+            .and(clean_map.eq(16).or(clean_map.eq(15).or(clean_map.eq(14).or(clean_map.eq(13).or(clean_map.eq(12).or(clean_map.eq(11).or(clean_map.eq(21).or(clean_map.eq(22).or(clean_map.eq(23).or(clean_map.eq(24).or(clean_map.eq(25).or(clean_map.eq(26))))))))))))),
+      value: ee.Image(2)
+    });
+  
+  
+  //Trial A
+  var aoi = WCMCbuffered;
+  var reefs = clean_map.clip(aoi);
+  // Trial B
+
+   */
+  
+  Map.addLayer(geo1km, map_palettes.geo, 'Geo clean 1, 1km', false);
+//Map.addLayer(reefs, map_palettes.geo, 'clean map', false);
+ // Map.addLayer(distfromLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+ Map.addLayer(dist500Land, {}, 'D From Land ' , false);
+ // Map.addLayer(Land500deep, {}, 'D From Land masked ' , false);
+  Map.addLayer(distFromLand, {}, 'D From Land ' , false);
+  //Map.addLayer(land_mask, {}, 'land mask', false);
+  Map.addLayer(WCMCmask, {}, 'wcmc mask', false);
+  Map.addLayer(WCMCbuffered, {}, 'wcmc buffered', false);
+  //Map.addLayer(WCMC, {}, 'WCMC solid', false);
+    Map.addLayer(wcmc500, {}, 'WCMC solid', false);
+  
+//print (region_params.image[0])
+var low_tide_image_dove = ee.Image(region_params.image);
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+
+Map.addLayer(one, map_palettes.geo, 'Geo clean 1 - 1km', false);
+//Map.addLayer(WCMC,{color:'#00FF00'}, "WCMCmask", false);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+/*
+// Export WCMC/Land buffers
+// Export
+    Export.image.toAsset({
+      image: distFromLand,
+      description: 'ImageToAsset', 
+      assetId: asset_output + 'in_out/sea_distFromLand500', // <------------ change asset name
+      region: region_extent, // <------------ change extent
+      scale: image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });
+*/
+// Export 
+Export.image.toAsset({
+      //image: clean_map.set(vars),
+      image: reef, 
+      description: 'reef',
+      assetId: vars.asset_output + 'in_out/sea_geo_clean1_maskRB2upmask',
+      region: region_extent,
+      scale: vars.image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });
+    

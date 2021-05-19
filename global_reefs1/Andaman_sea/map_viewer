@@ -1,19 +1,17 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89ff","3a52ff","0007ff","000258"]},
-    benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic"),
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo"),
+    geo1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean1"),
+    geo2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean2"),
+    geo3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
-    southasia_dove = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
-    geo_clean3 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
-    ben_clean2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2"),
-    no_waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3nowaves"),
-    g03 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves3b"),
-    g04 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves4b"),
-    g05 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3waves5b"),
-    waves = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_waves"),
-    centre_map = /* color: #98ff00 */ee.Geometry.Point([95.29979922931523, 10.069201603105322]);
+    centre_map = /* color: #98ff00 */ee.Geometry.Point([95.29979922931523, 10.069201603105322]),
+    ben = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic"),
+    ben1 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean1"),
+    ben2 = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_clean2");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // little viewing script for looking at reefs and classifications for each region. 
 //From this region Andaman Sea onwards the map_viewer script is going to be used from the very beginning
 //in the workflow 
@@ -29,27 +27,17 @@ Map.centerObject(centre_map, 7)
 
 // add some background data
 Map.addLayer(pixels, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Dove low tide mosaic", false)
-Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
+//Map.addLayer(southasia_dove, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "south asia - Dove low tide mosaic", false)
 //Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
 
 // Andaman + Myanmar
 Map.addLayer(geo, map_palettes.geo, "Andaman + Myanmar Geo - RAW", false)
-
-Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
-
-//Map.addLayer(geo_clean1, map_palettes.geo, "geo_clean_1", false)
-//Map.addLayer(geo_clean2, map_palettes.geo, "geo_clean_2", false)
-Map.addLayer(geo_clean3, map_palettes.geo, "geo_EXPORTED", false)
-Map.addLayer(no_waves, map_palettes.geo, "geo_manual + no waves", false)
-Map.addLayer(g03, map_palettes.geo, "geo_manual + waves 0.3", false)
-Map.addLayer(g04, map_palettes.geo, "geo_manual + waves 0.4", false)
-Map.addLayer(g05, map_palettes.geo, "geo_manual + waves 0.5", false)
-//Map.addLayer(ben_clean1, map_palettes.benthic, "ben_clean_1", false)
-Map.addLayer(ben_clean2, map_palettes.benthic, "ben_EXPORTED", false)
-
-// wave data
-Map.addLayer(waves, {color:'#00FFFF'}, "waves", false)
-
+Map.addLayer(geo1, map_palettes.geo, "geo_clean_1", false)
+Map.addLayer(geo2, map_palettes.geo, "geo_clean_2", false)
+Map.addLayer(geo3, map_palettes.geo, "geo_clean 3 EXPORTED", false)
+Map.addLayer(ben.updateMask(geo.gt(2)), map_palettes.benthic, "Andaman + Myanmar Benthic - RAW", false)
+Map.addLayer(ben1, map_palettes.benthic, "ben_clean_1", false)
+Map.addLayer(ben2, map_palettes.benthic, "ben_clean 2 EXPORTED", false)
 
 // add training data / sample point distributions
 

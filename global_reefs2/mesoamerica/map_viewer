@@ -1,0 +1,222 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered"),
+    centre_map = /* color: #d63000 */ee.Geometry.Point([-83.24687500000003, 15.225569400436166]),
+    region_extent = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-98.23707829442219, 21.710758260538704],
+          [-97.79762516942219, 20.768686710404456],
+          [-96.61110173192219, 18.617344300362586],
+          [-94.89723454442219, 17.53116615752296],
+          [-91.95289860692219, 17.866088196502286],
+          [-90.89821110692219, 18.075095258498997],
+          [-90.15114079442219, 19.44819368427586],
+          [-89.75563298192219, 20.604238585947947],
+          [-87.77809391942219, 21.056039988003523],
+          [-88.26149235692219, 20.027278908066048],
+          [-88.70094548192219, 19.116353305904592],
+          [-88.87672673192219, 18.492361298392265],
+          [-89.49196110692219, 16.143178296145617],
+          [-89.27223454442219, 15.381914693336922],
+          [-85.09742985692219, 15.381914693336922],
+          [-84.04274235692219, 14.53279625376923],
+          [-84.30641423192219, 12.867757614804463],
+          [-84.26246891942219, 10.673821632533592],
+          [-82.54860173192219, 8.420469486436572],
+          [-81.09840641942219, 8.246544345231495],
+          [-79.78004704442219, 8.941769934232369],
+          [-78.72535954442219, 8.941769934232369],
+          [-77.31910954442219, 7.375801848254606],
+          [-76.61598454442219, 7.375801848254606],
+          [-76.44020329442219, 7.767860215981506],
+          [-76.70387516942219, 9.028582025450318],
+          [-77.62672673192219, 9.808927326467089],
+          [-78.94508610692219, 10.198421284836678],
+          [-80.96657048192219, 10.284911501873095],
+          [-81.05446110692219, 9.592342638354397],
+          [-82.85621891942219, 11.06223484895104],
+          [-79.82399235692219, 12.438978523618095],
+          [-78.15407048192219, 15.466639734956974],
+          [-78.11012516942219, 16.354128056350778],
+          [-83.47145329442219, 17.866088196502286],
+          [-84.48219548192219, 17.866088196502286],
+          [-84.74586735692219, 17.11164351022532],
+          [-85.80055485692219, 17.11164351022532],
+          [-87.07496891942219, 16.817412489407793],
+          [-86.94313298192219, 17.48925712506888],
+          [-86.85524235692219, 18.15862863169901],
+          [-86.76735173192219, 19.282357542924824],
+          [-87.03102360692219, 19.696630055179753],
+          [-86.15211735692219, 20.233582584206275],
+          [-86.06422673192219, 21.955516940028563],
+          [-86.32789860692219, 22.60613959298944],
+          [-88.26149235692219, 22.849337404376055],
+          [-89.27223454442219, 24.01860857866657],
+          [-90.37086735692219, 23.49573245838375],
+          [-90.63453923192219, 22.849337404376055],
+          [-91.46950016942219, 23.13251915365963],
+          [-93.18336735692219, 21.342839511798598],
+          [-92.78785954442219, 20.027278908066048],
+          [-93.27125798192219, 19.61386051229782],
+          [-94.32594548192219, 19.32383238491417],
+          [-95.07301579442219, 19.531048338287246],
+          [-97.18239079442219, 22.199854850579047],
+          [-97.97340641942219, 22.240536666359894]]]),
+    mid_mask = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.MultiPoint();
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
+// in the workflow 
+
+//Viewer for Philippines
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.mesoamerica;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+
+// Choose which layers will be shown in the map viewer
+var vars = {
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+};
+
+// choose where to centre the map (link this dynamically to map app?)
+Map.centerObject(centre_map, 10);
+
+// Add low-tide base map to viewer
+// var low_tide_image = ee.Image(region_params.pixels);
+// Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
+
+//print (region_params.image[0])
+var low_tide_image_dove = ee.Image(region_params.image);
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+
+
+
+// Load the raw classifications
+if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map);
+  }
+
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
+  } else {
+      var benthic_map_raw = ee.Image(region_params.benthic_map);
+  }
+
+  // Add the raw region classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+}
+
+// Add geo clean stage 1 to the viewer
+if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
+  }
+
+// Add geo clean stage 2 to the viewer
+if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
+}
+
+// Add geo clean stage 3 to the viewer
+if (vars.geo_cleanup_stage == 3) {
+  var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
+}
+
+// Add benthic clean stage 1 to the viewer
+if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
+  }
+
+// Add geo clean stage 2 to the viewer
+if (vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
+}
+
+// Geo Training Data - Needs more work + add flag to show
+var geo_train = ee.FeatureCollection(region_params.geo_train_library);
+
+var geo_buff = function(feature) {
+ return feature.buffer(20);   // substitute in your value of Z herere
+};
+
+var geo_train_buff = geo_train.map(geo_buff);
+
+// Create an empty image into which to paint the features, cast to byte.
+var empty = ee.Image().byte();
+
+// Paint the interior of the polygons with different colors.
+var geo_fill = empty.paint({
+  featureCollection: geo_train_buff,
+  color: 'class_num',
+});
+
+//Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
+var wcmc=wcmc.filterBounds(region_extent);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '14px'}
+});
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+// generate the legend
+
+
+
+////////// MASK EXPORTS //////////
+
+
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent),
+  description: "region_extent_export",
+  assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
+})*/
+
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(notReef_mask),
+  description: "not_reef_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
+})*/
+
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(mid_mask),
+  description: "mid_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
+})*/
+

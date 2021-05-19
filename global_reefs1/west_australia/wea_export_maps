@@ -31,8 +31,8 @@ var geo = geo.where(geo.lte(2), 0).selfMask();
 var benthic = benthic.updateMask(geo.gt(0)).selfMask();
 
 // make reef/non-reef layer 
-var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum());
-var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum());
+var reef_top = geo.eq([11,13,14,15,16,26]).reduce(ee.Reducer.sum());
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,26]).reduce(ee.Reducer.sum());
 var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum());
 
 // check before export 

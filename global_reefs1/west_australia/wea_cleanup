@@ -5344,7 +5344,7 @@ var vars = {
   reproject_display: false,
   
   // export options
-  do_export: true, // export the results?
+  do_export: false, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -5746,8 +5746,8 @@ var Brs_mask = ee.Image().byte().paint(ee.Feature(brsdl_mask, {zone:1}),"zone").
   }
   
   // Add data + the manual layer to the map
-  var lowtide_image = ee.ImageCollection(region_params.image);
-  Map.addLayer(lowtide_image, imageVisParam2, sensor_params.sname + ' low tide', false);
+  var lowtide_image = ee.ImageCollection(region_params.pixels);
+  Map.addLayer(lowtide_image, {}, sensor_params.sname + ' low tide', false);
   var notreef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry();
   Map.addLayer(notreef_mask, {}, "noReefmask", false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
@@ -5897,11 +5897,24 @@ if (vars.manual_clean && !vars.geomorphic) {
   })
   
   
+  // code added by Mitch to regain missing data and to cleAN A ;LITTLE BIT benthic 2
+  
+  var ben_mask = man_benthic.gt(0),
+  
+  
+  man_benthic2 = man_benthic.focal_mode(1, 'plus')
+                    .updateMask(ben_mask)
+                    .selfMask()                  
+                    
+                    
+  var man_benthic10 = man_benthic.focal_mode(4, 'diamond')
+                    .updateMask(ben_mask)
+                    .selfMask()                  
   
      
   // Add the manual layer to the map
 
-  var dove_image = ee.Image(region_params.image);
+  var dove_image = ee.Image(region_params.pixels);
   Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
   
   var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
@@ -5914,7 +5927,8 @@ if (vars.manual_clean && !vars.geomorphic) {
   Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
   Map.addLayer(benthic_clean1.updateMask(geo_map.gt(0)), map_palettes.benthic, 'Benthic clean stage 1', false);
   Map.addLayer(man_benthic.updateMask(man_benthic.gt(0)), map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
-  
+  Map.addLayer(man_benthic2.updateMask(man_benthic.gt(0)), map_palettes.benthic, 'Benthic clean stage 2 - MANUAL2_radius', true);
+  Map.addLayer(man_benthic10.updateMask(man_benthic.gt(0)), map_palettes.benthic, 'Benthic clean stage 2 - MANUAL10_radius', true);
   // Export
   var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
   Export.image.toAsset({

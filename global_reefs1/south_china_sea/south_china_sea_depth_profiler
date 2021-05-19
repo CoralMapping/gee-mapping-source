@@ -2,6 +2,7 @@
 var geometry = /* color: #98ff00 */ee.Geometry.Point([115.0180418444777, 19.799562652802845]),
     imageVisParam8 = {"opacity":1,"bands":["b3","b2","b1"],"min":117.32,"max":1812.68,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
 
@@ -42,6 +43,7 @@ var vars = {
     Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
     //Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
+    GlobalMask: ee.Image(region_params.global_reef_mask)
 };
 
 //Map.addLayer(vars.Depth_composite)
@@ -100,7 +102,7 @@ var DepthCompos_renamed = depthComposite.select(
   ['constant'],
   ['b1_s']);  
   
-
+var GlobalMask=ee.Image(vars.GlobalMask)
 // 3. Get all the depth layers vizualized in the map panel to extract the profiles from 
 
 var imageVisParam1 = {"opacity":1,"bands":["b1_b"],"min":-6.25,"palette":["54278f","6a51a3","807dba","9e9ac8","bcbddc","dadaeb","f2f0f7"]};
@@ -121,6 +123,8 @@ var imageVisParam7 = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.332999
 var depthComposite1=ui.Map.Layer(DepthCompos_renamed, imageVisParam7, 'DepthComposite', false)
 
 
+var imageVisParam10 = {"opacity":1,"bands":["reef_probs"],"min":1,"max":3,"gamma":1}; 
+var globalmaskCombined= ui.Map.Layer(GlobalMask,imageVisParam10,'GlobalMaskCombinedCNN')
 //center the map to the region
 var mapPanel=ui.Map().centerObject(geometry, 6)
 
@@ -133,7 +137,7 @@ layers.add(high_depthDove)
 layers.add(Depth_S2_asu)//here depth from ASU
 layers.add(Depth_L8_asu)
 layers.add(depthComposite1)
-
+layers.add(globalmaskCombined)
 // 4. Create the inspector panel (the one that shows the profile graph)
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
 

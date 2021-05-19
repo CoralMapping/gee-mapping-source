@@ -1,0 +1,74 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var map_centre = /* color: #d63000 */ee.Geometry.Point([110.54123843930057, 11.203641832350737]),
+    region_extent = 
+    /* color: #d6ce3f */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[116.38606558463863, 24.20957364797585],
+          [105.04817495963863, 22.59644299595178],
+          [95.99544058463863, 7.365385406360966],
+          [105.31184683463863, -0.5243936157772513],
+          [114.10090933463863, 0.6181651949272108],
+          [118.84700308463863, 7.365385406360966],
+          [115.33137808463863, 9.191775121314864],
+          [110.32161245963863, 4.831192110835978],
+          [105.75129995963863, 6.230859367180478],
+          [110.84895620963863, 10.749860501427355],
+          [111.28840933463862, 16.47051682571067],
+          [117.61653433463863, 22.35279752171956]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//////////////////////////////////////////////
+// Script for exporting vectors to assets
+// Authour: Eva Kovacs (kovacsevam2@gmail.com)
+// Description:
+// - Exporting vectorsand masks to assets
+// - Currently for single layer, but to be updated for export as multiband raster
+//////////////////////////////////////////////
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+
+
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.southeastern_asia;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+var image_data_scale = sensor_params.pixel;
+var asset_output = region_params.asset; // asset path
+
+//Define images to combine
+var three = ee.Image(region_params.geo_map_clean3final); 
+var absent = ee.Image(region_params.geo_map_mr2cl3);
+
+// Creat a merged image using a list
+// Create a collection by giving a list to the constructor.
+var reefs = ee.ImageCollection([absent, three]);
+
+//var mosaic = clean5.mosaic();
+//Map.addLayer(mosaic, map_palettes.geo, 'geo mosaic',false);
+
+var composite = reefs.max();
+Map.addLayer(composite, map_palettes.geo, 'geo mosaic',false);
+
+
+var regionextent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent);
+
+
+// Export
+    Export.image.toAsset({
+      image: composite,
+      description: 'sea_geo_FINAL', 
+      assetId: asset_output + 'in_out/southeastern_asia_geo_clean3_FINAL', // <------------ change asset name
+      region: regionextent, // <------------ change extent
+      scale: image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });

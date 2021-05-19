@@ -1,0 +1,104 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":17.26,"max":845.74,"gamma":1},
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-65.19745961752741, 32.621767655530206],
+          [-65.19745961752741, 32.029938176613044],
+          [-64.27186147299616, 32.029938176613044],
+          [-64.27186147299616, 32.621767655530206]]], null, false),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":205.36,"max":3294.64,"gamma":1},
+    extent_mask = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-64.77448598471491, 32.552341696379045],
+          [-64.91456166830866, 32.49792048752803],
+          [-64.99421254721491, 32.41216926637982],
+          [-65.08072988119929, 32.307767330788145],
+          [-65.03541127768366, 32.20556898402366],
+          [-65.00245229330866, 32.15442669262387],
+          [-64.81705800619929, 32.14279943935753],
+          [-64.72092763510554, 32.20208292221254],
+          [-64.63029042807429, 32.23577592285488],
+          [-64.55613271323054, 32.26132779916361],
+          [-64.47785512533991, 32.38550023967087],
+          [-64.46961537924616, 32.43535331989054],
+          [-64.52729360190241, 32.489812381393754],
+          [-64.56162587729304, 32.53729231955918],
+          [-64.60419789877741, 32.56623118956105],
+          [-64.68384877768366, 32.5697032269077]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+///////////////////////////////
+// Coral atlas mapping project - Bermuda
+// Contact: mitchell.lyons@gmail.com
+//coordinator: Rodney Borrego
+// Description:
+// - Primarily for use in generating exports for wave modelling
+///////////////////////////////
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+
+// #############################
+// load analysis params module
+var region_params = param_module.bermuda        //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+// choose an appropriate scale
+var export_scale = ee.Number(100)
+// #############################
+
+//var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry().bounds()
+
+// display it
+
+var Dove_sr = ee.Image(region_params.image)
+Map.addLayer(Dove_sr, imageVisParam3, "Dove se caribbean")
+//var georaw=ee.Image(region_params.geo_map)
+//var geo1= ee.Image(region_params.geo_map_clean1)
+//Map.addLayer(geo1,  map_palettes.geo, "geo1")
+//var geo2mid= ee.Image(region_params.geo_map_clean2_mid)
+//Map.addLayer(geo2mid.updateMask(geo1.gt(2)),  map_palettes.geo, "geo2_mid")
+//var geo2= ee.Image(region_params.geo_map_clean2)
+//Map.addLayer(geo2.updateMask(geo1.gt(2)),  map_palettes.geo, "geo2")
+//Map.addLayer(reef_mask, {min:1, max:3}, "Global reef mask", true)
+//Map.addLayer
+
+// exports
+//Map.addLayer(refined_mask, {}, "export_geom", true)
+//Map.addLayer(se_caribbean_extent, {}, "se_caribbean_extent", true)//its the same as the refined mask
+//show wcmc
+//UnEp layer
+var extent =ee.FeatureCollection(region_params.extent_mask).geometry()
+var unepClipped= wcmc.filterBounds(extent)
+Map.addLayer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
+//Map.addLayer(table, {color:'#FFFF33'}, 'noreefMask', false)
+
+/*
+// drive export
+Export.image.toDrive({
+  image: reef_mask, 
+  description: 'reef_mask_export_' + region_params.sname,
+  folder: 'wcmc_rf/',
+  fileNamePrefix: 'reef_mask_' + region_params.sname,
+  region: region_extent,
+  scale: export_scale,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+*/
+
+Export.table.toAsset({
+ collection: ee.FeatureCollection(extent_mask),
+ //fileFormat: 'SHP'
+})
+
+

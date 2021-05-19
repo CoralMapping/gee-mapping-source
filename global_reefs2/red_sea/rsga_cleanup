@@ -1,8 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1};
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
+    geometry = /* color: #d63000 */ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
-// Global coral atlas project - South China Sea
+// Global coral atlas project - Red Sea and Gulf of Aden
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Chris Roelfsema
 // Description:
@@ -26,7 +27,7 @@ var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.south_china_sea;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.red_sea;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -37,7 +38,7 @@ var region_params = param_module.south_china_sea;  //<------------ THIS IS WHERE
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -46,14 +47,16 @@ var vars = {
   smooth_radius: ee.Number(1), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1250, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF
-  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.6, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1250, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
-  benthic_depth_cutoff: 1000, //depth in centimetres
+  benthic_depth_cutoff: 800, //depth in centimetres
+  turbid1_depth_cutoff: 500,//depth in centimeters to be combined with depth5m_mask Code introduced CR
+  turbid2_depth_cutoff: 800,//depth in centimeters to be combined with depth8m_mask Code introduced CR
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 2, // set to 1, 2 or 3
+  cleanup_stage: 3, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   /*
@@ -80,7 +83,7 @@ var vars = {
   reproject_display: true,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
   asset_output: region_params.asset // asset path
@@ -150,7 +153,7 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.pixels).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');// replace pixel with segments
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
@@ -164,16 +167,70 @@ if (vars.manual_clean && vars.geomorphic) {
     test: midmask.eq(1),
     value: ee.Image(0)
   });
-
+ //*******************************************************************************************************************************START
+ //************************************* START Import AND APPLY 5m and 8 m mask Chris RED SEA ************************************START
+ //*******************************************************************************************************************************START
+ // First part is masking out areas deeper then 8 m followed by 5 m
+ // Second part clean up small groups of pixels in deeper darker classes such as Reef Slope, Plateau, Deep Lagoon
+ // 5m mask is for area that are very turbid, but not turbid enough to completely neglect them and you can see edges of reef but between reefs its to turbid
+ // 8m mask is for area that are not turbid but clear enough to map it to certain extend and you can see edges of reef but between reefs its to turbid
+ // the mask are created in the viewer, and treshold are set in turbid1_depth_cutoff for 5 m and turbid1_depth_cutoff for 8 m.
+ //*******************************************************************************************************************************START
+ // import the depth8m_mask from asset ****only use ee.FC if depth8m_mask created in map viewer****
   
-  //************************************* START Import AND APPLY Lagoons mask Chris SCS************************************START
+  var turbiddeep_mask = ee.FeatureCollection(region_params.depth8m_mask).geometry();
+  var turbiddeepmask = ee.Image().byte().paint(ee.Feature(turbiddeep_mask.dissolve(),{zone: 1}), "zone").clip(turbiddeep_mask.dissolve());
+  
+  // the "turdbid MASK" applied to areas deeper then 8 m
+  man_geo = man_geo.where({
+    test: turbiddeepmask.eq(1)
+                     //.and (turbidmask.eq(1))
+                          .and(depth.gt(vars.turbid2_depth_cutoff)),
+    value: ee.Image(0)
+  });
+  
+   // import the depth5m_mask from asset ****only use ee.FC if depth5m_mask created in map viewer****
+  
+  var turbid_mask = ee.FeatureCollection(region_params.depth5m_mask).geometry();
+  var turbidmask = ee.Image().byte().paint(ee.Feature(turbid_mask.dissolve(),{zone: 1}), "zone").clip(turbid_mask.dissolve());
+  
+  // the "turdbid MASK" applied to areas deeper then 5 m
+  man_geo = man_geo.where({
+    test: turbidmask.eq(1)
+                     .and(depth.gt(vars.turbid1_depth_cutoff)),
+    value: ee.Image(0)
+  });
+
+  //************************************* clean up small groups of  pixesl in deep water Chris RSAG ************************************
+  
+var man_geo = man_geo.where({
+   test:man_geo.eq(22)// Reef Slope pixels
+    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are RS and neighbouring each other, with groups smaller then 25
+   value: ee.Image(0) // change those selected no class
+  })
+   var man_geo = man_geo.where({
+    test:man_geo.eq(12)// Deep Lagoon pixels
+    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are Deep Lagoon and neighbouring each other, with groups smaller then 25
+    value: ee.Image(0) // change those selected no class
+  })
+     var man_geo = man_geo.where({
+    test:man_geo.eq(23)// Plateau pixels
+    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are Plateau and neighbouring each other, with groups smaller then 25
+    value: ee.Image(0) // change those selected no class
+  })
+ //************************************* END flean up small groups of pixesl in deep water Chris RSAG ************************************
+ //************************************* END Import AND APPLY 5m and 8 m mask Chris RSAG************************************START
+ //*************************************************************************************************************************START 
+ 
+ 
+ /* //************************************* START Import AND APPLY Lagoons mask Chris SCS************************************START
   // import the lagoon mask from asset ****only use ee.FC if  lagoons mask created in map viewer****
   var lagoons_mask = ee.FeatureCollection(region_params.lagoons_mask).geometry();
   var lagoonsmask = ee.Image().byte().paint(ee.Feature(lagoons_mask.dissolve(),{zone: 1}), "zone").clip(lagoons_mask.dissolve());
 
   
   // RC within Lagoon ORF
-man_geo = man_geo.where({
+man_geo = man_geo.where(
 test: lagoonsmask.eq(1)
              .and(man_geo.eq(15)),
   value: ee.Image(14)
@@ -184,9 +241,9 @@ test: lagoonsmask.eq(1)
                     .and(man_geo.eq(21).or(man_geo.eq(22))),
     value: ee.Image(24)
  });    
-  //************************************* END IMPORT AND APPLY Lagoons mask Chris SCS************************************END
+  //************************************* END IMPORT AND APPLY Lagoons mask Chris SCS************************************END*/
   
-  //*********************START CREATING and APPLYING REEF OUTINE BUFFER FROM  reef (lagoon) mask Chris SCS**************START
+ /* //*********************START CREATING and APPLYING REEF OUTINE BUFFER FROM  reef (lagoon) mask Chris SCS**************START
   // in map viewer manual digitised reef top areas with lagoon in it. Tried to use CNN layer but to many artefacts and manual took 3 hr
   // creatimg a buffer around lagoon_mask
 
@@ -206,9 +263,9 @@ test: lagoonsmask.eq(1)
                     .and(man_geo.eq(13)),
     value: ee.Image(14)
   });   
-  //********************* END CREATING and APPLYING REEF OUTINE BUFFER FROM  Lagoons mask Chris SCS*****************END
+  //********************* END CREATING and APPLYING REEF OUTINE BUFFER FROM  Lagoons mask Chris SCS*****************END*/
   
-  //************************************* START Import AND APPLY Back Reef Slope to Deep Lagoon mask Chris SCS************************************START
+ /* //************************************* START Import AND APPLY Back Reef Slope to Deep Lagoon mask Chris SCS************************************START
   // import the Back Reef Slope to Deep Lagoon mask from asset ****only use ee.FC if  Back Reef Slope mask created in map viewer****
   // This was created for lagoons between 5 and 15 m deep which were completely filled in for that depth range with Back Reef Slope, hence the assumtion was made its deep lagoon
   var BRS_to_DL_mask = ee.FeatureCollection(region_params.BRS_to_DL_mask).geometry();
@@ -222,7 +279,24 @@ test: BRStoDL_mask.eq(1)
   value: ee.Image(12)
 });
 
-  //************************************* END Import AND APPLY Back Reef Slope to Deep Lagoon mask Chris SCS************************************END 
+  //************************************* END Import AND APPLY Back Reef Slope to Deep Lagoon mask Chris SCS************************************END */
+  
+ /*   //************************************* START Import AND APPLY Outer Reef Flat Between Reef Slope and Crest to Reef Slope mask Chris SCS************************************START
+  // import the BOuter Reef Flat Between Reef Slope and Crest to Reef Slope  mask from asset ****only use ee.FC if  ORF_RC mask created in map viewer****
+  // This was created for lagoons between 5 and 15 m deep which were completely filled in for that depth range with Back Reef Slope, hence the assumtion was made its deep lagoon
+  var ORF_to_RS_mask = ee.FeatureCollection(region_params.ORF_to_RS_mask).geometry();
+  var ORFtoRS_mask = ee.Image().byte().paint(ee.Feature(ORF_to_RS_mask.dissolve(),{zone: 1}), "zone").clip(ORF_to_RS_mask.dissolve());
+
+  
+  // Outer Reef Flat to Reef Slope if located between Crest and Reef Slope for larger areas within mask only
+man_geo = man_geo.where({
+test: ORFtoRS_mask.eq(1)
+             .and(man_geo.eq(13).or(man_geo.eq(14)).or(man_geo.eq(21))),
+  value: ee.Image(22)
+});
+
+  //************************************* END mport AND APPLY Outer Reef Flat Between Reef Slope and Crest to Reef Slope mask Chris SCS************************************END */
+  
   
   
   
@@ -263,8 +337,8 @@ test: BRStoDL_mask.eq(1)
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  })
-  */
+  })*/
+  
   
   
   
@@ -308,31 +382,22 @@ test: BRStoDL_mask.eq(1)
   
   // Add data + the manual layer to the map
   var lowtide_image = ee.Image(region_params.image);
-  Map.addLayer(lowtide_image, region_params.visParams, sensor_params.sname + ' low tide', false);
+  Map.addLayer(lowtide_image, {bands: ['b3','b2','b1'], min:0, max:2000, gamma:1.5}, sensor_params.sname + ' low tide', false);
   var geo_clean1 = ee.Image(region_params.geo_map_clean1);
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
-Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);// CR added
-Map.addLayer(lagoons_mask, {color: 'blue'}, "lagoons mask import", true, 0.4);// CR added
-//   Map.addLayer(reef_mask, {color: 'green'}, "reef mask import", true, 0.4);// CR added
-Map.addLayer(reef_band_mask, {}, "band(buffer) around lagoon");// CR added
- // Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+//  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
+Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", false, 0.4);// CR added
+/*Map.addLayer(lagoons_mask, {color: 'blue'}, "lagoons mask import", true, 0.4);// CR added*/
+Map.addLayer(turbiddeepmask, {color: 'green'}, "turbiddeep import", false, 0.4);// CR added
+/*Map.addLayer(reef_band_mask, {}, "band(buffer) around lagoon");// CR added*/
+/*Map.addLayer(ORFtoRS_mask, {}, "ORF_IRF_RCToRS");// CR added*/
+ Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
   // Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
   //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
 
-  // display distance to land mask for assessing cut-off distances
-  var distToLand = ee.Image(region_params.distToLand);
-    
-  //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
-  Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
-  
-  // display distance to water mask
-  var distToWater = ee.Image(region_params.distToWater);
-    
-  Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
   
   
   // Export
@@ -381,10 +446,10 @@ if (vars.manual_clean && !vars.geomorphic) {
     value: ee.Image(12)
   });
   
-  // Rubble on Outer reef flat and Reef crest -> rock 
+  // Rubble on Reef crest -> rock 
   man_benthic = man_benthic.where({
     test: man_benthic.eq(12)
-                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+                     .and(geo_map.eq(15)), //(geo_map.eq(14).or
     value: ee.Image(13)
   });
      // Coral/Algae on Deep Lagoon -> Sand
@@ -393,18 +458,28 @@ if (vars.manual_clean && !vars.geomorphic) {
                      .and(geo_map.eq(12)),
     value: ee.Image(11)
   });
-  // Seagrass on Reef Crest or Outer Reef Flat or reef slope or sheltered slope change to coral/algae or rock -> Coral/Algae
+  // Seagrass on Reef Crest or Outer Reef Flat or reef slope or sheltered slope change to coral/algae or rock -> coral algae
+  // Seagrass in generaly does not grow on hard substrate areas.
   
   man_benthic = man_benthic.where({
     test: man_benthic.eq(14)
-                     .and(geo_map.eq(14).or(geo_map.eq(15)).or(geo_map.eq(21)).or(geo_map.eq(22))),
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
     value: ee.Image(15)
   });  
-  // Sand on Reef crest -> Coral/Algae CR ADDED
+   // Seagrass on reef slope or sheltered slope change to rock -> rock
+  // Seagrass in generaly does not grow on hard substrate areas.
+  
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(14)
+                     .and(geo_map.eq(21).or(geo_map.eq(22))),
+    value: ee.Image(13)
+  }); 
+  // Sand on Reef crest ->  ROCK
+  // Sand in generally cannot stay in high energy zone so has to be hard substrate posisble Rock
   man_benthic = man_benthic.where({
     test: man_benthic.eq(11)
                      .and(geo_map.eq(15)),
-    value: ee.Image(15)
+    value: ee.Image(13)
   });  
   // Sand on Reef slope or sheltered slope -> Rubble CR ADDED
   man_benthic = man_benthic.where({
@@ -554,7 +629,7 @@ if (!vars.manual_clean) {
       test: depth.gt(vars.geo_depth_cutoff),
       value: ee.Image(2)
     });
-    
+   
     // make a smooth map with masked area as a value - *** Change to ee.kernal*** see reef mask in clean 3
     var smooth_map = geo_map
                         .focal_mode({
@@ -574,12 +649,12 @@ if (!vars.manual_clean) {
     Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
     Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
 
-    // // reef crest close to land -> TRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
-    // clean_map = clean_map.where({
-    //   test: distToLand.lte(vars.dist_to_land_RC)
-    //                 .and(clean_map.eq(15)),
-    //   value: ee.Image(16)
-    // });
+   // reef crest close to land -> TRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
+    clean_map = clean_map.where({
+    test: distToLand.lte(vars.dist_to_land_RC)
+                     .and(clean_map.eq(15)),
+       value: ee.Image(14)
+     });
     
     // TRF outside of specified distance from land -> ORF
     clean_map = clean_map.where({
@@ -590,7 +665,7 @@ if (!vars.manual_clean) {
   }
   
   if (!vars.geomorphic && vars.cleanup_stage == 1) {
-    
+   // TRF
     // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
     var smooth_map = benthic_map
                         .focal_mode({

@@ -1,10 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var centre_map = /* color: #d63000 */ee.Geometry.Point([84.91814369156045, -57.263386209890825]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    geometry = 
-    /* color: #98ff00 */
-    /* shown: false */
-    ee.Geometry.Polygon(
+    geometry = /* color: #98ff00 */ee.Geometry.Polygon(
         [[[142.31072181656043, -13.468312738204446],
           [144.15642494156043, -19.034745474100994],
           [152.59392494156043, -27.50207557152852],
@@ -12,6 +9,7 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([84.91814369156045, -57.2
           [158.30681556656043, -16.186866449829804],
           [144.50798744156043, -10.372894054872898]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // Viewing script for looking at reefs and classifications for each region. 
 //region: coral sea viewer
 //region coordinator: Rodney Borrego (rodbio2008@gmail.com)
@@ -93,13 +91,13 @@ var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
 var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 
 
-//var geo1= ui.Map.Layer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
-//var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
+var geo1= ui.Map.Layer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
+var geo2=ui.Map.Layer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 //var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false); to eldan
-var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic map', false);
-//var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
+var geo3 = ui.Map.Layer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic map - stage3_final', false);
+var benthic1= ui.Map.Layer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 //var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
-var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic map', false); //for app tp Eldan
+var benthic2= ui.Map.Layer (benthic_clean2, map_palettes.benthic, 'Benthic map -stage2_final', false); //for app tp Eldan
 //load depth composite used to slice geo raw map
 var Comp_depth=ee.Image(vars.Depth_composite)
 var Comp_depth=Comp_depth.expression( 
@@ -113,20 +111,21 @@ var depthComposite1=ui.Map.Layer(Comp_depth, imageVisParam, 'DepthComposite', fa
 //load the ui layers
 var layers = mapPanel.layers(); 
    layers.add(sr_Dove)
-   
-if (vars.benthic_clean2) {
-    layers.add(benthic2)}
-//if (vars.benthic_clean1) {
- //   layers.add(benthic1)}
-//if (vars.geo_clean1) {
- //   layers.add(geo1)}   
-//if (vars.geo_clean2) {
- //   layers.add(geo2)}    
+if (vars.raw){ 
+  layers.add(geo_raw)} //&& layers.add(depthComposite1)} 
+if (vars.geo_clean1) {
+    layers.add(geo1)}     
+if (vars.geo_clean2) {
+    layers.add(geo2)}    
 if (vars.geo_clean3) {  
    layers.add(geo3)}
-//if (vars.raw){ 
-  //layers.add(benthic_raw) && layers.add(geo_raw) && layers.add(depthComposite1)} 
-  //layers.add(Unep)
+if (vars.raw){ 
+  layers.add(benthic_raw)
+if (vars.benthic_clean1) {
+   layers.add(benthic1)}
+if (vars.benthic_clean2) {
+    layers.add(benthic2)}
+  layers.add(Unep)}
  // layers.add(mid_mask)
 
  // layers.add(mid_maskCR)

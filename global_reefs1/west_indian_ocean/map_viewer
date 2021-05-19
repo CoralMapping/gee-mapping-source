@@ -3,14 +3,15 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     wio_geo = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo"),
     wio_benthic = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic"),
-    geoclean3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual2"),
-    benthic_clean = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
-    geoclean4 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
-    geoclean1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p1"),
-    geoclean2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2"),
+    geo1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p1"),
+    geo2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_p2"),
+    geo3 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_geo-clean_manual_July10"),
     low_rrs = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"),
-    waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves");
+    waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
+    ben1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
+    ben2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // little viewing script for looking at reefs and classifications for each region. 
 //The map_viewer WIO script is going to be used from the very beginning
 //in the workflow to annotate masks 
@@ -50,23 +51,23 @@ Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
 
 //Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
 //Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-//Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
-//Map.addLayer(benthic_clean, map_palettes.benthic, "WIO benthic - clean", false)
+
+
 Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
-Map.addLayer(geoclean1, map_palettes.geo, "wio_geo - firstPass", false)
-Map.addLayer(geoclean2, map_palettes.geo, "wio_geo - 2ndPass", false)
-//Map.addLayer(geoclean3, map_palettes.geo, "wio_geo - manual", false)
-Map.addLayer(geoclean4, map_palettes.geo, "GEO manual July10", false)
-Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
+Map.addLayer(geo1, map_palettes.geo, "wio_geo clean 1", false)
+Map.addLayer(geo2, map_palettes.geo, "wio_geo clean 2", false)
+Map.addLayer(geo3, map_palettes.geo, "GEO manual clean 3", false)
+Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
+//Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
 //Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
-//Map.addLayer(geo_clean, map_palettes.geo, "Nth. Cari & Baha Geo - FINAL", false)
+Map.addLayer(ben1, map_palettes.benthic, "WIO benthic - clean 1", false)
+Map.addLayer(ben2, map_palettes.benthic, "WIO benthic - clean 2", false)
 
 
 
+var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
 
-//var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
-
-//Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
 
 // #############
 // example confidence layers

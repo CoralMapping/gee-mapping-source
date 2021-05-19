@@ -1,0 +1,317 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var sand = 
+    /* color: #ffff73 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry({
+          "type": "GeometryCollection",
+          "geometries": [
+            {
+              "type": "Point",
+              "coordinates": [
+                -61.279243765015146,
+                14.734257073072442
+              ]
+            },
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -61.889227329215544,
+                    17.677891030252876
+                  ],
+                  [
+                    -61.88825197953037,
+                    17.67766800082899
+                  ],
+                  [
+                    -61.88731564498511,
+                    17.678448603849873
+                  ],
+                  [
+                    -61.888759161942914,
+                    17.678671632305306
+                  ]
+                ]
+              ],
+              "geodesic": true,
+              "evenOdd": true
+            }
+          ],
+          "coordinates": []
+        }),
+        {
+          "Class": "sand",
+          "system:index": "0"
+        }),
+    imageVisParam9 = {"opacity":1,"bands":["b3","b2","b1"],"min":33.84,"max":1466.16,"gamma":1},
+    rubble = 
+    /* color: #cdaa66 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry.Polygon(
+            [[[-64.65267958558317, 17.718611524732655],
+              [-64.6524455026017, 17.718630106290863],
+              [-64.65242599503173, 17.71885308546303],
+              [-64.65267958558317, 17.718871666996215]]]),
+        {
+          "Class": "rubble",
+          "system:index": "0"
+        }),
+    rock = 
+    /* color: #a87000 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry.Polygon(
+            [[[-64.6388101276759, 17.71916897188909],
+              [-64.63906371691766, 17.71909464586801],
+              [-64.63892717047631, 17.718983156154895]]]),
+        {
+          "Class": "rock",
+          "system:index": "0"
+        }),
+    seagrass = 
+    /* color: #73b273 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry({
+          "type": "GeometryCollection",
+          "geometries": [
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -64.62326379855973,
+                    17.762328975493116
+                  ],
+                  [
+                    -64.6229321803478,
+                    17.762421861212232
+                  ],
+                  [
+                    -64.62322478472949,
+                    17.76262620887615
+                  ]
+                ]
+              ],
+              "evenOdd": true
+            },
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -65.2825874293328,
+                    18.13281573533347
+                  ],
+                  [
+                    -65.2829385551147,
+                    18.13283427348814
+                  ],
+                  [
+                    -65.28297756894494,
+                    18.13261181488023
+                  ],
+                  [
+                    -65.2827239783935,
+                    18.132593276701986
+                  ]
+                ]
+              ],
+              "geodesic": true,
+              "evenOdd": true
+            }
+          ],
+          "coordinates": []
+        }),
+        {
+          "Class": "seagrass",
+          "system:index": "0"
+        }),
+    coral_algae = 
+    /* color: #00a9e6 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry({
+          "type": "GeometryCollection",
+          "geometries": [
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -73.57239396309971,
+                    18.103212217596948
+                  ],
+                  [
+                    -73.57239396309971,
+                    18.102322230932167
+                  ],
+                  [
+                    -73.57173072667585,
+                    18.10243347795635
+                  ]
+                ]
+              ],
+              "evenOdd": true
+            },
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -61.662358410380655,
+                    16.37354761386581
+                  ],
+                  [
+                    -61.66122700537449,
+                    16.373285591274605
+                  ],
+                  [
+                    -61.660953907253095,
+                    16.37362247703961
+                  ],
+                  [
+                    -61.66228038010082,
+                    16.373996793734086
+                  ]
+                ]
+              ],
+              "geodesic": true,
+              "evenOdd": true
+            }
+          ],
+          "coordinates": []
+        }),
+        {
+          "Class": "coral_algae",
+          "system:index": "0"
+        }),
+    microalgal_mats = 
+    /* color: #c29ed7 */
+    /* shown: false */
+    ee.Feature(
+        ee.Geometry.Polygon(
+            [[[-68.7236895527708, 18.20664243598633],
+              [-68.72443081685515, 18.206086524323783],
+              [-68.72400166341276, 18.205864158415572],
+              [-68.72357250997038, 18.20604946356615]]]),
+        {
+          "Class": "microalgal_mats",
+          "system:index": "0"
+        });
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//Unmixing to find "pure pixels per classes"
+//Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 5/03/2021
+
+
+// Description: app to detect pure pixels within geo classes with the chance to extent to benthic
+
+//This script is still in dev
+
+
+// Table of contents:
+// 1. Initial data loads
+// 2. Get  the sr layers vizualized in the map panel 
+//3. re-structuring data to feed the unmix function that needs a list of endmember to unmix 
+//4. // SPECTRAL UNMIXING //
+
+// // 1. Initial data loads > initial utils for app and getting libraries needed from reef_params in workflow
+var utils = require('users/gena/packages:utils')
+var param_module = require('users/mitchest/global_reefs_modules:reef_params')
+
+//bring the keys from datagen
+
+var region_params = param_module.se_caribbean
+
+//setting variables from datagen keys
+
+var vars = {
+    Dove_low_sr : ee.Image(region_params.image),
+};
+
+
+var imageFilt = ee.Image(vars.Dove_low_sr).select(["b3","b2","b1"])
+
+//add bands to sr mosaic as the unmix() needs same bands as endmembers
+var b4_redBlueRatio = imageFilt.select('b3').divide(imageFilt.select('b1')) 
+var b5_redGrenRatio = imageFilt.select('b3').divide(imageFilt.select('b2')) 
+var b6_greenBlueRatio = imageFilt.select('b2').divide(imageFilt.select('b1'))
+var image_addedBands= imageFilt.addBands(b4_redBlueRatio).addBands(b5_redGrenRatio).addBands(b6_greenBlueRatio)
+//var image_addedBands =image_addedBands.select(["b3_1","b3_2","b2_1"],["b4","b5","b6"]) 
+print (image_addedBands, "added ratio to image")
+//Map.addLayer(image_addedBands, {}, "another image")
+/*
+var nir_ratio = reflec.select('b4').divide(reflec.select('b1')) // mask out land
+var b_bright = reflec.expression(' B / (B + G + R)', {
+  'B': reflec.select('b1'),
+  'G': reflec.select('b2'),
+  'R': reflec.select('b3')
+})
+*/
+
+// 1. Get  the sr layers vizualized in the map panel 
+
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+Map.addLayer(vars.Dove_low_sr, imageVisParam9,'Dove_sr', false )
+
+Map.centerObject(sand, 6)
+
+//2. re-structuring data to feed the unmix function that needs a list of endmember to unmix 
+
+///make a featColl of the endmembers
+
+var fc = ee.FeatureCollection([sand, rubble, rock, seagrass, coral_algae, microalgal_mats])
+
+//build a feature collection with spectral reflectance signatures per Class feature defined before 
+
+
+
+var ClassSpectral = image_addedBands.reduceRegions({
+  collection:fc,
+  reducer:ee.Reducer.mean(),
+  scale:10,
+})
+
+print(ClassSpectral, "Spectral data per Regions")
+// Use Array to make a list (a new property) that includes all the spectral data per band plus the class name-
+
+ClassSpectral = ClassSpectral.makeArray(["b3","b2","b1","b3_1","b3_2","b2_1"], "NewBandsList")
+
+print(ClassSpectral , "Spectral data per Regions_array")
+
+//Aggregate the array to extrac the new property (a list) created in "ClassSpectral"
+
+var SpectralValuesPerBand = ClassSpectral.aggregate_array("NewBandsList")
+
+print(SpectralValuesPerBand, "Band Values (List of Arrays)")// still not a list for unmix function, its weird GEE bug?
+
+//changing list of arrays to list of list to feed unmix function
+
+function ChangeArrayToList(myArray){
+  
+  var myList = ee.Array(myArray).toList()
+  
+  return myList
+}
+
+SpectralValuesPerBand = SpectralValuesPerBand.map(ChangeArrayToList)
+
+print(SpectralValuesPerBand, "Band Values (List of Lists)")//now this is what I need for feed unmix
+
+
+///////// make a list of classes of endmembers to rename with classes the "constant" bands created after te unmix function 
+
+var classes = ClassSpectral.aggregate_array("Class")
+
+print(classes, "Classes")
+
+//4. // SPECTRAL UNMIXING //
+
+var UnmixedSECimage =image_addedBands.unmix(SpectralValuesPerBand, true, true).rename(classes)
+
+Map.addLayer(UnmixedSECimage, {}, "Unmixed")
+
+//{bands:['sand','rubble','rock','seagrass','coral_algae','microalgal_mats']}
