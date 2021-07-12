@@ -1,6 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([60.17991031430058, 23.828987656739834]),
-    regionextent = ee.FeatureCollection("projects/coral_atlas/nw_arabian_sea/region_extent");
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-88.13551937319941, 5.422887978424963]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
@@ -13,7 +12,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([60.17991031430058, 23.82
 // - Corresponding '_classification' script performs the machine learning classificaiton
 ///////////////////////////////
 
-var region_extent = regionextent;
+
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 
@@ -21,7 +20,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nw_arabian_sea          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.tropical_eastern_pacific          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -59,8 +58,8 @@ var vars = {
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  segments_output_name: region_params.sname + '_'+ 'segmentation2',
-  pixels_output_name: region_params.sname + '_' + 'pixels2',
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
   asset_output: region_params.asset // asset path
 }
 

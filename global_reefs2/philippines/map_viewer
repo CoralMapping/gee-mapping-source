@@ -14516,7 +14516,8 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([121.87492178286129, 10.7
     /* color: #ff0000 */
     /* shown: false */
     ee.Geometry.MultiPoint(),
-    mid_mask_0 = ee.FeatureCollection("projects/coral_atlas/philippines/in_out/mid_mask_0");
+    mid_mask_0 = ee.FeatureCollection("projects/coral_atlas/philippines/in_out/mid_mask_0"),
+    GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 // Viewing script for looking at reefs and classifications for each region. 
@@ -14557,7 +14558,7 @@ Map.centerObject(centre_map, 6);
 //print (region_params.image[0])
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
-
+Map.addLayer(GCRMN_ext, {}, "GCRMN_ext");// CR added GCRMN_ext 
 //Load other imagery for viewing purpose only
 //Map.addLayer(geo_clean2_0, map_palettes.geo, 'Geomorphic - stage 2 clean', false);
 
@@ -14602,7 +14603,9 @@ if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
 // Add geo clean stage 3 to the viewer
 if (vars.geo_cleanup_stage == 3) {
   var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
-  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', false);
+  var geo_map_clean3_Reefext = ee.Image(region_params.geo_map_clean3_Reefext)
+  Map.addLayer(geo_map_clean3_Reefext.updateMask(geo_map_clean3_Reefext.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean - using Reef Exent', true);
 }
 
 // Add benthic clean stage 1 to the viewer

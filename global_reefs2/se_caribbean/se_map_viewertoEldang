@@ -60,7 +60,7 @@ var centerMap=ee.Geometry.Point([-63.13361412093955,14.696638336138593]);
 var mapPanel=ui.Map().centerObject(centerMap, 6);
 
 //load image sr
-var low_tide_image_dove = ee.Image(region_params.image);
+var low_tide_image_dove = ee.ImageCollection(region_params.pixels).mosaic();
 var sr_Dove= ui.Map.Layer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', true); // image data
 //UnEp layer
 var unepClipped= wcmc.filterBounds(geometry)

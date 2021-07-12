@@ -113,10 +113,7 @@ var reef_mask = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combine
               "system:index": "0"
             })]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
-    no_ReefMask = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.FeatureCollection(
+    no_ReefMask = /* color: #d63000 */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
                 [[[-73.01083660985321, 18.189262147524083],
@@ -1006,7 +1003,7 @@ var export_scale = ee.Number(100)
 
 // display it
 
-var Dove_sr = ee.Image(region_params.image)
+var Dove_sr = ee.ImageCollection(region_params.pixels).mosaic()
 Map.addLayer(Dove_sr, imageVisParam3, "Dove se caribbean")
 var georaw=ee.Image(region_params.geo_map)
 var geo1= ee.Image(region_params.geo_map_clean1)

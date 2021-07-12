@@ -1,14 +1,15 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var imageVisParam = {"opacity":1,"bands":["b1_s"],"min":-20.277,"max":-2.3329999999999997,"palette":["ff0ef8","8f348c","ad1ddc","dc19ff"]},
-    geometry = /* color: #d63000 */ee.Geometry.Point([78.7279342078017, 8.056269572926762]);
+var geometry = /* color: #d63000 */ee.Geometry.Point([78.7279342078017, 8.056269572926762]),
+    imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"min":45.38,"max":1839.62,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
 
 // Description: App to display depth profile (or any spatial profile) from a stack of images. 
 //Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
 //from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack plus depth layers
-//built from Andaman Sea datagen script. 
+//built from North Cari datagen script. 
 
 //This script will be used as a template for depth apps for other regions, so anyone can port over it to to other regions
 
@@ -107,7 +108,7 @@ var DepthCompos_renamed = depthComposite.select(
 //getting sr from the stack
 var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
 
-var Dove_low_sr=ui.Map.Layer(ee.Image(vars.stack),imageVisParam3,'Dove_sr', false )
+var Dove_low_sr=ui.Map.Layer(ee.Image(vars.stack),imageVisParam,'Dove_sr', false )
 
 //var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
 //var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
@@ -286,7 +287,7 @@ function showChart(transect) {
         pointSize: 2,
 
       series: {
-            0: { lineWidth: 4 },
+            3: { lineWidth: 5 },
             
           },
           colors: ['#ff0ef8']

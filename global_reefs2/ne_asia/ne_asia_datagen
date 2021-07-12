@@ -1,12 +1,12 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([60.17991031430058, 23.828987656739834]),
+var map_centre = /* color: #d63000 */ee.Geometry.Point([129.52561343930057, 29.097859548031103]),
     regionextent = ee.FeatureCollection("projects/coral_atlas/nw_arabian_sea/region_extent");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Coral atlas mapping project - South Eastern Asia
+// Coral atlas mapping project - North East Asia 
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
+// Region coordinator: Robert Canto (rfcanto@gmail.com)
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script generates the data as an asset (for quick load)
@@ -21,7 +21,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nw_arabian_sea          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.ne_asia          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 

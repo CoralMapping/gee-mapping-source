@@ -2,13 +2,14 @@
 var geometry = /* color: #98ff00 */ee.Geometry.Point([120.73147512364193, -5.545940521160284]),
     imageVisParam_sr = {"opacity":1,"bands":["b3","b2","b1"],"min":59.4,"max":2286.6,"gamma":1};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
 
 // Description: App to display depth profile (or any spatial profile) from a stack of images. 
 //Initially developed to explore depth profiles for Cairns-Cook are in the GBR. In this case it shows profiles
 //from depth derived from Sentinel, Dove and L8 for East Africa. This version integrates the pixel stack plus depth layers
-//built from Indonesia datagen script. 
+//built from coral_sea datagen script. 
 
 //This script will be used as a template for depth apps for other regions, so anyone can port over it to to other regions
 
@@ -40,10 +41,12 @@ var vars = {
     //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
     //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
     //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
+    //Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
     Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
-    //Depth_composite : ee.Image(region_params.depth_composite).rename('depth')
 };
 
+//Map.addLayer(vars.Depth_composite)
+//print (vars.Depth_composite)
 // 2. data preparation (invert sign, change band names))
 //Compute the transformation  to neg using expression for S2 (its server side method as well)
 //var depth_S2_neg=ee.Image(vars.depth_S2)
@@ -76,7 +79,7 @@ var vars = {
 //var depth_L8=depth_L8_neg.expression(
 //  '((-1) * B1)/100', {
 //  'B1' :depth_L8_neg.select('L8depth') //specify that B1 mean L8depth
-//})
+////})
 
 //renaming band 1 in ASU_depth_landsat from 'b1' to 'b1_c' 
 //var depth_L8=ee.Image(depth_L8)
@@ -107,9 +110,8 @@ var imageVisParam2 = {"opacity":1,"bands":["b1_l"],"min":-25.145744267455964,"ma
 //var Depth_S2_asu=ui.Map.Layer(depth_S2_renamed, imageVisParam2,'depth_S2', false )
 
 
-var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":59.4,"max":2286.6,"gamma":1};
-//var Dove_low_sr=ui.Map.Layer(vars.Dove_low_sr, imageVisParam3,'Dove_sr', false )
-var Dove_low_sr=ui.Map.Layer(ee.Image(vars.Depth_composite),imageVisParam3,'Dove_sr', false )
+var imageVisParam3 = {"opacity":1,"bands":["b3","b2","b1"],"min":94.7,"max":852.3,"gamma":1};
+var Dove_low_sr=ui.Map.Layer(vars.Depth_composite, imageVisParam_sr,'Dove_sr', false )
 
 var imageVisParam4 = {"opacity":0.81,"bands":["b1_c"],"min":-29.4004,"max":-0.6196,"palette":["bd0026","f03b20","fd8d3c","fecc5c","ffffb2"]};
 //var Depth_L8_asu=ui.Map.Layer(depth_L8_renamed, imageVisParam4,'depth_8', false)
@@ -138,7 +140,7 @@ var inspectorPanel = ui.Panel({style: {width: '70%'}});
 // Create an intro panel with labels 
 var intro = ui.Panel([
   ui.Label({
-    value: "Depth Profiles from L8, S2, Doves and Depth Composite for " + region_params.sname + " (sampling interval 10 m)",
+    value: "Depth Profiles from depth Composite for " + region_params.sname + " (sampling interval 10 m)",
     style: {fontSize: '20px', textAlign: 'center', fontWeight: 'bold'}
   }),
 ]);
@@ -284,9 +286,10 @@ function showChart(transect) {
         pointSize: 2,
 
       series: {
-            0: { lineWidth: 3 },
+            0: { lineWidth: 4 },
+            
           },
-          colors: ['#bd0026']
+          colors: ['#ff0ef8']
         };
       
       

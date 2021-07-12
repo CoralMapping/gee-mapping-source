@@ -1,19 +1,53 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([60.17991031430058, 23.828987656739834]),
-    regionextent = ee.FeatureCollection("projects/coral_atlas/nw_arabian_sea/region_extent");
+var map_centre = /* color: #d63000 */ee.Geometry.Point([-174.4151273676797, 13.361341581157612]),
+    geometry = /* color: #98ff00 */ee.Geometry.MultiPoint(),
+    export_geom_east = /* color: #d63000 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[-177.3423177648836, 2.870730590967862],
+                  [-177.97269125402414, -0.8060500711740506],
+                  [-177.10946823718623, -3.1698308750092385],
+                  [-174.25008302901026, -6.9070839269201265],
+                  [-169.4432394571827, -5.8833792140308905],
+                  [-159.01027409257128, -2.016197380424583],
+                  [-155.1349821767154, 1.465447905066423],
+                  [-162.18158745598274, 8.555332963517328],
+                  [-169.02423792971442, 3.3161597698259335]]]),
+            {
+              "system:index": "0"
+            })]),
+    export_geom_west = /* color: #98ff00 */ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[162.47622946086236, 18.289873323806777],
+                  [160.98506146986517, 16.183511380991675],
+                  [158.81949805603506, 8.026126764354778],
+                  [163.41914225890918, 6.747352583949153],
+                  [164.4767806457178, 1.0204289764671313],
+                  [167.80968180718025, -4.00553692448669],
+                  [174.88194092110635, -7.687323245727433],
+                  [178.13427044340574, -8.700966398142276],
+                  [177.61975611458934, -0.5142873156099127],
+                  [175.1817655806907, 5.564435925685329],
+                  [173.24148732908577, 11.738784377313713],
+                  [170.92909128792473, 16.03243336164507],
+                  [170.52246091357847, 19.95064075129599],
+                  [166.47909687839305, 20.48691160318517]]]),
+            {
+              "system:index": "0"
+            })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Coral atlas mapping project - South Eastern Asia
-// Contact: mitchell.lyons@gmail.com
-// Region coordinator: Eva Kovacs (kovacsevam2@gmail.com)
+// Coral atlas mapping project - Eastern_micro
+//Contact: Mitch Lyons
+//Region Coordinator: rodney borrego 
 // Description:
 // - Developing a process to combine OBIA and supervised classification
-// - This script generates the data as an asset (for quick load)
+// - This script generates the data as an asset /(for quick load)
 // - Corresponding '_classification' script performs the machine learning classificaiton
 ///////////////////////////////
 
-var region_extent = regionextent;
 // load analysis params module
 var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 
@@ -21,7 +55,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params')
 // SENSOR GENERICS
 var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nw_arabian_sea          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.eastern_micronesia       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -55,12 +89,12 @@ var vars = {
   nir_band: (sensor_params.sname == 'dove') ? 'b4' : 'B5', // doesn't handle the Landsat-8/Sentinel-2 difference
   use_glcm: true, // use glcm metrics
   small_object: 400, // the smallest size a group of image pixels should be to not be considered noise
-
+  
   // export options
   do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
-  segments_output_name: region_params.sname + '_'+ 'segmentation2',
-  pixels_output_name: region_params.sname + '_' + 'pixels2',
+  segments_output_name: region_params.sname + '_'+ 'segmentation',
+  pixels_output_name: region_params.sname + '_' + 'pixels',
   asset_output: region_params.asset // asset path
 }
 
@@ -73,30 +107,34 @@ var output_name = (vars.pixel_based) ? vars.pixels_output_name : vars.segments_o
 Map.centerObject(map_centre, 6)
 
 // load input data
-var reflec = ee.Image(region_params.image).select(vars.all_bands)
+var reflec = ee.ImageCollection(region_params.image).mosaic().select(vars.all_bands)
 
 // import depth data (NB depth is 16bit s integer in centimeters)
-var depth = ee.Image(region_params.depth_composite).rename('depth')
+var depth = ee.ImageCollection(region_params.depth_composite).mosaic().rename('depth')
 
 // define a mask based on min/max depth
 var depth_mask = depth.lt(vars.depth_limit).and(depth.gt(vars.min_depth)).and(reflec.select(0).gt(0))//.updateMask(waves)
-/*
-// "NOT REEF" CLEAN
-// var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
-var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 
+
+
+//"NOT REEF" CLEAN
+//var notReef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry()
+//var not_reef_img = ee.Image().byte().paint(ee.Feature(notReef_mask, {zone: 1}), "zone");
 // remove
-depth_mask = depth_mask.where({
-  test: not_reef_img.eq(1),
-  value: ee.Image(0)
-});
-*/
+//depth_mask = depth_mask.where({
+  //test: not_reef_img.eq(1),
+ // value: ee.Image(0)
+//});
+
+/*
 // clip and load other variables
 var depth = depth.updateMask(depth_mask).int16().rename('depth'); // mask out depth below set limit
+*/
+
 
 // add layers to the map
 Map.addLayer(reflec, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
-Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
+//Map.addLayer(depth, {bands: ['depth'], min: vars.min_depth, max: vars.depth_limit, palette:['#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']}, "Depth covariate (cm)", false); // water depth
 
 
 
@@ -206,6 +244,8 @@ Map.addLayer(all_data, {}, "Model predictor data", false)
 
 // 4. Export data to asset
 
+/*
+
 // export if specified in input params
 if (vars.do_export) {
   var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
@@ -217,7 +257,55 @@ if (vars.do_export) {
     assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
     region: region_extent,
-    maxPixels: 1e13,
+    maxPixels: 1e13
     //pyramidingPolicy:{'.default': 'mean'},
   });
+}
+
+*/
+
+
+// 4. Export data to asset
+
+// export if specified in input params
+if (vars.do_export) {
+  // add raster flag for either side of dateline
+  var latlong = ee.Image.pixelLonLat().select('longitude')//.clip(export_geom)
+  var export_stack_east = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.lte(0))
+  var export_stack_west = all_data.updateMask(depth_mask).set(vars).updateMask(latlong.gt(0))
+  
+  
+  
+  
+  Map.addLayer(export_geom_east, {}, "export footprint east", true)
+  Map.addLayer(export_geom_west, {}, "export footprint west", true)
+  
+  Export.table.toAsset ({
+    collection: export_geom_east,
+    })
+  Export.table.toAsset ({
+    collection: export_geom_west,
+    })
+
+  
+  Export.image.toAsset({
+    image: export_stack_east,
+    description: output_name + '_east',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_east',
+    scale: vars.export_scale,
+    region: export_geom_east,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
+  Export.image.toAsset({
+    image: export_stack_west,
+    description: output_name + '_west',
+    assetId: vars.asset_output + 'in_out/' + output_name + '_west',
+    scale: vars.export_scale,
+    region: export_geom_west,
+    maxPixels: 1e13,
+    pyramidingPolicy:{'.default': 'mean'},
+  })
+  
 }

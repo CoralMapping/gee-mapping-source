@@ -72,7 +72,10 @@ var centre_map =
           [142.07352381219226, -9.191356735223884],
           [142.25819766519015, -9.162764771128106],
           [142.53406045235698, -9.247924055465315]]]),
-    mid_mask = /* color: #0bd638 */ee.Geometry.MultiPolygon(
+    mid_mask = 
+    /* color: #0bd638 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[115.19308196643641, 8.39281687018826],
            [115.19917790225998, 8.388405154329423],
            [115.20733157036834, 8.376772574237147],
@@ -11420,7 +11423,8 @@ var centre_map =
            [111.74690637914203, 16.461574121155277],
            [111.74355898229145, 16.458775476359584],
            [111.73978243199848, 16.45671762353804],
-           [111.73669252721332, 16.45589447629611]]]]);
+           [111.73669252721332, 16.45589447629611]]]]),
+    GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 // Coral atlas mapping project - South China Sea
@@ -11464,7 +11468,7 @@ Map.centerObject(centre_map, 6);
 //print (region_params.image[0])
 var low_tide_image_dove = ee.Image(region_params.image);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
-
+Map.addLayer(GCRMN_ext, {}, "GCRMN_ext");// CR added GCRMN_ext
 
 
 

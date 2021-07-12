@@ -2318,8 +2318,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
           [142.76840281509237, -0.7107281976529471],
           [142.15316844009237, -2.467795559859385],
           [135.12191844009237, 0.6954864947804655],
-          [133.45199656509237, -0.44707001364412374]]]);
+          [133.45199656509237, -0.44707001364412374]]]),
+    GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
@@ -2358,6 +2360,7 @@ var low_tide_image = ee.Image(region_params.pixels);
 Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 //var low_tide_image_dove = ee.Image(region_params.image);
 //Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min:0, max:4000, gamma: vars.gamma}, sensor_params.sname + ' low tide', false); // image data
+Map.addLayer(GCRMN_ext, {}, "GCRMN_ext");// CR added GCRMN_ext
 
 // Load the raw classifications
 if (vars.raw) {
@@ -2397,6 +2400,8 @@ var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geomorphic clean - stage 3', false);
+  var geo_map_clean3_Reefext = ee.Image(region_params.geo_map_clean3_Reefext)
+  Map.addLayer(geo_map_clean3_Reefext.updateMask(geo_map_clean3_Reefext.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean - using Reef Exent', true);
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
