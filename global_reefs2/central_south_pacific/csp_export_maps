@@ -56,9 +56,9 @@ var reef_boundary= ee.FeatureCollection(region_params.extent_mask);
 Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'central_south_pacific_stack',
+  description: 'central_south_pacific_stack_v1.1',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/central_south_pacific/central_south_pacific_stack_',
+  fileNamePrefix: 'coral-gee-export-bucket/central_south_pacific/csp_stack_',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',

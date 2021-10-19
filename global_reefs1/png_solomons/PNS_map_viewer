@@ -2357,7 +2357,7 @@ Map.centerObject(centre_map, 8);
 
 // Add low-tide base map to viewer
 var low_tide_image = ee.Image(region_params.pixels);
-Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 1500}, sensor_params.sname + " from stack", false); // image data
 //var low_tide_image_dove = ee.Image(region_params.image);
 //Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min:0, max:4000, gamma: vars.gamma}, sensor_params.sname + ' low tide', false); // image data
 Map.addLayer(GCRMN_ext, {}, "GCRMN_ext");// CR added GCRMN_ext

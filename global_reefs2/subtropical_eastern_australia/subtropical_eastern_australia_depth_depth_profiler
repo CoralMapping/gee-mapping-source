@@ -2,6 +2,7 @@
 var geometry = /* color: #d63000 */ee.Geometry.Point([155.37664002404728, -26.616267149235057]),
     imageVisParam8 = {"opacity":1,"bands":["b3","b2","b1"],"min":107,"max":3823,"gamma":1.455};
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 //Contact: Rodney Borrego-Acevedo (rodbio2008@gmail.com), 2/07/2020
 
 
@@ -37,9 +38,9 @@ var region_params = param_module.subtropical_eastern_australia
 
 var vars = {
     Dove_low_sr : ee.Image(region_params.image),
-    depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
-    depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
-    Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
+    //depth_S2 : ee.Image(region_params.s2_depth).rename('S2depth'),
+    //depth_L8 : ee.Image(region_params.ls8_depth).rename('L8depth'),
+    //Dove_depth : ee.Image(region_params.depth).rename('Dovedepth'),
     Depth_composite : ee.Image(region_params.depth_composite).rename('depth'),
     //Depth_composite : ee.ImageCollection(region_params.pixels).mosaic(),
 };
@@ -128,10 +129,9 @@ var mapPanel=ui.Map().centerObject(geometry, 6)
 
 var layers = mapPanel.layers();
 layers.add(Dove_low_sr)
-layers.add(high_depthDove)
-layers.add(Depth_S2_asu)//here depth from ASU
-layers.add(Depth_L8_asu)
-layers.add(depthComposite1)
+//layers.add(high_depthDove)
+//layers.add(Depth_S2_asu)//here depth from ASU
+//layers.add(depthComposite1)
 
 // 4. Create the inspector panel (the one that shows the profile graph)
 var inspectorPanel = ui.Panel({style: {width: '70%'}});
@@ -204,10 +204,10 @@ Map.setOptions("HYBRID")
 
 // 6. Put all depth layers stacked into an image collection to build the code to extract profile curves
 
-var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
+//var collectionfromImages=ee.ImageCollection([ee.Image(depth_L8_renamed),ee.Image(depth_S2_renamed),ee.Image(Dove_depth_renamed), ee.Image(DepthCompos_renamed)]);
 //print (collectionfromImages)
 
-//var collectionfromImages=ee.ImageCollection(ee.Image(DepthCompos_renamed));
+var collectionfromImages=ee.ImageCollection(ee.Image(DepthCompos_renamed));
 //print (collectionfromImages)
 
 //Building an image where each band is a single depth layer
@@ -225,11 +225,13 @@ var stackCollection = function(collection) {
 var stacked = stackCollection (collectionfromImages);
 
 // Renaming bands names to depict in graph
-//var stackedRenamed = stacked.select(['b1_s'],['depth_composite']);
+var stackedRenamed = stacked.select(['b1_s'],['depth_composite']);
+print (stackedRenamed)
+
+//var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
 //print (stackedRenamed)
 
-var stackedRenamed = stacked.select(['b1_c','b1_l','b1_b','b1_s'],['depth_L8','depth_S2','depth_Doves','depth_composite']);
-//print (stackedRenamed)
+//var stackedRenamed = stacked.select(['b1_s'],['depth_composite']);
 
 
 //7. get the functions  "reduceImageProfile" and "featureCollectionToDataTable" integrated in the "ui" standalone app 
@@ -290,23 +292,23 @@ function showChart(transect) {
         width: 1000,
         pointSize: 2,
 
-     // series: {
-      //      0: { lineWidth: 3 },
-      //      
-      //    },
-      //    colors: ['#bd0026',]
-      //  };
-      
-            series: {
+      series: {
             0: { lineWidth: 3 },
-            1: { lineWidth: 3 },
-            2: { lineWidth: 3 },
-            3: { lineWidth: 8 },
             
           },
-          colors: ['#bd0026', '#006d2c', '#54278f',
-                   '#ff0ef8']
+          colors: ['#bd0026',]
         };
+      
+      //      series: {
+      //      0: { lineWidth: 3 },
+      //      1: { lineWidth: 3 },
+      //      2: { lineWidth: 3 },
+      //      3: { lineWidth: 8 },
+            
+      //    },
+      //    colors: ['#bd0026', '#006d2c', '#54278f',
+       //            '#ff0ef8']
+      //  };
       
 
   utils.featureCollectionToDataTable(profile1, 'distance').evaluate(function(dataTable){ 

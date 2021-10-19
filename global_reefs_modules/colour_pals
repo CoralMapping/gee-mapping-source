@@ -41,6 +41,43 @@ var geo_pal = {
   min: 0, max: 30
 }
 
+var geo_pal2 = {
+  palette: [  // the benthic classificaiton palette (NB in raster class value order)
+    'ffffff', // 0 =  Ignore
+    '004529', // 1 =  Land
+    '023858', // 2 =  Deep
+    'f768a1', // 3 =  Turbid
+    'ffffff', // 4 =  place-holder
+    'ffffff', // 5 =  place-holder
+    'ffffff', // 6 =  place-holder
+    'ffffff', // 7 =  place-holder
+    'ffffff', // 8 =  place-holder
+    'ffffff', // 9 =  place-holder
+    'ffffff', // 10 = place-holder
+    '77d0fc', // 11 = Shallow Lagoon
+    '2ca2f9', // 12 = Deep lagoon
+    'c5a7cb', // 13 = Inner Reef Flat
+    '92739d', // 14 = Outer Reef Flat
+    '92739d', // 15 = Reef Crest
+    'fbdefb', // 16 = Terrestrial Reef Flat
+    'ffffff', // 17 = place-holder
+    'ffffff', // 18 = place-holder
+    'ffffff', // 19 = place-holder
+    'ffffff', // 20 = place-holder
+    '10bda6', // 21 = Sheltered Reef Slope
+    '288471', // 22 = Reef Slope
+    'cd6812', // 23 = Plateau
+    'befbff', // 24 = Back Reef Slope
+    'ffba15', // 25 = Patch Reef
+    'deebf7', // 26 = Small Reef
+    'ffffff', // 27 = place-holder
+    'ffffff', // 28 = place-holder
+    'ffffff', // 29 = place-holder
+    'ffffff'  // 30 = place-holder
+  ],
+  min: 0, max: 30
+}
+
 
 
 // Define colour palette for BENTHIC classifications
@@ -65,6 +102,34 @@ var benthic_pal = {
     '5cfaff', // 16 = Coral
     'c994c7', // 17 = Algae
     'c29ed7', // 18 = Microalgal mats
+    'ffffff', // 19 = place-holder
+    'ffffff', // 20 = place-holder
+    'ffffff', // 21 = place-holder
+  ],
+  min: 0, max: 21
+  }
+
+var benthic_pal2 = {
+  palette: [ // the benthic classificaiton palette (NB in raster class value order)
+    'ffffff', // 0 =  Ignore
+    '004529', // 1 =  Land
+    '08306b', // 2 =  Temporal*
+    '99d8c9', // 3 =  Mangrove
+    'ffff5c', // 4 =  Mud
+    'ffffff', // 5 =  place-holder
+    'ffffff', // 6 =  place-holder
+    'ffffff', // 7 =  place-holder
+    'ffffff', // 8 =  place-holder
+    'ffffff', // 9 =  place-holder
+    'ffffff', // 10 = place-holder
+    'ffffbe', // 11 = Sand
+    'e0d05e', // 12 = Rubble
+    'b19c3a', // 13 = Rock
+    '668438', // 14 = Seagrass
+    'ff6161', // 15 = Coral/Algae
+    'ff6161', // 16 = Coral
+    'ff6161', // 17 = Algae
+    '9bcc4f', // 18 = Microalgal mats
     'ffffff', // 19 = place-holder
     'ffffff', // 20 = place-holder
     'ffffff', // 21 = place-holder
@@ -105,6 +170,9 @@ var conf_map_pal = {
 var geo_names = ['Deep',  'Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer Reef Flat', 'Reef Rim', 'Terrestrial Reef Flat', 'Slope Sheltered', 'Slope Exposed', 'Plateau', 'Open Complex Lagoon', 'Patch Reef', 'Small Reef']
 var geo_cols = ['023858',    '5ce0ff',       '3690c0',           'ffffbf',         'ffcc7a',        'a50f15',       'addd8e',             'd9f0a3',         'd4d417',         'bdbdbd',          '02818a',    'deebf7',         'deebf7']
 
+var geo2_names = ['Shallow Lagoon', 'Deep Lagoon', 'Inner Reef Flat', 'Outer Reef Flat', 'Reef Crest', 'Terrestrial Reef Flat', 'Sheltered Reef Slope', 'Reef Slope', 'Plateau', 'Back Reef Slope', 'Patch Reef']
+var geo2_cols = ['77d0fc',	'2ca2f9',	'c5a7cb',	'92739d',	'614272',	'fbdefb',	'10bda6',	'288471',	'cd6812',	'befbff',	'ffba15']
+
 var geo_atlas_names = ['Deep (2 - not exported)',  'Shallow Lagoon (11)', 'Deep Lagoon (12)', 'Inner Reef Flat (13)', 'Outer Reef Flat (14)', 'Reef Crest (15)', 'Terrestrial Reef Flat (16)', 'Sheltered Reef Slope (21)', 'Reef Slope (22)', 'Plateau (23)', 'Back Reef Slope (24)', 'Patch Reef (25)', 'Small Reef (26)']
 var geo_atlas_cols = ['023858',                       '5ce0ff',             '3690c0',           'ffffbf',               'ffcc7a',               'a50f15',         'addd8e',                     'd9f0a3',                     'd4d417',           'bdbdbd',          '02818a',                'deebf7',       'deebf7']
 
@@ -114,6 +182,9 @@ var geo_gbr_cols =  ['5ce0ff',         '3690c0',      'ffffbf',           'ffcc7
 // benthic legend
 var benthic_names = [ 'Sand',    'Rubble', 'Rock',    'Coral/Algae', 'Algae' ,  'Coral',   'Seagrass',  'BMA']
 var benthic_cols = ['ffffcc',  'fcbba1',   '993404',    '1c9099',    'c994c7',  '5cfaff',  'a6d96a',   '756bb1']
+
+var benthic2_names = [ 'Sand',    'Rubble', 'Rock',    'Coral/Algae', 'Seagrass',  'BMA']
+var benthic2_cols = ['ffffbe','e0d05e',	'b19c3a',		'ff6161', '668438',	'9bcc4f']
 
 var benthic_atlas_names = ['No benthic class',  'Sand (11)',    'Rubble (12) ', 'Rock (13)', 'Coral/Algae (15)',   'Seagrass (14)', 'Microalgal mats (18)']
 var benthic_atlas_cols = ['ffffff',             'ffff73',        'cdaa66',       'a87000',     '00a9e6',             '73b273',      'c29ed7']
@@ -143,16 +214,22 @@ var conf_cols = ['#d7191c','#fdae61','#abdda4','#2b83ba']
 exports = {
   geo : geo_pal,
   benthic : benthic_pal,
+  geo2 : geo_pal2,
+  benthic2 : benthic_pal2,
   UA_pal: UA_pal,
   UserAcc_pal: UserAcc_pal,
   geo_names : geo_names,
   geo_cols : geo_cols,
+  geo2_names : geo2_names,
+  geo2_cols : geo2_cols,
   geo_gbr_names : geo_gbr_names,
   geo_gbr_cols : geo_gbr_cols,
   geo_atlas_names : geo_atlas_names,
   geo_atlas_cols : geo_atlas_cols,
   benthic_names : benthic_names,
   benthic_cols : benthic_cols,
+  benthic2_names : benthic2_names,
+  benthic2_cols : benthic2_cols,
   benthic_atlas_names : benthic_atlas_names,
   benthic_atlas_cols : benthic_atlas_cols,
   benthic_gbr_names : benthic_gbr_names,

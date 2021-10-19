@@ -1430,7 +1430,7 @@ if (vars.manual_clean && vars.geomorphic) {
   print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  var depth = ee.Image(region_params.segments).select('depth');// replace pixel with segments
+  var depth = ee.Image(region_params.segments).select('depth').unmask(9999,false);// replace pixel with segments and add value to nodata;// replace pixel with segments
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);

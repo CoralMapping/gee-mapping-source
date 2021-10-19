@@ -8,22 +8,22 @@ var geometry = /* color: #d63000 */ee.Geometry.Point([41.10104768481966, -17.300
 var sentinel = {
   pixel: 10,
   sname: 's2'
-}
+};
 
 var landsat8 = {
   pixel: 15,
   sname: 'ls8'
-}
+};
 
 var dove = {
   pixel: 5,
   sname: 'dove'
-}
+};
 
 var wv2 = {
   pixel: 2,
   sname: 'wv2'
-}
+};
 
 var global_extent_mask = {
   gcrmn: "projects/coral_atlas/global_datasets/GCRMN_reefextent_final"
@@ -44,7 +44,7 @@ var heron_wv2 = {
   benthic_map: "users/mitchest/gbr_reefs/heron_benthic",
   geo_map_clean: "",
   benthic_map_clean: ""
-}
+};
 
 var gbr_eomap = {
   sname: "gbr",
@@ -75,7 +75,7 @@ var gbr_eomap = {
   geo_map_clean2: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean2",
   geo_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_geo-clean3",
   benthic_map_clean: "projects/coral_atlas/gbr_eomap/in_out/gbr_eomap_benthic-clean"
-}
+};
 
 
 var swpac = {
@@ -953,6 +953,7 @@ var eastern_micronesia = {
   extent_east :"projects/coral_atlas/eastern_micronesia/in_out/geom_east",
   extent_west: "projects/coral_atlas/eastern_micronesia/in_out/geom_west",
   lagoons_mask:"projects/coral_atlas/eastern_micronesia/in_out/Lagoons_maskFinal",//this is the last mask edited by CR from the original I did for all the reefs 
+  mid_mask: "projects/coral_atlas/eastern_micronesia/in_out/mid_mask",//this was the one CR created after user feedback (V2 version sent to ASU)
   //notreef_mask: "",
   pixels:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_pixels_east", "projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_pixels_west"],
   segments:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_segmentation_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_segmentation_west"],
@@ -966,12 +967,11 @@ var eastern_micronesia = {
   benthic_val_library:"projects/coral_atlas/eastern_micronesia/training/eastern_micronesia_benthic_validation",
   geo_map: ["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_west"],
   benthic_map: ["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_west"],
-  mid_mask: "", 
   geo_map_clean1:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean1_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean1_west"],
   geo_map_clean2:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean2_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean2_west"],
-  geo_map_clean3:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean3_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean3_west"],
+  geo_map_clean3:["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean3_eastV2","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_geo_clean3_westV2"],
   benthic_map_clean1: ["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean1_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean1_west"],
-  benthic_map_clean2: ["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean2_east","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean2_west"],
+  benthic_map_clean2: ["projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean2_eastV2","projects/coral_atlas/eastern_micronesia/in_out/eastern_micronesia_benthic_clean2_westV2"],
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
@@ -997,6 +997,8 @@ var central_south_pacific = {
   DW0_5mMask: "projects/coral_atlas/central_south_pacific/in_out/csp_DW_0_5m_mask",
   GCRMN_ext_mask: "projects/coral_atlas/central_south_pacific/in_out/csp_GCRMN_ext_mask",
   Lagoons_mask: "projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask",
+  Lagoons_mask1: "projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask_1",
+  Lagoons_mask2: "projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask_2",
   Coast_mask: "projects/coral_atlas/central_south_pacific/in_out/csp_Coast_mask",
   SG_to_AC_mask: "projects/coral_atlas/central_south_pacific/in_out/cspSG_to_AC_mask",
   segments:["projects/coral_atlas/central_south_pacific/in_out/csp_segmentation"],
@@ -1028,7 +1030,7 @@ var tropical_eastern_pacific = {
   tide: "both",
   asset: "projects/coral_atlas/tropical_eastern_pacific/",
   epsg: "EPSG:4326",
-  image: "projects/coral_atlas/tropical_eastern_pacific/image/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic",
+  dove: "projects/coral_atlas/tropical_eastern_pacific/image/tropical_eastern_pacific_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic",
   depth: "projects/coral_atlas/tropical_eastern_pacific/depth/tropical_eastern_pacific_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_dove_depth",
   s2_depth: "projects/coral_atlas/tropical_eastern_pacific/depth/tropical_eastern_pacific_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/tropical_eastern_pacific/depth/tropical_eastern_pacific_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_landsat8_depth",
@@ -1037,10 +1039,11 @@ var tropical_eastern_pacific = {
   distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
   distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
   extent_mask: "projects/coral_atlas/tropical_eastern_pacific/TEP_regionExtent",
-  notreef_mask: "",
+  notreef_mask: "projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_notReefMask",
   pixels:["projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_pixels"],
   segments:["projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_segmentation"],
   waves:"",
+  //GCRMN_ext_mask: "projects/coral_atlas/central_south_pacific/in_out/csp_GCRMN_ext_mask",
   geo_train:"projects/coral_atlas/tropical_eastern_pacific/training/TEP_geo_reference",
   benthic_train:"projects/coral_atlas/tropical_eastern_pacific/training/TEP_bnthic_reference",
   benthic_pts:"",
@@ -1052,10 +1055,11 @@ var tropical_eastern_pacific = {
   benthic_map: ["projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_benthic"],
   mid_mask: "",
   geo_map_clean1:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean1",
-  geo_map_clean2:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean2",
-  geo_map_clean3:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean3",
+ geo_map_clean1b:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean2", 
+ geo_map_clean2:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean3h",
+  geo_map_clean3:"projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean3k",
   benthic_map_clean1: "projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_benthic_clean1",
-  benthic_map_clean2: "projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_benthic_clean2",
+  benthic_map_clean2: "projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_benthic_clean2i",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
@@ -1093,9 +1097,12 @@ var nw_arabian_sea = {
   mid_mask: "",
   geo_map_clean1:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean1",
   geo_map_clean2:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean2",
-  geo_map_clean3:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3FINAL",
+  geo_map_clean3:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3_review_1b",
+  geo_map_clean3_review_1:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabain_sea_geo_clean3_review_1b",
   benthic_map_clean1: "projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean1b",
-  benthic_map_clean2: "projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2FINAL",
+  //benthic_map_clean2: "projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1d",
+  //benthic_map_clean2_review_1:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1d",
+  benthic_map_clean2:"projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1d",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
@@ -1115,26 +1122,29 @@ var ne_asia = {
   global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
   distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
   distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
-  extent_mask: "",
+  extent_mask: "projects/coral_atlas/ne_asia/in_out/ne_asia_extent",
   notreef_mask: "",
-  pixels:[""],
-  segments:[""],
-  waves:"",
-  geo_train:"",
-  benthic_train:"",
+  Lagoons_mask: "projects/coral_atlas/ne_asia/in_out/TAJ_lagoons_mask",
+  Geoclean3_rulesetmask1: "projects/coral_atlas/ne_asia/in_out/TAJ_Geoclean3_rulesetmask1",
+  Geoclean3_rulesetmask2: "projects/coral_atlas/ne_asia/in_out/TAJ_Geoclean3_rulesetmask2",
+  pixels:["projects/coral_atlas/ne_asia/in_out/ne_asia_pixels"],
+  segments:["projects/coral_atlas/ne_asia/in_out/ne_asia_segmentation"],
+  waves:"projects/coral_atlas/ne_asia/in_out/nea_waves",
+  geo_train:"projects/coral_atlas/ne_asia/training/TAJ_geo_reference",
+  benthic_train:"projects/coral_atlas/ne_asia/training/TAJ_benthic_reference",
   benthic_pts:"",
-  geo_train_library: "",
-  benthic_train_library:"",
-  geo_val_library:"",
-  benthic_val_library:"",
-  geo_map: [""],
-  benthic_map: [""],
-  mid_mask: "",
-  geo_map_clean1:"",
-  geo_map_clean2:"",
-  geo_map_clean3:"",
-  benthic_map_clean1: "",
-  benthic_map_clean2: "",
+  geo_train_library: "projects/coral_atlas/ne_asia/training/TAJ_geo_training",
+  benthic_train_library:"projects/coral_atlas/ne_asia/training/TAJ_benthic_training",
+  geo_val_library:"projects/coral_atlas/ne_asia/training/TAJ_geo_validation",
+  benthic_val_library:"projects/coral_atlas/ne_asia/training/TAJ_benthic_validation",
+  geo_map: ["projects/coral_atlas/ne_asia/in_out/TAJ_geo"],
+  benthic_map: ["projects/coral_atlas/ne_asia/in_out/TAJ_benthic"],
+  mid_mask:"projects/coral_atlas/ne_asia/in_out/TAJ_PortHarborMask",
+  geo_map_clean1:"projects/coral_atlas/ne_asia/in_out/TAJ_geo_clean1",
+  geo_map_clean2:"projects/coral_atlas/ne_asia/in_out/TAJ_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/ne_asia/in_out/TAJ_geo_clean3",
+  benthic_map_clean1: "projects/coral_atlas/ne_asia/in_out/TAJ_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/ne_asia/in_out/TAJ_benthic_clean2",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
@@ -1142,43 +1152,125 @@ var ne_asia = {
 
 
 var subtropical_eastern_australia = {
-  sname:"ne_asia",
+  sname:"sea",
   tide: "both",
   asset: "projects/coral_atlas/subtropical_eastern_australia/",
   epsg: "EPSG:4326",
-  image: "projects/coral_atlas/subtropical_eastern_australia/image/subtropical_eastern_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic",
+  image: ["projects/coral_atlas/subtropical_eastern_australia/image/subtropical_eastern_reef_low_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic","projects/coral_atlas/workflow/mapping/lord_howe_island/lord_howe_reef_low_tide_normalized_sr_august2018_dec2020_v2_shift_mosaic/20210413T225448Z/lord_howe_reef_low_tide_normalized_sr_august2018_dec2020_v2_shift_mosaic"],
   depth: "projects/coral_atlas/subtropical_eastern_australia/depth/subtropical_eastern_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_dove_depth",
   s2_depth: "projects/coral_atlas/subtropical_eastern_australia/depth/subtropical_eastern_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/subtropical_eastern_australia/depth/subtropical_eastern_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_landsat8_depth",
   global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
-  depth_composite: "projects/coral_atlas/subtropical_eastern_australia/depth/subtropical_eastern_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_composite_depth",
+  depth_composite: ["projects/coral_atlas/subtropical_eastern_australia/depth/subtropical_eastern_reef_high_tide_normalized_sr_august2018_oct2020_v2_shift_mosaic_composite_depth","projects/coral_atlas/workflow/mapping/lord_howe_island/lord_howe_reef_high_tide_normalized_sr_august2018_dec2020_v2_shift_mosaic/20210413T223817Z/lord_howe_reef_high_tide_normalized_sr_august2018_dec2020_v2_shift_mosaic_dove_depth"],
   distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
   distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
-  extent_mask: "",
-  notreef_mask: "",
-  pixels:[""],
-  segments:[""],
+  extent_mask: "projects/coral_atlas/subtropical_eastern_australia/in_out/sea_extent",
+  notreef_mask: "projects/coral_atlas/subtropical_eastern_australia/in_out/sea_notreef",
+  pixels:["projects/coral_atlas/subtropical_eastern_australia/in_out/sea_pixels"],
+  segments:["projects/coral_atlas/subtropical_eastern_australia/in_out/sea_segmentation"],
   waves:"",
-  geo_train:"",
-  benthic_train:"",
+  geo_train:"projects/coral_atlas/subtropical_eastern_australia/training/SEA_geo_reference",
+  benthic_train:"projects/coral_atlas/subtropical_eastern_australia/training/SEA_benthic_reference",
   benthic_pts:"",
-  geo_train_library: "",
-  benthic_train_library:"",
-  geo_val_library:"",
-  benthic_val_library:"",
-  geo_map: [""],
-  benthic_map: [""],
-  mid_mask: "",
-  geo_map_clean1:"",
-  geo_map_clean2:"",
-  geo_map_clean3:"",
-  benthic_map_clean1: "",
-  benthic_map_clean2: "",
+  geo_train_library: "projects/coral_atlas/subtropical_eastern_australia/training/sea_geo_training",
+  benthic_train_library:"projects/coral_atlas/subtropical_eastern_australia/training/sea_benthic_training",
+  geo_val_library:"projects/coral_atlas/subtropical_eastern_australia/training/sea_geo_validation",
+  benthic_val_library:"projects/coral_atlas/subtropical_eastern_australia/training/sea_benthic_validation",
+  geo_map: ["projects/coral_atlas/subtropical_eastern_australia/in_out/sea_geo"],
+  benthic_map: ["projects/coral_atlas/subtropical_eastern_australia/in_out/sea_benthic"],
+  mid_mask: "projects/coral_atlas/subtropical_eastern_australia/in_out/sea_midmask",
+  geo_map_clean1:"projects/coral_atlas/subtropical_eastern_australia/in_out/sea_geo_clean1",
+  geo_map_clean2:"projects/coral_atlas/subtropical_eastern_australia/in_out/sea_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/subtropical_eastern_australia/in_out/sea_geo_clean3",
+  benthic_map_clean1: "projects/coral_atlas/subtropical_eastern_australia/in_out/sea_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/subtropical_eastern_australia/in_out/sea_benthic_clean2",
   prob_geo:[""],
   prob_benthic:[""],
   QAQC: ""
 };
 
+
+var brazil = {
+  sname:"brazil",
+  tide: "both",
+  asset: "projects/coral_atlas/brazil/",
+  epsg: "EPSG:4326",
+  image: "projects/coral_atlas/brazil/image/small_systems_reef_low_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/brazil/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_dove_depth",
+  s2_depth: "projects/coral_atlas/brazil/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/brazil/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_landsat8_depth",
+  global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
+  depth_composite: "projects/coral_atlas/brazil/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_composite_depth",
+  distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
+  distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
+  extent_mask: "projects/coral_atlas/brazil/in_out/brazil_extent",
+  notreef_mask: "projects/coral_atlas/brazil/in_out/brazil_notreef",
+  pixels:["projects/coral_atlas/brazil/in_out/brazil_pixels"],
+  segments:["projects/coral_atlas/brazil/in_out/brazil_segmentation"],
+  lagoons_mask:"projects/coral_atlas/brazil/in_out/Lagoons_mask",
+  waves:"",
+  geo_train:"projects/coral_atlas/brazil/training/BRA_geo_reference",
+  benthic_train:"projects/coral_atlas/brazil/training/BRA_benthic_reference",
+  benthic_pts:"",
+  geo_train_library: "projects/coral_atlas/brazil/training/brazil_geo_training",
+  benthic_train_library:"projects/coral_atlas/brazil/training/brazil_benthic_training",
+  geo_val_library:"projects/coral_atlas/brazil/training/brazil_geo_validation",
+  benthic_val_library:"projects/coral_atlas/brazil/training/brazil_benthic_validation",
+  geo_map: ["projects/coral_atlas/brazil/in_out/brazil_geo"],
+  benthic_map: ["projects/coral_atlas/brazil/in_out/brazil_benthic"],
+  mid_mask: "",
+  geo_map_clean1:"projects/coral_atlas/brazil/in_out/brazil_geo_clean1",
+  //geo_map_clean2:"projects/coral_atlas/brazil/in_out/brazil_geo_clean2",
+  //geo_map_clean2:"projects/coral_atlas/brazil/in_out/brazil_geo_clean3_4", ///the version *_1 etc are ouitputs after removing sucessive geoms to avoid crashing the engine (typical script errors)
+  //geo_map_clean3:"projects/coral_atlas/brazil/in_out/brazil_geo_clean3_5", //the version *clean3_5 was the one sent before feedback
+  geo_map_clean2:"projects/coral_atlas/brazil/in_out/brazil_geo_clean3_5", //from here I depart to start corrections after feedback
+  geo_map_clean3:"projects/coral_atlas/brazil/in_out/brazil_geo_clean3_toFinish",// This is the geo 3 submitted after feedback
+  //benthic_map_clean1: "projects/coral_atlas/brazil/in_out/brazil_benthic_clean1_final",
+ // benthic_map_clean2: "projects/coral_atlas/brazil/in_out/brazil_benthic_clean2_final",//the version *clean2_final was the one sent before feedback
+  benthic_map_clean1: "projects/coral_atlas/brazil/in_out/brazil_benthic_clean2_final",//from here I depart to start corrections after feedback
+  benthic_map_clean2: "projects/coral_atlas/brazil/in_out/brazil_benthic_clean2_toFinish",//This is the benmthic 2 submitted after feedback
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
+
+var west_africa = {
+  sname:"west_africa",
+  tide: "both",
+  asset: "projects/coral_atlas/west_africa/",
+  epsg: "EPSG:4326",
+  doveimage: "projects/coral_atlas/west_africa/image/small_systems_reef_low_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic",
+  depth: "projects/coral_atlas/west_africa/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_dove_depth",
+  s2_depth: "projects/coral_atlas/west_africa/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_sentinel2_depth",
+  ls8_depth: "projects/coral_atlas/west_africa/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_landsat8_depth",
+  global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
+  depth_composite: "projects/coral_atlas/west_africa/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_composite_depth",
+  distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
+  distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
+  extent_mask: "projects/coral_atlas/west_africa/in_out/waf_regionextent",
+  notreef_mask: "",
+  pixels:["projects/coral_atlas/west_africa/in_out/west_africa_pixelsb"],
+  segments:["projects/coral_atlas/west_africa/in_out/west_africa_segmentationb"],
+  waves:"",
+  geo_train:"projects/coral_atlas/west_africa/training/WAF_geo_reference",
+  benthic_train:"projects/coral_atlas/west_africa/training/WAF_benthic_reference",
+  benthic_pts:"",
+  geo_train_library: "projects/coral_atlas/west_africa/training/west_africa_geo_training",
+  benthic_train_library:"projects/coral_atlas/west_africa/training/west_africa_benthic_training",
+  geo_val_library:"projects/coral_atlas/west_africa/training/west_africa_geo_validation",
+  benthic_val_library:"projects/coral_atlas/west_africa/training/west_africa_benthic_validation",
+  geo_map: ["projects/coral_atlas/west_africa/in_out/west_africa_geo"],
+  benthic_map: ["projects/coral_atlas/west_africa/in_out/west_africa_benthic"],
+  mid_mask: "",
+  geo_map_clean1:"projects/coral_atlas/west_africa/in_out/west_africa_geo_clean1",
+  geo_map_clean2:"projects/coral_atlas/west_africa/in_out/west_africa_geo_clean2",
+  geo_map_clean3:"projects/coral_atlas/west_africa/in_out/west_africa_geo_clean3b",
+  benthic_map_clean1: "projects/coral_atlas/west_africa/in_out/west_africa_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/west_africa/in_out/west_africa_benthic_clean2",
+  prob_geo:[""],
+  prob_benthic:[""],
+  QAQC: ""
+};
 
 
 // export the objects
@@ -1219,6 +1311,8 @@ exports = {
   nw_arabian_sea: nw_arabian_sea,
   ne_asia: ne_asia,
   subtropical_eastern_australia: subtropical_eastern_australia,
+  brazil: brazil,
+  west_africa:west_africa
 };
 
 

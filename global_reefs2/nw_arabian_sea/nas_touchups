@@ -1,6 +1,18 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    geometry = /* color: #d63000 */ee.Geometry.MultiPoint(),
+    regionextent = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[46.339138816562304, 31.15830622881757],
+          [46.339138816562304, 13.017422806068598],
+          [68.3996856915623, 13.017422806068598],
+          [68.3996856915623, 31.15830622881757]]], null, false),
     GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final"),
     mid_mask = /* color: #d6af32 */ee.Geometry({
       "type": "GeometryCollection",
@@ -3199,7 +3211,108 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [49.82477641509089, 27.933003804151838],
            [49.6771476309112, 27.929363851724396],
            [49.65792155669245, 27.960906032159237]]]]),
-    benthic = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2b");
+    benthic = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2b"),
+    review = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[58.48513863814409, 23.69609366297083],
+          [58.37252877486284, 23.587273884407416],
+          [58.787949307089406, 23.342257264818905],
+          [59.153244717245656, 22.880842031088317],
+          [59.434172884418935, 22.5737856326982],
+          [59.58111502309081, 22.45326568293463],
+          [59.758269564106435, 22.396140660523205],
+          [59.69728989697219, 22.202578303936587],
+          [59.54088490713774, 21.932072712697803],
+          [59.34511780314597, 21.642852188363666],
+          [59.186397797041394, 21.444863308496803],
+          [58.88464916964619, 21.195204655116758],
+          [58.64065926291632, 20.89167914601388],
+          [58.47006601265202, 20.586264439333657],
+          [58.12056344917546, 20.658883413163274],
+          [57.844546193617425, 20.38565690700181],
+          [57.415330770250065, 19.22705685456255],
+          [55.201585653062565, 17.96192934842677],
+          [51.81936001517022, 16.278559426182248],
+          [51.98061582685911, 15.02110396016655],
+          [56.90249082685911, 17.328038993378758],
+          [59.86934085323048, 19.580929811734308],
+          [60.13301272823048, 22.700615164143887],
+          [58.49879641963673, 23.740521549757425]]]),
+    HarbourMask = /* color: #0b4a8b */ee.Geometry.MultiPolygon(
+        [[[[58.57230409055048, 23.62761332071788],
+           [58.56754048734003, 23.63087665223951],
+           [58.55968697934443, 23.623681487995437],
+           [58.56342061429316, 23.618412647124533],
+           [58.58067258267695, 23.621597568802002],
+           [58.578698476841986, 23.626079919995096],
+           [58.5779260006457, 23.625765374038185],
+           [58.57556565671259, 23.627141507022923],
+           [58.574449857762396, 23.628163767880483]]],
+         [[[58.595274976844024, 23.617367958822292],
+           [58.59521060382767, 23.616945259410443],
+           [58.595489553565216, 23.61585409881187],
+           [58.59809666072769, 23.61627680174349],
+           [58.59780698215408, 23.617338468209905],
+           [58.596970132941436, 23.617407279628498],
+           [58.596508792990875, 23.61746626081567],
+           [58.59612255489273, 23.617338468209905],
+           [58.59569340145035, 23.617269656755177]]],
+         [[[58.596402804088385, 23.60188714161106],
+           [58.597110907268316, 23.597757903715703],
+           [58.601853052806646, 23.597993863669178],
+           [58.60208908719996, 23.599193320202303],
+           [58.60183159513453, 23.601336584070307],
+           [58.60058705015162, 23.601100630130965]]],
+         [[[58.60613442613759, 23.582640051966504],
+           [58.60845721914448, 23.582585971519805],
+           [58.6083338375298, 23.583260840373168],
+           [58.60804952337422, 23.58386555371747],
+           [58.60771692945637, 23.583659066547316],
+           [58.60735751344838, 23.58364923381682]]],
+         [[[59.47179544288611, 22.6126215237667],
+           [59.471457484550236, 22.61228973727032],
+           [59.471232178992985, 22.6119331896956],
+           [59.47081375438666, 22.611601401539026],
+           [59.47130191642737, 22.61112105010339],
+           [59.4718115361402, 22.611571689127754],
+           [59.47190273124671, 22.611700442863572],
+           [59.471977833099125, 22.61174501143637],
+           [59.471993926353214, 22.612502674964464],
+           [59.471951011008976, 22.612586859543317]]],
+         [[[59.4851854309761, 22.598207913512162],
+           [59.48471842965145, 22.591347406923134],
+           [59.48669253548641, 22.585067117382625],
+           [59.49276505669613, 22.58455200206327],
+           [59.490147220697594, 22.591743630097135],
+           [59.491197102258845, 22.596263194956375],
+           [59.48830031652276, 22.597560775274584]]],
+         [[[59.75268432233528, 22.52983182146942],
+           [59.7631342086573, 22.529930921563736],
+           [59.761245933510814, 22.532230023791147],
+           [59.75637504193977, 22.532309302495666]]],
+         [[[58.226291630245825, 20.461557396191694],
+           [58.22242924926438, 20.459546998818094],
+           [58.22792241332688, 20.45287229081956],
+           [58.23161313293137, 20.458179913571204]]],
+         [[[58.220527394350746, 20.450111644677843],
+           [58.206107838686684, 20.43225706557531],
+           [58.225076420840004, 20.416411401258497],
+           [58.248250706728676, 20.43772625605725]]],
+         [[[53.2521482901533, 16.705260246198343],
+           [53.25112905072764, 16.703657177629434],
+           [53.2522019343336, 16.703020056896406],
+           [53.25361814069346, 16.702485695932697],
+           [53.25489487218455, 16.702341829263883],
+           [53.255796094413554, 16.702578181591118],
+           [53.256815333839214, 16.703020056896406],
+           [53.25596775579051, 16.704602578670176]]],
+         [[[52.83593091967823, 16.5646509883196],
+           [52.83758316043141, 16.565998131917183],
+           [52.83352984813208, 16.56955199730453],
+           [52.83224238780493, 16.569356614254733],
+           [52.832595368059, 16.56701409284824]]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 ///////////////////////////////
 // Global coral atlas project - Red Sea and Gulf of Aden
@@ -3250,7 +3363,7 @@ var vars = {
   geo_depth_cutoff: 1250, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 800, //depth in centimetres
-  turbid1_depth_cutoff: 500,//depth in centimeters to be combined with depth5m_mask Code introduced CR
+  turbid1_depth_cutoff: 50,//depth in centimeters to be combined with depth5m_mask Code introduced CR
   turbid2_depth_cutoff: 800,//depth in centimeters to be combined with depth8m_mask Code introduced CR
   
   //############
@@ -3316,7 +3429,7 @@ if (vars.geomorphic) {
     vars.obia_clean = false;
     vars.fast_clean = false;
     vars.do_export = false;
-    vars.geomorph_output_name = temp_outname + '3FINAL';
+    vars.geomorph_output_name = temp_outname + '3_review_1b';
   }
 }
 
@@ -3334,12 +3447,14 @@ if (!vars.geomorphic) {
     vars.obia_clean = false, 
     vars.fast_clean = false,
     vars.do_export = false;
-    vars.benthic_output_name = temp_outname + '2FINAL';
+    vars.benthic_output_name = temp_outname + '2_review_1d';
   }
 }
 
 //Region extent is created in map viewer and exported to GEE asset
 var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
+//var region_extent = ee.Image().byte().paint(ee.Feature(regionextent.dissolve(),{zone: 1}), "zone").clip(regionextent.dissolve());
+  
 Map.addLayer(region_extent, {}, "Manual reef outline", false);
 // -----------------------------------------<
 
@@ -3359,290 +3474,17 @@ if (vars.manual_clean && vars.geomorphic) {
   //var depth = ee.Image(region_params.segments).select('depth');// replace pixel with segments
   
   // define the manually edited map - uses the output from the second pass of cleaning
-  var man_geo = ee.Image(region_params.geo_map_clean3);
+  var man_geo = ee.Image(region_params.geo_map_clean3_review_1);
   
-  /*
-   // the "GLOBAL MASK" clean
-  // currently uses GCRMN extent + bathymetry threhold < vars.global_depth_thresh
-  if (vars.global_extent_clean) {
-    var blanket_mask = ee.Image([param_module.global_extent_mask.gcrmn]).unmask(0, false)
-              .eq(1) // extent according to global extent layer
-              .add(depth.lt(vars.global_depth_thresh)) // combine with areas less than depth thrshold
-              .eq(0) // get leftovers
-              .selfMask().connectedPixelCount(25, true).gte(25);
-    
-    man_geo = man_geo.where({
-      test: blanket_mask.eq(1),
-      value: ee.Image(0)
-    });
-  }
-  */
-  /*
-  // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
-  var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
-  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
   
-  // the "MID MASK" CLEAN
+    // Mask out harbours
+  var harbours = ee.Image().byte().paint(ee.Feature(HarbourMask.dissolve(),{zone: 1}), "zone").clip(HarbourMask.dissolve());
+  
   man_geo = man_geo.where({
-    test: midmask.eq(1),
-    value: ee.Image(0)
-  });
-  */
-  
- //START**************************************************************************************************************************START
- //************************************* START clean up deep water using reef extent  *******************************START
- //*******************************************************************************************************************************START
- // Masking out all the areas that fall outside GCRMN_ext (the reef extent globally) or areas deeper then treshold depth
- // no additional mask are needed
- //*******************************************************************************************************************************START
- //***********Intergrating global mask to get out reefs to deep imagery to bad to get out using GCRMN_ext_mask created in viewer 
- /*
- var GCRMNext = ee.Image(GCRMN_ext).unmask(0,false);//to take care GCRMN_ext has 1 for reef and 0 for no reef
-
- // START-ALL REEF EXTENT *****Maps areas that fall within GCRMN reef ext and < 5 m (turbid1_depth_cutoff)*************START
- 
-  man_geo = man_geo.where({
-    test:  (GCRMNext.eq(1).add(depth.lt(vars.turbid1_depth_cutoff)).eq(0)),
-    value: ee.Image(0)
-  });
-  */
- // END-ALL REEF EXTENT *****Maps areas that fall within GCRMN reef ext and < 5 m (turbid1_depth_cutoff)*************START*/
- /*
-// import the depth8m_mask from asset ****only use ee.FC if depth8m_mask created in map viewer****
-  
-  var turbiddeep_mask = ee.FeatureCollection(region_params.depth8m_mask).geometry();
-  var turbiddeepmask = ee.Image().byte().paint(ee.Feature(turbiddeep_mask.dissolve(),{zone: 1}), "zone").clip(turbiddeep_mask.dissolve());
-  
-  // the "turdbid MASK" applied to areas deeper then 8 m
-  man_geo = man_geo.where({
-    test: (turbiddeepmask.eq(1).and(GCRMNextmask.neq(1)))
-                           .and(depth.gt(vars.turbid2_depth_cutoff)),
-                         //.and ((GCRMNextmask.eq(0).add(depth.gt(vars.turbid2_depth_cutoff))).eq(1)),
+    test: harbours.eq(1),
     value: ee.Image(0)
   });
   
-   // import the depth5m_mask from asset ****only use ee.FC if depth5m_mask created in map viewer****
-  
-  var turbid_mask = ee.FeatureCollection(region_params.depth5m_mask).geometry();
-  var turbidmask = ee.Image().byte().paint(ee.Feature(turbid_mask.dissolve(),{zone: 1}), "zone").clip(turbid_mask.dissolve());
-  
-  // the "turdbid MASK" applied to areas deeper then 5 m
-  man_geo = man_geo.where({
-    test: (turbidmask.eq(1).and (GCRMNextmask.eq(0)))
-                     .and(depth.gt(vars.turbid1_depth_cutoff)),
-                     //.and ((GCRMNextmask.eq(0).add(depth.gt(vars.turbid1_depth_cutoff))).eq(0)),
-    value: ee.Image(0)
-  });
-  */
-
-/*
-  //************************************* clean up small groups of  pixesl in deep water Chris RSAG ************************************
-  
-var man_geo = man_geo.where({
-   test:man_geo.eq(22)// Reef Slope pixels
-    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are RS and neighbouring each other, with groups smaller then 25
-   value: ee.Image(0) // change those selected no class
-  });
-   var man_geo = man_geo.where({
-    test:man_geo.eq(12)// Deep Lagoon pixels
-    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are Deep Lagoon and neighbouring each other, with groups smaller then 25
-    value: ee.Image(0) // change those selected no class
-  });
-     var man_geo = man_geo.where({
-    test:man_geo.eq(23)// Plateau pixels
-    .connectedPixelCount(25,false).lt(25),//selects group of pixel that are Plateau and neighbouring each other, with groups smaller then 25
-    value: ee.Image(0) // change those selected no class
-  });
-  
- //************************************* END flean up small groups of pixesl in deep water Chris RSAG ************************************
- //************************************* END Import AND APPLY 5m and 8 m mask Chris RSAG************************************START
- //*************************************************************************************************************************START 
- */
- 
-// Manual additions for NAS
-/*
-var MidMask = ee.Image().byte().paint(ee.Feature(mid_mask, {zone: 1}), "zone").clip(mid_mask);
-  
-  man_geo = man_geo.where({
-    test:  MidMask.eq(1),
-    value: ee.Image(0)
-  });
-  
- // TRF to IRF
-var TRFIRF = ee.Image().byte().paint(ee.Feature(TRFtoIRF, {zone: 1}), "zone").clip(TRFtoIRF);
-  
-  man_geo = man_geo.where({
-    test:  TRFIRF.eq(1)
-                .and(man_geo.eq(16)), //TRF
-    value: ee.Image(13)//IRF
-  });
-
-// ORF to Deep
-var ORFDeep = ee.Image().byte().paint(ee.Feature(ORFtoDeep, {zone: 1}), "zone").clip(ORFtoDeep);
-  
-  man_geo = man_geo.where({
-    test:  ORFDeep.eq(1)
-                .and(man_geo.eq(14)), //ORF
-    value: ee.Image(2)//Deep
-  });
-
-// ORFto BRS
-var ORFBRS = ee.Image().byte().paint(ee.Feature(ORFtoBRS, {zone: 1}), "zone").clip(ORFtoBRS);
-  
-  man_geo = man_geo.where({
-    test:  ORFBRS.eq(1)
-                .and(man_geo.eq(14)), //ORF
-    value: ee.Image(24)//BRS
-  });
-  */
-  // Cleanup phantom reefs
-var crap = ee.Image().byte().paint(ee.Feature(garbage, {zone: 1}), "zone").clip(garbage);
-  
-  man_geo = man_geo.where({
-    test:  crap.eq(1),
-    value: ee.Image(0)
-  });
-  
-/*
-// ORF to RS
-var ORFRS = ee.Image().byte().paint(ee.Feature(ORFtoRS, {zone: 1}), "zone").clip(ORFtoRS);
-  
-  man_geo = man_geo.where({
-    test:  ORFRS.eq(1)
-                .and(man_geo.eq(14)), //ORF
-    value: ee.Image(22)//RS
-  });
-
-// DL to BRS
-var DLBRS = ee.Image().byte().paint(ee.Feature(DLtoBRS, {zone: 1}), "zone").clip(DLtoBRS);
-  
-  man_geo = man_geo.where({
-    test:  DLBRS.eq(1)
-                .and(man_geo.eq(12)), //DL
-    value: ee.Image(24)//BRS
-  });
-*/
-/* 
- //************************************* START Import AND APPLY Lagoons mask Chris Red Sea ************************************START
-  // import the lagoon mask from asset ****only use ee.FC if  lagoons mask created in map viewer****
-  var lagoons_mask = ee.FeatureCollection(region_params.Lagoons_mask).geometry();
-  var lagoonsmask = ee.Image().byte().paint(ee.Feature(lagoons_mask.dissolve(),{zone: 1}), "zone").clip(lagoons_mask.dissolve());
-
-  
-  // RC within Lagoon ORF
-man_geo = man_geo.where({
-test: lagoonsmask.eq(1)
-             .and(man_geo.eq(15)),
-  value: ee.Image(14)
-});
-// Reef slope, sheltered slope (within lagoon mask) -> Back Reef Slope
- man_geo = man_geo.where({
-  test: lagoonsmask.eq(1)
-                    .and(man_geo.eq(21).or(man_geo.eq(22))),
-    value: ee.Image(24)
- });    
-
- 
- //************************************* START Import AND APPLY coast mask Chris Red Sea ************************************START
-  // import the coast mask from asset ****only use ee.FC if  coast mask created in map viewer****
-  var Coast_mask = ee.FeatureCollection(region_params.Coast_mask).geometry();
-  var Coastmask = ee.Image().byte().paint(ee.Feature(Coast_mask.dissolve(),{zone: 1}), "zone").clip(Coast_mask.dissolve());
-
-  
-  //Back Reef Slope or Sheltered slope within Coast RS
-man_geo = man_geo.where({
-test: Coastmask.eq(1)
-             .and(man_geo.eq(21).or(man_geo.eq(22))),//
-  value: ee.Image(24)
-});
-    //Deep Lagoon within Coast Deep Water
-man_geo = man_geo.where({
-test: Coastmask.eq(1)
-             .and(man_geo.eq(12)),//
-  value: ee.Image(2)
-}); 
-  //************************************* END IMPORT AND APPLY Lagoons mask Chris Red Sea ************************************END
-  
-  
-  */
-  /*
-  
-  // the "REEF MASK" CLEAN
-  
-  // Define a kernel for reef mask Morphological Operations
-  var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
-
-  // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
-  var reef_mask = man_geo.eq(2)
-            .focal_max({kernel: kernel_rm, iterations: 2});
-
-  // Inner Reef Flat (outside reef mask) -> outer reef flat
-  man_geo = man_geo.where({
-    test: reef_mask.eq(1)
-                    .and(man_geo.eq(13)),
-    value: ee.Image(14)
-  });
-  
-  // Reef crest, slope, sheltered slope (within reef mask) -> outer reef flat
-  man_geo = man_geo.where({
-    test: reef_mask.eq(0)
-                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
-    value: ee.Image(14)
-  });
-  
-*/
-  /*
-  // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
-  
-  var waves = ee.Image(region_params.waves)
-  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
-  
-  man_geo = man_geo.where({
-    test: waves.lte(vars.wave_height)
-               .and(man_geo.eq(22)),
-    value: ee.Image(21)
-  })*/
-  
-  
-  
-  
-  /*
-  ##############
-  
-  The rest of the manual geometry paintings and rules should go here
-      - make the geom, paint the layer, use it in a rule
-      - consult previous regions *_cleanup script for ideas/hints/existing rules etc.
-  e.g. 
-  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
-  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
-  
-  
-  // Reef crest -> Inner reef flat (inside the reef)
-  man_geo = man_geo.where({
-    test: notreefcrest.eq(1)
-                     .and(man_geo.eq(15)),
-    value: ee.Image(13)
-  });
-  
-  // Deep water -> Deep lagoon (inside the reef)
-  man_geo = man_geo.where({
-    test: notdeepwater.eq(1)
-                     .and(man_geo.eq(2)),
-    value: ee.Image(12)
-  });
-  
-  ##############
-  */
-  
-  if (vars.geo_refinement) {
-    // make the mask image layer
-    var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
-    // apply
-    man_geo = man_geo.where({
-      test: refine.eq(1),
-      value: ee.Image(0)
-    });
-  }
   
   man_geo = man_geo.updateMask(man_geo.gt(2)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
   
@@ -3653,12 +3495,7 @@ test: Coastmask.eq(1)
   Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
   var geo_clean2 = ee.Image(region_params.geo_map_clean2);
   Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-//  Map.addLayer(man_geo.updateMask(man_geo), map_palettes.geo, 'Geo clean stage 3', false);
-//Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", false, 0.4);// CR added
-//Map.addLayer(lagoons_mask, {color: 'blue'}, "lagoons mask import", true, 0.4);// CR added*/
-//Map.addLayer(turbiddeepmask, {color: 'green'}, "turbiddeep import", false, 0.4);// CR added
-//Map.addLayer(reef_band_mask, {}, "band(buffer) around lagoon");// CR added*/
-//Map.addLayer(ORFtoRS_mask, {}, "ORF_IRF_RCToRS");// CR added*/
+
 var GCRMNext=ee.Image([param_module.global_extent_mask.gcrmn])
 Map.addLayer(GCRMNext, {}, "GCRMNextmask");// CR added GCRMN_ext
  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
@@ -3688,14 +3525,41 @@ if (vars.manual_clean && !vars.geomorphic) {
   print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
   print("Export the manual map, check 'manual' layer in the viewer for effects");
   
-  //var depth = ee.Image(region_params.segments).select('depth');
+  var depth = ee.Image(region_params.segments).select('depth');
   
   // define the final geomorphic map (the manually edited geo map - stage 3)
-  var geo_map = ee.Image(region_params.geo_map_clean3);
+  var geo_map = ee.Image(region_params.geo_map_clean3_review_1);
   
   // define the clean benthic map to apply 2nd stage rules to
-  var man_benthic = ee.Image(region_params.benthic_map_clean2mid);
+  var man_benthic = ee.Image(region_params.benthic_map_clean2_review_1);
+ 
   
+    // Mask out harbours
+  var harbours = ee.Image().byte().paint(ee.Feature(HarbourMask.dissolve(),{zone: 1}), "zone").clip(HarbourMask.dissolve());
+  
+  man_benthic = man_benthic.where({
+    test: harbours.eq(1),
+    value: ee.Image(0)
+  });
+  
+  
+  // C/A to SD in areas deeper then 5 m
+  var Oman = ee.Image().byte().paint(ee.Feature(review.dissolve(),{zone: 1}), "zone").clip(review.dissolve());
+  man_benthic = man_benthic.where({
+    test: Oman.eq(1)
+              .and(depth.gt(vars.turbid1_depth_cutoff))
+              .and(man_benthic.eq(15)),// C/A 
+    value: ee.Image(11) // SD
+   });
+   
+   // SG to SD in Oman
+  man_benthic = man_benthic.where({
+    test: Oman.eq(1)
+              .and(man_benthic.eq(14)),// SG
+    value: ee.Image(11) // SD
+   }); 
+   
+  /*
     // Cleanup phantom reefs
   var crap = ee.Image().byte().paint(ee.Feature(garbage, {zone: 1}), "zone").clip(garbage);
   
@@ -3703,7 +3567,7 @@ if (vars.manual_clean && !vars.geomorphic) {
     test:  crap.eq(1),
     value: ee.Image(0)
   });
-  /*
+  
   // extra depth cutoff refinement
   man_benthic = man_benthic.where({
           test: depth.gt(vars.benthic_depth_cutoff),

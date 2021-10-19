@@ -1,0 +1,1686 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
+    imageVisParam2 = {"opacity":1,"bands":["b3","b2","b1"],"min":44.94,"max":2202.06,"gamma":1},
+    waves = ee.Image("projects/coral_atlas/coral_sea/in_out/cosea_waves"),
+    wavespng = ee.Image("projects/coral_atlas/png_solomons/in_out/pns_waves"),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    geometry = /* color: #d63000 */ee.Geometry.MultiPoint(),
+    rock_sand = 
+    /* color: #00ffff */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-35.23050881147014, -9.01095894345274],
+           [-35.2449283671342, -9.03842383224663],
+           [-35.22638893842326, -9.04147535740528],
+           [-35.21265602826701, -9.02757375569788],
+           [-35.203386313911544, -9.009263511463674],
+           [-35.192399985786544, -8.992647857249315],
+           [-35.19377327680217, -8.988239494405645],
+           [-35.20853615522014, -8.990952339429445]]],
+         [[[-35.13198391917451, -8.872978050149843],
+           [-35.13249890330537, -8.872045210149174],
+           [-35.13189808848603, -8.870009914646287],
+           [-35.13327137950166, -8.868653044709196],
+           [-35.135846300155954, -8.869246675923673],
+           [-35.13816372874482, -8.871451583459839],
+           [-35.14065281871064, -8.8773878071434],
+           [-35.147090120346384, -8.898418226160004],
+           [-35.14485852244599, -8.901216537646757],
+           [-35.144086046249704, -8.903082066746908],
+           [-35.143056077987985, -8.904099624063893],
+           [-35.142283601791696, -8.902912473585502],
+           [-35.1411678028415, -8.901216537646757],
+           [-35.13945118907197, -8.89909660666743],
+           [-35.13945118907197, -8.897315855153359],
+           [-35.13850705149873, -8.896213480826392],
+           [-35.13773457530244, -8.89341513108707],
+           [-35.13696209910615, -8.890531960502521],
+           [-35.13541714671357, -8.889005566886969],
+           [-35.13541714671357, -8.886461563395246],
+           [-35.134558839828806, -8.88493515282245],
+           [-35.13515965464814, -8.88391754224217],
+           [-35.13464467051728, -8.882730326328002],
+           [-35.1342155170749, -8.881373503432625],
+           [-35.13344304087861, -8.880101477408203],
+           [-35.131812257797556, -8.87840543584554],
+           [-35.1316405964206, -8.876370175618225],
+           [-35.13103978160127, -8.873995691082833]]],
+         [[[-45.11875887430535, -1.291369382000115],
+           [-45.164077477820975, -1.5885926596151034],
+           [-45.051467614539725, -1.625656930873268],
+           [-44.966323571570975, -1.371685206623081],
+           [-45.00340242899285, -1.2673427802770667]]],
+         [[[-33.80480264592764, -3.8590320107932032],
+           [-33.79991029668447, -3.8645983377990687],
+           [-33.798107852226465, -3.8661397757441964],
+           [-33.79647706914541, -3.8663966817959525],
+           [-33.79596208501455, -3.865112150758762],
+           [-33.79553293157217, -3.86374198217457],
+           [-33.79647706914541, -3.8627999899892087],
+           [-33.7987086670458, -3.8621149041066767],
+           [-33.79991029668447, -3.861686725149256],
+           [-33.80179857183096, -3.8598883711697307]]]]),
+    coral_sand = 
+    /* color: #bf04c2 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-35.086211576531014, -8.793680870571425],
+           [-35.09410799987086, -8.795716587457349],
+           [-35.09925784117945, -8.801823670956033],
+           [-35.103377714226326, -8.80589500396413],
+           [-35.107154264519295, -8.814037535511616],
+           [-35.11505068785914, -8.81743020404354],
+           [-35.12123049742945, -8.819126526624544],
+           [-35.12329043395289, -8.8330360777464],
+           [-35.11196078307398, -8.854069036139325],
+           [-35.11230410582789, -8.86390662014091],
+           [-35.11573733336695, -8.884259405626677],
+           [-35.097884550163826, -8.883580997636358],
+           [-35.084151640007576, -8.857461336221862],
+           [-35.0635522747732, -8.834053829187354],
+           [-35.071448698113045, -8.816751672829742],
+           [-35.075225248406014, -8.799448706012893]]],
+         [[[-35.00182983445405, -8.603062977495336],
+           [-34.98157379197358, -8.60170513578658],
+           [-34.948271484844675, -8.58659881864626],
+           [-34.8662417387447, -8.419922878554818],
+           [-34.914478585668526, -8.402092300479941],
+           [-34.931988046117745, -8.39937518800495],
+           [-34.95275907272907, -8.399545008092089],
+           [-34.961170480199776, -8.40073374662106],
+           [-34.967178628393135, -8.410922784553357],
+           [-34.96923856491657, -8.417036078736166],
+           [-34.97456006760212, -8.427903918929587],
+           [-34.97747831101032, -8.435035773097956],
+           [-34.983143136449776, -8.452864832351946],
+           [-34.984688088842354, -8.459317050708263],
+           [-34.98880796188923, -8.464241039387375],
+           [-34.995159432836495, -8.477863566757152],
+           [-34.99756269211384, -8.483296668040943],
+           [-34.99996595139118, -8.496520083867345],
+           [-34.9955027555904, -8.49804807711458],
+           [-34.99618940109821, -8.504839084534275],
+           [-34.995159432836495, -8.512478824007134],
+           [-34.99704770798298, -8.516892826216996],
+           [-34.99121122116657, -8.517571898960911],
+           [-34.98829297775837, -8.519099808227509],
+           [-34.99910764450642, -8.520797478032241],
+           [-34.99876432175251, -8.524871854812762],
+           [-34.99430112595173, -8.53064381423803],
+           [-34.992927834936104, -8.534548325573432],
+           [-34.994129464574776, -8.539810864627292],
+           [-34.99481611008259, -8.545243086874699],
+           [-34.99756269211384, -8.549486956662331],
+           [-34.99533109421345, -8.552372761126854],
+           [-34.9980776762447, -8.558993053471042],
+           [-34.999622628637276, -8.564764496457371],
+           [-35.00528745407673, -8.568668658245105],
+           [-35.00803403610798, -8.57274252346091],
+           [-35.01421384567829, -8.57274252346091],
+           [-35.013870522924385, -8.57902298011145],
+           [-35.00992231125446, -8.592601990708298],
+           [-35.00683240646931, -8.60227673914235]]],
+         [[[-34.95312554611177, -8.384108720403583],
+           [-34.929779598846146, -8.395656771168811],
+           [-34.89888055099458, -8.365087653886956],
+           [-34.89544732345552, -8.263852838584372],
+           [-34.83433587326021, -8.178904245052113],
+           [-34.80412347091646, -8.099375953206923],
+           [-34.767731259002396, -8.010992762925964],
+           [-34.77459771408052, -7.969514022463266],
+           [-34.800690243377396, -7.959993717573579],
+           [-34.81373650802583, -8.017112219886226],
+           [-34.830902645721146, -8.029350857578464],
+           [-34.85150201095552, -8.051787401866545],
+           [-34.863861630096146, -8.082380685987227],
+           [-34.87965447677583, -8.111612101486989],
+           [-34.89476067794771, -8.140161664827696],
+           [-34.91124017013521, -8.170068548767908],
+           [-34.907806942596146, -8.199973191677483],
+           [-34.91192681564302, -8.219002248515524],
+           [-34.91741997970552, -8.242107733021196],
+           [-34.938019344939896, -8.279481393059108],
+           [-34.93870599044771, -8.305980567118826],
+           [-34.93733269943208, -8.325683921662872],
+           [-34.943512509002396, -8.341310015171926],
+           [-34.95518548263521, -8.34742440348062],
+           [-34.97235162033052, -8.356256128663608],
+           [-34.97578484786958, -8.369163674952746]]],
+         [[[-35.08968888143108, -6.1797443502791465],
+           [-35.050893410239674, -6.172576419341548],
+           [-35.03922043660686, -6.097819380887204],
+           [-35.05741654256389, -6.046268495827668],
+           [-35.076299294028736, -5.997444253092401],
+           [-35.0962120137553, -5.968079314549209],
+           [-35.103078468833424, -5.980713260472599],
+           [-35.1017051778178, -5.99402980644203],
+           [-35.103765114341236, -6.004273082249789],
+           [-35.11440811971233, -6.008028901803619],
+           [-35.133977516684986, -6.052755302104473],
+           [-35.117498024497486, -6.12103273348214],
+           [-35.11063156941936, -6.1684804152548915]]],
+         [[[-35.124979863554884, -5.959535197341539],
+           [-35.124979863554884, -5.950656976922265],
+           [-35.11433685818379, -5.951339922048261],
+           [-35.10129059353535, -5.95407169406525],
+           [-35.089274297148634, -5.9585107946183165],
+           [-35.07794464626973, -5.945876337287317],
+           [-35.071764836699415, -5.89601862585751],
+           [-35.13974274197285, -5.866306760752653],
+           [-35.16823853054707, -5.873820255815162],
+           [-35.17270172634785, -5.90148270393429],
+           [-35.16274536648457, -5.955779044678206],
+           [-35.130473027617384, -5.984461740189286],
+           [-35.11708344021504, -5.981388666110057],
+           [-35.121203313261915, -5.971827880794896]]],
+         [[[-35.17441124475417, -5.88127674729548],
+           [-35.12600273645339, -5.846782601737248],
+           [-35.10437340295729, -5.786668917145258],
+           [-35.14694542444167, -5.691703622957199],
+           [-35.16033501184401, -5.667105726497879],
+           [-35.17715782678542, -5.637723532665771],
+           [-35.18762908455451, -5.632086132920835],
+           [-35.19192070520339, -5.496600082573312],
+           [-35.317576833133074, -5.202628884531192],
+           [-35.51498741662917, -5.0285737360650185],
+           [-35.6320604757112, -5.037807706787846],
+           [-35.698508572081415, -5.1181714390985436],
+           [-35.43808311975417, -5.23681878825677],
+           [-35.2255663350862, -5.796916021668892],
+           [-35.18333763635573, -5.855320955110442]]],
+         [[[-45.12635826569759, -1.4848951181230288],
+           [-45.14489769440853, -1.497078949391686],
+           [-45.13064980012142, -1.5621154250131928],
+           [-45.069538349926106, -1.550446757218126],
+           [-45.07485985261165, -1.4962209353150515],
+           [-45.09236931306087, -1.478717375165432]]],
+         [[[-45.05209697961756, -1.1381103021557228],
+           [-45.122134821414434, -1.1497809492708948],
+           [-45.13930095910975, -1.3303263492234767],
+           [-45.09672893762537, -1.31659710255444],
+           [-45.006778376101934, -1.279527761105676],
+           [-44.99991192102381, -1.1470349189299496]]]]),
+    sg_0 = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-35.07697394970274, -8.655559634966718],
+           [-35.111306225093365, -8.70137754490575],
+           [-35.07354072216368, -8.72106055636588],
+           [-35.050881420405865, -8.70035942993709],
+           [-35.04779151562071, -8.677960200754608],
+           [-35.058091198237896, -8.662687232497081]]],
+         [[[-34.81385357332763, -6.88909918147033],
+           [-34.83067638826903, -6.945675905347191],
+           [-34.78535778475341, -6.951469523975145],
+           [-34.785701107507315, -6.910571868429472],
+           [-34.793940853601065, -6.890462555612903]]],
+         [[[-34.80080730867919, -6.962374965224834],
+           [-34.81351025057372, -6.977710313041657],
+           [-34.80870373201903, -7.000201247529915],
+           [-34.784671139245596, -6.985888959879404],
+           [-34.795657467370596, -6.962715756181618]]],
+         [[[-35.238592880764834, -5.545267405949408],
+           [-35.25472905019843, -5.55859418167468],
+           [-35.235846298733584, -5.58148819426458],
+           [-35.212843674221865, -5.574654254087468],
+           [-35.21971012929999, -5.551418262954478],
+           [-35.22691990713202, -5.539458204356649],
+           [-35.234816330471865, -5.5418502354633565]]],
+         [[[-45.064456598758184, -1.1326182165540721],
+           [-45.1145817208285, -1.1463484109327329],
+           [-45.1255680489535, -1.31797003063679],
+           [-45.03081096887537, -1.293943680621109],
+           [-45.001285212039434, -1.2149983794844523],
+           [-45.02257122278162, -1.1422293594963298]]]]),
+    rb_sand = 
+    /* color: #00ff00 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-34.82847036752002, -7.950942156578579],
+           [-34.92803396615283, -8.067893089005516],
+           [-34.96648611459033, -8.220150492993639],
+           [-34.873788971035644, -8.190927008241314],
+           [-34.79001821908252, -8.054975744003949],
+           [-34.79894461068408, -7.983583001499804]]],
+         [[[-34.8075105505365, -7.225298919008721],
+           [-34.791374381102905, -7.217465131214328],
+           [-34.814377005614624, -7.076433895710033],
+           [-34.803390677489624, -7.007103633401071],
+           [-34.82124346069275, -6.928722616742362],
+           [-34.83222978881775, -6.882369440127862],
+           [-34.84939592651306, -6.8581685548832985],
+           [-34.91634386352478, -6.867371853534332],
+           [-34.86347215942322, -7.00630417957254],
+           [-34.85398906687439, -7.087139854751109],
+           [-34.82309001902283, -7.1515275765316115],
+           [-34.81656688669861, -7.203984938225897]]],
+         [[[-45.0500943235241, -1.2714616422342402],
+           [-45.144851403602225, -1.3071581683009506],
+           [-45.1764370969616, -1.5323086109094401],
+           [-45.09678621805535, -1.6284024055691348],
+           [-45.018508630164725, -1.5281902071523505],
+           [-44.97044344461785, -1.3785496841990694],
+           [-45.0171353391491, -1.272834594760616]]]]),
+    composite_depth = ee.Image("projects/coral_atlas/brazil/depth/small_systems_reef_high_tide_normalized_sr_august2018_nov2020_v2_shift_mosaic_composite_depth"),
+    fillin_coralAlgae = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-32.39581547745949, -3.8413101004536383],
+          [-32.39718876847512, -3.842637486304633],
+          [-32.39633046159035, -3.8498738437950593],
+          [-32.39405594834572, -3.851672218959713],
+          [-32.390794382183614, -3.850944305660294],
+          [-32.39023648270852, -3.849916662295515],
+          [-32.39135228165871, -3.8483751949227765],
+          [-32.39263974198586, -3.8463199007531506],
+          [-32.39321909949669, -3.8453136606912737],
+          [-32.39362679490334, -3.844007688887503],
+          [-32.39414177943806, -3.8433439973601846],
+          [-32.3946996785093, -3.8422521164316104]]]),
+    fillin_orf_holes = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-33.81151035960743, -3.8517387064525463],
+          [-33.81897762950489, -3.8549072627235397],
+          [-33.82309750255177, -3.867238828698416],
+          [-33.81185368236134, -3.8780288017738056],
+          [-33.79957989390919, -3.8783713383478235],
+          [-33.789709364734385, -3.8742608903003077],
+          [-33.786190306506846, -3.868523356512955],
+          [-33.78704861339161, -3.858418351827176],
+          [-33.791940962634776, -3.854136533906122],
+          [-33.80035237010548, -3.851139248533329]]]),
+    coral_inRS = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-45.76417647226271, 0.0027371457292706715],
+          [-45.85206709726271, -2.4354939264591082],
+          [-37.06300459726271, -8.317503943430928],
+          [-39.91944990976271, -15.209138338353293],
+          [-40.02931319101271, -19.900225876941324],
+          [-37.45851240976271, -20.333500177139445],
+          [-31.534582486098444, -7.550836626492849],
+          [-31.534582486098444, -5.586377719026224],
+          [-30.754553189223444, -3.264380795141359],
+          [-33.918615689223444, -2.8255491886655655],
+          [-40.13619652786609, -1.2548690300095022],
+          [-42.48727074661609, -0.09041854584106272],
+          [-44.24508324661609, 0.305087787408759]]]),
+    rock_toRubble = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-33.80643269457084, -3.8578800258138557],
+          [-33.80857846178275, -3.8585651151132447],
+          [-33.80935093797904, -3.861219830928943],
+          [-33.8084068004058, -3.8658441547787223],
+          [-33.805746049063025, -3.869612103714154],
+          [-33.801282853262244, -3.869012658413317],
+          [-33.79965207018119, -3.86781376653928],
+          [-33.79879376329642, -3.8643883518409985],
+          [-33.800510377065955, -3.861733645934547],
+          [-33.80454441942435, -3.8592502038601206]]]),
+    sg_sand = 
+    /* color: #00ffff */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-33.802226990835486, -3.856081663775008],
+          [-33.806003541128455, -3.8583938428401927],
+          [-33.802999467031775, -3.8619905533207115],
+          [-33.79905125536185, -3.864045809610147],
+          [-33.79536053575736, -3.8642170807428555],
+          [-33.79295727648002, -3.8615623743005703],
+          [-33.79407307543021, -3.8584794789810317],
+          [-33.79707714952689, -3.856766754524234]]]),
+    cut_CoralAlgae = 
+    /* color: #bf04c2 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-34.686047448265654, -7.784239264107502],
+           [-35.438610924828154, -8.088909575019013],
+           [-36.531750573265654, -10.317389971054043],
+           [-36.229626549828154, -10.905902142324772],
+           [-35.196911706078154, -10.084918021759831],
+           [-33.938977135765654, -8.632385959024385],
+           [-34.103772057640654, -7.991004518483236]]],
+         [[[-39.0405501442501, -16.033900176257177],
+           [-39.7711409645626, -18.024410935785248],
+           [-39.2383040505001, -18.811383627738238],
+           [-38.1012190895626, -18.123631051116615],
+           [-38.1781233864376, -16.89256726471374],
+           [-38.4692610817501, -16.033900176257177]]]]);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+///////////////////////////////
+// Global coral atlas project - Brazil
+// Contact: mitchell.lyons@gmail.com
+// Region coordinator: Rodney Borrego (rodbio2008@gmail.com)...Note: previous geometries for geo 3 are in version saved 21/04 15:58. I removed geoms as the script crashed.
+// Description:
+// - Developing a process to combine OBIA and supervised classification
+// - This script loads the raw classification data (from *_classification script)
+// - Then applied some cleanup and object-based relational rules
+///////////////////////////////
+
+// Table of contents
+// 1. Setting constants
+// 2. Data loads & vis
+// 3. OBIA clean up rules
+// 4. Export
+
+
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+
+//test NN
+
+
+
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.brazil;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// 1. Setting constants
+
+// These will get written to the asset metadata 
+
+//Map.centerObject(geometry, 7)
+
+var vars = {
+  
+  // analysis type
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  
+
+  // analysis parameters
+  image_data_scale: sensor_params.pixel,
+  small_object_geo: ee.Number(400).int(), // smallest object szie in pixels (geomorphic)
+  small_object_benthic: ee.Number(130).int(), // smallest object szie in pixels (benthic)
+  smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
+  dist_to_land_ORF: 8000, //distance to land in meters to convert terrestrial reef flat to ORF
+  dist_to_land_RC: 500, //distance to land in meters to convert reef crest to TRF - not used for Indo
+  wave_height: 0.4, //cut off height for waves in metres, Hs95 threshold
+  geo_depth_cutoff: 1200, //depth in centimetres
+  shallowlag_depth_cutoff: 500, //depth in centimetres
+  benthic_depth_cutoff: 1000, //depth in centimetres
+  Coral_algae_cutoff: 200, //depth-threholding coral algae to make sand in depper areas (the higuer you go in this number you will 
+                           // make more coral in depper areas than sand and viceversa (RB))
+
+  //############
+  // Clean-up stage selection
+  cleanup_stage: 2, // set to 1, 2 or 3
+  geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
+  
+  //if the global extend + depth cleanup be applied?
+  global_extent_clean: true,
+  global_depth_thresh: 500, // this is the depth limit for ADDING to the global extent (i.e. 5 = everything <5m will be added to the global extent layer)
+  global_land_dist: -1, // [-1 (don't apply) OR +ve distance in meters] WITHIN this distance, the global extent/depth mask will be applied
+  global_not_applied: false, // true = EXCLUDE reefs within 'global_not_applied' geometry polygons - mutually exclusive to land distance rule 
+  
+  /*
+  - GEOMORPHIC 1: The first pass does a small object filter, just to generally clean noise and reduce the amount of cleaning needed
+  -            2: The second pass runs the OBIA cleanup rules
+  -            3: The third pass is the MANUAL cleanup stage, which includes AT LEAST the no_reef masking
+                        - see below where it starts/ends (only that section is run)
+                        - please put region specific stuff in here ONLY
+
+  - BENTHIC 1: This is the main benthic stge - it does noise removal, no data reclaim and OBIA rules - review those if needed
+            2: The second mas is the MANUAL stage - it's optional, but shuold include ALL region specific stuff
+                        - see below where it starts/ends (only that section is run)
+                        - please put region specific stuff in here ONLY
+  */
+  
+  // DON'T TOUCH --->
+  obia_2nd_pass: null,
+  obia_clean: null, // run object-based relationship rules + small object clean up
+  fast_clean: null, // run a faster (but less precise) version of the OBIA clean; only applies to geomorphic (`obia_clean: true` also)
+  manual_clean: false, // apply manual touch ups
+  // --------------<
+  //############
+  
+  reproject_display: false,
+  
+  // export options
+  do_export: true, // export the results?
+  geomorph_output_name: region_params.sname + '_geo_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
+  benthic_output_name: region_params.sname + '_benthic_clean', // DO NOT CHANGE - change in the pop up dialouge if you must
+  asset_output: region_params.asset // asset path
+
+};
+
+
+
+
+// Clean up stage auto-parameterisation (DON'T TOUCH) --->
+
+if (vars.geomorphic) {
+  var temp_outname = vars.geomorph_output_name;
+  if (vars.cleanup_stage == 1) {
+    vars.obia_2nd_pass = false;
+    vars.obia_clean = false;
+    vars.fast_clean = true;
+    vars.manual_clean = false;
+    vars.geomorph_output_name = temp_outname + '1';
+  } else if (vars.cleanup_stage == 2) {
+    vars.obia_2nd_pass = true;
+    vars.obia_clean = true;
+    vars.fast_clean = true;
+    vars.manual_clean = false;
+    vars.geomorph_output_name = temp_outname + '2';
+  } else if (vars.cleanup_stage == 3) {
+    vars.manual_clean = true;
+    vars.obia_2nd_pass = false;
+    vars.obia_clean = false;
+    vars.fast_clean = false;
+    vars.do_export = false;
+    vars.geomorph_output_name = temp_outname + '3';
+  }
+}
+
+if (!vars.geomorphic) {
+  var temp_outname = vars.benthic_output_name;
+  if (vars.cleanup_stage == 1) {
+    vars.obia_2nd_pass = true,
+    vars.obia_clean = true, 
+    vars.fast_clean = false, 
+    vars.manual_clean = false;
+    vars.benthic_output_name = temp_outname + '1';
+  } else if (vars.cleanup_stage == 2) {
+    vars.manual_clean = true;
+    vars.obia_2nd_pass = false,
+    vars.obia_clean = false, 
+    vars.fast_clean = false,
+    vars.do_export = false;
+    vars.benthic_output_name = temp_outname + '2';
+  }
+}
+
+//Region extent is created in map viewer and exported to GEE asset
+var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry();
+Map.addLayer(region_extent, {}, "Manual reef outline", false);
+// -----------------------------------------<
+
+//################################################################################################
+//START OF CLEAN 3 - Manual Cleanup
+//Review everything in this section
+//This is the section to add/remove manual cleanups
+//You MUST review it for each region
+
+//###############################################################################################
+
+if (vars.manual_clean && vars.geomorphic) {
+  
+  print("Doing GEOMORPHIC manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer in the viewer for effects");
+  
+  var depth = ee.Image(region_params.pixels).select('depth');
+  
+ 
+  
+  // define the manually edited map - uses the output from the second pass of cleaning
+  //var man_geo = ee.Image(region_params.geo_map_clean2);
+  var man_geo = ee.Image(region_params.geo_map_clean2); // use this when testing for a small area
+  
+ 
+ 
+ // the "GLOBAL MASK" clean
+  // currently uses GCRMN extent + bathymetry threhold < vars.global_depth_thresh
+  if (vars.global_extent_clean) {
+    var blanket_mask = ee.Image([param_module.global_extent_mask.gcrmn]).unmask(0, false)
+              .eq(1) // extent according to global extent layer
+              .add(depth.lt(vars.global_depth_thresh)) // combine with areas less than depth thrshold
+              .eq(0) // get leftovers
+              .selfMask().connectedPixelCount(25, true).gte(25)
+    
+    
+    
+    if (vars.global_land_dist > 0) {
+      var distToLand = ee.Image(region_params.distToLand);
+      man_geo = man_geo.where({
+        test: blanket_mask.eq(1)
+                          .and(distToLand.lte(vars.global_land_dist)),
+        value: ee.Image(0)
+      });
+    } else if (vars.global_not_applied) {
+      var global_not_applied_i = ee.Image().byte().paint(ee.Feature(global_not_applied, {zone: 1}), 'zone').unmask(0, false)
+      man_geo = man_geo.where({
+        test: blanket_mask.eq(1)
+                          .and(global_not_applied_i.eq(0)),
+        value: ee.Image(0)
+      });
+    } else {
+      man_geo = man_geo.where({
+        test: blanket_mask.eq(1),
+        value: ee.Image(0)
+      });
+    }
+  }
+  
+  // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
+  //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
+  //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
+  var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone").clip(mid_mask.dissolve());
+  
+  // the "MID MASK" CLEAN
+  man_geo = man_geo.where({
+  test: midmask.eq(1),
+ value: ee.Image(0)
+  });
+  
+  
+  
+  //************************************* START Import AND APPLY Lagoons mask Chris SCS************************************START
+  // import the lagoon mask from asset ****only use ee.FC if  lagoons mask created in map viewer****
+  //var lagoons_mask = ee.FeatureCollection(region_params.lagoons_mask).geometry();
+  //Map.addLayer(lagoons_mask)
+  
+var lagoonsmask = ee.Image().byte().paint(ee.Feature(lagoon_mask.dissolve(),{zone: 1}), "zone").clip(lagoon_mask.dissolve());
+
+  
+  // RC within Lagoon ORF
+man_geo = man_geo.where({
+test: lagoonsmask.eq(1)
+             .and(man_geo.eq(15).or(man_geo.eq(16))),
+  value: ee.Image(14)
+});
+// Reef slope, sheltered slope (within lagoon mask) -> Back Reef Slope
+ man_geo = man_geo.where({
+  test: lagoonsmask.eq(1)
+                    .and(man_geo.eq(21).or(man_geo.eq(22))),
+    value: ee.Image(24)
+ });    
+  //************************************* END IMPORT AND APPLY Lagoons mask Chris SCS************************************END
+  
+  //*********************START CREATING and APPLYING REEF OUTINE BUFFER FROM  reef (lagoon) mask Chris SCS**************START
+  // in map viewer manual digitised reef top areas with lagoon in it. Tried to use CNN layer but to many artefacts and manual took 3 hr
+  // creatimg a buffer around lagoon_mask
+
+  //var lagoon_buffered = lagoons_mask.buffer(1000); // buffer 1000 m wide around reef mask
+  var lagoon_buffered = lagoon_mask.buffer(1000); // buffer 1000 m wide around reef mask
+  //var reef_band_mask = lagoon_buffered.difference(lagoons_mask);//substract buffered lagoon mask - lagoon mask resulting in band around reef of 1000 m
+  var reef_band_mask = lagoon_buffered.difference(lagoon_mask);
+  var reefbandmask = ee.Image().byte().paint(ee.Feature(reef_band_mask.dissolve(),{zone: 1}), "zone").clip(reef_band_mask.dissolve()); // paint it as image
+
+  // BRS, DL and SL should not be present on outside of reef on within reefbandmask  -> Reef Slope
+  man_geo = man_geo.where({
+   test: reefbandmask.eq(1)
+                      .and(man_geo.eq(24).or(man_geo.eq(12)).or(man_geo.eq(11))),
+    value: ee.Image(22)
+ });    
+  // IRF on within reefbandmask  -> ORF as RC would get artefacts
+   man_geo = man_geo.where({
+  test: reefbandmask.eq(1)
+                    .and(man_geo.eq(13)),
+    value: ee.Image(14)
+  });    
+  
+
+  /*
+  // the "REEF MASK" CLEAN
+  
+  // Define a kernel for reef mask Morphological Operations
+  var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
+
+  // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
+  var reef_mask = man_geo.eq(2)
+            .focal_max({kernel: kernel_rm, iterations: 2});
+  var global_reef_mask = ee.Image(region_params.global_reef_mask);
+  
+
+  // Reef crest, slope, sheltered slope (within reef mask) -> Inner reef flat
+  man_geo = man_geo.where({
+    test: reef_mask.eq(0)
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
+    value: ee.Image(13)
+  });
+  
+  // the "DEEP WATER" CLEAN
+  
+  // Define a kernel for deep water Morphological Operations
+  var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
+
+  // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
+  var deepwater = man_geo.eq(2)
+            .focal_max({kernel: kernel_dw, iterations: 2})
+            .focal_min({kernel: kernel_dw, iterations: 2});
+    
+  
+    // Deep lagoon (outside reef mask and global mask) -> deepwater 
+  man_geo = man_geo.where({
+    test: deepwater.eq(1)
+                    .and(man_geo.eq(12)),
+                    //.and(global_reef_mask.eq(2)),
+    value: ee.Image(2)
+  });
+  
+ 
+  // Reef classes in deepwater -> deepwater
+  man_geo = man_geo.where({
+    test: deepwater.eq(1)
+                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
+    value: ee.Image(2)
+  });
+  
+  */
+  
+  
+  
+  
+/*
+  // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
+  
+  var waves = ee.Image(region_params.waves)
+  Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
+  
+  man_geo = man_geo.where({
+    test: waves.lte(vars.wave_height)
+               .and(man_geo.eq(22)),
+    value: ee.Image(21)
+  })
+ 
+*/
+
+
+
+
+  
+/*
+  ##############
+  
+  The rest of the manual geometry paintings and rules should go here
+      - make the geom, paint the layer, use it in a rule
+      - consult previous regions *_cleanup script for ideas/hints/existing rules etc.
+  e.g. 
+  var notreefcrest = ee.Image().byte().paint(ee.Feature(not_reef_crest, {zone: 1}), "zone").clip(not_reef_crest);
+  var notdeepwater = ee.Image().byte().paint(ee.Feature(not_deep_water, {zone: 1}), "zone").clip(not_deep_water);
+  
+ */
+
+var trf_Orf_Rs = ee.Image().byte().paint(ee.Feature(trf_orf_rs, {zone: 1}), "zone").clip(trf_orf_rs);
+
+man_geo = man_geo.where({
+  test: trf_Orf_Rs.eq(1)
+        .and(man_geo.eq(16).or(man_geo.eq(14))),
+  value: ee.Image(22)
+}); 
+
+var rc_null = ee.Image().byte().paint(ee.Feature(rc_0, {zone: 1}), "zone").clip(rc_0);
+
+man_geo = man_geo.where({
+  test: rc_null.eq(1)
+        .and(man_geo.eq(15)),
+  value: ee.Image(0)
+}); 
+
+var irf_sl_null = ee.Image().byte().paint(ee.Feature(irf_sl_0, {zone: 1}), "zone").clip(irf_sl_0);
+
+man_geo = man_geo.where({
+  test: irf_sl_null.eq(1)
+        .and(man_geo.eq(13).or(man_geo.eq(11))),
+  value: ee.Image(0)
+}); 
+
+var Rs_0 = ee.Image().byte().paint(ee.Feature(rs_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Rs_0.eq(1)
+        .and(man_geo.eq(22)),
+  value: ee.Image(0)
+}); 
+
+var Orf_trf = ee.Image().byte().paint(ee.Feature(orf_trf,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Orf_trf.eq(1)
+        .and(man_geo.eq(14)),
+  value: ee.Image(16)
+}); 
+
+var Rs_brs = ee.Image().byte().paint(ee.Feature(rs_brs,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Rs_brs.eq(1)
+        .and(man_geo.eq(22)),
+  value: ee.Image(24)
+}); 
+
+var Trf_rc_orf = ee.Image().byte().paint(ee.Feature(trf_rc_orf,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Trf_rc_orf.eq(1)
+        .and(man_geo.eq(16).or(man_geo.eq(15))),
+  value: ee.Image(14)
+}); 
+
+var Brs_0 = ee.Image().byte().paint(ee.Feature(brs_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Brs_0.eq(1)
+        .and(man_geo.eq(24)),
+  value: ee.Image(0)
+}); 
+
+var Orf_0 = ee.Image().byte().paint(ee.Feature(orf_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Orf_0.eq(1)
+        .and(man_geo.eq(14)),
+  value: ee.Image(0)
+}); 
+
+var Sl_0 = ee.Image().byte().paint(ee.Feature(sl_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Sl_0.eq(1)
+        .and(man_geo.eq(11)),
+  value: ee.Image(0)
+}); 
+
+var Sl_0 = ee.Image().byte().paint(ee.Feature(sl_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Sl_0.eq(1)
+        .and(man_geo.eq(11)),
+  value: ee.Image(0)
+}); 
+
+var Irf_0= ee.Image().byte().paint(ee.Feature(irf_0,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Irf_0.eq(1)
+        .and(man_geo.eq(13)),
+  value: ee.Image(0)
+}); 
+
+
+var Rc_trf= ee.Image().byte().paint(ee.Feature(rc_trf,{zone: 1}), "zone");
+
+man_geo = man_geo.where({
+  test: Rc_trf.eq(1)
+        .and(man_geo.eq(15)),
+  value: ee.Image(16)
+}); 
+
+
+
+
+
+
+ 
+  if (vars.geo_refinement) {
+    // make the mask image layer
+    var refine = ee.Image().byte().paint(ee.Feature(refinement_mask, {zone: 1}), "zone").clip(refinement_mask);
+    // apply
+    man_geo = man_geo.where({
+      test: refine.eq(1),
+      value: ee.Image(0)
+    });
+  }
+  
+  
+  
+  
+  // Add data + the manual layer to the map
+  var lowtide_image = ee.ImageCollection(region_params.pixels).mosaic();
+  Map.addLayer(lowtide_image, imageVisParam2, sensor_params.sname + ' low tide', false);
+ // var notreef_mask = ee.FeatureCollection(region_params.notreef_mask).geometry();
+  //Map.addLayer(notreef_mask, {}, "noReefmask", false);
+  //var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+  //Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false); I removed this asset by mistake
+  var geo_raw = ee.Image(region_params.geo_map);
+  Map.addLayer(geo_raw, map_palettes.geo, 'Geo raw', false);
+  var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo 1', false);
+  var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+  Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+  Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
+  var unepClipped= wcmc.filterBounds(region_extent)
+  Map.addLayer(unepClipped, {color:'#FFFF33'}, 'UNEP_layer', false)
+  
+ // Map.addLayer(waves, {}, 'waves', false);
+ // Map.addLayer(wavespng, {}, 'wavespng', false);
+  
+  //Map.addLayer(man_geo.updateMask(man_geo.gt(2)), map_palettes.geo, 'Geo clean stage 3 - no DW', false);
+ // Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+  //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(3)), {palette: ['0000ff'], opacity: 0.4}, 'global_reef_mask - reef', false);
+  //Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(2)), {palette: ['FF0000'], opacity: 0.4}, 'global_reef_mask - water', false);
+
+  // display distance to land mask for assessing cut-off distances
+  var distToLand = ee.Image(region_params.distToLand);
+    
+  //Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+ // Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+  
+  // display distance to water mask
+  var distToWater = ee.Image(region_params.distToWater);
+    
+  //Map.addLayer(distToWater.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'distToWater ' + vars.dist_to_land_ORF + 'm', false);
+  
+  
+  // Export
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
+  Export.image.toAsset({
+    image: man_geo,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    region: region_extent,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  });
+  
+} 
+
+if (vars.manual_clean && !vars.geomorphic) {
+  
+  print("Doing BENTHIC manual clean ups - make sure this is what you want to do");
+  print("Export the manual map, check 'manual' layer in the viewer for effects");
+  
+  var depth = ee.Image(region_params.pixels).select('depth');
+  
+  // define the final geomorphic map (the manually edited geo map - stage 3)
+  var geo_map = ee.Image(region_params.geo_map_clean3);
+  
+  // define the clean benthic map to apply 2nd stage rules to
+  var man_benthic = ee.Image(region_params.benthic_map_clean1);
+  
+  
+  /*
+  **Generic benthic rules**
+    - should be generally applicable, but still review
+  */
+  
+  // BMA on inner RF, outer RF,reef crest, reef slope -> rubble 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(18)
+                     .and(geo_map.eq(13).or(geo_map.eq(14)).or(geo_map.eq(15)).or(geo_map.eq(22))),
+    value: ee.Image(12)
+  });
+  
+  // Rubble on Outer reef flat and Reef crest -> rock 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(12)
+                     .and(geo_map.eq(14).or(geo_map.eq(15))),
+    value: ee.Image(13)
+  });
+    
+  // Seagrass on Back reef slope -> Sand 
+  man_benthic = man_benthic.where({
+    test: man_benthic.eq(14)
+                     .and(geo_map.eq(24)),
+    value: ee.Image(11)
+  });  
+  
+     
+  /*
+  
+  **Manual polygon guided rules**
+   - same as per geomorphic clean section
+   - add a geometry, paint the layer, create a rule
+   
+   */
+   
+  
+   
+var Rock_sand = ee.Image().byte().paint(ee.Feature(rock_sand, {zone: 1}), "zone").clip(rock_sand); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Rock_sand.eq(1)
+                   .and(man_benthic.eq(13)),
+    value: ee.Image(11)
+  })
+  
+
+  
+  
+var Coral_sand = ee.Image().byte().paint(ee.Feature(coral_sand, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Coral_sand.eq(1)
+                   .and(man_benthic.eq(15)),
+    value: ee.Image(11)
+  })
+  
+  var Sg_0 = ee.Image().byte().paint(ee.Feature(sg_0, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Sg_0.eq(1)
+                   .and(man_benthic.eq(14)),
+    value: ee.Image(0)
+  })  
+  
+   var Rb_sand = ee.Image().byte().paint(ee.Feature(rb_sand, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Rb_sand.eq(1)
+                   .and(man_benthic.eq(12)),
+    value: ee.Image(11)
+  })  
+  
+  var Fillin_coralAlgae = ee.Image().byte().paint(ee.Feature(fillin_coralAlgae, {zone:1}), "zone");
+  
+  var compos_depth = composite_depth.multiply(0)
+  Map.addLayer(compos_depth, {}, 'compositeDepth')
+  
+  man_benthic = man_benthic.unmask(0,false).where({
+    test: Fillin_coralAlgae.eq(1)
+          .and(compos_depth.eq(0)),
+    value:ee.Image(15)
+  })
+  
+ var Fillin_orf_holes = ee.Image().byte().paint(ee.Feature(fillin_orf_holes, {zone:1}), "zone");
+    
+ man_benthic = man_benthic.where({
+   test: Fillin_orf_holes.eq(1)
+        .and(geo_map.eq(14)),
+    value: ee.Image(13)
+ })
+
+var Coral_inRs = ee.Image().byte().paint(ee.Feature(coral_inRS, {zone:1}), "zone");
+    
+ man_benthic = man_benthic.where({
+   test: Coral_inRs.eq(1)
+        .and(geo_map.eq(22)),
+    value: ee.Image(15)
+ })  
+ 
+ var rock_rub = ee.Image().byte().paint(ee.Feature(rock_toRubble, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: rock_rub.eq(1)
+                   .and(man_benthic.eq(13)),
+    value: ee.Image(12)
+  })   
+ 
+var Sg_sand = ee.Image().byte().paint(ee.Feature(sg_sand, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Sg_sand.eq(1)
+                   .and(man_benthic.eq(14)),
+    value: ee.Image(11)
+  })  
+  
+ var Cut_CoralAlgae = ee.Image().byte().paint(ee.Feature(cut_CoralAlgae, {zone:1}), "zone");
+ 
+ 
+ man_benthic = man_benthic.where({
+   test: depth.gt(vars.Coral_algae_cutoff).and(man_benthic.eq(15)),
+   value: ee.Image(11)
+   
+   
+ })
+  
+   /*  
+
+ var Sand_rock = ee.Image().byte().paint(ee.Feature(sand_rock, {zone: 1}), "zone"); 
+   
+   
+ man_benthic = man_benthic.where({
+    test: Sand_rock.eq(1)
+                   .and(man_benthic.eq(11)),
+    value: ee.Image(13)
+  })
+  
+
+  
+  
+  */
+  
+  
+  
+
+
+
+
+  // Add the manual layer to the map
+
+  var dove_image = ee.ImageCollection(region_params.pixels).mosaic();
+  Map.addLayer(dove_image, {bands: ['b3','b2','b1'], min:0, max:4000, gamma:1.5}, sensor_params.sname + ' low tide', true);
+  
+  var benthic_clean1 = ee.Image(region_params.benthic_map_clean1);
+  var geo_clean1 = ee.Image(region_params.geo_map_clean1);
+  var geo_clean2 = ee.Image(region_params.geo_map_clean2);
+  Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
+   Map.addLayer(geo_clean2.updateMask(geo_clean2.gt(2)), map_palettes.geo, 'Geo clean stage 2', false);
+  // Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
+  //Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', true);
+  Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3 - MANUAL', false);
+  Map.addLayer(benthic_clean1.updateMask(geo_map.gt(0)), map_palettes.benthic, 'Benthic clean stage 1', false);
+  //Map.addLayer(man_benthic.updateMask(man_benthic.gt(0)), map_palettes.benthic, 'Benthic clean stage 2 - MANUAL', true);
+  Map.addLayer(man_benthic.updateMask(geo_map.gt(2).and(man_benthic.gt(0))), map_palettes.benthic, 'Benthic clean stage 2 ', true);
+  //Map.addLayer(man_benthic10.updateMask(man_benthic10.gt(0)), map_palettes.benthic, 'Benthic clean stage 2 - MANUAL10_radius', true);
+  // Export
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
+  Export.image.toAsset({
+    image: man_benthic,
+    description: output_name,
+    assetId: vars.asset_output + 'in_out/' + output_name,
+    region: region_extent,
+    scale: vars.image_data_scale,
+    crs: 'EPSG:4326',
+    maxPixels: 1e13,
+    pyramidingPolicy: {'.default': 'mode'}
+  });
+  
+}
+
+// #################################################################################################
+// END OF MANUAL SECTION
+// #################################################################################################
+
+
+// 2. Data loads & vis
+
+if (!vars.manual_clean) {
+
+  // load input data
+  
+  // define raw geo/benthic outputs
+  // Run check to see if the region has been split into multiple areas
+  
+  // geo
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0,false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map);
+  }
+  
+  // benthic
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+      var benthic_map = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+               .add(ee.Image(region_params.benthic_map[1]).unmask(0,false))
+               .selfMask();
+  } else {
+      var benthic_map = ee.Image(region_params.benthic_map);
+  }
+  
+  // set the geo map for further processing
+  if (vars.geomorphic && vars.obia_2nd_pass) {
+    // if it's 2nd pass, you want to make sure you're loading the latest geo clean map
+    var geo_map = ee.Image(region_params.geo_map_clean1);
+  } else if (vars.geomorphic) {
+    var geo_map = geo_map_raw;
+  }
+  
+  var depth = ee.Image(region_params.pixels).select('depth');
+  var low_tide_image = ee.Image(region_params.image);
+  
+  var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic;
+  Map.addLayer(depth, {min:0, max:2500}, 'Depth data', false);
+  Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min:0, max:3000}, sensor_params.sname + ' low tide', false);
+  
+  // load for display purposes
+  if (vars.geomorphic) {
+    Map.addLayer(geo_map_raw, display_pal, 'Geomorphic map RAW', false);
+    if (vars.cleanup_stage == 2) Map.addLayer(ee.Image(region_params.geo_map_clean1), display_pal, 'Geo clean stage 1', false);
+  }
+  if (!vars.geomorphic) {
+    // Use the manually cleaned geomorphic map as input for the benthic clean
+    var geo_map = ee.Image(region_params.geo_map_clean3);
+    Map.addLayer(geo_map.updateMask(geo_map.gt(2)), map_palettes.geo, 'Geo clean stage 3', false);
+    Map.addLayer(benthic_map, display_pal, 'Benthic map RAW', false);
+  }
+  
+  // 3. Object-based re-classificaiton and cleaning
+  
+  /* OUTPUT EXTENT
+    - to the mapping extent just so it doesn't balloon out
+    - to the 'reef boundary' extent for noise/deep removal
+  */  
+  var class_extent_mask = geo_map.gt(0);
+  
+  /*
+  
+  ########
+  Initial small object clean
+   - this was originally at the end, but we needed to massively reduce the number of objects to 
+     iterate through in the OBIA cleaning, so this happens first now
+   - future collabs with google might fix this, but need to change the parallel serialisation of vector procesing
+   
+   - includes a possible special case for:
+        - geomorphic to clean up turbid areas over size threshold; fix shallow vs. deep lagoon
+        - benthic to allow breaking waves (temporal class) to grow into surrounding class
+  ########
+  
+  */
+  
+  // ##############################################################################################
+  // START OF CLEAN 1
+  // ##############################################################################################
+  
+  if (vars.geomorphic && !vars.obia_2nd_pass) {
+    
+    // shallow lagoon > 5m == deep lagoon//this rule is making mini deep laggoons witin BRS 
+    //so I will generate another clean up1 with shallow lagoons instead (comenting this up)
+    
+    // = geo_map.where({
+     // test: geo_map.eq(11)
+                    //.and(depth.gt(vars.shallowlag_depth_cutoff)),
+      //value: ee.Image(12)
+    //});
+    
+    // deep water in depth data == deep (s2 + ls8 data should be good enough for this)
+    geo_map = geo_map.where({
+      test: depth.gt(vars.geo_depth_cutoff),
+      value: ee.Image(2)
+    });
+    
+    // make a smooth map with masked area as a value - *** Change to ee.kernal*** see reef mask in clean 3
+    var smooth_map = geo_map
+                        .focal_mode({
+                          radius: vars.smooth_radius, // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 2
+                        });
+    
+    // replace small objects with smooth underneath
+    var clean_map = geo_map.where({
+      test: geo_map.connectedPixelCount(vars.small_object_geo, false).lt(vars.small_object_geo), 
+      value: smooth_map
+    }).updateMask(class_extent_mask);
+    
+    // display distance to land mask for assessing cut-off distances
+    var distToLand = ee.Image(region_params.distToLand);
+    
+    Map.addLayer(distToLand.lte(vars.dist_to_land_RC), {}, 'RC to TRF ' + vars.dist_to_land_RC + 'm', false);
+    Map.addLayer(distToLand.unmask(100000, false).lte(vars.dist_to_land_ORF), {}, 'TRF to ORF ' + vars.dist_to_land_ORF + 'm', false);
+
+    // // reef crest close to land -> TRF - Not need when using .focal masks (reef mask) as this will take care of RC inside the reef
+    // clean_map = clean_map.where({
+    //   test: distToLand.lte(vars.dist_to_land_RC)
+    //                 .and(clean_map.eq(15)),
+    //   value: ee.Image(16)
+    // });
+    
+    // TRF outside of specified distance from land -> ORF
+    clean_map = clean_map.where({
+      test: distToLand.unmask(100000, false).gt(vars.dist_to_land_ORF)
+                       .and(clean_map.eq(16)),
+      value: ee.Image(14)
+    });
+  }
+  
+  if (!vars.geomorphic && vars.cleanup_stage == 1) {
+    
+    // make a smooth map with masked area as a value, and without temporal class (basically breaking waves)
+    var smooth_map = benthic_map
+                        .focal_mode({
+                          radius: vars.smooth_radius, // relates to smoothness required
+                          kernelType: 'circle', units: 'pixels', iterations: 1
+                        });
+    
+    //replace small objects with smooth underneath
+    var clean_map = benthic_map.where({
+      test: benthic_map.connectedPixelCount(vars.small_object_benthic, false).lt(vars.small_object_benthic),
+      value: smooth_map
+    }).updateMask(class_extent_mask);
+    
+  }
+  
+  // ##############################################################################################
+  // START OF CLEAN 2
+  // ##############################################################################################
+  
+  if (vars.geomorphic && vars.obia_2nd_pass) {
+    var clean_map = geo_map;
+  }
+  
+  if (vars.obia_clean) {
+    
+    if (vars.geomorphic && !vars.fast_clean) { 
+      
+      // FUNCTION that maps over feature colleciton and assigns neighbour percentages
+      var set_neighbour_properties = function(f) {
+        // make the 1px buffer
+        var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5));
+        // reduce the classes in the buffer zone
+        var diff_classes = ee.Dictionary(
+          clean_map.unmask(ee.Image(0)).reduceRegion({
+            reducer: ee.Reducer.frequencyHistogram(),
+            geometry: diff.geometry(),
+            scale: vars.image_data_scale,
+            maxPixels: 1e11
+          }).get('classification')
+        );
+        // calculate the percentages
+        var diff_sum = diff_classes.toArray().reduce(ee.Reducer.sum(), [0]).get([0]);
+        var diff_percs = diff_classes.map(function(k,v){return(ee.Number(v).divide(diff_sum).multiply(100).toUint8())});
+        
+        /* NOW, we can try to do the class logic right here (see /users/mitchest/global_reefs/obia_dev),
+           or we can return the neighbour % and do image logic via (painted) rasters */
+        
+        return(f.set(diff_percs));
+      };
+      
+      // FUNCTION to reduce the map to vectors and map the neighbour properties function
+      var reduce_neighbours = function() {
+        // reduce map to vectors
+        var map_fc = clean_map
+              .updateMask(segment_id).updateMask(clean_map.eq(classn)) // only vectorise class/es of interest
+              .reduceToVectors({
+                scale: vars.image_data_scale, 
+                eightConnected: false,
+                bestEffort: true, 
+                maxPixels: 1e13,
+                tileScale: 1,
+                geometry: region_extent
+              });
+        // map the function, calculate neighbour properties
+        return(map_fc.map(set_neighbour_properties));
+      };
+      
+      // first make a make size threshold, so we're not vecortising huge objects when we don't have to
+      var segment_id = clean_map.connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels');
+      //Map.addLayer(segment_id.reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))))
+      Map.addLayer(clean_map.updateMask(segment_id).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false);
+      
+      // This is where we select the single or group of classes to vectorise for cleaning up
+      //var classn = ee.Number(15) // one class
+      var classn = clean_map.where({
+        test: clean_map.neq(16) //TRF
+                .and(clean_map.neq(15)) //RR
+                .and(clean_map.neq(14)) //ORF
+                .and(clean_map.neq(13)) //IRF
+                //.and(clean_map.neq(12)) // deep L
+                .and(clean_map.neq(11)), // shallow L 
+        value: ee.Image(99) // 99 ensures it's ignored in logic
+      });
+      
+      // Minimum size of object to reclass based on neighbourhood
+      var max_size = ee.Number(1000).divide(vars.image_data_scale).pow(2); // the first number is the square dimension of the desired min size;
+      // calculate neighbours
+      var map_fc_neighbours = reduce_neighbours();
+      
+      // #########
+      // REEF RIM
+      // #########
+      
+      var focus_class = ee.Number(15); //RR
+      
+      // start the object-based neighbourhood rules
+      // paint out to rasters (only paint the layers needed)
+      var objsize = ee.Image(30000).paint(map_fc_neighbours, 'count').rename('count');
+      //var nb24 = ee.Image().byte().paint(map_fc_neighbours, '24').unmask(0).rename('nb24') //OCL
+      var nb22 = ee.Image().byte().paint(map_fc_neighbours, '22').unmask(0).rename('nb22'); //SL ex
+      var nb21 = ee.Image().byte().paint(map_fc_neighbours, '21').unmask(0).rename('nb21'); //Sl sh
+      var nb16 = ee.Image().byte().paint(map_fc_neighbours, '16').unmask(0).rename('nb16'); //TRF
+      var nb15 = ee.Image().byte().paint(map_fc_neighbours, '15').unmask(0).rename('nb15'); //RR
+      var nb14 = ee.Image().byte().paint(map_fc_neighbours, '14').unmask(0).rename('nb14'); //ORF
+      var nb13 = ee.Image().byte().paint(map_fc_neighbours, '13').unmask(0).rename('nb13'); //IRF
+      //var nb3 = ee.Image().byte().paint(map_fc_neighbours, '3').unmask(0).rename('nb3') //Turbid
+      
+      // RR surrounded by ORF --> ORF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb14.gt(75)),
+        value: ee.Image(14)
+      });
+      
+      // RR surrounded by IRF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb13.gt(75)),
+        value: ee.Image(13)
+      });
+      
+      // RR surrounded by IRF + ORF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb13.add(nb14).gt(75)),
+        value: ee.Image(13)
+      });
+      
+      // RR with decent border to TRF --> TRF (often dark, probably seagrass)
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb16.gt(40)),
+        value: ee.Image(16)
+      });
+      
+      // RR surrounded by OCL --> OCL
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb24.gt(75)),
+        value: ee.Image(24)
+      })
+      
+      // small RR objects touching OCL + stuff --> ORF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(objsize.lte(max_size))
+                .and(nb13.lte(75).and(nb14.lte(75))) // to ensure we're no re-writing previous rules
+                .and(nb24.gt(1)),
+        value: ee.Image(14)
+      })
+      
+      // ####
+      // ORF
+      // ####
+      
+      focus_class = ee.Number(14); // ORF
+      
+      // ORF surrounded by IRF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb13.gt(75)),
+        value: ee.Image(13)
+      });
+      
+      // ORF surrounded by TRF --> TRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb16.gt(75)),
+        value: ee.Image(16)
+      });
+      
+      // ORF surrounded by RR --> RR
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb15.gt(85)),
+        value: ee.Image(15)
+      });
+      
+      // ORF touching slope and RR --> RR
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb21.gt(0).or(nb22.gt(0)))
+                .and(nb15.gt(0)),
+        value: ee.Image(15)
+      });
+      
+      // ####
+      // IRF
+      // ####
+      
+      focus_class = ee.Number(13); // IRF
+      
+      // IRF surrounded by ORF --> ORF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb14.gt(75)),
+        value: ee.Image(14)
+      });
+      
+      // IRF surrounded by TRF --> TRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb16.gt(75)),
+        value: ee.Image(16)
+      });
+      
+      // IRF surrounded by RR --> RR
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb15.gt(85)),
+        value: ee.Image(15)
+      });
+      
+      // ####
+      // TRF
+      // ####
+      
+      focus_class = ee.Number(16); // TRF
+      
+      // TRF surrounded by ORF --> ORF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb14.gt(75)),
+        value: ee.Image(14)
+      });
+      
+      // TRF surrounded by IRF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb13.gt(75)),
+        value: ee.Image(13)
+      });
+      
+      // TRF surrounded by IRF + ORF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(focus_class)
+                .and(nb13.add(nb14).gt(75)),
+        value: ee.Image(13)
+      });
+      
+      // ####
+      // LAGOONS
+      // ####
+      
+      var nb11 = ee.Image().byte().paint(map_fc_neighbours, '11').unmask(0).rename('nb11'); // shallow lag
+      
+      // SL sourrounded by DL --> DL
+      clean_map = clean_map.where({
+        test: clean_map.eq(11)
+                .and(nb12.gt(75)),
+        value: ee.Image(12)
+      })
+      
+      // DL sourrounded by SL --> SL
+      clean_map = clean_map.where({
+        test: clean_map.eq(12)
+                .and(nb11.gt(75)),
+        value: ee.Image(11)
+      })
+      
+      // DL/SL surrounded by IRF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(11).or(clean_map.eq(12))
+                .and(objsize.lte(max_size))
+                .and(nb13.gt(80)),
+        value: ee.Image(13)
+      })
+      
+      // SL surrounded by IRF --> IRF
+      clean_map = clean_map.where({
+        test: clean_map.eq(11)
+                .and(objsize.lte(max_size))
+                .and(nb13.gt(80)),
+        value: ee.Image(13)
+      });
+      
+    
+    } else if (vars.geomorphic && vars.fast_clean) {
+      print("Executing the fast version OBIA");
+      
+      /* fast version of the geo clean up
+        - blanket version assigns the underlying most common in neighbourhood
+        - mode OBIA version iterates through objects+buffers but take the mode instead of doing the class percs, to see if that speeds things up
+      */
+      
+      
+      // ## Blanket version
+      
+      // make a very smooth map to capture the broader neighbourhood  - *** Change to ee.kernal*** see reef mask in clean 3
+      var smooth_map = clean_map
+                          .focal_mode({
+                            radius: vars.smooth_radius.multiply(3), // relates to smoothness required
+                            kernelType: 'circle', units: 'pixels', iterations: 2
+                          });
+      
+      // first make a make size threshold, so we're not vectorising huge objects when we don't have t
+      // - the unmask(99) captures small no data values/ data gaps
+      var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt().multiply(2)).select('labels').pow(2).log().int();
+      Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false);
+      
+      // replace small objects with smooth underneath
+      var clean_map = clean_map.unmask(0).where({
+        test: segment_id.gt(0), 
+        value: smooth_map
+      }).selfMask();
+      
+      
+      // ## mode OBIA version
+      
+      /* A possible faster plan
+            - vectorise one/few class/es at a time, thus only spending resources on what is actually needed to clean up
+            - BUT, just assign the mode of the neighbours, so save resouces even further??
+      
+      // FUNCTION that maps over feature colleciton and assigns neighbour percentages
+      var set_neighbour_mode = function(f) {
+        // make the 1px buffer
+        var diff = f.buffer(vars.image_data_scale).difference(f, ee.ErrorMargin(0.5))
+        // reduce the classes in the buffer zone
+        var diff_mode = ee.Number(ee.Dictionary(
+          clean_map.unmask(ee.Image(0)).reduceRegion({
+            reducer: ee.Reducer.mode(),
+            geometry: diff.geometry(),
+            scale: vars.image_data_scale,
+            maxPixels: 1e11
+          })).get('classification'))
+        
+        return(f.set('mode',diff_mode))
+      }
+      
+      // FUNCTION to reduce the map to vectors and map the neighbour properties function
+      var reduce_neighbours_mode = function() {
+        // reduce map to vectors
+        var map_fc = clean_map.unmask(0)
+              .updateMask(classn.gt(0)) // only vectorise class/es of interest
+              .reduceToVectors({
+                scale: vars.image_data_scale, 
+                eightConnected: false,
+                bestEffort: true, 
+                maxPixels: 1e13,
+                tileScale: 1,
+                geometry: region_extent
+              })
+        // map the function, calculate neighbour properties
+        return(map_fc.map(set_neighbour_mode))
+      }
+      
+      // first make a make size threshold, so we're not vecortising huge objects when we don't have to
+      var segment_id = clean_map.unmask(0).connectedComponents(ee.Kernel.plus(1),vars.small_object_geo.sqrt()).select('labels')
+      Map.addLayer(clean_map.unmask(0).updateMask(segment_id.gt(0)).reproject(ee.Projection('EPSG:4326').atScale(ee.Number(vars.image_data_scale))), display_pal, 'Map objects to be iterated through (OBIA)', false)
+      
+      // This is where we select the single or group of classes to vectorise for cleaning up
+      var classn = segment_id.where({
+        test: clean_map.neq(16) //TRF
+                .and(clean_map.neq(15)) //RR
+                .and(clean_map.neq(14)) //ORF
+                .and(clean_map.neq(13)) //IRF
+                //.and(clean_map.neq(12)) // deep L
+                .and(clean_map.neq(11)) // shallow L 
+                .and(clean_map.unmask(0).neq(0)), // no data values (want to reclaim the small gaps 
+        value: ee.Image(0) // 99 ensures it's ignored in logic
+      })
+      
+      // calculate neighbours
+      var map_fc_neighbours = reduce_neighbours_mode()
+      
+      //print(map_fc_neighbours.limit(10))
+      
+      var mode_map = ee.Image().byte().paint(map_fc_neighbours, 'mode').unmask(0).rename('mode') // paint out the mode values to an image
+      //Map.addLayer(mode_map, display_pal, "mode map", false)
+      
+      // replace small objects with mode underneath
+      var clean_map = clean_map.unmask(0).where({
+        test: segment_id.gt(0), 
+        value: mode_map
+      }).selfMask()
+      
+      */
+      
+    } else {
+      
+      if (vars.cleanup_stage == 1) {
+        // BENTHIC CLEAN-UP RULES
+        
+        // reclaim shallow no data to surrounding class
+        var smooth_map = clean_map
+                            .focal_mode({
+                              radius: vars.smooth_radius.multiply(3), // relates to smoothness required
+                              kernelType: 'circle', units: 'pixels', iterations: 2
+                            });
+        
+        var clean_map = clean_map.unmask(0).where({
+          test: geo_map.gt(2).and(clean_map.eq(0)), 
+          value: smooth_map
+        }).selfMask();
+        
+        // cut benthic off to < 10 - 15 m
+        clean_map = clean_map.where({
+          test: depth.gt(vars.benthic_depth_cutoff),
+          value: ee.Image(0)
+        });
+        
+        // Deep (or land or missing) in geo == masked from benthic
+        clean_map = clean_map.where({
+          test: geo_map.unmask(0).lte(2),
+          value: ee.Image(0)
+        });
+        
+      }
+    }
+  }
+  
+  // Final clip to the classified extent and move on
+  if (vars.geomorphic) {
+    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+  } else {
+    clean_map = clean_map.updateMask(clean_map.gt(1)); // this ignores 0/land; make it .gt(2) if you want to mask deep too
+  }
+
+  
+  
+  // 4. Export data
+  
+  var output_name = (vars.geomorphic) ? vars.geomorph_output_name : vars.benthic_output_name;
+  
+  if (vars.do_export) {
+    print("For export, the image data scale must be set to:", vars.image_data_scale);
+    
+    Map.addLayer(region_extent, {}, "Export footprint", false);
+    
+    Export.image.toAsset({
+      image: clean_map.set(vars),
+      description: output_name,
+      assetId: vars.asset_output + 'in_out/' + output_name,
+      region: region_extent,
+      scale: vars.image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });
+    
+  } else {
+    if (vars.reproject_display) {
+      Map.addLayer(clean_map.reproject(ee.Projection('EPSG:4326').atScale(vars.image_data_scale)), display_pal, output_name, true);
+    } else {
+      Map.addLayer(clean_map, display_pal, output_name, false);
+    }
+  }
+
+}
+
+//Generate title
+var title = ui.Label({
+  value: 'Classes',
+  style: {fontWeight: 'bold', fontSize: '12px'}
+});
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+var legend = (vars.geomorphic) ? geo_legend : benthic_legend;
+pkg_vis.add_lgds([title, legend]);//, mask_legend])
+// generate the legend

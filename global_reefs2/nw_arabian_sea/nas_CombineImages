@@ -1,0 +1,106 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var ben2 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2FINAL"),
+    ben2absent = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_absent"),
+    geo3absent = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3_absent"),
+    geo3 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3FINAL"),
+    region_extent = 
+    /* color: #220800 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      },
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.MultiPolygon(
+        [[[[58.4950360371047, 23.686002955214356],
+           [58.4950360371047, 23.675155652909993],
+           [58.507052333491416, 23.675155652909993],
+           [58.507052333491416, 23.686002955214356]]],
+         [[[43.43215783152101, 32.138101008661216],
+           [43.43215783152101, 11.909998010113085],
+           [67.07473595652101, 11.909998010113085],
+           [67.07473595652101, 32.138101008661216]]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+//////////////////////////////////////////////
+// Script for exporting vectors to assets
+// Authour: Eva Kovacs (kovacsevam2@gmail.com)
+// Description:
+// - Exporting vectorsand masks to assets
+// - Currently for single layer, but to be updated for export as multiband raster
+//////////////////////////////////////////////
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+
+
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.nw_arabian_sea;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+var image_data_scale = sensor_params.pixel;
+var asset_output = region_params.asset; // asset path
+
+//Define GEO images to combine
+var three = ee.Image(geo3); 
+var absent = ee.Image(geo3absent)//.clip(region_extent);
+
+// Creat a merged image using a list
+// Create a collection by giving a list to the constructor.
+var georeefs = ee.ImageCollection([three, absent]);// last on top
+
+// Define Ben images to combine
+var two = ee.Image(ben2); 
+var b_absent = ee.Image(ben2absent)//.clip(region_extent);
+
+// Creat a merged image using a list
+// Create a collection by giving a list to the constructor.
+var benreefs = ee.ImageCollection([two, b_absent]);// last on top
+
+//var mosaic = clean5.mosaic();
+//Map.addLayer(mosaic, map_palettes.geo, 'geo mosaic',false);
+
+var Gcomposite = georeefs.max();
+Map.addLayer(Gcomposite, map_palettes.geo, 'geo mosaic',false);
+
+var Bcomposite = benreefs.max();
+Map.addLayer(Bcomposite, map_palettes.ben, 'ben mosaic',false);
+
+var regionextent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent);
+Map.addLayer(regionextent, {color:'#00FF00'},'extent',false);
+
+
+//var regionextent = ee.Image().byte().paint(ee.Feature(region_extent, {zone: 1}), "zone").clip(region_extent);
+
+
+// Export
+    Export.image.toAsset({
+      image: Gcomposite,
+      description: 'sea_geo_FINAL', 
+      assetId: asset_output + 'in_out/nw_arabain_sea_geo_clean3_review_1a', // <------------ change asset name
+      region: regionextent, // <------------ change extent
+      scale: image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });
+    
+    Export.image.toAsset({
+      image: Bcomposite,
+      description: 'sea_geo_FINAL', 
+      assetId: asset_output + 'in_out/nw_arabain_sea_ben_clean2_review_1a', // <------------ change asset name
+      region: regionextent, // <------------ change extent
+      scale: image_data_scale,
+      crs: 'EPSG:4326',
+      maxPixels: 1e13,
+      pyramidingPolicy: {'.default': 'mode'}
+    });

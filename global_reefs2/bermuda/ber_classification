@@ -4,7 +4,7 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([-65.05748674595273, 32.3
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Global coral atlas project - bermuda Classification
+// Global coral atlas project - brazil Classification
 // Contact: mitchell.lyons@gmail.com
 // Region coordinator: Rodney B (rodbio2008@gmail.com)
 // Description:
@@ -44,7 +44,7 @@ var region_params = param_module.bermuda;  //<------------ THIS IS WHERE YOU CHO
 var vars = {
   
   // analysis type
-  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
   use_benthic_points: false, // true = use benthic field points instead of map
   thresholding: false, // should all the thresholdable layers be added to the map?
   threshold_pixels: true, // whether the thresholding should be on the pixel or segment data
@@ -62,9 +62,9 @@ var vars = {
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
   */
   
-  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s'], //input bands for geomorphic, i left out 'depth_stdDev_p',
+  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_s', 'depth_stdDev_p'], //input bands for geomorphic, i left out 'depth_stdDev_p',
   
-  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p','depth_stdDev_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p','depth_stdDev_p', 'depth_stdDev_p'], //I removed this one 'depth_stdDev_p',//input bands for benthic
   
   all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove

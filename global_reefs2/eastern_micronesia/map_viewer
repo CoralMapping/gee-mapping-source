@@ -3,7 +3,7 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
     centre_map = /* color: #d63000 */ee.Geometry.Point([-169.73125000000005, -4.100221082372647]),
     GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-// Viewing script for looking at reefs and classifications for each region. 
+// Viewing script for looking at reefs and classifications for each region. brazil 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
 // in the workflow 
 
@@ -18,7 +18,7 @@ var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
 // SENSOR GENERICS
 var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.eastern_micronesia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.brazil;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -26,9 +26,9 @@ Map.addLayer(GCRMN_ext, {}, "GCRMN_ext", false);// CR added GCRMN_ext
 
 // Choose which layers will be shown in the map viewer
 var vars = {
-  raw: true, // set to true if you want to view the raw classifications for benthic and geo
-  geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
-  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+  raw: false, // set to true if you want to view the raw classifications for benthic and geo
+  geo_cleanup_stage: 0, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 0, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
 // choose where to centre the map (link this dynamically to map app?)

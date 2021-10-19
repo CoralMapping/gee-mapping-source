@@ -1,0 +1,869 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([153.38920400942382, -27.350503909395307]),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
+    GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final"),
+    mid_mask = 
+    /* color: #0047d6 */
+    /* shown: false */
+    ee.Geometry.MultiPoint(),
+    region_extent = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[152.61732680094937, -25.737214481192723],
+          [152.58436781657437, -26.97950463813798],
+          [153.23256117594937, -28.196617220175067],
+          [153.18861586344937, -29.112477445781437],
+          [158.85756117594937, -29.25635237342538],
+          [158.86854750407437, -31.820302162626916],
+          [159.31898695719937, -31.82963683873727],
+          [159.29701430094937, -29.208416488672185],
+          [154.16639906657437, -29.110185001428086],
+          [154.01259047282437, -26.516058100044084],
+          [153.74891859782437, -24.43340640647976],
+          [153.47426039469937, -24.122951347382628],
+          [151.62855726969937, -24.153028504248603]]]),
+    isReef_mask = 
+    /* color: #00ffed */
+    /* shown: false */
+    ee.Geometry({
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                152.42871897914645,
+                -24.791887894334135
+              ],
+              [
+                152.4582447359824,
+                -24.83302296740101
+              ],
+              [
+                152.47129100063083,
+                -24.87227551994253
+              ],
+              [
+                152.47747081020114,
+                -24.947630375789892
+              ],
+              [
+                152.47917319336017,
+                -25.0132941354644
+              ],
+              [
+                152.56330149867773,
+                -25.029160957880407
+              ],
+              [
+                152.57497447231054,
+                -24.965061302144324
+              ],
+              [
+                152.56604248838454,
+                -24.849838403701305
+              ],
+              [
+                152.48296397426364,
+                -24.804354509734036
+              ],
+              [
+                152.4314655611777,
+                -24.755104080229398
+              ],
+              [
+                152.3978199312949,
+                -24.75759824247378
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                152.85924571254492,
+                -25.303227889979162
+              ],
+              [
+                152.88119191496688,
+                -25.390705341486044
+              ],
+              [
+                152.9416431734824,
+                -25.458320300282903
+              ],
+              [
+                153.0240406344199,
+                -25.465759722396594
+              ],
+              [
+                153.06386607387302,
+                -25.326814765905326
+              ],
+              [
+                153.05425303676364,
+                -25.186467436084616
+              ],
+              [
+                153.03365367152927,
+                -25.13550490096879
+              ],
+              [
+                152.96224253871677,
+                -25.10939389718231
+              ],
+              [
+                152.90044444301364,
+                -25.116854753311458
+              ],
+              [
+                152.83040660121677,
+                -25.134261646375865
+              ],
+              [
+                152.75145272822198,
+                -25.136129311013555
+              ],
+              [
+                152.73119238234113,
+                -25.164405164677966
+              ],
+              [
+                152.74388926723242,
+                -25.19268092227816
+              ],
+              [
+                152.79058116176364,
+                -25.279636422604945
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.184208833031,
+                -25.961394701807293
+              ],
+              [
+                153.19656845217162,
+                -25.952751406466852
+              ],
+              [
+                153.21442123537474,
+                -25.92743524833337
+              ],
+              [
+                153.20274826174193,
+                -25.9008783118509
+              ],
+              [
+                153.1848954785388,
+                -25.90520194159914
+              ],
+              [
+                153.16429611330443,
+                -25.93052287598955
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.04902438992525,
+                -26.37316228952863
+              ],
+              [
+                153.0950296389487,
+                -26.402687126831538
+              ],
+              [
+                153.13004855984713,
+                -26.4033021473299
+              ],
+              [
+                153.13622836941744,
+                -26.357166518437822
+              ],
+              [
+                153.09159641140963,
+                -26.33686100689789
+              ],
+              [
+                153.0565774905112,
+                -26.346091226678986
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.08747653836275,
+                -26.566166896028975
+              ],
+              [
+                153.12592868680025,
+                -26.56002524712527
+              ],
+              [
+                153.11356906765963,
+                -26.514566819910183
+              ],
+              [
+                153.0840433108237,
+                -26.517024492594558
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.10944919461275,
+                -26.617743746189433
+              ],
+              [
+                153.11974887722994,
+                -26.619278415256037
+              ],
+              [
+                153.12043552273775,
+                -26.612218766982316
+              ],
+              [
+                153.1115091311362,
+                -26.61007009186341
+              ],
+              [
+                153.10919173710693,
+                -26.613216291758484
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.14618472928072,
+                -26.69261155376655
+              ],
+              [
+                153.14927463406588,
+                -26.67420599095577
+              ],
+              [
+                153.1293619143393,
+                -26.672058481749204
+              ],
+              [
+                153.123182104769,
+                -26.683409143806557
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.14875995698088,
+                -26.808983729002662
+              ],
+              [
+                153.16060459199065,
+                -26.80454054113176
+              ],
+              [
+                153.15665638032073,
+                -26.79534718595806
+              ],
+              [
+                153.14875995698088,
+                -26.785693361175802
+              ],
+              [
+                153.14189350190276,
+                -26.790443758547543
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.26863789554778,
+                -27.207394416971177
+              ],
+              [
+                153.21836169674236,
+                -27.325594629192096
+              ],
+              [
+                153.2101219506486,
+                -27.396334854651272
+              ],
+              [
+                153.21698840572674,
+                -27.493833334507052
+              ],
+              [
+                153.2760399193986,
+                -27.526719610683756
+              ],
+              [
+                153.4229820580705,
+                -27.518194483082674
+              ],
+              [
+                153.50537472759464,
+                -27.543191967668736
+              ],
+              [
+                153.615242800258,
+                -27.529155240020597
+              ],
+              [
+                153.64545520260174,
+                -27.340234245470285
+              ],
+              [
+                153.45868762447674,
+                -27.29997064979923
+              ],
+              [
+                153.38864978267986,
+                -27.19252967840776
+              ],
+              [
+                153.384529909633,
+                -27.059305767618547
+              ],
+              [
+                153.3639305443986,
+                -27.028727469947366
+              ],
+              [
+                153.3089989037736,
+                -27.027504164781
+              ],
+              [
+                153.27878650142986,
+                -27.070311914913336
+              ],
+              [
+                153.2362144799455,
+                -27.132659666411442
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.4314013611065,
+                -27.727541859375698
+              ],
+              [
+                153.4420443664776,
+                -27.756408442938
+              ],
+              [
+                153.46058379518854,
+                -27.75519316211009
+              ],
+              [
+                153.4688235412823,
+                -27.737873936578282
+              ],
+              [
+                153.46127044069635,
+                -27.715689153008018
+              ],
+              [
+                153.4471942077862,
+                -27.714777352998063
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.57660219325604,
+                -28.20115664005815
+              ],
+              [
+                153.58655855311932,
+                -28.19692060055451
+              ],
+              [
+                153.58158037318768,
+                -28.190717525480558
+              ],
+              [
+                153.57334062709393,
+                -28.19253309691166
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.60878266806293,
+                -28.649515623938804
+              ],
+              [
+                153.63075532431293,
+                -28.65704758820616
+              ],
+              [
+                153.64689149374652,
+                -28.64529748763972
+              ],
+              [
+                153.65238465780902,
+                -28.628724595761053
+              ],
+              [
+                153.6407116841762,
+                -28.62239607385226
+              ],
+              [
+                153.62732209677387,
+                -28.623300171768374
+              ],
+              [
+                153.59367646689105,
+                -28.63023133045724
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                159.01775190129277,
+                -29.44628180369261
+              ],
+              [
+                159.0417844940662,
+                -29.5180095356729
+              ],
+              [
+                159.08984967961308,
+                -29.538323159794597
+              ],
+              [
+                159.1509611298084,
+                -29.561021793462007
+              ],
+              [
+                159.2450315643787,
+                -29.503668051214508
+              ],
+              [
+                159.27318403019902,
+                -29.416380272415054
+              ],
+              [
+                159.13379499211308,
+                -29.384076733020795
+              ],
+              [
+                159.08229657902714,
+                -29.392452710087028
+              ],
+              [
+                159.02873822941777,
+                -29.42594972028689
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                159.00447261227572,
+                -29.902086720010967
+              ],
+              [
+                158.98387117636074,
+                -29.95146675002257
+              ],
+              [
+                159.01271235836947,
+                -30.002036534435472
+              ],
+              [
+                159.07588374508822,
+                -30.01809052218718
+              ],
+              [
+                159.12669551266634,
+                -30.014523193888827
+              ],
+              [
+                159.22488582028353,
+                -29.982411466197842
+              ],
+              [
+                159.24445263044495,
+                -29.92290542675372
+              ],
+              [
+                159.21458613766634,
+                -29.882441920298184
+              ],
+              [
+                159.19638250673276,
+                -29.84463074292189
+              ],
+              [
+                159.15072810543978,
+                -29.835397737078722
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                158.98136258562184,
+                -31.55656687979106
+              ],
+              [
+                159.00092899920037,
+                -31.61242624806626
+              ],
+              [
+                159.0610134645281,
+                -31.6513060407432
+              ],
+              [
+                159.0764644617525,
+                -31.63464225278615
+              ],
+              [
+                159.08023953874684,
+                -31.618567602844813
+              ],
+              [
+                159.13517117937184,
+                -31.575873413943974
+              ],
+              [
+                159.1379177614031,
+                -31.547789861278645
+              ],
+              [
+                159.06307340105153,
+                -31.46993086707711
+              ],
+              [
+                159.04728055437184,
+                -31.489255313297654
+              ],
+              [
+                158.95595670183278,
+                -31.502136060018604
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.17056981797657,
+                -26.744270395841625
+              ],
+              [
+                153.27219335313282,
+                -26.742430808311756
+              ],
+              [
+                153.26807348008595,
+                -26.598851399177665
+              ],
+              [
+                153.16919652696095,
+                -26.591483484150533
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                153.4579830842506,
+                -27.070014085625647
+              ],
+              [
+                153.54312712721935,
+                -27.04066188147815
+              ],
+              [
+                153.61453826003185,
+                -27.013748950044278
+              ],
+              [
+                153.63651091628185,
+                -26.940317293526885
+              ],
+              [
+                153.58157927565685,
+                -26.876637807820376
+              ],
+              [
+                153.4909420686256,
+                -26.8937858177609
+              ],
+              [
+                153.4469967561256,
+                -26.972143559425096
+              ],
+              [
+                153.43875701003185,
+                -27.04555444879176
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        }
+      ],
+      "coordinates": []
+    }),
+    benthic_ref = ee.FeatureCollection("projects/coral_atlas/subtropical_eastern_australia/training/SEA_benthic_reference"),
+    geo_ref = ee.FeatureCollection("projects/coral_atlas/subtropical_eastern_australia/training/SEA_geo_reference");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
+// in the workflow 
+
+//Viewer for Subtropical Eastern Australia + Lord Howe Is (note it's being run out of SEA script/asset folders)
+
+// #### ---> note this is a special joined region - don't use this as a template map viewer
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.subtropical_eastern_australia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+
+
+// Choose which layers will be shown in the map viewer
+var vars = {
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+};
+
+// choose where to centre the map (link this dynamically to map app?)
+Map.centerObject(centre_map, 6);
+
+
+// Add low-tide base map to viewer
+// var low_tide_image = ee.Image(region_params.pixels);
+// Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
+
+//print (region_params.image[0])
+var low_tide_image_dove = ee.ImageCollection(region_params.image).mosaic();
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+Map.addLayer(GCRMN_ext, {}, "GCRMN_ext", false);// CR added GCRMN_ext
+
+
+//Load other imagery for viewing purpose only
+//Map.addLayer(geo_clean2_0, map_palettes.geo, 'Geomorphic - stage 2 clean', false);
+
+
+
+
+// Load the raw classifications
+if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map);
+  }
+
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
+  } else {
+      var benthic_map_raw = ee.Image(region_params.benthic_map);
+  }
+
+  // Add the raw region classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+}
+
+// Add geo clean stage 1 to the viewer
+if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
+  }
+
+// Add geo clean stage 2 to the viewer
+if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
+}
+
+// Add geo clean stage 3 to the viewer
+if (vars.geo_cleanup_stage == 3) {
+  var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
+}
+
+// Add benthic clean stage 1 to the viewer
+if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
+  }
+
+// Add geo clean stage 2 to the viewer
+if (vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
+}
+
+// Geo Training Data - Needs more work + add flag to show
+var geo_train = ee.FeatureCollection(region_params.geo_train_library);
+
+var geo_buff = function(feature) {
+ return feature.buffer(20);   // substitute in your value of Z here
+};
+
+var geo_train_buff = geo_train.map(geo_buff);
+
+// Create an empty image into which to paint the features, cast to byte.
+var empty = ee.Image().byte();
+
+// Paint the interior of the polygons with different colors.
+var geo_fill = empty.paint({
+  featureCollection: geo_train_buff,
+  color: 'class_num',
+});
+
+//Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
+
+var wcmc=wcmc.filterBounds(region_extent);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+////////// UI SET UP //////////
+
+//Generate title
+var title = ui.Label({
+  value: 'Coral Atlas map classes',
+  style: {fontWeight: 'bold', fontSize: '14px'}
+});
+
+// generate the legend
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+// generate the legend
+
+
+
+////////// MASK EXPORTS //////////
+
+
+Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent),
+  description: "region_extent_export",
+  assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
+})
+
+// special case here since there is so little reef
+Map.addLayer(benthic_ref, {}, "Benthic reference", false)
+Map.addLayer(geo_ref, {}, "Geo reference", false)
+var notReef_mask = region_extent.difference(isReef_mask)
+Map.addLayer(notReef_mask, {}, "Not reef mask", false)
+Export.table.toAsset({
+  collection: ee.FeatureCollection(notReef_mask),
+  description: "not_reef_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
+})
+/*
+Export.table.toAsset({
+  collection: ee.FeatureCollection(mid_mask),
+  description: "mid_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
+})
+
+*/

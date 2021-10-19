@@ -2356,7 +2356,10 @@ var center_map = /* color: #d63000 */ee.Geometry.Point([59.82834781430058, 24.15
       ],
       "coordinates": []
     }),
-    ORFtoBRS = /* color: #36ffed */ee.Geometry.MultiPolygon(
+    ORFtoBRS = 
+    /* color: #36ffed */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[51.77273766018589, 24.29178526171062],
            [51.770849385039405, 24.267531201207312],
            [51.760640429114616, 24.186849982898423],
@@ -3880,7 +3883,13 @@ var center_map = /* color: #d63000 */ee.Geometry.Point([59.82834781430058, 24.15
         [[[58.38292031607767, 23.65236831596066],
           [58.46772910130297, 23.658694421069853],
           [58.47562547603085, 23.63888160549085],
-          [58.503434452627836, 23.651147034113823],
+          [58.50261624905407, 23.65330707807729],
+          [58.497337861153305, 23.677166029281516],
+          [58.50068787059659, 23.686364650299723],
+          [58.50339233203423, 23.683808702903317],
+          [58.504380054138934, 23.678737506962623],
+          [58.49875834534949, 23.677204528368783],
+          [58.504187637018056, 23.651596389976653],
           [58.51648063819731, 23.636679994649544],
           [58.526093617559994, 23.6366799942956],
           [58.56317225255563, 23.646429695117295],
@@ -7779,7 +7788,120 @@ var center_map = /* color: #d63000 */ee.Geometry.Point([59.82834781430058, 24.15
            [49.65792155669245, 27.960906032159237]]]]),
     geoFinal = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3FINAL"),
     ben2 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2b"),
-    benFinal = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2FINAL");
+    benFinal = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2FINAL"),
+    ben1 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean1b"),
+    geo1 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean1"),
+    geo2 = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean2"),
+    geo_absent = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3_absent"),
+    ben_absent = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_absent"),
+    review = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[58.48513863814409, 23.69609366297083],
+          [58.37252877486284, 23.587273884407416],
+          [58.787949307089406, 23.342257264818905],
+          [59.153244717245656, 22.880842031088317],
+          [59.434172884418935, 22.5737856326982],
+          [59.58111502309081, 22.45326568293463],
+          [59.758269564106435, 22.396140660523205],
+          [59.69728989697219, 22.202578303936587],
+          [59.54088490713774, 21.932072712697803],
+          [59.34511780314597, 21.642852188363666],
+          [59.186397797041394, 21.444863308496803],
+          [58.88464916964619, 21.195204655116758],
+          [58.64065926291632, 20.89167914601388],
+          [58.47006601265202, 20.586264439333657],
+          [58.12056344917546, 20.658883413163274],
+          [57.844546193617425, 20.38565690700181],
+          [57.415330770250065, 19.22705685456255],
+          [55.201585653062565, 17.96192934842677],
+          [51.81936001517022, 16.278559426182248],
+          [51.98061582685911, 15.02110396016655],
+          [56.90249082685911, 17.328038993378758],
+          [59.86934085323048, 19.580929811734308],
+          [60.13301272823048, 22.700615164143887],
+          [58.49879641963673, 23.740521549757425]]]),
+    HarbourMask = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[58.57230409055048, 23.62761332071788],
+           [58.56754048734003, 23.63087665223951],
+           [58.55968697934443, 23.623681487995437],
+           [58.56342061429316, 23.618412647124533],
+           [58.58067258267695, 23.621597568802002],
+           [58.578698476841986, 23.626079919995096],
+           [58.5779260006457, 23.625765374038185],
+           [58.57556565671259, 23.627141507022923],
+           [58.574449857762396, 23.628163767880483]]],
+         [[[58.595274976844024, 23.617367958822292],
+           [58.59521060382767, 23.616945259410443],
+           [58.595489553565216, 23.61585409881187],
+           [58.59809666072769, 23.61627680174349],
+           [58.59780698215408, 23.617338468209905],
+           [58.596970132941436, 23.617407279628498],
+           [58.596508792990875, 23.61746626081567],
+           [58.59612255489273, 23.617338468209905],
+           [58.59569340145035, 23.617269656755177]]],
+         [[[58.596402804088385, 23.60188714161106],
+           [58.597110907268316, 23.597757903715703],
+           [58.601853052806646, 23.597993863669178],
+           [58.60208908719996, 23.599193320202303],
+           [58.60183159513453, 23.601336584070307],
+           [58.60058705015162, 23.601100630130965]]],
+         [[[58.60613442613759, 23.582640051966504],
+           [58.60845721914448, 23.582585971519805],
+           [58.6083338375298, 23.583260840373168],
+           [58.60804952337422, 23.58386555371747],
+           [58.60771692945637, 23.583659066547316],
+           [58.60735751344838, 23.58364923381682]]],
+         [[[59.47179544288611, 22.6126215237667],
+           [59.471457484550236, 22.61228973727032],
+           [59.471232178992985, 22.6119331896956],
+           [59.47081375438666, 22.611601401539026],
+           [59.47130191642737, 22.61112105010339],
+           [59.4718115361402, 22.611571689127754],
+           [59.47190273124671, 22.611700442863572],
+           [59.471977833099125, 22.61174501143637],
+           [59.471993926353214, 22.612502674964464],
+           [59.471951011008976, 22.612586859543317]]],
+         [[[59.4851854309761, 22.598207913512162],
+           [59.48471842965145, 22.591347406923134],
+           [59.48669253548641, 22.585067117382625],
+           [59.49276505669613, 22.58455200206327],
+           [59.490147220697594, 22.591743630097135],
+           [59.491197102258845, 22.596263194956375],
+           [59.48830031652276, 22.597560775274584]]],
+         [[[59.75268432233528, 22.52983182146942],
+           [59.7631342086573, 22.529930921563736],
+           [59.761245933510814, 22.532230023791147],
+           [59.75637504193977, 22.532309302495666]]],
+         [[[58.226291630245825, 20.461557396191694],
+           [58.22242924926438, 20.459546998818094],
+           [58.22792241332688, 20.45287229081956],
+           [58.23161313293137, 20.458179913571204]]],
+         [[[58.220527394350746, 20.450111644677843],
+           [58.206107838686684, 20.43225706557531],
+           [58.225076420840004, 20.416411401258497],
+           [58.248250706728676, 20.43772625605725]]],
+         [[[53.2521482901533, 16.705260246198343],
+           [53.25112905072764, 16.703657177629434],
+           [53.2522019343336, 16.703020056896406],
+           [53.25361814069346, 16.702485695932697],
+           [53.25489487218455, 16.702341829263883],
+           [53.255796094413554, 16.702578181591118],
+           [53.256815333839214, 16.703020056896406],
+           [53.25596775579051, 16.704602578670176]]],
+         [[[52.83593091967823, 16.5646509883196],
+           [52.83758316043141, 16.565998131917183],
+           [52.83352984813208, 16.56955199730453],
+           [52.83224238780493, 16.569356614254733],
+           [52.832595368059, 16.56701409284824]]]]),
+    ben2rev = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1b"),
+    geo3rev = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_geo_clean3_review_1b"),
+    ben2revc = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1c"),
+    ben2revd = ee.Image("projects/coral_atlas/nw_arabian_sea/in_out/nw_arabian_sea_benthic_clean2_review_1d");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 // Viewing script for looking at reefs and classifications for each region. 
@@ -7853,20 +7975,12 @@ var midMask = M1.merge(M2);
 var midMask2 = midMask.merge(M3);
 
 
-// Export
-    Export.image.toAsset({
-      image: midMask2,
-      //folder: "SeagrassGEE",
-      description: 'nas_midmask', 
-      assetId: asset_output + 'in_out/nas_midmask', // <------------ change asset name
-      region: region_extent, // <------------ change extent
-      scale: image_data_scale,
-      crs: 'EPSG:4326',
-      maxPixels: 1e13,
-      //fileFormat: 'GeoTIFF',
-      pyramidingPolicy: {'.default': 'mode'}
-    });
 
+Export.table.toAsset({
+  collection: ee.FeatureCollection(midMask2),
+  description: "mid_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_mid_mask'
+})
 /*
 // Load the raw classifications
 if (vars.raw) {
@@ -7942,13 +8056,18 @@ var geo_fill = empty.paint({
 */
 
 //Map.addLayer(geo3Plus, map_palettes.geo, 'Geo clean3 refined', false);
-Map.addLayer(benraw, map_palettes.benthic, 'Benthic RAW', false);
+//Map.addLayer(benraw, map_palettes.benthic, 'Benthic RAW', false);
+Map.addLayer(ben2revc, map_palettes.benthic, 'Benthic 2 rev 1m', false);
+Map.addLayer(ben2revd, map_palettes.benthic, 'Benthic 2 rev 0.5m', false);
+//Map.addLayer(benFinal, map_palettes.benthic, 'Benthic clean 2FINAL', false);
+//Map.addLayer(ben2, map_palettes.benthic, 'Benthic clean 2b', false);
 //Map.addLayer(ben1, map_palettes.benthic, 'Benthic clean 1', false);
-Map.addLayer(benFinal, map_palettes.benthic, 'Benthic clean 2FINAL', false);
-Map.addLayer(ben2, map_palettes.benthic, 'Benthic clean 2b', false);
-Map.addLayer(cleanG, map_palettes.geo, 'Geo clean3 G', false);
-Map.addLayer(geoFinal, map_palettes.geo, 'Geo clean FINAL', false);
-//Map.addLayer(geo1reefs, map_palettes.geo, 'Geo clean 1, reefs', false);
+//Map.addLayer(ben_absent, map_palettes.benthic, 'Benthic missing', false);
+//Map.addLayer(geo_absent, map_palettes.geo, 'Geo missing', false);
+//Map.addLayer(geoFinal, map_palettes.geo, 'Geo clean FINAL', false);
+//Map.addLayer(geo1, map_palettes.geo, 'Geo 1', false);
+//Map.addLayer(geo2, map_palettes.geo, 'Geo 2', false);
+Map.addLayer(geo3rev, map_palettes.geo, 'Geo 3 rev', false);
 //Map.addLayer(dtl3, map_palettes.geo, 'geo3 d from l', false);
 //Map.addLayer(absent2, map_palettes.geo, 'absent', false);
 //Map.addLayer(missingcl3, map_palettes.geo, 'absent clean 3', false);

@@ -1,0 +1,284 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var regionextent = 
+    /* color: #1d0700 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-121.33783686072586, 32.4976221561919],
+          [-121.33783686072586, -17.028531332064187],
+          [-70.62494623572586, -17.028531332064187],
+          [-70.62494623572586, 32.4976221561919]]], null, false),
+    geoReview = ee.Image("projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_geo_clean3k"),
+    benclean = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
+        [[[[-78.7768158977168, 8.095364796204443],
+           [-78.95534372974805, 8.220429052554547],
+           [-79.0624604289668, 8.20411854683125],
+           [-79.2162690227168, 8.11439883355083],
+           [-79.1448578899043, 8.369910602531787],
+           [-79.2712006633418, 8.744718695470132],
+           [-79.39479685474805, 8.524767308730361],
+           [-79.6612153117793, 8.573656450270063],
+           [-79.8205170695918, 8.524767308730361],
+           [-79.81777048756055, 8.225865738804032],
+           [-79.44972849537305, 7.526657626039661],
+           [-78.8262543742793, 7.502150676380099],
+           [-78.4032807414668, 7.572944748831002],
+           [-78.33461619068555, 7.768928863581291],
+           [-78.5625824992793, 8.17693288358606]]],
+         [[[-78.60533513389986, 7.153078159782273],
+           [-77.97362126671236, 7.272971365047093],
+           [-78.26887883507173, 7.556227127746552]]],
+         [[[-81.19499720210341, 7.454603812441781],
+           [-81.37077845210341, 7.530851450055112],
+           [-81.67290247554091, 7.588028384040795],
+           [-81.58775843257216, 7.44098676169075],
+           [-81.50261438960341, 7.318414374895559],
+           [-82.14806116694716, 6.882332442989133],
+           [-81.78825892085341, 6.688691158567858],
+           [-80.18974817866591, 6.505888792150961],
+           [-79.55803431147841, 7.272100454569685],
+           [-79.79424036616591, 7.560802217040737],
+           [-80.01671351069716, 7.36472348770703],
+           [-80.24193323725966, 7.356551641977699],
+           [-80.35454310054091, 7.220332185171714],
+           [-80.81322229975966, 7.149481799904118],
+           [-81.08238733882216, 7.307517413285252]]],
+         [[[-83.1148132133874, 7.990704325628417],
+           [-82.9280456352624, 8.148428682950604],
+           [-83.0159362602624, 8.25444984620243],
+           [-83.1807311821374, 8.276194271865348]]],
+         [[[-84.30957639698114, 8.023341992466863],
+           [-83.51856077198114, 8.281630190852734],
+           [-83.8069518852624, 8.566909361752415],
+           [-84.13928831104364, 8.553329433154893]]],
+         [[[-85.59497678760614, 9.172070142912213],
+           [-85.0264343071374, 9.386210697484918],
+           [-85.07861936573114, 9.527091998257267],
+           [-85.16650999073114, 9.535218000498306],
+           [-85.2736266899499, 9.773493943761764],
+           [-85.43018186573114, 9.83033018981233],
+           [-85.7515319633874, 9.854685594043557]]],
+         [[[-86.1140807915124, 10.88942216471804],
+           [-86.3338073540124, 10.962235644749551],
+           [-86.6579040336999, 10.290068833714612],
+           [-86.03442991260614, 10.257638296677188],
+           [-85.97949827198114, 10.705961428230422]]],
+         [[[-78.24328944721503, 3.619935863317398],
+           [-80.11087404894407, 2.29540669569401],
+           [-80.71120986407242, 1.123454470415284],
+           [-79.81857070391617, 1.0355794536313554],
+           [-79.09347304766617, 1.6012232702038993],
+           [-78.69796523516617, 2.501515549620569],
+           [-78.26949843829117, 2.8773821489515874],
+           [-78.21182021563492, 2.998072918572462],
+           [-78.13216933672867, 3.0446999068125074],
+           [-78.01681289141617, 3.003558550348795]]],
+         [[[-89.8250076158278, -1.0254319637423797],
+           [-90.26308744981218, -1.096830845302333],
+           [-90.01452177598405, -1.3398482210721527],
+           [-89.8579666002028, -1.1915690204967389]]],
+         [[[-90.71352690293718, -0.7562997078553702],
+           [-90.75197905137468, -0.8675250944434229],
+           [-90.8302566392653, -0.9444197717186662],
+           [-90.6160232408278, -1.1462598490300868],
+           [-90.0941726548903, -0.9663893731107676],
+           [-90.22188871934343, -0.8057335898075546],
+           [-90.41964262559343, -0.792002014526959],
+           [-90.58993071153093, -0.7205971075067433],
+           [-90.70116728379655, -0.7700313997792465]]],
+         [[[-91.08156889512468, -1.083100420026967],
+           [-91.57320707871843, -1.069369932543768],
+           [-91.64736479356218, -1.4043743880909079],
+           [-91.1598464830153, -1.415357390285204],
+           [-90.74511259629655, -1.1366487195351762],
+           [-90.9401199205153, -1.0117012235940466]]],
+         [[[-90.54841285032153, -0.1960185547335242],
+           [-90.5085874108684, -0.31961347091179587],
+           [-90.54978614133715, -0.46243237355008654],
+           [-90.4371762780559, -0.4802845525503849],
+           [-90.33143286985278, -0.3305996221608015],
+           [-90.16938453000903, -0.42123486893465667],
+           [-90.11033301633715, -0.6258465792833663],
+           [-89.89472632688403, -0.586023367699157],
+           [-90.01330051440246, 0.04611124732411857],
+           [-90.23028049487121, 0.1628407694029943],
+           [-91.01992282885558, 0.09554968457569626],
+           [-90.84002170580871, -0.10357741198580009],
+           [-90.62441501635558, -0.170868474893186]]],
+         [[[-89.82103977221496, 0.3550994575125118],
+           [-90.02703342455871, 0.20678585221153295],
+           [-89.84850559252746, -0.03765949693975156],
+           [-89.46398410815246, 0.2905558077228794]]],
+         [[[-90.10643270924513, 0.5679525367972094],
+           [-90.56785849049513, 0.5775650935812362],
+           [-90.80406454518263, 0.4210159107395358],
+           [-90.73265341237013, 0.18755989192674588],
+           [-90.64750936940138, 0.26721013717239434],
+           [-90.55412558033888, 0.3976705594479263],
+           [-90.44151571705763, 0.39355078460904225],
+           [-90.275347504167, 0.28506271296609975]]]]),
+    benReview = ee.Image("projects/coral_atlas/tropical_eastern_pacific/in_out/tropical_eastern_pacific_benthic_clean2i");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+/*
+Script to export maps to GCS
+ 
+TODO: deal with change in dateline (i.e. WGS-84 projection wrapping) in an automated way
+  - Fiji/south pacific might be the only region where this happens? worth it?
+  **A: resonable solution below**
+*/
+
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+//var pkg_vis = require('users/mitchest/global_reefs:Modules/pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var reef_params = param_module.tropical_eastern_pacific;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
+
+// imports
+var geo = ee.Image(geoReview)
+//var benthic = ee.Image(reef_params.benthic_map_clean1) // - OR -
+var benthic = ee.Image(benReview)
+var image = ee.Image(reef_params.dove)
+var depth = ee.Image(reef_params.pixels).select('depth') // will need to import depth mosaic from pixels now
+var region_extent = ee.Image().byte().paint(ee.Feature(regionextent, {zone: 1}), "zone").clip(regionextent);
+
+// finalise layers (include 'mapped area' as zeros)
+geo = geo.where(geo.lte(2), 0)
+benthic = benthic.unmask(0).updateMask(geo.gte(0))
+
+// make reef/non-reef layer 
+var reef_top = geo.eq([11,13,14,15,16,25,26]).reduce(ee.Reducer.sum())
+var reef_all = geo.eq([11,12,13,14,15,16,21,22,23,24,25,26]).reduce(ee.Reducer.sum())
+var reef_layer = reef_top.addBands(reef_all).reduce(ee.Reducer.sum())
+
+// check before export
+Map.addLayer(region_extent, {color:'#ffff00'}, "extent", false);
+Map.addLayer(reef_layer.selfMask(), {min:0, max:2}, "reef layer", false)
+Map.addLayer(geo, map_palettes.geo, "geomorphic map", false)
+Map.addLayer(benthic, map_palettes.benthic, "benthic map", false)
+Map.addLayer(depth, {min: -3, max: 1200, palette:['#d0d1e6','#a6bddb','#74a9cf','#3690c0','#0570b0','#045a8d','#023858']}, "depth layer", false)
+Map.addLayer(image, {"opacity":1,"bands":["b1","b2","b3"],"min":1,"max":1514,"gamma":1}, 'Dove lowtide mosaic', false)
+// combine into single stack
+var export_stack = depth.updateMask(geo.gte(0)).rename('depth')
+                    .addBands(reef_layer.rename('reef'))
+                    .addBands(geo.rename('geomorphic'))
+                    .addBands(benthic.rename('benthic'))
+                    .toInt16()
+
+Map.addLayer(export_stack, {}, "export raster stack", false)
+
+
+
+/*// add export region
+var export_geom_east = ee.Geometry.Rectangle(-179.99998,-21.4794,-168.13175,-8.4)
+var export_geom_west = ee.Geometry.Rectangle(162.7051,-23.052,179.99998,-7.8)
+Map.addLayer(export_geom_west, {}, "export footprint west", true)
+Map.addLayer(export_geom_east, {}, "export footprint east", true)
+
+// add raster flag for either side of dateline
+var latlong = ee.Image.pixelLonLat().select('longitude').clipToCollection(ee.FeatureCollection([export_geom_west,export_geom_east]))
+//Map.addLayer(latlong)
+
+var export_stack_east = export_stack.updateMask(latlong.lte(0))
+var export_stack_west = export_stack.updateMask(latlong.gt(0))
+
+Map.addLayer(export_stack_east, {}, "export raster stack east", false)
+Map.addLayer(export_stack_west, {}, "export raster stack west", false)*/
+
+// make east/west export geometries
+/*var export_geom_east = latlong.lt(0).and(latlong.gt(-179.99998)).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
+                            })
+
+var export_geom_west = latlong.gt(0).and(latlong.lt(179.99998)).selfMask()
+                            .reduceToVectors({
+                              reducer: ee.Reducer.countEvery(),
+                              geometry: export_geom,
+                              scale: 5,
+                              maxPixels: 1e13,
+                              crs: 'EPSG:4326'
+                            })*/
+
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack,
+  description: 'tep_stack_review',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/tep/tep_stack_review',
+  region: region_extent, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+});
+
+
+/*
+Export.table.toCloudStorage({
+  collection: slithers, 
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/ea_updated20200618/Slither_Masks',
+  fileFormat: 'SHP'
+});
+
+*/
+
+/*// run the export
+Export.image.toCloudStorage({
+  image: export_stack_east,
+  description: 'swp_stack_east',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_east',
+  region: export_geom_east, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})
+
+// run the export
+Export.image.toCloudStorage({
+  image: export_stack_west,
+  description: 'swp_stack_west',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/final/swp_stack_west',
+  region: export_geom_west, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+})*/
+
+
+// export the convex hull boundary
+
+// export region convex hull, or manual
+/*var export_geom = geo.gte(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: geo.geometry().bounds(100), crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+
+Export.table.toCloudStorage({
+  collection: ee.FeatureCollection(export_geom),
+  description: 'swp_convex_hull',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/swp/new_geom/swp_convex_hull',
+  fileFormat: "SHP"
+})*/
