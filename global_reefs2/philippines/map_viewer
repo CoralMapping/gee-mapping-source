@@ -1,5 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var centre_map = /* color: #d63000 */ee.Geometry.Point([121.87492178286129, 10.727316049711094]),
+var centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([121.87492178286129, 10.727316049711094]),
     wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved"),
     region_extent = 
     /* color: #d63000 */
@@ -14515,16 +14518,14 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([121.87492178286129, 10.7
     mid_mask = 
     /* color: #ff0000 */
     /* shown: false */
-    ee.Geometry.MultiPoint(),
-    mid_mask_0 = ee.FeatureCollection("projects/coral_atlas/philippines/in_out/mid_mask_0"),
-    GCRMN_ext = ee.Image("projects/coral_atlas/global_datasets/GCRMN_reefextent_final");
+    ee.Geometry.MultiPoint();
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
 // in the workflow 
 
 //Viewer for Philippines
+
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
@@ -14549,20 +14550,20 @@ var vars = {
 };
 
 // choose where to centre the map (link this dynamically to map app?)
-Map.centerObject(centre_map, 6);
+Map.centerObject(centre_map, 10);
 
 // Add low-tide base map to viewer
 // var low_tide_image = ee.Image(region_params.pixels);
 // Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 
 //print (region_params.image[0])
-var low_tide_image_dove = ee.Image(region_params.image);
+var low_tide_image_dove = ee.Image(region_params.pixels);
 Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
-Map.addLayer(GCRMN_ext, {}, "GCRMN_ext");// CR added GCRMN_ext 
-//Load other imagery for viewing purpose only
-//Map.addLayer(geo_clean2_0, map_palettes.geo, 'Geomorphic - stage 2 clean', false);
 
 
+// V1 maps
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('geomorphic').selfMask(), map_palettes.geo, 'Geomorphic - V1', false);
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('benthic').selfMask(), map_palettes.benthic, 'Benthic - V1', false);
 
 
 // Load the raw classifications
@@ -14591,39 +14592,36 @@ if (vars.raw) {
 }
 
 // Add geo clean stage 1 to the viewer
-if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
+if (vars.geo_cleanup_stage >= 1) {
   Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
   }
 
 // Add geo clean stage 2 to the viewer
-if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
+if (vars.geo_cleanup_stage >= 2) {
   Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
 }
 
 // Add geo clean stage 3 to the viewer
-if (vars.geo_cleanup_stage == 3) {
+if (vars.geo_cleanup_stage >= 3) {
   var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
-  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', false);
-  var geo_map_clean3_Reefext = ee.Image(region_params.geo_map_clean3_Reefext)
-  Map.addLayer(geo_map_clean3_Reefext.updateMask(geo_map_clean3_Reefext.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean - using Reef Exent', true);
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
 }
 
 // Add benthic clean stage 1 to the viewer
-if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
+if (vars.benthic_cleanup_stage >= 1) {
   Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
   }
 
 // Add geo clean stage 2 to the viewer
 if (vars.benthic_cleanup_stage == 2) {
   Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
-  //Map.addLayer(ee.Image("projects/coral_atlas/philippines/in_out/phil_benthic_clean2x"), map_palettes.benthic, 'Benthic - agressive stage 2 clean', false);
 }
 
 // Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
 
 var geo_buff = function(feature) {
- return feature.buffer(20);   // substitute in your value of Z here
+ return feature.buffer(20);   // substitute in your value of Z herere
 };
 
 var geo_train_buff = geo_train.map(geo_buff);
@@ -14638,9 +14636,13 @@ var geo_fill = empty.paint({
 });
 
 //Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-
-var wcmc=wcmc.filterBounds(region_extent);
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered").filterBounds(region_extent);
 Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+// add global masks 
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select("reef_mask"), {min:0, max:1}, "Global mask", false);
+Map.addLayer(ee.FeatureCollection("projects/coral_atlas/global_datasets/global_lagoons_mask"), {}, "Global lagoons mask", false);
+
 
 ////////// UI SET UP //////////
 
@@ -14666,17 +14668,17 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
   collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
-})*/
+});*/
 
 /*Export.table.toAsset({
   collection: ee.FeatureCollection(notReef_mask),
   description: "not_reef_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
-})*/
+});*/
 
 /*Export.table.toAsset({
   collection: ee.FeatureCollection(mid_mask),
   description: "mid_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
-})*/
+});*/
 

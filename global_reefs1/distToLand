@@ -1,9 +1,32 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var mod_land = ee.ImageCollection("MODIS/006/MOD44W"),
     ls8_landreef = ee.Image("projects/coral_atlas/reefMask/global_reef_mask_combined"),
-    image = ee.Image("projects/coral_atlas/Indonesia/in_out/indo_pixels");
+    osm = ee.FeatureCollection("projects/coral_atlas/workflow/mapping/osm/land_polygons_complete_4326/20200915T051200Z/land_polygons_complete_4326"),
+    global_regions = ee.FeatureCollection("projects/coral_atlas/global_datasets/aca_mapped_simple"),
+    pns_extent = 
+    /* color: #051ad6 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[133.65904403361668, 1.5423670875241082],
+          [133.70298934611668, -3.3334940665077855],
+          [140.07505965861668, -9.227839178840291],
+          [151.80845809611668, -13.662997256508245],
+          [159.85045028361668, -14.430353736128849],
+          [164.99205184611668, -13.0216133807959],
+          [165.47545028361668, -9.791275221974912],
+          [164.72837997111668, -5.1302650823301885],
+          [160.11412215861668, 2.1133630909724754],
+          [152.59947372111668, 3.0352733285728117],
+          [146.66685653361668, 2.991388778986984],
+          [139.89927840861668, 2.7719401962986745],
+          [134.58189559611668, 1.981611352071806]]]),
+    phil_extent = ee.FeatureCollection("projects/coral_atlas/philippines/in_out/phil_extent");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-//var land_mask = mod_land.select('water_mask').mean().eq(0)
+//var extent_mask = ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 30, -30, -180, -30], null, false);
+
+var extent_mask = phil_extent;
+
+/*//var land_mask = mod_land.select('water_mask').mean().eq(0)
 var land_mask = ls8_landreef.eq(1)
 var water_mask = ls8_landreef.neq(1)
 
@@ -19,24 +42,35 @@ var water_mask_buff = water_mask.fastDistanceTransform(256).sqrt()
 
 Map.addLayer(land_mask_buff.updateMask(land_mask_buff.lte(7680)), {min:0, max: 7680}, "Land mask", false)
 Map.addLayer(water_mask_buff.updateMask(water_mask_buff.lte(7680)), {min:0, max: 7680}, "Water mask", false)
+*/
 
+var osm_land = osm.filterBounds(extent_mask).geometry().intersection(extent_mask).simplify(30);
+var osm_land_i = ee.Image().byte().paint(ee.Feature(osm_land,{zone: 1}), "zone").unmask(ee.Image(0), false);
+Map.addLayer(osm_land_i, {min:0, max:1}, "OSM land layer", false);
 
-Map.addLayer(ee.Geometry.Polygon([-180, 30, 0, 30, 180, 30, 180, -30, 30, -30, -180, -30], null, false), {}, "product bounds", false)
+var land_mask_buff = osm_land_i.eq(1) // <----- CHECK output and determine whether this should be 1 or 0 (for some intersections, the ocean area is taken to be "the" polygon)
+                               .fastDistanceTransform(256).sqrt()
+                               .multiply(ee.Image.pixelArea().sqrt())
+                               .uint16()
+Map.addLayer(land_mask_buff.updateMask(land_mask_buff.lte(7680)), {min:0, max:8000}, "Dist to land", false);
+
+Map.addLayer(extent_mask, {}, "product bounds", false);
 
 Export.image.toAsset({
   image: land_mask_buff.updateMask(land_mask_buff.lte(7680)),
-  description: 'global_land_dist',
-  assetId: 'projects/coral_atlas/global_datasets/ls8_global_distToLand',
-  region: ee.Geometry.Polygon([-180, 31, 0, 31, 180, 60, 180, -31, 10, -60, -180, -31], null, false),
+  description: 'osm_land_dist_ncb',
+  assetId: 'projects/coral_atlas/global_datasets/osm_distToLand_ncb',
+  region: extent_mask,
   scale: 30,
+  crs:"EPSG:4326",
   maxPixels: 1e13
-})
+});
 
-Export.image.toAsset({
+/*Export.image.toAsset({
   image: water_mask_buff.updateMask(water_mask_buff.lte(7680)),
   description: 'global_water_dist',
   assetId: 'projects/coral_atlas/global_datasets/ls8_global_distToWater',
-  region: ee.Geometry.Polygon([-180, 31, 0, 31, 180, 60, 180, -31, 10, -60, -180, -31], null, false),
+  region: extent_mask,
   scale: 30,
   maxPixels: 1e13
-})
+})*/

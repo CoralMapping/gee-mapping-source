@@ -1,0 +1,43 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var aca_v1 = ee.Image("ACA/reef_habitat/v1_0"),
+    export_extent = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_extent");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// geo map
+var geo = aca_v1.select('geomorphic').updateMask(aca_v1.select('reef_mask')).selfMask();
+Map.addLayer(geo, {}, "Geomorphic");
+
+// benthic map
+var ben = aca_v1.select('benthic').updateMask(aca_v1.select('reef_mask')).selfMask();
+Map.addLayer(ben, {}, "Benthic");
+
+
+/* export maps
+ - change the export path
+ - change the export geometry
+*/
+
+// run the geo export
+Export.image.toCloudStorage({
+  image: geo,
+  description: 'indo_geo',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/v2beta/indo_v2beta/geo/indo_geo_v2b_',
+  region: export_extent, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+});
+
+// run the benthic export
+Export.image.toCloudStorage({
+  image: ben,
+  description: 'indo_ben',
+  bucket: 'coral-atlas-data-pipeline',
+  fileNamePrefix: 'coral-gee-export-bucket/v2beta/indo_v2beta/ben/indo_ben_v2b_',
+  region: export_extent, 
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13, 
+  skipEmptyTiles: true
+});

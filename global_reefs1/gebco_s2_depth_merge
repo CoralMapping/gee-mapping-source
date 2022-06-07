@@ -1,0 +1,20 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var gebco = ee.Image("projects/coral_atlas/global_datasets/GEBCO_RN5136"),
+    swp_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_segmentation_east"),
+    swp_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_segmentation_west"),
+    aca_v1 = ee.Image("ACA/reef_habitat/v1_0");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+
+
+var swp_depth = ee.ImageCollection([swp_east, swp_west]).mosaic().select('depth')
+                      .updateMask(aca_v1.select('reef_mask'))
+
+var gebco = gebco.multiply(-100).int16().rename('depth')
+
+var merge_depth = ee.ImageCollection([gebco, swp_depth]).mosaic()
+
+Map.addLayer(gebco, {}, "gebco")
+Map.addLayer(swp_depth.select("depth"), {}, "swp")
+Map.addLayer(merge_depth, {}, "merged")
+
+Map.addLayer(merge_depth.reproject({crs:'EPSG:4326', scale:100}), {min:-10, max:10000}, "merged 100m")

@@ -1,6 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma":1},
-    mid_mask = /* color: #0800d6 */ee.Geometry({
+    mid_mask = 
+    /* color: #0800d6 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -3657,8 +3660,6 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
           [120.29526303750056, -5.259104744078933],
           [120.65060208779353, -5.259104744078933],
           [120.65060208779353, -4.745741910602106]]], null, false),
-    indo_east = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_east"),
-    indo_west = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_west"),
     sg_on_orf = 
     /* color: #98ff00 */
     /* shown: false */
@@ -3685,7 +3686,10 @@ var imageVisParam = {"opacity":1,"bands":["depth"],"min":1500,"max":2500,"gamma"
            [121.2507907460889, -6.384592753271515],
            [121.09972873437015, -6.368215207549017],
            [120.99398532616702, -6.406428665856303]]]]),
-    global_not_applied = /* color: #d60000 */ee.Geometry.MultiPolygon(
+    global_not_applied = 
+    /* color: #d60000 */
+    /* shown: false */
+    ee.Geometry.MultiPolygon(
         [[[[121.01766029715805, -6.725150810492541],
            [121.02778831839828, -6.731799494087888],
            [121.03877464652328, -6.722252637884376],
@@ -4331,7 +4335,7 @@ var region_params = param_module.indonesia;  //<------------ THIS IS WHERE YOU C
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -4347,7 +4351,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: false, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   // should the global extent + depth cleanup be applied?
@@ -4454,7 +4458,6 @@ if (vars.manual_clean && vars.geomorphic) {
   
   // define the manually edited map - uses the output from the second pass of cleaning
   var man_geo = ee.Image(region_params.geo_map_clean2);
-  //var man_geo = ee.Image(region_params.geo_map_clean2).clip(indo_west); // use this when testing for a small area
   
   // the "GLOBAL MASK" clean
   // currently uses GCRMN extent + bathymetry threhold < vars.global_depth_thresh
@@ -4463,7 +4466,16 @@ if (vars.manual_clean && vars.geomorphic) {
               .eq(1) // extent according to global extent layer
               .add(depth.lt(vars.global_depth_thresh)) // combine with areas less than depth thrshold
               .eq(0) // get leftovers
-              .selfMask().connectedPixelCount(25, true).gte(25)
+              .selfMask().connectedPixelCount(100, false).gte(100).unmask(0, false);
+    
+    blanket_mask = blanket_mask.where({
+      test: blanket_mask.eq(0).connectedPixelCount(100,false).lt(100),
+      value: ee.Image(1)
+    });
+    
+    
+    
+    Map.addLayer(blanket_mask, {min:0,max:1}, "Global clean mask", false);
     
     if (vars.global_land_dist > 0) {
       var distToLand = ee.Image(region_params.distToLand);
@@ -4487,61 +4499,19 @@ if (vars.manual_clean && vars.geomorphic) {
     }
   }
   
-  // import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
+  // the "MID MASK" CLEAN
+  //  - import the mid mask from asset ****only use ee.FC if mid_mask created in map viewer****
   //var mid_mask = ee.FeatureCollection(region_params.mid_mask).geometry();
   //Map.addLayer(mid_mask, {color: 'red'}, "mid mask import", true, 0.4);
   var midmask = ee.Image().byte().paint(ee.Feature(mid_mask.dissolve(),{zone: 1}), "zone");//.clip(mid_mask.dissolve());
   
-  // the "MID MASK" CLEAN
   man_geo = man_geo.where({
     test: midmask.eq(1),
     value: ee.Image(0)
   });
   
   /*
-  // the "REEF MASK" CLEAN
-  // Define a kernel for reef mask Morphological Operations
-  var kernel_rm = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
-
-  // Create reef mask to clean areas inside the reef - Perform an dilation of deepwater
-  var reef_mask = man_geo.eq(2)
-            .focal_max({kernel: kernel_rm, iterations: 2});
-  
-  // Reef crest, slope, sheltered slope (within reef mask) -> Inner reef flat
-  man_geo = man_geo.where({
-    test: reef_mask.eq(0)
-                    .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22))),
-    value: ee.Image(13)
-  });
-  
-  // the "DEEP WATER" CLEAN
-  
-  // Define a kernel for deep water Morphological Operations
-  var kernel_dw = ee.Kernel.circle({radius: vars.smooth_radius.multiply(5)});
-
-  // Create mask to clean deepwater areas - Perform an dilation of deepwater followed by a erosion
-  var deepwater = man_geo.eq(2)
-           .focal_max({kernel: kernel_dw, iterations: 2})
-           .focal_min({kernel: kernel_dw, iterations: 2});
-    
-  
-  // Deep lagoon (outside reef mask and global mask) -> deepwater 
-  man_geo = man_geo.where({
-    test: deepwater.eq(1)
-                   .and(man_geo.eq(12)),
-    value: ee.Image(2)
-  });
-  
-  
-  // Reef classes in deepwater -> deepwater
-  man_geo = man_geo.where({
-    test: deepwater.eq(1)
-                   .and(man_geo.eq(15).or(man_geo.eq(21)).or(man_geo.eq(22)).or(man_geo.eq(24))),
-    value: ee.Image(2)
-  });
-  
-  
-  // WAVE clean (un-comment this sectio nbased on whether you have waves or not)
+  // the WAVE clean (un-comment this sectio nbased on whether you have waves or not)
   
   var waves = ee.Image(region_params.waves)
   Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false)
@@ -4553,6 +4523,47 @@ if (vars.manual_clean && vars.geomorphic) {
   })
   */
   
+  // the "LAGOONS MASK" CLEAN
+  // - in map viewer manual digitised reef top areas with lagoon in it
+  // - import the lagoon mask from asset ****only use ee.FC if  lagoons mask created in map viewer****
+  
+  // LAGOON clean stage 1 - clean inside the lagoon extent
+  var lagoons_mask = ee.FeatureCollection(region_params.lagoons_mask).geometry();
+  var lagoons_mask_i = ee.Image().byte().paint(ee.Feature(lagoons_mask.dissolve(),{zone: 1}), "zone");
+
+  // RC within Lagoon ORF
+  man_geo = man_geo.where({
+    test: lagoons_mask_i.eq(1)
+                        .and(man_geo.eq(15)),
+    value: ee.Image(14)
+  });
+  // Reef slope, sheltered slope (within lagoon mask) -> Back Reef Slope
+  man_geo = man_geo.where({
+    test: lagoons_mask_i.eq(1)
+                        .and(man_geo.eq(21).or(man_geo.eq(22))),
+    value: ee.Image(24)
+  });    
+
+  // LAGOON clean stage 2 - buffer the lagoon mask, and clean inside buffer
+  var lagoon_buffered = lagoons_mask.buffer(1000); // buffer 1000 m wide around reef mask
+  var reef_band_mask = lagoon_buffered.difference(lagoons_mask);//substract buffered lagoon mask - lagoon mask resulting in band around reef of 1000 m
+  var reef_band_mask_i = ee.Image().byte().paint(ee.Feature(reef_band_mask.dissolve(),{zone: 1}), "zone");
+
+  // BRS, DL and SL should not be present on outside of reef on within lagoons_mask_i  -> Reef Slope
+  man_geo = man_geo.where({
+   test: reef_band_mask_i.eq(1)
+                         .and(man_geo.eq(24).or(man_geo.eq(12)).or(man_geo.eq(11))),
+    value: ee.Image(22)
+  });    
+  // IRF on within lagoons_mask_i  -> ORF as RC would get artefacts
+  man_geo = man_geo.where({
+    test: reef_band_mask_i.eq(1)
+                          .and(man_geo.eq(13)),
+    value: ee.Image(14)
+  });   
+  
+  
+  // the "DISTANCE TO DEEP WATER" CLEAN
   // use a distance to deepwater to cut out RC/slope
   var dist_to_deep = man_geo.eq(2).fastDistanceTransform(256).sqrt()
                                   .multiply(ee.Image.pixelArea().sqrt())
@@ -4560,12 +4571,13 @@ if (vars.manual_clean && vars.geomorphic) {
                                   .selfMask();
   Map.addLayer(dist_to_deep, {}, "distance to deepwater", false);
   
+  // reef crest too far from deep water -> ORF
   man_geo = man_geo.where({
     test: man_geo.eq(15)
                  .and(dist_to_deep.gte(300)),
     value: ee.Image(14)
   });
-  
+  // reef slope too far from deep wter -> BRS
   man_geo = man_geo.where({
     test: man_geo.eq(21).or(man_geo.eq(22))
                  .and(dist_to_deep.gte(1500)),
@@ -4643,7 +4655,7 @@ if (vars.manual_clean && vars.geomorphic) {
     image: man_geo,
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
-    region: indo_west,
+    region: region_extent,
     scale: vars.image_data_scale,
     crs: 'EPSG:4326',
     maxPixels: 1e13,
@@ -4713,9 +4725,9 @@ if (vars.manual_clean && !vars.geomorphic) {
   
   var to_seagrass_i = ee.Image().byte().paint(ee.Feature(to_seagrass, {zone: 1}), "zone")
   // coral/algea or rock --> seagrass
-  benthic = benthic.where({
+  man_benthic = man_benthic.where({
     test: to_seagrass_i.eq(1)
-                       .and(benthic.eq(13).or(benthic.eq(15))),
+                       .and(man_benthic.eq(13).or(man_benthic.eq(15))),
     value: ee.Image(14)
   });
   

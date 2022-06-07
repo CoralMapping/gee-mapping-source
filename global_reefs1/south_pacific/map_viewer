@@ -3,8 +3,23 @@ var centre_map = /* color: #d63000 */ee.Geometry.Point([178.66718749999995, -17.
     pixels_east = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_east"),
     pixels_west = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_pixels_west"),
     geo_2019 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_geo_dec2019"),
-    benthic_2019 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_dec2019");
+    benthic_2019 = ee.Image("projects/coral_atlas/sw_pacific/in_out/swp_benthic_dec2019"),
+    region_extent = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[163.80414892095968, -21.309141770714263],
+          [166.79243017095968, -23.42223469449948],
+          [-179.14506982904032, -24.065837856832925],
+          [-169.30131982904032, -19.37262746066781],
+          [-167.96899875613565, -14.522106479764608],
+          [-170.93731252611394, -9.238156350272982],
+          [-172.49737111986394, -8.45655890437076],
+          [178.6645374535279, -7.434650321411486],
+          [165.13339720151635, -9.384260917044042],
+          [162.36484251401635, -17.623302818343056]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // Viewing script for looking at reefs and classifications for each region. 
 // From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
 // in the workflow 
@@ -74,6 +89,11 @@ var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
 Map.addLayer(geo_2019, map_palettes.geo, 'Geomorphic clean - 2019 Dove only map', false);
 Map.addLayer(benthic_2019, map_palettes.benthic, 'Benthic clean - 2019 Dove only map', false);
 
+// V1 maps
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('geomorphic').selfMask(), map_palettes.geo, 'Geomorphic - V1', false);
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('benthic').selfMask(), map_palettes.benthic, 'Benthic - V1', false);
+
+
 if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geomorphic clean - stage 1', false);
 if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geomorphic clean - stage 2', false);
 if (vars.geo_clean3) Map.addLayer(geo_clean3, map_palettes.geo, 'Geomorphic clean - stage 3', false);
@@ -81,6 +101,8 @@ if (vars.geo_clean3) Map.addLayer(geo_clean3, map_palettes.geo, 'Geomorphic clea
 if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean - stage 1', false);
 if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean - stage 2', false);
 
+//load lagoons mask
+Map.addLayer(ee.FeatureCollection(region_params.lagoons_mask), {}, "Global lagoons mask", false);
 
 // Geo Training Data
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
@@ -89,7 +111,7 @@ var geo_buff = function(feature) {
   return feature.buffer(20);   // substitute in your value of Z here
 };
 
-var geo_train_buff = geo_train.map(geo_buff)
+var geo_train_buff = geo_train.map(geo_buff);
 
 // Create an empty image into which to paint the features, cast to byte.
 var empty = ee.Image().byte();
@@ -103,11 +125,11 @@ var geo_fill = empty.paint({
 Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
 
 // add trianing/validation point sets
-Map.addLayer(geo_train, {color: 'yellow'}, "Geo training library", false)
-Map.addLayer(ee.FeatureCollection(region_params.geo_val_library), {color: 'red'}, "Geo validation library", false)
+Map.addLayer(geo_train, {color: 'yellow'}, "Geo training library", false);
+Map.addLayer(ee.FeatureCollection(region_params.geo_val_library), {color: 'red'}, "Geo validation library", false);
 
-Map.addLayer(ee.FeatureCollection(region_params.benthic_train_library), {color: 'yellow'}, "Benthic training library", false)
-Map.addLayer(ee.FeatureCollection(region_params.benthic_val_library), {color: 'red'}, "Benthic validation library", false)
+Map.addLayer(ee.FeatureCollection(region_params.benthic_train_library), {color: 'yellow'}, "Benthic training library", false);
+Map.addLayer(ee.FeatureCollection(region_params.benthic_val_library), {color: 'red'}, "Benthic validation library", false);
 
 ////////// UI SET UP //////////
 
@@ -124,3 +146,35 @@ var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, m
 pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
+
+
+
+////////// MASK EXPORTS //////////
+
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent),
+  description: "region_extent_export",
+  assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
+});*/
+
+/*// check manually created notReef_mask 
+var notReefmask = ee.FeatureCollection(notReef_mask.dissolve())
+Map.addLayer(notReefmask, {}, 'not_reef_mask - check for donuts', false);
+Export.table.toAsset({
+  collection: notReefmask,
+  description: "not_reef_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
+});*/
+
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(mid_mask),
+  description: "mid_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
+});*/
+
+// DEPRICATED IN FAVOUR OF GLOBAL LAGOON MASK
+//Export.table.toAsset({
+//  collection: ee.FeatureCollection(Lagoon_mask),
+//  description: "lagoons_mask_export",
+//  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_lagoons_mask' // lagoons_mask to change RC in ORF and RS SRS in BRS
+//});

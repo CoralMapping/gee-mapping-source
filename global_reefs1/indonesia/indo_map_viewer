@@ -10679,3 +10679,9 @@ Export.table.toAsset({
   description: "mid_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
 });*/
+
+Export.table.toAsset({
+  collection: ee.FeatureCollection(Lagoon_mask),
+  description: "lagoons_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_lagoons_mask' // lagoons_mask to change RC in ORF and RS SRS in BRS
+});

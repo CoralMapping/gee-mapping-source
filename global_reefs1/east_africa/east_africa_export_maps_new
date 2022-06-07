@@ -1,11 +1,8 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var nth_cari_finalmask = ee.FeatureCollection("users/rodbio2008/nth_cari_final_mask");
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Global coral atlas project - Nth Caribbean and Bahamas
+// Global coral atlas project - East Africa
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Mitchell Lyons
+// Region coordinator: Chris Roelfsema v2 (script copied from wmic_export_maps)
 // Description:
 // - export geomorphic and benthic to GCS bucket
 ///////////////////////////////
@@ -18,7 +15,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.nth_cari;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.east_africa;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -56,18 +53,20 @@ Map.addLayer(export_stack, {}, "export raster stack", false);
 
 // run the export
 var reef_boundary= ee.FeatureCollection(region_params.extent_mask);
-Map.addLayer(reef_boundary, {}, "Reef Boundary", false);
+Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'ncb_v2',
+  description: 'east_africa_v2',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/ncb/v2/ncb_stack_',
+  fileNamePrefix: 'coral-gee-export-bucket/east_africa/v2/ea_stack_',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
-  skipEmptyTiles: true,
-  fileDimensions: 11520 //tile size
+  skipEmptyTiles: true
 });
+
+
+
 
 

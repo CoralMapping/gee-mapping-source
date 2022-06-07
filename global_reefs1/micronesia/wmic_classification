@@ -1,26 +1,5 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787600416741807]),
-    eg_area = 
-    /* color: #d63000 */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      },
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.MultiPolygon(
-        [[[[178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502],
-           [178.1914966082618, -19.126850353489502]]],
-         [[[178.1896083331153, -19.126039427046837],
-           [178.1896083331153, -19.156203209515112],
-           [178.24265169859382, -19.156203209515112],
-           [178.24265169859382, -19.126039427046837]]]], null, false),
-    rgb_vis = {"opacity":1,"bands":["b3","b2","b1"],"min":2643.4286587190527,"max":4022.9989507085565,"gamma":1},
-    wmic_extent = 
+var wmic_extent = 
     /* color: #d63000 */
     /* shown: false */
     /* displayProperties: [
@@ -32,23 +11,17 @@ var map_centre = /* color: #d63000 */ee.Geometry.Point([158.0748374727973, 6.787
         [[[130.7551960728133, 19.915585821970126],
           [130.7551960728133, 0.7075765650212411],
           [163.4944538853133, 0.7075765650212411],
-          [163.4944538853133, 19.915585821970126]]], null, false);
+          [163.4944538853133, 19.915585821970126]]], null, false),
+    pixels = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels"),
+    pixels_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_pixels_sld"),
+    segments = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_segmentation"),
+    segments_sld = ee.Image("projects/coral_atlas/Micronesia/in_out/wmic_segmentation_sld");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-/*
-TODO:
-
-  - ADD IN -1/-2/-3 pixels from depth data where needed
-
-  - add in GEBCO depth filter (done in _datagen now)
-          image: users/murrnick/global-reefs/existingData/GEBCO_RN5136
-          e.g. filter: Map.addLayer(gebco.lt(0).and(gebco.gt(-500)).selfMask().focal_max(10), {}, 'gebco depth')
-*/
-
-
 
 ///////////////////////////////
-// Global coral atlas project - west micronesia region
+// Global coral atlas project - west Micronesia
 // Contact: mitchell.lyons@gmail.com
+// Region coordinator: 
 // Description:
 // - Developing a process to combine OBIA and supervised classification
 // - This script loads the pixel-based and segmentation data and applies a mchaine learning classifier
@@ -63,21 +36,25 @@ TODO:
 // 5. Export data
 
 // Load and libraries needed
-var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals')
-var param_module = require('users/mitchest/global_reefs_modules:reef_params')
-var slider_module = require('users/mitchest/global_reefs_modules:threshold_sliders')
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var slider_module = require('users/mitchest/global_reefs_modules:threshold_sliders');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove;        //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.wmic  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.wmic;  //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
 // 1. Setting constants
 
 // These will get written to the asset metadata 
+
+//var extent = region_params.extent_mask
+//Map.addLayer(extent,{}, 'extent')
 
 var vars = {
   
@@ -98,8 +75,13 @@ var vars = {
   
   object data:
   ['b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s']
-    */
-  input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'depth_p', 'depth_stdDev_p', 'red_stdDev_p', 'depth_maxent_p', 'b1_savg_p', 'b2_savg_p', 'rb_p', 'gb_p', 'rg_p', 'b1_s', 'b2_s', 'b3_s', 'b4_s', 'depth_s', 'rb_s', 'gb_s', 'rg_s'],
+  */
+  
+  geo_input_bands: ['b1_s', 'b2_s', 'b3_s', 'b4_s','depth_stdDev_p', 'depth_s'], //input bands for geomorphic
+  
+  benthic_input_bands: ['b1_p', 'b2_p', 'b3_p', 'b4_p', 'b1_savg_p', 'b2_savg_p','depth_stdDev_p'], //input bands for benthic
+  
+  all_bands: (sensor_params.sname == 'dove') ? ['b1','b2','b3','b4'] : ['B1','B2','B3','B4','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_nir_bands: (sensor_params.sname == 'dove') ? ['b1','b4'] : ['B2','B5'], // only handles Landsat/Sentinel-2/Dove
   blue_band: (sensor_params.sname == 'dove') ? 'b1' : 'B2', // only handles Landsat/Sentinel-2/Dove
   class_field: 'class_num', // the field in the training data that stores the class integer
@@ -112,9 +94,9 @@ var vars = {
   //reef_top_depth: 4.5, // areas above this depth will be split into 'reef top'
   
   // classification params
-  rf_trees: 15, // number of random forest trees (per class)
-  rf_minLeafPop: 1, // minimum leaf population for random forest
-  rf_varPerSplit: 0, // default sqrt(n(k))
+  rf_trees: 40, // number of random forest trees (per class)
+  rf_minLeafPop: 5, // minimum leaf population for random forest
+  rf_varPerSplit: null, // default sqrt(n(k))
   set_seed: 42, // set a seed so results are repeatable
 
   // class information for classification, sampling and reporting
@@ -123,6 +105,11 @@ var vars = {
   trim_training_data: false, // if true, will trim the training data set by the % below
   trim_training_perc: 0.80,
   
+  // split into sub-regions
+  // runs classificaiton for this sub-region (grom need to be added to dictionary `region_dic` below)
+  // set to 'none' for normal operation without splitting
+  //split_region: 'subreg2',
+  split_region: 'none',
   // results/layers to show
   show_intermediates: false, // show separate intermediate layers (e.g. reef top, reef crest etc.)
   show_eg_area: false, // contrain the map add to the corresponding example_area polygon geomtery (you can change that)
@@ -131,38 +118,53 @@ var vars = {
   Use test mode?
   This pars down the training computation
   to test (in real-time in the map viewer)
-  whether classification output is working
+  whether classification output is working,
+  and provides some diagnostics (incl. variable importance)
   */
-  test_mode: true,
+  test_mode: false,
   
   // export options
-  do_export: false, // export the results?
+  do_export: true, // export the results?
   export_scale: sensor_params.pixel, // pixel size to export at
   geomorph_output_name: region_params.sname + '_' + 'geo',
   benthic_output_name: region_params.sname + '_' + 'benthic',
   asset_output: region_params.asset, // asset path
+  
+  // accuracy/confidence options
+  run_probabilities: false
 
+};
+
+// dictionary to control sub-region geometries (add new ones)
+if (vars.split_region != 'none') {
+  var region_dic = ee.Dictionary({subreg1: inner, subreg2: outer}); // <- include all splits here
+  var region_idx = ee.Number(region_dic.keys().indexOf(ee.String(vars.split_region))).getInfo();
+  var subregion_clip = ee.Geometry(region_dic.get(vars.split_region));
+  print('Running classificaiton for region split: ', vars.split_region);
 }
+
 
 // if running in test mode, over-write the trianing params
 if (vars.test_mode) {
-  vars.rf_trees = 10
-  vars.trim_training_data = true
-  vars.trim_training_perc = 0.1
+  vars.rf_trees = 10;
+  vars.trim_training_data = true;
+  vars.trim_training_perc = 0.2;
 }
 
 
 // 2. Data loads & vis
 
 // load input data
-var pixsegs = ee.ImageCollection(region_params.pixels).mosaic().regexpRename('(^.*$)','$1_p')
+var input_bands = (vars.geomorphic) ? vars.geo_input_bands : vars.benthic_input_bands; // Set the input bands to either geomorphic or benthic
+//########### --> special case for micronesia since it was the first S2/LS8/Dove composite and is a biy wonky
+var pixsegs = ee.ImageCollection([pixels_sld, pixels]).mosaic().regexpRename('(^.*$)','$1_p')
                   .addBands(
-              ee.ImageCollection(region_params.segments).mosaic().regexpRename('(^.*$)','$1_s')  
+              ee.ImageCollection([segments_sld, segments.select(['b1', 'b2', 'b3', 'b4', 'depth', 'rb', 'gb', 'rg'])]).mosaic().regexpRename('(^.*$)','$1_s')  
                            )
-                  .select(vars.input_bands)
-var geomorph = ee.FeatureCollection(region_params.geo_train_library)
-var benthic = ee.FeatureCollection(region_params.benthic_train_library)
-if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts)
+                  .select(input_bands);
+var geomorph = ee.FeatureCollection(region_params.geo_train_library);
+var benthic = ee.FeatureCollection(region_params.benthic_train_library);
+if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_params.benthic_pts);
 
 // Load training data samples (from '*_calval' script)
 
@@ -171,17 +173,26 @@ if (vars.use_benthic_points) var benthic_pts = ee.FeatureCollection(region_param
 //classes_mapped_benthic:       [ 3,    4,    11,   12,   13,   14,   15,   16,  17], // classes to map
 //classes_mapped_names_benthic: ['MAN','MU', 'SA', 'RU', 'RO', 'SG', 'CA', 'CO', 'AL'],
 
-var training_data = (vars.geomorphic) ? geomorph : benthic // Set the training points to either geomorphic or benthic
+var training_data = (vars.geomorphic) ? geomorph : benthic; // Set the training points to either geomorphic or benthic
 // trim the data (randomly) if needed
 if (vars.trim_training_data) {
-  training_data = training_data.randomColumn("random")
-  training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc))
+  training_data = training_data.randomColumn("random");
+  training_data = training_data.filter(ee.Filter.lte("random", vars.trim_training_perc));
 }
 
-print("Number of training samples:", training_data.size())
 
-Map.centerObject(map_centre, 14)
-Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
+// trim the image and training data to sub-region, if desired
+if (region_idx > -1) {
+  pixsegs = pixsegs.clip(subregion_clip);
+  training_data = ee.FeatureCollection(training_data.filterBounds(subregion_clip));
+}
+
+print("Number of training samples:", training_data.size());
+
+//Map.centerObject(map_centre, 6);
+var low_tide_image = ee.Image(region_params.image).select(vars.all_bands);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname, false); // image data
+Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false);
 
 
 // ################################################
@@ -190,25 +201,25 @@ Map.addLayer(pixsegs, {min: 100, max: 2000}, 'segments + pixels', false)
 
 if (vars.thresholding) {
   
-  var thresh_dat = (vars.threshold_pixels) ? pixels : segments
+  var thresh_dat = (vars.threshold_pixels) ? param_module.pixels : segments;
   
-  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999}
-  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999}
+  var bw_pal = {'palette': '000000,ffffff','min':-9999, 'max': -9999};
+  var red_pal = {'palette': '000000,f03b20','min':-9999, 'max': -9999};
   
   // N.B. these are all generic and come from mitchest/global_reefs/Modules/threshold_sliders
-  slider_module.add_depth(thresh_dat)
-  slider_module.add_waves(thresh_dat)
-  slider_module.add_slope(thresh_dat)
-  slider_module.add_b1(thresh_dat)
-  slider_module.add_b2(thresh_dat)
-  slider_module.add_b3(thresh_dat)
-  slider_module.add_b4(thresh_dat)
-  if (sensor_params.sname != 'dove') slider_module.add_b5(thresh_dat)
-  slider_module.add_depthsd(thresh_dat)
-  slider_module.add_redsd(thresh_dat)
-  slider_module.add_ndwi(thresh_dat)
-  slider_module.add_idm(thresh_dat)
-  slider_module.add_depth_depthvar(thresh_dat)
+  slider_module.add_depth(thresh_dat);
+  slider_module.add_waves(thresh_dat);
+  slider_module.add_slope(thresh_dat);
+  slider_module.add_b1(thresh_dat);
+  slider_module.add_b2(thresh_dat);
+  slider_module.add_b3(thresh_dat);
+  slider_module.add_b4(thresh_dat);
+  if (sensor_params.sname != 'dove') slider_module.add_b5(thresh_dat);
+  slider_module.add_depthsd(thresh_dat);
+  slider_module.add_redsd(thresh_dat);
+  slider_module.add_ndwi(thresh_dat);
+  slider_module.add_idm(thresh_dat);
+  slider_module.add_depth_depthvar(thresh_dat);
   
 }
   
@@ -233,51 +244,87 @@ if (vars.show_intermediates) {
 // 4. Train and fit models
 
 // filter nulls
-training_data = training_data.filter(ee.Filter.notNull(vars.input_bands))
-print('Number of sampels after null filter', training_data.size())
+training_data = training_data.filter(ee.Filter.notNull(input_bands))
+print('Number of samples after null filter', training_data.size())
 
 // parameterise and train the classifier (random forest in this case)
-var rf_classifier = ee.Classifier.randomForest({
+var rf_classifier = ee.Classifier.smileRandomForest({
   numberOfTrees: vars.rf_trees,
   minLeafPopulation: vars.rf_minLeafPop,
   variablesPerSplit: vars.rf_varPerSplit,
   seed: vars.set_seed
-}).train(training_data, vars.class_field, vars.input_bands)
+}).train(training_data, vars.class_field, input_bands)
 // fit the classificaiton model
-var raw_classification = pixsegs.classify(rf_classifier).toUint8()
+
+// print some stats in test mode
+if (vars.test_mode) {
+  
+  var rf_dic = rf_classifier.explain()
+  print(rf_dic)
+  
+  var chart =
+    ui.Chart.feature.byProperty(ee.Feature(null, ee.Dictionary(rf_dic).get('importance')))
+    .setChartType('ColumnChart')
+    .setOptions({
+    title: 'Random Forest Variable Importance',
+    legend: {position: 'none'},
+    hAxis: {title: 'Bands'},
+    vAxis: {title: 'Importance'}
+    })
+   
+  print(chart);
+
+}
+
+var raw_classification = pixsegs.classify(rf_classifier).toUint8();
+
+// Map.addLayer(raw_classification,{},'raw_classification');
+// print('raw_classification',raw_classification);
+
+// Map.addLayer(pixsegs,{},'pixsegs');
+// print('pixsegs',pixsegs);
+
+if (vars.run_probabilities) {
+  var classesList={
+     classes_mapped_geo:       [11,  12, 13, 14, 15, 21, 22, 23],
+     classes_mapped_benthic:      [11, 12, 13, 15, 18],
+     classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RC','SS','SE', 'PL'],
+     classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'CO', 'MM'],
+  };
+  
+  
+  var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
+  var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
+  
+  
+  var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
+  var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
 
 
-var classesList={
-   classes_mapped_geo:       [11,  12,    13,   14,   15,  16,    21,  22,  23],
-   classes_mapped_benthic:      [11,    12,   13,  14,    15,   18],
-   classes_mapped_names_geo: ['SL','DL', 'IRF','ORF','RR', 'TRF','SS','SE', 'PL'],
-   classes_mapped_names_benthic: ['SA', 'RU', 'RO', 'SG', 'CO', 'BMA' ],
-};
-
-var classes_mapped=(vars.geomorphic) ? classesList.classes_mapped_geo : classesList.classes_mapped_benthic;
-var classes_names=(vars.geomorphic) ? classesList.classes_mapped_names_geo : classesList.classes_mapped_names_benthic;
-
-
-var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
-  var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1)});
-  var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)});
+  var probabilities=ee.ImageCollection(classes_mapped.map(function(num){
+  var classOfInt=(training_data.filterMetadata('class_num','equals',ee.Number(num))).map(function (feat) {return feat.set('od',1)})//.aside(print,'classOfInt');
+  var classN=ee.String(classOfInt.first().get('class_num'));
+  print('class_num' , classN,'number of samples for the particular class',classOfInt.size());
+  var classesOfNoInt=(training_data.filterMetadata('class_num','not_equals',ee.Number(num))).map(function (feat) {return feat.set('od',0)})//.aside(print,'classOfNoInt');
   var training=pixsegs.sampleRegions(classOfInt.merge(classesOfNoInt),['od'],10);
   var trained=ee.Classifier.smileRandomForest(10).train(training,'od').setOutputMode('PROBABILITY');
   var classified=pixsegs.classify(trained).multiply(100).toInt8();
   var classs=classified//.expression('1-img',{'img':classified});
   return ee.Image(classs);
-}));
-var probabilities=(probabilities.toBands()).rename(classes_names);
-print('probabilities',probabilities);
-Map.addLayer(probabilities,{},'probabilities')
+  }));
+  var probabilities=(probabilities.toBands()).rename(classes_names);
+  print('probabilities',probabilities);
+  Map.addLayer(probabilities,{},'probabilities')
+  
+  Export.image.toAsset({image:probabilities,
+                        description:'prob_benthic',
+                        assetId:'projects/coral_atlas/hawaii/in_out/hawaii_prob_benthic',
+                        region:export_geom,
+                        scale:vars.export_scale,
+                        maxPixels:1e13
+                        });
 
-Export.image.toAsset({image:probabilities,
-                      description:'prob_geo',
-                      assetId:'projects/coral_atlas/Micronesia/in_out/wmic_prob_geo',
-                      region:export_geom,
-                      scale:vars.export_scale,
-                      maxPixels:1e13
-                      });
+}
 
 // 5. Export data
 
@@ -302,9 +349,14 @@ var display_pal = (vars.geomorphic) ? map_palettes.geo : map_palettes.benthic
 if (vars.do_export) {
   //export_classification() // export if wanted
   
-  //var export_geom = ee.Geometry.Rectangle(-168.034,-24.0093,162.7417,-7.3087)
-  var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: wmic_extent, crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
-  
+  if (region_idx > -1) {
+    var export_geom = subregion_clip
+    output_name = output_name + '_' + vars.split_region
+  } else {
+    //var region_extent = ee.FeatureCollection(region_params.extent_mask).geometry()
+    var region_extent = wmic_extent
+    var export_geom = pixsegs.select(1).gt(0).reduceToVectors({scale: 1000, maxPixels: 1e13, bestEffort: true, geometry: region_extent , crs: "EPSG:4326"}).geometry().convexHull({maxError: 100})
+  }
   Map.addLayer(export_geom, {}, "export footprint", true)
   
   Export.image.toAsset({
@@ -312,6 +364,7 @@ if (vars.do_export) {
     description: output_name,
     assetId: vars.asset_output + 'in_out/' + output_name,
     scale: vars.export_scale,
+    crs: region_params.epsg,
     region: export_geom,
     maxPixels: 1e13,
     pyramidingPolicy:{'.default': 'mode'},
@@ -357,10 +410,28 @@ if (vars.do_export) {
   if (vars.show_eg_area) {
     Map.addLayer(raw_classification.clip(eg_area), display_pal, output_name + '_raw', false)
   } else {
-    Map.addLayer(raw_classification, display_pal, output_name + '_raw', false)
+    Map.addLayer(raw_classification, display_pal, output_name + '_raw', true)
   }
 }
 
 // last so it sits on top
 Map.addLayer(training_data, {}, "Training point distribution", false) // Training data points
 if (vars.use_benthic_points) Map.addLayer(benthic_pts, {}, "Training field point distribution", false) // Training data points
+
+//Generate title
+var title = ui.Label({
+  value: 'Classes',
+  style: {fontWeight: 'bold', fontSize: '12px'}
+});
+
+// generate the legend depending on whether geo or benthic is being run
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+//var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
+var legend = (vars.geomorphic) ? geo_legend : benthic_legend
+pkg_vis.add_lgds([title, legend])//, mask_legend])
+// generate the legend
+
+//Export.table.toAsset({
+ // collection: ee.FeatureCollection(region_extent)
+//})

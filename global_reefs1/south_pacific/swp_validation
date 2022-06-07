@@ -38,8 +38,8 @@ var region_params = param_module.swpac  //<------------ THIS IS WHERE YOU CHOOSE
 var vars = {
   
   // analysis type
-  geomorphic: false, // assess geomorphic accuracy (one or the other)
-  benthic: true, // assess benthic accuracy
+  geomorphic: true, // assess geomorphic accuracy (one or the other)
+  benthic: false, // assess benthic accuracy
   
   assess_clean: true, // assess the OBIA clean version or not (allows to to validation on early stage mapping)
   
@@ -64,7 +64,7 @@ var vars = {
   // results/layers to show
   assess_accuracy: true, // do the accuracy assessment and write accuracy stats to output?
   show_accuracy: true, // print error stats to console? 
-  make_confidence: true, // make the confidence layer
+  make_confidence: false, // make the confidence layer
   show_class_pts: false, // print number of points per class?
   
   // export options

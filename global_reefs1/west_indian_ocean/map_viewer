@@ -9,154 +9,1275 @@ var depth_pal = {"opacity":1,"bands":["depth"],"max":5,"palette":["e4e1ff","7f89
     low_rrs = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_pixels"),
     waves = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_waves"),
     ben1 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean"),
-    ben2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10");
+    ben2 = ee.Image("projects/coral_atlas/west_indian_ocean/in_out/wio_benthic-clean_July10"),
+    region_extent = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[54.79221186791353, -3.0043648722285563],
+          [41.98215327416353, -11.087738819454058],
+          [43.27853999291353, -13.812363226208019],
+          [46.586822150448995, -13.251320193508121],
+          [49.721036024332506, -10.891360139299879],
+          [51.02927108156912, -11.091494429365584],
+          [53.66046689013173, -11.620586567384713],
+          [57.68595655350645, -16.371800971652373],
+          [53.88839562766794, -19.519577225824396],
+          [55.07785639916353, -21.999992214520322],
+          [64.06467280541354, -20.072332862238714],
+          [58.1721243935071, -11.637460834788708],
+          [57.31906733666353, -3.4211882584226188]]]),
+    centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([44.50823407289908, -12.139391784051922]),
+    mid_mask = /* color: #0a86d6 */ee.Geometry({
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.22003200232403,
+                -20.993272224413438
+              ],
+              [
+                55.576744343632626,
+                -21.372939060390056
+              ],
+              [
+                55.576744343632626,
+                -21.39052215189073
+              ],
+              [
+                55.854499654504416,
+                -21.41143631745345
+              ],
+              [
+                55.88883192989504,
+                -21.120927250869034
+              ],
+              [
+                55.66910536739504,
+                -20.80931013956074
+              ],
+              [
+                55.379340963098166,
+                -20.827280986302917
+              ],
+              [
+                55.209052877160666,
+                -20.942756600795967
+              ]
+            ]
+          ],
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                53.44241765130433,
+                -5.375425276168038
+              ],
+              [
+                53.33709107129932,
+                -5.324738664308392
+              ],
+              [
+                53.30877658220425,
+                -5.3097705169815255
+              ],
+              [
+                53.289731419643076,
+                -5.33479721031223
+              ],
+              [
+                53.29249625857312,
+                -5.342120265211033
+              ],
+              [
+                53.30925126691979,
+                -5.352776576257727
+              ],
+              [
+                53.31141502385369,
+                -5.378644015619517
+              ],
+              [
+                53.31402501272356,
+                -5.3991025966949655
+              ],
+              [
+                53.33998144489283,
+                -5.3997363071383475
+              ],
+              [
+                53.37679022004695,
+                -5.426979220988763
+              ],
+              [
+                53.38070951545453,
+                -5.448995808834674
+              ],
+              [
+                53.34858008570372,
+                -5.461443091967886
+              ],
+              [
+                53.28692422498372,
+                -5.446904848413303
+              ],
+              [
+                53.25934532850921,
+                -5.386295813235481
+              ],
+              [
+                53.301010993231905,
+                -5.310691172222429
+              ],
+              [
+                53.345065487988904,
+                -5.177651621165428
+              ],
+              [
+                53.28338985353975,
+                -5.1175059187531104
+              ],
+              [
+                53.365203543829715,
+                -5.063597626468782
+              ],
+              [
+                53.3813853408491,
+                -5.105037645352337
+              ],
+              [
+                53.45402072370082,
+                -5.037525368247612
+              ],
+              [
+                53.40855008862757,
+                -4.961804864560935
+              ],
+              [
+                53.36194685006649,
+                -4.919526436208909
+              ],
+              [
+                53.37714735678654,
+                -4.849878834656953
+              ],
+              [
+                53.36625659029002,
+                -4.790479832087701
+              ],
+              [
+                53.19469746423305,
+                -4.802235377169514
+              ],
+              [
+                52.89824327146659,
+                -4.817555042156198
+              ],
+              [
+                52.77332433369774,
+                -5.075814106557452
+              ],
+              [
+                52.510228301018124,
+                -5.109384934311189
+              ],
+              [
+                52.51914222097613,
+                -5.68211274140392
+              ],
+              [
+                52.656412425516855,
+                -6.014424412562184
+              ],
+              [
+                53.02446014387089,
+                -5.827524779487339
+              ],
+              [
+                53.21670327820226,
+                -5.6470680787973535
+              ],
+              [
+                53.25444966490403,
+                -5.638068160368491
+              ],
+              [
+                53.241289316365574,
+                -5.681543081203108
+              ],
+              [
+                53.32632506797365,
+                -5.733895917939181
+              ],
+              [
+                53.339639736660835,
+                -5.843626503233804
+              ],
+              [
+                53.157050406458445,
+                -5.78744133164868
+              ],
+              [
+                53.001872625553034,
+                -6.020821296574902
+              ],
+              [
+                53.1584405175337,
+                -6.143371212442576
+              ],
+              [
+                53.55954622506285,
+                -6.399655486355619
+              ],
+              [
+                53.652903118751944,
+                -5.85305694365933
+              ],
+              [
+                53.55826383061299,
+                -5.660260923646555
+              ],
+              [
+                53.59036237785638,
+                -5.562376616354475
+              ],
+              [
+                53.74110930713162,
+                -5.597563207234651
+              ],
+              [
+                53.941610380870884,
+                -5.594829677827714
+              ],
+              [
+                53.93062398715568,
+                -5.425328015690198
+              ],
+              [
+                53.735616114786524,
+                -5.469075027084167
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                47.30365400420401,
+                -11.501576643645487
+              ],
+              [
+                47.43823652373526,
+                -11.479035028169141
+              ],
+              [
+                47.4073374758837,
+                -11.42284137832642
+              ],
+              [
+                47.29095106230948,
+                -11.439666994870318
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                51.00992551136502,
+                -10.250274401650763
+              ],
+              [
+                51.02915158558377,
+                -10.131331335917299
+              ],
+              [
+                51.16922726917752,
+                -10.063730352627934
+              ],
+              [
+                51.285957005505644,
+                -10.101588653404924
+              ],
+              [
+                51.384833958630644,
+                -10.005582179835418
+              ],
+              [
+                51.43090766125239,
+                -9.720766210784017
+              ],
+              [
+                51.41442816906489,
+                -9.393042689596982
+              ],
+              [
+                51.32653754406489,
+                -9.203308179148879
+              ],
+              [
+                51.366855178069216,
+                -8.597407972646497
+              ],
+              [
+                50.918670112424266,
+                -8.501778972036174
+              ],
+              [
+                50.813193672218254,
+                -9.089336364180294
+              ],
+              [
+                50.99342037491585,
+                -9.082697863713044
+              ],
+              [
+                51.035319150894715,
+                -9.180684918459994
+              ],
+              [
+                51.04110975168307,
+                -9.192250724969888
+              ],
+              [
+                51.04829681774887,
+                -9.199558702639713
+              ],
+              [
+                51.05017386198364,
+                -9.20829617486442
+              ],
+              [
+                51.0525659864477,
+                -9.215339036976815
+              ],
+              [
+                51.05801643536439,
+                -9.22906262928276
+              ],
+              [
+                51.05831730556534,
+                -9.24753048114093
+              ],
+              [
+                51.065439573037935,
+                -9.263964050667594
+              ],
+              [
+                51.092130739066555,
+                -9.294544977860582
+              ],
+              [
+                51.12981360607661,
+                -9.322412495759561
+              ],
+              [
+                51.13976996593989,
+                -9.380171110381166
+              ],
+              [
+                51.14182990246333,
+                -9.412349161362288
+              ],
+              [
+                51.118844618748454,
+                -9.45450569557302
+              ],
+              [
+                51.1049424306684,
+                -9.456960055436584
+              ],
+              [
+                51.08940653789211,
+                -9.468684772774342
+              ],
+              [
+                51.046042854123485,
+                -9.549156982129816
+              ],
+              [
+                51.01772472966461,
+                -9.567274216257108
+              ],
+              [
+                51.00665291507642,
+                -9.605105426221664
+              ],
+              [
+                50.960898811154735,
+                -9.598922475439709
+              ],
+              [
+                50.95231574230708,
+                -9.544755601561196
+              ],
+              [
+                50.97155621915428,
+                -9.471426651373438
+              ],
+              [
+                50.98752234520714,
+                -9.455403124420386
+              ],
+              [
+                50.99275825425139,
+                -9.443411912197954
+              ],
+              [
+                50.99842299779503,
+                -9.429896575647351
+              ],
+              [
+                50.99632026555535,
+                -9.422254991406609
+              ],
+              [
+                50.99421772419853,
+                -9.398525391240751
+              ],
+              [
+                50.99606296594017,
+                -9.386057565838472
+              ],
+              [
+                50.996019859360345,
+                -9.370371830777339
+              ],
+              [
+                50.99593354940532,
+                -9.352127204008072
+              ],
+              [
+                50.99872321802747,
+                -9.349564117565906
+              ],
+              [
+                51.00047205917884,
+                -9.34221156098058
+              ],
+              [
+                50.99938845242635,
+                -9.338161958525479
+              ],
+              [
+                51.00322919141736,
+                -9.322609709923855
+              ],
+              [
+                51.014814757318,
+                -9.292583784852251
+              ],
+              [
+                51.018932425259855,
+                -9.267596666630018
+              ],
+              [
+                51.02030315758626,
+                -9.247353290329556
+              ],
+              [
+                51.01592085121176,
+                -9.22884691749979
+              ],
+              [
+                51.01784972063106,
+                -9.216458950546311
+              ],
+              [
+                51.03093665295161,
+                -9.189921250628517
+              ],
+              [
+                50.99420111828364,
+                -9.119250234012622
+              ],
+              [
+                50.85412543468989,
+                -9.184329092627491
+              ],
+              [
+                50.73871603535131,
+                -9.356069585247448
+              ],
+              [
+                50.70026388691381,
+                -9.35268201309812
+              ],
+              [
+                50.69545736835912,
+                -9.303897322164104
+              ],
+              [
+                50.64327230976537,
+                -9.243584621304496
+              ],
+              [
+                50.46199789570287,
+                -9.305930153740846
+              ],
+              [
+                50.51143637226537,
+                -10.05048470552834
+              ],
+              [
+                50.59246054218725,
+                -10.249199105686435
+              ],
+              [
+                50.897331147656,
+                -10.327569292865283
+              ],
+              [
+                51.00994101093725,
+                -10.297844961397631
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.2609598484591,
+                -4.445033428357658
+              ],
+              [
+                55.257183329651866,
+                -4.486277457708649
+              ],
+              [
+                55.25735495396331,
+                -4.493037546313877
+              ],
+              [
+                55.25435086802514,
+                -4.496759885078647
+              ],
+              [
+                55.249630197580196,
+                -4.513659379689302
+              ],
+              [
+                55.223709329660274,
+                -4.518108719695263
+              ],
+              [
+                55.20113061694334,
+                -4.478582874607327
+              ],
+              [
+                55.21035549587,
+                -4.461472556204559
+              ],
+              [
+                55.23814216641624,
+                -4.462672050243892
+              ],
+              [
+                55.257013255475,
+                -4.445986539361156
+              ],
+              [
+                55.24207289466633,
+                -4.419673494689465
+              ],
+              [
+                55.2044742385863,
+                -4.41766275282799
+              ],
+              [
+                54.93274329572473,
+                -4.4464025874405495
+              ],
+              [
+                54.8105203953341,
+                -4.911764104540726
+              ],
+              [
+                55.22937415509973,
+                -5.054046558775976
+              ],
+              [
+                55.3763162937716,
+                -4.521702397462047
+              ],
+              [
+                55.42300818830285,
+                -4.342339303153841
+              ],
+              [
+                55.2774393406466,
+                -4.303996562036211
+              ],
+              [
+                55.26370643049035,
+                -4.394372760852117
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.78217239090064,
+                -3.6745020023594535
+              ],
+              [
+                55.662696072541266,
+                -4.007461670811644
+              ],
+              [
+                56.04309768386939,
+                -4.1375948642462586
+              ],
+              [
+                56.198279568635016,
+                -3.7348005391340884
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.165564724885016,
+                -3.660797218671388
+              ],
+              [
+                55.055701443635016,
+                -3.677242933860036
+              ],
+              [
+                55.05432815261939,
+                -3.7841326276756306
+              ],
+              [
+                55.00008350891454,
+                -3.9759543578745125
+              ],
+              [
+                55.09244707062804,
+                -4.225250361797611
+              ],
+              [
+                55.59456163564161,
+                -4.163588019102459
+              ],
+              [
+                55.491249054548966,
+                -3.7820663548187317
+              ],
+              [
+                55.165564724885016,
+                -3.773170182824222
+              ],
+              [
+                55.19440383621314,
+                -3.688206575530649
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.73963115403421,
+                -4.4321327527436445
+              ],
+              [
+                55.774650074932644,
+                -4.575198515518287
+              ],
+              [
+                55.76435039231546,
+                -4.759977876044496
+              ],
+              [
+                55.942191578838894,
+                -4.7729790220550035
+              ],
+              [
+                56.03789371562163,
+                -4.7315688301373315
+              ],
+              [
+                55.956440028180644,
+                -4.647730976769955
+              ],
+              [
+                55.92537212698298,
+                -4.585445083333381
+              ],
+              [
+                55.94974467942483,
+                -4.421863799337657
+              ],
+              [
+                55.75954387376077,
+                -4.412963924582021
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                59.576924817342075,
+                -16.398513640656645
+              ],
+              [
+                59.706014172810825,
+                -16.43012932747356
+              ],
+              [
+                59.791158215779575,
+                -16.283863796254177
+              ],
+              [
+                59.524739758748325,
+                -16.27595443391656
+              ],
+              [
+                59.55357887007645,
+                -16.3273595845298
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                57.81798764442128,
+                -20.308324695703995
+              ],
+              [
+                57.82897397254628,
+                -20.315408122294063
+              ],
+              [
+                57.82828732703847,
+                -20.324422923616414
+              ],
+              [
+                57.82588406776112,
+                -20.33504683645784
+              ],
+              [
+                57.82519742225331,
+                -20.345348115384937
+              ],
+              [
+                57.81764432166737,
+                -20.35693623331117
+              ],
+              [
+                57.801851474987686,
+                -20.37978802802059
+              ],
+              [
+                57.76648923133534,
+                -20.412611440855063
+              ],
+              [
+                57.76099606727284,
+                -20.422907540818702
+              ],
+              [
+                57.75206967567128,
+                -20.428698794333524
+              ],
+              [
+                57.74623318885487,
+                -20.43738526580462
+              ],
+              [
+                57.738165104138076,
+                -20.444462768636722
+              ],
+              [
+                57.731126987683,
+                -20.446071246561534
+              ],
+              [
+                57.72529050086659,
+                -20.448162242696444
+              ],
+              [
+                57.72082730506581,
+                -20.450574895189412
+              ],
+              [
+                57.7175657389037,
+                -20.486277720720874
+              ],
+              [
+                57.81143744791976,
+                -20.44028064725588
+              ],
+              [
+                57.868429025068195,
+                -20.35886750177066
+              ],
+              [
+                57.8687723478221,
+                -20.30510484919964
+              ],
+              [
+                57.849605791740494,
+                -20.270536638440596
+              ],
+              [
+                57.82076668041237,
+                -20.304027242330843
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                46.183381487950584,
+                -9.479106266259063
+              ],
+              [
+                46.192825173638276,
+                -9.375801796256535
+              ],
+              [
+                46.20913069449355,
+                -9.355143593571764
+              ],
+              [
+                46.416840960606834,
+                -9.355143593571764
+              ],
+              [
+                46.42920057974746,
+                -9.366322377254471
+              ],
+              [
+                46.522927691563865,
+                -9.364967392323328
+              ],
+              [
+                46.53872053824355,
+                -9.272477221177814
+              ],
+              [
+                46.07729475699355,
+                -9.267733476235128
+              ],
+              [
+                46.0470823546498,
+                -9.498746529738046
+              ],
+              [
+                46.18166487418105,
+                -9.494005879530699
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                53.08607945192849,
+                -6.1908093898746595
+              ],
+              [
+                53.0867660974363,
+                -6.23722694538215
+              ],
+              [
+                53.12762150515115,
+                -6.2406398391059215
+              ],
+              [
+                53.1413544153074,
+                -6.2150425951361
+              ],
+              [
+                53.10427555788552,
+                -6.184324258867543
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                52.82279334699586,
+                -6.084994618459957
+              ],
+              [
+                52.837384564036874,
+                -6.07458217193826
+              ],
+              [
+                52.840646130198984,
+                -6.078337503755072
+              ],
+              [
+                52.84150443708375,
+                -6.086701557670174
+              ],
+              [
+                52.8387578550525,
+                -6.097625840144003
+              ],
+              [
+                52.86673865949586,
+                -6.094041334464549
+              ],
+              [
+                52.88750968610719,
+                -6.080215159835724
+              ],
+              [
+                52.87995658552125,
+                -6.054439491013689
+              ],
+              [
+                52.85540900861695,
+                -6.041124425027239
+              ],
+              [
+                52.82073341047242,
+                -6.0489769395014665
+              ],
+              [
+                52.812665325755624,
+                -6.0706561152138905
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                55.36946494122922,
+                -5.896926214781061
+              ],
+              [
+                55.36809165021359,
+                -5.878484584389712
+              ],
+              [
+                55.352298803533905,
+                -5.858676226602178
+              ],
+              [
+                55.34062582990109,
+                -5.845014880621685
+              ],
+              [
+                55.34474570294797,
+                -5.829303920547507
+              ],
+              [
+                55.363285131658905,
+                -5.796514414533755
+              ],
+              [
+                55.24586874982297,
+                -5.759623943691408
+              ],
+              [
+                55.195743627752655,
+                -5.943369081900415
+              ],
+              [
+                55.34268576642453,
+                -5.967271973109338
+              ],
+              [
+                55.41753012677609,
+                -5.971369507062403
+              ],
+              [
+                55.434696264471405,
+                -5.892828127607901
+              ],
+              [
+                55.398990698065155,
+                -5.885997915099004
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                57.47894956549017,
+                -20.13443158551314
+              ],
+              [
+                57.46744825323431,
+                -20.1399112943105
+              ],
+              [
+                57.46658994634954,
+                -20.1558658222865
+              ],
+              [
+                57.46658994634954,
+                -20.168757179026453
+              ],
+              [
+                57.4696798511347,
+                -20.185836585722274
+              ],
+              [
+                57.51791669805853,
+                -20.151675902068437
+              ],
+              [
+                57.51328184088079,
+                -20.137493799412233
+              ],
+              [
+                57.49954893072454,
+                -20.137493799412233
+              ],
+              [
+                57.495257396300715,
+                -20.136204453505634
+              ],
+              [
+                57.49216749151556,
+                -20.13572094604784
+              ],
+              [
+                57.48221113165228,
+                -20.132014005838514
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        }
+      ],
+      "coordinates": []
+    });
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Viewing script for looking at reefs and classifications for each region. 
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
+// in the workflow 
 
-// little viewing script for looking at reefs and classifications for each region. 
-//The map_viewer WIO script is going to be used from the very beginning
-//in the workflow to annotate masks 
-// little viewing script for looking at reefs and classifications for each region. 
-//The map_viewer WIO script is going to be used from the very beginning
-//in the workflow to annotate masks 
+//Viewer for west Micronesia
 
+// Load and libraries needed
+var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
+var param_module = require('users/mitchest/global_reefs_modules:reef_params');
+var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
 
-// Current Region: West Indian Ocean  <--------- Indicate region here
-
-// imports
-var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis')
-var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals')
-
-// choogse where to centre (link this dynamically to map app?)
-var centre_map = ee.Geometry.Point([50.26077595263271,-9.927142570159555]) // <---- change for region
-Map.centerObject(centre_map, 5)
-
-//splitting North Cari regions
-
-
-//4. add turbidity for reference
-//Map.addLayer(turbidity.focal_mode(5), {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity (smooth)", false)
-//Map.addLayer(turbidity, {min:5, max:20, palette: ['#ffffe5','#fff7bc','#fee391','#fec44f','#fe9929','#ec7014','#cc4c02','#993404','#662506']}, "Accumulative turbidity", false)
+// ###########################################
+// SENSOR GENERICS
+var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+// REGION AND SENSOR SPECIFIC LOAD PATHS
+var region_params = param_module.wio;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+//  ^^ all the data paths are in this module ^^
+// ###########################################
 
 
 
-// add some background data
-//Map.addLayer(any_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "Any tide mosaic", false)
-//Map.addLayer(high_rrs, {bands: ['b3','b2','b1'], min: 66, max: 1260}, "High tide mosaic", false)
+// Choose which layers will be shown in the map viewer
+var vars = {
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
+};
 
-var imageVisParam = {"opacity":1,"bands":["b3","b2","b1"],"max":1536,"gamma":1};
-Map.addLayer(low_rrs, imageVisParam, 'Dove sr lowtide', false)
-//Map.addLayer(Artifact_layer, {color: 'ffff00'}, 'Artifact Layer', false)
+// choose where to centre the map (link this dynamically to map app?)
+Map.centerObject(centre_map, 10);
 
-// West Indian Ocean classification
+// Add low-tide base map to viewer
+// var low_tide_image = ee.Image(region_params.pixels);
+// Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 
-//Map.addLayer(benthic.updateMask(geo.gt(2)), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-//Map.addLayer(ee.ImageCollection([benthic_baha,benthic_cari]).mosaic(), map_palettes.benthic, "Nth. Cari & Baha Benthic - RAW", false)
-
-
-Map.addLayer(wio_geo, map_palettes.geo, "wio_geo - RAW", false)
-Map.addLayer(geo1, map_palettes.geo, "wio_geo clean 1", false)
-Map.addLayer(geo2, map_palettes.geo, "wio_geo clean 2", false)
-Map.addLayer(geo3, map_palettes.geo, "GEO manual clean 3", false)
-Map.addLayer(wio_benthic, map_palettes.benthic, "wio_benthic - RAW", false)
-//Map.addLayer(waves.lte(0.4), {}, "waves 0.4 threshold", false)
-//Map.addLayer(ee.ImageCollection([hawaii_geo_west, hawaii_geo_east]).mosaic(), map_palettes.geo, "Hawaii east/west Geo - RAW", false)
-Map.addLayer(ben1, map_palettes.benthic, "WIO benthic - clean 1", false)
-Map.addLayer(ben2, map_palettes.benthic, "WIO benthic - clean 2", false)
+//print (region_params.image[0])
+var low_tide_image_dove = ee.Image(region_params.pixels);
+Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
 
 
+// V1 maps
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('geomorphic').selfMask(), map_palettes.geo, 'Geomorphic - V1', false);
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('benthic').selfMask(), map_palettes.benthic, 'Benthic - V1', false);
 
-var wcmc=wcmc.filterBounds(BondariesWCMCForWIO)
 
-Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false)
+// Load the raw classifications
+if (vars.raw) {
+// geo raw (test if more than one map exists for the region)
+  if (ee.List(region_params.geo_map).length().getInfo() > 1) {
+    var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
+                 .add(ee.Image(region_params.geo_map[1]).unmask(0, false))
+                 .selfMask();
+  } else {
+    var geo_map_raw = ee.Image(region_params.geo_map);
+  }
 
-// #############
-// example confidence layers
+  // benthic raw (test if more than one map exists for the region)
+  if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
+    var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
+                     .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
+                     .selfMask();
+  } else {
+      var benthic_map_raw = ee.Image(region_params.benthic_map);
+  }
 
-/*
-// depth and nir combos
-var depth_nir_flag = fiji_dove_ocean.select('b4').multiply(fiji_high_depth_ocean).gt(250000)
-//Map.addLayer(depth_nir_flag, {}, "NIR flag", false)
-var conf_flag = fiji_high_depth_ocean.eq(-1)
-                        .or(fiji_high_depth_ocean.gt(1000))
-                        .add(depth_nir_flag.eq(1))
-                        .selfMask()
-Map.addLayer(conf_flag, {min:1,max:2,palette:["#f7f7f7","#bababa"]}, "Confidence flag", false)
+  // Add the raw region classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
+}
 
-//straight depth missing/-1
-var depth_flag = fiji_high_depth_ocean.gt(0).selfMask()
-//Map.addLayer(depth_flag, {min:0,max:1,palette:["#ffff00"]}, "Valid depth retrievals", false)
+// Add geo clean stage 1 to the viewer
+if (vars.geo_cleanup_stage >= 1) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
+  }
 
-//Map.addLayer(fiji_geo_clean.gt(0).updateMask(fiji_high_depth_ocean.lte(0)), {min:0,max:1,palette:["#ff0000"]}, "Unmapped area via original algorithm", false)
-*/
+// Add geo clean stage 2 to the viewer
+if (vars.geo_cleanup_stage >= 2) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
+}
+
+// Add geo clean stage 3 to the viewer
+if (vars.geo_cleanup_stage >= 3) {
+  var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
+}
+
+// Add benthic clean stage 1 to the viewer
+if (vars.benthic_cleanup_stage >= 1) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
+  }
+
+// Add geo clean stage 2 to the viewer
+if (vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
+}
+
+// Geo Training Data - Needs more work + add flag to show
+var geo_train = ee.FeatureCollection(region_params.geo_train_library);
+
+var geo_buff = function(feature) {
+ return feature.buffer(20);   // substitute in your value of Z herere
+};
+
+var geo_train_buff = geo_train.map(geo_buff);
+
+// Create an empty image into which to paint the features, cast to byte.
+var empty = ee.Image().byte();
+
+// Paint the interior of the polygons with different colors.
+var geo_fill = empty.paint({
+  featureCollection: geo_train_buff,
+  color: 'class_num',
+});
+
+//Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
+var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_filtered").filterBounds(region_extent);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+// add global masks 
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select("reef_mask"), {min:0, max:1}, "Global mask", false);
+Map.addLayer(ee.FeatureCollection("projects/coral_atlas/global_datasets/global_lagoons_mask"), {}, "Global lagoons mask", false);
+
 
 ////////// UI SET UP //////////
-
 
 //Generate title
 var title = ui.Label({
   value: 'Coral Atlas map classes',
-  style: {fontWeight: 'bold', fontSize: '18px'}
-})
+  style: {fontWeight: 'bold', fontSize: '14px'}
+});
 
 // generate the legend
-var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false)
-var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false)
+var geo_legend = pkg_vis.discrete_legend(map_palettes.geo_atlas_names, map_palettes.geo_atlas_cols, 'Geomorphic Zone', false);
+var benthic_legend = pkg_vis.discrete_legend(map_palettes.benthic_atlas_names, map_palettes.benthic_atlas_cols, 'Benthic Habitat', false);
 //var mask_legend = pkg_vis.discrete_legend(["Low confidence depth","Water conditions"], ["#f7f7f7","#bababa"], 'Confidence Mask reason', false)
-pkg_vis.add_lgds([title, geo_legend, benthic_legend])//, mask_legend])
+pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
+// generate the legend
 
 
-//show confidence layers
-//var conf_str = {"opacity":1,"bands":["constant"],"min":0,"max":9,"palette":["4d004b","810f7c","88419d","8c6bb1","8c96c6","9ebcda","bfd3e6","e0ecf4","f7fcfd"]};
-//Map.addLayer(benthic_conf_clean,conf_str,'confidence_benthic',false);
-//Map.addLayer(geo_conf_clean,conf_str,'confidence_geo',false);
 
-//Confidence legend
+////////// MASK EXPORTS //////////
 
-var legend=ui.Panel({
-  style: {
-    position: 'bottom-right',
-    padding: "8px 15px"
-  }
-});
 
-var vis = {min: 'low', max: 'high', palette: 'ece2f0,a6bddb,1c9099'};
-var vis = {min: 'low', max: 'high', palette: '4d004b,810f7c,88419d,8c6bb1,8c96c6,9ebcda,bfd3e6,e0ecf4,f7fcfd'};
-
-function makeColorBarParams(palette) {
-  return {
-    bbox: [0, 0, 1, 0.1],
-    dimensions: '100x10',
-   format: 'png',
-   min: 0,
-    max: 1,
-    palette: palette,
-  };
-}
-
-var colorBar=ui.Thumbnail({
-  image: ee.Image.pixelLonLat().select(0),
-  params: makeColorBarParams(vis.palette),
-  style:{stretch:'horizontal', margin: '0px 8px',maxHeight: '24px'}
+Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent),
+  description: "region_extent_export",
+  assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
 })
-// Create a panel with three numbers for the legend.
-var legendLabels = ui.Panel({
-  widgets: [
-    ui.Label(vis.min, {margin: '4px 8px'}),
-    ui.Label(
-        (' '),
-        {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
-    ui.Label(vis.max, {margin: '4px 8px'})
-  ],
-  layout: ui.Panel.Layout.flow('horizontal')
-});
 
-var legendTitle = ui.Label({
-  value: 'Confidence Layer Legend',
-  style: {fontWeight: 'bold',position: 'bottom-right'}
-});
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(notReef_mask),
+  description: "not_reef_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
+})*/
 
-//legend.add(legendTitle);
-//legend.add(colorBar)
-//legend.add(legendLabels);
+Export.table.toAsset({
+  collection: ee.FeatureCollection(mid_mask),
+  description: "mid_mask_export",
+  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
+})
 
-//Map.add(legend)

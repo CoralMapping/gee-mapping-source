@@ -1,0 +1,30 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var scs = ee.FeatureCollection("projects/coral_atlas/south_china_sea/in_out/SCS_Lagoons"),
+    rsga = ee.FeatureCollection("projects/coral_atlas/red_sea/in_out/rsga_lagoons_mask"),
+    emic = ee.FeatureCollection("projects/coral_atlas/eastern_micronesia/in_out/Lagoons_maskFinal"),
+    csp1 = ee.FeatureCollection("projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask"),
+    csp2 = ee.FeatureCollection("projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask_1"),
+    csp3 = ee.FeatureCollection("projects/coral_atlas/central_south_pacific/in_out/csp_lagoons_mask_2"),
+    taj = ee.FeatureCollection("projects/coral_atlas/ne_asia/in_out/TAJ_lagoons_mask"),
+    indo = ee.FeatureCollection("projects/coral_atlas/Indonesia/in_out/indo_lagoons_mask");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var all_lagoons = scs
+          .merge(rsga)
+          .merge(emic)
+          .merge(csp1)
+          .merge(csp2)
+          .merge(csp3)
+          .merge(taj)
+          .merge(indo);
+
+print(all_lagoons)
+
+Map.addLayer(all_lagoons, {}, "lagoons");
+
+Export.table.toDrive({
+  collection: all_lagoons,
+  description: "aca_lagoons_export",
+  folder: "aca_lagoons",
+  fileNamePrefix: "aca_gee_lagoons_export",
+  fileFormat: "GeoJSON"
+})
