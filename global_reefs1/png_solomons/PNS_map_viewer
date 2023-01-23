@@ -1526,7 +1526,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    noReef_mask = /* color: #ff0000 */ee.Geometry({
+    noReef_mask = 
+    /* color: #ff0000 */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -2281,7 +2284,10 @@ var wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs
       ],
       "coordinates": []
     }),
-    centre_map = /* color: #d63000 */ee.Geometry.Point([149.9759061226323, -8.440993122283631]),
+    centre_map = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Point([149.9759061226323, -8.440993122283631]),
     region_extent = 
     /* color: #98ff00 */
     /* shown: false */

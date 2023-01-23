@@ -1,20 +1,20 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var missing_ben = ee.Image("projects/coral_atlas/south_asia/in_out/soa_benthic_missingNW_refined"),
-    reef_boundary = 
-    /* color: #d63000 */
-    /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
-    ee.Geometry.Polygon(
-        [[[65.90351562500001, 25.030560889967564],
-          [65.90351562500001, 3.365041702698651],
-          [90.16132812500001, 3.365041702698651],
-          [90.16132812500001, 25.030560889967564]]], null, false),
+    reef_boundary = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[68.75566906565571, 22.23659811328314],
+          [69.79087094610696, 21.064173981555623],
+          [72.2971937741477, 19.37048196917034],
+          [76.29494187163898, 14.0549583864319],
+          [78.62808989302158, 11.181232721257784],
+          [77.05019367607503, 8.313586330294445],
+          [80.29396530913897, 5.357244596599456],
+          [82.13966843413897, 6.144272878304611],
+          [82.71095749663897, 7.75824269737082],
+          [70.01076218413897, 22.75936911866621],
+          [68.78029343413897, 22.718839478948905]]]),
     missing_geo = ee.Image("projects/coral_atlas/south_asia/in_out/soa_geo_missingNW_refined");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 /*
 Script to export maps to GCS. South_asia
  
@@ -184,3 +184,9 @@ Export.table.toCloudStorage({
   fileNamePrefix: 'coral-gee-export-bucket/swp/new_geom/swp_convex_hull',
   fileFormat: "SHP"
 })*/
+
+Export.table.toAsset({
+  collection: ee.FeatureCollection(reef_boundary),
+  description: "region_extent_export",
+  assetId: "projects/coral_atlas/south_asia/in_out/soa_extent"
+})

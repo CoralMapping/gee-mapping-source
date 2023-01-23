@@ -1,15 +1,10 @@
-/**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var pixels = ee.Image("projects/coral_atlas/mesoamerica/in_out/meso_pixels"),
-    geo = ee.Image("projects/coral_atlas/mesoamerica/in_out/meso_geo_clean3"),
-    benthic = ee.Image("projects/coral_atlas/mesoamerica/in_out/meso_benthic_clean2");
-/***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Global coral atlas project - central_south_pacific
+// Global coral atlas project - Solomons_PNG
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: Mitchell Lyonds
+// Region coordinator: Chris Roelfsema v2 (script copied from EastAftica_export_maps_new)
 // Description:
-// - export geomorphic and benthic to Vulcan bucket
+// - export geomorphic and benthic to GCS bucket
 ///////////////////////////////
 
 // so we can visualise maps before export
@@ -20,7 +15,7 @@ var param_module = require('users/mitchest/global_reefs_modules:reef_params');
 // SENSOR GENERICS
 var sensor_params = param_module.dove;         //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.mesoamerica;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.png_solomons;          //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
@@ -61,14 +56,17 @@ var reef_boundary= ee.FeatureCollection(region_params.extent_mask);
 Map.addLayer(reef_boundary, {}, "Reef Boundary", false)
 Export.image.toCloudStorage({
   image: export_stack,
-  description: 'meso_stack',
+  description: 'png_solomons_v2',
   bucket: 'coral-atlas-data-pipeline',
-  fileNamePrefix: 'coral-gee-export-bucket/mesoamerica/v2/meso_stack_',
+  fileNamePrefix: 'coral-gee-export-bucket/png_solomons/v2/pnsv2_stack_',
   region: reef_boundary, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
   skipEmptyTiles: true
 });
+
+
+
 
 

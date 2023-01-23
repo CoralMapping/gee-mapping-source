@@ -143,6 +143,18 @@ var centre_map =
                 -4.996633897145968
               ],
               [
+                106.62833325472327,
+                -5.3129375550229465
+              ],
+              [
+                106.67056968091366,
+                -5.7932790857370655
+              ],
+              [
+                106.9309937377275,
+                -5.819086099636912
+              ],
+              [
                 106.89699176197443,
                 -6.062114002868484
               ],
@@ -2234,6 +2246,191 @@ var centre_map =
               [
                 108.68005089594138,
                 -3.6094039183299857
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                123.26815810421975,
+                -2.245516333626871
+              ],
+              [
+                123.21734633664163,
+                -2.2770774300500043
+              ],
+              [
+                123.2654115221885,
+                -2.45956904534083
+              ],
+              [
+                123.83807387570413,
+                -2.241399618412471
+              ],
+              [
+                123.8257142565635,
+                -2.196114991636106
+              ],
+              [
+                123.70349135617288,
+                -2.178275214781703
+              ],
+              [
+                123.65130629757913,
+                -2.219443608929484
+              ],
+              [
+                123.52084365109475,
+                -2.218071347476383
+              ],
+              [
+                123.42333998898538,
+                -2.2578664095955303
+              ],
+              [
+                123.33819594601663,
+                -2.2276771508714703
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                116.03913613225718,
+                -8.731893687775889
+              ],
+              [
+                116.0314113702943,
+                -8.753441376112775
+              ],
+              [
+                116.03278466130992,
+                -8.773121639044529
+              ],
+              [
+                116.06368370916148,
+                -8.776175379509196
+              ],
+              [
+                116.07981987859507,
+                -8.7675230496277
+              ],
+              [
+                116.09286614324351,
+                -8.721309645551806
+              ],
+              [
+                116.0676319208314,
+                -8.718764488589638
+              ],
+              [
+                116.04497261907359,
+                -8.725042511055959
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                117.16514612053813,
+                -9.005293290423063
+              ],
+              [
+                117.16239953850688,
+                -9.076495352523677
+              ],
+              [
+                117.2296907982725,
+                -9.067680623508645
+              ],
+              [
+                117.23724389885844,
+                -9.009362358535158
+              ],
+              [
+                117.17544580315531,
+                -8.992407606025358
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                118.34310609571783,
+                -8.68611858481995
+              ],
+              [
+                118.39391786329595,
+                -8.789277383512038
+              ],
+              [
+                118.49691468946783,
+                -8.699693739606415
+              ],
+              [
+                118.44472963087408,
+                -8.52725296295362
+              ],
+              [
+                118.32250673048345,
+                -8.546266028119408
+              ],
+              [
+                118.34447938673345,
+                -8.660324437547258
+              ]
+            ]
+          ],
+          "geodesic": true,
+          "evenOdd": true
+        },
+        {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                118.6699629566186,
+                -8.41585069906942
+              ],
+              [
+                118.64661700935298,
+                -8.453207734032205
+              ],
+              [
+                118.61022479743892,
+                -8.578836562729743
+              ],
+              [
+                118.71184833259517,
+                -8.58766297922675
+              ],
+              [
+                118.7523604175561,
+                -8.411095908491506
+              ],
+              [
+                118.67957599372798,
+                -8.405661790674563
               ]
             ]
           ],
@@ -5163,6 +5360,30 @@ var centre_map =
                 -8.429997322377458
               ],
               [
+                123.10082802685913,
+                -8.42660110135768
+              ],
+              [
+                123.118080145514,
+                -8.427620481156909
+              ],
+              [
+                123.14335919911974,
+                -8.418625400461687
+              ],
+              [
+                123.16547026868703,
+                -8.418924762295505
+              ],
+              [
+                123.221915675034,
+                -8.438918110006245
+              ],
+              [
+                123.24347827004216,
+                -8.400790129740988
+              ],
+              [
                 123.05241951855835,
                 -8.41505404428273
               ],
@@ -5546,7 +5767,10 @@ var centre_map =
            [131.1427395657822, 0.4126841585941503],
            [131.13844803135837, 0.4104526182674199],
            [131.1317532376572, 0.3941451895034062]]]]),
-    Lagoon_mask = /* color: #06d61b */ee.Geometry({
+    Lagoon_mask = 
+    /* color: #06d61b */
+    /* shown: false */
+    ee.Geometry({
       "type": "GeometryCollection",
       "geometries": [
         {
@@ -10525,14 +10749,14 @@ var centre_map =
         }
       ],
       "coordinates": []
-    });
+    }),
+    wcmc = ee.FeatureCollection("projects/coral_atlas/global_datasets/wcmc_reefs_2018v4_dissolved");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-
 // Viewing script for looking at reefs and classifications for each region. 
-// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning
+// From this region Timor Sea onwards the map_viewer script is going to be used from the very beginning 
 // in the workflow 
 
-// Viewer for Indonesia
+//Viewer for Indonesian Archipelago
 
 // Load and libraries needed
 var map_palettes = require('users/mitchest/global_reefs_modules:colour_pals');
@@ -10541,35 +10765,41 @@ var pkg_vis = require('users/mitchest/global_reefs_modules:pkg_vis');
 
 // ###########################################
 // SENSOR GENERICS
-var sensor_params = param_module.dove;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
+var sensor_params = param_module.dove ;      //<------------ THIS IS WHERE YOU CHOOSE THE SENSOR
 // REGION AND SENSOR SPECIFIC LOAD PATHS
-var region_params = param_module.indonesia;     //<------------ THIS IS WHERE YOU CHOOSE THE REGION
+var region_params = param_module.indonesia;       //<------------ THIS IS WHERE YOU CHOOSE THE REGION
 //  ^^ all the data paths are in this module ^^
 // ###########################################
 
-// **Choose which layers will be shown in the map viewer**
 
+
+// Choose which layers will be shown in the map viewer
 var vars = {
-  geo_raw: true, // set to true if you want to view the raw classifications for geomorphic (split into benthic and geo because CR has OCD)
-  geo_clean1: true, // set to true if you want to view geo clean 1
-  geo_clean2: true, // set to true if you want to view geo clean 2
-  geo_clean3: true, // set to true if you want to view geo clean 3
-  benthic_raw: true, // set to true if you want to view the raw classifications for benthic
-  benthic_clean1: true, // set to true if you want to view benthic clean 1
-  benthic_clean2: true, // set to true if you want to view benthic clean 2
+  raw: true, // set to true if you want to view the raw classifications for benthic and geo
+  geo_cleanup_stage: 3, // set to 0, 1, 2 or 3 - this controls the display of the geo clean stages (0 = cleanup not ready)
+  benthic_cleanup_stage: 2, // set to 0, 1 or 2 - this controls the display of the benthic clean stages (0 = cleanup not ready)
 };
 
 // choose where to centre the map (link this dynamically to map app?)
-Map.centerObject(centre_map, 6);
+Map.centerObject(centre_map, 10);
 
 // Add low-tide base map to viewer
-//var pix_lowtide = ee.ImageCollection(region_params.pixels); // low tide image from the stack
-//Map.addLayer(pix_lowtide, region_params.visParams, sensor_params.sname + ' low tide', false); // image data
-var lowtide_image = ee.ImageCollection(region_params.pixels).select('b1','b2','b3'); // original low tide image
-Map.addLayer(lowtide_image, region_params.visParams, sensor_params.sname + ' low tide', false); // image data
+var low_tide_image = ee.Image(region_params.pixels);
+Map.addLayer(low_tide_image, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + " from stack", false); // image data
 
-// Load the raw geomorphic classification
-if (vars.geo_raw) {
+//print (region_params.image[0])
+//var low_tide_image_dove = ee.Image(region_params.image);
+//Map.addLayer(low_tide_image_dove, {bands: ['b3','b2','b1'], min: 0, max: 3000}, sensor_params.sname + ' low tide', false); // image data
+
+
+// V1 maps
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('geomorphic').selfMask(), map_palettes.geo, 'Geomorphic - V1', false);
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select('benthic').selfMask(), map_palettes.benthic, 'Benthic - V1', false);
+
+
+
+// Load the raw classifications
+if (vars.raw) {
 // geo raw (test if more than one map exists for the region)
   if (ee.List(region_params.geo_map).length().getInfo() > 1) {
     var geo_map_raw = ee.Image(region_params.geo_map[0]).unmask(0, false)
@@ -10578,13 +10808,8 @@ if (vars.geo_raw) {
   } else {
     var geo_map_raw = ee.Image(region_params.geo_map);
   }
-  // Add the raw geomorphic classification to the viewer
-  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
-}
 
-// Load the raw benthic classification
-if (vars.benthic_raw) {
-// benthic raw (test if more than one map exists for the region)
+  // benthic raw (test if more than one map exists for the region)
   if (ee.List(region_params.benthic_map).length().getInfo() > 1) {
     var benthic_map_raw = ee.Image(region_params.benthic_map[0]).unmask(0, false)
                      .add(ee.Image(region_params.benthic_map[1]).unmask(0, false))
@@ -10592,42 +10817,46 @@ if (vars.benthic_raw) {
   } else {
       var benthic_map_raw = ee.Image(region_params.benthic_map);
   }
-  // Add the benthic classification to the viewer
-  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW - east/west', false);
+
+  // Add the raw region classification to the viewer
+  Map.addLayer(geo_map_raw, map_palettes.geo, 'Geomorphic RAW', false);
+  Map.addLayer(benthic_map_raw.updateMask(geo_map_raw.gt(2)), map_palettes.benthic, 'Benthic RAW', false);
 }
 
-Map.addLayer(indo_benthic.updateMask(geo_map_raw.gt(2)) , map_palettes.benthic, 'Benthic RAW - single', false);
+// Add geo clean stage 1 to the viewer
+if (vars.geo_cleanup_stage == 1||vars.geo_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean1), map_palettes.geo, 'Geomorphic - stage 1 clean', false);
+  }
 
-// Load the clean classifications
-var geo_clean1 = ee.Image(region_params.geo_map_clean1);
-var geo_clean2 = ee.Image(region_params.geo_map_clean2);
-var geo_clean3 = ee.Image(region_params.geo_map_clean3).selfMask();
-var benthic_clean1 = ee.Image(region_params.benthic_map_clean1).selfMask();
-var benthic_clean2 = ee.Image(region_params.benthic_map_clean2).selfMask();
+// Add geo clean stage 2 to the viewer
+if (vars.geo_cleanup_stage == 2||vars.geo_cleanup_stage == 3) {
+  Map.addLayer(ee.Image(region_params.geo_map_clean2), map_palettes.geo, 'Geomorphic - stage 2 clean', false);
+}
 
-if (vars.geo_clean1) Map.addLayer(geo_clean1, map_palettes.geo, 'Geo clean stage 1', false);
-if (vars.geo_clean2) Map.addLayer(geo_clean2, map_palettes.geo, 'Geo clean stage 2', false);
-if (vars.geo_clean3) Map.addLayer(geo_clean3.updateMask(geo_clean3.gt(2)), map_palettes.geo, 'Geo clean stage  3', false);
+// Add geo clean stage 3 to the viewer
+if (vars.geo_cleanup_stage == 3) {
+  var geo_map_clean3 = ee.Image(region_params.geo_map_clean3)
+  Map.addLayer(geo_map_clean3.updateMask(geo_map_clean3.gt(2)), map_palettes.geo, 'Geomorphic - stage 3 clean', true);
+}
 
-if (vars.benthic_clean1) Map.addLayer(benthic_clean1, map_palettes.benthic, 'Benthic clean stage 1', false);
-if (vars.benthic_clean2) Map.addLayer(benthic_clean2, map_palettes.benthic, 'Benthic clean stage 2', false);
+// Add benthic clean stage 1 to the viewer
+if (vars.benthic_cleanup_stage == 1||vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean1), map_palettes.benthic, 'Benthic - stage 1 clean', false);
+  }
 
-//Map.addLayer(global_reef_mask.updateMask(global_reef_mask.eq(1)), {palette: ['F8FF23'], opacity: 0.4}, 'global_reef_mask - land', false);
+// Add geo clean stage 2 to the viewer
+if (vars.benthic_cleanup_stage == 2) {
+  Map.addLayer(ee.Image(region_params.benthic_map_clean2), map_palettes.benthic, 'Benthic - stage 2 clean', false);
+}
 
-var wcmcreefs = wcmc_reefs.filterBounds(region_wcmcBound);
-Map.addLayer(wcmcreefs, {color:'#ffff00'}, "WCMC Reefs v4", false);
-
-
-Map.addLayer(ee.FeatureCollection(region_params.geo_train), {color: 'red'}, "Reference data areas", false)
-
-/*// Geo Training Data - Needs more work + add flag to show
+// Geo Training Data - Needs more work + add flag to show
 var geo_train = ee.FeatureCollection(region_params.geo_train_library);
 
 var geo_buff = function(feature) {
-  return feature.buffer(20);   // substitute in your value of Z here
+ return feature.buffer(20);   // substitute in your value of Z herere
 };
 
-var geo_train_buff = geo_train.map(geo_buff)
+var geo_train_buff = geo_train.map(geo_buff);
 
 // Create an empty image into which to paint the features, cast to byte.
 var empty = ee.Image().byte();
@@ -10638,8 +10867,14 @@ var geo_fill = empty.paint({
   color: 'class_num',
 });
 
-Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
-*/
+//Map.addLayer(geo_fill, map_palettes.geo, 'Geo Training Data', false);
+var wcmc=wcmc.filterBounds(region_extent);
+Map.addLayer(wcmc, {color:'#ffff00'}, "WCMC layer", false);
+
+// add global masks 
+Map.addLayer(ee.Image("ACA/reef_habitat/v1_0").select("reef_mask"), {min:0, max:1}, "Global mask", false);
+Map.addLayer(ee.FeatureCollection("projects/coral_atlas/global_datasets/global_lagoons_mask"), {}, "Global lagoons mask", false);
+
 
 ////////// UI SET UP //////////
 
@@ -10657,31 +10892,25 @@ pkg_vis.add_lgds([title, geo_legend, benthic_legend]);//, mask_legend])
 // generate the legend
 
 
+
 ////////// MASK EXPORTS //////////
 
-/*Export.table.toAsset({
+
+Export.table.toAsset({
   collection: ee.FeatureCollection(region_extent),
   description: "region_extent_export",
   assetId: region_params.asset + 'in_out/' + region_params.sname + '_extent'
-});
+})
 
-// check manually created notReef_mask 
-var notReefmask = ee.FeatureCollection(notReef_mask.dissolve())
-Map.addLayer(notReefmask, {}, 'not_reef_mask - check for donuts', false);
-Export.table.toAsset({
-  collection: notReefmask,
+/*Export.table.toAsset({
+  collection: ee.FeatureCollection(notReef_mask),
   description: "not_reef_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_notreef'
-});
+})*/
 
-Export.table.toAsset({
+/*Export.table.toAsset({
   collection: ee.FeatureCollection(mid_mask),
   description: "mid_mask_export",
   assetId: region_params.asset + 'in_out/' +  region_params.sname + '_midmask'
-});*/
+})*/
 
-Export.table.toAsset({
-  collection: ee.FeatureCollection(Lagoon_mask),
-  description: "lagoons_mask_export",
-  assetId: region_params.asset + 'in_out/' +  region_params.sname + '_lagoons_mask' // lagoons_mask to change RC in ORF and RS SRS in BRS
-});

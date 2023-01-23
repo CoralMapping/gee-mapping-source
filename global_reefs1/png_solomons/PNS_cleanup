@@ -15865,7 +15865,7 @@ var region_params = param_module.png_solomons;  //<------------ THIS IS WHERE YO
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -15874,7 +15874,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 200, //distance to land in meters to convert reef crest to TRF
-  wave_height: 0.35, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.9, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1400, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 1000, //depth in centimetres
@@ -15882,7 +15882,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: true, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   // should the global extent + depth cleanup be applied?

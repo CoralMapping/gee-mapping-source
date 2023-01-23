@@ -902,9 +902,9 @@ var pixels = ee.Image("projects/coral_atlas/philippines/in_out/phil_pixels"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
-// Global coral atlas project - Philippines
+// Global coral atlas project - Philippines V2
 // Contact: mitchell.lyons@gmail.com
-// Region coordinator: 
+// Region coordinator: Chris Roelfsema for v2
 // Description:
 // - export geomorphic and benthic to Vulcan bucket
 ///////////////////////////////

@@ -3,8 +3,24 @@ var benthic = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_benthic_cle
     geo = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_geo_clean3"),
     pixels = ee.Image("projects/coral_atlas/Andaman_sea/in_out/andm_pixels"),
     lowtide_sr = ee.Image("projects/coral_atlas/workflow/mapping/andaman_sea/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic/20200424T195720Z/andaman_sea_low_tide_normalized_sr_feb2018_apr2020_v2_shift_mosaic"),
-    sa_lowtide_sr = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic");
+    sa_lowtide_sr = ee.Image("projects/coral_atlas/south_asia/image/south_asia_low_tide_normalized_sr_may2018_may2020_v2_shift_mosaic"),
+    region_extent = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[91.86990764371268, 21.367888360278755],
+          [91.51834514371268, 20.87597581152602],
+          [93.23221233121268, 17.26328642994177],
+          [92.17752483121268, 13.919905984836042],
+          [91.38650920621268, 10.872925939427624],
+          [93.01248576871268, 5.918460069437163],
+          [100.21951701871268, 4.868456940176675],
+          [101.18631389371268, 5.612399334289123],
+          [99.16482951871268, 8.62090906931471],
+          [98.94510295621268, 11.820814160181007],
+          [98.19803264371268, 14.898839237010002],
+          [95.78104045621268, 15.280708778428638],
+          [94.33084514371268, 20.21758408397755],
+          [92.26541545621268, 21.367888360278755]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+
 // Andaman Sea export to Vulcan bucket
 
 // so we can visualise maps before export
@@ -45,7 +61,7 @@ Export.image.toCloudStorage({
   description: 'andaman_sea_stack',
   bucket: 'coral-atlas-data-pipeline',
   fileNamePrefix: 'coral-gee-export-bucket/andaman_sea/andaman_sea_stack',
-  region: reef_boundary, 
+  region: region_extent, 
   scale: 5,
   crs: 'EPSG:4326',
   maxPixels: 1e13, 
@@ -53,3 +69,8 @@ Export.image.toCloudStorage({
 });
 
 
+Export.table.toAsset({
+  collection: ee.FeatureCollection(region_extent),
+  description: "region_extent_export",
+  assetId: "projects/coral_atlas/Andaman_sea/in_out/andm_extent"
+})

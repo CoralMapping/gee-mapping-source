@@ -1,0 +1,72 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var atlasv2 = ee.Image("projects/coral_atlas/global_datasets/aca_gee_catalog_v2_raw"),
+    table = ee.FeatureCollection("projects/coral_atlas/global_datasets/aca_mapped_simple"),
+    ex_east = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[-179.99999598863482, 32.85954782417989],
+          [-179.99999598863482, -31.725099282379436],
+          [2.8022190808975544, -31.725099282379436],
+          [2.8022190808975544, 32.85954782417989]]], null, false),
+    ex_west = 
+    /* color: #98ff00 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[32.19461756595569, 32.68822522112766],
+          [32.19461756595569, -31.725096098089615],
+          [179.99999034055668, -31.725096098089615],
+          [179.99999034055668, 32.68822522112766]]], null, false);
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+var public_asset = atlasv2.select('b3').selfMask().toUint8().rename('geomorphic')
+         .addBands(atlasv2.select('b4').selfMask().toUint8().rename('benthic'))
+         .addBands(atlasv2.select('b2').gt(0).selfMask().toUint8().rename('reef_mask'));
+
+//Map.addLayer(atlasv2)         
+Map.addLayer(public_asset)
+
+//print(public_asset.projection())
+
+var all_regs = table.geometry().bounds()
+Map.addLayer(all_regs)
+
+print(ex_east)
+print(ex_west)
+
+
+Export.image.toCloudStorage({
+  image: public_asset,
+  description: 'acav2_east',
+  bucket: 'ee-allen-coral-atlas',
+  fileNamePrefix: 'acav2/aca_v2_east',
+  region: ex_east,
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+
+Export.image.toCloudStorage({
+  image: public_asset,
+  description: 'acav2_west',
+  bucket: 'ee-allen-coral-atlas',
+  fileNamePrefix: 'acav2/aca_v2_west',
+  region: ex_west,
+  scale: 5,
+  crs: 'EPSG:4326',
+  maxPixels: 1e13,
+  skipEmptyTiles: true
+})
+  
+  
+  
+  

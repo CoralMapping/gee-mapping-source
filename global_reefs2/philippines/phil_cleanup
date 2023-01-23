@@ -98,7 +98,16 @@ var refinement_mask =
            [121.28439279498338, 11.132805370871408],
            [121.24240358792656, 10.909615780598548],
            [121.22041836508934, 10.86039016388046],
-           [121.12979372464531, 10.77608724420416],
+           [121.16607953558429, 10.894032287773303],
+           [121.18339450113356, 10.981656352036119],
+           [121.09042133794517, 10.982994617361106],
+           [121.07570935674072, 10.99917156628759],
+           [121.03353204984393, 10.987710178562427],
+           [121.01098137309621, 10.935797015976807],
+           [121.08397750300853, 10.910172629443045],
+           [121.10075818903105, 10.841349917501992],
+           [121.05390164534317, 10.791264603329623],
+           [121.09202822171561, 10.753152121060282],
            [120.99658449612969, 10.674889775975679],
            [120.93039251601704, 10.393738175368545]]],
          [[[117.44126732119923, 7.416551226601631],
@@ -920,8 +929,15 @@ var refinement_mask =
            [120.36615761683176, 5.274810845705751],
            [120.37096413538644, 5.280622589010058],
            [120.3743973629255, 5.283699372234434]]]]),
-    global_not_applied = /* color: #0b4a8b */ee.Geometry.MultiPoint(),
-    RC_landDist_not_applied = /* color: #ffc82d */ee.FeatureCollection([]);
+    global_not_applied = 
+    /* color: #0b4a8b */
+    /* shown: false */
+    ee.Geometry.MultiPoint(),
+    RC_landDist_not_applied = 
+    /* color: #ffc82d */
+    /* shown: false */
+    ee.FeatureCollection([]),
+    image = ee.Image("projects/coral_atlas/philippines/in_out/phil_segmentation");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 
 ///////////////////////////////
@@ -960,7 +976,7 @@ var region_params = param_module.philippines;  //<------------ THIS IS WHERE YOU
 var vars = {
   
   // analysis type
-  geomorphic: true, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
+  geomorphic: false, // map geomorphic zonation (when set to true) or benthic habitat (when set to false)
 
   // analysis parameters
   image_data_scale: sensor_params.pixel,
@@ -969,7 +985,7 @@ var vars = {
   smooth_radius: ee.Number(3), // radius in pixels for initial smooth 
   dist_to_land_ORF: 1000, //distance to land in meters to convert terrestrial reef flat to ORF
   dist_to_land_RC: 200, //distance to land in meters to convert reef crest to TRF
-  wave_height: 0.6, //cut off height for waves in metres, Hs95 threshold
+  wave_height: 0.5, //cut off height for waves in metres, Hs95 threshold
   geo_depth_cutoff: 1400, //depth in centimetres
   shallowlag_depth_cutoff: 500, //depth in centimetres
   benthic_depth_cutoff: 900, //depth in centimetres
@@ -977,7 +993,7 @@ var vars = {
   
   //############
   // Clean-up stage selection
-  cleanup_stage: 3, // set to 1, 2 or 3
+  cleanup_stage: 2, // set to 1, 2 or 3
   geo_refinement: true, // set to true to apply the refinement_mask (the other stage 3 masks will still run)
   
   // should the global extent + depth cleanup be applied?
@@ -1233,7 +1249,7 @@ if (vars.manual_clean && vars.geomorphic) {
     value: ee.Image(22)
   }); */
   
- /* // the 'WAVE' clean (un-comment this sectio nbased on whether you have waves or not)
+ // the 'WAVE' clean (un-comment this sectio nbased on whether you have waves or not)
   var waves = ee.Image(region_params.waves);
   Map.addLayer(waves.lt(vars.wave_height), {}, vars.wave_height + "m Hs95 threshold", false);
   
@@ -1241,8 +1257,16 @@ if (vars.manual_clean && vars.geomorphic) {
     test: waves.lte(vars.wave_height)
                .and(man_geo.eq(22)),
     value: ee.Image(21)
-  });*/
+  });
   
+    // START Chris remove areas that have missing dove data, that should not have been filled with neighbouring class 
+  man_geo = man_geo.where({
+    test: man_geo.eq(12)
+                 .and(distToLand.unmask(8000,false).gt(1000))
+                 .and(depth.unmask(0,false).eq(0)),
+    value: ee.Image(0)
+  });
+// END Chris remove areas that have missing dove data, that should not have been filled with neighbouring class 
   
   /*// the "DISTANCE TO DEEP WATER" CLEAN
   // use a distance to deepwater to cut out RC/slope

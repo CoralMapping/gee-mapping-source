@@ -29,6 +29,12 @@ var global_extent_mask = {
   gcrmn: "projects/coral_atlas/global_datasets/GCRMN_reefextent_final"
 };
 
+var global_masks = {
+  lagoons: "projects/coral_atlas/global_datasets/global_lagoons_mask",
+  turbid: "projects/coral_atlas/global_datasets/global_turbid_mask",
+  harbours: "projects/coral_atlas/global_datasets/global_harbour_mask"
+};
+
 var heron_wv2 = {
   sname: "heron",
   asset: "gbr_reefs/",
@@ -247,9 +253,14 @@ var hawaii = {
   depth: "projects/coral_atlas/hawaii/depth/hawaii_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic_dove_depth",
   s2_depth: "projects/coral_atlas/hawaii/depth/hawaii_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/hawaii/depth/hawaii_islands_high_tide_normalized_sr_jan2018_jan2020_v2_shift_mosaic_landsat8_depth",
+  distToLand: "projects/coral_atlas/global_datasets/osm_distToLand_hawi",
+  distToWater: "",
+  mid_mask: "projects/coral_atlas/hawaii/in_out/hawaii_midmask",
+  extent_mask: "projects/coral_atlas/hawaii/in_out/hawaii_extent",
+  notreef_mask: "projects/coral_atlas/hawaii/in_out/hawaii_notreef",
   pixels:["projects/coral_atlas/hawaii/in_out/hawaii_pixels"],
   segments:["projects/coral_atlas/hawaii/in_out/hawaii_segmentation"],
-  waves:"",
+  waves:"projects/coral_atlas/hawaii/in_out/hawaii_waves",
   geo_train:"projects/coral_atlas/hawaii/training/hawaii_geo_reference",
   benthic_train:"projects/coral_atlas/hawaii/training/hawaii_benthic_reference",
   benthic_pts:"",
@@ -263,8 +274,10 @@ var hawaii = {
   geo_map_clean2:"projects/coral_atlas/hawaii/in_out/hawaii_geo_clean2",
   geo_map_clean3:"projects/coral_atlas/hawaii/in_out/hawaii_geo_clean3",
   benthic_map_clean1: "projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean1",
-  benthic_map_clean2: "",
-  QAQC: "projects/coral_atlas/hawaii/QAQC"
+  benthic_map_clean2: "projects/coral_atlas/hawaii/in_out/hawaii_benthic_clean2",
+  lagoons_mask: "projects/coral_atlas/global_datasets/global_lagoons_mask",
+  turbid_mask: "projects/coral_atlas/global_datasets/global_turbid_mask",
+  harbour_mask: "projects/coral_atlas/global_datasets/global_harbour_mask"
 };
 
 var wio = {
@@ -315,6 +328,7 @@ var andm = {
   depth: "projects/coral_atlas/Andaman_sea/depth/andaman_sea_high_tide_normalized_sr_feb2018_feb2020_depth",
   s2_depth: "projects/coral_atlas/Andaman_sea/depth/andaman_sea_high_tide_normalized_sr_feb2018_feb2020_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/Andaman_sea/depth/andaman_sea_high_tide_normalized_sr_feb2018_feb2020_landsat8_depth",
+  extent_mask: "projects/coral_atlas/Andaman_sea/in_out/andm_extent",
   pixels:["projects/coral_atlas/Andaman_sea/in_out/andm_pixels"],
   segments:["projects/coral_atlas/Andaman_sea/in_out/andm_segmentation"],
   waves:"projects/coral_atlas/Andaman_sea/in_out/andm_waves",
@@ -346,6 +360,7 @@ var timor = {
   depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_depth",
   s2_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/Timor/depth/timor_sea_high_tide_normalized_sr_feb2018_feb2020_landsat8_depth",
+  extent_mask: "projects/coral_atlas/Timor/in_out/timor_extent",
   pixels:["projects/coral_atlas/Timor/in_out/timor_pixels_no_mask"],
   segments:["projects/coral_atlas/Timor/in_out/timor_segmentation_no_mask"],
   turbid_mask:"projects/coral_atlas/Timor/mask/timor_mask_out",
@@ -419,6 +434,7 @@ var south_asia = {
   s2_depth: "projects/coral_atlas/south_asia/depth/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_sentinel2_depth",
   ls8_depth: "projects/coral_atlas/south_asia/depth/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_landsat8_depth",
   depth_composite: "projects/coral_atlas/south_asia/depth/south_asia_high_tide_normalized_sr_may2018_may2020_v2_shift_mosaic_composite_depth",
+  extent_mask: "projects/coral_atlas/south_asia/in_out/soa_extent",
   pixels:["projects/coral_atlas/south_asia/in_out/south_asia_pixels"],
   segments:["projects/coral_atlas/south_asia/in_out/south_asia_segmentation"],
   waves:"",
@@ -494,14 +510,15 @@ var indonesia = {
   s2_depth: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_sentinel2_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_sentinel2_depth"],
   ls8_depth: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_landsat8_depth"],
   depth_composite: ["projects/coral_atlas/Indonesia/depth/east/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_masked_composite_depth","projects/coral_atlas/Indonesia/depth/west/indonesia_high_tide_normalized_sr_june2018_june2020_v2_shift_mosaic_masked_composite_depth"],
-  global_reef_mask: "projects/coral_atlas/reefMask/global_reef_mask_combined",
-  distToLand: "projects/coral_atlas/global_datasets/ls8_global_distToLand",
-  distToWater: "projects/coral_atlas/global_datasets/ls8_global_distToWater",
+  global_reef_mask: "",
+  distToLand: "projects/coral_atlas/global_datasets/osm_distToLand_indo",
+  distToWater: "",
   extent_mask: "projects/coral_atlas/Indonesia/in_out/indo_extent",
   notreef_mask: "projects/coral_atlas/Indonesia/in_out/indo_notreef",
+  mid_mask: "projects/coral_atlas/Indonesia/in_out/indo_midmask",
   pixels:["projects/coral_atlas/Indonesia/in_out/indo_pixels"],
   segments:["projects/coral_atlas/Indonesia/in_out/indo_segmentation"],
-  waves:"",
+  waves:"projects/coral_atlas/Indonesia/in_out/indo_waves",
   geo_train:"projects/coral_atlas/Indonesia/training/indo_geo_reference",
   benthic_train:"projects/coral_atlas/Indonesia/training/indo_benthic_reference",
   benthic_pts:"",
@@ -513,14 +530,12 @@ var indonesia = {
   benthic_map: ["projects/coral_atlas/Indonesia/in_out/indo_benthic_east","projects/coral_atlas/Indonesia/in_out/indo_benthic_west"],
   geo_map_clean1:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean1",
   geo_map_clean2:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean2",
-  geo_map_clean3:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean3_v12" ,
-  benthic_map_clean1: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean1_v12",
-  benthic_map_clean2: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2_v12",
-  mid_mask: "projects/coral_atlas/Indonesia/in_out/indo_midmask",
-  lagoons_mask: "projects/coral_atlas/Indonesia/in_out/indo_lagoons_mask",
-  prob_geo:[""],
-  prob_benthic:[""],
-  QAQC: ""
+  geo_map_clean3:"projects/coral_atlas/Indonesia/in_out/indo_geo_clean3" ,
+  benthic_map_clean1: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean1",
+  benthic_map_clean2: "projects/coral_atlas/Indonesia/in_out/indo_benthic_clean2",
+  lagoons_mask: "projects/coral_atlas/global_datasets/global_lagoons_mask",
+  turbid_mask: "projects/coral_atlas/global_datasets/global_turbid_mask",
+  harbour_mask: "projects/coral_atlas/global_datasets/global_harbour_mask"
 };
 
 var coral_sea = {
@@ -700,7 +715,7 @@ var philippines = {
   notreef_mask: "projects/coral_atlas/philippines/in_out/phil_notreef",
   pixels:["projects/coral_atlas/philippines/in_out/phil_pixels"],
   segments:["projects/coral_atlas/philippines/in_out/phil_segmentation"],
-  waves:"",
+  waves:"projects/coral_atlas/philippines/in_out/phil_waves",
   geo_train:"projects/coral_atlas/philippines/training/PHI_geo_reference",
   benthic_train:"projects/coral_atlas/philippines/training/PHI_benthic_reference",
   benthic_pts:"",
@@ -1323,6 +1338,7 @@ exports = {
   landsat8 : landsat8,
   wv2: wv2,
   global_extent_mask: global_extent_mask,
+  global_masks: global_masks,
   heron_wv2: heron_wv2,
   gbr_eomap: gbr_eomap,
   swpac: swpac,
